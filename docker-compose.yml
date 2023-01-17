@@ -1,0 +1,27 @@
+version: "3.7"
+
+volumes:
+  node_modules:
+
+services:
+  frontend:
+    container_name: ${PROJECT_DIRECTORY}
+    hostname: ${PROJECT_DIRECTORY}
+    image: ${PROJECT_DIRECTORY}
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        APP_USER_ID: ${APP_USER_ID}
+        PROJECT_DIRECTORY: ${PROJECT_DIRECTORY}
+    ports:
+      - 3000:3000
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/home/react_generator/${PROJECT_DIRECTORY}:cached
+      - ~/.ssh:/home/react_generator/.ssh
+      - ~/.gitconfig:/home/react_generator/.gitconfig
+      - node_modules:/home/react_generator/${PROJECT_DIRECTORY}/node_modules
+    entrypoint: ["/home/react_generator/docker-entrypoint.sh"]
+    command: ["npm", "run", "start"]
