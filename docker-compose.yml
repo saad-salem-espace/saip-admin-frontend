@@ -5,23 +5,20 @@ volumes:
 
 services:
   frontend:
-    container_name: ${PROJECT_DIRECTORY}
-    hostname: ${PROJECT_DIRECTORY}
-    image: ${PROJECT_DIRECTORY}
     build:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        APP_USER_ID: ${APP_USER_ID}
-        PROJECT_DIRECTORY: ${PROJECT_DIRECTORY}
+        APP_USER_ID: ${APP_USER_ID:-1000}
+        PROJECT_DIRECTORY: ${PROJECT_DIRECTORY:-/app}
     ports:
       - 3000:3000
     tty: true
     stdin_open: true
     volumes:
-      - .:/home/react_generator/${PROJECT_DIRECTORY}:cached
-      - ~/.ssh:/home/react_generator/.ssh
-      - ~/.gitconfig:/home/react_generator/.gitconfig
-      - node_modules:/home/react_generator/${PROJECT_DIRECTORY}/node_modules
-    entrypoint: ["/home/react_generator/docker-entrypoint.sh"]
+      - .:${PROJECT_DIRECTORY:-/app}:cached
+      - ~/.ssh:/home/saip/.ssh
+      - ~/.gitconfig:/home/saip/.gitconfig
+      - ./node_modules:${PROJECT_DIRECTORY:-/app}/node_modules
+    entrypoint: [ "/home/saip/docker-entrypoint.sh" ]
     command: ["yarn", "start"]

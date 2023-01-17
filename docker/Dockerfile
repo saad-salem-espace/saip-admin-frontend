@@ -3,10 +3,10 @@ FROM node:alpine
 ARG APP_USER_ID
 ARG PROJECT_DIRECTORY
 
-ENV APP_USER             react_generator
+ENV APP_USER             saip
 ENV DEBIAN_FRONTEND      noninteractive
 ENV USER_HOME_DIRECTORY  /home/${APP_USER}
-ENV APP_PATH             ${USER_HOME_DIRECTORY}/${PROJECT_DIRECTORY}
+ENV APP_PATH             ${PROJECT_DIRECTORY}
 ENV NODE_MODULES_DIR     ${APP_PATH}/node_modules
 ENV DOT_NPM              ${USER_HOME_DIRECTORY}/.npm
 
