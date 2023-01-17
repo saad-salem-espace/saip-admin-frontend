@@ -16,7 +16,7 @@ RUN apk --no-cache --available upgrade
 # Install system dependencies required both at runtime and build time.
 RUN apk add --no-cache build-base \
   git curl bash vim \
-  bash-completion openssh
+  bash-completion openssh yarn
 
 RUN deluser --remove-home node
 

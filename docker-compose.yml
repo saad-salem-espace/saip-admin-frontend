@@ -24,4 +24,4 @@ services:
       - ~/.gitconfig:/home/react_generator/.gitconfig
       - node_modules:/home/react_generator/${PROJECT_DIRECTORY}/node_modules
     entrypoint: ["/home/react_generator/docker-entrypoint.sh"]
-    command: ["npm", "run", "start"]
+    command: ["yarn", "start"]
