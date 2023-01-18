@@ -59,7 +59,7 @@
 - Install yarn
   - Use npm to install yarn
     ```shell
-    npm install -g yarn
+    npm install -g yarn@1.22.17
     ```
   - Check yarn installed
     ```shell
