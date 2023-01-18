@@ -56,7 +56,8 @@
     ```shell
     node -v
     ```
-  - Install yarn
+- Install yarn
+  - Use npm to install yarn
     ```shell
     npm install -g yarn
     ```
@@ -93,6 +94,10 @@
 - Run yarn install
   ```shell
   yarn install
+  ```
+- Start application
+  ```shell
+  yarn start
   ```
 
 ## Test Users
