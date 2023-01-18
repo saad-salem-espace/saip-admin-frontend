@@ -33,30 +33,67 @@
 # Getting Started
 
 ## Prerequisites
+### Docker setup (for docker users) 
+- You should have [Docker](https://docs.docker.com/engine/install/ubuntu/) installed on your host OS.
+- Apply [post installation steps](https://docs.docker.com/engine/install/linux-postinstall/) to use docker without `sudo`.
 
-What things you need to install the software and how to install them.
-
-```
-Give examples
-```
+### Local setup (for non docker users)
+- Install nodejs
+  - Download PPA in order to get access to its packages
+    ```shell
+    cd ~
+    curl -sL https://deb.nodesource.com/setup_18.x -o /tmp/nodesource_setup.sh
+    ```
+  - Run setup script
+    ```shell
+    sudo bash /tmp/nodesource_setup.sh
+    ```
+  - Install nodejs
+    ```shell
+    sudo apt install nodejs
+    ```
+  - Check nodejs installed
+    ```shell
+    node -v
+    ```
+  - Install yarn
+    ```shell
+    npm install -g yarn
+    ```
+  - Check yarn installed
+    ```shell
+    yarn --version
+    ```
+  
 
 ## Installing
+### For docker users
+- Copy .env.example to .env
+  ```shell
+  cp .env.example .env
+  ```
+- Replace APP_USER_ID with you current user id
+  ```shell
+  sed  -i "/APP_USER_ID=/c\APP_USER_ID=$(id -u)" .env
+  ```
+- Create `node_modules` in the project directory
+  ```shell
+  mkdir node_modules
+  ```
+- Start docker compose
+  ```shell
+  docker compose up
+  ```
 
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-If possible, end with an example of getting some data out of the system or using it for a little demo.
+### For Local users
+- Copy .env.example to .env
+  ```shell
+  cp .env.example .env
+  ```
+- Run yarn install
+  ```shell
+  yarn install
+  ```
 
 ## Test Users
 
