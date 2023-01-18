@@ -1,4 +1,5 @@
-FROM node:alpine
+# Fetch most stable node image
+FROM node:18.13-alpine
 
 ARG APP_USER_ID
 ARG PROJECT_DIRECTORY
