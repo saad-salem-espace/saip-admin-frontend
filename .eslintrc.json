@@ -1,17 +1,46 @@
 {
+  "plugins": [
+    "react-hooks",
+    "react-perf",
+    "filename-rules",
+    "filenames",
+    "folders"
+  ],
   "extends": [
-    "airbnb"
+    "airbnb",
+    "plugin:react-perf/recommended"
   ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/react-in-jsx-scope": "off",
+    "react/hook-use-state": "error",
+    "react/jsx-pascal-case": ["error", {
+      "allowLeadingUnderscore": false,
+      "allowNamespace": false
+    }],
+    "react/destructuring-assignment": ["error", "always", {
+      "destructureInSignature": "always"
+    }],
+    "react/prefer-exact-props": "error",
+    "react/no-unused-state": "error",
+    "react/button-has-type": "error",
     "react/jsx-wrap-multilines": ["error", {
       "declaration": true,
       "assignment": true,
-      "return": true,
-      "arrow": true
+      "return": "parens-new-line",
+      "arrow": "parens-new-line"
     }],
-  "import/no-named-as-default": 0
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "import/no-named-as-default": 0,
+    "folders/match-regex": [2, "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$", "src/"],
+    "filenames/match-exported": "error",
+    "filename-rules/match": ["error", {
+      ".js":  "camelCase",
+      ".jsx":  "PascalCase"
+    }],
+    "camelcase": "error",
+    "prefer-arrow-callback": "warn"
   },
   "overrides": [
     {
