@@ -6,12 +6,14 @@
     "filenames",
     "folders",
     "functional",
-    "xss"
+    "xss",
+    "jsx-a11y"
   ],
   "extends": [
     "airbnb",
     "plugin:react-perf/recommended",
-    "plugin:xss/recommended"
+    "plugin:xss/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
