@@ -59,7 +59,8 @@
     ],
     "camelcase": "error",
     "prefer-arrow-callback": "warn",
-    "functional/no-class": "error"
+    "functional/no-class": "error",
+    "jsx-a11y/control-has-associated-label": "error"
   },
   "overrides": [
     {
