@@ -60,11 +60,15 @@
     "camelcase": "error",
     "prefer-arrow-callback": "warn",
     "functional/no-class": "error",
-    "jsx-a11y/control-has-associated-label": "error"
+    "jsx-a11y/control-has-associated-label": "error",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   },
   "overrides": [
     {
       "files": ["**/*.test.js", "**/*.test.jsx"],
+      "rules": {
+        "filename-rules/match": [0]
+      },
       "env": {
         "jest": true
       }
