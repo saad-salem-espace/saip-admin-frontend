@@ -63,7 +63,7 @@
     "jscpd": "^3.5.3"
   },
   "lint-staged": {
-    "*.js*": "prettier --write --ignore-unknown & eslint --cache --fix",
+    "*.js{,x}": "prettier --write --ignore-unknown & eslint --cache --fix",
     "*.css": "stylelint --fix",
     "*.scss": "stylelint --fix"
   }

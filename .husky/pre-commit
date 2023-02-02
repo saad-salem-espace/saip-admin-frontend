@@ -2,5 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 yarn lint-staged
-npx jscpd --pattern "src/**/*.js*"
+npx jscpd --pattern "src/**/*.js{,x}"
 yarn test
