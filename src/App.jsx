@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const { t } = useTranslation();
   return (
     <div className="app">
       <header className="app-header">
@@ -12,7 +14,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          {t('learnReact')}
         </a>
       </header>
     </div>
