@@ -10,6 +10,7 @@ ENV USER_HOME_DIRECTORY  /home/${APP_USER}
 ENV APP_PATH             ${PROJECT_DIRECTORY}
 ENV NODE_MODULES_DIR     ${APP_PATH}/node_modules
 ENV DOT_NPM              ${USER_HOME_DIRECTORY}/.npm
+ENV YARN_VERSION         1.22.17
 
 # Upgrade packages.
 RUN apk --no-cache --available upgrade
@@ -18,6 +19,8 @@ RUN apk --no-cache --available upgrade
 RUN apk add --no-cache build-base \
   git curl bash vim \
   bash-completion openssh yarn
+
+RUN yarn policies set-version ${YARN_VERSION}
 
 RUN deluser --remove-home node
 
