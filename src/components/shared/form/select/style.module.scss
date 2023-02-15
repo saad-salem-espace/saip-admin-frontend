@@ -1,0 +1,30 @@
+@import "../../../../assets/styles/utilities/custom-theme";
+
+.select {
+  background-color: $white;
+  border-radius: $border-radius;
+  padding: 16px;
+}
+
+.lg-select {
+  &.select {
+    padding-top: 41px;
+    border-radius: $border-radius 0 0;
+  }
+}
+
+.sm-select {
+  &.select {
+    border-radius: $border-radius 0 0;
+  }
+}
+
+.custom-select {
+  border: none !important;
+  color: $primary;
+  font-family: $font-bold;
+  font-size: 24px;
+  padding: 0;
+  border-bottom: $border-width dashed $gray !important;
+  border-radius: 0;
+}
