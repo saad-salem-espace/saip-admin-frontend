@@ -1,0 +1,9 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.label {
+  color: $gray;
+  left: 16px;
+  top: 16px;
+  font-size: 14px;
+  z-index: 9;
+}
