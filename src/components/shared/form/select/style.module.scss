@@ -9,13 +9,13 @@
 .lg-select {
   &.select {
     padding-top: 41px;
-    border-radius: $border-radius 0 0;
+    border-radius: $border-radius 0 0 $border-radius;
   }
 }
 
 .sm-select {
   &.select {
-    border-radius: $border-radius 0 0;
+    border-radius: $border-radius 0 0 $border-radius;
   }
 }
 

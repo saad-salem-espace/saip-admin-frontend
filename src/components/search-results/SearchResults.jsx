@@ -7,6 +7,7 @@ import SearchResultCard from './search-result-card/SearchResultCard';
 import SearchNote from './SearchNote';
 import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
+import ToggleButton from '../shared/toggle-button/ToggleButton';
 // import formStyle from '../shared/form/form.module.scss';
 
 function SearchResults() {
@@ -68,6 +69,9 @@ function SearchResults() {
 
   };
 
+  const handleToggleButton = () => {
+
+  };
   return (
     <Container fluid className="px-0">
       <Row className="mx-0">
@@ -76,14 +80,19 @@ function SearchResults() {
             {() => (
               <Form className="mt-8">
                 <div className="d-flex align-items-stretch">
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex mt-3">
                     <h4 className="mb-0">Search</h4>
                     <Select options={WorkStreamsOptions} onChangeSelect={onSelectWorkStream} id="workStreams" fieldName="workStreams" moduleClassName="custom-select" className="me-5 ms-3" />
                   </div>
-                  <div className="position-relative">
-                    <Select options={options} onChangeSelect={onChangeSelect} id="searchFields" fieldName="searchFields" moduleClassName="sm-select" />
+                  <div className="flex-grow-1">
+                    <div className="d-flex mb-3">
+                      <div className="position-relative">
+                        <Select options={options} onChangeSelect={onChangeSelect} id="searchFields" fieldName="searchFields" moduleClassName="sm-select" />
+                      </div>
+                      <Search id="search" className="flex-grow-1" moduleClassName="sm-search" placeholder={t('typeSearchTerms')} onSubmit={onSubmit} />
+                    </div>
+                    <ToggleButton handleToggleButton={handleToggleButton} isToggleButtonOn={false} text={t('allowSynonyms')} />
                   </div>
-                  <Search id="search" className="flex-grow-1" moduleClassName="sm-search" placeholder={t('typeSearchTerms')} onSubmit={onSubmit} />
                 </div>
               </Form>
             )}

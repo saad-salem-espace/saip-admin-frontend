@@ -6,5 +6,6 @@
   "searchSpecificProperty": "Search for specific <0>intellectual property</0> cases.",
   "patents": "Patents",
   "searchFields": "Search Fields",
-  "typeSearchTerms": "Type your search terms"
+  "typeSearchTerms": "Type your search terms",
+  "allowSynonyms": "Allow synonyms"
 }
