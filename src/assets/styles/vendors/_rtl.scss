@@ -1,0 +1,198 @@
+$direction: rtl;
+$right: right;
+$left: left;
+
+#ar {
+  dd,
+  dl,
+  dt,
+  li,
+  ol,
+  ul {
+    direction: $direction;
+    padding-right: 0;
+  }
+
+  h1,
+  h2 {
+    font-family: $font-bold;
+  }
+
+  h3,
+  h4 {
+    font-family: $font-medium;
+  }
+
+  h5,
+  h6 {
+    font-family: $font-regular;
+  }
+
+  .navbar-brand {
+    margin-left: $navbar-brand-margin-end;
+    margin-right: 0;
+  }
+
+  .modal-header .btn-close {
+    margin: ($modal-header-padding-y * -0.5) auto ($modal-header-padding-x * -0.5) ($modal-header-padding-y * -0.5);
+  }
+
+  .alert-dismissible {
+    padding-right: 1rem;
+    padding-left: 3rem;
+
+    .btn-close {
+      right: auto;
+      left: 0;
+    }
+  }
+
+  ul {
+    padding-right: 0;
+  }
+
+  .form-check {
+    padding-left: 0;
+    padding-right: $form-check-padding-start;
+
+    .form-check-input {
+      float: right;
+    }
+  }
+
+  .text-end {
+    text-align: left !important;
+  }
+
+  .text-start {
+    text-align: right !important;
+  }
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      @each $size, $length in $spacers {
+        .pe#{$infix}-#{$size} {
+          padding-#{$left}: $length !important;
+          padding-#{$right}: 0 !important;
+        }
+
+        .ps#{$infix}-#{$size} {
+          padding-#{$right}: $length !important;
+          padding-#{$left}: 0 !important;
+        }
+
+        .me#{$infix}-#{$size} {
+          margin-#{$left}: $length !important;
+          margin-#{$right}: 0 !important;
+        }
+
+        .ms#{$infix}-#{$size} {
+          margin-#{$right}: $length !important;
+          margin-#{$left}: 0 !important;
+        }
+
+        .ms#{$infix}-n#{$size} {
+          margin-#{$right}: -$length !important;
+          margin-#{$left}: 0 !important;
+        }
+
+        .me#{$infix}-n#{$size} {
+          margin-#{$left}: -$length !important;
+          margin-#{$right}: 0 !important;
+        }
+      }
+
+      // RTL TEXT
+      .text#{$infix}-end {
+        text-align: left !important;
+      }
+
+      .text#{$infix}-start {
+        text-align: right !important;
+      }
+
+      .float#{$infix}-none {
+        float: none !important;
+      }
+
+      .ms#{$infix}-auto {
+        margin-#{$right}: auto !important;
+        margin-#{$left}: inherit !important;
+      }
+
+      .me#{$infix}-auto {
+        margin-#{$left}: auto !important;
+        margin-#{$right}: inherit !important;
+      }
+
+      .border-end#{$infix} {
+        border-right: 0 !important;
+        border-left: $border-width solid $gray-300 !important;
+      }
+
+      .border-start#{$infix} {
+        border-left: 0 !important;
+        border-right: $border-width solid $gray-300 !important;
+      }
+
+      .border-end#{$infix}-0 {
+        border-left: 0 !important;
+      }
+
+      .border-start#{$infix}-0 {
+        border-right: 0 !important;
+      }
+
+      .dropdown-menu[data-bs-popper] {
+        left: 0;
+        right: auto;
+      }
+
+      .dropdown-menu#{$infix}-start {
+        --bs-position: start;
+
+        left: auto !important;
+        right: 0 !important;
+      }
+
+      .dropdown-menu#{$infix}-end {
+        --bs-position: end;
+
+        left: 0 !important;
+        right: auto !important;
+      }
+    }
+  }
+
+  @each $size, $length in $position-values {
+    .end-#{$size} {
+      #{$left}: $length !important;
+      right: auto !important;
+    }
+
+    .start-#{$size} {
+      #{$right}: $length !important;
+      left: auto !important;
+    }
+  }
+
+  .accordion-button {
+    text-align: start;
+
+    &::after {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+
+  .rate span span {
+    right: 0;
+  }
+
+  .dropdown-toggle::after {
+    margin-left: 0;
+    margin-right: $caret-spacing;
+  }
+}

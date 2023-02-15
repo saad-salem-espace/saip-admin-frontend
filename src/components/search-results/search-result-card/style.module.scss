@@ -1,0 +1,7 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.result-card {
+  &:hover {
+    background-color: $primary-01;
+  }
+}
