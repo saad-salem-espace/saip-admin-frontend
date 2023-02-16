@@ -61,7 +61,22 @@
     "prefer-arrow-callback": "warn",
     "functional/no-class": "error",
     "jsx-a11y/control-has-associated-label": "error",
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react-perf/jsx-no-new-object-as-prop": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": ["arrow-function", "function-declaration"],
+        "unnamedComponents": "arrow-function"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
   },
   "overrides": [
     {
