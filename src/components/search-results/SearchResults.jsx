@@ -46,10 +46,6 @@ function SearchResults() {
     },
   ];
 
-  const onChangeSelect = () => {
-
-  };
-
   const onSubmit = () => {
 
   };
@@ -65,10 +61,6 @@ function SearchResults() {
     },
   ];
 
-  const onSelectWorkStream = () => {
-
-  };
-
   const handleToggleButton = () => {
 
   };
@@ -82,12 +74,12 @@ function SearchResults() {
                 <div className="d-flex align-items-stretch">
                   <div className="d-flex mt-3">
                     <h4 className="mb-0">Search</h4>
-                    <Select options={WorkStreamsOptions} onChangeSelect={onSelectWorkStream} id="workStreams" fieldName="workStreams" moduleClassName="custom-select" className="me-5 ms-3" />
+                    <Select options={WorkStreamsOptions} moduleClassName="custom-select" className="me-5 ms-3" />
                   </div>
                   <div className="flex-grow-1">
                     <div className="d-flex mb-3">
                       <div className="position-relative">
-                        <Select options={options} onChangeSelect={onChangeSelect} id="searchFields" fieldName="searchFields" moduleClassName="sm-select" />
+                        <Select options={options} moduleClassName="sm-select" />
                       </div>
                       <Search id="search" className="flex-grow-1" moduleClassName="sm-search" placeholder={t('typeSearchTerms')} onSubmit={onSubmit} />
                     </div>

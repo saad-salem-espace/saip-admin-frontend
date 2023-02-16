@@ -41,10 +41,6 @@ function PatentsSearch() {
   //   },
   // ];
 
-  const onChangeSelect = () => {
-
-  };
-
   const onSubmit = () => {
 
   };
@@ -78,7 +74,7 @@ function PatentsSearch() {
                   <div className="d-flex align-items-stretch">
                     <div className="position-relative">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
-                      <Select options={searchOptions} onChangeSelect={onChangeSelect} id="searchFields" fieldName="searchFields" moduleClassName="lg-select" value="identifierName" />
+                      <Select options={searchOptions} moduleClassName="lg-select" />
                     </div>
                     <Search id="search" className="flex-grow-1" placeholder={t('typeSearchTerms')} onSubmit={onSubmit}>
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
