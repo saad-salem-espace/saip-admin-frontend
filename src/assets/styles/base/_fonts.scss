@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'BukraAlt-Regular';
+  src: url("../../fonts/BukraAlt_Regular.otf");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BukraAlt-Medium';
+  src: url("../../fonts/BukraAlt_Medium.otf");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BukraAlt-Bold';
+  src: url("../../fonts/BukraAlt_Bold.otf");
+  font-style: normal;
+  font-display: swap;
+}
+
+$font-regular: 'BukraAlt-Regular';
+$font-medium: 'BukraAlt-Medium';
+$font-bold: 'BukraAlt-Bold';
+
+.font-regular {
+  font-family: $font-regular;
+}
+
+.font-bold {
+  font-family: $font-bold;
+}
+
+.font-medium {
+  font-family: $font-medium;
+}

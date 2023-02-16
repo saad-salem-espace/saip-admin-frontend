@@ -1,0 +1,17 @@
+$fontSize: (
+  8,
+  14,
+  20,
+  24,
+  30
+);
+
+@each $fontSize in $fontSize {
+  .f-#{$fontSize} {
+    font-size: #{$fontSize}px !important;
+  }
+}
+
+.sm-text {
+  font-size: $font-size-sm;
+}
