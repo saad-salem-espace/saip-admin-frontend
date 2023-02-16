@@ -3,6 +3,10 @@ version: "3.7"
 volumes:
   node_modules:
 
+networks:
+  saip_search_network:
+    external: true
+
 services:
   frontend:
     build:
@@ -19,6 +23,7 @@ services:
       - .:${PROJECT_DIRECTORY:-/app}:cached
       - ~/.ssh:/home/saip/.ssh
       - ~/.gitconfig:/home/saip/.gitconfig
-      - ./node_modules:${PROJECT_DIRECTORY:-/app}/node_modules
     entrypoint: [ "/home/saip/docker-entrypoint.sh" ]
     command: ["yarn", "start"]
+    networks:
+      - saip_search_network
