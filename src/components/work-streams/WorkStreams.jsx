@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import style from './style.module.scss';
 import { getWorkstreamList } from '../../api/workstreamApi';
 
-function WorkStreams() {
-  const [selectedWorkStream, setSelectedWorkStream] = useState(1);
+function WorkStreams({ selectedWorkStream, onChange }) {
   const [workstreams, setWorkstreams] = useState([]);
 
   useEffect(async () => {
@@ -12,6 +11,10 @@ function WorkStreams() {
       setWorkstreams(res.data);
     });
   }, []);
+
+  const handleChange = (workstreamId) => {
+    onChange(workstreamId);
+  };
 
   // const workStreams = [
   //   {
@@ -53,7 +56,7 @@ function WorkStreams() {
           <Button
             variant="link"
             className={`${style.card} me-4 mb-lg-0 mb-3 shadow ${selectedWorkStream === workStream.id ? style.active : ''}`}
-            onClick={() => setSelectedWorkStream(workStream.id)}
+            onClick={() => handleChange(workStream.id)}
             key={workStream.id}
           >
             <span className={`f-24 mb-2 d-block ${style.icon} icon-${workStream.icon}`} />

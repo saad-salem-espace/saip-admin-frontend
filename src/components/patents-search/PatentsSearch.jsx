@@ -1,4 +1,5 @@
 import { Trans, useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,20 +9,37 @@ import style from './style.module.scss';
 import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import formStyle from '../shared/form/form.module.scss';
+import { getWorkstreamIdentifiers } from '../../api/workstreamApi';
 
 function PatentsSearch() {
   const { t } = useTranslation('search');
+  const [selectedWorkStream, setSelectedWorkStream] = useState(1);
+  const [searchOptions, setSearchOptions] = useState([]);
 
-  const options = [
-    {
-      key: '1',
-      value: 'any field',
-    },
-    {
-      key: '2',
-      value: 'Int. Classification(IPC)',
-    },
-  ];
+  useEffect(() => {
+    async function fetchWorkstreamIdentifiers() {
+      const response = await getWorkstreamIdentifiers(selectedWorkStream);
+      setSearchOptions(response.data);
+    }
+    fetchWorkstreamIdentifiers();
+  }, [selectedWorkStream]);
+
+  console.log(searchOptions);
+
+  const onChangeWorkstream = (newState) => {
+    setSelectedWorkStream(newState);
+  };
+
+  // const options = [
+  //   {
+  //     key: '1',
+  //     value: 'any field',
+  //   },
+  //   {
+  //     key: '2',
+  //     value: 'Int. Classification(IPC)',
+  //   },
+  // ];
 
   const onChangeSelect = () => {
 
@@ -43,7 +61,10 @@ function PatentsSearch() {
                   components={<span className="h3" />}
                 />
               </p>
-              <WorkStreams />
+              <WorkStreams
+                selectedWorkStream={selectedWorkStream}
+                onChange={onChangeWorkstream}
+              />
             </Col>
           </Row>
         </Container>
@@ -57,7 +78,7 @@ function PatentsSearch() {
                   <div className="d-flex align-items-stretch">
                     <div className="position-relative">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
-                      <Select options={options} onChangeSelect={onChangeSelect} id="searchFields" fieldName="searchFields" moduleClassName="lg-select" />
+                      <Select options={searchOptions} onChangeSelect={onChangeSelect} id="searchFields" fieldName="searchFields" moduleClassName="lg-select" value="identifierName" />
                     </div>
                     <Search id="search" className="flex-grow-1" placeholder={t('typeSearchTerms')} onSubmit={onSubmit}>
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
