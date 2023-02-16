@@ -4,5 +4,8 @@
   "published": "Published {{value}}",
   "searchNote": "Your search for <0>{{searchKeywords}}</0> returned <0>{{resultsCount}}</0> results.",
   "searchSpecificProperty": "Search for specific <0>intellectual property</0> cases.",
-  "patents": "Patents"
+  "patents": "Patents",
+  "searchFields": "Search Fields",
+  "typeSearchTerms": "Type your search terms",
+  "allowSynonyms": "Allow synonyms"
 }

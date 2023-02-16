@@ -1,0 +1,49 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.toggle-btn-container {
+  width: 50px;
+  height: 24px;
+  background-color: $secondary;
+  border-radius: 20px;
+  position: relative;
+  border: 2px solid $primary;
+
+  &:hover,
+  &:focus {
+    background-color: $secondary;
+  }
+
+  .toggle-btn {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background-color: $white;
+    position: absolute;
+    right: 1px;
+    left: auto;
+    top: 0;
+
+    &:hover,
+    &:focus {
+      background-color: $white;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  &.off {
+    background-color: $gray-500;
+    border-color: $gray-500;
+
+    &:hover,
+    &:focus {
+      background-color: $gray-500;
+    }
+
+    .toggle-btn {
+      left: 1px;
+      right: auto;
+    }
+  }
+}
