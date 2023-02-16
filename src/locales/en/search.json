@@ -7,5 +7,16 @@
   "patents": "Patents",
   "searchFields": "Search Fields",
   "typeSearchTerms": "Type your search terms",
-  "allowSynonyms": "Allow synonyms"
+  "allowSynonyms": "Allow synonyms",
+  "register": "Register",
+  "applicants": "Applicants",
+  "inventors": "Inventors",
+  "classifications": "Classifications",
+  "ipc": "IPC",
+  "cpc": "CPC",
+  "priorities": "Priorities",
+  "application": "Application",
+  "publication": "Publication",
+  "publishedAs": "Published as",
+  "viewSection": "View section"
 }

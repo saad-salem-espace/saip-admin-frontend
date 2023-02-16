@@ -8,6 +8,7 @@ import SearchNote from './SearchNote';
 import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import ToggleButton from '../shared/toggle-button/ToggleButton';
+import IprDetails from '../ipr-details/IprDetails';
 // import formStyle from '../shared/form/form.module.scss';
 
 function SearchResults() {
@@ -112,6 +113,7 @@ function SearchResults() {
             )}
           </Formik>
         </Col>
+        <IprDetails />
       </Row>
     </Container>
   );
