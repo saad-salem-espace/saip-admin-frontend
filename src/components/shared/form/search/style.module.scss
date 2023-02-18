@@ -1,10 +1,11 @@
 @import '../../../../assets/styles/utilities/custom-theme';
+@import "~bootstrap/scss/mixins";
 
 .search-icon {
   right: 0;
   position: absolute;
   top: 0;
-  padding: 28px 24px;
+  padding: 33px 24px;
   background-color: $primary;
   font-size: 21px;
   color: $white;
@@ -15,16 +16,29 @@
   color: $gray;
   position: absolute;
   right: 85px;
-  top: 30px;
+  top: 36px;
   font-size: 20px;
 }
 
 .sm-search {
+  input {
+    height: 57px !important;
+  }
+
   .clear-icon {
-    top: 19px;
+    top: 24px;
   }
 
   .search-icon {
     padding: 16px 24px;
+  }
+}
+
+.lg-search {
+  height: 87px !important;
+}
+.search-with-sibling input {
+  @include media-breakpoint-up(md) {
+    border-left: 0 !important;
   }
 }
