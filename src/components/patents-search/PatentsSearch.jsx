@@ -71,13 +71,20 @@ function PatentsSearch() {
             <Formik>
               {() => (
                 <Form className="mt-8">
-                  <div className="d-flex align-items-stretch">
-                    <div className="position-relative">
+                  <div className="d-md-flex align-items-stretch">
+                    <div className="position-relative mb-md-0 mb-3">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
-                      <Select options={searchOptions} moduleClassName="lg-select" />
+                      <Select options={searchOptions} className={`${style.select} lg-select select-with-sibling`} />
                     </div>
-                    <Search id="search" className="flex-grow-1" placeholder={t('typeSearchTerms')} onSubmit={onSubmit}>
-                      <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
+                    <Search
+                      id="search"
+                      className="flex-grow-1"
+                      moduleClassName="search-with-sibling lg-search"
+                      placeholder={t('typeSearchTerms')}
+                      onSubmit={onSubmit}
+                    >
+                      {/* <span className={`position-absolute ${formStyle.label}`}>
+                      {t('searchFields')}</span> */}
                     </Search>
                   </div>
                 </Form>
