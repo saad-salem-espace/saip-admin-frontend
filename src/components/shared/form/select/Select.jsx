@@ -8,6 +8,7 @@ function Select({
   options,
   placeholder,
   optionName,
+  optionValue,
   selectedOption,
   setSelectedOption,
 }) {
@@ -19,6 +20,7 @@ function Select({
         options={options}
         styles={selectStyle}
         getOptionLabel={optionName}
+        getOptionValue={optionValue}
         placeholder={placeholder}
         value={selectedOption}
       />

@@ -88,6 +88,7 @@ function PatentsSearch() {
                         optionName={(option) => option.identiferName}
                         selectedOption={selectedOption}
                         setSelectedOption={setSelectedOption}
+                        optionValue={(option) => option.identiferName}
                       />
                     </div>
                     <Search
