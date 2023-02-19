@@ -65,6 +65,12 @@ function SearchResults() {
   const handleToggleButton = () => {
 
   };
+
+  const SearchModuleClassName = ({
+    smSearch: true,
+    searchWithSibling: true,
+  });
+
   return (
     <Container fluid className="px-0">
       <Row className="mx-0">
@@ -72,25 +78,29 @@ function SearchResults() {
           <Formik>
             {() => (
               <Form className="mt-8">
-                <div className="d-flex align-items-stretch">
-                  <div className="d-flex mt-3">
-                    <h4 className="mb-0">Search</h4>
-                    <Select options={WorkStreamsOptions} moduleClassName="menu" className="me-5 ms-3 custom-select" />
+                <div className="d-lg-flex align-items-start">
+                  <div className="d-flex mb-lg-0 mb-3">
+                    <h4 className="mb-0 mt-4">Search</h4>
+                    <Select options={WorkStreamsOptions} moduleClassName="menu" className={`${style.workStreams} me-5 ms-3 mt-1 customSelect`} />
                   </div>
                   <div className="flex-grow-1">
-                    <div className="d-flex mb-3">
-                      <div className="position-relative">
-                        <Select options={options} className={`${style.select} select select-with-sibling sm-select`} />
+                    <div className="d-md-flex mb-3">
+                      <div className="position-relative mb-md-0 mb-3">
+                        <Select options={options} className={`${style.select} select selectWithSibling smSelect`} />
                       </div>
                       <Search
                         id="search"
                         className="flex-grow-1"
-                        moduleClassName="search-with-sibling sm-search"
+                        moduleClassName={SearchModuleClassName}
                         placeholder={t('typeSearchTerms')}
                         onSubmit={onSubmit}
                       />
                     </div>
-                    <ToggleButton handleToggleButton={handleToggleButton} isToggleButtonOn={false} text={t('allowSynonyms')} />
+                    <ToggleButton
+                      handleToggleButton={handleToggleButton}
+                      isToggleButtonOn={false}
+                      text={t('allowSynonyms')}
+                    />
                   </div>
                 </div>
               </Form>
