@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 import Input from '../input/Input';
 import style from './style.module.scss';
 import Button from '../../button/Button';
@@ -14,6 +15,8 @@ function Search({
   onSubmit,
   moduleClassName,
 }) {
+  const [inputValue, setInputValue] = useState('');
+
   return (
     <div className={`position-relative ${className} ${style[moduleClassName]}`}>
       {/* please render the below children if the input has value */}
@@ -23,8 +26,10 @@ function Search({
         type="text"
         name={name}
         placeholder={placeholder}
+        value={inputValue}
+        setInputValue={setInputValue}
       />
-      <Button variant="link" text={<FontAwesomeIcon icon={faTimes} className={`${style['clear-icon']}`} />} />
+      <Button variant="link" text={<FontAwesomeIcon icon={faTimes} className={`${style['clear-icon']}`} />} onClick={() => setInputValue('')} />
       <Button
         variant="link"
         type="submit"

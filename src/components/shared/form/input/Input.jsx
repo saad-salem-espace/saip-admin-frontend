@@ -7,6 +7,8 @@ function Input({
   type,
   name,
   placeholder,
+  value,
+  setInputValue,
 }) {
   return (
     <div className="position-relative h-100">
@@ -21,6 +23,8 @@ function Input({
                 placeholder={placeholder}
                   // please add class ${style['has-value']} if the input has value
                 className={`border h-100 ${isInvalid ? 'error' : ''} w-100 ${style.input} `}
+                onChange={(e) => setInputValue(e.target.value)}
+                value={value}
               />
             );
           }

@@ -15,16 +15,18 @@ function PatentsSearch() {
   const { t } = useTranslation('search');
   const [selectedWorkStream, setSelectedWorkStream] = useState(1);
   const [searchOptions, setSearchOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     async function fetchWorkstreamIdentifiers() {
       const response = await getWorkstreamIdentifiers(selectedWorkStream);
       setSearchOptions(response.data);
+
+      if (response.data.length) setSelectedOption(response.data[0]);
+      else setSelectedOption(null);
     }
     fetchWorkstreamIdentifiers();
   }, [selectedWorkStream]);
-
-  console.log(searchOptions);
 
   const onChangeWorkstream = (newState) => {
     setSelectedWorkStream(newState);
@@ -74,7 +76,13 @@ function PatentsSearch() {
                   <div className="d-md-flex align-items-stretch">
                     <div className="position-relative mb-md-0 mb-3">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
-                      <Select options={searchOptions} className={`${style.select} lg-select select-with-sibling`} />
+                      <Select
+                        options={searchOptions}
+                        className={`${style.select} lg-select select-with-sibling`}
+                        optionName={(option) => option.identiferName}
+                        selectedOption={selectedOption}
+                        setSelectedOption={setSelectedOption}
+                      />
                     </div>
                     <Search
                       id="search"

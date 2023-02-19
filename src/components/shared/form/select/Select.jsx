@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactSelect from 'react-select';
 import './style.scss';
@@ -8,16 +7,20 @@ function Select({
   className,
   options,
   placeholder,
+  optionName,
+  selectedOption,
+  setSelectedOption,
 }) {
-  const [selectedOption, setSelectedOption] = useState(null);
   return (
     <div className={className}>
       <ReactSelect
-        defaultValue={selectedOption}
+        defaultValue={null}
         onChange={setSelectedOption}
         options={options}
         styles={selectStyle}
+        getOptionLabel={optionName}
         placeholder={placeholder}
+        value={selectedOption}
       />
     </div>
   );

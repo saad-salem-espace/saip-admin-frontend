@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default function axiosFn(method, url, data = [], headers = '') {
+export default function axiosFn(method, url, data = [], headers = {}) {
   return axios({
     method,
     url: `http://localhost:8090/${url}`,
