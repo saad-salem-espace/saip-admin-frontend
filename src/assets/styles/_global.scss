@@ -1,5 +1,6 @@
 $fontSize: (
   8,
+  12,
   14,
   17,
   20,
@@ -16,4 +17,8 @@ $fontSize: (
 
 .sm-text {
   font-size: $font-size-sm;
+}
+
+.hr {
+  border: $border-width solid $gray;
 }

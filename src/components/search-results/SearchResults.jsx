@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -10,9 +11,15 @@ import Search from '../shared/form/search/Search';
 import ToggleButton from '../shared/toggle-button/ToggleButton';
 import IprDetails from '../ipr-details/IprDetails';
 // import formStyle from '../shared/form/form.module.scss';
+import style from './style.module.scss';
 
 function SearchResults() {
   const { t } = useTranslation('search');
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const collapseIPR = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   const results = [
     {
@@ -36,6 +43,7 @@ function SearchResults() {
       abstract: 'I claim: 1. A railroad freight car truck having a load rating, said truck comprising: a bolster, sideframes, spring groups and wheelsets; said bolster being mounted cross-wise to said...',
     },
   ];
+
   const options = [
     {
       key: '1',
@@ -46,10 +54,6 @@ function SearchResults() {
       value: 'Int. Classification(IPC)',
     },
   ];
-
-  const onChangeSelect = () => {
-
-  };
 
   const onSubmit = () => {
 
@@ -66,13 +70,15 @@ function SearchResults() {
     },
   ];
 
-  const onSelectWorkStream = () => {
-
-  };
-
   const handleToggleButton = () => {
 
   };
+
+  const SearchModuleClassName = ({
+    smSearch: true,
+    searchWithSibling: true,
+  });
+
   return (
     <Container fluid className="px-0">
       <Row className="mx-0">
@@ -80,26 +86,38 @@ function SearchResults() {
           <Formik>
             {() => (
               <Form className="mt-8">
-                <div className="d-flex align-items-stretch">
-                  <div className="d-flex mt-3">
-                    <h4 className="mb-0">Search</h4>
-                    <Select options={WorkStreamsOptions} onChangeSelect={onSelectWorkStream} id="workStreams" fieldName="workStreams" moduleClassName="custom-select" className="me-5 ms-3" />
+                <div className="d-lg-flex align-items-start">
+                  <div className="d-flex mb-lg-0 mb-3">
+                    <h4 className="mb-0 mt-4">Search</h4>
+                    <Select options={WorkStreamsOptions} moduleClassName="menu" className={`${style.workStreams} me-5 ms-3 mt-1 customSelect`} />
                   </div>
                   <div className="flex-grow-1">
-                    <div className="d-flex mb-3">
-                      <div className="position-relative">
-                        <Select options={options} onChangeSelect={onChangeSelect} id="searchFields" fieldName="searchFields" moduleClassName="sm-select" />
+                    <div className="d-md-flex mb-3">
+                      <div className="position-relative mb-md-0 mb-3">
+                        <Select options={options} className={`${style.select} select selectWithSibling smSelect`} />
                       </div>
-                      <Search id="search" className="flex-grow-1" moduleClassName="sm-search" placeholder={t('typeSearchTerms')} onSubmit={onSubmit} />
+                      <Search
+                        id="search"
+                        className="flex-grow-1"
+                        moduleClassName={SearchModuleClassName}
+                        placeholder={t('typeSearchTerms')}
+                        onSubmit={onSubmit}
+                      />
                     </div>
-                    <ToggleButton handleToggleButton={handleToggleButton} isToggleButtonOn={false} text={t('allowSynonyms')} />
+                    <ToggleButton
+                      handleToggleButton={handleToggleButton}
+                      isToggleButtonOn={false}
+                      text={t('allowSynonyms')}
+                    />
                   </div>
                 </div>
               </Form>
             )}
           </Formik>
         </Col>
-        <Col lg={4} md={6} className="mx-12">
+      </Row>
+      <Row className="border-top mx-0 align-items-stretch mb-10">
+        <Col lg={8} md={6} className={`ps-lg-ps-md-8 22 mt-8 ${isExpanded ? 'd-none' : 'd-block'}`}>
           <SearchNote searchKeywords="Title: “car” AND Publication date: “11/11/2020 AND IPC: ”A61K”" resultsCount={50} />
           <Formik>
             {() => (
@@ -113,7 +131,9 @@ function SearchResults() {
             )}
           </Formik>
         </Col>
-        <IprDetails />
+        <Col lg={isExpanded ? 12 : 4} md={isExpanded ? 0 : 6} className="px-0 border-start">
+          <IprDetails collapseIPR={collapseIPR} isExpanded={isExpanded} />
+        </Col>
       </Row>
     </Container>
   );

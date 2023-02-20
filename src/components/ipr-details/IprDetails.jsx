@@ -1,15 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
-import { faTimes, faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
-import Col from 'react-bootstrap/Col';
+import { faTimes, faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter } from '@fortawesome/free-solid-svg-icons';
+// import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
 import style from './ipr-details.module.scss';
 import Button from '../shared/button/Button';
 import Select from '../shared/form/select/Select';
 import formStyle from '../shared/form/form.module.scss';
+import Carousel from './carousel/Carousel';
 
-function IprDetails() {
+// eslint-disable-next-line react/prop-types
+function IprDetails({ collapseIPR, isExpanded }) {
   const { t } = useTranslation('search');
 
   const onChangeSelect = () => {
@@ -17,14 +19,15 @@ function IprDetails() {
   };
   const sectionsOptions = [
     {
-      key: '1',
+      label: '1',
       value: 'any field',
     },
     {
-      key: '2',
+      label: '2',
       value: 'bio',
     },
   ];
+
   const ipr = {
     publicationNumber: 'US10745034B2',
     owner: ' James W. Forbes National Steel Car Limited',
@@ -38,7 +41,7 @@ function IprDetails() {
     publishedAs: 'published As',
   };
   return (
-    <Col lg={4} md={6}>
+    <div>
       <div className="border-bottom bg-primary-01">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
           <div className="d-flex">
@@ -48,7 +51,12 @@ function IprDetails() {
             </h5>
           </div>
           <div>
-            <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} className={`f-17 text-gray ${style['expand-icon']}`} />
+            <Button
+              variant="link"
+              onClick={collapseIPR}
+              className="p-0"
+              text={<FontAwesomeIcon icon={isExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`d-md-inline-block d-none f-17 text-gray ${style['expand-icon']}`} />}
+            />
             <Button
               variant="link"
               // onClick={}
@@ -61,68 +69,71 @@ function IprDetails() {
           {ipr.owner}
         </p>
       </div>
-      <Formik>
-        {() => (
-          <Form>
-            <div className="position-relative">
-              <span className={`position-absolute ${formStyle.label}`}>{t('viewSection')}</span>
-              <Select
-                options={sectionsOptions}
-                onChangeSelect={onChangeSelect}
-                id="viewSection"
-                fieldName="viewSection"
-                moduleClassName="lg-select"
-                className="mb-5"
-              />
-            </div>
-          </Form>
-        )}
-      </Formik>
-      <h6>{t('register')}</h6>
-      <div className="d-flex">
-        <p>{t('applicants')}</p>
-        <p>
-          {ipr.applicants}
-        </p>
-      </div>
-      <div className="d-flex">
-        <p>{t('inventors')}</p>
-        <p>
-          {ipr.inventors}
-        </p>
-      </div>
-      <div>
-        <p>{t('classifications')}</p>
+      <div className="px-6 pt-4">
+        <Formik>
+          {() => (
+            <Form>
+              <div className="position-relative">
+                <span className={`position-absolute f-12 ${formStyle.label}`}>{t('viewSection')}</span>
+                <Select
+                  options={sectionsOptions}
+                  onChangeSelect={onChangeSelect}
+                  id="viewSection"
+                  fieldName="viewSection"
+                  className={`${style.select} mb-5 select-2`}
+                />
+              </div>
+            </Form>
+          )}
+        </Formik>
+        <h6 className="mt-8 mb-4">{t('register')}</h6>
         <div className="d-flex">
-          <p>{t('ipc')}</p>
-          <p>
-            {ipr.ipc}
+          <p className={`text-primary f-14 ${style.label}`}>{t('applicants')}</p>
+          <p className="f-12">
+            {ipr.applicants}
           </p>
         </div>
+        <div className="d-flex mb-4">
+          <p className={`text-primary f-14 ${style.label}`}>{t('inventors')}</p>
+          <p className="f-12">
+            {ipr.inventors}
+          </p>
+        </div>
+        <div>
+          <p className="text-primary f-14">{t('classifications')}</p>
+          <div className="d-flex f-12 mb-5">
+            <p className={`${style.label}`}>{t('ipc')}</p>
+            <p>
+              {ipr.ipc}
+            </p>
+          </div>
+        </div>
+        <div className="d-flex f-12 mb-5">
+          <p className={`${style.label}`}>{t('cpc')}</p>
+          <p>
+            {ipr.cpc}
+          </p>
+        </div>
+        <div className="d-flex">
+          <p className={`text-primary f-14 ${style.label}`}>{t('priorities')}</p>
+          <p className="f-12">{ipr.priorities}</p>
+        </div>
+        <div className="d-flex">
+          <p className={`text-primary f-14 ${style.label}`}>{t('application')}</p>
+          <p className="f-12">{ipr.application}</p>
+        </div>
+        <div className="d-flex">
+          <p className={`text-primary f-14 ${style.label}`}>{t('publication')}</p>
+          <p className="f-12">{ipr.publication}</p>
+        </div>
+        <div className="d-flex">
+          <p className={`text-primary f-14 ${style.label}`}>{t('publishedAs')}</p>
+          <p className="f-12">{ipr.publishedAs}</p>
+        </div>
+        <p className="text-primary f-14">{t('images')}</p>
+        <Carousel />
       </div>
-      <div className="d-flex">
-        <p>{t('cpc')}</p>
-        <p>
-          {ipr.cpc}
-        </p>
-      </div>
-      <div className="d-flex">
-        <p>{t('priorities')}</p>
-        <p>{ipr.priorities}</p>
-      </div>
-      <div className="d-flex">
-        <p>{t('application')}</p>
-        <p>{ipr.application}</p>
-      </div>
-      <div className="d-flex">
-        <p>{t('publication')}</p>
-        <p>{ipr.publication}</p>
-      </div>
-      <div className="d-flex">
-        <p>{t('publishedAs')}</p>
-        <p>{ipr.publishedAs}</p>
-      </div>
-    </Col>
+    </div>
   );
 }
 

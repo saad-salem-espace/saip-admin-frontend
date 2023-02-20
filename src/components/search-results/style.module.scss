@@ -1,0 +1,14 @@
+@import "../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.select {
+  width: 100%;
+
+  @include media-breakpoint-up(md) {
+    width: 200px;
+  }
+}
+
+.workStreams {
+  width: 140px;
+}
