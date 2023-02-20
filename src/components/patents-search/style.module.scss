@@ -1,8 +1,15 @@
 @import "../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
 
 .header {
   background-image: url(../../assets/images/search-header-bg.svg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom left;
+}
+
+.select {
+  @include media-breakpoint-up(md) {
+    width: 200px;
+  }
 }

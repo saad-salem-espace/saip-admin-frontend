@@ -63,7 +63,8 @@
     "jsx-a11y/control-has-associated-label": "error",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react-perf/jsx-no-new-object-as-prop": "off",
-    "react-perf/jsx-no-new-function-as-prop": "off"
+    "react-perf/jsx-no-new-function-as-prop": "off",
+    "react/prop-types": "off"
   },
   "overrides": [
     {

@@ -1,47 +1,41 @@
-import React from 'react';
-import { Field } from 'formik';
 import PropTypes from 'prop-types';
-import style from './style.module.scss';
+import ReactSelect from 'react-select';
+import './style.scss';
+import selectStyle from './SelectStyle';
 
 function Select({
-  id,
-  fieldName,
   className,
   options,
-  onChangeSelect,
-  moduleClassName,
+  placeholder,
+  optionName,
+  optionValue,
+  selectedOption,
+  setSelectedOption,
 }) {
   return (
     <div className={className}>
-      <Field id={id} as="select" name={fieldName} onChange={onChangeSelect} className={`${style[moduleClassName]} ${style.select} border border-end-0`}>
-        {options.map(({ key, value }) => (
-          <option
-            key={`${fieldName}-${key}-${value}`}
-            value={key}
-            className="f-14"
-          >
-            {value}
-          </option>
-        ))}
-      </Field>
+      <ReactSelect
+        defaultValue={null}
+        onChange={setSelectedOption}
+        options={options}
+        styles={selectStyle}
+        getOptionLabel={optionName}
+        getOptionValue={optionValue}
+        placeholder={placeholder}
+        value={selectedOption}
+      />
     </div>
   );
 }
 
 Select.propTypes = {
-  moduleClassName: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  fieldName: PropTypes.string,
   className: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string,
-    value: PropTypes.string,
   })).isRequired,
-  onChangeSelect: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
 };
 Select.defaultProps = {
-  moduleClassName: '',
-  fieldName: null,
   className: null,
+  placeholder: '',
 };
 export default Select;

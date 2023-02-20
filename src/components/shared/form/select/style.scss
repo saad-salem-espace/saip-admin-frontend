@@ -1,0 +1,120 @@
+@import "../../../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.css-1xc3v61-indicatorContainer,
+.css-15lsz6c-indicatorContainer,
+.css-1hb7zxy-IndicatorsContainer {
+  background-color: $gray-200;
+  border-radius: 0 4px 4px 0;
+
+  svg {
+    color: $gray;
+  }
+}
+
+.css-1u9des2-indicatorSeparator {
+  display: none;
+}
+
+.css-1dimb5e-singleValue {
+  position: absolute;
+  bottom: 17px;
+  left: 4px;
+}
+
+.css-1fdsijx-ValueContainer {
+  height: 85px;
+}
+
+.selectWithSibling {
+  @include media-breakpoint-up(md) {
+    .css-1xpjqq2-Control {
+      border-right: 0;
+      border-radius: 0;
+    }
+
+    .css-1hb7zxy-IndicatorsContainer {
+      border-radius: 0;
+    }
+  }
+}
+
+.css-4nklfm-option,.css-2jkpo2-option {
+  color: $white !important;
+  background-color: $primary !important;
+}
+
+.smSelect {
+  .css-1fdsijx-ValueContainer {
+    height: 57px;
+  }
+}
+
+.lgSelect {
+  input {
+    margin-top: 30px !important;
+    margin-left: 5px !important;
+  }
+}
+
+.customSelect {
+  .css-1fdsijx-ValueContainer {
+    border-bottom: $border-width dashed $primary;
+    font-size: 24px;
+    font-family: $font-medium;
+
+    input {
+      color: $primary !important;
+    }
+  }
+
+ .css-15lsz6c-indicatorContainer {
+    background-color: transparent;
+  }
+
+  .css-1xpjqq2-Control {
+    border: none;
+  }
+
+  .css-1hb7zxy-IndicatorsContainer, .css-1xc3v61-indicatorContainer {
+    background-color: transparent;
+  }
+
+  .css-1fdsijx-ValueContainer {
+    height: auto;
+  }
+
+}
+
+.select-2 {
+  .css-1xpjqq2-Control {
+    border: none;
+    border-bottom: $border-width solid $gray-400;
+    border-radius: 0;
+  }
+
+  .css-1hb7zxy-IndicatorsContainer,
+  .css-1xc3v61-indicatorContainer {
+    background-color: transparent;
+  }
+
+  .css-1dimb5e-singleValue {
+    margin: 0 7px;
+  }
+
+  input {
+    margin: 33px 8px !important;
+  }
+
+  .css-1fdsijx-ValueContainer {
+    height: 72px;
+  }
+
+  .css-1dimb5e-singleValue {
+    bottom: 37px;
+  }
+
+  .css-15lsz6c-indicatorContainer {
+    background-color: transparent;
+  }
+}
