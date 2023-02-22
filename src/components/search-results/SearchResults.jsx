@@ -12,10 +12,13 @@ import ToggleButton from '../shared/toggle-button/ToggleButton';
 import IprDetails from '../ipr-details/IprDetails';
 // import formStyle from '../shared/form/form.module.scss';
 import style from './style.module.scss';
+import AdvancedSearch from '../advanced-search/AdvancedSearch';
 
 function SearchResults() {
   const { t } = useTranslation('search');
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
+  const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
 
   const collapseIPR = () => {
     setIsExpanded(!isExpanded);
@@ -70,14 +73,21 @@ function SearchResults() {
     },
   ];
 
-  const handleToggleButton = () => {
+  const handleAdvancedSearch = () => {
+    setIsAdvancedSearch(true);
+  };
 
+  const handleToggleButton = () => {
   };
 
   const SearchModuleClassName = ({
     smSearch: true,
-    searchWithSibling: true,
+    searchWithSibling: !isAdvancedSearch,
   });
+
+  const toggleAdvancedSearchMenu = () => {
+    setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
+  };
 
   return (
     <Container fluid className="px-0">
@@ -92,10 +102,17 @@ function SearchResults() {
                     <Select options={WorkStreamsOptions} moduleClassName="menu" className={`${style.workStreams} me-5 ms-3 mt-1 customSelect`} />
                   </div>
                   <div className="flex-grow-1">
-                    <div className="d-md-flex mb-3">
-                      <div className="position-relative mb-md-0 mb-3">
-                        <Select options={options} className={`${style.select} select selectWithSibling smSelect`} />
-                      </div>
+                    <div className="d-md-flex mb-4">
+                      {
+                        !isAdvancedSearch && (
+                          <div className="position-relative mb-md-0 mb-3">
+                            <Select
+                              options={options}
+                              className={`${style.select} select selectWithSibling smSelect`}
+                            />
+                          </div>
+                        )
+                      }
                       <Search
                         id="search"
                         className="flex-grow-1"
@@ -104,11 +121,19 @@ function SearchResults() {
                         onSubmit={onSubmit}
                       />
                     </div>
-                    <ToggleButton
-                      handleToggleButton={handleToggleButton}
-                      isToggleButtonOn={false}
-                      text={t('allowSynonyms')}
-                    />
+                    <div className="d-flex">
+                      <ToggleButton
+                        handleToggleButton={handleAdvancedSearch}
+                        isToggleButtonOn={false}
+                        text={t('advancedSearch')}
+                        className="border-end pe-4 me-4"
+                      />
+                      <ToggleButton
+                        handleToggleButton={handleToggleButton}
+                        isToggleButtonOn={false}
+                        text={t('allowSynonyms')}
+                      />
+                    </div>
                   </div>
                 </div>
               </Form>
@@ -117,7 +142,17 @@ function SearchResults() {
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch mb-10">
-        <Col lg={8} md={6} className={`ps-lg-ps-md-8 22 mt-8 ${isExpanded ? 'd-none' : 'd-block'}`}>
+        {
+          isAdvancedSearch && (
+            <Col lg={isAdvancedMenuOpen ? 4 : 1} className={`${isExpanded ? 'd-none' : 'd-block'} ${isAdvancedMenuOpen ? style.expanded : style.closed} ps-0`}>
+              <AdvancedSearch
+                toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
+                isAdvancedMenuOpen={isAdvancedMenuOpen}
+              />
+            </Col>
+          )
+        }
+        <Col lg={isAdvancedSearch ? 4 : 8} md={6} className={`mt-8 ${isExpanded ? 'd-none' : 'd-block'}`}>
           <SearchNote searchKeywords="Title: “car” AND Publication date: “11/11/2020 AND IPC: ”A61K”" resultsCount={50} />
           <Formik>
             {() => (
@@ -131,7 +166,7 @@ function SearchResults() {
             )}
           </Formik>
         </Col>
-        <Col lg={isExpanded ? 12 : 4} md={isExpanded ? 0 : 6} className="px-0 border-start">
+        <Col lg={isExpanded && isAdvancedSearch ? 12 : 4} md={isExpanded ? 0 : 6} className="px-0 border-start">
           <IprDetails collapseIPR={collapseIPR} isExpanded={isExpanded} />
         </Col>
       </Row>
