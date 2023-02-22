@@ -19,5 +19,13 @@
   "publication": "Publication",
   "publishedAs": "Published as",
   "viewSection": "View section",
-  "images": "Images"
+  "images": "Images",
+  "advancedSearch": "Advanced Search",
+  "searchQuery": "Search query",
+  "filters": "Filters",
+  "addSearchField": "Add Search Field",
+  "clear": "Clear",
+  "apply": "Apply",
+  "condition": "Condition",
+  "criteria": "Criteria"
 }

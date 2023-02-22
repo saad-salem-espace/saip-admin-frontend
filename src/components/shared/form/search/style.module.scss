@@ -1,15 +1,15 @@
 @import '../../../../assets/styles/utilities/custom-theme';
 @import "~bootstrap/scss/mixins";
 
-.searchIcon {
+button.searchIcon {
   right: 0;
   position: absolute;
   top: 0;
   padding: 26px 24px;
-  background-color: $primary;
   font-size: 21px;
   color: $white;
   border-radius: 0 4px 4px 0;
+  background-color: $primary;
 
   &:hover, &:active, &:focus {
     background-color: $primary !important;
@@ -25,6 +25,7 @@
   font-size: 20px;
 }
 
+////smSearch
 .smSearch{
   input {
     height: 59px !important;
@@ -39,11 +40,14 @@
   }
 }
 
+//// lgSearch
 .lgSearch {
   height: 87px !important;
 }
 
+//// searchWithSibling
 .searchWithSibling input {
+  border-radius: 0 $border-radius $border-radius 0 ;
   @include media-breakpoint-up(md) {
     border-left: 0 !important;
   }
