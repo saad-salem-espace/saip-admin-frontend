@@ -1,0 +1,21 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.searchFields{
+  width: calc(60% - 20px);
+}
+
+.condition {
+  width: 40%;
+}
+
+.criteria {
+  width: calc(100% - 36px);
+}
+
+.wrapper {
+  border-radius: $border-radius-lg;
+}
+
+.roundedTop0 {
+  border-radius: 0 0 $border-radius-lg $border-radius-lg;
+}
