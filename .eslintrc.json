@@ -63,6 +63,7 @@
     "jsx-a11y/control-has-associated-label": "error",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react-perf/jsx-no-new-object-as-prop": "off",
+    "react/jsx-props-no-spreading": "off",
     "react/function-component-definition": [
       2,
       {
@@ -88,5 +89,8 @@
         "jest": true
       }
     }
-  ]
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  }
 }
