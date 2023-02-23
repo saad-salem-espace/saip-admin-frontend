@@ -15,8 +15,8 @@ function SearchResultCard({ searchResult }) {
 
   return (
     <div className={`${style['result-card']} mb-7 position-relative px-1`}>
-      <div className="d-flex align-items-center mb-1">
-        <Checkbox />
+      <div className="d-flex align-items-start mb-1">
+        <Checkbox className="mt-1" />
         {/* please wrap the search keyword with <span className="font-bold"></span> */}
         <Button variant="link" className="text-start f-20 pe-0 py-0 text-primary-dark" text={BibliographicData.ApplicationTitle} />
       </div>

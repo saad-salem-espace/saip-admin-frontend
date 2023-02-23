@@ -10,9 +10,10 @@ function Checkbox({
   name,
   text,
   checked,
+  className,
 }) {
   return (
-    <div>
+    <div className={className}>
       <label
         htmlFor={fieldFor}
       >
@@ -39,12 +40,14 @@ Checkbox.propTypes = {
   fieldFor: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   checked: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 Checkbox.defaultProps = {
   text: null,
   disabled: false,
   checked: undefined,
+  className: '',
 };
 
 export default Checkbox;
