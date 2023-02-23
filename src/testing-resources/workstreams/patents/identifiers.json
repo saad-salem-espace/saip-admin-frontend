@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "identiferName": "Full-text",
+    "identiferStrId": "ftxt"
+  },
+  {
+    "id": 2,
+    "identiferName": "Abstract",
+    "identiferStrId": "ab"
+  },
+  {
+    "id": 3,
+    "identiferName": "Title",
+    "identiferStrId": "ti"
+  },
+  {
+    "id": 4,
+    "identiferName": "Publication Number",
+    "identiferStrId": "pn"
+  },
+  {
+    "id": 5,
+    "identiferName": "Filing Number",
+    "identiferStrId": "fn"
+  },
+  {
+    "id": 6,
+    "identiferName": "IPC",
+    "identiferStrId": "ipc"
+  },
+  {
+    "id": 7,
+    "identiferName": "Applicant Name",
+    "identiferStrId": "an"
+  },
+  {
+    "id": 8,
+    "identiferName": "Publication Date",
+    "identiferStrId": "pd"
+  },
+  {
+    "id": 9,
+    "identiferName": "Numbers",
+    "identiferStrId": "nums"
+  },
+  {
+    "id": 10,
+    "identiferName": "Names",
+    "identiferStrId": "names"
+  },
+  {
+    "id": 11,
+    "identiferName": "Dates",
+    "identiferStrId": "dates"
+  },
+  {
+    "id": 12,
+    "identiferName": "Classifications",
+    "identiferStrId": "clsf"
+  }
+]
