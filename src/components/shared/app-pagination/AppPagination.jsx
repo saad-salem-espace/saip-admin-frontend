@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import apiInstance from 'apis/apiInstance';
 import Pagination from 'react-responsive-pagination';
+import './PaginationStyle.scss';
 
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, RenderedProps, axiosInstance,
