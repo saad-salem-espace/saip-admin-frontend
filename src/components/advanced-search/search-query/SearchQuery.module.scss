@@ -8,12 +8,17 @@
   width: 40%;
 }
 
-.criteria {
+.criteria, .dateWrapper {
   width: calc(100% - 36px);
 }
 
 .wrapper {
   border-radius: $border-radius-lg;
+
+  &:first-of-type {
+    border-radius: 0 0 $border-radius-lg $border-radius-lg;
+
+  }
 }
 
 .roundedTop0 {

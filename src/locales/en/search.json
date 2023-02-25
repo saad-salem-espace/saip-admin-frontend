@@ -27,5 +27,8 @@
   "clear": "Clear",
   "apply": "Apply",
   "condition": "Condition",
-  "criteria": "Criteria"
+  "criteria": "Criteria",
+  "and": "AND",
+  "or": "OR",
+  "not": "NOT"
 }

@@ -7,6 +7,7 @@ import Select from '../../../shared/form/select/Select';
 import style from '../SearchQuery.module.scss';
 import Button from '../../../shared/button/Button';
 import Input from '../../../shared/form/input/Input';
+// import DatePicker from '../../../shared/date-picker/AppDatePicker';
 
 function SearchField() {
   const { t } = useTranslation('search');
@@ -32,7 +33,7 @@ function SearchField() {
     },
   ];
   return (
-    <div className={`p-4 bg-primary-01 mb-4 ${style.wrapper}`}>
+    <div className={`p-4 bg-primary-01 mb-2 ${style.wrapper}`}>
       <div className="d-flex mb-4">
         <div className={`position-relative mb-md-0 mb-3 me-2 ${style.searchFields}`}>
           <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>{t('searchFields')}</span>
@@ -56,9 +57,17 @@ function SearchField() {
         />
       </div>
       <div className={`position-relative me-2 ${style.criteria}`}>
-        <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>{t('criteria')}</span>
+        <span className={`position-absolute ${formStyle.label}
+         ${formStyle.smLabel}`}
+        >
+          {t('criteria')}
+        </span>
         <Input moduleClassName="smInput" />
       </div>
+      {/* for datepicker */}
+      {/* <div className={style.dateWrapper}>
+        <DatePicker />
+      </div> */}
     </div>
   );
 }

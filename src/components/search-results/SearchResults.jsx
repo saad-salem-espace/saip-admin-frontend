@@ -121,12 +121,12 @@ function SearchResults() {
                         onSubmit={onSubmit}
                       />
                     </div>
-                    <div className="d-flex">
+                    <div className="d-md-flex">
                       <ToggleButton
                         handleToggleButton={handleAdvancedSearch}
                         isToggleButtonOn={false}
                         text={t('advancedSearch')}
-                        className="border-end pe-4 me-4"
+                        className="border-md-end pe-4 me-4 mb-md-0 mb-2"
                       />
                       <ToggleButton
                         handleToggleButton={handleToggleButton}

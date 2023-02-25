@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../shared/button/Button';
 import SearchField from './search-field/SearchField';
+import RadioButton from '../../shared/form/radio-button/RadioButton';
+import RadioButtonGroup from '../../shared/form/radio-button/RadioButtonGroup';
 
 function SearchQuery() {
   const { t } = useTranslation('search');
@@ -13,10 +15,15 @@ function SearchQuery() {
         {() => (
           <Form>
             <SearchField />
+            <RadioButtonGroup className="mb-2" moduleClassName="customRadio">
+              <RadioButton name="operator" value="and" checked>{t('and')}</RadioButton>
+              <RadioButton name="operator" value="or">{t('or')}</RadioButton>
+              <RadioButton name="operator" value="not">{t('not')}</RadioButton>
+            </RadioButtonGroup>
             <SearchField />
             <Button
               variant="outline-primary"
-              className="mb-9"
+              className="mb-9 mt-2"
               size="sm"
               text={<>
                 <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
