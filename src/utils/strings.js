@@ -6,9 +6,8 @@
  * is a useful one line method";
  * trimStringRelativeToSubtext(input, "there", 10, 10); //'There are lots of ways to...'
  * trimStringRelativeToSubtext(input, "method", 10, 10); //'...a useful one line method'
- * trimStringRelativeToSubtext(input, "method", 10, 10); //'...lots of ways to do it...'
- * trimStringRelativeToSubtext(input, "not found", 10, 10);
- * // 'There are lots of ways to do it, but a regular expression is a useful one line method'
+ * trimStringRelativeToSubtext(input, "ways", 10, 10); //'...lots of ways to do it...'
+ * trimStringRelativeToSubtext(input, "not found", 10, 10); // 'There are lots of ways...'
  *
  * @param {string} text - full text input
  * @param {string} subtext - the substring text to trim around
@@ -22,7 +21,9 @@ const trimStringRelativeToSubtext = (text, subtext, charsBefore = 100, charsAfte
   const wordRegex = new RegExp(spaceTrimmedSubtext, 'i');
   const wordPosition = text.match(wordRegex)?.index;
 
-  if (wordPosition == null) return text;
+  if (wordPosition == null) {
+    return trimStringRelativeToSubtext(text, text.substring(0, 3), charsBefore, charsAfter);
+  }
 
   // Checks the position of the trimmed string
   // If in the subtext in the beginning add the remaining chars to the end of string
