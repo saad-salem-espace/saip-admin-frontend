@@ -27,6 +27,12 @@ function PatentsSearch() {
   const onSubmit = () => {
 
   };
+
+  const SearchModuleClassName = ({
+    lgSearch: true,
+    searchWithSibling: true,
+  });
+
   return (
     <div>
       <div className={`${style.header}`}>
@@ -59,7 +65,7 @@ function PatentsSearch() {
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
                       <Select
                         options={searchOptions}
-                        className={`${style.select} lg-select select-with-sibling`}
+                        className={`${style.select} lgSelect selectWithSibling`}
                         optionName={(option) => option.identiferName}
                         selectedOption={selectedOption}
                         setSelectedOption={setSelectedOption}
@@ -69,7 +75,9 @@ function PatentsSearch() {
                     <Search
                       id="search"
                       className="flex-grow-1"
-                      moduleClassName="search-with-sibling lg-search"
+                      moduleClassName={
+                        SearchModuleClassName
+                      }
                       placeholder={t('typeSearchTerms')}
                       onSubmit={onSubmit}
                     >

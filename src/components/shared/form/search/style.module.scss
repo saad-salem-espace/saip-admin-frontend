@@ -1,43 +1,49 @@
 @import '../../../../assets/styles/utilities/custom-theme';
 @import "~bootstrap/scss/mixins";
 
-.search-icon {
+.searchIcon {
   right: 0;
   position: absolute;
   top: 0;
-  padding: 33px 24px;
+  padding: 26px 24px;
   background-color: $primary;
   font-size: 21px;
   color: $white;
   border-radius: 0 4px 4px 0;
+
+  &:hover, &:active, &:focus {
+    background-color: $primary !important;
+    color: $white !important;
+  }
 }
 
-.clear-icon {
+.clearIcon {
   color: $gray;
   position: absolute;
   right: 85px;
-  top: 36px;
+  top: 24px;
   font-size: 20px;
 }
 
-.sm-search {
+.smSearch{
   input {
-    height: 57px !important;
+    height: 59px !important;
   }
 
-  .clear-icon {
-    top: 24px;
+  .clearIcon {
+    top: 7px;
   }
 
-  .search-icon {
-    padding: 16px 24px;
+  .searchIcon {
+    padding: 12px 24px;
   }
 }
 
-.lg-search {
+.lgSearch {
   height: 87px !important;
 }
-.search-with-sibling input {
+
+.searchWithSibling input {
   @include media-breakpoint-up(md) {
     border-left: 0 !important;
   }

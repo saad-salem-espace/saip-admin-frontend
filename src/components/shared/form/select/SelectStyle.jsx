@@ -4,7 +4,7 @@ const SelectStyle = {
     color: '#888',
     fontSize: '14px',
     '&:hover': {
-      backgroundColor: '#F2F7F6',
+      backgroundColor: '#F8F8F8',
     },
     '&:active': {
       backgroundColor: '#F2F7F6',
@@ -13,7 +13,7 @@ const SelectStyle = {
   control: () => ({
     border: '1px solid #DDD',
     display: 'flex',
-    borderRadius: '4px',
+    borderRadius: '5px',
     backgroundColor: 'transparent',
     color: '#000',
   }),

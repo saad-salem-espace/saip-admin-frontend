@@ -16,13 +16,6 @@
   display: none;
 }
 
-.lg-select {
-  input {
-    margin-top: 30px !important;
-    margin-left: 5px !important;
-  }
-}
-
 .css-1dimb5e-singleValue {
   position: absolute;
   bottom: 17px;
@@ -33,9 +26,9 @@
   height: 85px;
 }
 
-.select-with-sibling {
+.selectWithSibling {
   @include media-breakpoint-up(md) {
-    .css-jvqvmn-Control {
+    .css-1xpjqq2-Control {
       border-right: 0;
       border-radius: 0;
     }
@@ -46,18 +39,40 @@
   }
 }
 
-//// sm select
-.sm-select {
+.css-4nklfm-option,.css-2jkpo2-option {
+  color: $white !important;
+  background-color: $primary !important;
+}
+
+.smSelect {
   .css-1fdsijx-ValueContainer {
     height: 57px;
   }
 }
 
-/////custom select
-.custom-select {
-  border-bottom: $border-width dashed $primary;
+.lgSelect {
+  input {
+    margin-top: 30px !important;
+    margin-left: 5px !important;
+  }
+}
 
-  .css-jvqvmn-Control {
+.customSelect {
+  .css-1fdsijx-ValueContainer {
+    border-bottom: $border-width dashed $primary;
+    font-size: 24px;
+    font-family: $font-medium;
+
+    input {
+      color: $primary !important;
+    }
+  }
+
+ .css-15lsz6c-indicatorContainer {
+    background-color: transparent;
+  }
+
+  .css-1xpjqq2-Control {
     border: none;
   }
 
@@ -68,4 +83,5 @@
   .css-1fdsijx-ValueContainer {
     height: auto;
   }
+
 }
