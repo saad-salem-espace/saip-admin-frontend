@@ -44,11 +44,17 @@ Input.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  setInputValue: PropTypes.func,
+  moduleClassName: PropTypes.string,
 };
 Input.defaultProps = {
   type: 'text',
   placeholder: null,
   name: null,
+  value: '',
+  setInputValue: () => {},
+  moduleClassName: '',
 };
 
 export default Input;

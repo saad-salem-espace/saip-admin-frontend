@@ -18,9 +18,11 @@ function RadioButtonGroup({
 RadioButtonGroup.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
+  moduleClassName: PropTypes.string,
 };
 
 RadioButtonGroup.defaultProps = {
   className: '',
+  moduleClassName: '',
 };
 export default RadioButtonGroup;

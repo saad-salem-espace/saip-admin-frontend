@@ -1,5 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import style from './style.module.scss';
 import { getWorkstreamList } from '../../api/workstreamApi';
 
@@ -67,5 +68,10 @@ function WorkStreams({ selectedWorkStream, onChange }) {
     </div>
   );
 }
+
+WorkStreams.propTypes = {
+  selectedWorkStream: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default WorkStreams;

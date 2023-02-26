@@ -33,9 +33,15 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
   })).isRequired,
   placeholder: PropTypes.string,
+  optionName: PropTypes.string.isRequired,
+  optionValue: PropTypes.string.isRequired,
+  selectedOption: PropTypes.string,
+  setSelectedOption: PropTypes.func,
 };
 Select.defaultProps = {
   className: null,
   placeholder: '',
+  selectedOption: '',
+  setSelectedOption: () => {},
 };
 export default Select;

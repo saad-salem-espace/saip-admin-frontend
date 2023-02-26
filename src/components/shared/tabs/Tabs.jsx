@@ -1,4 +1,5 @@
 import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 import tabsStyle from './tabs.module.scss';
 
 function Tabs({
@@ -37,5 +38,18 @@ function Tabs({
     </div>
   );
 }
+
+Tabs.propTypes = {
+  tabsItems: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+    title: PropTypes.string.isRequired,
+  })).isRequired,
+  activeKey: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+  handleActiveTab: PropTypes.func,
+};
+
+Tabs.defaultProps = {
+  handleActiveTab: () => {},
+};
 
 export default Tabs;

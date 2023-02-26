@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
-import SearchResultCard from './search-result-card/SearchResultCard';
+import { useSearchParams } from 'react-router-dom';
+import useWorkstreams from 'hooks/useWorkstreams';
 import SearchNote from './SearchNote';
+import AppPagination from '../shared/app-pagination/AppPagination';
+import SearchResultCards from './search-result-cards/SearchResultCards';
 import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import ToggleButton from '../shared/toggle-button/ToggleButton';
@@ -16,36 +19,25 @@ import AdvancedSearch from '../advanced-search/AdvancedSearch';
 
 function SearchResults() {
   const { t } = useTranslation('search');
+  const [searchParams] = useSearchParams();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
+  const [totalResults, setTotalResults] = useState(0);
+  const searchResultParams = {
+    workstreamId: searchParams.get('workstreamId'),
+    identifierStrId: searchParams.get('identifierStrId'),
+    queryString: searchParams.get('query'),
+  };
+
+  const { getIdentifierByStrId, isReady } = useWorkstreams(searchResultParams.workstreamId);
+  if (!isReady) return null;
+
+  const identifier = getIdentifierByStrId(searchParams.get('identifierStrId'));
 
   const collapseIPR = () => {
     setIsExpanded(!isExpanded);
   };
-
-  const results = [
-    {
-      id: 1,
-      title: 'Rail road car and truck therefor',
-      priority: '2001-1-02',
-      filingNumber: '20-30',
-      publicationNumber: 'US US10745034B2',
-      filingDate: '1',
-      publishedAt: '20-2-2022',
-      abstract: 'I claim: 1. A railroad freight car truck having a load rating, said truck comprising: a bolster, sideframes, spring groups and wheelsets; said bolster being mounted cross-wise to said...',
-    },
-    {
-      id: 2,
-      title: 'Rail road car and truck therefor',
-      priority: '2001-1-02',
-      filingNumber: '20-30',
-      publicationNumber: 'US US10745034B2',
-      filingDate: '1',
-      publishedAt: '20-2-2022',
-      abstract: 'I claim: 1. A railroad freight car truck having a load rating, said truck comprising: a bolster, sideframes, spring groups and wheelsets; said bolster being mounted cross-wise to said...',
-    },
-  ];
 
   const options = [
     {
@@ -153,15 +145,23 @@ function SearchResults() {
           )
         }
         <Col lg={isAdvancedSearch ? 4 : 8} md={6} className={`mt-8 ${isExpanded ? 'd-none' : 'd-block'}`}>
-          <SearchNote searchKeywords="Title: “car” AND Publication date: “11/11/2020 AND IPC: ”A61K”" resultsCount={50} />
+          <SearchNote
+            searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
+            resultsCount={totalResults}
+          />
           <Formik>
             {() => (
               <Form className="mt-8">
-                {
-                  results.map((searchResult) => (
-                    <SearchResultCard key={searchResult.id} searchResult={searchResult} />
-                  ))
-                }
+                <AppPagination
+                  axiosConfig={{
+                    url: 'search',
+                    params: searchResultParams,
+                  }}
+                  defaultPage={Number(searchParams.get('page') || '1')}
+                  RenderedComponent={SearchResultCards}
+                  renderedProps={{ query: searchResultParams.queryString }}
+                  fetchedTotalResults={setTotalResults}
+                />
               </Form>
             )}
           </Formik>
