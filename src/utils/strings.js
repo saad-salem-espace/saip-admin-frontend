@@ -6,7 +6,7 @@
  * is a useful one line method";
  * trimStringRelativeToSubtext(input, "there", 10, 10); //'There are lots of ways to...'
  * trimStringRelativeToSubtext(input, "method", 10, 10); //'...a useful one line method'
- * trimStringRelativeToSubtext(input, "method", 10, 10); //'...lots of ways to do it...'
+ * trimStringRelativeToSubtext(input, "ways", 10, 10); //'...lots of ways to do it...'
  * trimStringRelativeToSubtext(input, "not found", 10, 10); // 'There are lots of ways...'
  *
  * @param {string} text - full text input
