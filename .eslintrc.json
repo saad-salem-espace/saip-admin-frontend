@@ -64,7 +64,8 @@
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react-perf/jsx-no-new-object-as-prop": "off",
     "react-perf/jsx-no-new-function-as-prop": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react-perf/jsx-no-new-array-as-prop": "off"
   },
   "overrides": [
     {

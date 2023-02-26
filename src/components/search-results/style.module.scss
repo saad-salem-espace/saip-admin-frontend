@@ -12,3 +12,9 @@
 .workStreams {
   width: 140px;
 }
+
+@include media-breakpoint-down(lg) {
+  .closed{
+    height: 60px;
+  }
+}

@@ -3,9 +3,11 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import ToggleButtonStyle from './ToggleButton.module.scss';
 
-function ToggleButton({ handleToggleButton, isToggleButtonOn, text }) {
+function ToggleButton({
+  handleToggleButton, isToggleButtonOn, text, className,
+}) {
   return (
-    <div>
+    <div className={className}>
       <Button
         onClick={handleToggleButton}
         className={`${ToggleButtonStyle['toggle-btn-container']} ${isToggleButtonOn ? ToggleButtonStyle.on : ToggleButtonStyle.off} p-0`}
@@ -21,6 +23,11 @@ ToggleButton.propTypes = {
   handleToggleButton: PropTypes.func.isRequired,
   isToggleButtonOn: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
+
+ToggleButton.defaultProps = {
+  className: '',
 };
 
 export default ToggleButton;

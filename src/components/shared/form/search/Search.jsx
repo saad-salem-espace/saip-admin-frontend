@@ -34,7 +34,6 @@ function Search({
       />
       <Button className={`${style.clearIcon} text-gray`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={() => setInputValue('')} />
       <Button
-        variant="link"
         type="submit"
         onClick={onSubmit}
         className={`${style.searchIcon}`}
