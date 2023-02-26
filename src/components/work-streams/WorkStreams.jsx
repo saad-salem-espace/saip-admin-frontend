@@ -7,8 +7,8 @@ import { getWorkstreamList } from '../../api/workstreamApi';
 function WorkStreams({ selectedWorkStream, onChange }) {
   const [workstreams, setWorkstreams] = useState([]);
 
-  useEffect(async () => {
-    await getWorkstreamList().then((res) => {
+  useEffect(() => {
+    getWorkstreamList().then((res) => {
       setWorkstreams(res.data);
     });
   }, []);
