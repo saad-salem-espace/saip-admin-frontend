@@ -1,22 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import logo from './logo.svg';
-import './App.css';
+import './assets/styles/App.scss';
+// import PatentsSearch from './components/patents-search/PatentsSearch';
+import SearchResults from './components/search-results/SearchResults';
 
 function App() {
-  const { t } = useTranslation();
   return (
     <div className="app">
-      <header className="app-header">
-        <img src={logo} className="app-logo" alt="logo" />
-        <a
-          className="app-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {t('learnReact')}
-        </a>
-      </header>
+      <SearchResults />
+      {/* <PatentsSearch /> */}
     </div>
   );
 }
