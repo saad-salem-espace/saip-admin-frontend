@@ -1,54 +1,21 @@
 import Button from 'react-bootstrap/Button';
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import CacheContext from 'contexts/CacheContext';
+import useCacheRequest from '../../hooks/useCacheRequest';
 import style from './style.module.scss';
-import { getWorkstreamList } from '../../api/workstreamApi';
 
 function WorkStreams({ selectedWorkStream, onChange }) {
-  const [workstreams, setWorkstreams] = useState([]);
-
-  useEffect(async () => {
-    await getWorkstreamList().then((res) => {
-      setWorkstreams(res.data);
-    });
-  }, []);
+  const { cachedRequests } = useContext(CacheContext);
+  const [workstreams] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
 
   const handleChange = (workstreamId) => {
     onChange(workstreamId);
   };
 
-  // const workStreams = [
-  //   {
-  //     id: 1,
-  //     icon: 'patents',
-  //     text: 'Patents',
-  //   },
-  //   {
-  //     id: 2,
-  //     icon: 'trademark',
-  //     text: 'Trademark',
-  //   },
-  //   {
-  //     id: 3,
-  //     icon: 'copyrights',
-  //     text: 'Copyright',
-  //   },
-  //   {
-  //     id: 4,
-  //     icon: 'industrial-design',
-  //     text: 'Industrial designs',
-  //   },
-  //   {
-  //     id: 5,
-  //     icon: 'plant-varieties',
-  //     text: 'Plant varieties',
-  //   },
-  //   {
-  //     id: 6,
-  //     icon: 'layout',
-  //     text: 'IC Layout',
-  //   },
-  // ];
-
+  useEffect(() => {
+    handleChange(workstreams?.[0].id);
+  }, [workstreams]);
+  if (!workstreams) return null;
   return (
     <div className="text-center">
       {

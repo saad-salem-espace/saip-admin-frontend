@@ -2,111 +2,42 @@ import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { useTranslation } from 'react-i18next';
-import SearchResultCard from './search-result-card/SearchResultCard';
+import { useSearchParams } from 'react-router-dom';
+import useWorkstreams from 'hooks/useWorkstreams';
 import SearchNote from './SearchNote';
-import Select from '../shared/form/select/Select';
-import Search from '../shared/form/search/Search';
-import ToggleButton from '../shared/toggle-button/ToggleButton';
-import style from './style.module.scss';
+import AppPagination from '../shared/app-pagination/AppPagination';
+import SearchResultCards from './search-result-cards/SearchResultCards';
 
 function SearchResults() {
-  const { t } = useTranslation('search');
-
-  const results = [
-    {
-      id: 1,
-      title: 'Rail road car and truck therefor',
-      priority: '2001-1-02',
-      filingNumber: '20-30',
-      publicationNumber: 'US US10745034B2',
-      filingDate: '1',
-      publishedAt: '20-2-2022',
-      abstract: 'I claim: 1. A railroad freight car truck having a load rating, said truck comprising: a bolster, sideframes, spring groups and wheelsets; said bolster being mounted cross-wise to said...',
-    },
-    {
-      id: 2,
-      title: 'Rail road car and truck therefor',
-      priority: '2001-1-02',
-      filingNumber: '20-30',
-      publicationNumber: 'US US10745034B2',
-      filingDate: '1',
-      publishedAt: '20-2-2022',
-      abstract: 'I claim: 1. A railroad freight car truck having a load rating, said truck comprising: a bolster, sideframes, spring groups and wheelsets; said bolster being mounted cross-wise to said...',
-    },
-  ];
-
-  const options = [
-    {
-      key: '1',
-      value: 'any field',
-    },
-    {
-      key: '2',
-      value: 'Int. Classification(IPC)',
-    },
-  ];
-
-  const onSubmit = () => {
-
+  const [searchParams] = useSearchParams();
+  const searchResultParams = {
+    workstreamId: searchParams.get('workstreamId'),
+    identifierStrId: searchParams.get('identifierStrId'),
+    queryString: searchParams.get('query'),
   };
+  const { getIdentifierByStrId, isReady } = useWorkstreams(searchResultParams.workstreamId);
+  if (!isReady) return null;
 
-  const WorkStreamsOptions = [
-    {
-      key: '1',
-      value: 'patents',
-    },
-    {
-      key: '2',
-      value: 'copy right',
-    },
-  ];
+  const identifier = getIdentifierByStrId(searchParams.get('identifierStrId'));
 
-  const handleToggleButton = () => {
-
-  };
   return (
     <Container fluid className="px-0">
       <Row className="mx-0">
-        <Col md={{ span: 10, offset: 1 }} className="mb-8">
+        <Col lg={4} md={6}>
+          <SearchNote
+            searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
+            resultsCount={50}
+          />
           <Formik>
             {() => (
               <Form className="mt-8">
-                <div className="d-flex align-items-stretch">
-                  <div className="d-flex mt-3">
-                    <h4 className="mb-0">Search</h4>
-                    <Select options={WorkStreamsOptions} moduleClassName="menu" className="me-5 ms-3 custom-select" />
-                  </div>
-                  <div className="flex-grow-1">
-                    <div className="d-flex mb-3">
-                      <div className="position-relative">
-                        <Select options={options} className={`${style.select} select select-with-sibling sm-select`} />
-                      </div>
-                      <Search
-                        id="search"
-                        className="flex-grow-1"
-                        moduleClassName="search-with-sibling sm-search"
-                        placeholder={t('typeSearchTerms')}
-                        onSubmit={onSubmit}
-                      />
-                    </div>
-                    <ToggleButton handleToggleButton={handleToggleButton} isToggleButtonOn={false} text={t('allowSynonyms')} />
-                  </div>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </Col>
-        <Col lg={4} md={6} className="mx-12">
-          <SearchNote searchKeywords="Title: “car” AND Publication date: “11/11/2020 AND IPC: ”A61K”" resultsCount={50} />
-          <Formik>
-            {() => (
-              <Form className="mt-8">
-                {
-                  results.map((searchResult) => (
-                    <SearchResultCard key={searchResult.id} searchResult={searchResult} />
-                  ))
-                }
+                <AppPagination
+                  axiosConfig={{
+                    url: 'search',
+                    params: searchResultParams,
+                  }}
+                  RenderedComponent={SearchResultCards}
+                />
               </Form>
             )}
           </Formik>

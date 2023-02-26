@@ -1,47 +1,28 @@
 import { Trans, useTranslation } from 'react-i18next';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
+import CacheContext from 'contexts/CacheContext';
+import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
 import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import formStyle from '../shared/form/form.module.scss';
-import { getWorkstreamIdentifiers } from '../../api/workstreamApi';
 
 function PatentsSearch() {
   const { t } = useTranslation('search');
-  const [selectedWorkStream, setSelectedWorkStream] = useState(1);
-  const [searchOptions, setSearchOptions] = useState([]);
+
+  const { cachedRequests } = useContext(CacheContext);
+  const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
-
-  useEffect(() => {
-    async function fetchWorkstreamIdentifiers() {
-      const response = await getWorkstreamIdentifiers(selectedWorkStream);
-      setSearchOptions(response.data);
-
-      if (response.data.length) setSelectedOption(response.data[0]);
-      else setSelectedOption(null);
-    }
-    fetchWorkstreamIdentifiers();
-  }, [selectedWorkStream]);
+  const [searchOptions] = useCacheRequest(cachedRequests.workstreamList, { url: `workstream/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
 
   const onChangeWorkstream = (newState) => {
     setSelectedWorkStream(newState);
   };
-
-  // const options = [
-  //   {
-  //     key: '1',
-  //     value: 'any field',
-  //   },
-  //   {
-  //     key: '2',
-  //     value: 'Int. Classification(IPC)',
-  //   },
-  // ];
 
   const onSubmit = () => {
 
