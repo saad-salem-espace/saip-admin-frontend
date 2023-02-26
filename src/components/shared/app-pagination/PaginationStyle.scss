@@ -1,0 +1,57 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.pagination {
+  justify-content: flex-start !important;
+  .page-item {
+    margin: 0 8px;
+
+    &:first-of-type , &:last-of-type {
+      .page-link {
+        color: $primary-dark;
+
+        &::after {
+          font-size: 16px;
+        }
+
+        span {
+          display: none;
+        }
+      }
+    }
+
+    &:first-of-type {
+      margin-left: 0 !important;
+
+      .page-link {
+        &::after {
+          content: "<";
+        }
+      }
+    }
+
+    &:last-of-type {
+      margin-right: 0 !important;
+
+      .page-link {
+        &::after {
+          content: ">"
+        }
+      }
+    }
+
+    &.disabled {
+      .page-link {
+        color: $gray-600;
+      }
+    }
+  }
+
+  .page-link{
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

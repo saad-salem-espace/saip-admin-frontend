@@ -1,17 +1,23 @@
 /* eslint-env browser */
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 // eslint-disable-next-line import/no-named-as-default-member
 import reportWebVitals from './reportWebVitals';
 import './i18n';
+import { CacheProvider } from './contexts/CacheContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Suspense fallback="Loading ...">
-      <App />
-    </Suspense>
+    <CacheProvider>
+      <Suspense fallback="Loading ...">
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Suspense>
+    </CacheProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

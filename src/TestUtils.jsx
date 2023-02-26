@@ -2,13 +2,29 @@ import { Suspense } from 'react';
 import { render } from '@testing-library/react';
 import PropTypes from 'prop-types';
 import './i18n';
+import { BrowserRouter } from 'react-router-dom';
+import { CacheProvider } from 'contexts/CacheContext';
+import CacheMock from 'browser-cache-mock';
+
+const cacheMock = new CacheMock();
+
+// eslint-disable-next-line no-undef
+window.caches = {
+  // eslint-disable-next-line no-undef
+  ...window.caches,
+  open: async () => cacheMock,
+  ...cacheMock,
+};
 
 function AllTheProviders({ children }) {
   return (
-    <Suspense fallback="Loading ...">
-      {children}
-    </Suspense>
-
+    <CacheProvider>
+      <Suspense fallback="Loading ...">
+        <BrowserRouter>
+          {children}
+        </BrowserRouter>
+      </Suspense>
+    </CacheProvider>
   );
 }
 
