@@ -1,0 +1,24 @@
+@import '../../../../assets/styles/utilities/custom-theme';
+@import "~bootstrap/scss/mixins";
+
+.has-value {
+  padding: 32px 16px 9px;
+
+  @include media-breakpoint-down(md) {
+    padding: 43px 16px 23px
+  }
+}
+
+.input {
+  padding-left: 16px;
+  padding-right: 16px;
+  line-height: 0.1;
+  outline: none;
+  border-radius: $border-radius;
+  height: 100%;
+}
+
+.smInput input {
+  height: 57px;
+  padding-top: 14px;
+}

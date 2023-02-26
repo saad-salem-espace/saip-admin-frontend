@@ -48,6 +48,7 @@ const AppPagination = ({
     <>
       {renderedComponent}
       <Pagination
+        className="pagination"
         current={currentPage}
         total={totalNumberOfPages}
         onPageChange={setCurrentPage}

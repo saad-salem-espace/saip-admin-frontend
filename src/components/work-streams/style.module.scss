@@ -1,0 +1,28 @@
+@import "../../assets/styles/utilities/custom-theme";
+
+.card {
+  border-radius: 4px;
+  color: $gray !important;
+  text-decoration: none;
+  padding: 8px 24px;
+  background-color: $white;
+  height: 72px;
+
+  &:hover, &:focus, &:active {
+    background-color: $patents !important;
+    color: $white !important;
+
+    .icon::before {
+      color: $white !important;
+    }
+  }
+
+  &.active {
+    background-color: $patents;
+    color: $white !important;
+
+    .icon::before {
+      color: $white !important;
+    }
+  }
+}
