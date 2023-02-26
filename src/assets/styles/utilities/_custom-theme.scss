@@ -1084,17 +1084,17 @@ $dropdown-dark-header-color: $gray-500 !default;
 // Pagination
 
 // scss-docs-start pagination-variables
-$pagination-padding-y: .375rem !default;
-$pagination-padding-x: .75rem !default;
+$pagination-padding-y: 0;
+$pagination-padding-x: 0;
 $pagination-padding-y-sm: .25rem !default;
 $pagination-padding-x-sm: .5rem !default;
 $pagination-padding-y-lg: .75rem !default;
 $pagination-padding-x-lg: 1.5rem !default;
 
-$pagination-color: $link-color !default;
-$pagination-bg: $white !default;
-$pagination-border-width: $border-width !default;
-$pagination-border-radius: $border-radius !default;
+$pagination-color: $gray-700;
+$pagination-bg:  $primary-01;
+$pagination-border-width: 0;
+$pagination-border-radius: 50%;
 $pagination-margin-start: -$pagination-border-width !default;
 $pagination-border-color: $gray-300 !default;
 
@@ -1107,12 +1107,12 @@ $pagination-hover-color: $link-hover-color !default;
 $pagination-hover-bg: $gray-200 !default;
 $pagination-hover-border-color: $gray-300 !default;
 
-$pagination-active-color: $component-active-color !default;
-$pagination-active-bg: $component-active-bg !default;
+$pagination-active-color: $white;
+$pagination-active-bg:  $primary-dark;
 $pagination-active-border-color: $pagination-active-bg !default;
 
-$pagination-disabled-color: $gray-600 !default;
-$pagination-disabled-bg: $white !default;
+$pagination-disabled-color: $gray-600;
+$pagination-disabled-bg: $primary-01;;
 $pagination-disabled-border-color: $gray-300 !default;
 
 $pagination-transition: color .15s ease-in-out,
@@ -1529,3 +1529,4 @@ $pre-color: null !default;
 @import "~bootstrap/scss/root";
 @import "~bootstrap/scss/type";
 @import "~bootstrap/scss/transitions";
+@import "~bootstrap/scss/pagination";

@@ -3,4 +3,4 @@
 
 yarn lint-staged
 npx jscpd --pattern "src/**/*.js{,x}"
-yarn test
+CI=true yarn test --silent

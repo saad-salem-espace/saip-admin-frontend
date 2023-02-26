@@ -1,0 +1,6 @@
+{
+  "workstreams": {
+    "keyName": "workstreams",
+    "expiredRangeMillis": 604800000
+  }
+}
