@@ -30,7 +30,6 @@ function Input({
                 className={`border ${isInvalid ? 'error' : ''} w-100 ${style.input} `}
                 onChange={(e) => setInputValue(e.target.value)}
                 value={value}
-                data-testid="input"
               />
             );
           }

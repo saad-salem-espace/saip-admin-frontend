@@ -19,7 +19,6 @@ function Search({
 }) {
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
-
   return (
     <div className={`position-relative ${className} ${searchClassName}`}>
       {/* please render the below children if the input has value */}
