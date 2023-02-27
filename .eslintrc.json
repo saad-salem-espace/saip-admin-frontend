@@ -1,27 +1,98 @@
 {
+  "plugins": [
+    "react-hooks",
+    "react-perf",
+    "filename-rules",
+    "filenames",
+    "folders",
+    "functional",
+    "xss",
+    "jsx-a11y"
+  ],
   "extends": [
-    "airbnb"
+    "airbnb",
+    "plugin:react-perf/recommended",
+    "plugin:xss/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-wrap-multilines": ["error", {
-      "declaration": true,
-      "assignment": true,
-      "return": true,
-      "arrow": true
-    }],
-  "import/no-named-as-default": 0
+    "react/hook-use-state": "error",
+    "react/jsx-pascal-case": [
+      "error",
+      {
+        "allowLeadingUnderscore": false,
+        "allowNamespace": false
+      }
+    ],
+    "react/destructuring-assignment": [
+      "error",
+      "always",
+      {
+        "destructureInSignature": "always"
+      }
+    ],
+    "react/prefer-exact-props": "error",
+    "react/no-unused-state": "error",
+    "react/button-has-type": "error",
+    "react/jsx-wrap-multilines": [
+      "error",
+      {
+        "declaration": true,
+        "assignment": true,
+        "return": "parens-new-line",
+        "arrow": "parens-new-line"
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "off", // Checks effect dependencies
+    "import/no-named-as-default": 0,
+    "folders/match-regex": [2, "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$", "src/"],
+    "filenames/match-exported": "error",
+    "filename-rules/match": [
+      "error",
+      {
+        ".js": "camelCase",
+        ".jsx": "PascalCase"
+      }
+    ],
+    "camelcase": "error",
+    "prefer-arrow-callback": "warn",
+    "functional/no-class": "error",
+    "jsx-a11y/control-has-associated-label": "error",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "react-perf/jsx-no-new-object-as-prop": "off",
+    "react-perf/jsx-no-new-array-as-prop": "off",
+    "react-perf/jsx-no-new-function-as-prop": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": ["arrow-function", "function-declaration"],
+        "unnamedComponents": "arrow-function"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
   },
   "overrides": [
     {
-      "files": [
-        "**/*.test.js",
-        "**/*.test.jsx"
-      ],
+      "files": ["**/*.test.js", "**/*.test.jsx"],
+      "rules": {
+        "filename-rules/match": [0]
+      },
       "env": {
         "jest": true
       }
     }
-  ]
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  }
 }

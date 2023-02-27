@@ -1,0 +1,22 @@
+@import"../../../assets/styles/utilities/custom-theme";
+
+.btn {
+  text-decoration: none;
+}
+
+.appBtn {
+  &.btn-outline-primary {
+    &:hover {
+      color: $white !important;
+    }
+  }
+
+  &.btn-primary {
+    color: $white !important;
+
+    &:hover {
+      color: $primary !important;
+      background-color: $white !important;
+    }
+  }
+}

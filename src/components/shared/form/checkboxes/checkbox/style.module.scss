@@ -1,0 +1,25 @@
+@import "../../../../../assets/styles/utilities/custom-theme";
+
+.checkmark {
+  height: 24px;
+  width: 24px;
+  border: $border-width solid $gray-400;
+  margin-top: 3px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox {
+  display: none;
+
+  ~.checkmark {
+    background-color: $white;
+  }
+
+  &:checked~.checkmark {
+    background-color: $secondary;
+    border-color: $primary;
+  }
+}
