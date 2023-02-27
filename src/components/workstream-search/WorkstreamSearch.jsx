@@ -1,50 +1,41 @@
 import { Trans, useTranslation } from 'react-i18next';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
+import CacheContext from 'contexts/CacheContext';
+import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
 import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import formStyle from '../shared/form/form.module.scss';
-import { getWorkstreamIdentifiers } from '../../api/workstreamApi';
 
-function PatentsSearch() {
+function WorkstreamSearch() {
   const { t } = useTranslation('search');
-  const [selectedWorkStream, setSelectedWorkStream] = useState(1);
-  const [searchOptions, setSearchOptions] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
+  const { cachedRequests } = useContext(CacheContext);
+  const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [searchOption] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
+  const searchOptions = searchOption?.data;
 
   useEffect(() => {
-    async function fetchWorkstreamIdentifiers() {
-      const response = await getWorkstreamIdentifiers(selectedWorkStream);
-      setSearchOptions(response.data);
-
-      if (response.data.length) setSelectedOption(response.data[0]);
-      else setSelectedOption(null);
-    }
-    fetchWorkstreamIdentifiers();
-  }, [selectedWorkStream]);
+    setSelectedOption(searchOptions?.[0]);
+  }, [searchOptions]);
 
   const onChangeWorkstream = (newState) => {
     setSelectedWorkStream(newState);
   };
 
-  // const options = [
-  //   {
-  //     key: '1',
-  //     value: 'any field',
-  //   },
-  //   {
-  //     key: '2',
-  //     value: 'Int. Classification(IPC)',
-  //   },
-  // ];
-
   const onSubmit = () => {
-
+    navigate({
+      pathname: '/search',
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: inputValue })}`,
+    });
   };
 
   const SearchModuleClassName = ({
@@ -99,6 +90,8 @@ function PatentsSearch() {
                       }
                       placeholder={t('typeSearchTerms')}
                       onSubmit={onSubmit}
+                      inputValue={inputValue}
+                      setInputValue={setInputValue}
                     >
                       {/* <span className={`position-absolute ${formStyle.label}`}>
                       {t('searchFields')}</span> */}
@@ -114,4 +107,4 @@ function PatentsSearch() {
   );
 }
 
-export default PatentsSearch;
+export default WorkstreamSearch;
