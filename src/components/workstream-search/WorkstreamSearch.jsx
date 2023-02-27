@@ -1,5 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,20 +13,28 @@ import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import formStyle from '../shared/form/form.module.scss';
 
-function PatentsSearch() {
+function WorkstreamSearch() {
   const { t } = useTranslation('search');
-
+  const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [searchOptions] = useCacheRequest(cachedRequests.workstreamList, { url: `workstream/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
+
+  useEffect(() => {
+    setSelectedOption(searchOptions?.[0]);
+  }, [searchOptions]);
 
   const onChangeWorkstream = (newState) => {
     setSelectedWorkStream(newState);
   };
 
   const onSubmit = () => {
-
+    navigate({
+      pathname: '/search',
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: inputValue })}`,
+    });
   };
 
   const SearchModuleClassName = ({
@@ -80,6 +89,8 @@ function PatentsSearch() {
                       }
                       placeholder={t('typeSearchTerms')}
                       onSubmit={onSubmit}
+                      value={inputValue}
+                      setInputValue={setInputValue}
                     >
                       {/* <span className={`position-absolute ${formStyle.label}`}>
                       {t('searchFields')}</span> */}
@@ -95,4 +106,4 @@ function PatentsSearch() {
   );
 }
 
-export default PatentsSearch;
+export default WorkstreamSearch;

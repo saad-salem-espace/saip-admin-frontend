@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+// import { useState } from 'react';
 import classNames from 'classnames/bind';
 import Input from '../input/Input';
 import style from './style.module.scss';
@@ -15,8 +15,10 @@ function Search({
   placeholder,
   onSubmit,
   moduleClassName,
+  inputValue,
+  setInputValue,
 }) {
-  const [inputValue, setInputValue] = useState('');
+  // const [inputValue, setInputValue] = useState('');
 
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
