@@ -1,54 +1,33 @@
 import Button from 'react-bootstrap/Button';
-import React, { useState } from 'react';
+import React, { useContext, useEffect } from 'react';
+import CacheContext from 'contexts/CacheContext';
+import useCacheRequest from '../../hooks/useCacheRequest';
 import style from './style.module.scss';
 
-function WorkStreams() {
-  const [selectedWorkStream, setSelectedWorkStream] = useState(1);
+function WorkStreams({ selectedWorkStream, onChange }) {
+  const { cachedRequests } = useContext(CacheContext);
+  const [workstreams] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
 
-  const workStreams = [
-    {
-      id: 1,
-      icon: 'patents',
-      text: 'Patents',
-    },
-    {
-      id: 2,
-      icon: 'trademark',
-      text: 'Trademark',
-    },
-    {
-      id: 3,
-      icon: 'copyrights',
-      text: 'Copyright',
-    },
-    {
-      id: 4,
-      icon: 'industrial-design',
-      text: 'Industrial designs',
-    },
-    {
-      id: 5,
-      icon: 'plant-varieties',
-      text: 'Plant varieties',
-    },
-    {
-      id: 6,
-      icon: 'layout',
-      text: 'IC Layout',
-    },
-  ];
+  const handleChange = (workstreamId) => {
+    onChange(workstreamId);
+  };
+
+  useEffect(() => {
+    handleChange(workstreams?.[0].id);
+  }, [workstreams]);
+  if (!workstreams) return null;
   return (
     <div className="text-center">
       {
-        workStreams.map((workStream) => (
+        workstreams.map((workStream) => (
           <Button
             variant="link"
             className={`${style.card} me-4 mb-lg-0 mb-3 shadow ${selectedWorkStream === workStream.id ? style.active : ''}`}
-            onClick={() => setSelectedWorkStream(workStream.id)}
+            onClick={() => handleChange(workStream.id)}
             key={workStream.id}
           >
             <span className={`f-24 mb-2 d-block ${style.icon} icon-${workStream.icon}`} />
-            <span>{workStream.text}</span>
+            <span>{workStream.workstreamName}</span>
           </Button>
         ))
       }
