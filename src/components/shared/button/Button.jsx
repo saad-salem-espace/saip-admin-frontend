@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import BootstrapButton from 'react-bootstrap/Button';
-import ButtonStyle from './Button.module.scss';
+import './Button.scss';
 
 function Button({
   text,
@@ -18,7 +18,7 @@ function Button({
       size={size}
       variant={variant}
       type={type}
-      className={`${ButtonStyle.button} ${className}`}
+      className={`appBtn ${className}`}
     >
       { text }
     </BootstrapButton>
@@ -41,7 +41,7 @@ Button.defaultProps = {
   size: 'lg',
   onClick: () => {},
   disabled: false,
-  variant: 'primary',
+  variant: '',
   type: 'button',
   className: '',
 };

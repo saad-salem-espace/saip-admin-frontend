@@ -1,5 +1,6 @@
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import style from './style.module.scss';
 
 function Input({
@@ -9,9 +10,13 @@ function Input({
   placeholder,
   value,
   setInputValue,
+  moduleClassName,
 }) {
+  const styleClassNames = classNames.bind(style);
+  const inputClassName = styleClassNames(moduleClassName);
+
   return (
-    <div className="position-relative h-100">
+    <div className={`position-relative h-100 ${inputClassName}`}>
       <Field name={name}>
         {
           ({ field, form }) => {
@@ -22,9 +27,10 @@ function Input({
                 type={type}
                 placeholder={placeholder}
                   // please add class ${style['has-value']} if the input has value
-                className={`border h-100 ${isInvalid ? 'error' : ''} w-100 ${style.input} `}
+                className={`border ${isInvalid ? 'error' : ''} w-100 ${style.input} `}
                 onChange={(e) => setInputValue(e.target.value)}
                 value={value}
+                data-testid="input"
               />
             );
           }
@@ -39,11 +45,17 @@ Input.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  setInputValue: PropTypes.func,
+  moduleClassName: PropTypes.string,
 };
 Input.defaultProps = {
   type: 'text',
   placeholder: null,
   name: null,
+  value: '',
+  setInputValue: () => {},
+  moduleClassName: '',
 };
 
 export default Input;

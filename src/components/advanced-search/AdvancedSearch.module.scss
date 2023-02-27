@@ -1,0 +1,28 @@
+@import "../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.collapseIcon {
+  background-color: $primary-dark;
+  padding: 4px 8px;
+  border-radius: $border-radius;
+  position: absolute;
+  top:32px;
+  right: 24px;
+
+  &.closed {
+    right: calc(50% - 16px);
+  }
+
+  @include media-breakpoint-down(lg) {
+    top:10px;
+
+    &.closed {
+      right: auto;
+      left: 20px;
+    }
+  }
+}
+
+.menu{
+  box-shadow: 4px 8px 15px 0px rgba(0, 0, 0, 0.14);
+}

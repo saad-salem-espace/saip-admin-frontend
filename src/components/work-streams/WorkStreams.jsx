@@ -1,13 +1,14 @@
 import Button from 'react-bootstrap/Button';
 import React, { useContext, useEffect } from 'react';
 import CacheContext from 'contexts/CacheContext';
+import PropTypes from 'prop-types';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import style from './style.module.scss';
 
 function WorkStreams({ selectedWorkStream, onChange }) {
   const { cachedRequests } = useContext(CacheContext);
-  const [workstreams] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
-
+  const [workstream] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
+  const workstreams = workstream?.data;
   const handleChange = (workstreamId) => {
     onChange(workstreamId);
   };
@@ -34,5 +35,10 @@ function WorkStreams({ selectedWorkStream, onChange }) {
     </div>
   );
 }
+
+WorkStreams.propTypes = {
+  selectedWorkStream: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default WorkStreams;

@@ -1,9 +1,8 @@
 @import "../../../../assets/styles/utilities/custom-theme";
 @import "~bootstrap/scss/mixins";
 
-.css-1xc3v61-indicatorContainer,
-.css-15lsz6c-indicatorContainer,
-.css-1hb7zxy-IndicatorsContainer {
+div[class$="indicatorContainer"],
+div[class$="indicatorsContainer"] {
   background-color: $gray-200;
   border-radius: 0 4px 4px 0;
 
@@ -12,44 +11,52 @@
   }
 }
 
-.css-1u9des2-indicatorSeparator {
+span[class$="indicatorSeparator"] {
   display: none;
 }
 
-.css-1dimb5e-singleValue {
+div[class$="singleValue"] {
   position: absolute;
-  bottom: 17px;
+  bottom: 8px;
   left: 4px;
 }
 
-.css-1fdsijx-ValueContainer {
+div[class$="ValueContainer"] {
   height: 85px;
 }
 
+
+////// selectWithSibling
 .selectWithSibling {
   @include media-breakpoint-up(md) {
-    .css-1xpjqq2-Control {
+    div[class$="Control"] {
       border-right: 0;
       border-radius: 0;
     }
 
-    .css-1hb7zxy-IndicatorsContainer {
+    div[class$="IndicatorsContainer"] {
       border-radius: 0;
     }
   }
+
+  div[class$="IndicatorsContainer"] {
+    background-color: $gray-200;
+  }
 }
 
-.css-4nklfm-option,.css-2jkpo2-option {
+.css-2jkpo2-option{
   color: $white !important;
   background-color: $primary !important;
 }
 
+////// small select
 .smSelect {
-  .css-1fdsijx-ValueContainer {
+  div[class$="ValueContainer"] {
     height: 57px;
   }
 }
 
+///// lg select
 .lgSelect {
   input {
     margin-top: 30px !important;
@@ -57,31 +64,75 @@
   }
 }
 
+////// customSelect
 .customSelect {
-  .css-1fdsijx-ValueContainer {
+  div[class$="ValueContainer"] {
     border-bottom: $border-width dashed $primary;
     font-size: 24px;
     font-family: $font-medium;
+    height: auto;
 
     input {
       color: $primary !important;
     }
   }
 
- .css-15lsz6c-indicatorContainer {
+  div[class$="indicatorsContainer"],
+  div[class$="indicatorContainer"] {
     background-color: transparent;
   }
 
-  .css-1xpjqq2-Control {
+  div[class$="Control"] {
     border: none;
   }
+}
 
-  .css-1hb7zxy-IndicatorsContainer, .css-1xc3v61-indicatorContainer {
+///// select-2
+.select-2 {
+  div[class$="Control"] {
+    border: none;
+    border-bottom: $border-width solid $gray-400;
+    border-radius: 0;
+  }
+
+  div[class$="IndicatorsContainer"],
+  div[class$="indicatorContainer"] {
     background-color: transparent;
   }
 
-  .css-1fdsijx-ValueContainer {
-    height: auto;
+  div[class$="singleValue"] {
+    margin: 0 7px;
   }
 
+  input {
+    margin: 33px 8px !important;
+  }
+
+  div[class$="ValueContainer"] {
+    height: 72px;
+  }
+
+  div[class$="singleValue"] {
+    bottom: 37px;
+  }
+
+  div[class$="indicatorContainer"] {
+    background-color: transparent;
+  }
+}
+
+///// defaultSelect
+.defaultSelect {
+  div[class$="indicatorContainer"],
+  div[class$="IndicatorsContainer"]{
+    background-color: transparent;
+  }
+}
+
+//// sm select with inner label
+.smWithLabel {
+  input {
+    margin-top: 20px !important;
+    margin-left: 5px !important;
+  }
 }

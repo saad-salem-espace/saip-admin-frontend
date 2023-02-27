@@ -20,7 +20,8 @@ function WorkstreamSearch() {
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [searchOptions] = useCacheRequest(cachedRequests.workstreamList, { url: `workstream/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
+  const [searchOption] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
+  const searchOptions = searchOption?.data;
 
   useEffect(() => {
     setSelectedOption(searchOptions?.[0]);
@@ -89,7 +90,7 @@ function WorkstreamSearch() {
                       }
                       placeholder={t('typeSearchTerms')}
                       onSubmit={onSubmit}
-                      value={inputValue}
+                      inputValue={inputValue}
                       setInputValue={setInputValue}
                     >
                       {/* <span className={`position-absolute ${formStyle.label}`}>

@@ -19,6 +19,7 @@ function Search({
 }) {
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
+
   return (
     <div className={`position-relative ${className} ${searchClassName}`}>
       {/* please render the below children if the input has value */}
@@ -33,7 +34,6 @@ function Search({
       />
       <Button className={`${style.clearIcon} text-gray`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={() => setInputValue('')} />
       <Button
-        variant="link"
         type="submit"
         onClick={onSubmit}
         className={`${style.searchIcon}`}
@@ -51,6 +51,8 @@ Search.propTypes = {
   placeholder: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   moduleClassName: PropTypes.string,
+  inputValue: PropTypes.string,
+  setInputValue: PropTypes.func,
 };
 
 Search.defaultProps = {
@@ -59,6 +61,8 @@ Search.defaultProps = {
   children: null,
   placeholder: null,
   moduleClassName: null,
+  inputValue: '',
+  setInputValue: () => {},
 };
 
 export default Search;

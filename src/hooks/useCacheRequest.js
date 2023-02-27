@@ -18,7 +18,7 @@ const useCacheRequest = (config, axiosConfig, options = {}) => {
   const updateRequest = async () => {
     const fetchedResponse = await axiosInstance.request(axiosConfig);
     setResponse(fetchedResponse.data);
-    await setCacheResponse(config.keyName, URI, fetchedResponse.data);
+    setCacheResponse(config.keyName, URI, fetchedResponse.data);
   };
 
   useEffect(() => {
@@ -34,13 +34,12 @@ const useCacheRequest = (config, axiosConfig, options = {}) => {
     ) ?? true;
 
     if (isValid) {
-      getCachedRequest(config.keyName, URI, config.expiredRangeMillis).then((responseBody) => {
-        if (!responseBody) {
-          updateRequest();
-        } else {
-          setResponse(responseBody.response);
-        }
-      });
+      const responseBody = getCachedRequest(config.keyName, URI, config.expiredRangeMillis);
+      if (!responseBody) {
+        updateRequest();
+      } else {
+        setResponse(responseBody.response);
+      }
     }
 
     isMounted.current = true;

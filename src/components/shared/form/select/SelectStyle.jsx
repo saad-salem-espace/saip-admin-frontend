@@ -14,7 +14,7 @@ const SelectStyle = {
     border: '1px solid #DDD',
     display: 'flex',
     borderRadius: '5px',
-    backgroundColor: 'transparent',
+    backgroundColor: '#fff',
     color: '#000',
   }),
   placeholder: () => ({
