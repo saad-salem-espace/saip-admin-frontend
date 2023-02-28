@@ -33,8 +33,14 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
   })).isRequired,
   placeholder: PropTypes.string,
-  optionName: PropTypes.string.isRequired,
-  optionValue: PropTypes.string.isRequired,
+  optionName: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
+  optionValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
   selectedOption: PropTypes.string,
   setSelectedOption: PropTypes.func,
 };

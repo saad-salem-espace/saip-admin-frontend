@@ -44,7 +44,7 @@ Input.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   setInputValue: PropTypes.func,
   moduleClassName: PropTypes.string,
 };

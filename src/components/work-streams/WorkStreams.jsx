@@ -37,8 +37,12 @@ function WorkStreams({ selectedWorkStream, onChange }) {
 }
 
 WorkStreams.propTypes = {
-  selectedWorkStream: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+  selectedWorkStream: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
+};
+
+WorkStreams.defaultProps = {
+  selectedWorkStream: null,
 };
 
 export default WorkStreams;
