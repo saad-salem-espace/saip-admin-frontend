@@ -10,6 +10,7 @@ function Button({
   variant,
   type,
   className,
+  ...props
 }) {
   return (
     <BootstrapButton
@@ -19,6 +20,7 @@ function Button({
       variant={variant}
       type={type}
       className={`appBtn ${className}`}
+      {...props}
     >
       { text }
     </BootstrapButton>
