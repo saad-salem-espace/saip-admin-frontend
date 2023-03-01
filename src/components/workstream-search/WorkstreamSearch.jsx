@@ -88,10 +88,10 @@ function WorkstreamSearch() {
                       <Select
                         options={searchOptions}
                         className={`${style.select} lgSelect selectWithSibling`}
-                        optionName={(option) => option.identiferName}
+                        getOptionName={(option) => option.identiferName}
                         selectedOption={selectedOption}
                         setSelectedOption={setSelectedOption}
-                        optionValue={(option) => option.identiferName}
+                        getOptionValue={(option) => option.identiferName}
                       />
                     </div>
                     <Search
