@@ -97,6 +97,9 @@
   "jest": {
     "transformIgnorePatterns": [
       "/node_modules/(?!axios)"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/src/testing-resources/assets/css/__mocks__/styleMock.js"
+    }
   }
 }
