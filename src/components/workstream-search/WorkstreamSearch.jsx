@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
 import * as Yup from 'yup';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
@@ -108,9 +109,10 @@ function WorkstreamSearch() {
                       {/* <span className={`position-absolute ${formStyle.label}`}>
                       {t('searchFields')}</span> */}
                     </Search>
-                    {touched.searchQuery && errors.searchQuery
-                      ? (<div>{errors.searchQuery}</div>) : null}
                   </div>
+                  {touched.searchQuery && errors.searchQuery
+                    ? (<ErrorMessage msg={errors.searchQuery} className={`mt-2 ${style.errorMsg}`} />
+                    ) : null}
                 </Form>
               )}
             </Formik>
