@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import ShowMore from 'components/shared/show-more/ShowMore';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import Carousel from './carousel/Carousel';
@@ -65,6 +66,12 @@ const BibliographicDataSection = ({ document }) => {
           <HandleEmptyAttribute checkOn={document.Priorities?.PublishedAs} />
         </p>
       </div>
+      <p className="text-primary f-14">{t('abstract')}</p>
+      <p className="f-14">
+        <ShowMore>
+          <HandleEmptyAttribute checkOn={BibliographicData.ApplicationAbstract.join(' ')} />
+        </ShowMore>
+      </p>
       <p className="text-primary f-14">{t('images')}</p>
       <HandleEmptyAttribute checkOn={document.Images} RenderedComponent={Carousel} />
     </>
@@ -77,6 +84,7 @@ BibliographicDataSection.propTypes = {
       Application: PropTypes.string,
       PublicationNumber: PropTypes.string,
       PublicationDate: PropTypes.string,
+      ApplicationAbstract: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     Applicants: PropTypes.arrayOf(PropTypes.string),
     Inventors: PropTypes.arrayOf(PropTypes.string),
