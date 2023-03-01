@@ -25,11 +25,11 @@ const AppPagination = ({
       const responseData = response.data;
       const responsePaginationInfo = responseData?.pagination || {
         per_page: 10,
-        total: 10,
+        total: 0,
       };
       setData(responseData?.data || responseData);
       setPaginationInfo(responsePaginationInfo);
-      if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.per_page);
+      if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.total);
     });
   }, [currentPage]);
 
