@@ -7,8 +7,8 @@ function Select({
   className,
   options,
   placeholder,
-  optionName,
-  optionValue,
+  getOptionName,
+  getOptionValue,
   selectedOption,
   setSelectedOption,
 }) {
@@ -19,8 +19,8 @@ function Select({
         onChange={setSelectedOption}
         options={options}
         styles={selectStyle}
-        getOptionLabel={optionName}
-        getOptionValue={optionValue}
+        getOptionLabel={getOptionName}
+        getOptionValue={getOptionValue}
         placeholder={placeholder}
         value={selectedOption}
       />
@@ -33,8 +33,14 @@ Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
   })).isRequired,
   placeholder: PropTypes.string,
-  optionName: PropTypes.string.isRequired,
-  optionValue: PropTypes.string.isRequired,
+  getOptionName: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
+  getOptionValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]).isRequired,
   selectedOption: PropTypes.string,
   setSelectedOption: PropTypes.func,
 };
