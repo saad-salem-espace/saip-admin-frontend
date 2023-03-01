@@ -5,8 +5,8 @@ import apiInstance from 'apis/apiInstance';
 import patentIdentifiers from 'testing-resources/workstreams/patents/identifiers.json';
 import samplePatent from 'testing-resources/patents/samplePatent.json';
 import { search } from 'utils/arrays';
+import { trimStringRelativeToSubtext } from 'utils/strings';
 import SearchResults from './SearchResults';
-import { trimStringRelativeToSubtext } from '../../utils/strings';
 
 const mockAxios = new MockAdapter(apiInstance);
 
@@ -16,7 +16,7 @@ const patentList = Array(TOTAL).fill(samplePatent);
 
 const searchParams = { workstreamId: 1, identifierStrId: 'ti', query: 'test' };
 
-mockAxios.onGet(/\/workstream\/\d+\/identifiers/).reply(200, patentIdentifiers);
+mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, { data: patentIdentifiers });
 
 mockAxios.onGet(/\/search\/?.*/).reply((config) => ([200, {
   data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),

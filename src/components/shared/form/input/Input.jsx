@@ -8,8 +8,6 @@ function Input({
   type,
   name,
   placeholder,
-  value,
-  setInputValue,
   moduleClassName,
 }) {
   const styleClassNames = classNames.bind(style);
@@ -28,8 +26,7 @@ function Input({
                 placeholder={placeholder}
                   // please add class ${style['has-value']} if the input has value
                 className={`border ${isInvalid ? 'error' : ''} w-100 ${style.input} `}
-                onChange={(e) => setInputValue(e.target.value)}
-                value={value}
+                {...field}
               />
             );
           }
@@ -45,7 +42,6 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  setInputValue: PropTypes.func,
   moduleClassName: PropTypes.string,
 };
 Input.defaultProps = {
@@ -53,7 +49,6 @@ Input.defaultProps = {
   placeholder: null,
   name: null,
   value: '',
-  setInputValue: () => {},
   moduleClassName: '',
 };
 

@@ -15,7 +15,6 @@ import formStyle from '../shared/form/form.module.scss';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
-  const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
@@ -31,10 +30,11 @@ function WorkstreamSearch() {
     setSelectedWorkStream(newState);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (values) => {
+    console.log(values);
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: inputValue })}`,
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery })}`,
     });
   };
 
@@ -67,9 +67,9 @@ function WorkstreamSearch() {
       <Container className="px-0 m-auto">
         <Row className="mx-0">
           <Col className="pt-5 pb-8" lg={{ span: 8, offset: 2 }}>
-            <Formik>
-              {() => (
-                <Form className="mt-8">
+            <Formik onSubmit={onSubmit} initialValues={{ searchQuery: '' }}>
+              {({ handleSubmit, values, setFieldValue }) => (
+                <Form className="mt-8" onSubmit={handleSubmit}>
                   <div className="d-md-flex align-items-stretch">
                     <div className="position-relative mb-md-0 mb-3">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
@@ -84,14 +84,14 @@ function WorkstreamSearch() {
                     </div>
                     <Search
                       id="search"
+                      name="searchQuery"
                       className="flex-grow-1"
                       moduleClassName={
                         SearchModuleClassName
                       }
                       placeholder={t('typeSearchTerms')}
-                      onSubmit={onSubmit}
-                      inputValue={inputValue}
-                      setInputValue={setInputValue}
+                      isClearable={!!values.searchQuery}
+                      clearInput={() => { setFieldValue('searchQuery', ''); }}
                     >
                       {/* <span className={`position-absolute ${formStyle.label}`}>
                       {t('searchFields')}</span> */}

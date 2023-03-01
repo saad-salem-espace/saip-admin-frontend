@@ -7,7 +7,7 @@ import { search } from 'utils/arrays';
 
 const useWorkstreams = (workstreamId) => {
   const { cachedRequests } = useContext(CacheContext);
-  const [responseIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstream/${workstreamId}/identifiers` });
+  const [responseIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${workstreamId}/identifiers` });
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const useWorkstreams = (workstreamId) => {
   }, [responseIdentifiers]);
 
   const getIdentifierByStrId = useCallback((strId) => (
-    search(responseIdentifiers, 'identiferStrId', strId).identiferName
+    search(responseIdentifiers.data, 'identiferStrId', strId).identiferName
   ), [responseIdentifiers]);
 
   return { getIdentifierByStrId, isReady };
