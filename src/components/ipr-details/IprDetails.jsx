@@ -49,7 +49,7 @@ function IprDetails({
   ];
 
   return (
-    <div>
+    <div className={`${style.iprWrapper}`}>
       <div className="border-bottom bg-primary-01">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
           <div className="d-flex">
