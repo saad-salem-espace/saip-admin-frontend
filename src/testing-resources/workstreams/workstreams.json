@@ -1,0 +1,15 @@
+{
+  "code": 200,
+  "pagination": [],
+  "data": [
+    {
+      "id": 1,
+      "workstreamName": "patent"
+    },
+    {
+      "id": 2,
+      "workstreamName": "trademarks"
+    }
+  ],
+  "message": "success"
+}

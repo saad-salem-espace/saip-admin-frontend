@@ -6,6 +6,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
+import * as Yup from 'yup';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
@@ -15,13 +17,16 @@ import formStyle from '../shared/form/form.module.scss';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
-  const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [searchOption] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
   const searchOptions = searchOption?.data;
+
+  const formSchema = Yup.object({
+    searchQuery: Yup.string().trim().required('Search query cannot be empty'),
+  });
 
   useEffect(() => {
     setSelectedOption(searchOptions?.[0]);
@@ -31,10 +36,10 @@ function WorkstreamSearch() {
     setSelectedWorkStream(newState);
   };
 
-  const onSubmit = () => {
+  const onSubmit = (values) => {
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: inputValue })}`,
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery })}`,
     });
   };
 
@@ -67,36 +72,47 @@ function WorkstreamSearch() {
       <Container className="px-0 m-auto">
         <Row className="mx-0">
           <Col className="pt-5 pb-8" lg={{ span: 8, offset: 2 }}>
-            <Formik>
-              {() => (
-                <Form className="mt-8">
+            <Formik
+              onSubmit={onSubmit}
+              initialValues={{ searchQuery: '' }}
+              validationSchema={formSchema}
+              validateOnChange={false}
+              validateOnBlur={false}
+            >
+              {({
+                handleSubmit, values, setFieldValue, errors, touched,
+              }) => (
+                <Form className="mt-8" onSubmit={handleSubmit}>
                   <div className="d-md-flex align-items-stretch">
                     <div className="position-relative mb-md-0 mb-3">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
                       <Select
                         options={searchOptions}
                         className={`${style.select} lgSelect selectWithSibling`}
-                        optionName={(option) => option.identiferName}
+                        getOptionName={(option) => option.identiferName}
                         selectedOption={selectedOption}
                         setSelectedOption={setSelectedOption}
-                        optionValue={(option) => option.identiferName}
+                        getOptionValue={(option) => option.identiferName}
                       />
                     </div>
                     <Search
                       id="search"
+                      name="searchQuery"
                       className="flex-grow-1"
                       moduleClassName={
                         SearchModuleClassName
                       }
                       placeholder={t('typeSearchTerms')}
-                      onSubmit={onSubmit}
-                      inputValue={inputValue}
-                      setInputValue={setInputValue}
+                      isClearable={!!values.searchQuery}
+                      clearInput={() => { setFieldValue('searchQuery', ''); }}
                     >
                       {/* <span className={`position-absolute ${formStyle.label}`}>
                       {t('searchFields')}</span> */}
                     </Search>
                   </div>
+                  {touched.searchQuery && errors.searchQuery
+                    ? (<ErrorMessage msg={errors.searchQuery} className={`mt-2 ${style.errorMsg}`} />
+                    ) : null}
                 </Form>
               )}
             </Formik>
