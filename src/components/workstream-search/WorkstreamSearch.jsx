@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
+import * as Yup from 'yup';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
@@ -22,6 +23,10 @@ function WorkstreamSearch() {
   const [searchOption] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
   const searchOptions = searchOption?.data;
 
+  const formSchema = Yup.object({
+    searchQuery: Yup.string().trim().required('Search query cannot be empty'),
+  });
+
   useEffect(() => {
     setSelectedOption(searchOptions?.[0]);
   }, [searchOptions]);
@@ -31,7 +36,6 @@ function WorkstreamSearch() {
   };
 
   const onSubmit = (values) => {
-    console.log(values);
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery })}`,
@@ -67,8 +71,16 @@ function WorkstreamSearch() {
       <Container className="px-0 m-auto">
         <Row className="mx-0">
           <Col className="pt-5 pb-8" lg={{ span: 8, offset: 2 }}>
-            <Formik onSubmit={onSubmit} initialValues={{ searchQuery: '' }}>
-              {({ handleSubmit, values, setFieldValue }) => (
+            <Formik
+              onSubmit={onSubmit}
+              initialValues={{ searchQuery: '' }}
+              validationSchema={formSchema}
+              validateOnChange={false}
+              validateOnBlur={false}
+            >
+              {({
+                handleSubmit, values, setFieldValue, errors, touched,
+              }) => (
                 <Form className="mt-8" onSubmit={handleSubmit}>
                   <div className="d-md-flex align-items-stretch">
                     <div className="position-relative mb-md-0 mb-3">
@@ -96,6 +108,8 @@ function WorkstreamSearch() {
                       {/* <span className={`position-absolute ${formStyle.label}`}>
                       {t('searchFields')}</span> */}
                     </Search>
+                    {touched.searchQuery && errors.searchQuery
+                      ? (<div>{errors.searchQuery}</div>) : null}
                   </div>
                 </Form>
               )}
