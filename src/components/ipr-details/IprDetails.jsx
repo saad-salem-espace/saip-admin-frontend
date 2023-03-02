@@ -4,15 +4,36 @@ import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import { faTimes, faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter } from '@fortawesome/free-solid-svg-icons';
 // import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import style from './ipr-details.module.scss';
 import Button from '../shared/button/Button';
 import Select from '../shared/form/select/Select';
 import formStyle from '../shared/form/form.module.scss';
-import Carousel from './carousel/Carousel';
+import { documentApi } from '../../apis/workstreams/documentsApi';
+import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
+import BibliographicDataSection from './BibliographicDataSection';
 
-// eslint-disable-next-line react/prop-types
-function IprDetails({ collapseIPR, isExpanded }) {
+// TODO change structure when trademarks are added
+function IprDetails({
+  collapseIPR, isExpanded, documentId, onClose,
+}) {
   const { t } = useTranslation('search');
+  const [searchParams] = useSearchParams();
+  const [document, setDocument] = useState(null);
+  useEffect(() => {
+    if (documentId) {
+      documentApi({ workstreamId: searchParams.get('workstreamId'), documentId })
+        .then((resp) => {
+          setDocument(resp.data?.data[0]);
+        });
+    }
+  }, [documentId]);
+
+  if (!document) {
+    return null;
+  }
 
   const onChangeSelect = () => {
 
@@ -28,26 +49,14 @@ function IprDetails({ collapseIPR, isExpanded }) {
     },
   ];
 
-  const ipr = {
-    publicationNumber: 'US10745034B2',
-    owner: ' James W. Forbes National Steel Car Limited',
-    cpc: 'cpc',
-    ipc: 'ipc',
-    applicants: 'applicants',
-    inventors: 'inventors',
-    application: 'application',
-    priorities: 'priorities',
-    publication: 'publication',
-    publishedAs: 'published As',
-  };
   return (
-    <div>
+    <div className={`${style.iprWrapper}`}>
       <div className="border-bottom bg-primary-01">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
           <div className="d-flex">
             <FontAwesomeIcon icon={faBookmark} className="me-3 f-22 text-primary-dark" />
             <h5>
-              {ipr.publicationNumber}
+              {document.BibliographicData.PublicationNumber}
             </h5>
           </div>
           <div>
@@ -55,18 +64,20 @@ function IprDetails({ collapseIPR, isExpanded }) {
               variant="link"
               onClick={collapseIPR}
               className="p-0"
+              data-testid="expand-ipr-detail-button"
               text={<FontAwesomeIcon icon={isExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`d-md-inline-block d-none f-17 text-gray ${style['expand-icon']}`} />}
             />
             <Button
               variant="link"
-              // onClick={}
+              data-testid="close-ipr-detail-button"
+              onClick={onClose}
               className="p-0"
               text={<FontAwesomeIcon icon={faTimes} className="f-20 text-gray ms-5 border-start ps-5" />}
             />
           </div>
         </div>
         <p className="text-gray px-6">
-          {ipr.owner}
+          <HandleEmptyAttribute checkOn={document.BibliographicData.owner} />
         </p>
       </div>
       <div className="px-6 pt-4">
@@ -86,55 +97,22 @@ function IprDetails({ collapseIPR, isExpanded }) {
             </Form>
           )}
         </Formik>
-        <h6 className="mt-8 mb-4">{t('register')}</h6>
-        <div className="d-flex">
-          <p className={`text-primary f-14 ${style.label}`}>{t('applicants')}</p>
-          <p className="f-12">
-            {ipr.applicants}
-          </p>
-        </div>
-        <div className="d-flex mb-4">
-          <p className={`text-primary f-14 ${style.label}`}>{t('inventors')}</p>
-          <p className="f-12">
-            {ipr.inventors}
-          </p>
-        </div>
-        <div>
-          <p className="text-primary f-14">{t('classifications')}</p>
-          <div className="d-flex f-12 mb-5">
-            <p className={`${style.label}`}>{t('ipc')}</p>
-            <p>
-              {ipr.ipc}
-            </p>
-          </div>
-        </div>
-        <div className="d-flex f-12 mb-5">
-          <p className={`${style.label}`}>{t('cpc')}</p>
-          <p>
-            {ipr.cpc}
-          </p>
-        </div>
-        <div className="d-flex">
-          <p className={`text-primary f-14 ${style.label}`}>{t('priorities')}</p>
-          <p className="f-12">{ipr.priorities}</p>
-        </div>
-        <div className="d-flex">
-          <p className={`text-primary f-14 ${style.label}`}>{t('application')}</p>
-          <p className="f-12">{ipr.application}</p>
-        </div>
-        <div className="d-flex">
-          <p className={`text-primary f-14 ${style.label}`}>{t('publication')}</p>
-          <p className="f-12">{ipr.publication}</p>
-        </div>
-        <div className="d-flex">
-          <p className={`text-primary f-14 ${style.label}`}>{t('publishedAs')}</p>
-          <p className="f-12">{ipr.publishedAs}</p>
-        </div>
-        <p className="text-primary f-14">{t('images')}</p>
-        <Carousel />
+        <BibliographicDataSection document={document} />
       </div>
     </div>
   );
 }
+
+IprDetails.propTypes = {
+  collapseIPR: PropTypes.func.isRequired,
+  isExpanded: PropTypes.bool.isRequired,
+  documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onClose: PropTypes.func,
+};
+
+IprDetails.defaultProps = {
+  documentId: null,
+  onClose: () => {},
+};
 
 export default IprDetails;

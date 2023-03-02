@@ -21,6 +21,7 @@ function SearchResults() {
   const { t } = useTranslation('search');
   const [searchParams] = useSearchParams();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [activeDocument, setActiveDocument] = useState(null);
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
   const [totalResults, setTotalResults] = useState(0);
@@ -64,6 +65,10 @@ function SearchResults() {
       value: 'copy right',
     },
   ];
+
+  const handleCloseIprDetail = () => {
+    setActiveDocument(null);
+  };
 
   const handleAdvancedSearch = () => {
     setIsAdvancedSearch(true);
@@ -159,16 +164,23 @@ function SearchResults() {
                   }}
                   defaultPage={Number(searchParams.get('page') || '1')}
                   RenderedComponent={SearchResultCards}
-                  renderedProps={{ query: searchResultParams.queryString }}
+                  renderedProps={{ query: searchResultParams.queryString, setActiveDocument }}
                   fetchedTotalResults={setTotalResults}
                 />
               </Form>
             )}
           </Formik>
         </Col>
-        <Col lg={isExpanded && isAdvancedSearch ? 12 : 4} md={isExpanded ? 0 : 6} className="px-0 border-start">
-          <IprDetails collapseIPR={collapseIPR} isExpanded={isExpanded} />
-        </Col>
+        {activeDocument && (
+          <Col lg={isExpanded && isAdvancedSearch ? 12 : 4} md={isExpanded ? 0 : 6} className="px-0 border-start">
+            <IprDetails
+              collapseIPR={collapseIPR}
+              isExpanded={isExpanded}
+              documentId={activeDocument}
+              onClose={handleCloseIprDetail}
+            />
+          </Col>
+        )}
       </Row>
     </Container>
   );
