@@ -88,18 +88,10 @@ function SearchResults() {
 
   const getIprClassName = (media) => {
     let size = 4;
-    if (isAdvancedSearch && media === 'lg') {
-      if (isIPRExpanded && isAdvancedMenuOpen) {
-        size = 8;
-      }
-      if (isIPRExpanded && !isAdvancedMenuOpen) {
-        size = 11;
-      }
-    }
-    if (!isAdvancedSearch && media === 'lg') {
-      size = 4;
-      if (isIPRExpanded) {
-        size = 12;
+    if (media === 'lg' && isIPRExpanded) {
+      size = 12;
+      if (isAdvancedSearch) {
+        size = isAdvancedMenuOpen ? 8 : 11;
       }
     }
     return size;

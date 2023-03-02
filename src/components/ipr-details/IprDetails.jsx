@@ -63,9 +63,9 @@ function IprDetails({
             <Button
               variant="link"
               onClick={collapseIPR}
-              className="p-0"
+              className="p-0 d-md-inline-block d-none"
               data-testid="expand-ipr-detail-button"
-              text={<FontAwesomeIcon icon={isIPRExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`d-md-inline-block d-none f-17 text-gray ${style['expand-icon']}`} />}
+              text={<FontAwesomeIcon icon={isIPRExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`f-17 text-gray ${style['expand-icon']}`} />}
             />
             <Button
               variant="link"
