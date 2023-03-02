@@ -105,11 +105,12 @@ div[class$="ValueContainer"] {
   }
 
   input {
-    margin: 33px 8px !important;
+    margin: 33px 0 !important;
   }
 
   div[class$="ValueContainer"] {
     height: 72px;
+    padding: 2px 0;
   }
 
   div[class$="singleValue"] {
@@ -118,6 +119,7 @@ div[class$="ValueContainer"] {
 
   div[class$="indicatorContainer"] {
     background-color: transparent;
+    margin-top: 25px;
   }
 }
 
