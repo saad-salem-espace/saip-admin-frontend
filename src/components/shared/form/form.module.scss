@@ -6,6 +6,10 @@
   top: 16px;
   font-size: $font-size-sm;
   z-index: 9;
+
+  &.select2{
+    left: 0;
+  }
 }
 
 .smLabel {
