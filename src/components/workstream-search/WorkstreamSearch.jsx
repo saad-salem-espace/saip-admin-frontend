@@ -111,7 +111,7 @@ function WorkstreamSearch() {
                     </Search>
                   </div>
                   {touched.searchQuery && errors.searchQuery && !values.searchQuery.trim()
-                    ? (<ErrorMessage msg={errors.searchQuery} className={`mt-2 ${style.errorMsg}`} />
+                    ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                 </Form>
               )}
