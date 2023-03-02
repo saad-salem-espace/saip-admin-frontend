@@ -69,6 +69,7 @@ function SearchResults() {
 
   const handleCloseIprDetail = () => {
     setActiveDocument(null);
+    setIsIPRExpanded(false);
   };
 
   const handleAdvancedSearch = () => {
