@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import useWorkstreams from 'hooks/useWorkstreams';
+// import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import SearchNote from './SearchNote';
 import AppPagination from '../shared/app-pagination/AppPagination';
 import SearchResultCards from './search-result-cards/SearchResultCards';
@@ -68,6 +69,7 @@ function SearchResults() {
 
   const handleCloseIprDetail = () => {
     setActiveDocument(null);
+    setIsIPRExpanded(false);
   };
 
   const handleAdvancedSearch = () => {
@@ -110,24 +112,27 @@ function SearchResults() {
                     <Select options={WorkStreamsOptions} moduleClassName="menu" className={`${style.workStreams} me-5 ms-3 mt-1 customSelect`} />
                   </div>
                   <div className="flex-grow-1">
-                    <div className="d-md-flex mb-4">
-                      {
-                        !isAdvancedSearch && (
-                          <div className="position-relative mb-md-0 mb-3">
-                            <Select
-                              options={options}
-                              className={`${style.select} select selectWithSibling smSelect`}
-                            />
-                          </div>
-                        )
-                      }
-                      <Search
-                        id="search"
-                        className="flex-grow-1"
-                        moduleClassName={SearchModuleClassName}
-                        placeholder={t('typeSearchTerms')}
-                        onSubmit={onSubmit}
-                      />
+                    <div className="mb-4">
+                      <div className="d-md-flex">
+                        {
+                          !isAdvancedSearch && (
+                            <div className="position-relative mb-md-0 mb-3">
+                              <Select
+                                options={options}
+                                className={`${style.select} select selectWithSibling smSelect`}
+                              />
+                            </div>
+                          )
+                        }
+                        <Search
+                          id="search"
+                          className="flex-grow-1"
+                          moduleClassName={SearchModuleClassName}
+                          placeholder={t('typeSearchTerms')}
+                          onSubmit={onSubmit}
+                        />
+                      </div>
+                      {/* <ErrorMessage msg="" className="mt-2" /> */}
                     </div>
                     <div className="d-md-flex">
                       <ToggleButton

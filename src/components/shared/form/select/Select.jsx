@@ -41,13 +41,16 @@ Select.propTypes = {
     PropTypes.string,
     PropTypes.func,
   ]).isRequired,
-  selectedOption: PropTypes.string,
+  selectedOption: PropTypes.shape({
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
   setSelectedOption: PropTypes.func,
 };
 Select.defaultProps = {
   className: null,
   placeholder: '',
-  selectedOption: '',
+  selectedOption: {},
   setSelectedOption: () => {},
 };
 export default Select;
