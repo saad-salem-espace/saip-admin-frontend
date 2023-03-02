@@ -25,7 +25,7 @@ function WorkstreamSearch() {
   const searchOptions = searchOption?.data;
 
   const formSchema = Yup.object({
-    searchQuery: Yup.string().trim().required('Search query cannot be empty'),
+    searchQuery: Yup.string().trim().required('Input search criteria to display search results.'),
   });
 
   useEffect(() => {
