@@ -23,12 +23,12 @@ function WorkStreams({ selectedWorkStream, onChange }) {
         workstreams.map((workStream) => (
           <Button
             variant="link"
-            className={`${style.card} me-4 mb-lg-0 mb-3 shadow ${selectedWorkStream === workStream.id ? style.active : ''}`}
+            className={`${style.card} me-4 mb-lg-0 mb-3 shadow px-6 py-2 ${style[workStream.workstreamName]} ${selectedWorkStream === workStream.id ? style.active : ''}`}
             onClick={() => handleChange(workStream.id)}
             key={workStream.id}
           >
-            <span className={`f-24 mb-2 d-block ${style.icon} icon-${workStream.icon}`} />
-            <span>{workStream.workstreamName}</span>
+            <span className={`f-24 mb-2 d-block ${style.icon} icon-${workStream.workstreamName}`} />
+            <span className="text-capitalize">{workStream.workstreamName}</span>
           </Button>
         ))
       }
@@ -37,8 +37,12 @@ function WorkStreams({ selectedWorkStream, onChange }) {
 }
 
 WorkStreams.propTypes = {
-  selectedWorkStream: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+  selectedWorkStream: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
+};
+
+WorkStreams.defaultProps = {
+  selectedWorkStream: null,
 };
 
 export default WorkStreams;

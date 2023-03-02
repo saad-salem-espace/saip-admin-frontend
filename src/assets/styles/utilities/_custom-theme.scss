@@ -49,6 +49,8 @@ $green: #198754 !default;
 $teal: #20c997 !default;
 $cyan: #0dcaf0 !default;
 $patents: #5287BE;
+$trademark: #E08C05;
+$copyright: #C5CF01;
 
 // saip color-variables
 $turquoise: #00A49B;
@@ -58,6 +60,7 @@ $turquoise-01: #F2F7F6;
 $turquoise-10: #E0F1F1;
 $danger: #D91148;
 $danger-dark: #B50644;
+
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
@@ -79,7 +82,8 @@ $colors: (
   "gray-dark": $gray-800,
   "turquoise": $turquoise,
   "danger": $danger,
-  "danger-dark":$danger-dark);
+  "danger-dark":$danger-dark
+);
 // scss-docs-end colors-map
 
 // scss-docs-start theme-color-variables
@@ -276,13 +280,17 @@ $spacer: 1rem !default;
 $spacers: (
   0: 0,
   1: $spacer * .25,
-  2: $spacer * .5, // 8px
+  2: $spacer * .5,
+  // 8px
   3: $spacer *.75,
-  4: $spacer * 1, // 16px
+  4: $spacer * 1,
+  // 16px
   5: $spacer * 1.25,
-  6: $spacer * 1.5, //24px
+  6: $spacer * 1.5,
+  //24px
   7: $spacer * 1.75,
-  8: $spacer * 2, //32px
+  8: $spacer * 2,
+  //32px
   9: $spacer * 2.25,
   10: $spacer * 2.5,
   11: $spacer * 2.75,
@@ -410,7 +418,8 @@ $border-radius-pill: 50rem !default;
 // scss-docs-end border-radius-variables
 
 // scss-docs-start box-shadow-variables
-$box-shadow:  4px 4px 15px rgba(0, 0, 0, 0.08);
+$box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08
+);
 $box-shadow-sm: 0 .125rem .25rem rgba($black, .075) !default;
 $box-shadow-lg: 4px 4px 15px 0px rgba(0, 0, 0, 0.14);
 $box-shadow-inset: inset 0 1px 2px rgba($black, .075) !default;
@@ -1104,7 +1113,7 @@ $pagination-padding-y-lg: .75rem !default;
 $pagination-padding-x-lg: 1.5rem !default;
 
 $pagination-color: $gray-700;
-$pagination-bg:  $primary-01;
+$pagination-bg: $primary-01;
 $pagination-border-width: 0;
 $pagination-border-radius: 50%;
 $pagination-margin-start: -$pagination-border-width !default;
@@ -1120,11 +1129,12 @@ $pagination-hover-bg: $gray-200 !default;
 $pagination-hover-border-color: $gray-300 !default;
 
 $pagination-active-color: $white;
-$pagination-active-bg:  $primary-dark;
+$pagination-active-bg: $primary-dark;
 $pagination-active-border-color: $pagination-active-bg !default;
 
 $pagination-disabled-color: $gray-600;
-$pagination-disabled-bg: $primary-01;;
+$pagination-disabled-bg: $primary-01;
+;
 $pagination-disabled-border-color: $gray-300 !default;
 
 $pagination-transition: color .15s ease-in-out,

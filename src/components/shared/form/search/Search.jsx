@@ -14,8 +14,8 @@ function Search({
   placeholder,
   onSubmit,
   moduleClassName,
-  inputValue,
-  setInputValue,
+  isClearable,
+  clearInput,
 }) {
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
@@ -28,13 +28,13 @@ function Search({
         type="text"
         name={name}
         placeholder={placeholder}
-        value={inputValue}
-        setInputValue={setInputValue}
       />
-      <Button className={`${style.clearIcon} text-gray`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={() => setInputValue('')} />
+      {
+        isClearable && <Button className={`${style.clearIcon} text-gray`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
+      }
       <Button
         type="submit"
-        onClick={onSubmit}
+        {...(onSubmit && { onClick: onSubmit })}
         className={`${style.searchIcon}`}
         text={<FontAwesomeIcon icon={faSearch} />}
       />
@@ -48,10 +48,10 @@ Search.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   placeholder: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
   moduleClassName: PropTypes.string,
-  inputValue: PropTypes.string,
-  setInputValue: PropTypes.func,
+  isClearable: PropTypes.bool,
+  clearInput: PropTypes.func,
 };
 
 Search.defaultProps = {
@@ -60,8 +60,9 @@ Search.defaultProps = {
   children: null,
   placeholder: null,
   moduleClassName: null,
-  inputValue: '',
-  setInputValue: () => {},
+  isClearable: false,
+  onSubmit: null,
+  clearInput: () => {},
 };
 
 export default Search;

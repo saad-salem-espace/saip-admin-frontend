@@ -56,8 +56,8 @@ describe('<SearchResult />', () => {
 
     await waitFor(() => {
       expect(getByText(`${search(patentIdentifiers, 'identiferStrId', searchParams.identifierStrId).identiferName}: “${searchParams.query}”`)).toBeInTheDocument();
-      expect(getByText(TOTAL <= PER_PAGE ? TOTAL : PER_PAGE)).toBeInTheDocument();
-      expect(getByText(TOTAL <= PER_PAGE ? TOTAL : PER_PAGE)).toHaveClass('font-medium');
+      expect(getByText(TOTAL)).toBeInTheDocument();
+      expect(getByText(TOTAL)).toHaveClass('font-medium');
     });
   });
 });

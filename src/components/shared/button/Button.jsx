@@ -14,7 +14,7 @@ function Button({
 }) {
   return (
     <BootstrapButton
-      onClick={onClick}
+      {...(onClick && { onClick })}
       disabled={disabled}
       size={size}
       variant={variant}
@@ -41,7 +41,7 @@ Button.propTypes = {
 };
 Button.defaultProps = {
   size: 'lg',
-  onClick: () => {},
+  onClick: null,
   disabled: false,
   variant: '',
   type: 'button',
