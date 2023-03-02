@@ -13,9 +13,3 @@
     width: 200px;
   }
 }
-
-.errorMsg {
-  @include media-breakpoint-up(md) {
-    margin-left: 200px;
-  }
-}
