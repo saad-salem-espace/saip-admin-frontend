@@ -15,6 +15,7 @@ import { documentApi } from '../../apis/workstreams/documentsApi';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import BibliographicDataSection from './BibliographicDataSection';
 
+// TODO change structure when trademarks are added
 function IprDetails({
   collapseIPR, isExpanded, documentId, onClose,
 }) {
