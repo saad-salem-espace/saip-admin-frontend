@@ -20,7 +20,7 @@ import AdvancedSearch from '../advanced-search/AdvancedSearch';
 function SearchResults() {
   const { t } = useTranslation('search');
   const [searchParams] = useSearchParams();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [activeDocument, setActiveDocument] = useState(null);
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
@@ -37,7 +37,7 @@ function SearchResults() {
   const identifier = getIdentifierByStrId(searchParams.get('identifierStrId'));
 
   const collapseIPR = () => {
-    setIsExpanded(!isExpanded);
+    setIsIPRExpanded(!isIPRExpanded);
   };
 
   const options = [
@@ -84,6 +84,17 @@ function SearchResults() {
 
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
+  };
+
+  const getIprClassName = (media) => {
+    let size = 4;
+    if (media === 'lg' && isIPRExpanded) {
+      size = 12;
+      if (isAdvancedSearch) {
+        size = isAdvancedMenuOpen ? 8 : 11;
+      }
+    }
+    return size;
   };
 
   return (
@@ -141,7 +152,7 @@ function SearchResults() {
       <Row className="border-top mx-0 align-items-stretch mb-10">
         {
           isAdvancedSearch && (
-            <Col lg={isAdvancedMenuOpen ? 4 : 1} className={`${isExpanded ? 'd-none' : 'd-block'} ${isAdvancedMenuOpen ? style.expanded : style.closed} ps-0`}>
+            <Col lg={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? style.expanded : style.closed} ps-0`}>
               <AdvancedSearch
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
                 isAdvancedMenuOpen={isAdvancedMenuOpen}
@@ -149,7 +160,7 @@ function SearchResults() {
             </Col>
           )
         }
-        <Col lg={isAdvancedSearch ? 4 : 8} md={6} className={`mt-8 ${isExpanded ? 'd-none' : 'd-block'}`}>
+        <Col lg={isAdvancedSearch ? 4 : 8} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <SearchNote
             searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
             resultsCount={totalResults}
@@ -172,10 +183,10 @@ function SearchResults() {
           </Formik>
         </Col>
         {activeDocument && (
-          <Col lg={isExpanded && isAdvancedSearch ? 12 : 4} md={isExpanded ? 0 : 6} className="px-0 border-start">
+          <Col lg={getIprClassName('lg')} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails
               collapseIPR={collapseIPR}
-              isExpanded={isExpanded}
+              isIPRExpanded={isIPRExpanded}
               documentId={activeDocument}
               onClose={handleCloseIprDetail}
             />
