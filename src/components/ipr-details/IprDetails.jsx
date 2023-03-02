@@ -85,7 +85,7 @@ function IprDetails({
           {() => (
             <Form>
               <div className="position-relative">
-                <span className={`position-absolute f-12 ${formStyle.label}`}>{t('viewSection')}</span>
+                <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('viewSection')}</span>
                 <Select
                   options={sectionsOptions}
                   onChangeSelect={onChangeSelect}

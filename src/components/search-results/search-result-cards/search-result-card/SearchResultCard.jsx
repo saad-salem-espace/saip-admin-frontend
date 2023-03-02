@@ -13,14 +13,14 @@ function SearchResultCard({ searchResult, query, setActiveDocument }) {
   const { BibliographicData } = searchResult;
 
   return (
-    <div className={`${style['result-card']} mb-7 position-relative px-1`}>
-      <div className="d-flex align-items-start mb-1">
-        <Checkbox className="mt-1" />
-        <Button
-          variant="link"
-          onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
-          className="text-start f-20 pe-0 py-0 text-primary-dark"
-          text={(
+    <Button
+      variant="transparent"
+      onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
+      className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0"
+      text={(
+        <div className={`${style['result-card']} mb-7 position-relative `}>
+          <div className="d-flex align-items-start mb-1">
+            <Checkbox className="me-4" />
             <Highlighter
               highlightTag="span"
               highlightClassName="font-bold"
@@ -31,17 +31,16 @@ function SearchResultCard({ searchResult, query, setActiveDocument }) {
               searchWords={[query]}
               autoEscape
             />
-          )}
-        />
-      </div>
-      <p className="mb-2">
-        {BibliographicData.PublicationNumber}
-      </p>
-      <p className="font-medium mb-2 d-lg-flex align-items-center">
-        {t('priority', { value: searchResult.Priority })}
-        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-        {t('filed', { value: BibliographicData.FilingNumber })}
-        {
+
+          </div>
+          <p className="mb-2 text-black">
+            {BibliographicData.PublicationNumber}
+          </p>
+          <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
+            {t('priority', { value: searchResult.Priority })}
+            <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+            {t('filed', { value: BibliographicData.FilingNumber })}
+            {
           BibliographicData.PublicationDate && (
             <>
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
@@ -49,20 +48,22 @@ function SearchResultCard({ searchResult, query, setActiveDocument }) {
             </>
           )
         }
-      </p>
-      <p className="text-gray sm-text">
-        <Highlighter
-          highlightTag="span"
-          highlightClassName="font-bold"
-          textToHighlight={trimStringRelativeToSubtext(
-            BibliographicData.ApplicationAbstract.join(' '),
-            query,
-          )}
-          searchWords={[query]}
-          autoEscape
-        />
-      </p>
-    </div>
+          </p>
+          <p className="text-gray sm-text">
+            <Highlighter
+              highlightTag="span"
+              highlightClassName="font-bold"
+              textToHighlight={trimStringRelativeToSubtext(
+                BibliographicData.ApplicationAbstract.join(' '),
+                query,
+              )}
+              searchWords={[query]}
+              autoEscape
+            />
+          </p>
+        </div>
+       )}
+    />
   );
 }
 
