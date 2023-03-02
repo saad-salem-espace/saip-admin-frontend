@@ -16,7 +16,7 @@ import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import BibliographicDataSection from './BibliographicDataSection';
 
 function IprDetails({
-  collapseIPR, isExpanded, documentId, onClose,
+  collapseIPR, isIPRExpanded, documentId, onClose,
 }) {
   const { t } = useTranslation('search');
   const [searchParams] = useSearchParams();
@@ -64,7 +64,7 @@ function IprDetails({
               onClick={collapseIPR}
               className="p-0"
               data-testid="expand-ipr-detail-button"
-              text={<FontAwesomeIcon icon={isExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`d-md-inline-block d-none f-17 text-gray ${style['expand-icon']}`} />}
+              text={<FontAwesomeIcon icon={isIPRExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`d-md-inline-block d-none f-17 text-gray ${style['expand-icon']}`} />}
             />
             <Button
               variant="link"
@@ -104,7 +104,7 @@ function IprDetails({
 
 IprDetails.propTypes = {
   collapseIPR: PropTypes.func.isRequired,
-  isExpanded: PropTypes.bool.isRequired,
+  isIPRExpanded: PropTypes.bool.isRequired,
   documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onClose: PropTypes.func,
 };
