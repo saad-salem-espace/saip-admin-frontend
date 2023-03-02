@@ -38,14 +38,12 @@ function IprDetails({
   const onChangeSelect = () => {
 
   };
+
+  // TODO to be handled on handling section task
   const sectionsOptions = [
     {
-      label: '1',
-      value: 'any field',
-    },
-    {
-      label: '2',
-      value: 'bio',
+      label: 'Bibliographic Data',
+      value: 1,
     },
   ];
 
@@ -89,6 +87,7 @@ function IprDetails({
                 <Select
                   options={sectionsOptions}
                   onChangeSelect={onChangeSelect}
+                  selectedOption={sectionsOptions[0]}
                   id="viewSection"
                   fieldName="viewSection"
                   className={`${style.select} mb-5 select-2`}
