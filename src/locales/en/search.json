@@ -31,5 +31,7 @@
   "and": "AND",
   "or": "OR",
   "not": "NOT",
-  "abstract": "Abstract"
+  "abstract": "Abstract",
+  "emptyStateMsg": "Change your search term in the search bar above or open 'Advanced search'.",
+  "emptyStateTitle": "Searching but not finding?"
 }

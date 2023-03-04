@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import useWorkstreams from 'hooks/useWorkstreams';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
+// import EmptyState from 'components/shared/empty-state/EmptyState';
 import SearchNote from './SearchNote';
 import AppPagination from '../shared/app-pagination/AppPagination';
 import SearchResultCards from './search-result-cards/SearchResultCards';
@@ -17,6 +18,7 @@ import IprDetails from '../ipr-details/IprDetails';
 // import formStyle from '../shared/form/form.module.scss';
 import style from './style.module.scss';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
+// import emptyState from '../../assets/images/search-empty-state.svg';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -98,6 +100,28 @@ function SearchResults() {
     }
     return size;
   };
+  const getSearchResultsClassName = (media) => {
+    let size = 4;
+    if (media === 'lg') {
+      if (isAdvancedSearch) {
+        if (!totalResults) {
+          size = 8;
+        }
+        if (!isAdvancedMenuOpen) {
+          if (totalResults) {
+            size = 7;
+          } else {
+            size = 11;
+          }
+        }
+      } else if (totalResults) {
+        size = 8;
+      } else {
+        size = 12;
+      }
+    }
+    return size;
+  };
 
   return (
     <Container fluid className="px-0">
@@ -165,11 +189,13 @@ function SearchResults() {
             </Col>
           )
         }
-        <Col lg={isAdvancedSearch ? 4 : 8} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+        <Col lg={getSearchResultsClassName('lg')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <SearchNote
             searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
             resultsCount={totalResults}
           />
+          {/* {
+            totalResults ? ( */}
           <Formik>
             {() => (
               <Form className="mt-8">
@@ -186,6 +212,11 @@ function SearchResults() {
               </Form>
             )}
           </Formik>
+          {/* ) : (
+              <EmptyState title=
+              {t('emptyStateTitle')} msg={t('emptyStateMsg')} img={emptyState} className="mt-18" />
+            )
+          } */}
         </Col>
         {activeDocument && (
           <Col lg={getIprClassName('lg')} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
