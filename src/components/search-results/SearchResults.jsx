@@ -17,6 +17,7 @@ import IprDetails from '../ipr-details/IprDetails';
 // import formStyle from '../shared/form/form.module.scss';
 import style from './style.module.scss';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
+// import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
 
 function SearchResults() {
   const { t } = useTranslation('search');
