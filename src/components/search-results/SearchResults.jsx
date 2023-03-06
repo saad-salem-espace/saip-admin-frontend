@@ -181,7 +181,11 @@ function SearchResults() {
                   }}
                   defaultPage={Number(searchParams.get('page') || '1')}
                   RenderedComponent={SearchResultCards}
-                  renderedProps={{ query: searchResultParams.queryString, setActiveDocument }}
+                  renderedProps={{
+                    query: searchResultParams.queryString,
+                    setActiveDocument,
+                    activeDocument,
+                  }}
                   fetchedTotalResults={setTotalResults}
                 />
               </Form>
