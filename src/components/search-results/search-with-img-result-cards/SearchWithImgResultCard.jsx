@@ -12,7 +12,9 @@ import style from '../search-result-cards/search-result-card/style.module.scss';
 import c from '../../../assets/images/search-header-bg.svg';
 import './style.scss';
 
-function SearchWithImgResultCard({ searchResult, query, setActiveDocument }) {
+function SearchWithImgResultCard({
+  searchResult, query, setActiveDocument, activeDocument,
+}) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
 
@@ -22,7 +24,7 @@ function SearchWithImgResultCard({ searchResult, query, setActiveDocument }) {
       onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
       className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0"
       text={(
-        <div className={`${style['result-card']} mb-7 position-relative `}>
+        <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
             <Checkbox className="me-4" />
             <Highlighter
@@ -82,6 +84,7 @@ SearchWithImgResultCard.propTypes = {
   }).isRequired,
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
+  activeDocument: PropTypes.number.isRequired,
 };
 
 export default SearchWithImgResultCard;
