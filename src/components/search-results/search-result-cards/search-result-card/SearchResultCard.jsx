@@ -8,7 +8,9 @@ import Checkbox from 'components/shared/form/checkboxes/checkbox/Checkbox';
 import Highlighter from 'react-highlight-words';
 import style from './style.module.scss';
 
-function SearchResultCard({ searchResult, query, setActiveDocument }) {
+function SearchResultCard({
+  searchResult, query, setActiveDocument, activeDocument,
+}) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
 
@@ -18,7 +20,7 @@ function SearchResultCard({ searchResult, query, setActiveDocument }) {
       onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
       className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0"
       text={(
-        <div className={`${style['result-card']} mb-7 position-relative `}>
+        <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
             <Checkbox className="me-4" />
             <Highlighter
@@ -80,6 +82,7 @@ SearchResultCard.propTypes = {
   }).isRequired,
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
+  activeDocument: PropTypes.number.isRequired,
 };
 
 export default SearchResultCard;
