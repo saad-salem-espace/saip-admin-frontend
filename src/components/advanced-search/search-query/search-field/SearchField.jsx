@@ -7,7 +7,7 @@ import Select from '../../../shared/form/select/Select';
 import style from '../SearchQuery.module.scss';
 import Button from '../../../shared/button/Button';
 import Input from '../../../shared/form/input/Input';
-// import DatePicker from '../../../shared/date-picker/AppDatePicker';
+import DatePicker from '../../../shared/date-picker/AppDatePicker';
 
 function SearchField() {
   const { t } = useTranslation('search');
@@ -68,6 +68,10 @@ function SearchField() {
       {/* <div className={style.dateWrapper}>
         <DatePicker />
       </div> */}
+      {/* for datepicker range */}
+      <div className={style.dateWrapper}>
+        <DatePicker range />
+      </div>
     </div>
   );
 }
