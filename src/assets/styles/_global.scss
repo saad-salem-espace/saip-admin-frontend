@@ -6,7 +6,9 @@ $fontSize: (
   20,
   22,
   24,
-  30
+  26,
+  30,
+  60
 );
 
 @each $fontSize in $fontSize {
@@ -25,4 +27,8 @@ $fontSize: (
 
 .hr {
   border: $border-width solid $gray;
+}
+
+.text-underline {
+  text-decoration: underline
 }

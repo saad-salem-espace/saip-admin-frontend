@@ -9,7 +9,11 @@
 }
 
 .select {
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(xl) {
     width: 200px;
   }
+}
+
+span.customLabel {
+  left: 154px;
 }

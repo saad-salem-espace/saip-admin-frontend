@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import Input from '../input/Input';
 import style from './style.module.scss';
 import Button from '../../button/Button';
-
+// import UploadImage from '../../upload-image/UploadImage';
 function Search({
   id,
   name,
@@ -16,6 +16,8 @@ function Search({
   moduleClassName,
   isClearable,
   clearInput,
+  handleUploadImg,
+  searchWithImg,
 }) {
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
@@ -30,8 +32,13 @@ function Search({
         placeholder={placeholder}
       />
       {
-        isClearable && <Button className={`${style.clearIcon} text-gray`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
+        isClearable && <Button className={`${style.clearIcon} text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
       }
+      {
+        searchWithImg && (
+        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4 border-start" />} onClick={() => handleUploadImg()} />
+        )
+    }
       <Button
         type="submit"
         {...(onSubmit && { onClick: onSubmit })}
@@ -52,6 +59,8 @@ Search.propTypes = {
   moduleClassName: PropTypes.string,
   isClearable: PropTypes.bool,
   clearInput: PropTypes.func,
+  handleUploadImg: PropTypes.func,
+  searchWithImg: PropTypes.bool,
 };
 
 Search.defaultProps = {
@@ -63,6 +72,8 @@ Search.defaultProps = {
   isClearable: false,
   onSubmit: null,
   clearInput: () => {},
+  handleUploadImg: null,
+  searchWithImg: false,
 };
 
 export default Search;
