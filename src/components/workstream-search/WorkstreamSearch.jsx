@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
+import uploadFile from 'apis/uploadFileApi';
 import * as Yup from 'yup';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import useCacheRequest from '../../hooks/useCacheRequest';
@@ -26,9 +27,10 @@ function WorkstreamSearch() {
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
   const [searchOption] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
   const searchOptions = searchOption?.data;
-  // eslint-disable-next-line react/hook-use-state
-  const [isImgUploaded] = useState(false); // plese set this state with true if user uploads img
+  const [isImgUploaded, setIsImgUploaded] = useState(false);
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formSchema = Yup.object({
     searchQuery: Yup.string().trim().required('Input search criteria to display search results.'),
@@ -58,6 +60,16 @@ function WorkstreamSearch() {
 
   const handleAdvancedSearch = () => {
     setIsAdvancedSearch(true);
+  };
+  const uploadCurrentFile = async (file) => {
+    setIsSubmitting(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    // eslint-disable-next-line no-unused-vars
+    const { res, err } = await uploadFile(formData);
+    if (err) setErrorMessage(err);
+    setIsImgUploaded(true);
+    setIsSubmitting(false);
   };
 
   const handleUploadImg = () => {
@@ -128,7 +140,7 @@ function WorkstreamSearch() {
                       isClearable={!!values.searchQuery}
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
-                      searchWithImg
+                      searchWithImg={selectedWorkStream === 1}
                     >
                       {/* please show this span if the search has text value */}
                       {/* <span className={`position-absolute ${formStyle.label}
@@ -142,8 +154,15 @@ function WorkstreamSearch() {
                     ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                   <div className="rounded">
-                    <UploadImage className={` ${showUploadImgSection ? 'my-4 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} />
+                    <UploadImage className={` ${showUploadImgSection ? 'my-4 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} />
                   </div>
+                  {
+                    errorMessage && (
+                      <span className="text-danger-dark f-12">
+                        { errorMessage }
+                      </span>
+                    )
+                  }
                 </Form>
               )}
             </Formik>

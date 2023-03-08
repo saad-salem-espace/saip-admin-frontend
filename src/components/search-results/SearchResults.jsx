@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
+import uploadFile from 'apis/uploadFileApi';
 import useWorkstreams from 'hooks/useWorkstreams';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 // import EmptyState from 'components/shared/empty-state/EmptyState';
@@ -27,18 +28,19 @@ function SearchResults() {
   const [searchParams] = useSearchParams();
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [activeDocument, setActiveDocument] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
   const [totalResults, setTotalResults] = useState(0);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     identifierStrId: searchParams.get('identifierStrId'),
     queryString: searchParams.get('query'),
   };
 
-  // eslint-disable-next-line react/hook-use-state
-  const [isImgUploaded] = useState(true); // plese set this state with true if user uploads img
+  const [isImgUploaded, setIsImgUploaded] = useState(false);
 
   const { getIdentifierByStrId, isReady } = useWorkstreams(searchResultParams.workstreamId);
   if (!isReady) return null;
@@ -93,6 +95,17 @@ function SearchResults() {
     imgUploadedResultView: isImgUploaded,
     searchWithImage: true, // please set it true for workstream with search with image
   });
+
+  const uploadCurrentFile = async (file) => {
+    setIsSubmitting(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    // eslint-disable-next-line no-unused-vars
+    const { res, err } = await uploadFile(formData);
+    if (err) setErrorMessage(err);
+    setIsImgUploaded(true);
+    setIsSubmitting(false);
+  };
 
   const handleUploadImg = () => {
     setShowUploadImgSection(!showUploadImgSection);
@@ -191,8 +204,15 @@ function SearchResults() {
             )}
           </Formik>
           <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
-            <UploadImage className={`${showUploadImgSection ? 'py-8' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} />
+            <UploadImage className={`${showUploadImgSection ? 'py-8' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
           </div>
+          {
+            errorMessage && (
+              <span className="text-danger-dark f-12">
+                { errorMessage }
+              </span>
+            )
+          }
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch mb-10">

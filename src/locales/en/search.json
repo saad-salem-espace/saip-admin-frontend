@@ -37,5 +37,7 @@
   "browseFiles": "Browse Files",
   "dragDrop": "Drag & Drop Files Here",
   "imgFormats": "Only .jpeg .png .tiff .jpg .gif formats supported <0> or </0>",
-  "imgFormatsValidation": "Can't upload. Use an image in one of these formats: .jpeg, .png, .tiff, or .gif"
+  "validationErrors": {
+    "imgFormats": "Can't upload. Use an image in one of these formats: .jpeg, .png, .tiff, .jpg, or .gif"
+  }
 }

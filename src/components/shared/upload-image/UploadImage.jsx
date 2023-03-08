@@ -11,14 +11,17 @@ import './UploadImage.scss';
 import Spinner from '../spinner/Spinner';
 
 function UploadImage({
-  maxNumber, className, showUploadImgSection,
+  maxNumber, className, showUploadImgSection, uploadFile, changeIsImgUploaded, isSubmitting,
 }) {
-  const [images, setImages] = React.useState([]);
-  // eslint-disable-next-line react/hook-use-state
-  const [isSubmitting] = useState(false);
+  const [images, setImages] = useState([]);
 
   const onChange = (imageList) => {
     setImages(imageList);
+    if (imageList.length !== 0) {
+      uploadFile(imageList[0]?.file);
+    } else {
+      changeIsImgUploaded(false);
+    }
   };
 
   const { t } = useTranslation('search');
@@ -30,7 +33,7 @@ function UploadImage({
       onChange={onChange}
       maxNumber={maxNumber}
       dataURLKey="data_url"
-      acceptType={['png', 'gif', 'jpeg', 'tiff']}
+      acceptType={['png', 'gif', 'jpeg', 'tiff', 'jpg']}
     >
       {({
         imageList,
@@ -92,7 +95,7 @@ function UploadImage({
           </div>
           {errors
             && <div>
-              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg">{t('imgFormatsValidation')}</span>}
+              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg">{t('validationErrors.imgFormats')}</span>}
             </div>}
         </>
       )}
@@ -104,6 +107,9 @@ UploadImage.propTypes = {
   className: PropTypes.string,
   maxNumber: PropTypes.number,
   showUploadImgSection: PropTypes.bool.isRequired,
+  uploadFile: PropTypes.func.isRequired,
+  changeIsImgUploaded: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
 };
 
 UploadImage.defaultProps = {
