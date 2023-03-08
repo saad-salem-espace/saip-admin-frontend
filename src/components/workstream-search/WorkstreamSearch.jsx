@@ -98,7 +98,7 @@ function WorkstreamSearch() {
               {({
                 handleSubmit, values, setFieldValue, errors, touched,
               }) => (
-                <Form className="mt-8" onSubmit={handleSubmit}>
+                <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
                   <ToggleButton
                     handleToggleButton={handleAdvancedSearch}
                     isToggleButtonOn={false}
