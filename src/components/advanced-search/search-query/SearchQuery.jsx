@@ -11,20 +11,25 @@ import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Button from '../../shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 
-function SearchQuery({ workstreamId }) {
+function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${workstreamId}/identifiers` });
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
+  const [firstIdentifier, setFirstIdentifier] = useState(null);
+  const [firstCondition, setFirstCondition] = useState(null);
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
+    /* eslint-disable-next-line max-len */
+    setFirstIdentifier(searchIdentifiers?.data.find((element) => element.identiferStrId === firstIdentifierStr));
   }, [searchIdentifiers]);
 
   useEffect(() => {
     setDefaultCondition(defaultIdentifier?.identifierOptions?.[0]);
-  }, [defaultIdentifier]);
+    setFirstCondition(firstIdentifier?.identifierOptions?.[0]);
+  }, [defaultIdentifier, firstIdentifier]);
 
   const formSchema = Yup.object().shape({
     searchFields: Yup.array().of(
@@ -43,7 +48,7 @@ function SearchQuery({ workstreamId }) {
         validateOnBlur={false}
         initialValues={{
           searchFields: [{
-            id: 1, data: '', identifier: defaultIdentifier, condition: defaultCondition,
+            id: 1, data: defaultCriteria, identifier: firstIdentifier, condition: firstCondition,
           }],
         }}
       >
@@ -119,6 +124,8 @@ function SearchQuery({ workstreamId }) {
 
 SearchQuery.propTypes = {
   workstreamId: PropTypes.string.isRequired,
+  firstIdentifierStr: PropTypes.string.isRequired,
+  defaultCriteria: PropTypes.string.isRequired,
 };
 
 export default SearchQuery;

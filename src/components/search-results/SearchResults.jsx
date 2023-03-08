@@ -162,6 +162,8 @@ function SearchResults() {
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
                 isAdvancedMenuOpen={isAdvancedMenuOpen}
                 workstreamId={searchResultParams.workstreamId}
+                firstIdentifierStr={searchResultParams.identifierStrId}
+                defaultCriteria={searchResultParams.queryString}
               />
             </Col>
           )
