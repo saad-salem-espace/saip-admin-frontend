@@ -1,0 +1,145 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.multiSelect {
+  position: relative;
+
+  >div {
+    height: 100%;
+    width: 100%;
+  }
+
+  button {
+    height: 100%;
+    width: 100%;
+    box-shadow: none;
+    border: $border-width solid $gray-400;
+    border-radius: $border-radius;
+    padding: 16px;
+
+    +div {
+      z-index: 10 !important;
+    }
+
+    .css-1v99tuv {
+      color: $gray;
+      font-family: $font-regular;
+      font-size: 14px;
+    }
+
+    +div {
+      border: $border-width solid $gray-400 !important;
+      padding: 16px;
+      width: 100%;
+
+      [class$="control"] {
+        height: 56px;
+        border-color: $gray-400;
+        // padding: 16px;
+        margin-bottom: 0;
+        cursor: text;
+        box-shadow: none;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        svg {
+          color: $gray;
+        }
+      }
+
+      [class$="placeholder"] {
+        color: $gray;
+        font-size: 14px;
+        // top: 0;
+        // position: relative;
+      }
+
+      .css-ik6y5r {
+        box-shadow: none;
+      }
+
+      [class$="-option"] {
+        color: $gray-700;
+        font-family: $font-regular;
+      }
+
+      .css-11unzgr input {
+        display: none;
+      }
+
+      .css-1vr111p-option {
+        background-color: transparent;
+
+        &:hover {
+          background-color: $gray-200;
+        }
+
+        &::before {
+          content: "\f0c8";
+          font-family: FontAwesomeRegular;
+          font-size: 22px;
+          margin-right: 10px;
+          color: $gray-400;
+        }
+      }
+
+      .css-1qprcsu-option {
+        background-color: transparent;
+
+        &:hover {
+          background-color: $gray-200;
+        }
+
+        &::before {
+          content: "\f14a";
+          font-family: FontAwesomeSolid;
+          color: $turquoise-secondary;
+          font-size: 22px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  &.smMultiSelect {
+    height: 56px;
+  }
+
+  .css-1gpjby2 {
+    svg {
+      color: $gray;
+    }
+  }
+
+  &.has-value {
+    .css-1v99tuv {
+      color: $gray-700;
+      margin-top: 16px;
+    }
+  }
+
+  .label {
+    z-index: 99;
+    color: $gray;
+    font-size: 12px;
+    top: 8px;
+    left: 16px;
+    font-family: $font-regular;
+  }
+
+  &.error {
+    button {
+      border: $border-width solid $danger;
+
+      &::after {
+        content: "\f06a";
+        font-family: FontAwesomeSolid;
+        color: $danger;
+        position: absolute;
+        right: 41px;
+        top: 19px;
+      }
+    }
+  }
+}

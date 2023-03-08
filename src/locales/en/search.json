@@ -31,5 +31,7 @@
   "and": "AND",
   "or": "OR",
   "not": "NOT",
-  "abstract": "Abstract"
+  "abstract": "Abstract",
+  "publicationCountry": "Publication Country",
+  "clearAll": "Clear all"
 }
