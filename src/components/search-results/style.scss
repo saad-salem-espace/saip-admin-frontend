@@ -21,7 +21,6 @@
 
 .searchResultsView {
   position: absolute;
-  width: calc(100% - 288px);
   background-color: $white;
   z-index: 10;
   top: 91px;
@@ -33,13 +32,13 @@
   }
 
   @include media-breakpoint-down(lg) {
-    top: 156px;
+   top:156px;
   }
 
   @include media-breakpoint-down(md) {
-    top: 215px;
+    top:215px;
     width: 94%;
-  }
+   }
 
   .uploadImageWrapper {
     .imageView {
@@ -47,22 +46,22 @@
       height: 30px;
       margin: 5px;
     }
+  }
 
-    .imgUploaded {
-      .image-item {
-        top: -51px;
-        height: 43px;
-      }
+  .imgUploaded {
+    .image-item {
+      top: -51px;
+      height: 43px;
     }
+  }
 
-    .removeImg {
-      position: relative;
+  .removeImg {
+    position: relative;
 
-      .fa-xmark {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-      }
+    .fa-xmark {
+      position: absolute;
+      top: 5px;
+      right: 5px;
     }
   }
 
