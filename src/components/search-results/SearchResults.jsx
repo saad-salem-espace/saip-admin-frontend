@@ -161,6 +161,7 @@ function SearchResults() {
               <AdvancedSearch
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
                 isAdvancedMenuOpen={isAdvancedMenuOpen}
+                workstreamId={searchResultParams.workstreamId}
               />
             </Col>
           )
