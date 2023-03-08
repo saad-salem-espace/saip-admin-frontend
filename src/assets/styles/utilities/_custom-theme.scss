@@ -297,6 +297,7 @@ $spacers: (
   10: $spacer * 2.5,
   11: $spacer * 2.75,
   12:$spacer * 3,
+  14:$spacer * 3.5,
   18: $spacer * 4,
   22: $spacer * 5.8,
   ) !default;
@@ -401,7 +402,8 @@ $container-padding-x: $grid-gutter-width * .5 !default;
 // Define common padding and border radius sizes and more.
 
 // scss-docs-start border-variables
-$border-width: 1px !default;
+$border-width: 1px;
+$border-width-md: 2px;
 $border-widths: (
   1: 1px,
   2: 2px,
@@ -1557,3 +1559,4 @@ $pre-color: null !default;
 @import "~bootstrap/scss/carousel";
 @import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/spinners";
