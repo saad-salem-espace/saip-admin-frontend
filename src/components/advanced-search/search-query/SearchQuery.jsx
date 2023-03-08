@@ -6,6 +6,8 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
+import * as Yup from 'yup';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Button from '../../shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 
@@ -24,17 +26,30 @@ function SearchQuery({ workstreamId }) {
     setDefaultCondition(defaultIdentifier?.identifierOptions?.[0]);
   }, [defaultIdentifier]);
 
+  const formSchema = Yup.object().shape({
+    searchFields: Yup.array().of(
+      Yup.object().shape({
+        data: Yup.string().trim().required(),
+      }),
+    ),
+  });
+
   return (
     <div>
       <Formik
         enableReinitialize
+        validationSchema={formSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
         initialValues={{
           searchFields: [{
             id: 1, data: '', identifier: defaultIdentifier, condition: defaultCondition,
           }],
         }}
       >
-        {({ values, resetForm, setFieldValue }) => (
+        {({
+          values, resetForm, setFieldValue, errors,
+        }) => (
           <Form>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
@@ -88,6 +103,9 @@ function SearchQuery({ workstreamId }) {
                       // onClick={onSubmit}
                       text={t('apply')}
                     />
+                    {
+                      errors.searchFields ? <ErrorMessage msg="Search criteria cannot be empty for any field." className="mt-2" /> : null
+                    }
                   </div>
                 </div>
               )}
