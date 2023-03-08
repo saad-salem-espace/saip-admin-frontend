@@ -70,6 +70,13 @@
     }
 
     &.rmdp-day {
+
+      &:hover,
+      &:hover span {
+        background-color: $primary-dark;
+        color: $white;
+      }
+
       span:hover {
         background-color: $primary-dark;
       }
@@ -97,23 +104,36 @@
     }
   }
 
-  .rmdp-range {
-    color: $dark;
-    background-color: #AFDEDC;
-    box-shadow: none;
+  .rmdp-day {
+    &.rmdp-range {
+      color: $dark;
+      background-color: #AFDEDC;
+      box-shadow: none;
 
-    &.start,
-    &.end {
-      border-radius: $border-radius;
-      color: $white;
-    }
+      span {
+        background-color: #AFDEDC;
+      }
 
-    &.start {
-      background-color: $primary;
-    }
+      &.start,
+      &.end {
+        border-radius: $border-radius;
+        color: $white;
+        background-color: $primary;
 
-    &.end {
-      background-color: $primary-dark;
+        &:hover,
+        &:hover span {
+          background-color: $primary-dark;
+        }
+
+        span {
+          background-color: $primary;
+
+          &:hover {
+
+            background-color: $primary-dark;
+          }
+        }
+      }
     }
   }
 
@@ -130,4 +150,33 @@
       }
     }
   }
+
+  .rmdp-ep-arrow {
+    display: none;
+  }
+
+  &.error {
+    .rmdp-input {
+      border-color: $danger;
+    }
+  }
+}
+
+.rmdp-arrow-container {
+  width: 30px;
+  height: 30px;
+  padding-top: 5px;
+
+  &:hover {
+    background-color: $gray-300;
+    box-shadow: none;
+
+    .rmdp-arrow {
+      border-color: $primary;
+    }
+  }
+}
+
+.rmdp-calendar {
+  padding: 4px 10px;
 }
