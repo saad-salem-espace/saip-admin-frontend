@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+// import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import formStyle from '../../../shared/form/form.module.scss';
 import Select from '../../../shared/form/select/Select';
 import style from '../SearchQuery.module.scss';
@@ -22,6 +23,11 @@ function SearchField({
 }) {
   const { t } = useTranslation('search');
   const identifiersList = searchIdentifiers;
+
+  const inputModuleClassName = ({
+    smInput: true,
+    error: true, // please change it to true if we have error
+  });
 
   return (
     <div className={`p-4 bg-primary-01 mb-2 ${style.wrapper}`}>
@@ -61,7 +67,9 @@ function SearchField({
         >
           {t('criteria')}
         </span>
-        <Input moduleClassName="smInput" name={name} />
+        <Input moduleClassName={inputModuleClassName} name={name} />
+        {/* <ErrorMessage msg="Search criteria cannot be empty for any field."
+         className="mt-2" /> */}
       </div>
       {/* for datepicker */}
       {/* <div className={style.dateWrapper}>
