@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-// import ErrorMessage from 'components/shared/error-message/ErrorMessage';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import formStyle from '../../../shared/form/form.module.scss';
 import Select from '../../../shared/form/select/Select';
 import style from '../SearchQuery.module.scss';
@@ -20,13 +20,15 @@ function SearchField({
   onChangeIdentifier,
   conditionValue,
   onChangeCondition,
+  error,
+  order,
 }) {
   const { t } = useTranslation('search');
   const identifiersList = searchIdentifiers;
 
   const inputModuleClassName = ({
     smInput: true,
-    error: true, // please change it to true if we have error
+    error: !!error, // please change it to true if we have error
   });
 
   return (
@@ -54,12 +56,15 @@ function SearchField({
             getOptionValue={(option) => option.optionName}
           />
         </div>
-        <Button
-          variant="link"
-          onClick={handleRemove}
-          className="p-0"
-          text={<FontAwesomeIcon icon={faTrashAlt} className="text-danger-dark" />}
-        />
+        {
+          order
+            ? <Button
+                variant="link"
+                onClick={handleRemove}
+                className="p-0"
+                text={<FontAwesomeIcon icon={faTrashAlt} className="text-danger-dark" />}
+            /> : null
+        }
       </div>
       <div className={`position-relative me-2 ${style.criteria}`}>
         <span className={`position-absolute ${formStyle.label}
@@ -68,8 +73,10 @@ function SearchField({
           {t('criteria')}
         </span>
         <Input moduleClassName={inputModuleClassName} name={name} />
-        {/* <ErrorMessage msg="Search criteria cannot be empty for any field."
-         className="mt-2" /> */}
+        {error && <ErrorMessage
+          msg="Search criteria cannot be empty for any field."
+          className="mt-2"
+        /> }
       </div>
       {/* for datepicker */}
       {/* <div className={style.dateWrapper}>
@@ -88,11 +95,14 @@ SearchField.propTypes = {
   conditionValue: PropTypes.object.isRequired,
   onChangeIdentifier: PropTypes.func.isRequired,
   onChangeCondition: PropTypes.func.isRequired,
+  order: PropTypes.objectOf(PropTypes.number).isRequired,
+  error: PropTypes.string,
 };
 
 SearchField.defaultProps = {
   handleRemove: null,
   name: null,
+  error: null,
 };
 
 export default SearchField;

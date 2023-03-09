@@ -7,7 +7,6 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Button from '../../shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 
@@ -34,7 +33,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
   const formSchema = Yup.object().shape({
     searchFields: Yup.array().of(
       Yup.object().shape({
-        data: Yup.string().trim().required(),
+        data: Yup.string().trim().required('Search criteria cannot be empty for any field'),
       }),
     ),
   });
@@ -53,7 +52,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
         }}
       >
         {({
-          values, resetForm, setFieldValue, errors,
+          values, setFieldValue, errors, setValues,
         }) => (
           <Form>
             <FieldArray name="searchFields">
@@ -74,6 +73,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                      }}
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
+                     error={value.data.trim() ? null : errors.searchFields?.[index]}
                    />
                  ))
                }
@@ -98,7 +98,11 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                       variant="outline-primary"
                       className="me-4"
                       size="sm"
-                      onClick={() => resetForm()}
+                      onClick={() => setValues({
+                        searchFields: [{
+                          id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition,
+                        }],
+                      })}
                       text={t('clear')}
                     />
                     <Button
@@ -108,9 +112,6 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                       // onClick={onSubmit}
                       text={t('apply')}
                     />
-                    {
-                      errors.searchFields ? <ErrorMessage msg="Search criteria cannot be empty for any field." className="mt-2" /> : null
-                    }
                   </div>
                 </div>
               )}

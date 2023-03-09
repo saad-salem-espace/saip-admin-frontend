@@ -14,39 +14,32 @@ function SearchFieldWIthButtons({
   onChangeIdentifier,
   conditionValue,
   onChangeCondition,
+  error,
 }) {
   const { t } = useTranslation('search');
-
+  const searchField = (
+    <SearchField
+      order={order}
+      handleRemove={handleRemove}
+      name={name}
+      searchIdentifiers={searchIdentifiers}
+      identifierValue={identifierValue}
+      onChangeIdentifier={onChangeIdentifier}
+      conditionValue={conditionValue}
+      onChangeCondition={onChangeCondition}
+      error={error}
+    />
+  );
   return (
     <div>
-      {
-            order === 0 ? <SearchField
-              handleRemove={handleRemove}
-              name={name}
-              searchIdentifiers={searchIdentifiers}
-              identifierValue={identifierValue}
-              onChangeIdentifier={onChangeIdentifier}
-              conditionValue={conditionValue}
-              onChangeCondition={onChangeCondition}
-            />
-              : <div>
-                <RadioButtonGroup className="mb-2" moduleClassName="customRadio">
-                  <RadioButton name="operator" value="and" checked>{t('and')}</RadioButton>
-                  <RadioButton name="operator" value="or">{t('or')}</RadioButton>
-                  <RadioButton name="operator" value="not">{t('not')}</RadioButton>
-                </RadioButtonGroup>
-                <SearchField
-                  handleRemove={handleRemove}
-                  name={name}
-                  searchIdentifiers={searchIdentifiers}
-                  identifierValue={identifierValue}
-                  onChangeIdentifier={onChangeIdentifier}
-                  conditionValue={conditionValue}
-                  onChangeCondition={onChangeCondition}
-                />
-                {/* eslint-disable-next-line react/jsx-closing-tag-location */}
-              </div>
-}
+      { !!order && (
+      <RadioButtonGroup className="mb-2" moduleClassName="customRadio">
+        <RadioButton name="operator" value="and" checked>{t('and')}</RadioButton>
+        <RadioButton name="operator" value="or">{t('or')}</RadioButton>
+        <RadioButton name="operator" value="not">{t('not')}</RadioButton>
+      </RadioButtonGroup>
+      )}
+      {searchField}
     </div>
   );
 }
@@ -61,6 +54,11 @@ SearchFieldWIthButtons.propTypes = {
   onChangeCondition: PropTypes.func.isRequired,
   identifierValue: PropTypes.object.isRequired,
   conditionValue: PropTypes.object.isRequired,
+  error: PropTypes.string,
+};
+
+SearchFieldWIthButtons.defaultProps = {
+  error: null,
 };
 
 export default SearchFieldWIthButtons;
