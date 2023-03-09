@@ -18,6 +18,10 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
   const [firstCondition, setFirstCondition] = useState(null);
+  const operators = ['and', 'or', 'not'].map((operator) => ({
+    operator: operator.toUpperCase(),
+    displayName: t(`operators.${operator}`),
+  }));
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
@@ -77,7 +81,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                    <SearchFieldWithButtons
                      key={value.id}
                      order={index}
-                     name={`searchFields.${index}.data`}
+                     namePrefix={`searchFields.${index}`}
                      handleRemove={() => remove(index)}
                      searchIdentifiers={searchIdentifiers?.data}
                      identifierValue={value.identifier}
@@ -86,6 +90,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                        setFieldValue(`searchFields.${index}.condition`, identifier?.identifierOptions?.[0]);
                        setFieldValue(`searchFields.${index}.data`, '');
                      }}
+                     operators={operators}
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
                      error={value.data.trim() ? null : errors.searchFields?.[index]}
