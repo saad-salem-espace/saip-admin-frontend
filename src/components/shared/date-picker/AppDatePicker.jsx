@@ -10,7 +10,7 @@ function AppDatePicker({ name, onChangeDate }) {
     <div className="datePicker position-relative">
       <Field name={name}>
         {
-        ({ field }) => <DatePicker {...field} name={name} onChange={(val) => onChangeDate(val.format('YYYY/MM/DD'))} />
+        ({ field }) => <DatePicker {...field} name={name} format="DD MMMM YYYY" onChange={(val) => onChangeDate(val.format())} />
       }
       </Field>
 
