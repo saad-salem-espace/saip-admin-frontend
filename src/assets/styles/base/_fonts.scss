@@ -26,6 +26,17 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'FontAwesomeRegular';
+  src: url('../../fonts//fontawesome-regular.ttf');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FontAwesomeSolid';
+  src: url('../../fonts//fontawesome-solid.ttf');
+  font-display: swap;
+}
 
 $font-regular: 'BukraAlt-Regular';
 $font-medium: 'BukraAlt-Medium';

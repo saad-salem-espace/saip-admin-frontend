@@ -1,0 +1,84 @@
+@import "../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.select {
+  width: 100%;
+
+  @include media-breakpoint-up(md) {
+    width: 200px;
+  }
+}
+
+.workStreams {
+  width: 140px;
+}
+
+@include media-breakpoint-down(lg) {
+  .closed {
+    height: 60px;
+  }
+}
+
+.searchResultsView {
+  position: absolute;
+  background-color: $white;
+  z-index: 10;
+  top: 91px;
+  right: 13px;
+  width: 96%;
+
+  @include media-breakpoint-up(lg) {
+    width: calc(100% - 288px);
+  }
+
+  @include media-breakpoint-down(lg) {
+   top:156px;
+  }
+
+  @include media-breakpoint-down(md) {
+    top:215px;
+    width: 94%;
+   }
+
+  .uploadImageWrapper {
+    .imageView {
+      width: 49px;
+      height: 30px;
+      margin: 5px;
+    }
+  }
+
+  .imgUploaded {
+    .image-item {
+      top: -51px;
+      height: 43px;
+    }
+  }
+
+  .removeImg {
+    position: relative;
+
+    .fa-xmark {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+  }
+
+  .errorMsg {
+    margin-left: 33px;
+    display: flex;
+  }
+
+  .imgUploaded {
+    @include media-breakpoint-up(md) {
+      input {
+        padding-left: 154px;
+      }
+    }
+  }
+
+  .dashedBorder {
+    padding: 32px;
+  }
+}

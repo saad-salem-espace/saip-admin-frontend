@@ -5,6 +5,11 @@
 }
 
 .appBtn {
+
+  &.btn:first-child:active {
+    border-color: transparent;
+  }
+
   &.btn-outline-primary {
     &:hover {
       color: $white !important;
@@ -18,5 +23,9 @@
       color: $primary !important;
       background-color: $white !important;
     }
+  }
+
+  &.disabled {
+    color: $gray-500 !important;
   }
 }

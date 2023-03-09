@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
+// import MultiSelect from 'components/shared/multi-select/MultiSelect';
 import formStyle from '../../../shared/form/form.module.scss';
 import Select from '../../../shared/form/select/Select';
 import style from '../SearchQuery.module.scss';
@@ -24,13 +25,18 @@ function SearchField({
   order,
   onChangeDate,
 }) {
-  const { t } = useTranslation('search');
   const identifiersList = searchIdentifiers;
 
   const inputModuleClassName = ({
     smInput: true,
     error: !!error, // please change it to true if we have error
   });
+  const { t } = useTranslation(['search', 'translation']);
+
+  // const options = [
+  //   { label: 'Thing 1', value: 1 },
+  //   { label: 'Thing 2', value: 2 },
+  // ];
 
   return (
     <div className={`p-4 bg-primary-01 mb-2 ${style.wrapper}`}>
@@ -46,7 +52,7 @@ function SearchField({
             setSelectedOption={onChangeIdentifier}
           />
         </div>
-        <div className={`position-relative mb-md-0 mb-3 me-4 ${style.condition}`}>
+        <div className={`position-relative mb-md-0 mb-3 flex-grow-1 ${style.condition}`}>
           <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>{t('condition')}</span>
           <Select
             options={identifierValue?.identifierOptions}
@@ -63,16 +69,16 @@ function SearchField({
                 variant="link"
                 onClick={handleRemove}
                 className="p-0"
-                text={<FontAwesomeIcon icon={faTrashAlt} className="text-danger-dark" />}
+                text={<FontAwesomeIcon icon={faTrashAlt} className="text-danger-dark ms-2" />}
             /> : null
         }
       </div>
-      <div className={`position-relative me-2 ${style.criteria}`}>
+      <div className={`position-relative ${style.criteria}`}>
         {
           identifierValue?.identifierType === 'Date'
             ? (
-              <div className={style.dateWrapper}>
-                <DatePicker name={name} onChangeDate={onChangeDate} />
+              <div>
+                <DatePicker name={name} onChangeDate={onChangeDate} className={`${error ? 'error' : ''}`} />
               </div>
             )
             : (
@@ -93,7 +99,37 @@ function SearchField({
       </div>
       {/* for datepicker */}
       {/* <div className={style.dateWrapper}>
-        <DatePicker />
+       please add error class if date has error
+        <DatePicker
+          className="error"
+          errorMsg={t('translation:noEmptyField')}
+        />
+      </div> */}
+      {/* for datepicker range */}
+      {/* need to handle the onchange function on datePicker component for datepicker range */}
+      {/* please add error class if date has error */}
+      {/* <div className={style.dateWrapper}>
+        <DatePicker
+          range
+          className="error"
+          errorMsg={t('translation:noEmptyField')}
+        />
+        <ErrorMessage
+          msg="Search criteria cannot be empty for any field."
+          className="mt-2"
+        />
+      </div> */}
+      {/* <MultiSelect
+        options={options}
+        errorMsg={t('translation:noEmptyField')}
+        // please add class has-value if the user selects any option
+        // please add error class if select has error
+        className={`smMultiSelect ${style.advancedSearchSelect}`}
+        // please show the below label if the user selects any option
+        // label={t('publicationCountry')}
+      /> */}
+      {/* <div className="border-top mt-7 pb-2 pt-5">
+        <Button variant="link" className="font-regular px-0" text={t('clearAll')} />
       </div> */}
     </div>
   );
