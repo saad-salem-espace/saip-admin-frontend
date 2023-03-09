@@ -68,11 +68,6 @@ function SearchField({
         }
       </div>
       <div className={`position-relative me-2 ${style.criteria}`}>
-        <span className={`position-absolute ${formStyle.label}
-         ${formStyle.smLabel}`}
-        >
-          {t('criteria')}
-        </span>
         {
           identifierValue?.identifierType === 'Date'
             ? (
@@ -81,7 +76,14 @@ function SearchField({
               </div>
             )
             : (
-              <Input moduleClassName={inputModuleClassName} name={name} />
+              <>
+                <span className={`position-absolute ${formStyle.label}
+              ${formStyle.smLabel}`}
+                >
+                  {t('criteria')}
+                </span>
+                <Input moduleClassName={inputModuleClassName} name={name} />
+              </>
             )
         }
         {error && <ErrorMessage
