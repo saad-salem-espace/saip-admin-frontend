@@ -46,7 +46,7 @@ function SearchField({
             setSelectedOption={onChangeIdentifier}
           />
         </div>
-        <div className={`position-relative mb-md-0 mb-3 me-4 ${style.condition}`}>
+        <div className={`position-relative mb-md-0 mb-3 flex-grow-1 ${style.condition}`}>
           <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>{t('condition')}</span>
           <Select
             options={identifierValue?.identifierOptions}
@@ -63,15 +63,15 @@ function SearchField({
                 variant="link"
                 onClick={handleRemove}
                 className="p-0"
-                text={<FontAwesomeIcon icon={faTrashAlt} className="text-danger-dark" />}
+                text={<FontAwesomeIcon icon={faTrashAlt} className="text-danger-dark ms-2" />}
             /> : null
         }
       </div>
-      <div className={`position-relative me-2 ${style.criteria}`}>
+      <div className={`position-relative ${style.criteria}`}>
         {
           identifierValue?.identifierType === 'Date'
             ? (
-              <div className={style.dateWrapper}>
+              <div>
                 <DatePicker name={name} onChangeDate={onChangeDate} />
               </div>
             )
