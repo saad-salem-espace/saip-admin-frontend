@@ -38,6 +38,20 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
     ),
   });
 
+  // const parse = (values) => {
+  //   const finalQuery = '';
+
+  //   values.searchFields.forEach((value, index) => {
+  //     parseSingleQuery(value);
+  //   });
+  // };
+
+  // const parseSingleQuery = (searchField) => {
+  //   let searchQuery = '';
+  //   searchQuery += `${searchField.identifier.identifierName} `;
+  //   searchQuery += `${searchField.condition.optionName} `;
+  // };
+
   return (
     <div>
       <Formik
@@ -47,7 +61,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
         validateOnBlur={false}
         initialValues={{
           searchFields: [{
-            id: 1, data: defaultCriteria, identifier: firstIdentifier, condition: firstCondition,
+            id: 1, data: defaultCriteria, identifier: firstIdentifier, condition: firstCondition, operator: '',
           }],
         }}
       >
@@ -85,7 +99,11 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                     size="sm"
                     onClick={() => {
                       const newField = {
-                        id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition,
+                        id: Math.max(...values.searchFields.map((o) => o.id)) + 1,
+                        data: '',
+                        identifier: defaultIdentifier,
+                        condition: defaultCondition,
+                        operator: 'AND',
                       };
                       push(newField);
                     }}
@@ -102,7 +120,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                       size="sm"
                       onClick={() => setValues({
                         searchFields: [{
-                          id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition,
+                          id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition, operator: '',
                         }],
                       })}
                       text={t('clear')}
@@ -111,7 +129,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                       variant="primary"
                       type="submit"
                       size="sm"
-                      // onClick={onSubmit}
+                      // onClick={() => parse(values)}
                       text={t('apply')}
                     />
                   </div>
