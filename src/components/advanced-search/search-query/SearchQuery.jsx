@@ -70,10 +70,12 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                      onChangeIdentifier={(identifier) => {
                        setFieldValue(`searchFields.${index}.identifier`, identifier);
                        setFieldValue(`searchFields.${index}.condition`, identifier?.identifierOptions?.[0]);
+                       setFieldValue(`searchFields.${index}.data`, '');
                      }}
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
                      error={value.data.trim() ? null : errors.searchFields?.[index]}
+                     onChangeDate={(date) => setFieldValue(`searchFields.${index}.data`, date)}
                    />
                  ))
                }

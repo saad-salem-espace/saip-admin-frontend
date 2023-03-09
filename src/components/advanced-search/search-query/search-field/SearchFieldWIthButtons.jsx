@@ -15,6 +15,7 @@ function SearchFieldWIthButtons({
   conditionValue,
   onChangeCondition,
   error,
+  onChangeDate,
 }) {
   const { t } = useTranslation('search');
   const searchField = (
@@ -28,6 +29,7 @@ function SearchFieldWIthButtons({
       conditionValue={conditionValue}
       onChangeCondition={onChangeCondition}
       error={error}
+      onChangeDate={onChangeDate}
     />
   );
   return (
@@ -52,12 +54,14 @@ SearchFieldWIthButtons.propTypes = {
   order: PropTypes.objectOf(PropTypes.number).isRequired,
   onChangeIdentifier: PropTypes.func.isRequired,
   onChangeCondition: PropTypes.func.isRequired,
+  onChangeDate: PropTypes.func,
   identifierValue: PropTypes.object.isRequired,
   conditionValue: PropTypes.object.isRequired,
   error: PropTypes.string,
 };
 
 SearchFieldWIthButtons.defaultProps = {
+  onChangeDate: () => {},
   error: null,
 };
 

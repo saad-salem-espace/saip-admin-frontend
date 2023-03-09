@@ -10,7 +10,7 @@ import Select from '../../../shared/form/select/Select';
 import style from '../SearchQuery.module.scss';
 import Button from '../../../shared/button/Button';
 import Input from '../../../shared/form/input/Input';
-// import DatePicker from '../../../shared/date-picker/AppDatePicker';
+import DatePicker from '../../../shared/date-picker/AppDatePicker';
 
 function SearchField({
   handleRemove,
@@ -22,6 +22,7 @@ function SearchField({
   onChangeCondition,
   error,
   order,
+  onChangeDate,
 }) {
   const { t } = useTranslation('search');
   const identifiersList = searchIdentifiers;
@@ -72,7 +73,17 @@ function SearchField({
         >
           {t('criteria')}
         </span>
-        <Input moduleClassName={inputModuleClassName} name={name} />
+        {
+          identifierValue?.identifierType === 'Date'
+            ? (
+              <div className={style.dateWrapper}>
+                <DatePicker name={name} onChangeDate={onChangeDate} />
+              </div>
+            )
+            : (
+              <Input moduleClassName={inputModuleClassName} name={name} />
+            )
+        }
         {error && <ErrorMessage
           msg="Search criteria cannot be empty for any field."
           className="mt-2"
@@ -97,12 +108,14 @@ SearchField.propTypes = {
   onChangeCondition: PropTypes.func.isRequired,
   order: PropTypes.objectOf(PropTypes.number).isRequired,
   error: PropTypes.string,
+  onChangeDate: PropTypes.func,
 };
 
 SearchField.defaultProps = {
   handleRemove: () => {},
   name: null,
   error: null,
+  onChangeDate: () => {},
 };
 
 export default SearchField;
