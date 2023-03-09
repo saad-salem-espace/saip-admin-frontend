@@ -38,6 +38,7 @@
     color: $primary-dark;
     font-size: $font-size-xs;
     font-family: $font-medium;
+    text-transform: uppercase;
   }
 
   .rmdp-day {
@@ -48,28 +49,134 @@
     border-radius: $border-radius;
     margin: 4px;
 
+    &:hover {
+      background-color: $gray-200;
+    }
+
     &.rmdp-today {
-      background-color: $primary;
+      background-color: $gray-200;
 
       span {
-        background-color: $primary;
+        background-color: $gray-200;
+        color: $dark;
       }
+
+      &.rmdp-selected {
+        span {
+          color: $white;
+        }
+      }
+
     }
 
     &.rmdp-day {
 
+      &:hover,
+      &:hover span {
+        background-color: $primary-dark;
+        color: $white;
+      }
+
       span:hover {
-        background-color: $primary-dark !important;
+        background-color: $primary-dark;
       }
     }
 
-    &.rmdp-selected  {
-      background-color: $primary-dark;
+    &.rmdp-selected {
+      background-color: $primary;
+
+      &:hover {
+        background-color: $primary-dark;
+
+        span:not(.highlight) {
+          background-color: $primary-dark;
+        }
+      }
 
       span:not(.highlight) {
-        background-color: $primary-dark;
+        background-color: $primary;
         box-shadow: none;
+
+        &:hover {
+          background-color: $primary-dark;
+        }
       }
     }
   }
+
+  .rmdp-day {
+    &.rmdp-range {
+      color: $dark;
+      background-color: #AFDEDC;
+      box-shadow: none;
+
+      span {
+        background-color: #AFDEDC;
+      }
+
+      &.start,
+      &.end {
+        border-radius: $border-radius;
+        color: $white;
+        background-color: $primary;
+
+        &:hover,
+        &:hover span {
+          background-color: $primary-dark;
+        }
+
+        span {
+          background-color: $primary;
+
+          &:hover {
+
+            background-color: $primary-dark;
+          }
+        }
+      }
+    }
+  }
+
+  .sd {
+    &:hover {
+      border-radius: $border-radius;
+    }
+  }
+
+  .rmdp-day-hidden {
+    span {
+      &:hover {
+        background-color: $gray-200;
+      }
+    }
+  }
+
+  .rmdp-ep-arrow {
+    display: none;
+  }
+
+  &.error {
+    .rmdp-input {
+      border-color: $danger;
+    }
+  }
+}
+
+.rmdp-arrow-container {
+  width: 30px;
+  height: 30px;
+  padding-top: 5px;
+
+  &:hover {
+    background-color: $gray-300;
+    box-shadow: none;
+
+    .rmdp-arrow {
+      border-color: $primary;
+    }
+  }
+}
+
+.rmdp-calendar {
+  padding: 4px 10px;
 }
