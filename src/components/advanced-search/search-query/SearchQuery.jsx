@@ -38,19 +38,72 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
     ),
   });
 
-  // const parse = (values) => {
-  //   const finalQuery = '';
+  function camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase())).replace(/\s+/g, '');
+  }
 
-  //   values.searchFields.forEach((value, index) => {
-  //     parseSingleQuery(value);
-  //   });
-  // };
+  function formatDate(date) {
+    const dateData = date.split(' ');
+    let newDate = '';
+    const months = [
+      ['January', '01'],
+      ['February', '02'],
+      ['March', '03'],
+      ['April', '04'],
+      ['May', '05'],
+      ['June', '06'],
+      ['July', '07'],
+      ['August', '08'],
+      ['September', '09'],
+      ['October', '10'],
+      ['November', '11'],
+      ['December', '12'],
+    ];
 
-  // const parseSingleQuery = (searchField) => {
-  //   let searchQuery = '';
-  //   searchQuery += `${searchField.identifier.identifierName} `;
-  //   searchQuery += `${searchField.condition.optionName} `;
-  // };
+    const map = new Map(months);
+
+    newDate += dateData[2];
+    newDate += '-';
+    newDate += map.get(dateData[1]);
+    newDate += '-';
+    newDate += dateData[0];
+
+    return newDate;
+  }
+
+  // the if conditions for the condition are temporary as options are not full in database.
+  const parseSingleQuery = (searchField, index) => {
+    let searchQuery = '';
+
+    if (index) {
+      searchQuery += ' ';
+      searchQuery += (searchField.operator);
+      searchQuery += ' ';
+    }
+
+    searchQuery += (searchField.identifier.identiferStrId);
+    searchQuery += ' ';
+    if (searchField.condition) {
+      searchQuery += camelize(searchField.condition.optionName);
+    }
+    searchQuery += ' "';
+    if (searchField.condition && searchField.condition.optionName === 'Has Any') searchQuery += (searchField.data.trim().replace(/\s+/g, ','));// replace spaces with a comma
+    else if (searchField.identifier.identifierType === 'Date') searchQuery += formatDate(searchField.data);
+    else searchQuery += (searchField.data.trim().replace(/\s+/g, ' '));// replace one more spaces with one space (remove extra middle spaces)
+    searchQuery += '"';
+
+    return searchQuery;
+  };
+
+  const parse = (values) => {
+    let finalQuery = '';
+
+    values.searchFields.forEach((value, index) => {
+      finalQuery += parseSingleQuery(value, index);
+    });
+
+    return finalQuery;
+  };
 
   return (
     <div>
@@ -129,7 +182,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                       variant="primary"
                       type="submit"
                       size="sm"
-                      // onClick={() => parse(values)}
+                      onClick={() => parse(values)} /* to be changed to submit */
                       text={t('apply')}
                     />
                   </div>
