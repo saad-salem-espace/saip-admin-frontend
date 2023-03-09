@@ -9,7 +9,7 @@
   border: none;
   color: $gray !important;
   padding: 16px;
-  border-radius: $border-radius-lg $border-radius-lg 0 0;
+  border-radius: $border-radius-lg $border-radius-lg 0 0 !important;
 
   &.active {
     background-color: $primary;

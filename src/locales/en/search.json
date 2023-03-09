@@ -32,6 +32,8 @@
   "or": "OR",
   "not": "NOT",
   "abstract": "Abstract",
+  "publicationCountry": "Publication Country",
+  "clearAll": "Clear all",
   "emptyStateMsg": "Try another search term in the search bar above.",
   "emptyStateTitle": "Searching but not finding?",
   "browseFiles": "Browse Files",
