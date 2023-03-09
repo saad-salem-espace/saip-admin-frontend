@@ -4,7 +4,7 @@
 .has-value {
   padding: 32px 16px 9px;
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     padding: 43px 16px 23px
   }
 }

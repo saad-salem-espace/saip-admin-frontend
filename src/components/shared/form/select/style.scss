@@ -28,10 +28,10 @@ div[class$="ValueContainer"] {
 
 ////// selectWithSibling
 .selectWithSibling {
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(xl) {
     div[class$="Control"] {
       border-right: 0;
-      border-radius: 0;
+      border-radius: 5px 0 0 5px;
     }
 
     div[class$="IndicatorsContainer"] {

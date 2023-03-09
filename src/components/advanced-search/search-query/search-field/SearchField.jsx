@@ -7,7 +7,7 @@ import formStyle from '../../../shared/form/form.module.scss';
 import Select from '../../../shared/form/select/Select';
 import style from '../SearchQuery.module.scss';
 import Button from '../../../shared/button/Button';
-// import Input from '../../../shared/form/input/Input';
+import Input from '../../../shared/form/input/Input';
 // import DatePicker from '../../../shared/date-picker/AppDatePicker';
 
 function SearchField() {
@@ -63,14 +63,14 @@ function SearchField() {
           text={<FontAwesomeIcon icon={faTrashAlt} className="text-danger-dark" />}
         />
       </div>
-      {/* <div className={`position-relative me-2 ${style.criteria}`}>
+      <div className={`position-relative me-2 ${style.criteria}`}>
         <span className={`position-absolute ${formStyle.label}
          ${formStyle.smLabel}`}
         >
           {t('criteria')}
         </span>
         <Input moduleClassName="smInput" />
-      </div> */}
+      </div>
       {/* for datepicker */}
       {/* <div className={style.dateWrapper}>
        please add error class if date has error
