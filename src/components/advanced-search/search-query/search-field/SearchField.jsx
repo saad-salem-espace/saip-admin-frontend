@@ -100,7 +100,7 @@ SearchField.propTypes = {
 };
 
 SearchField.defaultProps = {
-  handleRemove: null,
+  handleRemove: () => {},
   name: null,
   error: null,
 };
