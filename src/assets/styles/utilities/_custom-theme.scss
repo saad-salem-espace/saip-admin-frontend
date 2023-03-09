@@ -48,9 +48,6 @@ $yellow: #ffc107 !default;
 $green: #198754 !default;
 $teal: #20c997 !default;
 $cyan: #0dcaf0 !default;
-$patents: #5287BE;
-$trademark: #E08C05;
-$copyright: #C5CF01;
 
 // saip color-variables
 $turquoise: #00A49B;
@@ -60,6 +57,11 @@ $turquoise-01: #F2F7F6;
 $turquoise-10: #E0F1F1;
 $danger: #D91148;
 $danger-dark: #B50644;
+$patents: #5287BE;
+$trademark: #E08C05;
+$copyright: #C5CF01;
+$secondary-tangerine:#ED8A00;
+$secondary-tangerine-l: #FDF0DE;
 
 // scss-docs-end color-variables
 
@@ -295,6 +297,7 @@ $spacers: (
   10: $spacer * 2.5,
   11: $spacer * 2.75,
   12:$spacer * 3,
+  14:$spacer * 3.5,
   18: $spacer * 4,
   22: $spacer * 5.8,
   ) !default;
@@ -399,7 +402,8 @@ $container-padding-x: $grid-gutter-width * .5 !default;
 // Define common padding and border radius sizes and more.
 
 // scss-docs-start border-variables
-$border-width: 1px !default;
+$border-width: 1px;
+$border-width-md: 2px;
 $border-widths: (
   1: 1px,
   2: 2px,
@@ -1287,12 +1291,12 @@ $toast-header-border-color: rgba(0, 0, 0, .05) !default;
 // Badges
 
 // scss-docs-start badge-variables
-$badge-font-size: .75em !default;
-$badge-font-weight: $font-weight-bold !default;
+$badge-font-size: $font-size-sm;
+$badge-font-weight: $font-regular;
 $badge-color: $white !default;
-$badge-padding-y: .35em !default;
-$badge-padding-x: .65em !default;
-$badge-border-radius: $border-radius !default;
+$badge-padding-y: 8px;
+$badge-padding-x: 16px;
+$badge-border-radius: $border-radius;
 // scss-docs-end badge-variables
 
 
@@ -1554,3 +1558,5 @@ $pre-color: null !default;
 @import "~bootstrap/scss/pagination";
 @import "~bootstrap/scss/carousel";
 @import "~bootstrap/scss/modal";
+@import "~bootstrap/scss/badge";
+@import "~bootstrap/scss/spinners";

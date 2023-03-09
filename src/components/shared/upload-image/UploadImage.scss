@@ -1,0 +1,66 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.dashedBorder {
+  border: $border-width-md dashed $primary;
+}
+
+.uploadImageWrapper {
+  &.error {
+    border-color: $danger-dark;
+  }
+
+  .image-item {
+    border: $border-width solid $gray-400;
+    border-radius: $border-radius;
+    position: absolute;
+  }
+
+  .imageView {
+    width: 70px;
+    height: 46px;
+    margin: 8px;
+  }
+}
+
+.workStreamView {
+  .image-item {
+    top: 53px;
+    left: 217px;
+
+    @include media-breakpoint-down(xl) {
+      left: 16px;
+      top: 153px;
+    }
+
+    @include media-breakpoint-down(sm) {
+      left: 2px;
+      top: 241px;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    margin-top: 60px;
+  }
+
+  .dashedBorder {
+    padding: 32px 0;
+  }
+}
+
+.advancedMode{
+  input{
+    @include media-breakpoint-up(md) {
+      padding-left: 150px;
+    }
+  }
+
+  .image-item {
+    left: 16px;
+    top: 53px;
+
+    @include media-breakpoint-down(sm) {
+      top: 140px;
+      left: 0;
+    }
+  }
+}

@@ -21,7 +21,7 @@ button.searchIcon {
   color: $gray;
   position: absolute;
   right: 85px;
-  top: 24px;
+  top: 33px;
   font-size: 20px;
 }
 
@@ -32,7 +32,7 @@ button.searchIcon {
   }
 
   .clearIcon {
-    top: 7px;
+    top: 16px;
   }
 
   .searchIcon {
@@ -47,8 +47,52 @@ button.searchIcon {
 
 //// searchWithSibling
 .searchWithSibling input {
-  border-radius: 0 $border-radius $border-radius 0 ;
-  @include media-breakpoint-up(md) {
+  border-radius: $border-radius $border-radius;
+  @include media-breakpoint-up(xl) {
     border-left: 0 !important;
+    border-radius: 0 $border-radius $border-radius 0 ;
+  }
+}
+
+.imgUploaded  {
+  @include media-breakpoint-up(md) {
+    input {
+      padding-left: 154px;
+    }
+  }
+}
+
+.imgUploadedResultView {
+  @include media-breakpoint-up(md) {
+    input {
+      padding-left: 120px;
+    }
+  }
+}
+
+.searchWithImage {
+  .clearIcon {
+    right: 155px;
+  }
+}
+
+///// others
+.uploadIcon {
+  position: absolute;
+  top: 34px;
+  right: 94px;
+}
+
+.smSearch {
+  .uploadIcon {
+    top: 17px;
+    right: 90px;
+  }
+
+  &.searchWithImage {
+    .clearIcon {
+      top: 16px;
+      right: 150px;
+    }
   }
 }

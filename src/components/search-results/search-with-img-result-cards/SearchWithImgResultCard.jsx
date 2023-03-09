@@ -6,9 +6,13 @@ import { trimStringRelativeToSubtext } from 'utils/strings';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form/checkboxes/checkbox/Checkbox';
 import Highlighter from 'react-highlight-words';
-import style from './style.module.scss';
+import Image from 'react-bootstrap/Image';
+import Badge from 'components/shared/badge/Badge';
+import style from '../search-result-cards/search-result-card/style.module.scss';
+import c from '../../../assets/images/search-header-bg.svg';
+import './style.scss';
 
-function SearchResultCard({
+function SearchWithImgResultCard({
   searchResult, query, setActiveDocument, activeDocument,
 }) {
   const { t } = useTranslation('search');
@@ -33,43 +37,41 @@ function SearchResultCard({
               searchWords={[query]}
               autoEscape
             />
-
           </div>
-          <p className="mb-2 text-black">
-            {BibliographicData.PublicationNumber}
-          </p>
-          <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
-            {t('priority', { value: searchResult.Priority })}
-            <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-            {t('filed', { value: BibliographicData.FilingNumber })}
-            {
-          BibliographicData.PublicationDate && (
-            <>
-              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              {t('published', { value: BibliographicData.PublicationDate })}
-            </>
-          )
-        }
-          </p>
-          <p className="text-gray sm-text">
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-bold"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData.ApplicationAbstract.join(' '),
-                query,
-              )}
-              searchWords={[query]}
-              autoEscape
-            />
-          </p>
+          <div className="d-flex">
+            <div className="searchImgWrapper border rounded me-2">
+              <Image src={c} className="rounded" />
+            </div>
+            <div>
+              <Badge text="ended" varient="secondary" className="text-capitalize mb-2" />
+              <p className="mb-2 text-black">
+                {BibliographicData.PublicationNumber}
+              </p>
+              <p className="text-gray md-text mb-3">
+                Hozon New Energy Automobile Co., Ltd. (China)
+              </p>
+              <p className="font-medium mb-2 d-lg-flex align-items-center text-dark sm-text">
+                {t('priority', { value: searchResult.Priority })}
+                <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                {t('filed', { value: BibliographicData.FilingNumber })}
+                {
+                  BibliographicData.PublicationDate && (
+                    <>
+                      <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                      {t('published', { value: BibliographicData.PublicationDate })}
+                    </>
+                  )
+                }
+              </p>
+            </div>
+          </div>
         </div>
-       )}
+      )}
     />
   );
 }
 
-SearchResultCard.propTypes = {
+SearchWithImgResultCard.propTypes = {
   searchResult: PropTypes.shape({
     BibliographicData: PropTypes.shape({
       ApplicationAbstract: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -85,4 +87,4 @@ SearchResultCard.propTypes = {
   activeDocument: PropTypes.number.isRequired,
 };
 
-export default SearchResultCard;
+export default SearchWithImgResultCard;

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import SearchResultCard from './search-result-card/SearchResultCard';
+import SearchWithImgResultCard from './SearchWithImgResultCard';
 
-const SearchResultCards = ({
+const SearchWithImgResultCards = ({
   data, query, setActiveDocument, activeDocument,
 }) => (
   <>
     {data.map((searchResult) => (
-      <SearchResultCard
+      <SearchWithImgResultCard
         key={searchResult.BibliographicData.filingNumber}
         searchResult={searchResult}
         query={query}
@@ -17,11 +17,11 @@ const SearchResultCards = ({
   </>
 );
 
-SearchResultCards.propTypes = {
+SearchWithImgResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
 };
 
-export default SearchResultCards;
+export default SearchWithImgResultCards;

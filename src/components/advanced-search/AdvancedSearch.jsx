@@ -39,8 +39,8 @@ function AdvancedSearch({
       <Button
         variant="primary-dark"
         onClick={toggleAdvancedSearchMenu}
-        className={`${isAdvancedMenuOpen ? ' ' : AdvancedSearchStyle.closed} ${AdvancedSearchStyle.collapseIcon}`}
-        text={<FontAwesomeIcon icon={isAdvancedMenuOpen ? faAnglesLeft : faAnglesRight} className="f-20 text-white" />}
+        className={`${isAdvancedMenuOpen ? ' ' : AdvancedSearchStyle.closed} ${AdvancedSearchStyle.collapseIcon} p-2 d-flex`}
+        text={<FontAwesomeIcon icon={isAdvancedMenuOpen ? faAnglesLeft : faAnglesRight} className="f-24 text-white" />}
       />
       <div className={`${isAdvancedMenuOpen ? 'd-block' : 'd-none'}`}>
         <h6 className="pb-6 pt-9">{t('advancedSearch')}</h6>

@@ -4,7 +4,7 @@
 .collapseIcon {
   background-color: $primary-dark;
   padding: 4px 8px;
-  border-radius: $border-radius;
+  border-radius: $border-radius !important;
   position: absolute;
   top:32px;
   right: 24px;

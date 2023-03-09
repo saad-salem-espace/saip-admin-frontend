@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
+import uploadFile from 'apis/uploadFileApi';
 import useWorkstreams from 'hooks/useWorkstreams';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 // import EmptyState from 'components/shared/empty-state/EmptyState';
@@ -16,8 +17,10 @@ import Search from '../shared/form/search/Search';
 import ToggleButton from '../shared/toggle-button/ToggleButton';
 import IprDetails from '../ipr-details/IprDetails';
 // import formStyle from '../shared/form/form.module.scss';
-import style from './style.module.scss';
+import './style.scss';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
+import UploadImage from '../shared/upload-image/UploadImage';
+// import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
 // import emptyState from '../../assets/images/search-empty-state.svg';
 
 function SearchResults() {
@@ -25,14 +28,19 @@ function SearchResults() {
   const [searchParams] = useSearchParams();
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [activeDocument, setActiveDocument] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
   const [totalResults, setTotalResults] = useState(0);
+  const [showUploadImgSection, setShowUploadImgSection] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     identifierStrId: searchParams.get('identifierStrId'),
     queryString: searchParams.get('query'),
   };
+
+  const [isImgUploaded, setIsImgUploaded] = useState(false);
 
   const { getIdentifierByStrId, isReady } = useWorkstreams(searchResultParams.workstreamId);
   if (!isReady) return null;
@@ -84,7 +92,24 @@ function SearchResults() {
   const SearchModuleClassName = ({
     smSearch: true,
     searchWithSibling: !isAdvancedSearch,
+    imgUploadedResultView: isImgUploaded,
+    searchWithImage: true, // please set it true for workstream with search with image
   });
+
+  const uploadCurrentFile = async (file) => {
+    setIsSubmitting(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    // eslint-disable-next-line no-unused-vars
+    const { res, err } = await uploadFile(formData);
+    if (err) setErrorMessage(err);
+    setIsImgUploaded(true);
+    setIsSubmitting(false);
+  };
+
+  const handleUploadImg = () => {
+    setShowUploadImgSection(!showUploadImgSection);
+  };
 
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
@@ -126,14 +151,14 @@ function SearchResults() {
   return (
     <Container fluid className="px-0">
       <Row className="mx-0">
-        <Col md={{ span: 10, offset: 1 }} className="mb-8">
+        <Col md={{ span: 10, offset: 1 }} className="mb-8 position-relative">
           <Formik>
             {() => (
               <Form className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
                     <h4 className="mb-0 mt-4">Search</h4>
-                    <Select options={WorkStreamsOptions} moduleClassName="menu" className={`${style.workStreams} me-5 ms-3 mt-1 customSelect`} />
+                    <Select options={WorkStreamsOptions} moduleClassName="menu" className="workStreams me-5 ms-3 mt-1 customSelect" />
                   </div>
                   <div className="flex-grow-1">
                     <div className="mb-4">
@@ -143,7 +168,7 @@ function SearchResults() {
                             <div className="position-relative mb-md-0 mb-3">
                               <Select
                                 options={options}
-                                className={`${style.select} select selectWithSibling smSelect`}
+                                className="searchResultsSelect select selectWithSibling smSelect"
                               />
                             </div>
                           )
@@ -152,13 +177,15 @@ function SearchResults() {
                           id="search"
                           className="flex-grow-1"
                           moduleClassName={SearchModuleClassName}
-                          placeholder={t('typeSearchTerms')}
+                          placeholder={t('typeHere')}
                           onSubmit={onSubmit}
+                          handleUploadImg={handleUploadImg}
+                          searchWithImg
                         />
                       </div>
                       {/* <ErrorMessage msg="" className="mt-2" /> */}
                     </div>
-                    <div className="d-md-flex">
+                    <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton
                         handleToggleButton={handleAdvancedSearch}
                         isToggleButtonOn={false}
@@ -176,12 +203,22 @@ function SearchResults() {
               </Form>
             )}
           </Formik>
+          <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
+            <UploadImage className={`${showUploadImgSection ? 'py-8' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
+          </div>
+          {
+            errorMessage && (
+              <span className="text-danger-dark f-12">
+                { errorMessage }
+              </span>
+            )
+          }
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch mb-10">
         {
           isAdvancedSearch && (
-            <Col lg={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? style.expanded : style.closed} ps-0`}>
+            <Col lg={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
               <AdvancedSearch
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
                 isAdvancedMenuOpen={isAdvancedMenuOpen}
@@ -209,7 +246,11 @@ function SearchResults() {
                   }}
                   defaultPage={Number(searchParams.get('page') || '1')}
                   RenderedComponent={SearchResultCards}
-                  renderedProps={{ query: searchResultParams.queryString, setActiveDocument }}
+                  renderedProps={{
+                    query: searchResultParams.queryString,
+                    setActiveDocument,
+                    activeDocument,
+                  }}
                   fetchedTotalResults={setTotalResults}
                 />
               </Form>

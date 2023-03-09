@@ -17,7 +17,7 @@
   }
 
   &:not(:first-of-type){
-    .criteria, .dateWrapper {
+    .criteria, .dateWrapper, .advancedSearchSelect {
       width: calc(100% - 26px);
     }
   }

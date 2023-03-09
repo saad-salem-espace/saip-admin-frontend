@@ -1,5 +1,6 @@
 {
   "emptyText": "No data available",
   "showMore": "Show more",
-  "showLess": "Show less"
+  "showLess": "Show less",
+  "": "This field cannot be empty."
 }
