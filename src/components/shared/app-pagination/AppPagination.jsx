@@ -4,6 +4,7 @@ import apiInstance from 'apis/apiInstance';
 import Pagination from 'react-responsive-pagination';
 import { useSearchParams } from 'react-router-dom';
 import './PaginationStyle.scss';
+import Spinner from '../spinner/Spinner';
 
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
@@ -35,7 +36,7 @@ const AppPagination = ({
   }, [currentPage]);
 
   if (!data) {
-    return null;
+    return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
   }
 
   if (!paginationInfo.total) {
