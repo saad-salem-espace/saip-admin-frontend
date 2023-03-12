@@ -53,5 +53,42 @@ const trimStringRelativeToSubtext = (text, subtext, charsBefore = 100, charsAfte
   return `${text.startsWith(trimmedSubtext) ? '' : '...'}${trimmedOutput}${text.endsWith(trimmedSubtext) ? '' : '...'}`;
 };
 
+// Convert a normal sentence to camel case.
+// Used to camel case conditions
+const camelize = (str) => str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase())).replace(/\s+/g, '');
+
+// Convert Date DD-MMM-YYYY to YY-MM-DD
+// Example 01 March 2023 becomes 2023-03-01
+const formatDate = (date) => {
+  if (!date) return '';
+
+  const dateData = date.split(' ');
+  let newDate = '';
+  const months = [
+    ['January', '01'],
+    ['February', '02'],
+    ['March', '03'],
+    ['April', '04'],
+    ['May', '05'],
+    ['June', '06'],
+    ['July', '07'],
+    ['August', '08'],
+    ['September', '09'],
+    ['October', '10'],
+    ['November', '11'],
+    ['December', '12'],
+  ];
+
+  const map = new Map(months);
+
+  newDate += dateData[2];
+  newDate += '-';
+  newDate += map.get(dateData[1]);
+  newDate += '-';
+  newDate += dateData[0];
+
+  return newDate;
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { trimStringRelativeToSubtext };
+export { trimStringRelativeToSubtext, camelize, formatDate };

@@ -7,10 +7,13 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
+import { formatDate, camelize } from 'utils/strings';
 import Button from '../../shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 
-function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
+function SearchQuery({
+  workstreamId, firstIdentifierStr, defaultCriteria, onChangeSearchQuery,
+}) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${workstreamId}/identifiers` });
@@ -18,6 +21,10 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
   const [firstCondition, setFirstCondition] = useState(null);
+  const operators = ['and', 'or', 'not'].map((operator) => ({
+    operator: operator.toUpperCase(),
+    displayName: t(`operators.${operator}`),
+  }));
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
@@ -38,42 +45,12 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
     ),
   });
 
-  function camelize(str) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase())).replace(/\s+/g, '');
-  }
-
-  function formatDate(date) {
-    const dateData = date.split(' ');
-    let newDate = '';
-    const months = [
-      ['January', '01'],
-      ['February', '02'],
-      ['March', '03'],
-      ['April', '04'],
-      ['May', '05'],
-      ['June', '06'],
-      ['July', '07'],
-      ['August', '08'],
-      ['September', '09'],
-      ['October', '10'],
-      ['November', '11'],
-      ['December', '12'],
-    ];
-
-    const map = new Map(months);
-
-    newDate += dateData[2];
-    newDate += '-';
-    newDate += map.get(dateData[1]);
-    newDate += '-';
-    newDate += dateData[0];
-
-    return newDate;
-  }
-
   // the if conditions for the condition are temporary as options are not full in database.
-  const parseSingleQuery = (searchField, index) => {
+  // isQuery = false in case of parsing a memo. true in case of query.
+  const parseSingleQuery = (searchField, index, isQuery) => {
     let searchQuery = '';
+
+    if (!searchField.identifier) return searchQuery;
 
     if (index) {
       searchQuery += ' ';
@@ -81,12 +58,23 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
       searchQuery += ' ';
     }
 
-    searchQuery += (searchField.identifier.identiferStrId);
-    searchQuery += ' ';
-    if (searchField.condition) {
-      searchQuery += camelize(searchField.condition.optionName);
+    if (isQuery) {
+      searchQuery += (searchField.identifier.identiferStrId);
+      searchQuery += ' ';
+    } else {
+      searchQuery += (searchField.identifier.identiferName);
+      searchQuery += ': ';
     }
+
+    if (searchField.condition && isQuery) {
+      searchQuery += camelize(searchField.condition.optionName);
+    } else if (searchField.condition && !isQuery) {
+      searchQuery += (searchField.condition.optionName);
+      searchQuery += ':';
+    }
+
     searchQuery += ' "';
+
     if (searchField.condition && searchField.condition.optionName === 'Has Any') searchQuery += (searchField.data.trim().replace(/\s+/g, ','));// replace spaces with a comma
     else if (searchField.identifier.identifierType === 'Date') searchQuery += formatDate(searchField.data);
     else searchQuery += (searchField.data.trim().replace(/\s+/g, ' '));// replace one more spaces with one space (remove extra middle spaces)
@@ -95,11 +83,11 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
     return searchQuery;
   };
 
-  const parse = (values) => {
+  const parseQuery = (values, isQuery) => {
     let finalQuery = '';
 
     values.searchFields.forEach((value, index) => {
-      finalQuery += parseSingleQuery(value, index);
+      finalQuery += parseSingleQuery(value, index, isQuery);
     });
 
     return finalQuery;
@@ -121,7 +109,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
         {({
           values, setFieldValue, errors, setValues,
         }) => (
-          <Form>
+          <Form onChange={onChangeSearchQuery(parseQuery(values, true))}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -130,7 +118,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                    <SearchFieldWithButtons
                      key={value.id}
                      order={index}
-                     name={`searchFields.${index}.data`}
+                     namePrefix={`searchFields.${index}`}
                      handleRemove={() => remove(index)}
                      searchIdentifiers={searchIdentifiers?.data}
                      identifierValue={value.identifier}
@@ -139,6 +127,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                        setFieldValue(`searchFields.${index}.condition`, identifier?.identifierOptions?.[0]);
                        setFieldValue(`searchFields.${index}.data`, '');
                      }}
+                     operators={operators}
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
                      error={value.data.trim() ? null : errors.searchFields?.[index]}
@@ -182,7 +171,7 @@ function SearchQuery({ workstreamId, firstIdentifierStr, defaultCriteria }) {
                       variant="primary"
                       type="submit"
                       size="sm"
-                      onClick={() => parse(values)} /* to be changed to submit */
+                      // onClick={() => {}} /* to be changed to submit */
                       text={t('apply')}
                     />
                   </div>
@@ -200,6 +189,11 @@ SearchQuery.propTypes = {
   workstreamId: PropTypes.string.isRequired,
   firstIdentifierStr: PropTypes.string.isRequired,
   defaultCriteria: PropTypes.string.isRequired,
+  onChangeSearchQuery: PropTypes.func,
+};
+
+SearchQuery.defaultProps = {
+  onChangeSearchQuery: () => {},
 };
 
 export default SearchQuery;

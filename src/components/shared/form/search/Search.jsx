@@ -18,6 +18,7 @@ function Search({
   clearInput,
   handleUploadImg,
   searchWithImg,
+  disabled,
 }) {
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
@@ -30,6 +31,7 @@ function Search({
         type="text"
         name={name}
         placeholder={placeholder}
+        disabled={disabled}
       />
       {
         isClearable && <Button className={`${style.clearIcon} text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
@@ -61,6 +63,7 @@ Search.propTypes = {
   clearInput: PropTypes.func,
   handleUploadImg: PropTypes.func,
   searchWithImg: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 Search.defaultProps = {
@@ -74,6 +77,7 @@ Search.defaultProps = {
   clearInput: () => {},
   handleUploadImg: null,
   searchWithImg: false,
+  disabled: false,
 };
 
 export default Search;

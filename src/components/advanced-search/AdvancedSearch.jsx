@@ -9,7 +9,12 @@ import AdvancedSearchStyle from './AdvancedSearch.module.scss';
 import SearchQuery from './search-query/SearchQuery';
 
 function AdvancedSearch({
-  toggleAdvancedSearchMenu, isAdvancedMenuOpen, workstreamId, firstIdentifierStr, defaultCriteria,
+  toggleAdvancedSearchMenu,
+  isAdvancedMenuOpen,
+  workstreamId,
+  firstIdentifierStr,
+  defaultCriteria,
+  onChangeSearchQuery,
 }) {
   const { t } = useTranslation('search');
   const [activeTabId, setActiveTabId] = useState(1);
@@ -26,6 +31,7 @@ function AdvancedSearch({
         workstreamId={workstreamId}
         firstIdentifierStr={firstIdentifierStr}
         defaultCriteria={defaultCriteria}
+        onChangeSearchQuery={onChangeSearchQuery}
       />,
     },
   ];
@@ -60,6 +66,11 @@ AdvancedSearch.propTypes = {
   workstreamId: PropTypes.string.isRequired,
   firstIdentifierStr: PropTypes.string.isRequired,
   defaultCriteria: PropTypes.string.isRequired,
+  onChangeSearchQuery: PropTypes.func,
+};
+
+AdvancedSearch.defaultProps = {
+  onChangeSearchQuery: () => {},
 };
 
 export default AdvancedSearch;
