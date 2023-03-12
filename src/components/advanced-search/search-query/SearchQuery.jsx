@@ -6,7 +6,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
-import { parseSingleQuery } from 'utils/strings';
+import { parseSingleQuery } from 'utils/parsers';
 import { formSchema } from './SearchQueryValidation';
 import Button from '../../shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
@@ -52,7 +52,7 @@ function SearchQuery({
       <Formik
         enableReinitialize
         validationSchema={formSchema}
-        validateOnChange={false}
+        validateOnChange
         validateOnBlur={false}
         initialValues={{
           searchFields: [{
@@ -61,7 +61,7 @@ function SearchQuery({
         }}
       >
         {({
-          values, setFieldValue, errors, setValues,
+          values, setFieldValue, errors, setValues, touched,
         }) => (
           <Form onChange={onChangeSearchQuery(parseQuery(values, true))}>
             <FieldArray name="searchFields">
@@ -84,8 +84,9 @@ function SearchQuery({
                      operators={operators}
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
-                     error={value.data.trim() ? null : errors.searchFields?.[index]}
-                     onChangeDate={(date) => setFieldValue(`searchFields.${index}.data`, date)}
+                     error={touched.searchFields?.[index] && errors.searchFields?.[index]}
+                    //  onChangeDate={(date) => console.log(date)}
+                     onChangeDate={(date) => { setFieldValue(`searchFields.${index}.data`, date); }}
                    />
                  ))
                }

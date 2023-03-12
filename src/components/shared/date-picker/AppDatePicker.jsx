@@ -12,7 +12,7 @@ function AppDatePicker({
     <div className={`datePicker position-relative ${className}`}>
       <Field name={name}>
         {
-        ({ field }) => <DatePicker range={range} editable={false} {...field} name={name} format="DD MMMM YYYY" onChange={(val) => onChangeDate(val.format())} />
+        ({ field }) => <DatePicker range={range} editable={false} {...field} name={name} format="DD MMMM YYYY" value={field.value} onChange={(val) => onChangeDate(val)} />
       }
       </Field>
       <FontAwesomeIcon icon={faCalendarDays} className="calendar-icon f-20 text-primary" />
