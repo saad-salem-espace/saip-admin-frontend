@@ -6,7 +6,8 @@ import { useSearchParams } from 'react-router-dom';
 import './PaginationStyle.scss';
 
 const AppPagination = ({
-  axiosConfig, defaultPage, RenderedComponent, renderedProps, axiosInstance, fetchedTotalResults,
+  axiosConfig, defaultPage, RenderedComponent, renderedProps,
+  axiosInstance, fetchedTotalResults, emptyState,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage);
@@ -34,8 +35,11 @@ const AppPagination = ({
   }, [currentPage]);
 
   if (!data) {
-    // TODO Change this part to empty state
     return null;
+  }
+
+  if (!paginationInfo.total) {
+    return emptyState;
   }
 
   const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
@@ -64,6 +68,7 @@ AppPagination.propTypes = {
   renderedProps: PropTypes.instanceOf(Object),
   axiosInstance: PropTypes.func,
   fetchedTotalResults: PropTypes.func,
+  emptyState: PropTypes.node,
 };
 
 AppPagination.defaultProps = {
@@ -71,6 +76,7 @@ AppPagination.defaultProps = {
   renderedProps: {},
   axiosInstance: apiInstance,
   fetchedTotalResults: null,
+  emptyState: null,
 };
 
 export default AppPagination;
