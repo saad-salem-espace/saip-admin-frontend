@@ -1,5 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import SearchField from './SearchField';
 import RadioButton from '../../../shared/form/radio-button/RadioButton';
@@ -8,7 +6,7 @@ import RadioButtonGroup from '../../../shared/form/radio-button/RadioButtonGroup
 function SearchFieldWIthButtons({
   order,
   handleRemove,
-  name,
+  namePrefix,
   searchIdentifiers,
   identifierValue,
   onChangeIdentifier,
@@ -16,13 +14,13 @@ function SearchFieldWIthButtons({
   onChangeCondition,
   error,
   onChangeDate,
+  operators,
 }) {
-  const { t } = useTranslation('search');
   const searchField = (
     <SearchField
       order={order}
       handleRemove={handleRemove}
-      name={name}
+      name={`${namePrefix}.data`}
       searchIdentifiers={searchIdentifiers}
       identifierValue={identifierValue}
       onChangeIdentifier={onChangeIdentifier}
@@ -36,9 +34,15 @@ function SearchFieldWIthButtons({
     <div>
       { !!order && (
       <RadioButtonGroup className="mb-2" moduleClassName="customRadio">
-        <RadioButton name="operator" value="and" checked>{t('and')}</RadioButton>
-        <RadioButton name="operator" value="or">{t('or')}</RadioButton>
-        <RadioButton name="operator" value="not">{t('not')}</RadioButton>
+        {operators.map(({ displayName, operator }) => (
+          <RadioButton
+            key={`${namePrefix}.operator.${operator}`}
+            name={`${namePrefix}.operator`}
+            value={operator}
+          >
+            {displayName}
+          </RadioButton>
+        ))}
       </RadioButtonGroup>
       )}
       {searchField}
@@ -48,15 +52,21 @@ function SearchFieldWIthButtons({
 
 SearchFieldWIthButtons.propTypes = {
   handleRemove: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
+  namePrefix: PropTypes.string.isRequired,
   searchIdentifiers: PropTypes.arrayOf(PropTypes.shape({
   })).isRequired,
   order: PropTypes.objectOf(PropTypes.number).isRequired,
   onChangeIdentifier: PropTypes.func.isRequired,
   onChangeCondition: PropTypes.func.isRequired,
   onChangeDate: PropTypes.func,
-  identifierValue: PropTypes.object.isRequired,
-  conditionValue: PropTypes.object.isRequired,
+  identifierValue: PropTypes.instanceOf(Object).isRequired,
+  conditionValue: PropTypes.instanceOf(Object).isRequired,
+  operators: PropTypes.arrayOf(
+    PropTypes.shape({
+      displayName: PropTypes.string.isRequired,
+      operator: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
   error: PropTypes.string,
 };
 
