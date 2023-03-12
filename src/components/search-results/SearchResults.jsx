@@ -44,10 +44,6 @@ function SearchResults() {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const onChangeSearchQuery = (newState) => {
-    setSearchQuery(newState);
-  };
-
   const { getIdentifierByStrId, isReady } = useWorkstreams(searchResultParams.workstreamId);
   if (!isReady) return null;
 
@@ -233,7 +229,7 @@ function SearchResults() {
                 workstreamId={searchResultParams.workstreamId}
                 firstIdentifierStr={searchResultParams.identifierStrId}
                 defaultCriteria={searchResultParams.queryString}
-                onChangeSearchQuery={onChangeSearchQuery}
+                onChangeSearchQuery={setSearchQuery}
               />
             </Col>
           )

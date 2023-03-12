@@ -6,8 +6,8 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { formatDate, camelize } from 'utils/strings';
+import { parseSingleQuery } from 'utils/strings';
+import { formSchema } from './SearchQueryValidation';
 import Button from '../../shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 
@@ -36,52 +36,6 @@ function SearchQuery({
     setDefaultCondition(defaultIdentifier?.identifierOptions?.[0]);
     setFirstCondition(firstIdentifier?.identifierOptions?.[0]);
   }, [defaultIdentifier, firstIdentifier]);
-
-  const formSchema = Yup.object().shape({
-    searchFields: Yup.array().of(
-      Yup.object().shape({
-        data: Yup.string().trim().required('Search criteria cannot be empty for any field'),
-      }),
-    ),
-  });
-
-  // the if conditions for the condition are temporary as options are not full in database.
-  // isQuery = false in case of parsing a memo. true in case of query.
-  const parseSingleQuery = (searchField, index, isQuery) => {
-    let searchQuery = '';
-
-    if (!searchField.identifier) return searchQuery;
-
-    if (index) {
-      searchQuery += ' ';
-      searchQuery += (searchField.operator);
-      searchQuery += ' ';
-    }
-
-    if (isQuery) {
-      searchQuery += (searchField.identifier.identiferStrId);
-      searchQuery += ' ';
-    } else {
-      searchQuery += (searchField.identifier.identiferName);
-      searchQuery += ': ';
-    }
-
-    if (searchField.condition && isQuery) {
-      searchQuery += camelize(searchField.condition.optionName);
-    } else if (searchField.condition && !isQuery) {
-      searchQuery += (searchField.condition.optionName);
-      searchQuery += ':';
-    }
-
-    searchQuery += ' "';
-
-    if (searchField.condition && searchField.condition.optionName === 'Has Any') searchQuery += (searchField.data.trim().replace(/\s+/g, ','));// replace spaces with a comma
-    else if (searchField.identifier.identifierType === 'Date') searchQuery += formatDate(searchField.data);
-    else searchQuery += (searchField.data.trim().replace(/\s+/g, ' '));// replace one more spaces with one space (remove extra middle spaces)
-    searchQuery += '"';
-
-    return searchQuery;
-  };
 
   const parseQuery = (values, isQuery) => {
     let finalQuery = '';
