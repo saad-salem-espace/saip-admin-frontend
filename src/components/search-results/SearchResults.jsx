@@ -154,8 +154,7 @@ function SearchResults() {
             initialValues={{
               searchQuery,
               selectedWorkstream: workstreams.find(
-                // eslint-disable-next-line eqeqeq
-                (element) => element.id == searchResultParams.workstreamId,
+                (element) => element.id.toString() === searchResultParams.workstreamId,
               ),
             }}
           >
