@@ -220,7 +220,7 @@ function SearchResults() {
             )}
           </Formik>
           <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
-            <UploadImage className={`${showUploadImgSection ? 'py-8' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
+            <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
           </div>
           {
             errorMessage && (

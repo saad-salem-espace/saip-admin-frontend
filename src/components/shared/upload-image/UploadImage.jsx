@@ -99,11 +99,11 @@ function UploadImage({
           </div>
           {errors
             && <div>
-              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg">{t('validationErrors.imgFormats')}</span>}
+              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.imgFormats')}</span>}
             </div>}
           {errors
           && <div>
-            {errors.maxFileSize && <span className="text-danger-dark f-12 errorMsg">{t('validationErrors.maxSize')}</span>}
+            {errors.maxFileSize && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxSize')}</span>}
           </div>}
         </>
       )}
