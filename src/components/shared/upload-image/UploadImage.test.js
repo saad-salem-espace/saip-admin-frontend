@@ -42,7 +42,7 @@ describe('<UploadImage />', () => {
     />);
     const validImage = fileGenerator({ size: 500, type: 'zip', name: 'test.zip' });
     await userEvent.upload(container.firstChild, validImage);
-    await waitFor(() => expect(queryAllByText("Can't upload. Use an image in one of these formats: .jpeg, .png, .tiff, .jpg, or .gif")).toHaveLength(1));
+    await waitFor(() => expect(queryAllByText('The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.')).toHaveLength(1));
   });
 
   it('should display allow images', async () => {
@@ -54,7 +54,7 @@ describe('<UploadImage />', () => {
     />);
     const validImage = fileGenerator({ size: 500, type: 'image/jpg', name: 'test.jpg' });
     await userEvent.upload(container.firstChild, [validImage]);
-    await waitFor(() => expect(queryAllByText("Can't upload. Use an image in one of these formats: .jpeg, .png, .tiff, .jpg, or .gif")).toHaveLength(0));
+    await waitFor(() => expect(queryAllByText('The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.')).toHaveLength(0));
   });
 
   it('not render', async () => {
