@@ -38,7 +38,7 @@
   "dragDrop": "Drag & Drop Files Here",
   "imgFormats": "Only .jpeg .png .tiff .jpg .gif formats supported <0> or </0>",
   "validationErrors": {
-    "imgFormats": "Can't upload. Use an image in one of these formats: .jpeg, .png, .tiff, .jpg, or .gif",
+    "imgFormats": "The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.",
     "maxSize": "The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB."
   }
 }
