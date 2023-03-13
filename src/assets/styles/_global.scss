@@ -32,3 +32,7 @@ $fontSize: (
 .text-underline {
   text-decoration: underline
 }
+
+a {
+  font-size: $font-size-sm;
+}
