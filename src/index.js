@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
-// eslint-disable-next-line import/no-named-as-default-member
 import reportWebVitals from './reportWebVitals';
 import './i18n';
 import { CacheProvider } from './contexts/CacheContext';

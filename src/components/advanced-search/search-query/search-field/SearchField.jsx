@@ -1,5 +1,3 @@
-/* eslint-disable react-perf/jsx-no-new-array-as-prop */
-/* eslint-disable react/forbid-prop-types */
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -140,8 +138,8 @@ SearchField.propTypes = {
   name: PropTypes.string,
   searchIdentifiers: PropTypes.arrayOf(PropTypes.shape({
   })).isRequired,
-  identifierValue: PropTypes.object.isRequired,
-  conditionValue: PropTypes.object.isRequired,
+  identifierValue: PropTypes.instanceOf(Object).isRequired,
+  conditionValue: PropTypes.instanceOf(Object).isRequired,
   onChangeIdentifier: PropTypes.func.isRequired,
   onChangeCondition: PropTypes.func.isRequired,
   order: PropTypes.objectOf(PropTypes.number).isRequired,

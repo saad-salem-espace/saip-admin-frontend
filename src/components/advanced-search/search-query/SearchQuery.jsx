@@ -7,16 +7,16 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import { parseSingleQuery } from 'utils/parsers';
-import { formSchema } from './SearchQueryValidation';
-import Button from '../../shared/button/Button';
+import Button from 'components/shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
+import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, defaultCriteria, onChangeSearchQuery,
 }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
-  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${workstreamId}/identifiers` });
+  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${workstreamId}/identifiers` });
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
@@ -28,8 +28,9 @@ function SearchQuery({
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
-    /* eslint-disable-next-line max-len */
-    setFirstIdentifier(searchIdentifiers?.data.find((element) => element.identiferStrId === firstIdentifierStr));
+    setFirstIdentifier(searchIdentifiers?.data.find(
+      (element) => element.identiferStrId === firstIdentifierStr,
+    ));
   }, [searchIdentifiers]);
 
   useEffect(() => {
@@ -51,7 +52,7 @@ function SearchQuery({
     <div>
       <Formik
         enableReinitialize
-        validationSchema={formSchema}
+        validationSchema={SearchQueryValidationSchema}
         validateOnChange
         validateOnBlur={false}
         initialValues={{
@@ -104,11 +105,12 @@ function SearchQuery({
                       };
                       push(newField);
                     }}
-                    text={<>
-                      <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
-                      {t('addSearchField')}
-                      {/* eslint-disable-next-line react/jsx-indent */}
-                          </>}
+                    text={(
+                      <>
+                        <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
+                        {t('addSearchField')}
+                      </>
+                    )}
                   />
                   <div className="border-top d-flex justify-content-end pt-4 pb-8">
                     <Button

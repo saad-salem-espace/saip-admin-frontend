@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-const formSchema = Yup.object().shape({
+const SearchQueryValidationSchema = Yup.object().shape({
   searchFields: Yup.array().of(
     Yup.object().shape({
       data: Yup.string().trim().required('Search criteria cannot be empty for any field'),
@@ -8,5 +8,4 @@ const formSchema = Yup.object().shape({
   ),
 });
 
-/* eslint-disable-next-line import/prefer-default-export */
-export { formSchema };
+export default SearchQueryValidationSchema;

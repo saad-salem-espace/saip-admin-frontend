@@ -25,7 +25,7 @@ function WorkstreamSearch() {
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
-  const [searchOption] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
+  const [searchOption] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
   const searchOptions = searchOption?.data;
   const [isImgUploaded, setIsImgUploaded] = useState(false);
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
@@ -65,8 +65,7 @@ function WorkstreamSearch() {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append('file', file);
-    // eslint-disable-next-line no-unused-vars
-    const { res, err } = await uploadFile(formData);
+    const { err } = await uploadFile(formData);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
     setIsSubmitting(false);
