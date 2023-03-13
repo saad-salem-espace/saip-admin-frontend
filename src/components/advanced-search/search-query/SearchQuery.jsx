@@ -6,7 +6,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
-import { parseSingleQuery } from 'utils/parsers';
+import { parseSingleQuery } from 'utils/searchQueryParser';
 import Button from 'components/shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
