@@ -7,7 +7,7 @@ import style from './style.module.scss';
 
 function WorkStreams({ selectedWorkStream, onChange }) {
   const { cachedRequests } = useContext(CacheContext);
-  const [workstream] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
+  const [workstream] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
   const workstreams = workstream?.data;
   const handleChange = (workstreamId) => {
     onChange(workstreamId);

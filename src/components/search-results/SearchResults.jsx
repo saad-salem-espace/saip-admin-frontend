@@ -102,8 +102,7 @@ function SearchResults() {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append('file', file);
-    // eslint-disable-next-line no-unused-vars
-    const { res, err } = await uploadFile(formData);
+    const { err } = await uploadFile(formData);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
     setIsSubmitting(false);
