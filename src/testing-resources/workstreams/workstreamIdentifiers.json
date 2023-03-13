@@ -7,7 +7,20 @@
       "identiferName": "Full-text",
       "identifierType": "Text",
       "identiferStrId": "ftxt",
-      "identifierOptions": [],
+      "identifierOptions": [
+        {
+          "id": 1,
+          "optionName": "Has Exactly"
+        },
+        {
+          "id": 2,
+          "optionName": "Has With"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any"
+        }
+      ],
       "identifierWorkstreams": [
         {
           "id": 1,

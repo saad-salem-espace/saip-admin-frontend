@@ -8,16 +8,18 @@
   width: 40%;
 }
 
-.criteria, .dateWrapper, .advancedSearchSelect {
-  width: calc(100% - 36px);
-}
-
 .wrapper {
   border-radius: $border-radius-lg;
 
   &:first-of-type {
     border-radius: 0 0 $border-radius-lg $border-radius-lg;
 
+  }
+
+  &:not(:first-of-type){
+    .criteria, .dateWrapper, .advancedSearchSelect {
+      width: calc(100% - 26px);
+    }
   }
 }
 

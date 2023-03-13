@@ -9,6 +9,7 @@ function Input({
   name,
   placeholder,
   moduleClassName,
+  disabled,
 }) {
   const styleClassNames = classNames.bind(style);
   const inputClassName = styleClassNames(moduleClassName);
@@ -26,6 +27,7 @@ function Input({
                 placeholder={placeholder}
                   // please add class ${style['has-value']} if the input has value
                 className={`border ${isInvalid ? 'error' : ''} w-100 ${style.input} `}
+                disabled={disabled}
                 {...field}
               />
             );
@@ -43,6 +45,7 @@ Input.propTypes = {
   name: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   moduleClassName: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 Input.defaultProps = {
   type: 'text',
@@ -50,6 +53,7 @@ Input.defaultProps = {
   name: null,
   value: '',
   moduleClassName: '',
+  disabled: false,
 };
 
 export default Input;

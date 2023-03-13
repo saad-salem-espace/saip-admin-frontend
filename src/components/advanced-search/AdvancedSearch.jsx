@@ -8,7 +8,14 @@ import Button from '../shared/button/Button';
 import AdvancedSearchStyle from './AdvancedSearch.module.scss';
 import SearchQuery from './search-query/SearchQuery';
 
-function AdvancedSearch({ toggleAdvancedSearchMenu, isAdvancedMenuOpen }) {
+function AdvancedSearch({
+  toggleAdvancedSearchMenu,
+  isAdvancedMenuOpen,
+  workstreamId,
+  firstIdentifierStr,
+  defaultCriteria,
+  onChangeSearchQuery,
+}) {
   const { t } = useTranslation('search');
   const [activeTabId, setActiveTabId] = useState(1);
 
@@ -20,7 +27,12 @@ function AdvancedSearch({ toggleAdvancedSearchMenu, isAdvancedMenuOpen }) {
         <FontAwesomeIcon icon={faCircleQuestion} className="f-20 ms-2" />
         {/* eslint-disable-next-line react/jsx-closing-tag-location */}
       </div>,
-      content: <SearchQuery />,
+      content: <SearchQuery
+        workstreamId={workstreamId}
+        firstIdentifierStr={firstIdentifierStr}
+        defaultCriteria={defaultCriteria}
+        onChangeSearchQuery={onChangeSearchQuery}
+      />,
     },
   ];
 
@@ -51,6 +63,14 @@ function AdvancedSearch({ toggleAdvancedSearchMenu, isAdvancedMenuOpen }) {
 AdvancedSearch.propTypes = {
   toggleAdvancedSearchMenu: PropTypes.func.isRequired,
   isAdvancedMenuOpen: PropTypes.bool.isRequired,
+  workstreamId: PropTypes.string.isRequired,
+  firstIdentifierStr: PropTypes.string.isRequired,
+  defaultCriteria: PropTypes.string.isRequired,
+  onChangeSearchQuery: PropTypes.func,
+};
+
+AdvancedSearch.defaultProps = {
+  onChangeSearchQuery: () => {},
 };
 
 export default AdvancedSearch;

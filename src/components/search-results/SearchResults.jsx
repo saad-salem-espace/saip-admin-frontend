@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -8,20 +8,22 @@ import { useSearchParams } from 'react-router-dom';
 import uploadFile from 'apis/uploadFileApi';
 import useWorkstreams from 'hooks/useWorkstreams';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
-// import EmptyState from 'components/shared/empty-state/EmptyState';
+import EmptyState from 'components/shared/empty-state/EmptyState';
+import AppPagination from 'components/shared/app-pagination/AppPagination';
+import Select from 'components/shared/form/select/Select';
+import Search from 'components/shared/form/search/Search';
+import ToggleButton from 'components/shared/toggle-button/ToggleButton';
+import UploadImage from 'components/shared/upload-image/UploadImage';
+import emptyState from 'assets/images/search-empty-state.svg';
+import CacheContext from 'contexts/CacheContext';
 import SearchNote from './SearchNote';
-import AppPagination from '../shared/app-pagination/AppPagination';
 import SearchResultCards from './search-result-cards/SearchResultCards';
-import Select from '../shared/form/select/Select';
-import Search from '../shared/form/search/Search';
-import ToggleButton from '../shared/toggle-button/ToggleButton';
+import useCacheRequest from '../../hooks/useCacheRequest';
 import IprDetails from '../ipr-details/IprDetails';
 // import formStyle from '../shared/form/form.module.scss';
 import './style.scss';
-import AdvancedSearch from '../advanced-search/AdvancedSearch';
-import UploadImage from '../shared/upload-image/UploadImage';
 // import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
-// import emptyState from '../../assets/images/search-empty-state.svg';
+import AdvancedSearch from '../advanced-search/AdvancedSearch';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -42,7 +44,13 @@ function SearchResults() {
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
 
+  const [searchQuery, setSearchQuery] = useState('');
+
   const { getIdentifierByStrId, isReady } = useWorkstreams(searchResultParams.workstreamId);
+  const { cachedRequests } = useContext(CacheContext);
+  const [workstream] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
+  const workstreams = workstream?.data;
+
   if (!isReady) return null;
 
   const identifier = getIdentifierByStrId(searchParams.get('identifierStrId'));
@@ -65,17 +73,6 @@ function SearchResults() {
   const onSubmit = () => {
 
   };
-
-  const WorkStreamsOptions = [
-    {
-      key: '1',
-      value: 'patents',
-    },
-    {
-      key: '2',
-      value: 'copy right',
-    },
-  ];
 
   const handleCloseIprDetail = () => {
     setActiveDocument(null);
@@ -152,13 +149,29 @@ function SearchResults() {
     <Container fluid className="px-0">
       <Row className="mx-0">
         <Col md={{ span: 10, offset: 1 }} className="mb-8 position-relative">
-          <Formik>
-            {() => (
+          <Formik
+            enableReinitialize
+            initialValues={{
+              searchQuery,
+              selectedWorkstream: workstreams.find(
+                (element) => element.id.toString() === searchResultParams.workstreamId,
+              ),
+            }}
+          >
+            {({ values, setFieldValue }) => (
               <Form className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
                     <h4 className="mb-0 mt-4">Search</h4>
-                    <Select options={WorkStreamsOptions} moduleClassName="menu" className="workStreams me-5 ms-3 mt-1 customSelect" />
+                    <Select
+                      options={workstreams}
+                      moduleClassName="menu"
+                      className="workStreams me-5 ms-3 mt-1 customSelect"
+                      getOptionName={(option) => option.workstreamName}
+                      getOptionValue={(option) => option.workstreamName}
+                      selectedOption={values.selectedWorkstream}
+                      setSelectedOption={(data) => setFieldValue('selectedWorkstream', data)}
+                    />
                   </div>
                   <div className="flex-grow-1">
                     <div className="mb-4">
@@ -175,11 +188,13 @@ function SearchResults() {
                         }
                         <Search
                           id="search"
+                          name="searchQuery"
                           className="flex-grow-1"
                           moduleClassName={SearchModuleClassName}
                           placeholder={t('typeHere')}
                           onSubmit={onSubmit}
                           handleUploadImg={handleUploadImg}
+                          disabled
                           searchWithImg
                         />
                       </div>
@@ -222,6 +237,10 @@ function SearchResults() {
               <AdvancedSearch
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
                 isAdvancedMenuOpen={isAdvancedMenuOpen}
+                workstreamId={searchResultParams.workstreamId}
+                firstIdentifierStr={searchResultParams.identifierStrId}
+                defaultCriteria={searchResultParams.queryString}
+                onChangeSearchQuery={setSearchQuery}
               />
             </Col>
           )
@@ -231,8 +250,6 @@ function SearchResults() {
             searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
             resultsCount={totalResults}
           />
-          {/* {
-            totalResults ? ( */}
           <Formik>
             {() => (
               <Form className="mt-8">
@@ -249,15 +266,17 @@ function SearchResults() {
                     activeDocument,
                   }}
                   fetchedTotalResults={setTotalResults}
+                  emptyState={(
+                    <EmptyState
+                      title={t('emptyStateTitle')}
+                      msg={t('emptyStateMsg')}
+                      img={emptyState}
+                      className="mt-18"
+                    />)}
                 />
               </Form>
             )}
           </Formik>
-          {/* ) : (
-              <EmptyState title=
-              {t('emptyStateTitle')} msg={t('emptyStateMsg')} img={emptyState} className="mt-18" />
-            )
-          } */}
         </Col>
         {activeDocument && (
           <Col lg={getIprClassName('lg')} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
