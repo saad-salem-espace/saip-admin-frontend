@@ -3,28 +3,34 @@ import './DatePicker.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
-import ErrorMessage from '../error-message/ErrorMessage';
+import { Field } from 'formik';
 
-function AppDatePicker({ range, className, errorMsg }) {
+function AppDatePicker({
+  name, onChangeDate, className, range,
+}) {
   return (
     <div className={`datePicker position-relative ${className}`}>
-      <DatePicker range={range} />
+      <Field name={name}>
+        {
+        ({ field }) => <DatePicker range={range} editable={false} {...field} name={name} format="DD MMMM YYYY" value={field.value} onChange={(val) => onChangeDate(val)} />
+      }
+      </Field>
       <FontAwesomeIcon icon={faCalendarDays} className="calendar-icon f-20 text-primary" />
-      <ErrorMessage msg={errorMsg} className="mt-2 mb-0" />
     </div>
   );
 }
 
 AppDatePicker.propTypes = {
-  range: PropTypes.bool,
+  name: PropTypes.string,
+  onChangeDate: PropTypes.func.isRequired,
   className: PropTypes.string,
-  errorMsg: PropTypes.string,
+  range: PropTypes.bool,
 };
 
 AppDatePicker.defaultProps = {
-  range: false,
+  name: null,
   className: '',
-  errorMsg: '',
+  range: false,
 };
 
 export default AppDatePicker;
