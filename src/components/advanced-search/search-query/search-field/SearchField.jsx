@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 // import MultiSelect from 'components/shared/multi-select/MultiSelect';
-import formStyle from '../../../shared/form/form.module.scss';
-import Select from '../../../shared/form/select/Select';
+import formStyle from 'components/shared/form/form.module.scss';
+import Select from 'components/shared/form/select/Select';
+import Button from 'components/shared/button/Button';
+import Input from 'components/shared/form/input/Input';
+import DatePicker from 'components/shared/date-picker/AppDatePicker';
+import { isMultipleValue, isRangeValue } from 'utils/searchQueryParser';
 import style from '../SearchQuery.module.scss';
-import Button from '../../../shared/button/Button';
-import Input from '../../../shared/form/input/Input';
-import DatePicker from '../../../shared/date-picker/AppDatePicker';
 
 function SearchField({
   handleRemove,
@@ -76,7 +77,13 @@ function SearchField({
           identifierValue?.identifierType === 'Date'
             ? (
               <div>
-                <DatePicker name={name} onChangeDate={onChangeDate} className={`${error ? 'error' : ''}`} />
+                <DatePicker
+                  name={name}
+                  range={isRangeValue(conditionValue.optionParserName)}
+                  isMulti={isMultipleValue(conditionValue.optionParserName)}
+                  onChangeDate={onChangeDate}
+                  className={`${error ? 'error' : ''}`}
+                />
               </div>
             )
             : (

@@ -6,13 +6,30 @@ import PropTypes from 'prop-types';
 import { Field } from 'formik';
 
 function AppDatePicker({
-  name, onChangeDate, className, range,
+  name, onChangeDate, className, range, isMulti,
 }) {
   return (
     <div className={`datePicker position-relative ${className}`}>
       <Field name={name}>
         {
-        ({ field }) => <DatePicker range={range} editable={false} {...field} name={name} format="DD MMMM YYYY" value={field.value} onChange={(val) => onChangeDate(val)} />
+        ({ field }) => (
+          <DatePicker
+            range={range}
+            editable={false}
+            multiple={isMulti}
+            {...field}
+            name={name}
+            format="DD MMMM YYYY"
+            value={field.value}
+            onChange={(val) => {
+              if (Array.isArray(val) && (!isMulti && !range)) {
+                onChangeDate(val[0]);
+              } else {
+                onChangeDate(val);
+              }
+            }}
+          />
+        )
       }
       </Field>
       <FontAwesomeIcon icon={faCalendarDays} className="calendar-icon f-20 text-primary" />
@@ -25,12 +42,14 @@ AppDatePicker.propTypes = {
   onChangeDate: PropTypes.func.isRequired,
   className: PropTypes.string,
   range: PropTypes.bool,
+  isMulti: PropTypes.bool,
 };
 
 AppDatePicker.defaultProps = {
   name: null,
   className: '',
   range: false,
+  isMulti: false,
 };
 
 export default AppDatePicker;
