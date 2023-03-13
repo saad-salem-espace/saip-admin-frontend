@@ -104,6 +104,7 @@ function SearchResults() {
     const { res, err } = await uploadFile(formData);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
+    setShowUploadImgSection(false);
     setIsSubmitting(false);
   };
 
