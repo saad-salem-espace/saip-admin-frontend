@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -15,8 +15,10 @@ import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import UploadImage from 'components/shared/upload-image/UploadImage';
 import emptyState from 'assets/images/search-empty-state.svg';
+import CacheContext from 'contexts/CacheContext';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
+import useCacheRequest from '../../hooks/useCacheRequest';
 import IprDetails from '../ipr-details/IprDetails';
 // import formStyle from '../shared/form/form.module.scss';
 import './style.scss';
@@ -45,6 +47,10 @@ function SearchResults() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const { getIdentifierByStrId, isReady } = useWorkstreams(searchResultParams.workstreamId);
+  const { cachedRequests } = useContext(CacheContext);
+  const [workstream] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
+  const workstreams = workstream?.data;
+
   if (!isReady) return null;
 
   const identifier = getIdentifierByStrId(searchParams.get('identifierStrId'));
@@ -67,17 +73,6 @@ function SearchResults() {
   const onSubmit = () => {
 
   };
-
-  const WorkStreamsOptions = [
-    {
-      key: '1',
-      value: 'patents',
-    },
-    {
-      key: '2',
-      value: 'copy right',
-    },
-  ];
 
   const handleCloseIprDetail = () => {
     setActiveDocument(null);
@@ -154,13 +149,29 @@ function SearchResults() {
     <Container fluid className="px-0">
       <Row className="mx-0">
         <Col md={{ span: 10, offset: 1 }} className="mb-8 position-relative">
-          <Formik enableReinitialize initialValues={{ searchQuery }}>
-            {() => (
+          <Formik
+            enableReinitialize
+            initialValues={{
+              searchQuery,
+              selectedWorkstream: workstreams.find(
+                (element) => element.id.toString() === searchResultParams.workstreamId,
+              ),
+            }}
+          >
+            {({ values, setFieldValue }) => (
               <Form className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
                     <h4 className="mb-0 mt-4">Search</h4>
-                    <Select options={WorkStreamsOptions} moduleClassName="menu" className="workStreams me-5 ms-3 mt-1 customSelect" />
+                    <Select
+                      options={workstreams}
+                      moduleClassName="menu"
+                      className="workStreams me-5 ms-3 mt-1 customSelect"
+                      getOptionName={(option) => option.workstreamName}
+                      getOptionValue={(option) => option.workstreamName}
+                      selectedOption={values.selectedWorkstream}
+                      setSelectedOption={(data) => setFieldValue('selectedWorkstream', data)}
+                    />
                   </div>
                   <div className="flex-grow-1">
                     <div className="mb-4">
