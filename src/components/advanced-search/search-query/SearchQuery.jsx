@@ -112,7 +112,7 @@ function SearchQuery({
                           </>}
                   />
                   {
-                      values.searchFields.length.toString() === maximumSearchFields
+                      values.searchFields.length >= parseInt(maximumSearchFields, 10)
                         ? <span>You have reached the maximum number of search fields</span> : null
                   }
                   <div className="border-top d-flex justify-content-end pt-4 pb-8">
