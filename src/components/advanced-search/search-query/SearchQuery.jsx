@@ -92,6 +92,11 @@ function SearchQuery({
                    />
                  ))
                }
+                  {
+                      values.searchFields.length >= parseInt(maximumSearchFields, 10)
+                        ? <ErrorMessage msg={t('searchFieldValidationMsg')} className="mb-2 mt-4" />
+                        : null
+                  }
                   <Button
                     variant="outline-primary"
                     className="mb-2 mt-2"
@@ -112,11 +117,6 @@ function SearchQuery({
                       {/* eslint-disable-next-line react/jsx-indent */}
                           </>}
                   />
-                  {
-                      values.searchFields.length >= parseInt(maximumSearchFields, 10)
-                        ? <ErrorMessage msg={t('searchFieldValidationMsg')} />
-                        : null
-                  }
                   <div className="border-top d-flex justify-content-end pt-4 pb-8 mt-6">
                     <Button
                       variant="outline-primary"
