@@ -25,6 +25,7 @@ function SearchQuery({
     operator: operator.toUpperCase(),
     displayName: t(`operators.${operator}`),
   }));
+  const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS;
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
@@ -102,7 +103,7 @@ function SearchQuery({
                         condition: defaultCondition,
                         operator: 'AND',
                       };
-                      push(newField);
+                      if (values.searchFields.length < maximumSearchFields) push(newField);
                     }}
                     text={<>
                       <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
@@ -110,6 +111,10 @@ function SearchQuery({
                       {/* eslint-disable-next-line react/jsx-indent */}
                           </>}
                   />
+                  {
+                      values.searchFields.length.toString() === maximumSearchFields
+                        ? <span>You have reached the maximum number of search fields</span> : null
+                  }
                   <div className="border-top d-flex justify-content-end pt-4 pb-8">
                     <Button
                       variant="outline-primary"
