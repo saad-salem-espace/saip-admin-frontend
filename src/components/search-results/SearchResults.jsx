@@ -20,7 +20,6 @@ import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import IprDetails from '../ipr-details/IprDetails';
-// import formStyle from '../shared/form/form.module.scss';
 import './style.scss';
 // import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
@@ -101,6 +100,7 @@ function SearchResults() {
     const { res, err } = await uploadFile(formData);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
+    setShowUploadImgSection(false);
     setIsSubmitting(false);
   };
 
@@ -219,7 +219,7 @@ function SearchResults() {
             )}
           </Formik>
           <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
-            <UploadImage className={`${showUploadImgSection ? 'py-8' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
+            <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
           </div>
           {
             errorMessage && (

@@ -85,6 +85,10 @@ div[class$="ValueContainer"] {
   div[class$="Control"] {
     border: none;
   }
+
+  div[class$="singleValue"]{
+    color: $primary;
+  }
 }
 
 ///// select-2
