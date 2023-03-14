@@ -1,6 +1,6 @@
 import { Trans, useTranslation } from 'react-i18next';
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useNavigate, createSearchParams, Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -16,7 +16,6 @@ import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import formStyle from '../shared/form/form.module.scss';
 import UploadImage from '../shared/upload-image/UploadImage';
-import ToggleButton from '../shared/toggle-button/ToggleButton';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
@@ -28,7 +27,6 @@ function WorkstreamSearch() {
   const [searchOption] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
   const searchOptions = searchOption?.data;
   const [isImgUploaded, setIsImgUploaded] = useState(false);
-  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -53,14 +51,11 @@ function WorkstreamSearch() {
 
   const SearchModuleClassName = ({
     lgSearch: true,
-    searchWithSibling: !isAdvancedSearch,
+    searchWithSibling: true,
     imgUploaded: isImgUploaded,
     searchWithImage: selectedWorkStream === 1,
   });
 
-  const handleAdvancedSearch = () => {
-    setIsAdvancedSearch(true);
-  };
   const uploadCurrentFile = async (file) => {
     setIsSubmitting(true);
     const formData = new FormData();
@@ -112,14 +107,9 @@ function WorkstreamSearch() {
                 handleSubmit, values, setFieldValue, errors, touched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
-                  <ToggleButton
-                    handleToggleButton={handleAdvancedSearch}
-                    isToggleButtonOn={false}
-                    text={t('advancedSearch')}
-                    className="mb-4 text-end"
-                  />
-                  <div className="d-md-flex align-items-stretch">
-                    <div className="position-relative mb-md-0 mb-3">
+                  <Link to="/" className="d-block text-primary-dark mb-1 text-end">{t('advancedSearch')}</Link>
+                  <div className="d-xl-flex align-items-stretch">
+                    <div className="position-relative mb-xl-0 mb-3">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
                       <Select
                         options={searchOptions}
@@ -155,7 +145,7 @@ function WorkstreamSearch() {
                     ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                   <div className="rounded">
-                    <UploadImage className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} />
+                    <UploadImage className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`} showUploadImgSection={showUploadImgSection} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} />
                   </div>
                   {
                     errorMessage && (
