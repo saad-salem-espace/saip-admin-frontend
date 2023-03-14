@@ -40,6 +40,7 @@ function SearchResults() {
     workstreamId: searchParams.get('workstreamId'),
     identifierStrId: searchParams.get('identifierStrId'),
     queryString: searchParams.get('query'),
+    fireSearch: searchParams.get('fireSearch') !== 'false',
   };
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
@@ -101,6 +102,7 @@ function SearchResults() {
     const { res, err } = await uploadFile(formData);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
+    setShowUploadImgSection(false);
     setIsSubmitting(false);
   };
 
@@ -219,7 +221,7 @@ function SearchResults() {
             )}
           </Formik>
           <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
-            <UploadImage className={`${showUploadImgSection ? 'py-8' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
+            <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
           </div>
           {
             errorMessage && (
@@ -245,39 +247,43 @@ function SearchResults() {
             </Col>
           )
         }
-        <Col lg={getSearchResultsClassName('lg')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
-          <SearchNote
-            searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
-            resultsCount={totalResults}
-          />
-          <Formik>
-            {() => (
-              <Form className="mt-8">
-                <AppPagination
-                  axiosConfig={{
-                    url: 'search',
-                    params: searchResultParams,
-                  }}
-                  defaultPage={Number(searchParams.get('page') || '1')}
-                  RenderedComponent={SearchResultCards}
-                  renderedProps={{
-                    query: searchResultParams.queryString,
-                    setActiveDocument,
-                    activeDocument,
-                  }}
-                  fetchedTotalResults={setTotalResults}
-                  emptyState={(
-                    <EmptyState
-                      title={t('emptyStateTitle')}
-                      msg={t('emptyStateMsg')}
-                      img={emptyState}
-                      className="mt-18"
-                    />)}
-                />
-              </Form>
-            )}
-          </Formik>
-        </Col>
+        {
+          searchResultParams.fireSearch
+             && <Col lg={getSearchResultsClassName('lg')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+               <SearchNote
+                 searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
+                 resultsCount={totalResults}
+               />
+               <Formik>
+                 {() => (
+                   <Form className="mt-8">
+                     <AppPagination
+                       axiosConfig={{
+                         url: 'search',
+                         params: searchResultParams,
+                       }}
+                       defaultPage={Number(searchParams.get('page') || '1')}
+                       RenderedComponent={SearchResultCards}
+                       renderedProps={{
+                         query: searchResultParams.queryString,
+                         setActiveDocument,
+                         activeDocument,
+                       }}
+                       fetchedTotalResults={setTotalResults}
+                       emptyState={(
+                         <EmptyState
+                           title={t('emptyStateTitle')}
+                           msg={t('emptyStateMsg')}
+                           img={emptyState}
+                           className="mt-18"
+                         />)}
+                     />
+                   </Form>
+                 )}
+               </Formik>
+               {/* eslint-disable-next-line react/jsx-closing-tag-location */}
+             </Col>
+}
         {activeDocument && (
           <Col lg={getIprClassName('lg')} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails
