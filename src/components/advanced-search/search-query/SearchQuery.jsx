@@ -7,6 +7,7 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import { parseSingleQuery } from 'utils/parsers';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import { formSchema } from './SearchQueryValidation';
 import Button from '../../shared/button/Button';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
@@ -25,6 +26,7 @@ function SearchQuery({
     operator: operator.toUpperCase(),
     displayName: t(`operators.${operator}`),
   }));
+  const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS;
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
@@ -90,9 +92,14 @@ function SearchQuery({
                    />
                  ))
                }
+                  {
+                      values.searchFields.length >= parseInt(maximumSearchFields, 10)
+                        ? <ErrorMessage msg={t('searchFieldValidationMsg')} className="mb-2 mt-4" />
+                        : null
+                  }
                   <Button
                     variant="outline-primary"
-                    className="mb-9 mt-2"
+                    className="mb-2 mt-2"
                     size="sm"
                     onClick={() => {
                       const newField = {
@@ -102,7 +109,7 @@ function SearchQuery({
                         condition: defaultCondition,
                         operator: 'AND',
                       };
-                      push(newField);
+                      if (values.searchFields.length < maximumSearchFields) push(newField);
                     }}
                     text={<>
                       <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
@@ -110,7 +117,7 @@ function SearchQuery({
                       {/* eslint-disable-next-line react/jsx-indent */}
                           </>}
                   />
-                  <div className="border-top d-flex justify-content-end pt-4 pb-8">
+                  <div className="border-top d-flex justify-content-end pt-4 pb-8 mt-6">
                     <Button
                       variant="outline-primary"
                       className="me-4"
