@@ -14,8 +14,8 @@ import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
 import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
-import formStyle from '../shared/form/form.module.scss';
 import UploadImage from '../shared/upload-image/UploadImage';
+import formStyle from '../shared/form/form.module.scss';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');

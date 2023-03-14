@@ -20,7 +20,6 @@ import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import IprDetails from '../ipr-details/IprDetails';
-// import formStyle from '../shared/form/form.module.scss';
 import './style.scss';
 // import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
