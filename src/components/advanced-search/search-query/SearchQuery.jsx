@@ -61,7 +61,7 @@ function SearchQuery({
         }}
       >
         {({
-          values, setFieldValue, errors, setValues, touched,
+          values, setFieldValue, errors, setValues, touched, setErrors, setTouched,
         }) => (
           <Form onChange={onChangeSearchQuery(parseQuery(values, true))}>
             <FieldArray name="searchFields">
@@ -115,11 +115,15 @@ function SearchQuery({
                       variant="outline-primary"
                       className="me-4"
                       size="sm"
-                      onClick={() => setValues({
-                        searchFields: [{
-                          id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition, operator: '',
-                        }],
-                      })}
+                      onClick={() => {
+                        setValues({
+                          searchFields: [{
+                            id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition, operator: '',
+                          }],
+                        });
+                        setErrors({});
+                        setTouched({});
+                      }}
                       text={t('clear')}
                     />
                     <Button
