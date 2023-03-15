@@ -19,6 +19,7 @@ div[class$="singleValue"] {
   position: absolute;
   bottom: 8px;
   left: 4px;
+  font-size: $font-size-sm;
 }
 
 div[class$="ValueContainer"] {
@@ -68,7 +69,6 @@ div[class$="ValueContainer"] {
 .customSelect {
   div[class$="ValueContainer"] {
     border-bottom: $border-width dashed $primary;
-    font-size: 24px;
     font-family: $font-medium;
     height: auto;
 
@@ -86,8 +86,10 @@ div[class$="ValueContainer"] {
     border: none;
   }
 
-  div[class$="singleValue"]{
+  div[class$="singleValue"], input{
     color: $primary;
+    font-size: 24px;
+    bottom: 0;
   }
 }
 
@@ -132,6 +134,9 @@ div[class$="ValueContainer"] {
   div[class$="indicatorContainer"],
   div[class$="IndicatorsContainer"]{
     background-color: transparent;
+  }
+  input {
+    font-size: $font-size-sm !important;
   }
 }
 

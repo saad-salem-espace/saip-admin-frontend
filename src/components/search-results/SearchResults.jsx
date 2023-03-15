@@ -114,26 +114,26 @@ function SearchResults() {
 
   const getIprClassName = (media) => {
     let size = 4;
-    if (media === 'lg' && isIPRExpanded) {
+    if (media === 'xl' && isIPRExpanded) {
       size = 12;
       if (isAdvancedSearch) {
-        size = isAdvancedMenuOpen ? 8 : 11;
+        size = isAdvancedMenuOpen ? 9 : 11;
       }
     }
     return size;
   };
   const getSearchResultsClassName = (media) => {
-    let size = 4;
-    if (media === 'lg') {
+    let size = 5;
+    if (media === 'xl') {
       if (isAdvancedSearch) {
         if (!totalResults) {
-          size = 8;
+          size = 9;
         }
         if (!isAdvancedMenuOpen) {
           if (totalResults) {
             size = 7;
           } else {
-            size = 11;
+            size = 12;
           }
         }
       } else if (totalResults) {
@@ -146,8 +146,8 @@ function SearchResults() {
   };
 
   return (
-    <Container fluid className="px-0">
-      <Row className="mx-0">
+    <Container fluid className="px-0 workStreamResults">
+      <Row className="mx-0 header">
         <Col md={{ span: 10, offset: 1 }} className="mb-8 position-relative">
           <Formik
             enableReinitialize
@@ -230,10 +230,10 @@ function SearchResults() {
           }
         </Col>
       </Row>
-      <Row className="border-top mx-0 align-items-stretch mb-10">
+      <Row className="border-top mx-0 align-items-stretch content">
         {
           isAdvancedSearch && (
-            <Col lg={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
+            <Col xl={isAdvancedMenuOpen ? 3 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
               <AdvancedSearch
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
                 isAdvancedMenuOpen={isAdvancedMenuOpen}
@@ -245,7 +245,7 @@ function SearchResults() {
             </Col>
           )
         }
-        <Col lg={getSearchResultsClassName('lg')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+        <Col xl={getSearchResultsClassName('xl')} lg={7} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <SearchNote
             searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
             resultsCount={totalResults}
@@ -279,7 +279,7 @@ function SearchResults() {
           </Formik>
         </Col>
         {activeDocument && (
-          <Col lg={getIprClassName('lg')} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
+          <Col xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails
               collapseIPR={collapseIPR}
               isIPRExpanded={isIPRExpanded}
