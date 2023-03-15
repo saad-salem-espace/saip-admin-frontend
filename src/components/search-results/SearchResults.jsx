@@ -134,13 +134,13 @@ function SearchResults() {
           if (totalResults) {
             size = 7;
           } else {
-            size = 12;
+            size = 11;
           }
         }
       } else if (totalResults) {
         size = 8;
       } else {
-        size = 12;
+        size = 11;
       }
     }
     return size;
@@ -248,7 +248,7 @@ function SearchResults() {
         }
         {
           searchResultParams.fireSearch
-             && <Col lg={getSearchResultsClassName('lg')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+             && <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
                <SearchNote
                  searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
                  resultsCount={totalResults}
@@ -283,6 +283,7 @@ function SearchResults() {
                {/* eslint-disable-next-line react/jsx-closing-tag-location */}
              </Col>
 }
+
         {activeDocument && (
           <Col xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails
