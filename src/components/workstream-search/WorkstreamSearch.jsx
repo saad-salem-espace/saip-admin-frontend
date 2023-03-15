@@ -107,7 +107,20 @@ function WorkstreamSearch() {
                 handleSubmit, values, setFieldValue, errors, touched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
-                  <Link to="/" className="d-block text-primary mb-4 text-end">{t('SwitchToAdvancedSearch')}</Link>
+                  <Link
+                    to={{
+                      pathname: '/search',
+                      search: `?${createSearchParams({
+                        workstreamId: selectedWorkStream,
+                        identifierStrId: selectedOption?.identiferStrId,
+                        query: values.searchQuery,
+                        fireSearch: false,
+                      })}`,
+                    }}
+                    className="d-block text-primary-dark mb-1 text-end"
+                  >
+                    {t('advancedSearch')}
+                  </Link>
                   <div className="d-xl-flex align-items-stretch">
                     <div className="position-relative mb-xl-0 mb-3">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>

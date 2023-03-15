@@ -39,6 +39,7 @@ function SearchResults() {
     workstreamId: searchParams.get('workstreamId'),
     identifierStrId: searchParams.get('identifierStrId'),
     queryString: searchParams.get('query'),
+    fireSearch: searchParams.get('fireSearch') !== 'false',
   };
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
@@ -245,39 +246,43 @@ function SearchResults() {
             </Col>
           )
         }
-        <Col xl={getSearchResultsClassName('xl')} lg={7} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
-          <SearchNote
-            searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
-            resultsCount={totalResults}
-          />
-          <Formik>
-            {() => (
-              <Form className="mt-8">
-                <AppPagination
-                  axiosConfig={{
-                    url: 'search',
-                    params: searchResultParams,
-                  }}
-                  defaultPage={Number(searchParams.get('page') || '1')}
-                  RenderedComponent={SearchResultCards}
-                  renderedProps={{
-                    query: searchResultParams.queryString,
-                    setActiveDocument,
-                    activeDocument,
-                  }}
-                  fetchedTotalResults={setTotalResults}
-                  emptyState={(
-                    <EmptyState
-                      title={t('emptyStateTitle')}
-                      msg={t('emptyStateMsg')}
-                      img={emptyState}
-                      className="mt-18"
-                    />)}
-                />
-              </Form>
-            )}
-          </Formik>
-        </Col>
+        {
+          searchResultParams.fireSearch
+             && <Col lg={getSearchResultsClassName('lg')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+               <SearchNote
+                 searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
+                 resultsCount={totalResults}
+               />
+               <Formik>
+                 {() => (
+                   <Form className="mt-8">
+                     <AppPagination
+                       axiosConfig={{
+                         url: 'search',
+                         params: searchResultParams,
+                       }}
+                       defaultPage={Number(searchParams.get('page') || '1')}
+                       RenderedComponent={SearchResultCards}
+                       renderedProps={{
+                         query: searchResultParams.queryString,
+                         setActiveDocument,
+                         activeDocument,
+                       }}
+                       fetchedTotalResults={setTotalResults}
+                       emptyState={(
+                         <EmptyState
+                           title={t('emptyStateTitle')}
+                           msg={t('emptyStateMsg')}
+                           img={emptyState}
+                           className="mt-18"
+                         />)}
+                     />
+                   </Form>
+                 )}
+               </Formik>
+               {/* eslint-disable-next-line react/jsx-closing-tag-location */}
+             </Col>
+}
         {activeDocument && (
           <Col xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails
