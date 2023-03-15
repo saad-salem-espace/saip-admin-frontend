@@ -142,22 +142,6 @@ function SearchResults() {
         size = 12;
       }
     }
-    if (media === 'lg') {
-      if (isAdvancedSearch) {
-        if (!totalResults) {
-          size = 9;
-        }
-        if (!isAdvancedMenuOpen) {
-          if (totalResults) {
-            size = 7;
-          } else {
-            size = 12;
-          }
-        }
-      } else if (totalResults) {
-        size = 8;
-      }
-    }
     return size;
   };
 
