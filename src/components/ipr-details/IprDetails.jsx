@@ -61,7 +61,7 @@ function IprDetails({
             <Button
               variant="link"
               onClick={collapseIPR}
-              className="p-0 d-md-inline-block d-none"
+              className="p-0 pe-5 d-md-inline-block d-none"
               data-testid="expand-ipr-detail-button"
               text={<FontAwesomeIcon icon={isIPRExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`f-17 text-gray ${style['expand-icon']}`} />}
             />
@@ -70,7 +70,7 @@ function IprDetails({
               data-testid="close-ipr-detail-button"
               onClick={onClose}
               className="p-0"
-              text={<FontAwesomeIcon icon={faTimes} className="f-20 text-gray ms-5 border-start ps-5" />}
+              text={<FontAwesomeIcon icon={faTimes} className="f-20 text-gray border-start ps-5" />}
             />
           </div>
         </div>
