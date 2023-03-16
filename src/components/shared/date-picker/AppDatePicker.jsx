@@ -5,38 +5,46 @@ import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
+import WarningMessage from '../warning-message/WarningMessage';
 
 function AppDatePicker({
   name, onChangeDate, className, range, isMulti,
 }) {
   const { t } = useTranslation('common', { keyPrefix: 'datePicker' });
   return (
-    <div className={`datePicker position-relative ${className}`}>
-      <Field name={name}>
-        {
-        ({ field }) => (
-          <DatePicker
-            range={range}
-            editable={false}
-            multiple={isMulti}
-            {...field}
-            name={name}
-            format="DD MMMM YYYY"
-            value={field.value}
-            onChange={(val) => {
-              if (Array.isArray(val) && (!isMulti && !range)) {
-                onChangeDate(val[0]);
-              } else {
-                onChangeDate(val);
-              }
-            }}
-          />
+    <Field name={name}>
+      {
+        ({ field, meta }) => (
+          <div className={`datePicker position-relative
+           ${className}
+           ${!isMulti && !range && Array.isArray(field.value) && field.value.length > 1 ? 'warning' : ''}
+           ${meta.error && meta.touched ? 'error' : ''}
+           `}
+          >
+            <DatePicker
+              range={range}
+              editable={false}
+              multiple={isMulti}
+              {...field}
+              name={name}
+              format="DD MMMM YYYY"
+              value={field.value}
+              onChange={(val) => {
+                if (Array.isArray(val) && (!isMulti && !range)) {
+                  onChangeDate(val[0]);
+                } else {
+                  onChangeDate(val);
+                }
+              }}
+            />
+            <FontAwesomeIcon icon={faCalendarDays} className="calendar-icon f-20 text-primary" />
+            {(!isMulti && !range && Array.isArray(field.value) && field.value.length > 1) && (
+            <WarningMessage className="mt-2" msg={t('singleValueMessage')} />
+            )}
+          </div>
         )
       }
-      </Field>
-      <FontAwesomeIcon icon={faCalendarDays} className="calendar-icon f-20 text-primary" />
-      <div className="text-warning">{!isMulti && !range && t('singleValueMessage')}</div>
-    </div>
+    </Field>
   );
 }
 
