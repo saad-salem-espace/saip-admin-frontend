@@ -29,6 +29,7 @@ function WorkstreamSearch() {
   const [isImgUploaded, setIsImgUploaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageName, setImageName] = useState(null);
 
   const formSchema = Yup.object({
     searchQuery: Yup.string().trim().required('Input search criteria to display search results.'),
@@ -45,7 +46,10 @@ function WorkstreamSearch() {
   const onSubmit = (values) => {
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery })}`,
+      search: `?${createSearchParams({
+        /* eslint-disable-next-line max-len */
+        workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery, ...(imageName && { imageName }),
+      })}`,
     });
   };
 
@@ -56,13 +60,15 @@ function WorkstreamSearch() {
     searchWithImage: selectedWorkStream === 1,
   });
 
-  const uploadCurrentFile = async (file) => {
+  const uploadCurrentFile = async (file, setField) => {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append('file', file);
     // eslint-disable-next-line no-unused-vars
     const { res, err } = await uploadFile(formData);
+    setImageName(res.data.data?.[0]);
     if (err) setErrorMessage(err);
+    else setField('');
     setIsImgUploaded(true);
     setShowUploadImgSection(false);
     setIsSubmitting(false);
@@ -99,7 +105,7 @@ function WorkstreamSearch() {
             <Formik
               onSubmit={onSubmit}
               initialValues={{ searchQuery: '' }}
-              validationSchema={formSchema}
+              validationSchema={isImgUploaded ? Yup.object().shape({}) : formSchema}
               validateOnChange={false}
               validateOnBlur={false}
             >
@@ -145,6 +151,7 @@ function WorkstreamSearch() {
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
                       searchWithImg={selectedWorkStream === 1}
+                      disabled={isImgUploaded}
                     >
                       {/* please show this span if the search has text value */}
                       {/* <span className={`position-absolute ${formStyle.label}
@@ -158,7 +165,7 @@ function WorkstreamSearch() {
                     ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                   <div className="rounded">
-                    <UploadImage className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`} showUploadImgSection={showUploadImgSection} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} />
+                    <UploadImage className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`} showUploadImgSection={showUploadImgSection} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} uploadFile={(file) => uploadCurrentFile(file, (data) => setFieldValue('searchQuery', data))} isSubmitting={isSubmitting} />
                   </div>
                   {
                     errorMessage && (

@@ -38,8 +38,9 @@ function SearchResults() {
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     identifierStrId: searchParams.get('identifierStrId'),
-    queryString: searchParams.get('query'),
+    queryString: searchParams.get('imageName') ? '' : searchParams.get('query'),
     fireSearch: searchParams.get('fireSearch') !== 'false',
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
@@ -250,14 +251,20 @@ function SearchResults() {
           searchResultParams.fireSearch
              && <Col lg={getSearchResultsClassName('lg')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
                <SearchNote
-                 searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
+                 searchKeywords={searchResultParams.imageName ? searchResultParams.imageName : `${identifier}: “${searchResultParams.queryString}”`}
                  resultsCount={totalResults}
                />
                <Formik>
                  {() => (
                    <Form className="mt-8">
                      <AppPagination
-                       axiosConfig={{
+                       axiosConfig={searchResultParams.imageName ? {
+                         url: 'search/image',
+                         params: {
+                           imageName: searchResultParams.imageName,
+                           type: 'generic',
+                         },
+                       } : {
                          url: 'search',
                          params: searchResultParams,
                        }}
