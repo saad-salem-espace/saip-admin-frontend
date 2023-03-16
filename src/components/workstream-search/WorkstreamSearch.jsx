@@ -17,6 +17,7 @@ import Search from '../shared/form/search/Search';
 import formStyle from '../shared/form/form.module.scss';
 import UploadImage from '../shared/upload-image/UploadImage';
 import ToggleButton from '../shared/toggle-button/ToggleButton';
+import { parseSingleQuery } from '../../utils/searchQueryParser';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
@@ -45,9 +46,15 @@ function WorkstreamSearch() {
   };
 
   const onSubmit = (values) => {
+    const query = parseSingleQuery({
+      identifier: selectedOption,
+      condition: { optionParserName: 'hasExactly' },
+      data: values.searchQuery,
+    }, 0, true);
+
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery })}`,
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: query })}`,
     });
   };
 
