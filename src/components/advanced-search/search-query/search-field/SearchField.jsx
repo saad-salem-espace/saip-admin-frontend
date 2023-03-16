@@ -10,6 +10,10 @@ import Button from 'components/shared/button/Button';
 import Input from 'components/shared/form/input/Input';
 import DatePicker from 'components/shared/date-picker/AppDatePicker';
 import { isMultipleValue, isRangeValue } from 'utils/searchQueryParser';
+import { useMemo } from 'react';
+import { exclude } from 'utils/arrays';
+import MultiSelect from 'components/shared/multi-select/MultiSelect';
+import options from 'testing-resources/patents/lkps/ipcClassifications.json';
 import style from '../SearchQuery.module.scss';
 
 function SearchField({
@@ -32,10 +36,67 @@ function SearchField({
   });
   const { t } = useTranslation(['search', 'translation']);
 
-  // const options = [
-  //   { label: 'Thing 1', value: 1 },
-  //   { label: 'Thing 2', value: 2 },
-  // ];
+  const inputFields = {
+    textFields: {
+      supports: ['Text', 'Number'],
+      // eslint-disable-next-line react/no-unstable-nested-components
+      getField: () => (
+        <>
+          <span className={`position-absolute ${formStyle.label}
+              ${formStyle.smLabel}`}
+          >
+            {t('criteria')}
+          </span>
+          <Input moduleClassName={inputModuleClassName} name={name} />
+        </>
+      ),
+    },
+    dateFields: {
+      supports: ['Date'],
+      // eslint-disable-next-line react/no-unstable-nested-components
+      getField: () => (
+        <div>
+          <DatePicker
+            name={name}
+            range={isRangeValue(conditionValue.optionParserName)}
+            isMulti={isMultipleValue(conditionValue.optionParserName)}
+            onChangeDate={onChangeDate}
+            className={`${error ? 'error' : ''}`}
+          />
+        </div>
+      ),
+    },
+    lkpFields: {
+      supports: ['Text', 'Number'],
+      // eslint-disable-next-line react/no-unstable-nested-components
+      getField: () => (
+        <MultiSelect
+          name={name}
+          options={options}
+          errorMsg={t('translation:noEmptyField')}
+        // please add class has-value if the user selects any option
+        // please add error class if select has error
+          className={`smMultiSelect ${style.advancedSearchSelect}`}
+        // please show the below label if the user selects any option
+          label={identifierValue.identiferName}
+        />
+      ),
+    },
+  };
+
+  const getInputField = useMemo(() => {
+    let returnedField = null;
+    if (identifierValue?.isLkp) {
+      returnedField = inputFields.lkpFields.getField();
+    } else {
+      exclude(Object.keys(inputFields), ['lkpFields']).forEach((inputField) => {
+        if (inputFields[inputField].supports.includes(identifierValue?.identifierType)) {
+          returnedField = inputFields[inputField].getField();
+        }
+      });
+    }
+    return returnedField || inputFields.textFields.getField();
+  }, [identifierValue?.identifierType, identifierValue?.isLkp, conditionValue]);
 
   return (
     <div className={`p-4 bg-primary-01 mb-2 ${style.wrapper}`}>
@@ -73,30 +134,7 @@ function SearchField({
         }
       </div>
       <div className={`position-relative ${style.criteria}`}>
-        {
-          identifierValue?.identifierType === 'Date'
-            ? (
-              <div>
-                <DatePicker
-                  name={name}
-                  range={isRangeValue(conditionValue.optionParserName)}
-                  isMulti={isMultipleValue(conditionValue.optionParserName)}
-                  onChangeDate={onChangeDate}
-                  className={`${error ? 'error' : ''}`}
-                />
-              </div>
-            )
-            : (
-              <>
-                <span className={`position-absolute ${formStyle.label}
-              ${formStyle.smLabel}`}
-                >
-                  {t('criteria')}
-                </span>
-                <Input moduleClassName={inputModuleClassName} name={name} />
-              </>
-            )
-        }
+        {getInputField}
         {error && <ErrorMessage
           msg="Search criteria cannot be empty for any field."
           className="mt-2"
@@ -144,9 +182,18 @@ SearchField.propTypes = {
   handleRemove: PropTypes.func,
   name: PropTypes.string,
   searchIdentifiers: PropTypes.arrayOf(PropTypes.shape({
+    identiferName: PropTypes.string.isRequired,
   })).isRequired,
-  identifierValue: PropTypes.instanceOf(Object).isRequired,
-  conditionValue: PropTypes.instanceOf(Object).isRequired,
+  identifierValue: PropTypes.shape({
+    identiferName: PropTypes.string.isRequired,
+    identifierType: PropTypes.string.isRequired,
+    isLkp: PropTypes.bool.isRequired,
+    identifierOptions: PropTypes.instanceOf(Object).isRequired,
+  }).isRequired,
+  conditionValue: PropTypes.shape({
+    optionParserName: PropTypes.string.isRequired,
+    optionName: PropTypes.string.isRequired,
+  }).isRequired,
   onChangeIdentifier: PropTypes.func.isRequired,
   onChangeCondition: PropTypes.func.isRequired,
   order: PropTypes.objectOf(PropTypes.number).isRequired,
