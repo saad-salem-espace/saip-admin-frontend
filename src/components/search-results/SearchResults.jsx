@@ -40,6 +40,7 @@ function SearchResults() {
     identifierStrId: searchParams.get('identifierStrId'),
     queryString: searchParams.get('query'),
     fireSearch: searchParams.get('fireSearch') !== 'false',
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
@@ -250,7 +251,8 @@ function SearchResults() {
           searchResultParams.fireSearch
              && <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
                <SearchNote
-                 searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
+                  /* eslint-disable-next-line prefer-template */
+                 searchKeywords={`${identifier}: “${searchResultParams.queryString}”` + (searchResultParams.imageName && ` AND Image ${searchResultParams.imageName}`)}
                  resultsCount={totalResults}
                />
                <Formik>
