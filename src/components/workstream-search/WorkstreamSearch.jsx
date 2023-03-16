@@ -60,7 +60,7 @@ function WorkstreamSearch() {
     searchWithImage: selectedWorkStream === 1,
   });
 
-  const uploadCurrentFile = async (file, setField) => {
+  const uploadCurrentFile = async (file) => {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append('file', file);
@@ -68,7 +68,6 @@ function WorkstreamSearch() {
     const { res, err } = await uploadFile(formData);
     setImageName(res.data.data?.[0]);
     if (err) setErrorMessage(err);
-    else setField('');
     setIsImgUploaded(true);
     setShowUploadImgSection(false);
     setIsSubmitting(false);
@@ -151,7 +150,6 @@ function WorkstreamSearch() {
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
                       searchWithImg={selectedWorkStream === 1}
-                      disabled={isImgUploaded}
                     >
                       {/* please show this span if the search has text value */}
                       {/* <span className={`position-absolute ${formStyle.label}
@@ -165,7 +163,7 @@ function WorkstreamSearch() {
                     ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                   <div className="rounded">
-                    <UploadImage className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`} showUploadImgSection={showUploadImgSection} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} uploadFile={(file) => uploadCurrentFile(file, (data) => setFieldValue('searchQuery', data))} isSubmitting={isSubmitting} />
+                    <UploadImage className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`} showUploadImgSection={showUploadImgSection} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} />
                   </div>
                   {
                     errorMessage && (

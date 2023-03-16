@@ -36,7 +36,7 @@
   "abstract": "Abstract",
   "publicationCountry": "Publication Country",
   "clearAll": "Clear all",
-  "emptyStateMsg": "Try another search term in the search bar above.",
+  "emptyStateMsg": "No search results for the input keywords",
   "emptyStateTitle": "Searching but not finding?",
   "browseFiles": "Browse Files",
   "dragDrop": "Drag & Drop Files Here",
