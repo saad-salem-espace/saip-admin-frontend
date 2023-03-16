@@ -29,6 +29,7 @@ function WorkstreamSearch() {
   const [isImgUploaded, setIsImgUploaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageName, setImageName] = useState(null);
 
   const formSchema = Yup.object({
     searchQuery: Yup.string().trim().required('Input search criteria to display search results.'),
@@ -45,7 +46,10 @@ function WorkstreamSearch() {
   const onSubmit = (values) => {
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery })}`,
+      search: `?${createSearchParams({
+        /* eslint-disable-next-line max-len */
+        workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery, ...(imageName && { imageName }),
+      })}`,
     });
   };
 
@@ -62,6 +66,7 @@ function WorkstreamSearch() {
     formData.append('file', file);
     // eslint-disable-next-line no-unused-vars
     const { res, err } = await uploadFile(formData);
+    setImageName(res.data.data?.[0]);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
     setShowUploadImgSection(false);
@@ -99,7 +104,7 @@ function WorkstreamSearch() {
             <Formik
               onSubmit={onSubmit}
               initialValues={{ searchQuery: '' }}
-              validationSchema={formSchema}
+              validationSchema={isImgUploaded ? Yup.object().shape({}) : formSchema}
               validateOnChange={false}
               validateOnBlur={false}
             >
