@@ -1,3 +1,5 @@
+import { DateObject } from 'react-multi-date-picker';
+
 const commonIdentifierCategoriesHandler = {
   singleValue(data) {
     return Array.isArray(data) ? data[0].trim() : data.trim();
@@ -11,13 +13,13 @@ const commonIdentifierCategoriesHandler = {
   },
   rangeValue(data) {
     if (Array.isArray(data) && data.length >= 2) {
-      return data.slice(0, 2).filter(Boolean).map((str) => str.trim()).join(',');
+      return [data[0], data[data.length - 1]].filter(Boolean).map((str) => str.trim()).join(',');
     }
     return '';
   },
 };
 
-const identifierCategories = {
+const optionCategories = {
   singleValue: {
     is: {},
     hasExactly: {},
@@ -25,27 +27,60 @@ const identifierCategories = {
     after: {},
   },
   multiValue: {
-    hasAll: {},
-    hasAny: {},
+    hasAll: {
+      type: 'array',
+    },
+    hasAny: {
+      type: 'array',
+    },
   },
   rangeValue: {
-    between: {},
+    between: {
+      type: 'array',
+      conditions: {
+        min: 2,
+      },
+    },
   },
 };
 
-const isSingleValue = (checkName) => !!identifierCategories.singleValue[checkName];
-const isMultipleValue = (checkName) => !!identifierCategories.multiValue[checkName];
-const isRangeValue = (checkName) => !!identifierCategories.rangeValue[checkName];
+// Write special handling for identifier Name categories
+const identifierNameCategories = {
+  Text: {
+    type: String,
+  },
+  Date: {
+    type: DateObject,
+  },
+  Number: {
+    type: Number,
+  },
+};
+
+const isSingleValue = (checkName) => !!optionCategories.singleValue[checkName];
+const isMultipleValue = (checkName) => !!optionCategories.multiValue[checkName];
+const isRangeValue = (checkName) => !!optionCategories.rangeValue[checkName];
+
+const selectOption = (option) => {
+  let type = null;
+  let selectedOption = null;
+  Object.entries(optionCategories).forEach(([key, operations]) => {
+    if (Object.keys(operations).includes(option)) {
+      type = key;
+      selectedOption = operations[option];
+    }
+  });
+  return type && selectedOption ? { type, selectedOption } : null;
+};
 
 const identifierOperationHandlers = (identifierOperation, data) => {
   let result = '';
-  Object.entries(identifierCategories).forEach(([key, operations]) => {
-    if (Object.keys(operations).includes(identifierOperation)) {
-      result = (
-        operations[identifierOperation].handle ?? commonIdentifierCategoriesHandler[key]
-      )(data);
-    }
-  });
+  const selectedOption = selectOption(identifierOperation);
+  if (selectedOption) {
+    result = (
+      selectedOption.selectedOption.handle ?? commonIdentifierCategoriesHandler[selectedOption.type]
+    )(data);
+  }
   return result;
 };
 
@@ -98,5 +133,6 @@ const parseSingleQuery = (searchField, index, isQuery) => {
 };
 
 export {
-  isSingleValue, isRangeValue, isMultipleValue, identifierCategories, parseSingleQuery,
+  isSingleValue, isRangeValue, isMultipleValue, optionCategories,
+  identifierNameCategories, selectOption, parseSingleQuery,
 };
