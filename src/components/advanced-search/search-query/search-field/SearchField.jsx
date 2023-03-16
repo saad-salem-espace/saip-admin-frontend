@@ -36,51 +36,53 @@ function SearchField({
   });
   const { t } = useTranslation(['search', 'translation']);
 
+  const textField = () => (
+    <>
+      <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>
+        {t('criteria')}
+      </span>
+      <Input moduleClassName={inputModuleClassName} name={name} />
+    </>
+  );
+
+  const dateField = () => (
+    <div>
+      <DatePicker
+        name={name}
+        range={isRangeValue(conditionValue.optionParserName)}
+        isMulti={isMultipleValue(conditionValue.optionParserName)}
+        onChangeDate={onChangeDate}
+        className={`${error ? 'error' : ''}`}
+      />
+    </div>
+  );
+
+  const lkpField = (isClearable = true) => (
+    <MultiSelect
+      name={name}
+      options={options}
+      errorMsg={t('translation:noEmptyField')}
+        // please add class has-value if the user selects any option
+        // please add error class if select has error
+      className={`smMultiSelect ${style.advancedSearchSelect}`}
+        // please show the below label if the user selects any option
+      label={identifierValue.identiferName}
+      isClearable={isClearable}
+    />
+  );
+
   const inputFields = {
     textFields: {
       supports: ['Text', 'Number'],
-      // eslint-disable-next-line react/no-unstable-nested-components
-      getField: () => (
-        <>
-          <span className={`position-absolute ${formStyle.label}
-              ${formStyle.smLabel}`}
-          >
-            {t('criteria')}
-          </span>
-          <Input moduleClassName={inputModuleClassName} name={name} />
-        </>
-      ),
+      getField: textField,
     },
     dateFields: {
       supports: ['Date'],
-      // eslint-disable-next-line react/no-unstable-nested-components
-      getField: () => (
-        <div>
-          <DatePicker
-            name={name}
-            range={isRangeValue(conditionValue.optionParserName)}
-            isMulti={isMultipleValue(conditionValue.optionParserName)}
-            onChangeDate={onChangeDate}
-            className={`${error ? 'error' : ''}`}
-          />
-        </div>
-      ),
+      getField: dateField,
     },
     lkpFields: {
       supports: ['Text', 'Number'],
-      // eslint-disable-next-line react/no-unstable-nested-components
-      getField: () => (
-        <MultiSelect
-          name={name}
-          options={options}
-          errorMsg={t('translation:noEmptyField')}
-        // please add class has-value if the user selects any option
-        // please add error class if select has error
-          className={`smMultiSelect ${style.advancedSearchSelect}`}
-        // please show the below label if the user selects any option
-          label={identifierValue.identiferName}
-        />
-      ),
+      getField: lkpField,
     },
   };
 
@@ -140,40 +142,6 @@ function SearchField({
           className="mt-2"
         /> }
       </div>
-      {/* for datepicker */}
-      {/* <div className={style.dateWrapper}>
-       please add error class if date has error
-        <DatePicker
-          className="error"
-          errorMsg={t('translation:noEmptyField')}
-        />
-      </div> */}
-      {/* for datepicker range */}
-      {/* need to handle the onchange function on datePicker component for datepicker range */}
-      {/* please add error class if date has error */}
-      {/* <div className={style.dateWrapper}>
-        <DatePicker
-          range
-          className="error"
-          errorMsg={t('translation:noEmptyField')}
-        />
-        <ErrorMessage
-          msg="Search criteria cannot be empty for any field."
-          className="mt-2"
-        />
-      </div> */}
-      {/* <MultiSelect
-        options={options}
-        errorMsg={t('translation:noEmptyField')}
-        // please add class has-value if the user selects any option
-        // please add error class if select has error
-        className={`smMultiSelect ${style.advancedSearchSelect}`}
-        // please show the below label if the user selects any option
-        // label={t('publicationCountry')}
-      /> */}
-      {/* <div className="border-top mt-7 pb-2 pt-5">
-        <Button variant="link" className="font-regular px-0" text={t('clearAll')} />
-      </div> */}
     </div>
   );
 }
