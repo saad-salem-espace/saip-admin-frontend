@@ -8,6 +8,7 @@ import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import { parseSingleQuery } from 'utils/searchQueryParser';
 import Button from 'components/shared/button/Button';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
@@ -21,6 +22,7 @@ function SearchQuery({
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
   const [firstCondition, setFirstCondition] = useState(null);
+  const navigate = useNavigate();
   const operators = ['and', 'or', 'not'].map((operator) => ({
     operator: operator.toUpperCase(),
     displayName: t(`operators.${operator}`),
@@ -48,12 +50,24 @@ function SearchQuery({
     return finalQuery;
   };
 
+  const onSubmit = (values) => {
+    navigate({
+      pathname: '/search',
+      search: `?${createSearchParams({
+        workstreamId,
+        q: parseQuery(values, true),
+        page: 1,
+      })}`,
+    });
+  };
+
   return (
     <div>
       <Formik
         enableReinitialize
         validationSchema={SearchQueryValidationSchema}
         validateOnChange
+        onSubmit={onSubmit}
         validateOnBlur={false}
         initialValues={{
           searchFields: [{
@@ -86,7 +100,6 @@ function SearchQuery({
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
                      error={touched.searchFields?.[index] && errors.searchFields?.[index]}
-                    //  onChangeDate={(date) => console.log(date)}
                      onChangeDate={(date) => { setFieldValue(`searchFields.${index}.data`, date); }}
                    />
                  ))
