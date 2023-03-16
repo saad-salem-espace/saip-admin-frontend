@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
 import { Field } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 function AppDatePicker({
   name, onChangeDate, className, range, isMulti,
 }) {
+  const { t } = useTranslation('common', { keyPrefix: 'datePicker' });
   return (
     <div className={`datePicker position-relative ${className}`}>
       <Field name={name}>
@@ -33,6 +35,7 @@ function AppDatePicker({
       }
       </Field>
       <FontAwesomeIcon icon={faCalendarDays} className="calendar-icon f-20 text-primary" />
+      <div className="text-warning">{!isMulti && !range && t('singleValueMessage')}</div>
     </div>
   );
 }
