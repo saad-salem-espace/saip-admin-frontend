@@ -3,11 +3,14 @@ import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 // import ErrorMessage from '../error-message/ErrorMessage';
 import './MultiSelect.scss';
 import { Field } from 'formik';
+import { useTranslation } from 'react-i18next';
+import Button from '../button/Button';
 
 function MultiSelect({
-  options, className, label, name,
+  options, className, label, name, isClearable,
   //  errorMsg,
 }) {
+  const { t } = useTranslation('search');
   return (
     <Field name={name}>
       {({ field, form }) => (
@@ -26,6 +29,16 @@ function MultiSelect({
             </div>
           </div>
           {/* <ErrorMessage msg={errorMsg} className="mt-2 mb-0" /> */}
+          {isClearable && (
+            <div className="border-top mt-7 pb-2 pt-5">
+              <Button
+                variant="link"
+                className="font-regular px-0"
+                text={t('clearAll')}
+                onClick={() => { form.setFieldValue(field.name, []); }}
+              />
+            </div>
+          )}
         </>
       )}
 
@@ -41,11 +54,13 @@ MultiSelect.propTypes = {
   className: PropTypes.string.isRequired,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
+  isClearable: PropTypes.bool,
   // errorMsg: PropTypes.string,
 };
 
 MultiSelect.defaultProps = {
   label: null,
+  isClearable: false,
   // errorMsg: null,
 };
 
