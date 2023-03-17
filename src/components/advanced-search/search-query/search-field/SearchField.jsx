@@ -88,7 +88,7 @@ function SearchField({
                 >
                   {t('criteria')}
                 </span>
-                <Input moduleClassName={inputModuleClassName} name={name} />
+                <Input moduleClassName={inputModuleClassName} className="pt-4" name={name} />
               </>
             )
         }

@@ -2,63 +2,7 @@ $direction: rtl;
 $right: right;
 $left: left;
 
-#ar {
-  dd,
-  dl,
-  dt,
-  li,
-  ol,
-  ul {
-    direction: $direction;
-    padding-right: 0;
-  }
-
-  h1,
-  h2 {
-    font-family: $font-bold;
-  }
-
-  h3,
-  h4 {
-    font-family: $font-medium;
-  }
-
-  h5,
-  h6 {
-    font-family: $font-regular;
-  }
-
-  .navbar-brand {
-    margin-left: $navbar-brand-margin-end;
-    margin-right: 0;
-  }
-
-  .modal-header .btn-close {
-    margin: ($modal-header-padding-y * -0.5) auto ($modal-header-padding-x * -0.5) ($modal-header-padding-y * -0.5);
-  }
-
-  .alert-dismissible {
-    padding-right: 1rem;
-    padding-left: 3rem;
-
-    .btn-close {
-      right: auto;
-      left: 0;
-    }
-  }
-
-  ul {
-    padding-right: 0;
-  }
-
-  .form-check {
-    padding-left: 0;
-    padding-right: $form-check-padding-start;
-
-    .form-check-input {
-      float: right;
-    }
-  }
+html[dir="rtl"] {
 
   .text-end {
     text-align: left !important;
@@ -101,6 +45,11 @@ $left: left;
         .me#{$infix}-n#{$size} {
           margin-#{$left}: -$length !important;
           margin-#{$right}: 0 !important;
+        }
+
+        .offset#{$infix}-#{$size}  {
+          margin-#{$right}: 16.6%;
+          margin-#{$left}: auto;
         }
       }
 
@@ -176,23 +125,5 @@ $left: left;
       #{$right}: $length !important;
       left: auto !important;
     }
-  }
-
-  .accordion-button {
-    text-align: start;
-
-    &::after {
-      margin-left: 0;
-      margin-right: auto;
-    }
-  }
-
-  .rate span span {
-    right: 0;
-  }
-
-  .dropdown-toggle::after {
-    margin-left: 0;
-    margin-right: $caret-spacing;
   }
 }
