@@ -64,7 +64,7 @@ function SearchField({
       errorMsg={t('translation:noEmptyField')}
         // please add class has-value if the user selects any option
         // please add error class if select has error
-      className={`smMultiSelect ${style.advancedSearchSelect}`}
+      className={`smMultiSelect ${style.advancedSearchSelect} has-value`}
         // please show the below label if the user selects any option
       label={identifierValue.identiferName}
       isClearable={isClearable}
