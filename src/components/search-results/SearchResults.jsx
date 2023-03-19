@@ -252,7 +252,7 @@ function SearchResults() {
              && <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
                <SearchNote
                   /* eslint-disable-next-line prefer-template */
-                 searchKeywords={`${identifier}: “${searchResultParams.queryString}”` + (searchResultParams.imageName && ` AND Image ${searchResultParams.imageName}`)}
+                 searchKeywords={`${identifier}: “${searchResultParams.queryString}”` + (searchResultParams.imageName ? ` AND Image ${searchResultParams.imageName}` : '')}
                  resultsCount={totalResults}
                />
                <Formik>
