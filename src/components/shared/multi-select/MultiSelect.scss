@@ -3,6 +3,10 @@
 .multiSelect {
   position: relative;
 
+  div[id^="react-select"]  input {
+    display: none;
+  }
+
   >div {
     height: 100%;
     width: 100%;
@@ -61,9 +65,7 @@
         font-family: $font-regular;
       }
 
-      .css-11unzgr input {
-        display: none;
-      }
+
 
       .css-1vr111p-option {
         background-color: transparent;
