@@ -18,15 +18,15 @@ function Input({
     <div className={`position-relative h-100 ${inputClassName}`}>
       <Field name={name}>
         {
-          ({ field, form }) => {
-            const isInvalid = !!(form.touched[field.name] && form.errors[field.name]);
+          ({ field, meta }) => {
+            const isInvalid = !!(meta.touched && meta.error);
             return (
               <input
                 id={id}
                 type={type}
                 placeholder={placeholder}
                   // please add class ${style['has-value']} if the input has value
-                className={`border ${isInvalid ? 'error' : ''} w-100 ${style.input} `}
+                className={`border ${isInvalid ? style.error : ''} w-100 ${style.input} `}
                 disabled={disabled}
                 {...field}
               />

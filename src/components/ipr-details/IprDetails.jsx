@@ -7,12 +7,12 @@ import { Formik, Form } from 'formik';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Button from 'components/shared/button/Button';
+import Select from 'components/shared/form/select/Select';
+import formStyle from 'components/shared/form/form.module.scss';
+import { documentApi } from 'apis/search/documentsApi';
+import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import style from './ipr-details.module.scss';
-import Button from '../shared/button/Button';
-import Select from '../shared/form/select/Select';
-import formStyle from '../shared/form/form.module.scss';
-import { documentApi } from '../../apis/workstreams/documentsApi';
-import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import BibliographicDataSection from './BibliographicDataSection';
 
 // TODO change structure when trademarks are added

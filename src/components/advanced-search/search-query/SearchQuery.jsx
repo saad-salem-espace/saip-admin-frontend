@@ -6,32 +6,35 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
-import { parseSingleQuery } from 'utils/parsers';
+import { parseSingleQuery } from 'utils/searchQueryParser';
+import Button from 'components/shared/button/Button';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
-import { formSchema } from './SearchQueryValidation';
-import Button from '../../shared/button/Button';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
+import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, defaultCriteria, onChangeSearchQuery,
 }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
-  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${workstreamId}/identifiers` });
+  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${workstreamId}/identifiers` });
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
   const [firstCondition, setFirstCondition] = useState(null);
+  const navigate = useNavigate();
   const operators = ['and', 'or', 'not'].map((operator) => ({
     operator: operator.toUpperCase(),
     displayName: t(`operators.${operator}`),
   }));
-  const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS;
+  const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
-    /* eslint-disable-next-line max-len */
-    setFirstIdentifier(searchIdentifiers?.data.find((element) => element.identiferStrId === firstIdentifierStr));
+    setFirstIdentifier(searchIdentifiers?.data.find(
+      (element) => element.identiferStrId === firstIdentifierStr,
+    ));
   }, [searchIdentifiers]);
 
   useEffect(() => {
@@ -49,12 +52,24 @@ function SearchQuery({
     return finalQuery;
   };
 
+  const onSubmit = (values) => {
+    navigate({
+      pathname: '/search',
+      search: `?${createSearchParams({
+        workstreamId,
+        q: parseQuery(values, true),
+        page: 1,
+      })}`,
+    });
+  };
+
   return (
     <div>
       <Formik
         enableReinitialize
-        validationSchema={formSchema}
+        validationSchema={SearchQueryValidationSchema}
         validateOnChange
+        onSubmit={onSubmit}
         validateOnBlur={false}
         initialValues={{
           searchFields: [{
@@ -87,7 +102,6 @@ function SearchQuery({
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
                      error={touched.searchFields?.[index] && errors.searchFields?.[index]}
-                    //  onChangeDate={(date) => console.log(date)}
                      onChangeDate={(date) => { setFieldValue(`searchFields.${index}.data`, date); }}
                    />
                  ))
@@ -111,11 +125,12 @@ function SearchQuery({
                       };
                       if (values.searchFields.length < maximumSearchFields) push(newField);
                     }}
-                    text={<>
-                      <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
-                      {t('addSearchField')}
-                      {/* eslint-disable-next-line react/jsx-indent */}
-                          </>}
+                    text={(
+                      <>
+                        <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
+                        {t('addSearchField')}
+                      </>
+                    )}
                   />
                   <div className="border-top d-flex justify-content-end pt-4 pb-8 mt-6">
                     <Button
