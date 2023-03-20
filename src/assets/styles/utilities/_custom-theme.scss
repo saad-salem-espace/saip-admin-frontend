@@ -330,7 +330,7 @@ $body-text-align: null !default;
 // Style anchor elements.
 
 $link-color: $primary !default;
-$link-decoration: underline !default;
+$link-decoration: underline;
 $link-shade-percentage: 20% !default;
 $link-hover-color: shift-color($link-color, $link-shade-percentage) !default;
 $link-hover-decoration: null !default;
@@ -1560,3 +1560,4 @@ $pre-color: null !default;
 @import "~bootstrap/scss/modal";
 @import "~bootstrap/scss/badge";
 @import "~bootstrap/scss/spinners";
+@import "~bootstrap/scss/mixins/utilities";

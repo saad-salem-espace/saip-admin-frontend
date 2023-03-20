@@ -8,6 +8,7 @@ import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import { parseSingleQuery } from 'utils/searchQueryParser';
 import Button from 'components/shared/button/Button';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
@@ -27,6 +28,7 @@ function SearchQuery({
     operator: operator.toUpperCase(),
     displayName: t(`operators.${operator}`),
   }));
+  const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
@@ -76,7 +78,7 @@ function SearchQuery({
         }}
       >
         {({
-          values, setFieldValue, errors, setValues, touched,
+          values, setFieldValue, errors, setValues, touched, setErrors, setTouched,
         }) => (
           <Form onChange={onChangeSearchQuery(parseQuery(values, true))}>
             <FieldArray name="searchFields">
@@ -104,9 +106,14 @@ function SearchQuery({
                    />
                  ))
                }
+                  {
+                      values.searchFields.length >= parseInt(maximumSearchFields, 10)
+                        ? <ErrorMessage msg={t('searchFieldValidationMsg')} className="mb-2 mt-4" />
+                        : null
+                  }
                   <Button
                     variant="outline-primary"
-                    className="mb-9 mt-2"
+                    className="mb-2 mt-2"
                     size="sm"
                     onClick={() => {
                       const newField = {
@@ -116,7 +123,7 @@ function SearchQuery({
                         condition: defaultCondition,
                         operator: 'AND',
                       };
-                      push(newField);
+                      if (values.searchFields.length < maximumSearchFields) push(newField);
                     }}
                     text={(
                       <>
@@ -125,16 +132,20 @@ function SearchQuery({
                       </>
                     )}
                   />
-                  <div className="border-top d-flex justify-content-end pt-4 pb-8">
+                  <div className="border-top d-flex justify-content-end pt-4 pb-8 mt-6">
                     <Button
                       variant="outline-primary"
                       className="me-4"
                       size="sm"
-                      onClick={() => setValues({
-                        searchFields: [{
-                          id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition, operator: '',
-                        }],
-                      })}
+                      onClick={() => {
+                        setValues({
+                          searchFields: [{
+                            id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition, operator: '',
+                          }],
+                        });
+                        setErrors({});
+                        setTouched({});
+                      }}
                       text={t('clear')}
                     />
                     <Button

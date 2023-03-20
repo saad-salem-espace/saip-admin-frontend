@@ -10,7 +10,10 @@ import './UploadImage.scss';
 import Spinner from '../spinner/Spinner';
 
 function UploadImage({
-  maxNumber, className, showUploadImgSection, uploadFile, changeIsImgUploaded, isSubmitting,
+  maxNumber, className,
+  maxMbFileSize, showUploadImgSection,
+  uploadFile, changeIsImgUploaded,
+  isSubmitting,
 }) {
   const [images, setImages] = useState([]);
 
@@ -32,7 +35,8 @@ function UploadImage({
       onChange={onChange}
       maxNumber={maxNumber}
       dataURLKey="data_url"
-      acceptType={['png', 'gif', 'jpeg', 'tiff', 'jpg']}
+      acceptType={['png', 'gif', 'jpeg', 'tiff', 'jpg', 'tif']}
+      maxFileSize={maxMbFileSize}
     >
       {({
         imageList,
@@ -93,7 +97,13 @@ function UploadImage({
           </div>
           {errors && (
             <div>
-              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg">{t('validationErrors.imgFormats')}</span>}
+              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.imgFormats')}</span>}
+            </div>
+          )}
+          {errors
+          && (
+            <div>
+              {errors.maxFileSize && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxSize')}</span>}
             </div>
           )}
         </>
@@ -105,6 +115,7 @@ function UploadImage({
 UploadImage.propTypes = {
   className: PropTypes.string,
   maxNumber: PropTypes.number,
+  maxMbFileSize: PropTypes.number,
   showUploadImgSection: PropTypes.bool.isRequired,
   uploadFile: PropTypes.func.isRequired,
   changeIsImgUploaded: PropTypes.func.isRequired,
@@ -114,6 +125,7 @@ UploadImage.propTypes = {
 UploadImage.defaultProps = {
   className: '',
   maxNumber: 1,
+  maxMbFileSize: 10 * 1024 * 1024, // 10Mb
 };
 
 export default UploadImage;

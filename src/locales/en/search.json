@@ -36,12 +36,15 @@
   "abstract": "Abstract",
   "publicationCountry": "Publication Country",
   "clearAll": "Clear all",
-  "emptyStateMsg": "Try another search term in the search bar above.",
+  "emptyStateMsg": "No search results for the input keywords",
   "emptyStateTitle": "Searching but not finding?",
   "browseFiles": "Browse Files",
   "dragDrop": "Drag & Drop Files Here",
   "imgFormats": "Only .jpeg .png .tiff .jpg .gif formats supported <0> or </0>",
   "validationErrors": {
-    "imgFormats": "Can't upload. Use an image in one of these formats: .jpeg, .png, .tiff, .jpg, or .gif"
-  }
+    "imgFormats": "The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.",
+    "maxSize": "The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB."
+  },
+  "searchFieldValidationMsg": "You have reached the maximum number of search fields",
+  "SwitchToAdvancedSearch": "Switch to advanced search"
 }
