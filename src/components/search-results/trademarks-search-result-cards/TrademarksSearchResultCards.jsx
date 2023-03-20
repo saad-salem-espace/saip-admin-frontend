@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import SearchWithImgResultCard from './SearchWithImgResultCard';
+import SearchWithImgResultCard from './TrademarksSearchResultCard';
 
-const SearchWithImgResultCards = ({
+const TrademarksSearchResultCards = ({
   data, query, setActiveDocument, activeDocument,
 }) => (
   <>
@@ -17,11 +17,11 @@ const SearchWithImgResultCards = ({
   </>
 );
 
-SearchWithImgResultCards.propTypes = {
+TrademarksSearchResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
 };
 
-export default SearchWithImgResultCards;
+export default TrademarksSearchResultCards;

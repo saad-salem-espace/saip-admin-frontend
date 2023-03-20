@@ -12,7 +12,7 @@ import style from '../search-result-cards/search-result-card/style.module.scss';
 import c from '../../../assets/images/search-header-bg.svg';
 import './style.scss';
 
-function SearchWithImgResultCard({
+function TrademarksSearchResultCard({
   searchResult, query, setActiveDocument, activeDocument,
 }) {
   const { t } = useTranslation('search');
@@ -71,7 +71,7 @@ function SearchWithImgResultCard({
   );
 }
 
-SearchWithImgResultCard.propTypes = {
+TrademarksSearchResultCard.propTypes = {
   searchResult: PropTypes.shape({
     BibliographicData: PropTypes.shape({
       ApplicationAbstract: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -87,4 +87,4 @@ SearchWithImgResultCard.propTypes = {
   activeDocument: PropTypes.number.isRequired,
 };
 
-export default SearchWithImgResultCard;
+export default TrademarksSearchResultCard;
