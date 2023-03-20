@@ -287,6 +287,7 @@ function SearchResults() {
               isIPRExpanded={isIPRExpanded}
               documentId={activeDocument}
               onClose={handleCloseIprDetail}
+              // moreDetails for search with image
             />
           </Col>
         )}
