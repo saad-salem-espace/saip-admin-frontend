@@ -1,17 +1,20 @@
-/* eslint-disable react-perf/jsx-no-new-array-as-prop */
-/* eslint-disable react/forbid-prop-types */
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 // import MultiSelect from 'components/shared/multi-select/MultiSelect';
-import formStyle from '../../../shared/form/form.module.scss';
-import Select from '../../../shared/form/select/Select';
+import formStyle from 'components/shared/form/form.module.scss';
+import Select from 'components/shared/form/select/Select';
+import Button from 'components/shared/button/Button';
+import Input from 'components/shared/form/input/Input';
+import DatePicker from 'components/shared/date-picker/AppDatePicker';
+import { isMultipleValue, isRangeValue } from 'utils/searchQueryParser';
+import { useMemo } from 'react';
+import { exclude } from 'utils/arrays';
+import MultiSelect from 'components/shared/multi-select/MultiSelect';
+import options from 'testing-resources/patents/lkps/ipcClassifications.json';
 import style from '../SearchQuery.module.scss';
-import Button from '../../../shared/button/Button';
-import Input from '../../../shared/form/input/Input';
-import DatePicker from '../../../shared/date-picker/AppDatePicker';
 
 function SearchField({
   handleRemove,
@@ -33,10 +36,69 @@ function SearchField({
   });
   const { t } = useTranslation(['search', 'translation']);
 
-  // const options = [
-  //   { label: 'Thing 1', value: 1 },
-  //   { label: 'Thing 2', value: 2 },
-  // ];
+  const textField = () => (
+    <>
+      <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>
+        {t('criteria')}
+      </span>
+      <Input moduleClassName={inputModuleClassName} name={name} />
+    </>
+  );
+
+  const dateField = () => (
+    <div>
+      <DatePicker
+        name={name}
+        range={isRangeValue(conditionValue.optionParserName)}
+        isMulti={isMultipleValue(conditionValue.optionParserName)}
+        onChangeDate={onChangeDate}
+        className={`${error ? 'error' : ''}`}
+      />
+    </div>
+  );
+
+  const lkpField = (isClearable = true) => (
+    <MultiSelect
+      name={name}
+      options={options}
+      errorMsg={t('translation:noEmptyField')}
+        // please add class has-value if the user selects any option
+        // please add error class if select has error
+      className={`smMultiSelect ${style.advancedSearchSelect} has-value`}
+        // please show the below label if the user selects any option
+      label={identifierValue.identiferName}
+      isClearable={isClearable}
+    />
+  );
+
+  const inputFields = {
+    textFields: {
+      supports: ['Text', 'Number'],
+      getField: textField,
+    },
+    dateFields: {
+      supports: ['Date'],
+      getField: dateField,
+    },
+    lkpFields: {
+      supports: ['Text', 'Number'],
+      getField: lkpField,
+    },
+  };
+
+  const getInputField = useMemo(() => {
+    let returnedField = null;
+    if (identifierValue?.isLkp) {
+      returnedField = inputFields.lkpFields.getField();
+    } else {
+      exclude(Object.keys(inputFields), ['lkpFields']).forEach((inputField) => {
+        if (inputFields[inputField].supports.includes(identifierValue?.identifierType)) {
+          returnedField = inputFields[inputField].getField();
+        }
+      });
+    }
+    return returnedField || inputFields.textFields.getField();
+  }, [identifierValue?.identifierType, identifierValue?.isLkp, conditionValue]);
 
   return (
     <div className={`p-4 bg-primary-01 mb-2 ${style.wrapper}`}>
@@ -74,63 +136,12 @@ function SearchField({
         }
       </div>
       <div className={`position-relative ${style.criteria}`}>
-        {
-          identifierValue?.identifierType === 'Date'
-            ? (
-              <div>
-                <DatePicker name={name} onChangeDate={onChangeDate} className={`${error ? 'error' : ''}`} />
-              </div>
-            )
-            : (
-              <>
-                <span className={`position-absolute ${formStyle.label}
-              ${formStyle.smLabel}`}
-                >
-                  {t('criteria')}
-                </span>
-                <Input moduleClassName={inputModuleClassName} name={name} />
-              </>
-            )
-        }
+        {getInputField}
         {error && <ErrorMessage
           msg="Search criteria cannot be empty for any field."
           className="mt-2"
         /> }
       </div>
-      {/* for datepicker */}
-      {/* <div className={style.dateWrapper}>
-       please add error class if date has error
-        <DatePicker
-          className="error"
-          errorMsg={t('translation:noEmptyField')}
-        />
-      </div> */}
-      {/* for datepicker range */}
-      {/* need to handle the onchange function on datePicker component for datepicker range */}
-      {/* please add error class if date has error */}
-      {/* <div className={style.dateWrapper}>
-        <DatePicker
-          range
-          className="error"
-          errorMsg={t('translation:noEmptyField')}
-        />
-        <ErrorMessage
-          msg="Search criteria cannot be empty for any field."
-          className="mt-2"
-        />
-      </div> */}
-      {/* <MultiSelect
-        options={options}
-        errorMsg={t('translation:noEmptyField')}
-        // please add class has-value if the user selects any option
-        // please add error class if select has error
-        className={`smMultiSelect ${style.advancedSearchSelect}`}
-        // please show the below label if the user selects any option
-        // label={t('publicationCountry')}
-      /> */}
-      {/* <div className="border-top mt-7 pb-2 pt-5">
-        <Button variant="link" className="font-regular px-0" text={t('clearAll')} />
-      </div> */}
     </div>
   );
 }
@@ -139,9 +150,18 @@ SearchField.propTypes = {
   handleRemove: PropTypes.func,
   name: PropTypes.string,
   searchIdentifiers: PropTypes.arrayOf(PropTypes.shape({
+    identiferName: PropTypes.string.isRequired,
   })).isRequired,
-  identifierValue: PropTypes.object.isRequired,
-  conditionValue: PropTypes.object.isRequired,
+  identifierValue: PropTypes.shape({
+    identiferName: PropTypes.string.isRequired,
+    identifierType: PropTypes.string.isRequired,
+    isLkp: PropTypes.bool.isRequired,
+    identifierOptions: PropTypes.instanceOf(Object).isRequired,
+  }).isRequired,
+  conditionValue: PropTypes.shape({
+    optionParserName: PropTypes.string.isRequired,
+    optionName: PropTypes.string.isRequired,
+  }).isRequired,
   onChangeIdentifier: PropTypes.func.isRequired,
   onChangeCondition: PropTypes.func.isRequired,
   order: PropTypes.objectOf(PropTypes.number).isRequired,

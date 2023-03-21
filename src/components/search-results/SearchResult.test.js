@@ -4,8 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import apiInstance from 'apis/apiInstance';
 import patentIdentifiers from 'testing-resources/workstreams/patents/identifiers.json';
 import samplePatent from 'testing-resources/patents/samplePatent.json';
-import WorkstreamList from 'testing-resources/workstreams/workstreams.json';
-import { search } from 'utils/arrays';
+import workstreams from 'testing-resources/workstreams/workstreams.json';
 import { trimStringRelativeToSubtext } from 'utils/strings';
 import SearchResults from './SearchResults';
 
@@ -15,13 +14,12 @@ const PER_PAGE = 10;
 const TOTAL = 12;
 const patentList = Array(TOTAL).fill(samplePatent);
 
-const searchParams = { workstreamId: 1, identifierStrId: 'ti', query: 'test' };
+const searchParams = { workstreamId: 1, q: 'ftxt hasExactly "test"' };
 
+mockAxios.onGet(/\/workstreams/).reply(200, workstreams);
 mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, { data: patentIdentifiers });
 
-mockAxios.onGet('workstreams').reply(200, WorkstreamList);
-
-mockAxios.onGet(/\/search\/?.*/).reply((config) => ([200, {
+mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
   data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),
   pagination: {
     per_page: PER_PAGE,
@@ -58,7 +56,6 @@ describe('<SearchResult />', () => {
     const { getByText } = render(<SearchResults />);
 
     await waitFor(() => {
-      expect(getByText(`${search(patentIdentifiers, 'identiferStrId', searchParams.identifierStrId).identiferName}: “${searchParams.query}”`)).toBeInTheDocument();
       expect(getByText(TOTAL)).toBeInTheDocument();
       expect(getByText(TOTAL)).toHaveClass('font-medium');
     });

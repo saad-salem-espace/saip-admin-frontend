@@ -16,6 +16,7 @@ import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import UploadImage from '../shared/upload-image/UploadImage';
 import formStyle from '../shared/form/form.module.scss';
+import { parseSingleQuery } from '../../utils/searchQueryParser';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
@@ -24,11 +25,12 @@ function WorkstreamSearch() {
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
-  const [searchOption] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
+  const [searchOption] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
   const searchOptions = searchOption?.data;
   const [isImgUploaded, setIsImgUploaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageName, setImageName] = useState(null);
 
   const formSchema = Yup.object({
     searchQuery: Yup.string().trim().required('Input search criteria to display search results.'),
@@ -43,9 +45,15 @@ function WorkstreamSearch() {
   };
 
   const onSubmit = (values) => {
+    const query = parseSingleQuery({
+      identifier: selectedOption,
+      condition: { optionParserName: 'hasExactly' },
+      data: values.searchQuery,
+    }, 0, true);
+
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, identifierStrId: selectedOption?.identiferStrId, query: values.searchQuery })}`,
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: query, ...(imageName && { imageName }) })}`,
     });
   };
 
@@ -60,8 +68,8 @@ function WorkstreamSearch() {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append('file', file);
-    // eslint-disable-next-line no-unused-vars
     const { res, err } = await uploadFile(formData);
+    setImageName(res.data.data?.[0]);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
     setShowUploadImgSection(false);
@@ -99,7 +107,7 @@ function WorkstreamSearch() {
             <Formik
               onSubmit={onSubmit}
               initialValues={{ searchQuery: '' }}
-              validationSchema={formSchema}
+              validationSchema={isImgUploaded ? Yup.object().shape({}) : formSchema}
               validateOnChange={false}
               validateOnBlur={false}
             >
@@ -158,7 +166,13 @@ function WorkstreamSearch() {
                     ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                   <div className="rounded">
-                    <UploadImage className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`} showUploadImgSection={showUploadImgSection} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} />
+                    <UploadImage
+                      className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`}
+                      showUploadImgSection={showUploadImgSection}
+                      changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }}
+                      uploadFile={(file) => uploadCurrentFile(file)}
+                      isSubmitting={isSubmitting}
+                    />
                   </div>
                   {
                     errorMessage && (
