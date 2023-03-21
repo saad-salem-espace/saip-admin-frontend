@@ -55,15 +55,19 @@ function WorkstreamSearch() {
   };
 
   const onSubmit = (values) => {
+    let { searchQuery } = values;
+
+    if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
+
     const query = parseSingleQuery({
       identifier: selectedOption,
       condition: (selectedOption.identifierType === 'Date' ? { optionParserName: 'is' } : { optionParserName: 'hasExactly' }),
-      data: (selectedOption.identifierType === 'Date' ? values.searchQuery : values.searchQuery.trim()),
+      data: searchQuery,
     }, 0, true);
 
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: (query.data ? query : ''), ...(imageName && { imageName }) })}`,
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: (searchQuery ? query : ''), ...(imageName && { imageName }) })}`,
     });
   };
 
