@@ -14,7 +14,7 @@ function App() {
   // };
   return (
     <ThemeProvider
-    //  lang={lang}
+      // lang={lang}
     // eslint-disable-next-line react/jsx-closing-bracket-location
     >
       <div className="app">

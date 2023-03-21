@@ -1,16 +1,18 @@
-import React, { createContext } from 'react';
+import React, { createContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 const ThemeContext = createContext({
   language: 'en',
 });
 
-const ThemeProvider = ({ children, lang }) => (
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  <ThemeContext.Provider value={{ language: lang }}>
-    {children}
-  </ThemeContext.Provider>
-);
+const ThemeProvider = ({ children, lang }) => {
+  const langValue = useMemo(() => ({ language: lang }), [lang]);
+  return (
+    <ThemeContext.Provider value={langValue}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
 export default ThemeProvider;
 export { ThemeContext };
 

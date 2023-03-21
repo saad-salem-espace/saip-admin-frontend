@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 function ChangeLanguage({ changeLang }) {
   const lang = useContext(ThemeContext).language;
   const changeDirection = () => {
-    // eslint-disable-next-line no-undef
     const wrapperElement = document.getElementsByTagName('html');
     wrapperElement[0].setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
   };
