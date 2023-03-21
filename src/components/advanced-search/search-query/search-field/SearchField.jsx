@@ -136,24 +136,6 @@ function SearchField({
         }
       </div>
       <div className={`position-relative ${style.criteria}`}>
-        {
-          identifierValue?.identifierType === 'Date'
-            ? (
-              <div>
-                <DatePicker name={name} onChangeDate={onChangeDate} className={`${error ? 'error' : ''}`} />
-              </div>
-            )
-            : (
-              <>
-                <span className={`position-absolute ${formStyle.label}
-              ${formStyle.smLabel}`}
-                >
-                  {t('criteria')}
-                </span>
-                <Input moduleClassName={inputModuleClassName} className="pt-4" name={name} />
-              </>
-            )
-        }
         {getInputField}
         {error && <ErrorMessage
           msg="Search criteria cannot be empty for any field."
