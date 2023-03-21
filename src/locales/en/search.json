@@ -46,5 +46,11 @@
     "maxSize": "The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB."
   },
   "searchFieldValidationMsg": "You have reached the maximum number of search fields",
-  "SwitchToAdvancedSearch": "Switch to advanced search"
+  "SwitchToAdvancedSearch": "Switch to advanced search",
+  "trademarks": {
+    "detailed": "Detailed",
+    "summary": "Summary",
+    "compact": "Compact",
+    "view": "View"
+  }
 }

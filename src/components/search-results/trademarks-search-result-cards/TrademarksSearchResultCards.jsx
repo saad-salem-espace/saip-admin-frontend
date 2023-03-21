@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types';
-import SearchWithImgResultCard from './TrademarksSearchResultCard';
+import TrademarksSearchResultCard from './TrademarksSearchResultCard';
 
 const TrademarksSearchResultCards = ({
-  data, query, setActiveDocument, activeDocument,
+  data, query, setActiveDocument, activeDocument, selectedView,
 }) => (
   <>
     {data.map((searchResult) => (
-      <SearchWithImgResultCard
+      <TrademarksSearchResultCard
         key={searchResult.BibliographicData.filingNumber}
         searchResult={searchResult}
         query={query}
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
+        selectedView={selectedView}
       />
     ))}
   </>
@@ -22,6 +23,7 @@ TrademarksSearchResultCards.propTypes = {
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
+  selectedView: PropTypes.string.isRequired,
 };
 
 export default TrademarksSearchResultCards;

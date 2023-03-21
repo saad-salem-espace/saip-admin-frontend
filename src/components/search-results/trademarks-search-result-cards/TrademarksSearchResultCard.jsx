@@ -13,7 +13,7 @@ import c from '../../../assets/images/search-header-bg.svg';
 import './style.scss';
 
 function TrademarksSearchResultCard({
-  searchResult, query, setActiveDocument, activeDocument,
+  searchResult, query, setActiveDocument, activeDocument, selectedView,
 }) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
@@ -51,35 +51,44 @@ function TrademarksSearchResultCard({
                 <p className="mb-2 text-black">
                   {BibliographicData.PublicationNumber}
                 </p>
-                <p className="text-gray md-text mb-2">
-                  Hozon New Energy Automobile Co., Ltd. (China)
-                </p>
-                <p className="font-medium mb-2 d-lg-flex align-items-center text-dark sm-text">
-                  {t('priority', { value: searchResult.Priority })}
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                  {t('filed', { value: BibliographicData.FilingNumber })}
-                  {
-                  BibliographicData.PublicationDate && (
+                {
+                  (selectedView === 'detailed' || selectedView === 'summary') && (
+                    <p className="text-gray md-text mb-2">
+                      Hozon New Energy Automobile Co., Ltd. (China)
+                    </p>)
+                }
+                {
+                  selectedView === 'detailed' && (
                     <>
-                      <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                      {t('published', { value: BibliographicData.PublicationDate })}
+                      <p className="font-medium mb-2 d-lg-flex align-items-center text-dark sm-text">
+                        {t('priority', { value: searchResult.Priority })}
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        {t('filed', { value: BibliographicData.FilingNumber })}
+                        {
+                          BibliographicData.PublicationDate && (
+                            <>
+                              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                              {t('published', { value: BibliographicData.PublicationDate })}
+                            </>
+                          )
+                        }
+                      </p>
+                      <p className="font-medium d-lg-flex align-items-center text-dark sm-text">
+                        {t('priority', { value: searchResult.Priority })}
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        {t('filed', { value: BibliographicData.FilingNumber })}
+                        {
+                          BibliographicData.PublicationDate && (
+                            <>
+                              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                              {t('published', { value: BibliographicData.PublicationDate })}
+                            </>
+                          )
+                        }
+                      </p>
                     </>
                   )
                 }
-                </p>
-                <p className="font-medium d-lg-flex align-items-center text-dark sm-text">
-                  {t('priority', { value: searchResult.Priority })}
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                  {t('filed', { value: BibliographicData.FilingNumber })}
-                  {
-                  BibliographicData.PublicationDate && (
-                    <>
-                      <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                      {t('published', { value: BibliographicData.PublicationDate })}
-                    </>
-                  )
-                }
-                </p>
               </div>
             </div>
           </div>
@@ -103,6 +112,7 @@ TrademarksSearchResultCard.propTypes = {
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
+  selectedView: PropTypes.number.isRequired,
 };
 
 export default TrademarksSearchResultCard;
