@@ -24,11 +24,12 @@ function AdvancedSearch({
   const tabsItems = [
     {
       id: 1,
-      title: <div className="d-flex align-items-center">
-        {t('searchQuery')}
-        <FontAwesomeIcon icon={faCircleQuestion} className="f-20 ms-2" />
-        {/* eslint-disable-next-line react/jsx-closing-tag-location */}
-      </div>,
+      title: (
+        <div className="d-flex align-items-center">
+          {t('searchQuery')}
+          <FontAwesomeIcon icon={faCircleQuestion} className="f-20 ms-2" />
+        </div>
+      ),
       content: <SearchQuery
         workstreamId={workstreamId}
         firstIdentifierStr={firstIdentifierStr}

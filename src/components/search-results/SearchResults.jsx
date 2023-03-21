@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import uploadFile from 'apis/uploadFileApi';
-import useWorkstreams from 'hooks/useWorkstreams';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
@@ -15,12 +14,13 @@ import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import UploadImage from 'components/shared/upload-image/UploadImage';
 import emptyState from 'assets/images/search-empty-state.svg';
+import advancedSearchApi from 'apis/search/advancedSearchApi';
+import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
+import { pascalCase } from 'change-case';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
-import useCacheRequest from '../../hooks/useCacheRequest';
 import IprDetails from '../ipr-details/IprDetails';
-// import formStyle from '../shared/form/form.module.scss';
 import './style.scss';
 // import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
@@ -38,22 +38,16 @@ function SearchResults() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
-    identifierStrId: searchParams.get('identifierStrId'),
-    queryString: searchParams.get('query'),
+    query: searchParams.get('q'),
+    fireSearch: searchParams.get('fireSearch') !== 'false',
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
+  const { cachedRequests } = useContext(CacheContext);
+  const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
-
-  const { getIdentifierByStrId, isReady } = useWorkstreams(searchResultParams.workstreamId);
-  const { cachedRequests } = useContext(CacheContext);
-  const [workstream] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
-  const workstreams = workstream?.data;
-
-  if (!isReady) return null;
-
-  const identifier = getIdentifierByStrId(searchParams.get('identifierStrId'));
 
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
@@ -73,6 +67,11 @@ function SearchResults() {
   const onSubmit = () => {
 
   };
+
+  const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
+    label: pascalCase(workstream.workstreamName),
+    value: workstream.id,
+  }));
 
   const handleCloseIprDetail = () => {
     setActiveDocument(null);
@@ -97,8 +96,7 @@ function SearchResults() {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append('file', file);
-    // eslint-disable-next-line no-unused-vars
-    const { res, err } = await uploadFile(formData);
+    const { err } = await uploadFile(formData);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
     setShowUploadImgSection(false);
@@ -115,20 +113,20 @@ function SearchResults() {
 
   const getIprClassName = (media) => {
     let size = 4;
-    if (media === 'lg' && isIPRExpanded) {
+    if (media === 'xl' && isIPRExpanded) {
       size = 12;
       if (isAdvancedSearch) {
-        size = isAdvancedMenuOpen ? 8 : 11;
+        size = isAdvancedMenuOpen ? 9 : 11;
       }
     }
     return size;
   };
   const getSearchResultsClassName = (media) => {
-    let size = 4;
-    if (media === 'lg') {
+    let size = 5;
+    if (media === 'xl') {
       if (isAdvancedSearch) {
         if (!totalResults) {
-          size = 8;
+          size = 9;
         }
         if (!isAdvancedMenuOpen) {
           if (totalResults) {
@@ -140,37 +138,37 @@ function SearchResults() {
       } else if (totalResults) {
         size = 8;
       } else {
-        size = 12;
+        size = 11;
       }
     }
     return size;
   };
 
+  const axiosConfig = advancedSearchApi(searchResultParams, true);
+
   return (
-    <Container fluid className="px-0">
-      <Row className="mx-0">
+    <Container fluid className="px-0 workStreamResults">
+      <Row className="mx-0 header">
         <Col md={{ span: 10, offset: 1 }} className="mb-8 position-relative">
           <Formik
             enableReinitialize
             initialValues={{
-              searchQuery,
-              selectedWorkstream: workstreams.find(
+              searchQuery: searchQuery || searchResultParams.query,
+              selectedWorkstream: workstreams?.data?.find(
                 (element) => element.id.toString() === searchResultParams.workstreamId,
               ),
             }}
           >
-            {({ values, setFieldValue }) => (
+            {({ setFieldValue }) => (
               <Form className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
                     <h4 className="mb-0 mt-4">Search</h4>
                     <Select
-                      options={workstreams}
+                      options={WorkStreamsOptions}
                       moduleClassName="menu"
+                      selectedOption={WorkStreamsOptions?.[0]}
                       className="workStreams me-5 ms-3 mt-1 customSelect"
-                      getOptionName={(option) => option.workstreamName}
-                      getOptionValue={(option) => option.workstreamName}
-                      selectedOption={values.selectedWorkstream}
                       setSelectedOption={(data) => setFieldValue('selectedWorkstream', data)}
                     />
                   </div>
@@ -220,7 +218,7 @@ function SearchResults() {
             )}
           </Formik>
           <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
-            <UploadImage className={`${showUploadImgSection ? 'py-8' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
+            <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
           </div>
           {
             errorMessage && (
@@ -231,56 +229,59 @@ function SearchResults() {
           }
         </Col>
       </Row>
-      <Row className="border-top mx-0 align-items-stretch mb-10">
+      <Row className="border-top mx-0 align-items-stretch content">
         {
           isAdvancedSearch && (
-            <Col lg={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
+            <Col xl={isAdvancedMenuOpen ? 3 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
               <AdvancedSearch
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
                 isAdvancedMenuOpen={isAdvancedMenuOpen}
                 workstreamId={searchResultParams.workstreamId}
                 firstIdentifierStr={searchResultParams.identifierStrId}
-                defaultCriteria={searchResultParams.queryString}
+                defaultCriteria=""
                 onChangeSearchQuery={setSearchQuery}
               />
             </Col>
           )
         }
-        <Col lg={getSearchResultsClassName('lg')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
-          <SearchNote
-            searchKeywords={`${identifier}: “${searchResultParams.queryString}”`}
-            resultsCount={totalResults}
-          />
-          <Formik>
-            {() => (
-              <Form className="mt-8">
-                <AppPagination
-                  axiosConfig={{
-                    url: 'search',
-                    params: searchResultParams,
-                  }}
-                  defaultPage={Number(searchParams.get('page') || '1')}
-                  RenderedComponent={SearchResultCards}
-                  renderedProps={{
-                    query: searchResultParams.queryString,
-                    setActiveDocument,
-                    activeDocument,
-                  }}
-                  fetchedTotalResults={setTotalResults}
-                  emptyState={(
-                    <EmptyState
-                      title={t('emptyStateTitle')}
-                      msg={t('emptyStateMsg')}
-                      img={emptyState}
-                      className="mt-18"
-                    />)}
-                />
-              </Form>
-            )}
-          </Formik>
-        </Col>
+        {
+          searchResultParams.fireSearch
+          && (
+            <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+              <SearchNote
+                searchKeywords={searchResultParams.query}
+                resultsCount={totalResults}
+              />
+              <Formik>
+                {() => (
+                  <Form className="mt-8">
+                    <AppPagination
+                      axiosConfig={axiosConfig}
+                      defaultPage={Number(searchParams.get('page') || '1')}
+                      RenderedComponent={SearchResultCards}
+                      renderedProps={{
+                        query: searchResultParams.query,
+                        setActiveDocument,
+                        activeDocument,
+                      }}
+                      fetchedTotalResults={setTotalResults}
+                      emptyState={(
+                        <EmptyState
+                          title={t('emptyStateTitle')}
+                          msg={t('emptyStateMsg')}
+                          img={emptyState}
+                          className="mt-18"
+                        />)}
+                      updateDependencies={[...Object.values(searchResultParams)]}
+                    />
+                  </Form>
+                )}
+              </Formik>
+            </Col>
+          )
+}
         {activeDocument && (
-          <Col lg={getIprClassName('lg')} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
+          <Col xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails
               collapseIPR={collapseIPR}
               isIPRExpanded={isIPRExpanded}

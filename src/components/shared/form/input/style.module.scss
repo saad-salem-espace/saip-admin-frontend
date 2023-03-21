@@ -14,14 +14,14 @@
   outline: none;
   border-radius: $border-radius;
   height: 100%;
+  background-color: $white;
 }
 
 .smInput input {
   height: 57px;
 }
 
-.error {
-  input {
-    border-color: $danger !important;
-  }
+input.error {
+  border-color: $danger !important;
 }
+

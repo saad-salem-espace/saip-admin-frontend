@@ -5,7 +5,7 @@
 }
 
 .uploadImageWrapper {
-  &.error {
+  .error.dashedBorder{
     border-color: $danger-dark;
   }
 
@@ -24,7 +24,7 @@
 
 .workStreamView {
   .image-item {
-    top: 53px;
+    top: 40px;
     left: 217px;
 
     html[dir="rtl"] & {

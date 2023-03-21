@@ -6,30 +6,35 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
-import { parseSingleQuery } from 'utils/parsers';
-import { formSchema } from './SearchQueryValidation';
-import Button from '../../shared/button/Button';
+import { parseSingleQuery } from 'utils/searchQueryParser';
+import Button from 'components/shared/button/Button';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
+import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, defaultCriteria, onChangeSearchQuery,
 }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
-  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreamList, { url: `workstreams/${workstreamId}/identifiers` });
+  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${workstreamId}/identifiers` });
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
   const [firstCondition, setFirstCondition] = useState(null);
+  const navigate = useNavigate();
   const operators = ['and', 'or', 'not'].map((operator) => ({
     operator: operator.toUpperCase(),
     displayName: t(`operators.${operator}`),
   }));
+  const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
 
   useEffect(() => {
     setDefaultIdentifier(searchIdentifiers?.data[0]);
-    /* eslint-disable-next-line max-len */
-    setFirstIdentifier(searchIdentifiers?.data.find((element) => element.identiferStrId === firstIdentifierStr));
+    setFirstIdentifier(searchIdentifiers?.data.find(
+      (element) => element.identiferStrId === firstIdentifierStr,
+    ));
   }, [searchIdentifiers]);
 
   useEffect(() => {
@@ -47,12 +52,24 @@ function SearchQuery({
     return finalQuery;
   };
 
+  const onSubmit = (values) => {
+    navigate({
+      pathname: '/search',
+      search: `?${createSearchParams({
+        workstreamId,
+        q: parseQuery(values, true),
+        page: 1,
+      })}`,
+    });
+  };
+
   return (
     <div>
       <Formik
         enableReinitialize
-        validationSchema={formSchema}
+        validationSchema={SearchQueryValidationSchema}
         validateOnChange
+        onSubmit={onSubmit}
         validateOnBlur={false}
         initialValues={{
           searchFields: [{
@@ -61,7 +78,7 @@ function SearchQuery({
         }}
       >
         {({
-          values, setFieldValue, errors, setValues, touched,
+          values, setFieldValue, errors, setValues, touched, setErrors, setTouched,
         }) => (
           <Form onChange={onChangeSearchQuery(parseQuery(values, true))}>
             <FieldArray name="searchFields">
@@ -85,14 +102,18 @@ function SearchQuery({
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
                      error={touched.searchFields?.[index] && errors.searchFields?.[index]}
-                    //  onChangeDate={(date) => console.log(date)}
                      onChangeDate={(date) => { setFieldValue(`searchFields.${index}.data`, date); }}
                    />
                  ))
                }
+                  {
+                      values.searchFields.length >= parseInt(maximumSearchFields, 10)
+                        ? <ErrorMessage msg={t('searchFieldValidationMsg')} className="mb-2 mt-4" />
+                        : null
+                  }
                   <Button
                     variant="outline-primary"
-                    className="mb-9 mt-2"
+                    className="mb-2 mt-2"
                     size="sm"
                     onClick={() => {
                       const newField = {
@@ -102,24 +123,29 @@ function SearchQuery({
                         condition: defaultCondition,
                         operator: 'AND',
                       };
-                      push(newField);
+                      if (values.searchFields.length < maximumSearchFields) push(newField);
                     }}
-                    text={<>
-                      <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
-                      {t('addSearchField')}
-                      {/* eslint-disable-next-line react/jsx-indent */}
-                          </>}
+                    text={(
+                      <>
+                        <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
+                        {t('addSearchField')}
+                      </>
+                    )}
                   />
-                  <div className="border-top d-flex justify-content-end pt-4 pb-8">
+                  <div className="border-top d-flex justify-content-end pt-4 pb-8 mt-6">
                     <Button
                       variant="outline-primary"
                       className="me-4"
                       size="sm"
-                      onClick={() => setValues({
-                        searchFields: [{
-                          id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition, operator: '',
-                        }],
-                      })}
+                      onClick={() => {
+                        setValues({
+                          searchFields: [{
+                            id: Math.max(...values.searchFields.map((o) => o.id)) + 1, data: '', identifier: defaultIdentifier, condition: defaultCondition, operator: '',
+                          }],
+                        });
+                        setErrors({});
+                        setTouched({});
+                      }}
                       text={t('clear')}
                     />
                     <Button

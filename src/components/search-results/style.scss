@@ -13,7 +13,7 @@
   width: 140px;
 }
 
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-down(xl) {
   .closed {
     height: 60px;
   }
@@ -100,5 +100,21 @@
 
   .dashedBorder {
     padding: 32px;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .workStreamResults {
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+
+    .header {
+      flex: 0 1 auto;
+    }
+
+    .content {
+      flex: 1 1 auto;
+    }
   }
 }

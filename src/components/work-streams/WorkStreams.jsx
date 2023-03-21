@@ -7,7 +7,7 @@ import style from './style.module.scss';
 
 function WorkStreams({ selectedWorkStream, onChange }) {
   const { cachedRequests } = useContext(CacheContext);
-  const [workstream] = useCacheRequest(cachedRequests.workstreamList, { url: 'workstreams' });
+  const [workstream] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
   const workstreams = workstream?.data;
   const handleChange = (workstreamId) => {
     onChange(workstreamId);
@@ -22,7 +22,7 @@ function WorkStreams({ selectedWorkStream, onChange }) {
       {
         workstreams.map((workStream) => (
           <Button
-            variant="link"
+            variant="transparent"
             className={`${style.card} me-4 mb-lg-0 mb-3 shadow px-6 py-2 ${style[workStream.workstreamName]} ${selectedWorkStream === workStream.id ? style.active : ''}`}
             onClick={() => handleChange(workStream.id)}
             key={workStream.id}

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-closing-tag-location */
 import React, { useState } from 'react';
 import ImageUploading from 'react-images-uploading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -60,7 +59,6 @@ function UploadImage({
                       variant="transparent"
                       className="text-primary-dark f-16 w-100 py-0 border-0"
                       onClick={onImageUpload}
-                      // eslint-disable-next-line react/jsx-props-no-spreading
                       {...dragProps}
                       text={
                         <>
@@ -97,14 +95,17 @@ function UploadImage({
               </div>
             ))}
           </div>
+          {errors && (
+            <div>
+              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.imgFormats')}</span>}
+            </div>
+          )}
           {errors
-            && <div>
-              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg">{t('validationErrors.imgFormats')}</span>}
-            </div>}
-          {errors
-          && <div>
-            {errors.maxFileSize && <span className="text-danger-dark f-12 errorMsg">{t('validationErrors.maxSize')}</span>}
-          </div>}
+          && (
+            <div>
+              {errors.maxFileSize && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxSize')}</span>}
+            </div>
+          )}
         </>
       )}
     </ImageUploading>
