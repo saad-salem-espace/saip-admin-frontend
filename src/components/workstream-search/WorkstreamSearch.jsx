@@ -44,16 +44,26 @@ function WorkstreamSearch() {
     setSelectedWorkStream(newState);
   };
 
+  const onChangeIdentifier = (identifier, clearData, clearErrors, clearTouch) => {
+    if (identifier.identifierType === 'Date' || selectedOption.identifierType === 'Date') {
+      clearData();
+      clearErrors();
+      clearTouch();
+    }
+
+    setSelectedOption(identifier);
+  };
+
   const onSubmit = (values) => {
     const query = parseSingleQuery({
       identifier: selectedOption,
-      condition: { optionParserName: 'hasExactly' },
+      condition: (selectedOption.identifierType === 'Date' ? { optionParserName: 'is' } : { optionParserName: 'hasExactly' }),
       data: values.searchQuery,
     }, 0, true);
 
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: query, ...(imageName && { imageName }) })}`,
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: (values.searchQuery ? query : ''), ...(imageName && { imageName }) })}`,
     });
   };
 
@@ -108,11 +118,11 @@ function WorkstreamSearch() {
               onSubmit={onSubmit}
               initialValues={{ searchQuery: '' }}
               validationSchema={isImgUploaded ? Yup.object().shape({}) : formSchema}
-              validateOnChange={false}
+              validateOnChange
               validateOnBlur={false}
             >
               {({
-                handleSubmit, values, setFieldValue, errors, touched,
+                handleSubmit, values, setFieldValue, errors, touched, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
                   <Link
@@ -137,7 +147,7 @@ function WorkstreamSearch() {
                         className={`${style.select} lgSelect selectWithSibling`}
                         getOptionName={(option) => option.identiferName}
                         selectedOption={selectedOption}
-                        setSelectedOption={setSelectedOption}
+                        setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
                         getOptionValue={(option) => option.identiferName}
                       />
                     </div>
@@ -153,6 +163,9 @@ function WorkstreamSearch() {
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
                       searchWithImg={selectedWorkStream === 1}
+                      type={selectedOption?.identifierType}
+                      onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
+                      imageSearch={isImgUploaded}
                     >
                       {/* please show this span if the search has text value */}
                       {/* <span className={`position-absolute ${formStyle.label}
@@ -162,7 +175,7 @@ function WorkstreamSearch() {
                       </span> */}
                     </Search>
                   </div>
-                  {touched.searchQuery && errors.searchQuery && !values.searchQuery.trim()
+                  {touched.searchQuery && errors.searchQuery && !isImgUploaded
                     ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                   <div className="rounded">

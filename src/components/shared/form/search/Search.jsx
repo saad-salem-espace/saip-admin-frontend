@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
+import DatePicker from 'components/shared/date-picker/AppDatePicker';
 import Input from '../input/Input';
 import style from './style.module.scss';
 import Button from '../../button/Button';
@@ -19,6 +20,9 @@ function Search({
   handleUploadImg,
   searchWithImg,
   disabled,
+  type,
+  onChangeDate,
+  imageSearch,
 }) {
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
@@ -26,13 +30,17 @@ function Search({
     <div className={`position-relative ${className} ${searchClassName}`}>
       {/* please render the below children if the input has value */}
       {children}
-      <Input
-        id={id}
-        type="text"
-        name={name}
-        placeholder={placeholder}
-        disabled={disabled}
-      />
+      {
+        type === 'Date' ? <DatePicker name={name} onChangeDate={onChangeDate} />
+          : <Input
+              id={id}
+              type="text"
+              name={name}
+              placeholder={placeholder}
+              disabled={disabled}
+              imageSearch={imageSearch}
+          />
+      }
       {
         isClearable && <Button className={`${style.clearIcon} text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
       }
@@ -62,8 +70,11 @@ Search.propTypes = {
   isClearable: PropTypes.bool,
   clearInput: PropTypes.func,
   handleUploadImg: PropTypes.func,
+  onChangeDate: PropTypes.func,
   searchWithImg: PropTypes.bool,
   disabled: PropTypes.bool,
+  type: PropTypes.string,
+  imageSearch: PropTypes.bool,
 };
 
 Search.defaultProps = {
@@ -78,6 +89,9 @@ Search.defaultProps = {
   handleUploadImg: null,
   searchWithImg: false,
   disabled: false,
+  type: 'Text',
+  onChangeDate: null,
+  imageSearch: false,
 };
 
 export default Search;
