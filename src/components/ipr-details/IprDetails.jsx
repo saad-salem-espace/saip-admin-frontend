@@ -66,13 +66,11 @@ function IprDetails({
           <div>
             <Button
               variant="link"
-              // onClick={}
               className="p-0 pe-5"
               text={<FontAwesomeIcon icon={faChevronLeft} className="md-text text-gray" />}
             />
             <Button
               variant="link"
-              // onClick={}
               className="p-0 pe-5 border-end me-4"
               text={<FontAwesomeIcon icon={faChevronRight} className="md-text text-gray" />}
             />
