@@ -25,7 +25,7 @@
     }
   }
 
-  &.disabled {
-    color: $gray-500 !important;
+  &.disabled, :disabled {
+    color: $gray-500;
   }
 }
