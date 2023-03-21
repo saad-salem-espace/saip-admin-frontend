@@ -58,12 +58,12 @@ function WorkstreamSearch() {
     const query = parseSingleQuery({
       identifier: selectedOption,
       condition: (selectedOption.identifierType === 'Date' ? { optionParserName: 'is' } : { optionParserName: 'hasExactly' }),
-      data: values.searchQuery,
+      data: (selectedOption.identifierType === 'Date' ? values.searchQuery : values.searchQuery.trim()),
     }, 0, true);
 
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: (values.searchQuery ? query : ''), ...(imageName && { imageName }) })}`,
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: (query.data ? query : ''), ...(imageName && { imageName }) })}`,
     });
   };
 
