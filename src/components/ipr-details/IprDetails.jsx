@@ -20,6 +20,8 @@ import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttr
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
 import c from '../../assets/images/search-header-bg.svg';
+// import Citation from './citation/Citation';
+// import CitationRow from './citation/CitationRow';
 
 // TODO change structure when trademarks are added
 function IprDetails({
@@ -52,6 +54,33 @@ function IprDetails({
       value: 1,
     },
   ];
+
+  // const citation = [
+  //   {
+  //     id: 1,
+  //     citationOrigin: '1',
+  //     publication: 'publication',
+  //     publicationURL: '/',
+  //     title: 'title',
+  //     priorityDate: '20/2',
+  //     publicationDate: '8/8',
+  //     applicants: 'applicants',
+  //     IPC: 'IPC',
+  //     CPC: 'CPC',
+  //   },
+  //   {
+  //     id: 2,
+  //     citationOrigin: '2',
+  //     publication: 'publication',
+  //     publicationURL: '/',
+  //     title: 'title',
+  //     priorityDate: '20/2',
+  //     publicationDate: '8/8',
+  //     applicants: 'applicants',
+  //     IPC: 'IPC',
+  //     CPC: 'CPC',
+  //   },
+  // ];
 
   return (
     <div className={`${style.iprWrapper}`}>
@@ -128,6 +157,13 @@ function IprDetails({
           )}
         </Formik>
         <BibliographicDataSection document={document} />
+        {/* <Citation>
+          {
+            citation.map((row) => (
+              <CitationRow row={row} />
+            ))
+          }
+        </Citation> */}
       </div>
     </div>
   );

@@ -1,0 +1,34 @@
+@import "../../styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.table.appTable {
+  margin-bottom: 0;
+
+  tr:first-of-type {
+    @extend.border-top
+  }
+
+  th {
+    font-family: $font-medium;
+    color: $primary-dark;
+    font-size: $font-size-base;
+    @extend .pe-8;
+    @extend .py-8;
+  }
+
+  td {
+    background-color: #FAFCFB;
+    color: $gray-700;
+    font-size: $font-size-sm;
+    @extend .pt-4;
+    @extend .pb-8;
+  }
+
+  th,
+  td {
+    &:first-of-type {
+      @extend .ps-8;
+
+    }
+  }
+}
