@@ -2,5 +2,8 @@ const search = (array, attribute, value) => (
   array.find((item) => item[attribute] === value)
 );
 
-// eslint-disable-next-line import/prefer-default-export
-export { search };
+const exclude = (inputArray, excludedArray) => (
+  inputArray.filter((arrayElement) => !excludedArray.includes(arrayElement))
+);
+
+export { search, exclude };

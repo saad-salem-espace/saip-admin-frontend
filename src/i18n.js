@@ -4,12 +4,14 @@ import { initReactI18next } from 'react-i18next';
 import translationEn from './locales/en/translation.json';
 import searchEn from './locales/en/search.json';
 import citationEn from './locales/en/citation.json';
+import commonEn from './locales/en/common.json';
 
 const resources = {
   en: {
     translation: translationEn,
     search: searchEn,
     citation: citationEn,
+    common: commonEn,
   },
 };
 

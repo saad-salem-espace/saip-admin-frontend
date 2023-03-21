@@ -24,8 +24,7 @@
   padding-top: 14px;
 }
 
-.error {
-  input {
-    border-color: $danger !important;
-  }
+input.error {
+  border-color: $danger !important;
 }
+
