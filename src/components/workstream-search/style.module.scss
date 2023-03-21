@@ -16,4 +16,9 @@
 
 span.customLabel {
   left: 154px;
+
+  html[dir="rtl"] & {
+    right: 154px;
+    left: auto;
+  }
 }

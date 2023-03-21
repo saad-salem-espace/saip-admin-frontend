@@ -15,7 +15,7 @@
 .iprWrapper {
   height: 80vh;
   overflow-y: auto;
-  margin-right: 8px;
+  @extend .me-2;
 }
 
 .img {

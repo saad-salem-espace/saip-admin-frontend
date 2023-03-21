@@ -6,7 +6,7 @@ button.toggle-btn-container {
   background-color: $secondary;
   border-radius: 20px;
   position: relative;
-  border: 2px solid $primary;
+  border: $border-width-md solid $primary;
 
   &:hover,
   &:focus {
@@ -23,6 +23,11 @@ button.toggle-btn-container {
     right: 1px;
     left: auto;
     top: 0;
+
+    html[dir="rtl"] & {
+      left: 1px;
+      right: auto;
+    }
 
     &:hover,
     &:focus {
@@ -44,6 +49,11 @@ button.toggle-btn-container {
     .toggle-btn {
       left: 1px;
       right: auto;
+
+      html[dir="rtl"] & {
+        left: auto;
+        right: 1px;
+      }
     }
   }
 }
