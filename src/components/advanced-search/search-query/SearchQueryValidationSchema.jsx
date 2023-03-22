@@ -22,7 +22,7 @@ const SearchQueryValidationSchema = Yup.object().shape({
       }).required(),
       operator: Yup.string().oneOf(['AND', 'OR', 'NOT']),
       // Validates according to optionCategories from 'utils/searchQueryParser'
-      data: Yup.mixed().required(),
+      data: Yup.mixed().required().test('Is not empty', 'Invalid', (data) => Array.isArray(data) || data.trim()),
       // TODO to be refactored
       // .test('Is valid type', 'Invalid type', (data, { parent }) => {
       //   const selectedOption = selectOption(parent.condition.optionParserName);

@@ -2,6 +2,7 @@ import { t } from 'i18next';
 import { DateObject } from 'react-multi-date-picker';
 import { search } from './arrays';
 import { isMultipleValue, parseSingleQuery } from './searchQuery/encoder';
+import { insert } from './strings';
 
 const operators = ['and', 'or', 'not'].map((operator) => ({
   operator: operator.toUpperCase(),
@@ -30,11 +31,19 @@ const reformatDecoder = (identifiers, queryResult) => {
         lastCriteria.identifier = search(identifiers, 'identiferStrId', curr.identifier);
         lastCriteria.condition = search(lastCriteria.identifier.identifierOptions, 'optionParserName', curr.condition);
         let { criteria } = curr;
-        if (lastCriteria.identifier.identifierType === 'Date') {
+        if (lastCriteria.identifier.isLkp) {
+          criteria = criteria.split(',');
+        } else if (lastCriteria.identifier.identifierType === 'Date') {
           criteria = criteria.split(',').map((date) => new DateObject(date));
           criteria = criteria.length > 1 ? criteria : criteria[0];
         } else {
-          criteria = isMultipleValue(curr.condition) ? criteria.replaceAll(',', ' ') : criteria;
+          if (isMultipleValue(curr.condition)) {
+            [...criteria.matchAll(/[^,]+( +)+[^,]+/g)].forEach((match) => {
+              const startIndex = match.index;
+              criteria = insert(criteria, '"', [startIndex, startIndex + match[0].length]);
+            });
+            criteria = criteria.replaceAll(',', ' ');
+          }
           criteria = criteria.trim();
         }
         lastCriteria.data = criteria;
@@ -46,4 +55,16 @@ const reformatDecoder = (identifiers, queryResult) => {
   return [];
 };
 
-export { operators, parseQuery, reformatDecoder };
+const flattenCriteria = (queryFields) => queryFields.map(
+  (queryField, idx) => {
+    if (idx > 0 && queryFields[idx - 1].operator === 'not') {
+      return [];
+    }
+    return queryField.criteria ? queryField.criteria.split(',') : [];
+  }
+  ,
+).flat(1000);
+
+export {
+  operators, parseQuery, reformatDecoder, flattenCriteria,
+};
