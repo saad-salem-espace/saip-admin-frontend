@@ -39,7 +39,11 @@ describe('<SearchResultCard />', () => {
           .substring(splitPosition + 1, value.length);
         const { getByText } = render(
           <Formik>
-            <SearchResultCard searchResult={patentResponse} query={query} />
+            <SearchResultCard
+              searchResult={patentResponse}
+              query={query}
+              flattenedCriteria={[query]}
+            />
           </Formik>,
         );
         await waitFor(() => {

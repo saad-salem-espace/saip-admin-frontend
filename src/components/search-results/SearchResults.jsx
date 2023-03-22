@@ -27,7 +27,7 @@ import './style.scss';
 // import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/searchQuery/decoder';
-import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import { flattenCriteria, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -43,6 +43,7 @@ function SearchResults() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchFields, setSearchFields] = useState([]);
   const [imageName, setImageName] = useState(null);
+  const [flattenedCriteria, setFlattenedCriteria] = useState([]);
   const submitRef = useRef();
 
   const searchResultParams = {
@@ -88,6 +89,7 @@ function SearchResults() {
   useEffect(() => {
     if (searchIdentifiers) {
       const decodedQuery = decodeQuery(searchResultParams.query);
+      setFlattenedCriteria(flattenCriteria(decodedQuery));
       const searchIdentifiersData = searchIdentifiers.data;
       const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
@@ -293,6 +295,7 @@ function SearchResults() {
                       RenderedComponent={SearchResultCards}
                       renderedProps={{
                         query: searchResultParams.query,
+                        flattenedCriteria,
                         setActiveDocument,
                         activeDocument,
                       }}
