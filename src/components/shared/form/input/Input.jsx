@@ -28,6 +28,7 @@ function Input({
                   // please add class ${style['has-value']} if the input has value
                 className={`border ${isInvalid ? style.error : ''} w-100 ${style.input} `}
                 disabled={disabled}
+                data-testid={`test-${name}`}
                 {...field}
               />
             );
