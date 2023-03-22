@@ -37,6 +37,7 @@ function SearchResults() {
   const [activeDocument, setActiveDocument] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
+  const [isEnabledSynonyms, setIsEnabledSynonyms] = useState(false);
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
   const [totalResults, setTotalResults] = useState(0);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
@@ -51,6 +52,7 @@ function SearchResults() {
     query: searchParams.get('q'),
     fireSearch: searchParams.get('fireSearch') !== 'false',
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
@@ -81,6 +83,7 @@ function SearchResults() {
         workstreamId: values.selectedWorkstream.value,
         q: values.searchQuery,
         ...(imageName && { imageName }),
+        enableSynonyms: isEnabledSynonyms,
         page: 1,
       })}`,
     });
@@ -110,9 +113,6 @@ function SearchResults() {
 
   const handleAdvancedSearch = () => {
     setIsAdvancedSearch(true);
-  };
-
-  const handleToggleButton = () => {
   };
 
   const SearchModuleClassName = ({
@@ -240,8 +240,8 @@ function SearchResults() {
                         className="border-md-end pe-4 me-4 mb-md-0 mb-2"
                       />
                       <ToggleButton
-                        handleToggleButton={handleToggleButton}
-                        isToggleButtonOn={false}
+                        handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
+                        isToggleButtonOn={isEnabledSynonyms}
                         text={t('allowSynonyms')}
                       />
                     </div>
