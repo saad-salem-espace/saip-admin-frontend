@@ -13,7 +13,8 @@ function AdvancedSearch({
   isAdvancedMenuOpen,
   workstreamId,
   firstIdentifierStr,
-  defaultCriteria,
+  defaultInitializers,
+  submitRef,
   onChangeSearchQuery,
 }) {
   const { t } = useTranslation('search');
@@ -31,8 +32,9 @@ function AdvancedSearch({
       content: <SearchQuery
         workstreamId={workstreamId}
         firstIdentifierStr={firstIdentifierStr}
-        defaultCriteria={defaultCriteria}
+        defaultInitializers={defaultInitializers}
         onChangeSearchQuery={onChangeSearchQuery}
+        submitRef={submitRef}
       />,
     },
   ];
@@ -66,8 +68,17 @@ AdvancedSearch.propTypes = {
   isAdvancedMenuOpen: PropTypes.bool.isRequired,
   workstreamId: PropTypes.string.isRequired,
   firstIdentifierStr: PropTypes.string.isRequired,
-  defaultCriteria: PropTypes.string.isRequired,
   onChangeSearchQuery: PropTypes.func,
+  defaultInitializers: PropTypes.arrayOf(PropTypes.shape({
+    operator: PropTypes.string,
+    identifier: PropTypes.instanceOf(Object),
+    condition: PropTypes.instanceOf(Object),
+    data: PropTypes.instanceOf(Object),
+  })).isRequired,
+  submitRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Object) }),
+  ]).isRequired,
 };
 
 AdvancedSearch.defaultProps = {
