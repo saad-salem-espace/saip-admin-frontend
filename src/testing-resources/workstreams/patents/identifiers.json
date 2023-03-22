@@ -1,62 +1,377 @@
-[
-  {
-    "id": 1,
-    "identiferName": "Full-text",
-    "identiferStrId": "ftxt"
-  },
-  {
-    "id": 2,
-    "identiferName": "Abstract",
-    "identiferStrId": "ab"
-  },
-  {
-    "id": 3,
-    "identiferName": "Title",
-    "identiferStrId": "ti"
-  },
-  {
-    "id": 4,
-    "identiferName": "Publication Number",
-    "identiferStrId": "pn"
-  },
-  {
-    "id": 5,
-    "identiferName": "Filing Number",
-    "identiferStrId": "fn"
-  },
-  {
-    "id": 6,
-    "identiferName": "IPC",
-    "identiferStrId": "ipc"
-  },
-  {
-    "id": 7,
-    "identiferName": "Applicant Name",
-    "identiferStrId": "an"
-  },
-  {
-    "id": 8,
-    "identiferName": "Publication Date",
-    "identiferStrId": "pd"
-  },
-  {
-    "id": 9,
-    "identiferName": "Numbers",
-    "identiferStrId": "nums"
-  },
-  {
-    "id": 10,
-    "identiferName": "Names",
-    "identiferStrId": "names"
-  },
-  {
-    "id": 11,
-    "identiferName": "Dates",
-    "identiferStrId": "dates"
-  },
-  {
-    "id": 12,
-    "identiferName": "Classifications",
-    "identiferStrId": "clsf"
-  }
-]
+{
+  "code": 200,
+  "message": "success",
+  "data": [
+    {
+      "id": 1,
+      "identiferName": "Full-text",
+      "identifierType": "Text",
+      "isLkp": false,
+      "identiferStrId": "ftxt",
+      "identifierOptions": [
+        {
+          "id": 1,
+          "optionName": "Has Exactly",
+          "optionParserName": "hasExactly"
+        },
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "identiferName": "Abstract",
+      "identifierType": "Text",
+      "isLkp": false,
+      "identiferStrId": "ab",
+      "identifierOptions": [
+        {
+          "id": 1,
+          "optionName": "Has Exactly",
+          "optionParserName": "hasExactly"
+        },
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "identiferName": "Title",
+      "identifierType": "Text",
+      "isLkp": false,
+      "identiferStrId": "ti",
+      "identifierOptions": [
+        {
+          "id": 1,
+          "optionName": "Has Exactly",
+          "optionParserName": "hasExactly"
+        },
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "identiferName": "Publication Number",
+      "identifierType": "Number",
+      "isLkp": false,
+      "identiferStrId": "pn",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        },
+        {
+          "id": 4,
+          "optionName": "Is",
+          "optionParserName": "is"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "identiferName": "Filing Number",
+      "identifierType": "Number",
+      "isLkp": false,
+      "identiferStrId": "fn",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        },
+        {
+          "id": 4,
+          "optionName": "Is",
+          "optionParserName": "is"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "identiferName": "IPC",
+      "identifierType": "Number",
+      "isLkp": true,
+      "identiferStrId": "ipc",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "identiferName": "Applicant Name",
+      "identifierType": "Text",
+      "isLkp": false,
+      "identiferStrId": "an",
+      "identifierOptions": [
+        {
+          "id": 1,
+          "optionName": "Has Exactly",
+          "optionParserName": "hasExactly"
+        },
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "identiferName": "Publication Date",
+      "identifierType": "Date",
+      "isLkp": false,
+      "identiferStrId": "pd",
+      "identifierOptions": [
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        },
+        {
+          "id": 4,
+          "optionName": "Is",
+          "optionParserName": "is"
+        },
+        {
+          "id": 5,
+          "optionName": "Before",
+          "optionParserName": "before"
+        },
+        {
+          "id": 6,
+          "optionName": "After",
+          "optionParserName": "after"
+        },
+        {
+          "id": 7,
+          "optionName": "Between",
+          "optionParserName": "between"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "identiferName": "Numbers",
+      "identifierType": "Number",
+      "isLkp": false,
+      "identiferStrId": "nums",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        },
+        {
+          "id": 4,
+          "optionName": "Is",
+          "optionParserName": "is"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "identiferName": "Names",
+      "identifierType": "Text",
+      "isLkp": false,
+      "identiferStrId": "names",
+      "identifierOptions": [
+        {
+          "id": 1,
+          "optionName": "Has Exactly",
+          "optionParserName": "hasExactly"
+        },
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "identiferName": "Dates",
+      "identifierType": "Date",
+      "isLkp": false,
+      "identiferStrId": "dates",
+      "identifierOptions": [
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        },
+        {
+          "id": 4,
+          "optionName": "Is",
+          "optionParserName": "is"
+        },
+        {
+          "id": 5,
+          "optionName": "Before",
+          "optionParserName": "before"
+        },
+        {
+          "id": 6,
+          "optionName": "After",
+          "optionParserName": "after"
+        },
+        {
+          "id": 7,
+          "optionName": "Between",
+          "optionParserName": "between"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "identiferName": "Classifications",
+      "identifierType": "Text",
+      "isLkp": false,
+      "identiferStrId": "clsf",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent"
+        }
+      ]
+    }
+  ],
+  "pagination": null
+}
