@@ -16,8 +16,8 @@ const patentList = Array(TOTAL).fill(samplePatent);
 
 const searchParams = { workstreamId: 1, q: 'ftxt hasExactly "test"' };
 
+mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, patentIdentifiers);
 mockAxios.onGet(/\/workstreams/).reply(200, workstreams);
-mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, { data: patentIdentifiers });
 
 mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
   data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),
