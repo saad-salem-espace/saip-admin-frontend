@@ -13,9 +13,13 @@ const parseQuery = (fields, isQuery) => {
   let finalQuery = '';
 
   fields.forEach((value, index) => {
-    finalQuery += parseSingleQuery(value, index, isQuery);
+    if (!finalQuery) {
+      finalQuery += parseSingleQuery({ ...value, operator: '' }, index, isQuery);
+    } else {
+      finalQuery += parseSingleQuery(value, index, isQuery);
+    }
   });
-  return finalQuery;
+  return finalQuery.trim();
 };
 
 const reformatDecoder = (identifiers, queryResult) => {
