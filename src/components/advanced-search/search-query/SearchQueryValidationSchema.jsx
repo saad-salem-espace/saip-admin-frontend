@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { DateObject } from 'react-multi-date-picker';
 // import { DateObject } from 'react-multi-date-picker';
 // import { identifierNameCategories, selectOption } from 'utils/searchQueryParser';
 
@@ -24,8 +25,9 @@ const SearchQueryValidationSchema = Yup.object().shape({
       // Validates according to optionCategories from 'utils/searchQueryParser'
       data: Yup.mixed().required()
         .test('Is not empty', 'Invalid', (data) => (
-          (!(typeof data === 'string' || data instanceof String) || data.trim())
+          ((typeof data === 'string' || data instanceof String) && data.trim())
           || (Array.isArray(data) && data.length > 0)
+          || data instanceof DateObject
         )),
       // TODO to be refactored
       // .test('Is valid type', 'Invalid type', (data, { parent }) => {
