@@ -15,7 +15,7 @@ function Input({
 }) {
   const styleClassNames = classNames.bind(style);
   const inputClassName = styleClassNames(moduleClassName);
-
+  console.log(imageSearch);
   return (
     <div className={`position-relative h-100 ${inputClassName}`}>
       <Field name={name}>
@@ -28,7 +28,7 @@ function Input({
                 type={type}
                 placeholder={placeholder}
                   // please add class ${style['has-value']} if the input has value
-                className={`border ${isInvalid && !imageSearch ? style.error : ''} w-100 ${style.input}  px-4 ${className} `}
+                className={`border ${isInvalid && !imageSearch ? style.error : ''} w-100 ${style.input} ${className} `}
                 disabled={disabled}
                 {...field}
               />
