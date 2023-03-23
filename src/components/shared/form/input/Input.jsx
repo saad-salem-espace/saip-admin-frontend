@@ -15,7 +15,7 @@ function Input({
 }) {
   const styleClassNames = classNames.bind(style);
   const inputClassName = styleClassNames(moduleClassName);
-  console.log(imageSearch);
+
   return (
     <div className={`position-relative h-100 ${inputClassName}`}>
       <Field name={name}>
