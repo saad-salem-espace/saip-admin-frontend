@@ -43,6 +43,8 @@ function Search({
   );
 
   dataTypes.set('Text', textField);
+  dataTypes.set('Number', textField);
+  dataTypes.set('LKP', textField);
   dataTypes.set('Date', dateField);
 
   const getInputField = useMemo(() => dataTypes.get(type)(), [type]);
