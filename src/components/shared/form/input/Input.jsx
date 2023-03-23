@@ -28,7 +28,7 @@ function Input({
                 type={type}
                 placeholder={placeholder}
                   // please add class ${style['has-value']} if the input has value
-                className={`border ${isInvalid && !imageSearch ? style.error : ''} w-100 ${style.input}  px-4 ${className} `}
+                className={`border ${isInvalid && !imageSearch ? style.error : ''} w-100 ${style.input} ${className} `}
                 disabled={disabled}
                 {...field}
               />

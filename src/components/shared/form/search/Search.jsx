@@ -28,7 +28,6 @@ function Search({
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
   const dataTypes = new Map();
-
   const dateField = () => <DatePicker name={name} onChangeDate={onChangeDate} />;
 
   const textField = () => (
@@ -47,7 +46,7 @@ function Search({
   dataTypes.set('LKP', textField);
   dataTypes.set('Date', dateField);
 
-  const getInputField = useMemo(() => dataTypes.get(type)(), [type]);
+  const getInputField = useMemo(() => dataTypes.get(type)(), [type, imageSearch]);
 
   return (
     <div className={`position-relative ${className} ${searchClassName}`}>
