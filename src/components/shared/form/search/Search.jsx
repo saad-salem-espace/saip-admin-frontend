@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
+import DatePicker from 'components/shared/date-picker/AppDatePicker';
 import Input from '../input/Input';
 import style from './style.module.scss';
 import Button from '../../button/Button';
@@ -19,20 +21,40 @@ function Search({
   handleUploadImg,
   searchWithImg,
   disabled,
+  type,
+  onChangeDate,
+  imageSearch,
 }) {
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
+  const dataTypes = new Map();
+  const dateField = () => <DatePicker name={name} onChangeDate={onChangeDate} />;
+
+  const textField = () => (
+    <Input
+      id={id}
+      type="text"
+      name={name}
+      placeholder={placeholder}
+      disabled={disabled}
+      imageSearch={imageSearch}
+    />
+  );
+
+  dataTypes.set('Text', textField);
+  dataTypes.set('Number', textField);
+  dataTypes.set('LKP', textField);
+  dataTypes.set('Date', dateField);
+
+  const getInputField = useMemo(() => dataTypes.get(type)(), [type, imageSearch]);
+
   return (
     <div className={`position-relative ${className} ${searchClassName}`}>
       {/* please render the below children if the input has value */}
       {children}
-      <Input
-        id={id}
-        type="text"
-        name={name}
-        placeholder={placeholder}
-        disabled={disabled}
-      />
+      {
+        getInputField
+      }
       {
         isClearable && <Button className={`${style.clearIcon} text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
       }
@@ -62,8 +84,11 @@ Search.propTypes = {
   isClearable: PropTypes.bool,
   clearInput: PropTypes.func,
   handleUploadImg: PropTypes.func,
+  onChangeDate: PropTypes.func,
   searchWithImg: PropTypes.bool,
   disabled: PropTypes.bool,
+  type: PropTypes.string,
+  imageSearch: PropTypes.bool,
 };
 
 Search.defaultProps = {
@@ -78,6 +103,9 @@ Search.defaultProps = {
   handleUploadImg: null,
   searchWithImg: false,
   disabled: false,
+  type: 'Text',
+  onChangeDate: null,
+  imageSearch: false,
 };
 
 export default Search;
