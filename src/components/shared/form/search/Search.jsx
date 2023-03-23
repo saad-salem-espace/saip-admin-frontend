@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
@@ -26,20 +27,32 @@ function Search({
 }) {
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
+  const dataTypes = new Map();
+
+  const dateField = () => <DatePicker name={name} onChangeDate={onChangeDate} />;
+
+  const textField = () => (
+    <Input
+      id={id}
+      type="text"
+      name={name}
+      placeholder={placeholder}
+      disabled={disabled}
+      imageSearch={imageSearch}
+    />
+  );
+
+  dataTypes.set('Text', textField);
+  dataTypes.set('Date', dateField);
+
+  const getInputField = useMemo(() => dataTypes.get(type)(), [type]);
+
   return (
     <div className={`position-relative ${className} ${searchClassName}`}>
       {/* please render the below children if the input has value */}
       {children}
       {
-        type === 'Date' ? <DatePicker name={name} onChangeDate={onChangeDate} />
-          : <Input
-              id={id}
-              type="text"
-              name={name}
-              placeholder={placeholder}
-              disabled={disabled}
-              imageSearch={imageSearch}
-          />
+        getInputField
       }
       {
         isClearable && <Button className={`${style.clearIcon} text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />

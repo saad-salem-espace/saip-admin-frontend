@@ -11,6 +11,7 @@ function Input({
   moduleClassName,
   disabled,
   imageSearch,
+  className,
 }) {
   const styleClassNames = classNames.bind(style);
   const inputClassName = styleClassNames(moduleClassName);
@@ -27,7 +28,7 @@ function Input({
                 type={type}
                 placeholder={placeholder}
                   // please add class ${style['has-value']} if the input has value
-                className={`border ${isInvalid && !imageSearch ? style.error : ''} w-100 ${style.input} `}
+                className={`border ${isInvalid && !imageSearch ? style.error : ''} w-100 ${style.input}  px-4 ${className} `}
                 disabled={disabled}
                 {...field}
               />
@@ -48,6 +49,7 @@ Input.propTypes = {
   moduleClassName: PropTypes.string,
   disabled: PropTypes.bool,
   imageSearch: PropTypes.bool,
+  className: PropTypes.string,
 };
 Input.defaultProps = {
   type: 'text',
@@ -55,6 +57,7 @@ Input.defaultProps = {
   name: null,
   value: '',
   moduleClassName: '',
+  className: '',
   disabled: false,
   imageSearch: false,
 };

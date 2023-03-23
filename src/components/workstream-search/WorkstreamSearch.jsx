@@ -59,9 +59,15 @@ function WorkstreamSearch() {
 
     if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
 
+    const defaultConditions = new Map();
+    defaultConditions.set('Text', 'hasExactly');
+    defaultConditions.set('Date', 'is');
+
+    const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
+
     const query = parseSingleQuery({
       identifier: selectedOption,
-      condition: (selectedOption.identifierType === 'Date' ? { optionParserName: 'is' } : { optionParserName: 'hasExactly' }),
+      condition: { optionParserName: defaultCondition },
       data: searchQuery,
     }, 0, true);
 

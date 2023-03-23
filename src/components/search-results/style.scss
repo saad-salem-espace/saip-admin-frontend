@@ -27,6 +27,11 @@
   right: 13px;
   width: 96%;
 
+  html[dir="rtl"] & {
+    right: auto;
+    left: 13px;
+  }
+
   @include media-breakpoint-up(lg) {
     width: calc(100% - 288px);
   }
@@ -62,18 +67,33 @@
       position: absolute;
       top: 5px;
       right: 5px;
+
+      html[dir="rtl"] & {
+        right: auto;
+        left: 5px;
+      }
     }
   }
 
   .errorMsg {
     margin-left: 33px;
     display: flex;
+
+    html[dir="rtl"] & {
+      margin-right: 33px;
+      margin-left: auto;
+    }
   }
 
   .imgUploaded {
     @include media-breakpoint-up(md) {
       input {
         padding-left: 154px;
+
+        html[dir="rtl"] & {
+          padding-right: 154px;
+          padding-left: auto;
+        }
       }
     }
   }

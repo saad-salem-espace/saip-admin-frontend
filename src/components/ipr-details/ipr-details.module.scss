@@ -1,3 +1,5 @@
+@import "../../assets/styles/utilities/custom-theme";
+
 .expand-icon {
   transform: rotateY(180deg);
 }
@@ -13,5 +15,15 @@
 .iprWrapper {
   height: 80vh;
   overflow-y: auto;
-  margin-right: 8px;
+  @extend .me-2;
+}
+
+.img {
+  width: 193px;
+  height: 100px;
+  border: $border-width solid $gray-400;
+
+  img {
+    width: 100%;
+  }
 }

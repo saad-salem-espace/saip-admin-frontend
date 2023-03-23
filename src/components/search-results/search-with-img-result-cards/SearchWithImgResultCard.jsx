@@ -26,35 +26,39 @@ function SearchWithImgResultCard({
       text={(
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
-            <Checkbox className="me-4" />
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-bold"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData.ApplicationTitle,
-                query,
-              )}
-              searchWords={[query]}
-              autoEscape
-            />
-          </div>
-          <div className="d-flex">
-            <div className="searchImgWrapper border rounded me-2">
-              <Image src={c} className="rounded" />
+            <div>
+              <div className="d-flex">
+                <Checkbox className="me-4" />
+                <Badge text="ended" varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
+              </div>
+              <div className="searchImgWrapper border rounded me-2">
+                <Image src={c} className="rounded" />
+              </div>
             </div>
             <div>
-              <Badge text="ended" varient="secondary" className="text-capitalize mb-2" />
-              <p className="mb-2 text-black">
-                {BibliographicData.PublicationNumber}
-              </p>
-              <p className="text-gray md-text mb-3">
-                Hozon New Energy Automobile Co., Ltd. (China)
-              </p>
-              <p className="font-medium mb-2 d-lg-flex align-items-center text-dark sm-text">
-                {t('priority', { value: searchResult.Priority })}
-                <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                {t('filed', { value: BibliographicData.FilingNumber })}
-                {
+              <Highlighter
+                highlightTag="span"
+                className="d-block mw-100"
+                highlightClassName="font-bold"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData.ApplicationTitle,
+                  query,
+                )}
+                searchWords={[query]}
+                autoEscape
+              />
+              <div>
+                <p className="mb-2 text-black">
+                  {BibliographicData.PublicationNumber}
+                </p>
+                <p className="text-gray md-text mb-2">
+                  Hozon New Energy Automobile Co., Ltd. (China)
+                </p>
+                <p className="font-medium mb-2 d-lg-flex align-items-center text-dark sm-text">
+                  {t('priority', { value: searchResult.Priority })}
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  {t('filed', { value: BibliographicData.FilingNumber })}
+                  {
                   BibliographicData.PublicationDate && (
                     <>
                       <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
@@ -62,7 +66,21 @@ function SearchWithImgResultCard({
                     </>
                   )
                 }
-              </p>
+                </p>
+                <p className="font-medium d-lg-flex align-items-center text-dark sm-text">
+                  {t('priority', { value: searchResult.Priority })}
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  {t('filed', { value: BibliographicData.FilingNumber })}
+                  {
+                  BibliographicData.PublicationDate && (
+                    <>
+                      <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                      {t('published', { value: BibliographicData.PublicationDate })}
+                    </>
+                  )
+                }
+                </p>
+              </div>
             </div>
           </div>
         </div>

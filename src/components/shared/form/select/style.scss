@@ -4,7 +4,7 @@
 div[class$="indicatorContainer"],
 div[class$="indicatorsContainer"] {
   background-color: $gray-200;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 $border-radius $border-radius 0;
 
   svg {
     color: $gray;
@@ -20,6 +20,11 @@ div[class$="singleValue"] {
   bottom: 12px;
   left: 4px;
   font-size: $font-size-sm;
+
+  html[dir="rtl"] & {
+    left: auto;
+    right: 4px;
+  }
 }
 
 div[class$="ValueContainer"] {
@@ -33,6 +38,12 @@ div[class$="ValueContainer"] {
     div[class$="Control"] {
       border-right: 0;
       border-radius: 5px 0 0 5px;
+
+      html[dir="rtl"] & {
+        border-left: 0;
+        border-right: $border-width solid $gray-400;
+        border-radius: 0 5px 5px 0;
+      }
     }
 
     div[class$="IndicatorsContainer"] {
@@ -62,6 +73,11 @@ div[class$="ValueContainer"] {
   input {
     margin-top: 30px !important;
     margin-left: 5px !important;
+
+    html[dir="rtl"] & {
+     margin-left: auto !important;
+     margin-right: 5px !important;
+    }
   }
 }
 
@@ -145,5 +161,10 @@ div[class$="ValueContainer"] {
   input {
     margin-top: 20px !important;
     margin-left: 5px !important;
+
+    html[dir="rtl"] & {
+     margin-right: 5px !important;
+     margin-left: 0 !important;
+    }
   }
 }
