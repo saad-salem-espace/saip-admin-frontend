@@ -80,6 +80,7 @@ function WorkstreamSearch() {
   const SearchModuleClassName = ({
     lgSearch: true,
     searchWithSibling: true,
+    searchInputWrapper: true,
     imgUploaded: isImgUploaded,
     searchWithImage: selectedWorkStream === 1,
   });

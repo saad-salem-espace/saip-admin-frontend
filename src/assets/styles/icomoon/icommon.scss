@@ -25,37 +25,58 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  &:before {
+    color: #888;
+  }
+  &.colored {
+    &:before {
+      color: #00a49b;
+    }
+  }
+}
+.icon-ic-calendar {
+  &:before {
+    content: "\e909";
+  }
+}
+.icon-layout {
+  &:before {
+    content: "\e900";
+  }
 }
 
-.icon-layout:before {
-  content: "\e900";
-  color: #888;
+.icon-plant-varieties {
+  &:before {
+    content: "\e901";
+  }
 }
-.icon-plant-varieties:before {
-  content: "\e901";
-  color: #888;
+.icon-industrial-design{
+  &:before {
+    content: "\e902";
+  }
 }
-.icon-industrial-design:before {
-  content: "\e902";
-  color: #888;
+.icon-copyrights {
+  &:before {
+    content: "\e903";
+  }
 }
-.icon-copyrights:before {
-  content: "\e903";
-  color: #888;
+.icon-trademark {
+  &:before {
+    content: "\e904";
+  }
 }
-.icon-trademark:before {
-  content: "\e904";
-  color: #888;
+.icon-patent {
+  &:before {
+    content: "\e905";
+  }
 }
-.icon-patent:before {
-  content: "\e905";
-  color: #888;
+.icon-camera {
+  &:before {
+    content: "\e907";
+  }
 }
-.icon-camera:before {
-  content: "\e907";
-  color: #00a49b;
-}
-.icon-file-plus:before {
-  content: "\e908";
-  color: #00a49b;
+.icon-file-plus {
+  &:before {
+    content: "\e908";
+  }
 }

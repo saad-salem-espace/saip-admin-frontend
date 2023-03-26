@@ -17,10 +17,15 @@
     width: 100%;
   }
 
-  .calendar-icon {
+  .icon-ic-calendar {
     position: absolute;
-    right: 16px;
     top: 18px;
+    html[dir="ltr"] & {
+      right: 16px;
+    }
+    html[dir="rtl"] & {
+      left: 16px;
+    }
   }
 
   .rmdp-header-values {
@@ -203,4 +208,24 @@
 
 .rmdp-calendar {
   padding: 4px 10px;
+}
+
+.datePickerWrapper {
+  &.datePicker, .rmdp-container , .rmdp-input{
+    @extend .h-100;
+  }
+  .rmdp-input {
+    margin: 0;
+    border-radius: 0;
+  }
+  &.datePicker .icon-ic-calendar {
+    top: 36px;
+    html[dir="ltr"] & {
+      right: 155px;
+    }
+    html[dir="rtl"] & {
+      left: 155px;
+    }
+  }
+  
 }

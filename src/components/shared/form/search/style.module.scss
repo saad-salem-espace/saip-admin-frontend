@@ -58,8 +58,9 @@ button.searchIcon {
   height: 87px !important;
 }
 
+
 //// searchWithSibling
-.searchWithSibling input {
+.searchWithSibling  {
   border-radius: $border-radius $border-radius;
 
   @include media-breakpoint-up(xl) {
@@ -72,40 +73,50 @@ button.searchIcon {
     }
   }
 }
-
 .imgUploaded {
-  @include media-breakpoint-up(md) {
-    input {
-      padding-left: 154px;
-
-      html[dir="rtl"] & {
-        padding-right: 154px;
-        padding-left: auto;
+  &.searchInputWrapper{
+    @include media-breakpoint-up(md) {
+      input {
+        padding-left: 154px !important;
+  
+        html[dir="rtl"] & {
+          padding-right: 154px;
+          padding-left: auto;
+        }
       }
     }
   }
 }
 
 .imgUploadedResultView {
-  @include media-breakpoint-up(md) {
-    input {
-      padding-left: 120px;
-
-      html[dir="rtl"] & {
-        padding-right: 120px;
-        padding-left: auto;
+  &.searchWithImage {
+    @include media-breakpoint-up(md) {
+      input {
+        padding-left: 120px;
+  
+        html[dir="rtl"] & {
+          padding-right: 120px;
+          padding-left: auto;
+        }
       }
     }
   }
 }
-
 .searchWithImage {
   .clearIcon {
-    right: 155px;
-
+    html[dir="ltr"] & {
+      right: 155px;
+    }
     html[dir="rtl"] & {
-      right: auto;
       left: 155px;
+    }
+  }
+  .datePickerWrapper + .clearIcon {
+    html[dir="ltr"] & {
+      right: 195px;
+    }
+    html[dir="rtl"] & {
+      left: 195px;
     }
   }
 }

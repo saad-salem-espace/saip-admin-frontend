@@ -28,7 +28,7 @@ function Search({
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
   const dataTypes = new Map();
-  const dateField = () => <DatePicker name={name} onChangeDate={onChangeDate} />;
+  const dateField = () => <DatePicker className="datePickerWrapper" name={name} onChangeDate={onChangeDate} />;
 
   const textField = () => (
     <Input
@@ -60,9 +60,9 @@ function Search({
       }
       {
         searchWithImg && (
-        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4 border-start" />} onClick={() => handleUploadImg()} />
+        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4 border-start colored" />} onClick={() => handleUploadImg()} />
         )
-    }
+      }
       <Button
         type="submit"
         {...(onSubmit && { onClick: onSubmit })}
