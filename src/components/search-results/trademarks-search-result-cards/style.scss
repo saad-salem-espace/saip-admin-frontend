@@ -1,6 +1,5 @@
 .searchImgWrapper {
-  width: 140px;
-  height: 128px;
+  height: calc(100% - 42px);
   display: flex;
   align-items: center;
 

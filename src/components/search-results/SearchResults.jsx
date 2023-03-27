@@ -315,7 +315,9 @@ function SearchResults() {
                 {() => (
                   <Form className="mt-8">
                     {
-                      searchResultParams.workstreamId === '2' && (
+                      // changed for "1" for testing only
+                      // searchResultParams.workstreamId === '2' && (
+                      searchResultParams.workstreamId === '1' && (
                         <div className="position-relative mb-8 viewSelect">
                           <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
                           <Select
@@ -333,7 +335,9 @@ function SearchResults() {
                     <AppPagination
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
-                      RenderedComponent={searchResult[searchResultParams.workstreamId]}
+                      // RenderedComponent={searchResult[searchResultParams.workstreamId]}
+                      // commented for testing only
+                      RenderedComponent={searchResult[2]}
                       renderedProps={{
                         query: searchResultParams.query,
                         flattenedCriteria,

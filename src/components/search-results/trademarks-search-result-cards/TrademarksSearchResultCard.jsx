@@ -27,7 +27,7 @@ function TrademarksSearchResultCard({
       className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0 w-100"
       text={(
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
-          <div className="d-flex align-items-start mb-1">
+          <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
                 <Checkbox className="me-4" />
@@ -40,18 +40,18 @@ function TrademarksSearchResultCard({
             <div className="title">
               <Highlighter
                 highlightTag="span"
-                className="d-block text-truncate"
-                highlightClassName="font-bold"
+                className="d-block text-truncate mb-3"
+                highlightClassName="font-medium"
                 textToHighlight={trimStringRelativeToSubtext(
-                  BibliographicData.ApplicationTitle,
-                  //  will replace ApplicationTitle with BrandNameEn
+                  BibliographicData.BrandNameEn,
                   query,
                 )}
-                searchWords={[query]}
+                // for testing only
+                searchWords={['device']}
                 autoEscape
               />
-              <span className="d-block text-truncate">
-                {/* {BibliographicData.BrandNameAr} */}
+              <span className="d-block text-truncate mb-2">
+                {BibliographicData.BrandNameAr}
               </span>
               <div>
                 <p className="mb-1 text-black md-text">
@@ -61,7 +61,7 @@ function TrademarksSearchResultCard({
                 </p>
                 {
                   (selectedView.value === 'detailed' || selectedView.value === 'summary') && (
-                    <p className="text-gray md-text mb-1">
+                    <p className="text-gray md-text mb-2">
                       {BibliographicData.PrimaryApplicantName}
                     </p>)
                 }
@@ -74,7 +74,7 @@ function TrademarksSearchResultCard({
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                         <span>{BibliographicData.RegistrationDate}</span>
                       </p>
-                      <p className="font-medium mb-2 d-lg-flex align-items-center text-dark sm-text">
+                      <p className="font-medium mb-0 d-lg-flex align-items-center text-dark sm-text">
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                         {t('trademarks.published', { value: BibliographicData.PublicationNumber })}
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />

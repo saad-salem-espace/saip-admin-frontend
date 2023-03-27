@@ -25,7 +25,7 @@ function SearchResultCard({
             <Checkbox className="me-4" />
             <Highlighter
               highlightTag="span"
-              highlightClassName="font-bold"
+              highlightClassName="font-medium"
               textToHighlight={trimStringRelativeToSubtext(
                 BibliographicData.ApplicationTitle,
                 query,
@@ -54,7 +54,7 @@ function SearchResultCard({
           <p className="text-gray sm-text">
             <Highlighter
               highlightTag="span"
-              highlightClassName="font-bold"
+              highlightClassName="font-medium"
               textToHighlight={trimStringRelativeToSubtext(
                 BibliographicData.ApplicationAbstract.join(' '),
                 query,
