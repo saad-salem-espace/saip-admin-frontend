@@ -77,6 +77,7 @@ function SearchResults() {
   ];
 
   const onSubmit = (values) => {
+    setActiveDocument(null);
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
