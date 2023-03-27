@@ -9,7 +9,7 @@ import CacheContext from 'contexts/CacheContext';
 import uploadFile from 'apis/uploadFileApi';
 import * as Yup from 'yup';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
-import { parseSingleQuery } from 'utils/searchQuery/encoder';
+import { parseSingleQuery } from 'utils/search-query/encoder';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
