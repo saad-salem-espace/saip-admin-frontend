@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const advancedSearchApi = ({
-  workstreamId, query, imageName, page,
+  workstreamId, query, imageName, enableSynonyms, page,
 }, configOnly = false) => {
   const config = {
     url: 'advanced-search',
@@ -10,6 +10,7 @@ const advancedSearchApi = ({
       workstreamId,
       q: query,
       ...(imageName && { imageName }),
+      ...(enableSynonyms && { enableSynonyms }),
       page: page || 1,
     },
   };

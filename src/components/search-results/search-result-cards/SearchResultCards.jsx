@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import SearchResultCard from './search-result-card/SearchResultCard';
 
 const SearchResultCards = ({
-  data, query, setActiveDocument, activeDocument,
+  data, query, setActiveDocument, activeDocument, flattenedCriteria,
 }) => (
   <>
     {data.map((searchResult) => (
@@ -12,6 +12,7 @@ const SearchResultCards = ({
         query={query}
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
+        flattenedCriteria={flattenedCriteria}
       />
     ))}
   </>
@@ -19,6 +20,7 @@ const SearchResultCards = ({
 
 SearchResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
+  flattenedCriteria: PropTypes.arrayOf(PropTypes.string).isRequired,
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,

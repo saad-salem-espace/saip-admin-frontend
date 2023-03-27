@@ -9,6 +9,7 @@ import CacheContext from 'contexts/CacheContext';
 import uploadFile from 'apis/uploadFileApi';
 import * as Yup from 'yup';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
+import { parseSingleQuery } from 'utils/searchQuery/encoder';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
@@ -16,7 +17,6 @@ import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import UploadImage from '../shared/upload-image/UploadImage';
 import formStyle from '../shared/form/form.module.scss';
-import { parseSingleQuery } from '../../utils/searchQueryParser';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
