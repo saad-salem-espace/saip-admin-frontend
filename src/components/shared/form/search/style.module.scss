@@ -42,6 +42,12 @@ button.searchIcon {
 .smSearch {
   input {
     height: 59px !important;
+    html[dir="ltr"] & {
+      padding-right: 145px;
+    }
+    html[dir="rtl"] & {
+      padding-left: 145px;
+    }
   }
 
   .clearIcon {
