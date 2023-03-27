@@ -46,6 +46,7 @@ function UploadImage({
         errors,
       }) => (
         <>
+          {console.log(errors?.maxNumber)}
           <div className={`uploadImageWrapper ${className}`}>
             {
             showUploadImgSection && (
@@ -104,6 +105,12 @@ function UploadImage({
           && (
             <div>
               {errors.maxFileSize && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxSize')}</span>}
+            </div>
+          )}
+          {errors
+          && (
+            <div>
+              {errors.maxNumber && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxNumber')}</span>}
             </div>
           )}
         </>
