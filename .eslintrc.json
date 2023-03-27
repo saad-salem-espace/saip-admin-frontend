@@ -93,12 +93,6 @@
       "env": {
         "jest": true
       }
-    },
-    {
-      "files": ["src/utils/**/*.js"],
-      "rules": {
-        "folders/match-regex": [0]
-      }
     }
   ],
   "parserOptions": {

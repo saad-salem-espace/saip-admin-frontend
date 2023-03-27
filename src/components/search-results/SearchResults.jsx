@@ -26,7 +26,7 @@ import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
 // import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
-import { decodeQuery } from '../../utils/searchQuery/decoder';
+import { decodeQuery } from '../../utils/search-query/decoder';
 import { flattenCriteria, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 
 function SearchResults() {
