@@ -32,8 +32,11 @@ function IprDetails({
   moreDetails,
   getNextDocument,
   getPreviousDocument,
+  setActiveDocument,
 }) {
   const { t } = useTranslation('search');
+  const previousDocument = getPreviousDocument();
+  const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
   const [document, setDocument] = useState(null);
   useEffect(() => {
@@ -103,13 +106,15 @@ function IprDetails({
               variant="link"
               className="p-0 pe-5"
               text={<FontAwesomeIcon icon={faChevronLeft} className="md-text text-gray" />}
-              onClick={getPreviousDocument}
+              disabled={!previousDocument}
+              onClick={() => setActiveDocument(previousDocument)}
             />
             <Button
               variant="link"
               className="p-0 pe-5 border-end me-4"
               text={<FontAwesomeIcon icon={faChevronRight} className="md-text text-gray" />}
-              onClick={getNextDocument}
+              disabled={!nextDocument}
+              onClick={() => setActiveDocument(nextDocument)}
             />
             <Button
               variant="link"
@@ -185,6 +190,7 @@ IprDetails.propTypes = {
   moreDetails: PropTypes.bool,
   getNextDocument: PropTypes.func,
   getPreviousDocument: PropTypes.func,
+  setActiveDocument: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -193,6 +199,7 @@ IprDetails.defaultProps = {
   moreDetails: false,
   getNextDocument: () => {},
   getPreviousDocument: () => {},
+  setActiveDocument: () => {},
 };
 
 export default IprDetails;

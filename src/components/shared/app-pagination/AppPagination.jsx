@@ -86,7 +86,7 @@ AppPagination.defaultProps = {
   fetchedTotalResults: null,
   emptyState: null,
   updateDependencies: [],
-  setResults: () => null,
+  setResults: () => {},
 };
 
 export default AppPagination;

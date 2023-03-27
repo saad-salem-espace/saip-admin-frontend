@@ -55,14 +55,14 @@ function SearchResults() {
     if (!results || !activeDocument) return null;
 
     const index = results.findLastIndex((element) => element.BibliographicData.FilingNumber === activeDocument);
-    return (index + 1 === results.length ? activeDocument : results[index + 1].BibliographicData.FilingNumber);
+    return (index === results.length - 1 ? null : results[index + 1].BibliographicData.FilingNumber);
   };
 
   const getPreviousDocument = () => {
     if (!results || !activeDocument) return null;
 
     const index = results.findIndex((element) => element.BibliographicData.FilingNumber === activeDocument);
-    return (index === 0 ? activeDocument : results[index - 1].BibliographicData.FilingNumber);
+    return (index === 0 ? null : results[index - 1].BibliographicData.FilingNumber);
   };
 
   const collapseIPR = () => {
@@ -304,8 +304,9 @@ function SearchResults() {
               isIPRExpanded={isIPRExpanded}
               documentId={activeDocument}
               onClose={handleCloseIprDetail}
-              getNextDocument={() => setActiveDocument(getNextDocument)}
-              getPreviousDocument={() => setActiveDocument(getPreviousDocument)}
+              getNextDocument={getNextDocument}
+              getPreviousDocument={getPreviousDocument}
+              setActiveDocument={setActiveDocument}
               // moreDetails for search with image
             />
           </Col>
