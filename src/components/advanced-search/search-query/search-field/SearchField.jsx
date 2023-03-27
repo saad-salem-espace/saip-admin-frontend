@@ -9,7 +9,7 @@ import Select from 'components/shared/form/select/Select';
 import Button from 'components/shared/button/Button';
 import Input from 'components/shared/form/input/Input';
 import DatePicker from 'components/shared/date-picker/AppDatePicker';
-import { isMultipleValue, isRangeValue } from 'utils/searchQueryParser';
+import { isMultipleValue, isRangeValue } from 'utils/searchQuery/encoder';
 import { useMemo } from 'react';
 import { exclude } from 'utils/arrays';
 import MultiSelect from 'components/shared/multi-select/MultiSelect';
