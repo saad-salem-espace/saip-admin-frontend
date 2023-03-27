@@ -20,6 +20,13 @@
 
 .smInput input {
   height: 57px;
+  padding-top: 26px;
+  html[dir="ltr"] & {
+    padding-right:15px;
+  }
+  html[dir="ltr"] & {
+    padding-right:15px;
+  }
 }
 
 input.error {

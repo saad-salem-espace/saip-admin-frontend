@@ -33,6 +33,7 @@ function MultiSelect({
             <div className="border-top mt-7 pb-2 pt-5">
               <Button
                 variant="link"
+                size="md"
                 className="font-regular px-0"
                 text={t('clearAll')}
                 onClick={() => { form.setFieldValue(field.name, []); }}
