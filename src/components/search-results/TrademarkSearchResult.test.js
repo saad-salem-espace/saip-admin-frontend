@@ -3,27 +3,27 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import apiInstance from 'apis/apiInstance';
 import patentIdentifiers from 'testing-resources/workstreams/patents/identifiers.json';
-import samplePatent from 'testing-resources/patents/samplePatent.json';
 import workstreams from 'testing-resources/workstreams/workstreams.json';
 import { trimStringRelativeToSubtext } from 'utils/strings';
+import sampleTrademark from 'testing-resources//trademarks/sampleTrademark.json';
 import SearchResults from './SearchResults';
 
 const mockAxios = new MockAdapter(apiInstance);
 
 const PER_PAGE = 10;
 const TOTAL = 12;
-const patentList = Array(TOTAL).fill(samplePatent);
+const trademarkList = Array(TOTAL).fill(sampleTrademark);
 
-const searchParams = { workstreamId: '1', q: 'ftxt hasExactly "test"' };
+const searchParams = { workstreamId: '2', q: 'ftxt hasExactly "test"' };
 
 mockAxios.onGet(/\/workstreams/).reply(200, workstreams);
-mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, { data: patentIdentifiers });
+mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, { data: patentIdentifiers }); // will replace it wit trademark identifiers
 
 mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
-  data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),
+  data: trademarkList.slice((config.params.page - 1) * 10, config.params.page * 10),
   pagination: {
     per_page: PER_PAGE,
-    total: patentList.length,
+    total: trademarkList.length,
   },
 }]));
 
@@ -43,13 +43,15 @@ describe('<SearchResult />', () => {
     const { queryAllByText, getByLabelText } = render(<SearchResults />);
 
     await waitFor(() => {
-      expect(queryAllByText(trimStringRelativeToSubtext(samplePatent.BibliographicData.ApplicationTitle, 'test', 100, 100))).toHaveLength(PER_PAGE);
+      // will replace ApplicationTitle with BrandNameEn
+      expect(queryAllByText(trimStringRelativeToSubtext(sampleTrademark.BibliographicData.ApplicationTitle, 'test', 100, 100))).toHaveLength(PER_PAGE);
     });
     await waitFor(() => {
       fireEvent.click(getByLabelText('Next').closest('a'));
     });
     await waitFor(() => {
-      expect(queryAllByText(trimStringRelativeToSubtext(samplePatent.BibliographicData.ApplicationTitle, 'test', 100, 100))).toHaveLength(2);
+      // will replace ApplicationTitle with BrandNameEn
+      expect(queryAllByText(trimStringRelativeToSubtext(sampleTrademark.BibliographicData.ApplicationTitle, 'test', 100, 100))).toHaveLength(2);
     });
   });
   it('should render the component data correctly', async () => {

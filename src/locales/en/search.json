@@ -51,6 +51,8 @@
     "detailed": "Detailed",
     "summary": "Summary",
     "compact": "Compact",
-    "view": "View"
+    "view": "View",
+    "registered": "Registered {{value}}",
+    "published": "Published {{value}}"
   }
 }

@@ -11,11 +11,12 @@ function Select({
   getOptionValue,
   selectedOption,
   setSelectedOption,
+  defaultValue,
 }) {
   return (
     <div className={className}>
       <ReactSelect
-        defaultValue={null}
+        defaultValue={defaultValue}
         onChange={setSelectedOption}
         options={options}
         styles={selectStyle}
@@ -46,11 +47,16 @@ Select.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
   setSelectedOption: PropTypes.func,
+  defaultValue: PropTypes.shape({
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
 };
 Select.defaultProps = {
   className: null,
   placeholder: '',
   selectedOption: {},
   setSelectedOption: () => {},
+  defaultValue: null,
 };
 export default Select;

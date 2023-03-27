@@ -1,0 +1,247 @@
+{
+  "BibliographicData": {
+    "ApplicationTitle": "Manufcaturing method for room-temperature substrate bonding",
+    "BrandNameEn": "any text",
+    "BrandNameAr": "any ar text ",
+    "Description": "any text",
+    "TrademarkType": "combined",
+    "Mark": "any text",
+    "FilingNumber": "US, 13797521",
+    "RegistrationNumber": "US, 13797521",
+    "ApplicationCountry": "",
+    "IPOffice": "",
+    "ApplicationLanguage": "",
+    "TrademarkLastStatus": "ended",
+    "PrimaryApplicantName": "name",
+    "OwnerName": "",
+    "FilingDate": "2015-01-20",
+    "RegistrationDate": "2015-01-0",
+    "PublicationNumber": "B2, 08936998",
+    "PublicationDate": "2015-01-10"
+  },
+  "GoodsAndServices": {
+    "NICEClassification": [
+      "H01L21/30",
+      "H01L21/302",
+      "H01L21/324",
+      "H01L21/20",
+      "H01L23/00",
+      "H01L31/0203"
+    ]
+  },
+  "FigurativeClassification": [
+    {
+      "ViennaCode": "any text",
+      "Description": "any text"
+    },
+    {
+      "ViennaCode": "any text",
+      "Description": "any text"
+    }
+  ],
+  "OwnersDetails": [
+    {
+      "OwnerName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "OwnerDetails": ""
+    },
+    {
+      "OwnerName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "OwnerDetails": ""
+    },
+    {
+      "OwnerName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "OwnerDetails": ""
+    },
+    {
+      "OwnerName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "OwnerDetails": ""
+    }
+  ],
+  "ApplicantsDetails": [
+    {
+      "ApplicantName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "ApplicantDetails": ""
+    },
+    {
+      "ApplicantName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "ApplicantDetails": ""
+    },
+    {
+      "ApplicantName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "ApplicantDetails": ""
+    },
+    {
+      "ApplicantName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "ApplicantDetails": ""
+    }
+  ],
+  "Publications": [
+    {
+      "PublicationNumber": "B2, 08936998",
+      "PublicationDate": "2015-01-20",
+      "PublicationCounrty": ""
+    },
+    {
+      "PublicationNumber": "B2, 08936998",
+      "PublicationDate": "2015-01-20",
+      "PublicationCounrty": ""
+    },
+    {
+      "PublicationNumber": "B2, 08936998",
+      "PublicationDate": "2015-01-20",
+      "PublicationCounrty": ""
+    }
+  ],
+  "LegalStatus": [
+    {
+      "StatusCode": "B2, 08936998",
+      "StatusDate": "2015-01-20",
+      "Status": "Active",
+      "EffectiveDate": "2015-01-20",
+      "Notes": "Active"
+    },
+    {
+      "StatusCode": "B2, 08936998",
+      "StatusDate": "2015-01-20",
+      "Status": "Active",
+      "EffectiveDate": "2015-01-20",
+      "Notes": "Active"
+    },
+    {
+      "StatusCode": "B2, 08936998",
+      "StatusDate": "2015-01-20",
+      "Status": "Active",
+      "EffectiveDate": "2015-01-20",
+      "Notes": "Active"
+    }
+  ],
+  "Certificates": {
+    "PDFFiles": ["", ""]
+  },
+  "Recordals/LegalEvents": [
+    {
+      "EventDescription": "B2, 08936998",
+      "EventDate": "2015-01-20"
+    },
+    {
+      "EventDescription": "B2, 08936998",
+      "EventDate": "2015-01-20"
+    },
+    {
+      "EventDescription": "B2, 08936998",
+      "EventDate": "2015-01-20"
+    }
+  ],
+  "Agent/Representative": [
+    {
+      "RepresentativeName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "RepresentativeDetails": ""
+    },
+    {
+      "RepresentativeName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "RepresentativeDetails": ""
+    },
+    {
+      "RepresentativeName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "RepresentativeDetails": ""
+    },
+    {
+      "RepresentativeName": "",
+      "CountryCode": "",
+      "Naionality": "",
+      "RepresentativeDetails": ""
+    }
+  ],
+  "ExhibitionInformation": [
+    {
+      "ExhibitionName": "",
+      "ExihibitionDate": "",
+      "ExibitionDetails": ""
+    },
+    {
+      "ExhibitionName": "",
+      "ExihibitionDate": "",
+      "ExibitionDetails": ""
+    },
+    {
+      "ExhibitionName": "",
+      "ExihibitionDate": "",
+      "ExibitionDetails": ""
+    },
+    {
+      "ExhibitionName": "",
+      "ExihibitionDate": "",
+      "ExibitionDetails": ""
+    }
+  ],
+  "Priorities": [
+    {
+      "PriorityNumber": "",
+      "PriorityDate": "",
+      "PriorityCountry": ""
+    },
+    {
+      "PriorityNumber": "",
+      "PriorityDate": "",
+      "PriorityCountry": ""
+    },
+    {
+      "PriorityNumber": "",
+      "PriorityDate": "",
+      "PriorityCountry": ""
+    },
+    {
+      "PriorityNumber": "",
+      "PriorityDate": "",
+      "PriorityCountry": ""
+    }
+  ],
+  "OfficeActions": [
+    {
+      "OfficeAction": "",
+      "OfficeActionDateTime": "",
+      "ExaminerName": "",
+      "ExaminerDetails": ""
+    },
+    {
+      "OfficeAction": "",
+      "OfficeActionDateTime": "",
+      "ExaminerName": "",
+      "ExaminerDetails": ""
+    },
+    {
+      "OfficeAction": "",
+      "OfficeActionDateTime": "",
+      "ExaminerName": "",
+      "ExaminerDetails": ""
+    },
+    {
+      "OfficeAction": "",
+      "OfficeActionDateTime": "",
+      "ExaminerName": "",
+      "ExaminerDetails": ""
+    }
+  ]
+}
