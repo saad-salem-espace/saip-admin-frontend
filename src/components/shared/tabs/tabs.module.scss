@@ -8,7 +8,7 @@
   background-color: transparent;
   border: none;
   color: $gray !important;
-  padding: 16px;
+  @extend .p-4;
   border-radius: $border-radius-lg $border-radius-lg 0 0 !important;
 
   &.active {

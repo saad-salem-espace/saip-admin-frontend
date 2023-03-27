@@ -10,18 +10,16 @@
 }
 
 .input {
-  padding-left: 16px;
-  padding-right: 16px;
   line-height: 0.1;
   outline: none;
   border-radius: $border-radius;
   height: 100%;
   background-color: $white;
+  padding-left: 16px;
 }
 
 .smInput input {
   height: 57px;
-  padding-top: 14px;
 }
 
 input.error {

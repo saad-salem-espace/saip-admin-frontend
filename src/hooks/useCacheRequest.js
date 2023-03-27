@@ -10,7 +10,7 @@ const useCacheRequest = (config, axiosConfig, options = {}) => {
   const [response, setResponse] = useState(null);
   const isMounted = useRef(false);
   // eslint-disable-next-line
-  console.log("backend_url", process.env.REACT_APP_BACKEND_URL);
+  console.log('backend_url', process.env.REACT_APP_BACKEND_URL);
   const [reload, setReload] = useState(0);
   const refresh = () => {
     setReload(reload + 1);

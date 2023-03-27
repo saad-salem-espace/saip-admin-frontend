@@ -105,6 +105,8 @@ const parseSingleQuery = (searchField, index, isQuery) => {
   let searchQuery = '';
 
   if (!searchField.identifier) return searchQuery;
+  const textFromField = getTextFromField(searchField);
+  if (!textFromField) return searchQuery;
 
   if (index) {
     searchQuery += ' ';
@@ -127,7 +129,7 @@ const parseSingleQuery = (searchField, index, isQuery) => {
     searchQuery += ':';
   }
 
-  searchQuery += ` "${getTextFromField(searchField)}"`;
+  searchQuery += ` "${textFromField}"`;
 
   return searchQuery;
 };

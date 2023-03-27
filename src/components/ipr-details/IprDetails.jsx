@@ -10,16 +10,18 @@ import { Formik, Form } from 'formik';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Badge from 'components/shared/badge/Badge';
+import Image from 'react-bootstrap/Image';
 import Button from 'components/shared/button/Button';
 import Select from 'components/shared/form/select/Select';
 import formStyle from 'components/shared/form/form.module.scss';
 import { documentApi } from 'apis/search/documentsApi';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
-import Badge from 'components/shared/badge/Badge';
-import Image from 'react-bootstrap/Image';
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
 import c from '../../assets/images/search-header-bg.svg';
+// import Citation from './citation/Citation';
+// import CitationRow from './citation/CitationRow';
 
 // TODO change structure when trademarks are added
 function IprDetails({
@@ -53,6 +55,33 @@ function IprDetails({
     },
   ];
 
+  // const citation = [
+  //   {
+  //     id: 1,
+  //     citationOrigin: '1',
+  //     publication: 'publication',
+  //     publicationURL: '/',
+  //     title: 'title',
+  //     priorityDate: '20/2',
+  //     publicationDate: '8/8',
+  //     applicants: 'applicants',
+  //     IPC: 'IPC',
+  //     CPC: 'CPC',
+  //   },
+  //   {
+  //     id: 2,
+  //     citationOrigin: '2',
+  //     publication: 'publication',
+  //     publicationURL: '/',
+  //     title: 'title',
+  //     priorityDate: '20/2',
+  //     publicationDate: '8/8',
+  //     applicants: 'applicants',
+  //     IPC: 'IPC',
+  //     CPC: 'CPC',
+  //   },
+  // ];
+
   return (
     <div className={`${style.iprWrapper}`}>
       <div className="border-bottom bg-primary-01">
@@ -66,13 +95,11 @@ function IprDetails({
           <div>
             <Button
               variant="link"
-              // onClick={}
               className="p-0 pe-5"
               text={<FontAwesomeIcon icon={faChevronLeft} className="md-text text-gray" />}
             />
             <Button
               variant="link"
-              // onClick={}
               className="p-0 pe-5 border-end me-4"
               text={<FontAwesomeIcon icon={faChevronRight} className="md-text text-gray" />}
             />
@@ -130,6 +157,13 @@ function IprDetails({
           )}
         </Formik>
         <BibliographicDataSection document={document} />
+        {/* <Citation>
+          {
+            citation.map((row) => (
+              <CitationRow row={row} />
+            ))
+          }
+        </Citation> */}
       </div>
     </div>
   );

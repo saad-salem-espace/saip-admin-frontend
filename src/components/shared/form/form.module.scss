@@ -7,8 +7,18 @@
   font-size: $font-size-sm;
   z-index: 9;
 
-  &.select2{
+  html[dir="rtl"] & {
     left: 0;
+    right: 16px;
+  }
+
+  &.select2 {
+    left: 0;
+
+    html[dir="rtl"] & {
+      right: 0;
+      left: auto;
+    }
   }
 }
 

@@ -9,6 +9,7 @@ import CacheContext from 'contexts/CacheContext';
 import uploadFile from 'apis/uploadFileApi';
 import * as Yup from 'yup';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
+import { parseSingleQuery } from 'utils/searchQuery/encoder';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
@@ -16,7 +17,6 @@ import Select from '../shared/form/select/Select';
 import Search from '../shared/form/search/Search';
 import UploadImage from '../shared/upload-image/UploadImage';
 import formStyle from '../shared/form/form.module.scss';
-import { parseSingleQuery } from '../../utils/searchQueryParser';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
@@ -44,16 +44,36 @@ function WorkstreamSearch() {
     setSelectedWorkStream(newState);
   };
 
+  const onChangeIdentifier = (identifier, clearData, clearErrors, clearTouch) => {
+    if (identifier.identifierType === 'Date' || selectedOption.identifierType === 'Date') {
+      clearData();
+      clearErrors();
+      clearTouch();
+    }
+
+    setSelectedOption(identifier);
+  };
+
   const onSubmit = (values) => {
+    let { searchQuery } = values;
+
+    if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
+
+    const defaultConditions = new Map();
+    defaultConditions.set('Text', 'hasExactly');
+    defaultConditions.set('Date', 'is');
+
+    const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
+
     const query = parseSingleQuery({
       identifier: selectedOption,
-      condition: { optionParserName: 'hasExactly' },
-      data: values.searchQuery,
+      condition: { optionParserName: defaultCondition },
+      data: searchQuery,
     }, 0, true);
 
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: query, ...(imageName && { imageName }) })}`,
+      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: (searchQuery ? query : ''), ...(imageName && { imageName }) })}`,
     });
   };
 
@@ -108,11 +128,11 @@ function WorkstreamSearch() {
               onSubmit={onSubmit}
               initialValues={{ searchQuery: '' }}
               validationSchema={isImgUploaded ? Yup.object().shape({}) : formSchema}
-              validateOnChange={false}
+              validateOnChange
               validateOnBlur={false}
             >
               {({
-                handleSubmit, values, setFieldValue, errors, touched,
+                handleSubmit, values, setFieldValue, errors, touched, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
                   <Link
@@ -137,7 +157,7 @@ function WorkstreamSearch() {
                         className={`${style.select} lgSelect selectWithSibling`}
                         getOptionName={(option) => option.identiferName}
                         selectedOption={selectedOption}
-                        setSelectedOption={setSelectedOption}
+                        setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
                         getOptionValue={(option) => option.identiferName}
                       />
                     </div>
@@ -153,6 +173,9 @@ function WorkstreamSearch() {
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
                       searchWithImg={selectedWorkStream === 1}
+                      type={selectedOption?.identifierType}
+                      onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
+                      imageSearch={isImgUploaded}
                     >
                       {/* please show this span if the search has text value */}
                       {/* <span className={`position-absolute ${formStyle.label}
@@ -162,7 +185,7 @@ function WorkstreamSearch() {
                       </span> */}
                     </Search>
                   </div>
-                  {touched.searchQuery && errors.searchQuery && !values.searchQuery.trim()
+                  {touched.searchQuery && errors.searchQuery && !isImgUploaded
                     ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                   <div className="rounded">

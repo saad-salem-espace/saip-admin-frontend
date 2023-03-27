@@ -1,10 +1,12 @@
-import { useContext, useState } from 'react';
+import {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import uploadFile from 'apis/uploadFileApi';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import EmptyState from 'components/shared/empty-state/EmptyState';
@@ -25,24 +27,34 @@ import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
+import { decodeQuery } from '../../utils/searchQuery/decoder';
+import { flattenCriteria, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 
 function SearchResults() {
   const { t } = useTranslation('search');
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [activeDocument, setActiveDocument] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
+  const [isEnabledSynonyms, setIsEnabledSynonyms] = useState(false);
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
   const [totalResults, setTotalResults] = useState(0);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
+  const [searchFields, setSearchFields] = useState([]);
+  const [imageName, setImageName] = useState(null);
+  const [flattenedCriteria, setFlattenedCriteria] = useState([]);
+  const submitRef = useRef();
+
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
     fireSearch: searchParams.get('fireSearch') !== 'false',
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
@@ -50,7 +62,7 @@ function SearchResults() {
   const [isImgUploaded, setIsImgUploaded] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
-
+  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
   };
@@ -66,9 +78,30 @@ function SearchResults() {
     },
   ];
 
-  const onSubmit = () => {
-
+  const onSubmit = (values) => {
+    navigate({
+      pathname: '/search',
+      search: `?${createSearchParams({
+        workstreamId: values.selectedWorkstream.value,
+        q: values.searchQuery,
+        ...(imageName && { imageName }),
+        enableSynonyms: isEnabledSynonyms,
+        page: 1,
+      })}`,
+    });
   };
+
+  useEffect(() => {
+    if (searchIdentifiers) {
+      const decodedQuery = decodeQuery(searchResultParams.query);
+      setFlattenedCriteria(flattenCriteria(decodedQuery));
+      const searchIdentifiersData = searchIdentifiers.data;
+      const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
+      setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
+        id: 1, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
+      }]);
+    }
+  }, [searchResultParams.query, searchIdentifiers]);
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
     label: pascalCase(workstream.workstreamName),
@@ -84,9 +117,6 @@ function SearchResults() {
     setIsAdvancedSearch(true);
   };
 
-  const handleToggleButton = () => {
-  };
-
   const SearchModuleClassName = ({
     smSearch: true,
     searchWithSibling: !isAdvancedSearch,
@@ -98,7 +128,8 @@ function SearchResults() {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append('file', file);
-    const { err } = await uploadFile(formData);
+    const { res, err } = await uploadFile(formData);
+    setImageName(res.data.data?.[0]);
     if (err) setErrorMessage(err);
     setIsImgUploaded(true);
     setShowUploadImgSection(false);
@@ -176,23 +207,25 @@ function SearchResults() {
       <Row className="mx-0 header">
         <Col md={{ span: 10, offset: 1 }} className="mb-8 position-relative">
           <Formik
+            innerRef={submitRef}
             enableReinitialize
+            onSubmit={onSubmit}
             initialValues={{
               searchQuery: searchQuery || searchResultParams.query,
-              selectedWorkstream: workstreams?.data?.find(
-                (element) => element.id.toString() === searchResultParams.workstreamId,
+              selectedWorkstream: WorkStreamsOptions?.find(
+                (element) => element.value.toString() === searchResultParams.workstreamId,
               ),
             }}
           >
-            {({ setFieldValue }) => (
-              <Form className="mt-8">
+            {({ setFieldValue, handleSubmit, values }) => (
+              <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
                     <h4 className="mb-0 mt-4">Search</h4>
                     <Select
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
-                      selectedOption={WorkStreamsOptions?.[0]}
+                      selectedOption={values.selectedWorkstream}
                       className="workStreams me-5 ms-3 mt-1 customSelect"
                       setSelectedOption={(data) => setFieldValue('selectedWorkstream', data)}
                     />
@@ -232,8 +265,8 @@ function SearchResults() {
                         className="border-md-end pe-4 me-4 mb-md-0 mb-2"
                       />
                       <ToggleButton
-                        handleToggleButton={handleToggleButton}
-                        isToggleButtonOn={false}
+                        handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
+                        isToggleButtonOn={isEnabledSynonyms}
                         text={t('allowSynonyms')}
                       />
                     </div>
@@ -260,10 +293,11 @@ function SearchResults() {
             <Col xl={isAdvancedMenuOpen ? 3 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
               <AdvancedSearch
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
+                defaultInitializers={searchFields}
                 isAdvancedMenuOpen={isAdvancedMenuOpen}
+                submitRef={submitRef}
                 workstreamId={searchResultParams.workstreamId}
                 firstIdentifierStr={searchResultParams.identifierStrId}
-                defaultCriteria=""
                 onChangeSearchQuery={setSearchQuery}
               />
             </Col>
@@ -274,7 +308,7 @@ function SearchResults() {
           && (
             <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
               <SearchNote
-                searchKeywords={searchResultParams.query}
+                searchKeywords={parseQuery(searchFields, false)}
                 resultsCount={totalResults}
               />
               <Formik>
@@ -302,6 +336,7 @@ function SearchResults() {
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
                         query: searchResultParams.query,
+                        flattenedCriteria,
                         setActiveDocument,
                         activeDocument,
                         selectedView,
