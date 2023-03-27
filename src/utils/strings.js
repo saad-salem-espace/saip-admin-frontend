@@ -53,8 +53,21 @@ const trimStringRelativeToSubtext = (text, subtext, charsBefore = 100, charsAfte
   return `${text.startsWith(trimmedSubtext) ? '' : '...'}${trimmedOutput}${text.endsWith(trimmedSubtext) ? '' : '...'}`;
 };
 
+const insert = (text, insertStr, position) => {
+  if (Array.isArray(position)) {
+    let modStr = text;
+    const insertStrLen = insertStr.length;
+    position.forEach((pos, idx) => {
+      const shiftPos = insertStrLen * idx;
+      modStr = modStr.slice(0, pos + shiftPos) + insertStr + modStr.slice(pos + shiftPos);
+    });
+    return modStr;
+  }
+  return text.slice(0, position) + insertStr + text.slice(position);
+};
+
 // Convert a normal sentence to camel case.
 // Used to camel case conditions
 const camelize = (str) => str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => (index === 0 ? word.toLowerCase() : word.toUpperCase())).replace(/\s+/g, '');
 
-export { trimStringRelativeToSubtext, camelize };
+export { trimStringRelativeToSubtext, camelize, insert };

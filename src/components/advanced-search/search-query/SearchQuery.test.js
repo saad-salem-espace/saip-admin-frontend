@@ -2,7 +2,7 @@ import { render } from 'TestUtils';
 import { fireEvent, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import apiInstance from 'apis/apiInstance';
-import WorkstreamIdentifiers from 'testing-resources/workstreams/workstreamIdentifiers.json';
+import WorkstreamIdentifiers from 'testing-resources/workstreams/patents/identifiers.json';
 import WorkstreamList from 'testing-resources/workstreams/workstreams.json';
 import SearchQuery from './SearchQuery';
 
@@ -13,6 +13,13 @@ mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, WorkstreamIdentifi
 const mockOnChange = jest.fn();
 
 const defaultCriteria = 'device';
+const defaultInitializers = [{
+  id: 1,
+  data: defaultCriteria,
+  identifier: WorkstreamIdentifiers.data[0],
+  condition: WorkstreamIdentifiers.data[0].identifierOptions[0],
+  operator: '',
+}];
 
 describe('<SearchQuery />', () => {
   it('The default field renders correctly', async () => {
@@ -21,8 +28,8 @@ describe('<SearchQuery />', () => {
     } = render(<SearchQuery
       workstreamId={WorkstreamList.data[0].id}
       firstIdentifierStr={WorkstreamIdentifiers.data[0].identifierOptions[0]}
-      defaultCriteria={defaultCriteria}
       onChangeSearchQuery={mockOnChange}
+      defaultInitializers={defaultInitializers}
     />);
 
     await waitFor(() => {
@@ -37,8 +44,8 @@ describe('<SearchQuery />', () => {
     const { getByText, queryAllByText } = render(<SearchQuery
       workstreamId={WorkstreamList.data[0].id}
       firstIdentifierStr={WorkstreamIdentifiers.data[0].identifierOptions[0]}
-      defaultCriteria={defaultCriteria}
       onChangeSearchQuery={mockOnChange}
+      defaultInitializers={defaultInitializers}
     />);
 
     await waitFor(() => {
@@ -60,6 +67,7 @@ describe('<SearchQuery />', () => {
       firstIdentifierStr={WorkstreamIdentifiers.data[0].identifierOptions[0]}
       defaultCriteria={defaultCriteria}
       onChangeSearchQuery={mockOnChange}
+      defaultInitializers={defaultInitializers}
     />);
 
     await waitFor(() => {

@@ -6,15 +6,14 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
-import { parseSingleQuery } from 'utils/searchQueryParser';
 import Button from 'components/shared/button/Button';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { operators, parseQuery } from 'utils/searchQuery';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
-  workstreamId, firstIdentifierStr, defaultCriteria, onChangeSearchQuery,
+  workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef,
 }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
@@ -22,12 +21,7 @@ function SearchQuery({
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
-  const [firstCondition, setFirstCondition] = useState(null);
-  const navigate = useNavigate();
-  const operators = ['and', 'or', 'not'].map((operator) => ({
-    operator: operator.toUpperCase(),
-    displayName: t(`operators.${operator}`),
-  }));
+
   const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
 
   useEffect(() => {
@@ -39,28 +33,10 @@ function SearchQuery({
 
   useEffect(() => {
     setDefaultCondition(defaultIdentifier?.identifierOptions?.[0]);
-    setFirstCondition(firstIdentifier?.identifierOptions?.[0]);
   }, [defaultIdentifier, firstIdentifier]);
 
-  const parseQuery = (values, isQuery) => {
-    let finalQuery = '';
-
-    values.searchFields.forEach((value, index) => {
-      finalQuery += parseSingleQuery(value, index, isQuery);
-    });
-
-    return finalQuery;
-  };
-
-  const onSubmit = (values) => {
-    navigate({
-      pathname: '/search',
-      search: `?${createSearchParams({
-        workstreamId,
-        q: parseQuery(values, true),
-        page: 1,
-      })}`,
-    });
+  const onSubmit = () => {
+    submitRef.current.handleSubmit();
   };
 
   return (
@@ -72,15 +48,13 @@ function SearchQuery({
         onSubmit={onSubmit}
         validateOnBlur={false}
         initialValues={{
-          searchFields: [{
-            id: 1, data: defaultCriteria, identifier: firstIdentifier, condition: firstCondition, operator: '',
-          }],
+          searchFields: defaultInitializers,
         }}
       >
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched,
         }) => (
-          <Form onChange={onChangeSearchQuery(parseQuery(values, true))}>
+          <Form onChange={onChangeSearchQuery(parseQuery(values.searchFields, true))}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -169,8 +143,17 @@ function SearchQuery({
 SearchQuery.propTypes = {
   workstreamId: PropTypes.string.isRequired,
   firstIdentifierStr: PropTypes.string.isRequired,
-  defaultCriteria: PropTypes.string.isRequired,
+  defaultInitializers: PropTypes.arrayOf(PropTypes.shape({
+    operator: PropTypes.string,
+    identifier: PropTypes.instanceOf(Object),
+    condition: PropTypes.instanceOf(Object),
+    data: PropTypes.instanceOf(Object),
+  })).isRequired,
   onChangeSearchQuery: PropTypes.func,
+  submitRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Object) }),
+  ]).isRequired,
 };
 
 SearchQuery.defaultProps = {
