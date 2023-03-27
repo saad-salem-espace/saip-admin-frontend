@@ -46,7 +46,6 @@ function UploadImage({
         errors,
       }) => (
         <>
-          {console.log(errors?.maxNumber)}
           <div className={`uploadImageWrapper ${className}`}>
             {
             showUploadImgSection && (
