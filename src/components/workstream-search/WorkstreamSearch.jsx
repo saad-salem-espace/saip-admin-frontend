@@ -80,6 +80,7 @@ function WorkstreamSearch() {
   const SearchModuleClassName = ({
     lgSearch: true,
     searchWithSibling: true,
+    searchInputWrapper: true,
     imgUploaded: isImgUploaded,
     searchWithImage: selectedWorkStream === 1,
   });
@@ -164,7 +165,7 @@ function WorkstreamSearch() {
                     <Search
                       id="search"
                       name="searchQuery"
-                      className="flex-grow-1"
+                      className="flex-grow-1 searchBox"
                       moduleClassName={
                         SearchModuleClassName
                       }

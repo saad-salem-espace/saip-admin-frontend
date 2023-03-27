@@ -1,0 +1,10 @@
+.searchBox {
+  .datePickerWrapper + .resetSearch {
+    html[dir="ltr"] & {
+      right: 195px;
+    }
+    html[dir="rtl"] & {
+      left: 195px;
+    }
+  } 
+  }

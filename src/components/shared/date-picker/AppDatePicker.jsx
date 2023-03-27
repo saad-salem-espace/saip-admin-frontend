@@ -1,7 +1,5 @@
 import DatePicker from 'react-multi-date-picker';
 import './DatePicker.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -37,7 +35,7 @@ function AppDatePicker({
                 }
               }}
             />
-            <FontAwesomeIcon icon={faCalendarDays} className="calendar-icon f-20 text-primary" />
+            <span className="icon-ic-calendar f-20 colored" />
             {(!isMulti && !range && Array.isArray(field.value) && field.value.length > 1) && (
             <WarningMessage className="mt-2" msg={t('singleValueMessage')} />
             )}
