@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {
   useContext, useEffect, useRef, useState,
 } from 'react';
@@ -42,6 +43,7 @@ function SearchResults() {
   const [totalResults, setTotalResults] = useState(0);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [results, setResults] = useState(null);
   const [searchFields, setSearchFields] = useState([]);
   const [imageName, setImageName] = useState(null);
   const [flattenedCriteria, setFlattenedCriteria] = useState([]);
@@ -60,6 +62,21 @@ function SearchResults() {
   const [isImgUploaded, setIsImgUploaded] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
+
+  const getNextDocument = () => {
+    if (!results || !activeDocument) return null;
+
+    const index = results.findLastIndex((element) => element.BibliographicData.FilingNumber === activeDocument);
+    return (index === results.length - 1 ? null : results[index + 1].BibliographicData.FilingNumber);
+  };
+
+  const getPreviousDocument = () => {
+    if (!results || !activeDocument) return null;
+
+    const index = results.findIndex((element) => element.BibliographicData.FilingNumber === activeDocument);
+    return (index === 0 ? null : results[index - 1].BibliographicData.FilingNumber);
+  };
+
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
@@ -294,6 +311,7 @@ function SearchResults() {
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
                       RenderedComponent={SearchResultCards}
+                      setResults={setResults}
                       renderedProps={{
                         query: searchResultParams.query,
                         flattenedCriteria,
@@ -323,6 +341,9 @@ function SearchResults() {
               isIPRExpanded={isIPRExpanded}
               documentId={activeDocument}
               onClose={handleCloseIprDetail}
+              getNextDocument={getNextDocument}
+              getPreviousDocument={getPreviousDocument}
+              setActiveDocument={setActiveDocument}
               // moreDetails for search with image
             />
           </Col>
