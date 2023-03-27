@@ -9,7 +9,7 @@ import Highlighter from 'react-highlight-words';
 import style from './style.module.scss';
 
 function SearchResultCard({
-  searchResult, query, setActiveDocument, activeDocument,
+  searchResult, query, setActiveDocument, activeDocument, flattenedCriteria,
 }) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
@@ -30,7 +30,7 @@ function SearchResultCard({
                 BibliographicData.ApplicationTitle,
                 query,
               )}
-              searchWords={[query]}
+              searchWords={flattenedCriteria}
               autoEscape
             />
 
@@ -59,7 +59,7 @@ function SearchResultCard({
                 BibliographicData.ApplicationAbstract.join(' '),
                 query,
               )}
-              searchWords={[query]}
+              searchWords={flattenedCriteria}
               autoEscape
             />
           </p>
@@ -81,8 +81,13 @@ SearchResultCard.propTypes = {
     Priority: PropTypes.string.isRequired,
   }).isRequired,
   query: PropTypes.string.isRequired,
+  flattenedCriteria: PropTypes.arrayOf(PropTypes.string),
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
+};
+
+SearchResultCard.defaultProps = {
+  flattenedCriteria: [],
 };
 
 export default SearchResultCard;

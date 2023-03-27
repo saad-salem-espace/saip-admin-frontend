@@ -3,7 +3,7 @@ import { waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import apiInstance from 'apis/apiInstance';
 import WorkstreamList from 'testing-resources/workstreams/workstreams.json';
-import WorkstreamIdentifiers from 'testing-resources/workstreams/workstreamIdentifiers.json';
+import WorkstreamIdentifiers from 'testing-resources/workstreams/patents/identifiers.json';
 import WorkstreamSearch from './WorkstreamSearch';
 
 const mockAxios = new MockAdapter(apiInstance);
