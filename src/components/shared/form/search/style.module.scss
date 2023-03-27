@@ -111,14 +111,6 @@ button.searchIcon {
       left: 155px;
     }
   }
-  .datePickerWrapper + .clearIcon {
-    html[dir="ltr"] & {
-      right: 195px;
-    }
-    html[dir="rtl"] & {
-      left: 195px;
-    }
-  }
 }
 
 ///// others

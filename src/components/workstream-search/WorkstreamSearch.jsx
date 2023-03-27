@@ -165,7 +165,7 @@ function WorkstreamSearch() {
                     <Search
                       id="search"
                       name="searchQuery"
-                      className="flex-grow-1"
+                      className="flex-grow-1 searchBox"
                       moduleClassName={
                         SearchModuleClassName
                       }

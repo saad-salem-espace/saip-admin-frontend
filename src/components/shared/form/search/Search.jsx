@@ -7,6 +7,7 @@ import DatePicker from 'components/shared/date-picker/AppDatePicker';
 import Input from '../input/Input';
 import style from './style.module.scss';
 import Button from '../../button/Button';
+import './search.scss';
 // import UploadImage from '../../upload-image/UploadImage';
 function Search({
   id,
@@ -56,7 +57,7 @@ function Search({
         getInputField
       }
       {
-        isClearable && <Button className={`${style.clearIcon} text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
+        isClearable && <Button className={`${style.clearIcon} resetSearch text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
       }
       {
         searchWithImg && (
