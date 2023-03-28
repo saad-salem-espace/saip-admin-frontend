@@ -15,6 +15,10 @@ describe('validation conditions', () => {
     expect(validate('~xyz')).toBe(false);
     expect(validate('~with?wildcard')).toBe(false);
     expect(validate('~~doubletelda')).toBe(false);
+    expect(validate('doubletelda~~')).toBe(false);
+    expect(validate('endtelda~ ')).toBe(false);
+    expect(validate('endtelda~2 ')).toBe(false);
+    expect(validate('endtelda~1xu')).toBe(false);
     expect(validate('middle~telda')).toBe(false);
     expect(validate('middle~telda~')).toBe(false);
     expect(validate('wildcard?telda~')).toBe(false);
