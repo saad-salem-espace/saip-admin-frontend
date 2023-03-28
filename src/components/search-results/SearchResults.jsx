@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   useContext, useEffect, useRef, useState,
 } from 'react';
@@ -68,14 +67,19 @@ function SearchResults() {
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findLastIndex((element) => element.BibliographicData.FilingNumber === activeDocument);
-    return (index === results.length - 1 ? null : results[index + 1].BibliographicData.FilingNumber);
+    const index = results.findLastIndex(
+      (element) => element.BibliographicData.FilingNumber === activeDocument,
+    );
+    return (index === results.length - 1
+      ? null : results[index + 1].BibliographicData.FilingNumber);
   };
 
   const getPreviousDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findIndex((element) => element.BibliographicData.FilingNumber === activeDocument);
+    const index = results.findIndex(
+      (element) => element.BibliographicData.FilingNumber === activeDocument,
+    );
     return (index === 0 ? null : results[index - 1].BibliographicData.FilingNumber);
   };
 
