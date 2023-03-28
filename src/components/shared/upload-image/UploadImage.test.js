@@ -69,6 +69,18 @@ describe('<UploadImage />', () => {
     await waitFor(() => expect(queryAllByText('The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.')).toHaveLength(0));
   });
 
+  it('should not allow more than 10 MB image', async () => {
+    const { container, queryAllByText } = render(<UploadImage
+      changeIsImgUploaded={mockOnChange}
+      showUploadImgSection
+      uploadFile={mockOnChange}
+      isSubmitting
+    />);
+    const validImage = fileGenerator({ size: 12000, type: 'image/jpg', name: 'test.jpg' });
+    await userEvent.upload(container.firstChild, [validImage]);
+    await waitFor(() => expect(queryAllByText('The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB.')).toHaveLength(1));
+  });
+
   it('not render', async () => {
     const { container } = render(<UploadImage
       changeIsImgUploaded={mockOnChange}

@@ -96,7 +96,7 @@ describe('<SearchResultCard />', () => {
 
   describe('when component have highlighting', () => {
     [
-      { key: 'title', value: trademarkResponse.BibliographicData.ApplicationTitle },
+      { key: 'title', value: trademarkResponse.BibliographicData.BrandNameEn },
     ].forEach((item) => {
       it(`should display the highlight in the ${item.key}`, async () => {
         const { value } = item;

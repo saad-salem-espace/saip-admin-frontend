@@ -20,7 +20,7 @@ describe('<TrademarksSearchResultCards />', () => {
     );
     await waitFor(() => {
       //  will replace ApplicationTitle with BrandNameEn
-      expect(queryAllByText(trademarkResponse.BibliographicData.ApplicationTitle))
+      expect(queryAllByText(trademarkResponse.BibliographicData.BrandNameEn))
         .toHaveLength(ITEMS_LENGTH);
     });
   });

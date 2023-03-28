@@ -43,6 +43,7 @@ function SearchResults() {
   const [totalResults, setTotalResults] = useState(0);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [results, setResults] = useState(null);
   const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
   const [imageName, setImageName] = useState(null);
@@ -62,6 +63,26 @@ function SearchResults() {
   const [isImgUploaded, setIsImgUploaded] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
+
+  const getNextDocument = () => {
+    if (!results || !activeDocument) return null;
+
+    const index = results.findLastIndex(
+      (element) => element.BibliographicData.FilingNumber === activeDocument,
+    );
+    return (index === results.length - 1
+      ? null : results[index + 1].BibliographicData.FilingNumber);
+  };
+
+  const getPreviousDocument = () => {
+    if (!results || !activeDocument) return null;
+
+    const index = results.findIndex(
+      (element) => element.BibliographicData.FilingNumber === activeDocument,
+    );
+    return (index === 0 ? null : results[index - 1].BibliographicData.FilingNumber);
+  };
+
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
@@ -316,8 +337,6 @@ function SearchResults() {
                 {() => (
                   <Form className="mt-8">
                     {
-                      // changed for "1" for testing only
-                      // searchResultParams.workstreamId === '2' && (
                       searchResultParams.workstreamId === '1' && (
                         <div className="position-relative mb-8 viewSelect">
                           <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
@@ -336,6 +355,7 @@ function SearchResults() {
                     <AppPagination
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
+                      setResults={setResults}
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
                         query: searchResultParams.query,
@@ -367,6 +387,9 @@ function SearchResults() {
               isIPRExpanded={isIPRExpanded}
               documentId={activeDocument}
               onClose={handleCloseIprDetail}
+              getNextDocument={getNextDocument}
+              getPreviousDocument={getPreviousDocument}
+              setActiveDocument={setActiveDocument}
               // moreDetails for search with image
             />
           </Col>
