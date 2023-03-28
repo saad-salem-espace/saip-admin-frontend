@@ -21,11 +21,12 @@ import advancedSearchApi from 'apis/search/advancedSearchApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
+import formStyle from 'components/shared/form/form.module.scss';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
-// import SearchWithImgResultCards from './search-with-img-result-cards/SearchWithImgResultCards';
+import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import { flattenCriteria, parseQuery, reformatDecoder } from '../../utils/searchQuery';
@@ -44,6 +45,7 @@ function SearchResults() {
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [results, setResults] = useState(null);
+  const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
   const [imageName, setImageName] = useState(null);
   const [flattenedCriteria, setFlattenedCriteria] = useState([]);
@@ -195,6 +197,29 @@ function SearchResults() {
 
   const axiosConfig = advancedSearchApi(searchResultParams, true);
 
+  const viewOptions = [
+    {
+      label: t('trademarks.detailed'),
+      value: 'detailed',
+    },
+    {
+      label: t('trademarks.summary'),
+      value: 'summary',
+    },
+    {
+      label: t('trademarks.compact'),
+      value: 'compact',
+    },
+  ];
+
+  const onChangeView = (i) => {
+    setSelectedView(i);
+  };
+
+  const searchResult = {
+    1: SearchResultCards,
+    2: TrademarksSearchResultCards,
+  };
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -307,16 +332,35 @@ function SearchResults() {
               <Formik>
                 {() => (
                   <Form className="mt-8">
+                    {
+                      // changed for "1" for testing only
+                      // searchResultParams.workstreamId === '2' && (
+                      searchResultParams.workstreamId === '1' && (
+                        <div className="position-relative mb-8 viewSelect">
+                          <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                          <Select
+                            options={viewOptions}
+                            setSelectedOption={onChangeView}
+                            selectedOption={selectedView}
+                            defaultValue={selectedView}
+                            id="viewSection"
+                            fieldName="viewSection"
+                            className="mb-5 select-2"
+                          />
+                        </div>
+                      )
+                    }
                     <AppPagination
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
-                      RenderedComponent={SearchResultCards}
                       setResults={setResults}
+                      RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
                         query: searchResultParams.query,
                         flattenedCriteria,
                         setActiveDocument,
                         activeDocument,
+                        selectedView,
                       }}
                       fetchedTotalResults={setTotalResults}
                       emptyState={(
