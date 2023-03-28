@@ -31,5 +31,7 @@
 
 input.error {
   border-color: $danger !important;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px
 }
 
