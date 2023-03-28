@@ -8,7 +8,7 @@ import Spinner from '../spinner/Spinner';
 
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
-  axiosInstance, fetchedTotalResults, emptyState, updateDependencies,
+  axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage);
@@ -34,6 +34,7 @@ const AppPagination = ({
         total: 0,
       };
       setData(responseData?.data || responseData);
+      setResults(responseData?.data || responseData);
       setPaginationInfo(responsePaginationInfo);
       if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.total);
     });
@@ -46,7 +47,6 @@ const AppPagination = ({
   if (!paginationInfo.total) {
     return emptyState;
   }
-
   const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
 
   const renderedComponent = (
@@ -75,6 +75,7 @@ AppPagination.propTypes = {
   fetchedTotalResults: PropTypes.func,
   emptyState: PropTypes.node,
   updateDependencies: PropTypes.arrayOf(Object),
+  setResults: PropTypes.func,
 };
 
 AppPagination.defaultProps = {
@@ -84,6 +85,7 @@ AppPagination.defaultProps = {
   fetchedTotalResults: null,
   emptyState: null,
   updateDependencies: [],
+  setResults: () => {},
 };
 
 export default AppPagination;

@@ -47,5 +47,13 @@
     "maxNumber": "Only a single image search is allowed."
   },
   "searchFieldValidationMsg": "You have reached the maximum number of search fields",
-  "SwitchToAdvancedSearch": "Switch to advanced search"
+  "SwitchToAdvancedSearch": "Switch to advanced search",
+  "trademarks": {
+    "detailed": "Detailed",
+    "summary": "Summary",
+    "compact": "Compact",
+    "view": "View",
+    "registered": "Registered {{value}}",
+    "published": "Published {{value}}"
+  }
 }
