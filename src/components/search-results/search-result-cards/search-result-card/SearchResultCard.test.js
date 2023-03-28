@@ -48,7 +48,7 @@ describe('<SearchResultCard />', () => {
         );
         await waitFor(() => {
           expect(getByText(query)).toBeInTheDocument();
-          expect(getByText(query)).toHaveClass('font-bold');
+          expect(getByText(query)).toHaveClass('font-medium');
           expect(getByText(restValue)).toBeInTheDocument();
         });
       });

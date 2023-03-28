@@ -46,7 +46,6 @@ const AppPagination = ({
   if (!paginationInfo.total) {
     return emptyState;
   }
-
   const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
 
   const renderedComponent = (
