@@ -69,6 +69,9 @@ const flattenCriteria = (queryFields) => queryFields.map(
   ,
 ).flat(1000);
 
+const teldaRegex = /^[^*?!~]+?~?\d*$/;
+const noTeldaRegex = /^[^~]+$/;
+
 export {
-  operators, parseQuery, reformatDecoder, flattenCriteria,
+  operators, parseQuery, reformatDecoder, flattenCriteria, teldaRegex, noTeldaRegex,
 };

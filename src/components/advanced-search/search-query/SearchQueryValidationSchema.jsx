@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
+import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
 // import { DateObject } from 'react-multi-date-picker';
 // import { identifierNameCategories, selectOption } from 'utils/searchQueryParser';
 
@@ -8,6 +9,9 @@ const option = Yup.object().shape({
   optionName: Yup.string().trim().required(),
   optionParserName: Yup.string().trim().required(),
 });
+// this should be refactored to a json
+const emptyMsg = 'Search criteria cannot be empty for any field';
+const teldaMsg = 'Fuzzy search cannot be at the beginning of the string, or with a wildcard.';
 
 const SearchQueryValidationSchema = Yup.object().shape({
   searchFields: Yup.array().of(
@@ -23,9 +27,14 @@ const SearchQueryValidationSchema = Yup.object().shape({
       }).required(),
       operator: Yup.string().oneOf(['AND', 'OR', 'NOT']),
       // Validates according to optionCategories from 'utils/searchQueryParser'
-      data: Yup.mixed().required()
-        .test('Is not empty', 'Invalid', (data) => (
-          ((typeof data === 'string' || data instanceof String) && data.trim())
+      data: Yup.mixed().required(emptyMsg)
+        .test('Is not empty', emptyMsg, (data) => (
+          ((typeof data === 'string' || data instanceof String) && data.trim(emptyMsg))
+          || (Array.isArray(data) && data.length > 0)
+          || data instanceof DateObject
+        ))
+        .test('is Valid String', teldaMsg, (data) => (
+          ((typeof data === 'string' || data instanceof String) && data.trim(emptyMsg) && (data.match(noTeldaRegex) || data.match(teldaRegex)))
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         )),
