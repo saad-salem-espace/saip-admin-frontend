@@ -335,9 +335,7 @@ function SearchResults() {
                     <AppPagination
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
-                      // RenderedComponent={searchResult[searchResultParams.workstreamId]}
-                      // commented for testing only
-                      RenderedComponent={searchResult[2]}
+                      RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
                         query: searchResultParams.query,
                         flattenedCriteria,

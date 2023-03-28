@@ -43,15 +43,15 @@ function TrademarksSearchResultCard({
                 className="d-block text-truncate mb-3"
                 highlightClassName="font-medium"
                 textToHighlight={trimStringRelativeToSubtext(
-                  BibliographicData.BrandNameEn,
+                  BibliographicData.ApplicationTitle,
+                  // to replace ApplicationTitle with BrandNameEn
                   query,
                 )}
-                // for testing only
-                searchWords={['device']}
+                searchWords={[query]}
                 autoEscape
               />
               <span className="d-block text-truncate mb-2">
-                {BibliographicData.BrandNameAr}
+                {/* {BibliographicData.BrandNameAr} */}
               </span>
               <div>
                 <p className="mb-1 text-black md-text">

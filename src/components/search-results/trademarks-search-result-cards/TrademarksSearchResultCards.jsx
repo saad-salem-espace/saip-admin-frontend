@@ -3,26 +3,25 @@ import TrademarksSearchResultCard from './TrademarksSearchResultCard';
 import trademarkSample from '../../../testing-resources/trademarks/sampleTrademark.json';
 
 const TrademarksSearchResultCards = ({
-  // data,
+  data,
   query, setActiveDocument, activeDocument, selectedView,
 }) => (
   <>
-    {/* static data for testing */}
-    {/* {data.map((searchResult) => ( */}
-    <TrademarksSearchResultCard
-      key={trademarkSample.BibliographicData.filingNumber}
-      searchResult={trademarkSample}
-      query={query}
-      setActiveDocument={setActiveDocument}
-      activeDocument={activeDocument}
-      selectedView={selectedView}
-    />
-    {/* ))} */}
+    {data.map((searchResult) => (
+      <TrademarksSearchResultCard
+        key={trademarkSample.BibliographicData.filingNumber}
+        searchResult={searchResult}
+        query={query}
+        setActiveDocument={setActiveDocument}
+        activeDocument={activeDocument}
+        selectedView={selectedView}
+      />
+    ))}
   </>
 );
 
 TrademarksSearchResultCards.propTypes = {
-  // data: PropTypes.arrayOf(Object).isRequired,
+  data: PropTypes.arrayOf(Object).isRequired,
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
