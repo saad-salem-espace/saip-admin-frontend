@@ -333,8 +333,6 @@ function SearchResults() {
                 {() => (
                   <Form className="mt-8">
                     {
-                      // changed for "1" for testing only
-                      // searchResultParams.workstreamId === '2' && (
                       searchResultParams.workstreamId === '1' && (
                         <div className="position-relative mb-8 viewSelect">
                           <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
