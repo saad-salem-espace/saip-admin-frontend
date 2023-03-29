@@ -92,7 +92,7 @@ function WorkstreamSearch() {
     searchWithSibling: true,
     searchInputWrapper: true,
     imgUploaded: isImgUploaded,
-    searchWithImage: selectedWorkStream === 1,
+    searchWithImage: selectedWorkStream === 2,
   });
 
   const uploadCurrentFile = async (file, setErrors, data) => {
@@ -184,7 +184,7 @@ function WorkstreamSearch() {
                       isClearable={!!values.searchQuery}
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
-                      searchWithImg={selectedWorkStream === 1}
+                      searchWithImg={selectedWorkStream === 2}
                       type={selectedOption?.identifierType}
                       onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
                       imageSearch={isImgUploaded}
