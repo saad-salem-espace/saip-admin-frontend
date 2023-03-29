@@ -9,9 +9,6 @@ const option = Yup.object().shape({
   optionName: Yup.string().trim().required(),
   optionParserName: Yup.string().trim().required(),
 });
-// this should be refactored to a json
-const emptyMsg = 'Search criteria cannot be empty for any field';
-const teldaMsg = 'Fuzzy search cannot be at the beginning of the string, or with a wildcard.';
 
 const SearchQueryValidationSchema = Yup.object().shape({
   searchFields: Yup.array().of(
@@ -27,14 +24,14 @@ const SearchQueryValidationSchema = Yup.object().shape({
       }).required(),
       operator: Yup.string().oneOf(['AND', 'OR', 'NOT']),
       // Validates according to optionCategories from 'utils/searchQueryParser'
-      data: Yup.mixed().required(emptyMsg)
-        .test('Is not empty', emptyMsg, (data) => (
-          ((typeof data === 'string' || data instanceof String) && data.trim(emptyMsg))
+      data: Yup.mixed().required('empty')
+        .test('Is not empty', 'empty', (data) => (
+          ((typeof data === 'string' || data instanceof String) && data.trim('empty'))
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         ))
-        .test('is Valid String', teldaMsg, (data) => (
-          ((typeof data === 'string' || data instanceof String) && data.trim(emptyMsg) && (data.match(noTeldaRegex) || data.match(teldaRegex)))
+        .test('is Valid String', 'wildcards', (data) => (
+          ((typeof data === 'string' || data instanceof String) && data.trim('empty') && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex)))
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         )),

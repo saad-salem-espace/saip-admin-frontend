@@ -1,7 +1,7 @@
 import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
 
 function validate(str) {
-  return noTeldaRegex.test(str) || teldaRegex.test(str);
+  return noTeldaRegex.test(str.trim()) || teldaRegex.test(str.trim());
 }
 
 describe('validation conditions', () => {
@@ -16,8 +16,11 @@ describe('validation conditions', () => {
     expect(validate('~with?wildcard')).toBe(false);
     expect(validate('~~doubletelda')).toBe(false);
     expect(validate('doubletelda~~')).toBe(false);
-    expect(validate('endtelda~ ')).toBe(false);
-    expect(validate('endtelda~2 ')).toBe(false);
+    expect(validate('endt?elda~')).toBe(false);
+    expect(validate('?endtelda~')).toBe(false);
+    expect(validate('?endtelda~9')).toBe(false);
+    expect(validate(' ?endtelda~')).toBe(false);
+    expect(validate(' !endtelda~')).toBe(false);
     expect(validate('endtelda~1xu')).toBe(false);
     expect(validate('middle~telda')).toBe(false);
     expect(validate('middle~telda~')).toBe(false);
@@ -30,6 +33,8 @@ describe('validation conditions', () => {
     expect(validate('space telda~')).toBe(true);
     expect(validate('numeric 999 telda~')).toBe(true);
     expect(validate('xyz~9')).toBe(true);
+    expect(validate('endtelda~2 ')).toBe(true);
+    expect(validate('endtelda~ ')).toBe(true);
     expect(validate('space telda~1')).toBe(true);
     expect(validate('numeric 999 telda~2')).toBe(true);
   });

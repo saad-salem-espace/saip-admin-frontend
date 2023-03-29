@@ -138,7 +138,7 @@ function SearchField({
       <div className={`position-relative ${style.criteria}`}>
         {getInputField}
         {error && <ErrorMessage
-          msg={error.data}
+          msg={t(`search:validationErrors:${error.data}`)}
           className="mt-2"
         /> }
       </div>

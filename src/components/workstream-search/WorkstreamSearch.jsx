@@ -34,17 +34,14 @@ function WorkstreamSearch() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageName, setImageName] = useState(null);
 
-  const emptyMsg = 'Search criteria cannot be empty for any field';
-  const teldaMsg = 'Fuzzy search cannot be at the beginning of the string, or with a wildcard.';
-
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
-      .test('Is not empty', emptyMsg, (data) => (
-        (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(emptyMsg)))
+      .test('Is not empty', t('validationErrors.empty'), (data) => (
+        (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
       || data instanceof DateObject
       ))
-      .test('is Valid String', teldaMsg, (data) => (
-        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.match(noTeldaRegex) || data.match(teldaRegex))))
+      .test('is Valid String', t('validationErrors.wildcards'), (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
       || data instanceof DateObject
       )),
   });
