@@ -9,7 +9,7 @@ import Select from 'components/shared/form/select/Select';
 import Button from 'components/shared/button/Button';
 import Input from 'components/shared/form/input/Input';
 import DatePicker from 'components/shared/date-picker/AppDatePicker';
-import { isMultipleValue, isRangeValue } from 'utils/searchQuery/encoder';
+import { isMultipleValue, isRangeValue } from 'utils/search-query/encoder';
 import { useMemo } from 'react';
 import { exclude } from 'utils/arrays';
 import MultiSelect from 'components/shared/multi-select/MultiSelect';
@@ -138,7 +138,7 @@ function SearchField({
       <div className={`position-relative ${style.criteria}`}>
         {getInputField}
         {error && <ErrorMessage
-          msg="Search criteria cannot be empty for any field."
+          msg={t(`search:validationErrors:${error.data}`)}
           className="mt-2"
         /> }
       </div>

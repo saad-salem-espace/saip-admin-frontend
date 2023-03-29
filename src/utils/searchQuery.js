@@ -1,7 +1,7 @@
 import { t } from 'i18next';
 import { DateObject } from 'react-multi-date-picker';
 import { search } from './arrays';
-import { isMultipleValue, parseSingleQuery } from './searchQuery/encoder';
+import { isMultipleValue, parseSingleQuery } from './search-query/encoder';
 import { insert } from './strings';
 
 const operators = ['and', 'or', 'not'].map((operator) => ({
@@ -69,6 +69,9 @@ const flattenCriteria = (queryFields) => queryFields.map(
   ,
 ).flat(1000);
 
+const teldaRegex = /^[^*?!~]+?~?\d*$/;
+const noTeldaRegex = /^[^~]+$/;
+
 export {
-  operators, parseQuery, reformatDecoder, flattenCriteria,
+  operators, parseQuery, reformatDecoder, flattenCriteria, teldaRegex, noTeldaRegex,
 };

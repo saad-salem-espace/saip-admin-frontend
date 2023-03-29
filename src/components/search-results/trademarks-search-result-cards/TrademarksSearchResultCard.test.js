@@ -96,7 +96,7 @@ describe('<SearchResultCard />', () => {
 
   describe('when component have highlighting', () => {
     [
-      { key: 'title', value: trademarkResponse.BibliographicData.ApplicationTitle },
+      { key: 'title', value: trademarkResponse.BibliographicData.BrandNameEn },
     ].forEach((item) => {
       it(`should display the highlight in the ${item.key}`, async () => {
         const { value } = item;
@@ -116,7 +116,7 @@ describe('<SearchResultCard />', () => {
         );
         await waitFor(() => {
           expect(getByText(query)).toBeInTheDocument();
-          expect(getByText(query)).toHaveClass('font-bold');
+          expect(getByText(query)).toHaveClass('font-medium');
           expect(getByText(restValue)).toBeInTheDocument();
         });
       });

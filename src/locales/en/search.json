@@ -43,7 +43,10 @@
   "imgFormats": "Only .jpeg .png .tiff .jpg .gif formats supported <0> or </0>",
   "validationErrors": {
     "imgFormats": "The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.",
-    "maxSize": "The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB."
+    "maxSize": "The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB.",
+    "maxNumber": "Only a single image search is allowed.",
+    "empty": "Search criteria cannot be empty for any field",
+    "wildcards": "Fuzzy search cannot be at the beginning or middle of the string, or with a wildcard."
   },
   "searchFieldValidationMsg": "You have reached the maximum number of search fields",
   "SwitchToAdvancedSearch": "Switch to advanced search",

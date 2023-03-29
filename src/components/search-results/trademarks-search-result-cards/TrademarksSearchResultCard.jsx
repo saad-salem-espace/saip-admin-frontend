@@ -46,8 +46,7 @@ function TrademarksSearchResultCard({
                   BibliographicData.BrandNameEn,
                   query,
                 )}
-                // for testing only
-                searchWords={['device']}
+                searchWords={[query]}
                 autoEscape
               />
               <span className="d-block text-truncate mb-2">

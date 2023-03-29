@@ -1,0 +1,20 @@
+.searchBox {
+  .datePickerWrapper + .resetSearch {
+    html[dir="ltr"] & {
+      right: 115px;
+    }
+    html[dir="rtl"] & {
+      left: 115px;
+    }
+  } 
+  &.style_searchWithImage__jbGoX {
+    .datePickerWrapper + .resetSearch {
+      html[dir="ltr"] & {
+        right: 195px;
+      }
+      html[dir="rtl"] & {
+        left: 195px;
+      }
+    } 
+  }
+}

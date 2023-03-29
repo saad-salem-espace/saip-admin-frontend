@@ -11,7 +11,7 @@ function SearchNote({ searchKeywords, resultsCount }) {
         resultsCount,
       }}
     >
-      <span className="font-medium" />
+      <span className="font-medium text-break d-inline-block" />
     </Trans>
   );
 }

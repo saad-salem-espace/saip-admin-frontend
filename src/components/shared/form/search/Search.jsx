@@ -7,6 +7,7 @@ import DatePicker from 'components/shared/date-picker/AppDatePicker';
 import Input from '../input/Input';
 import style from './style.module.scss';
 import Button from '../../button/Button';
+import './search.scss';
 // import UploadImage from '../../upload-image/UploadImage';
 function Search({
   id,
@@ -28,7 +29,7 @@ function Search({
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
   const dataTypes = new Map();
-  const dateField = () => <DatePicker name={name} onChangeDate={onChangeDate} />;
+  const dateField = () => <DatePicker className="datePickerWrapper" name={name} onChangeDate={onChangeDate} />;
 
   const textField = () => (
     <Input
@@ -56,13 +57,13 @@ function Search({
         getInputField
       }
       {
-        isClearable && <Button className={`${style.clearIcon} text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
+        isClearable && <Button className={`${style.clearIcon} resetSearch text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
       }
       {
         searchWithImg && (
-        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4 border-start" />} onClick={() => handleUploadImg()} />
+        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4 border-start colored" />} onClick={() => handleUploadImg()} />
         )
-    }
+      }
       <Button
         type="submit"
         {...(onSubmit && { onClick: onSubmit })}
