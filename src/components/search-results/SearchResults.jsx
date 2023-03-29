@@ -330,7 +330,7 @@ function SearchResults() {
           && (
             <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
               <SearchNote
-                searchKeywords={parseQuery(searchFields, false)}
+                searchKeywords={parseQuery(searchFields, searchParams.get('imageName'), false)}
                 resultsCount={totalResults}
               />
               <Formik>
