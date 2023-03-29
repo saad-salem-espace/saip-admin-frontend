@@ -54,7 +54,7 @@ function SearchQuery({
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched,
         }) => (
-          <Form onChange={onChangeSearchQuery(parseQuery(values.searchFields, true))}>
+          <Form onChange={onChangeSearchQuery(parseQuery(values.searchFields, '', true))}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
