@@ -11,7 +11,7 @@ const operators = ['and', 'or', 'not'].map((operator) => ({
 
 const parseQuery = (fields, imageName, isQuery) => {
   let finalQuery = '';
-  console.log(imageName);
+
   fields.forEach((value, index) => {
     if (!finalQuery) {
       finalQuery += parseSingleQuery({ ...value, operator: '' }, index, isQuery);
