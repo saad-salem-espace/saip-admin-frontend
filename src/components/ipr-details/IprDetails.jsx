@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
@@ -22,6 +23,27 @@ import BibliographicDataSection from './BibliographicDataSection';
 import c from '../../assets/images/search-header-bg.svg';
 // import Citation from './citation/Citation';
 // import CitationRow from './citation/CitationRow';
+import TrademarkBibliographic from './trademarks/bibliographic-data-section/BibliographicDataSection';
+import LegalStatus from './shared/legal-status/LegalStatus';
+import LegalStatusRow from './shared/legal-status/LegalStatusRow';
+import Applicants from './shared/applicants/Applicants';
+import ApplicantRow from './shared/applicants/ApplicantRow';
+import Owners from './shared/owners/Owners';
+import OwnerRow from './shared/owners/OwnerRow';
+import Representatives from './shared/representatives/Representatives';
+import RepresentativeRow from './shared/representatives/RepresentativeRow';
+import OfficeActions from './trademarks/office-actions/OfficeActions';
+import OfficeActionRow from './trademarks/office-actions/OfficeActionRow';
+import GoodsAndServices from './trademarks/goods-and-services/GoodsAndServices';
+import GoodsAndServicesRow from './trademarks/goods-and-services/GoodsAndServicesRow';
+import FigurativeClassification from './trademarks/figurative-classification/FigurativeClassification';
+import FigurativeClassificationRow from './trademarks/figurative-classification/FigurativeClassificationRow';
+import Exhibitions from './trademarks/exhibitions/Exhibitions';
+import ExhibitionRow from './trademarks/exhibitions/ExhibitionRow';
+import Priorities from './trademarks/priorities/Priorities';
+import PriorityRow from './trademarks/priorities/PriorityRow';
+import Description from './shared/description/Description';
+import trademarkSample from '../../testing-resources/trademarks/sampleTrademark.json';
 
 // TODO change structure when trademarks are added
 function IprDetails({
@@ -30,9 +52,14 @@ function IprDetails({
   const { t } = useTranslation('search');
   const [searchParams] = useSearchParams();
   const [document, setDocument] = useState(null);
+  const [selectedView, setSelectedView] = useState({ label: t('ipr.bibliographic'), value: 'bibliographic' });
+
+  const searchResultParams = {
+    workstreamId: searchParams.get('workstreamId'),
+  };
   useEffect(() => {
     if (documentId) {
-      documentApi({ workstreamId: searchParams.get('workstreamId'), documentId })
+      documentApi({ workstreamId: searchResultParams.workstreamId, documentId })
         .then((resp) => {
           setDocument(resp.data?.data[0]);
         });
@@ -43,44 +70,146 @@ function IprDetails({
     return null;
   }
 
-  const onChangeSelect = () => {
-
-  };
-
-  // TODO to be handled on handling section task
-  const sectionsOptions = [
+  const trademarkViewsOptions = [
     {
-      label: 'Bibliographic Data',
-      value: 1,
+      label: t('ipr.bibliographic'),
+      value: 'bibliographic',
+    },
+    {
+      label: t('ipr.mark'),
+      value: 'mark',
+    },
+    {
+      label: t('ipr.description'),
+      value: 'description',
+    },
+    {
+      label: t('ipr.legalStatus'),
+      value: 'legalStatus',
+    },
+    {
+      label: t('ipr.applicantDetails'),
+      value: 'applicants',
+    },
+    {
+      label: t('ipr.ownerDetails'),
+      value: 'owners',
+    },
+    {
+      label: t('ipr.representativeDetails'),
+      value: 'representatives',
+    },
+    {
+      label: t('ipr.goodsServices'),
+      value: 'goodsServices',
+    },
+    {
+      label: t('ipr.figurativeClassification'),
+      value: 'figurative',
+    },
+    {
+      label: t('ipr.exhibitionDetails'),
+      value: 'exhibition',
+    },
+    {
+      label: t('ipr.priorities'),
+      value: 'priorities',
+    },
+    {
+      label: t('ipr.officeActions'),
+      value: 'officeActions',
     },
   ];
 
-  // const citation = [
-  //   {
-  //     id: 1,
-  //     citationOrigin: '1',
-  //     publication: 'publication',
-  //     publicationURL: '/',
-  //     title: 'title',
-  //     priorityDate: '20/2',
-  //     publicationDate: '8/8',
-  //     applicants: 'applicants',
-  //     IPC: 'IPC',
-  //     CPC: 'CPC',
-  //   },
-  //   {
-  //     id: 2,
-  //     citationOrigin: '2',
-  //     publication: 'publication',
-  //     publicationURL: '/',
-  //     title: 'title',
-  //     priorityDate: '20/2',
-  //     publicationDate: '8/8',
-  //     applicants: 'applicants',
-  //     IPC: 'IPC',
-  //     CPC: 'CPC',
-  //   },
-  // ];
+  // todo in patent story
+  const patentViewsOptions = [
+    {
+      label: t('ipr.bibliographic'),
+      value: 'bibliographic',
+    },
+  ];
+
+  const onChangeSelect = (i) => {
+    setSelectedView(i);
+  };
+
+  const trademarkViews = {
+    bibliographic: <TrademarkBibliographic document={document} />,
+    legalStatus: <LegalStatus>
+      {
+        trademarkSample.LegalStatus.map((row) => (
+          <LegalStatusRow row={row} />
+        ))
+      }
+                 </LegalStatus>,
+    applicants: <Applicants>
+      {
+        trademarkSample.ApplicantsDetails.map((row) => (
+          <ApplicantRow row={row} />
+        ))
+      }
+                </Applicants>,
+    owners: <Owners>
+      {
+        trademarkSample.OwnersDetails.map((row) => (
+          <OwnerRow row={row} />
+        ))
+      }
+            </Owners>,
+    representatives: <Representatives>
+      {
+        trademarkSample.Representative.map((row) => (
+          <RepresentativeRow row={row} />
+        ))
+      }
+                     </Representatives>,
+    officeActions: <OfficeActions>
+      {
+        trademarkSample.OfficeActions.map((row) => (
+          <OfficeActionRow row={row} />
+        ))
+      }
+                   </OfficeActions>,
+    goodsServices: <GoodsAndServices>
+      {
+        trademarkSample.GoodsAndServices.map((row) => (
+          <GoodsAndServicesRow row={row} />
+        ))
+      }
+                   </GoodsAndServices>,
+    figurative: <FigurativeClassification>
+      {
+        trademarkSample.FigurativeClassification.map((row) => (
+          <FigurativeClassificationRow row={row} />
+        ))
+      }
+                </FigurativeClassification>,
+    exhibition: <Exhibitions>
+      {
+        trademarkSample.ExhibitionInformation.map((row) => (
+          <ExhibitionRow row={row} />
+        ))
+      }
+                </Exhibitions>,
+    priorities: <Priorities>
+                  {
+                    trademarkSample.Priorities.map((row) => (
+                      <PriorityRow row={row} />
+                    ))
+                  }
+                </Priorities>,
+    description: <Description description={trademarkSample.description} />,
+
+  };
+
+  const patentViews = {
+    bibliographic: <BibliographicDataSection document={document} />,
+  };
+
+  const views = {
+    2: patentViews,
+    1: trademarkViews,
+  };
 
   return (
     <div className={`${style.iprWrapper}`}>
@@ -120,23 +249,23 @@ function IprDetails({
           </div>
         </div>
         {
-            moreDetails && (
-              <div className="ms-6 d-flex align-items-center mb-2">
-                <Badge text="ended" varient="secondary" className="text-capitalize me-2" />
-                <h5 className="text-capitalize text-primary font-regular mb-0">title</h5>
-              </div>
-            )
-          }
+          moreDetails && (
+            <div className="ms-6 d-flex align-items-center mb-2">
+              <Badge text="ended" varient="secondary" className="text-capitalize me-2" />
+              <h5 className="text-capitalize text-primary font-regular mb-0">title</h5>
+            </div>
+          )
+        }
         <p className="text-gray px-6">
           <HandleEmptyAttribute checkOn={document.BibliographicData.owner} />
         </p>
         {
-            moreDetails && (
-              <div className={`ms-6 mb-4 ${style.img}`}>
-                <Image src={c} />
-              </div>
-            )
-}
+          moreDetails && (
+            <div className={`ms-6 mb-4 ${style.img}`}>
+              <Image src={c} />
+            </div>
+          )
+        }
       </div>
       <div className="px-6 pt-4">
         <Formik>
@@ -145,25 +274,19 @@ function IprDetails({
               <div className="position-relative">
                 <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('viewSection')}</span>
                 <Select
-                  options={sectionsOptions}
-                  onChangeSelect={onChangeSelect}
-                  selectedOption={sectionsOptions[0]}
-                  id="viewSection"
-                  fieldName="viewSection"
+                  options={searchResultParams.workstreamId === '1' ? trademarkViewsOptions : patentViewsOptions}
+                  setSelectedOption={onChangeSelect}
+                  selectedOption={selectedView}
+                  defaultValue={selectedView}
+                  id="sections"
+                  fieldName="sections"
                   className={`${style.select} mb-5 select-2`}
                 />
               </div>
             </Form>
           )}
         </Formik>
-        <BibliographicDataSection document={document} />
-        {/* <Citation>
-          {
-            citation.map((row) => (
-              <CitationRow row={row} />
-            ))
-          }
-        </Citation> */}
+        {(views[searchResultParams.workstreamId])[selectedView.value]}
       </div>
     </div>
   );
@@ -179,7 +302,7 @@ IprDetails.propTypes = {
 
 IprDetails.defaultProps = {
   documentId: null,
-  onClose: () => {},
+  onClose: () => { },
   moreDetails: false,
 };
 

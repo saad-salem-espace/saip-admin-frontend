@@ -14,6 +14,7 @@
     font-size: $font-size-base;
     @extend .pe-8;
     @extend .py-8;
+    white-space: nowrap;
   }
 
   td {
@@ -22,6 +23,7 @@
     font-size: $font-size-sm;
     @extend .pt-4;
     @extend .pb-8;
+    // @extend .align-middle;
   }
 
   th,
