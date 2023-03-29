@@ -9,7 +9,9 @@ import CacheContext from 'contexts/CacheContext';
 import uploadFile from 'apis/uploadFileApi';
 import * as Yup from 'yup';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
+import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
+import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import WorkStreams from '../work-streams/WorkStreams';
 import style from './style.module.scss';
@@ -33,7 +35,15 @@ function WorkstreamSearch() {
   const [imageName, setImageName] = useState(null);
 
   const formSchema = Yup.object({
-    searchQuery: Yup.string().trim().required('Input search criteria to display search results.'),
+    searchQuery: Yup.mixed()
+      .test('Is not empty', t('validationErrors.empty'), (data) => (
+        (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
+      || data instanceof DateObject
+      ))
+      .test('is Valid String', t('validationErrors.wildcards'), (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+      || data instanceof DateObject
+      )),
   });
 
   useEffect(() => {
@@ -85,7 +95,7 @@ function WorkstreamSearch() {
     searchWithImage: selectedWorkStream === 1,
   });
 
-  const uploadCurrentFile = async (file) => {
+  const uploadCurrentFile = async (file, setErrors, data) => {
     setIsSubmitting(true);
     const formData = new FormData();
     formData.append('file', file);
@@ -95,6 +105,7 @@ function WorkstreamSearch() {
     setIsImgUploaded(true);
     setShowUploadImgSection(false);
     setIsSubmitting(false);
+    if (!data.trim()) setErrors({});
   };
 
   const handleUploadImg = () => {
@@ -128,7 +139,7 @@ function WorkstreamSearch() {
             <Formik
               onSubmit={onSubmit}
               initialValues={{ searchQuery: '' }}
-              validationSchema={isImgUploaded ? Yup.object().shape({}) : formSchema}
+              validationSchema={formSchema}
               validateOnChange
               validateOnBlur={false}
             >
@@ -186,7 +197,7 @@ function WorkstreamSearch() {
                       </span> */}
                     </Search>
                   </div>
-                  {touched.searchQuery && errors.searchQuery && !isImgUploaded
+                  {touched.searchQuery && errors.searchQuery
                     ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
                     ) : null}
                   <div className="rounded">
@@ -194,7 +205,7 @@ function WorkstreamSearch() {
                       className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`}
                       showUploadImgSection={showUploadImgSection}
                       changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }}
-                      uploadFile={(file) => uploadCurrentFile(file)}
+                      uploadFile={(file) => uploadCurrentFile(file, setErrors, values.searchQuery)}
                       isSubmitting={isSubmitting}
                     />
                   </div>
