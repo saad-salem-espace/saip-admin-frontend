@@ -92,7 +92,7 @@ function WorkstreamSearch() {
     searchWithSibling: true,
     searchInputWrapper: true,
     imgUploaded: isImgUploaded,
-    searchWithImage: selectedWorkStream === 1,
+    searchWithImage: selectedWorkStream === 2,
   });
 
   const uploadCurrentFile = async (file, setErrors, data) => {
