@@ -184,7 +184,7 @@ function WorkstreamSearch() {
                       isClearable={!!values.searchQuery}
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
-                      searchWithImg={selectedWorkStream === 1}
+                      searchWithImg={selectedWorkStream === 2}
                       type={selectedOption?.identifierType}
                       onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
                       imageSearch={isImgUploaded}
