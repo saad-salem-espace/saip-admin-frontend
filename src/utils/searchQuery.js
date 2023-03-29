@@ -9,7 +9,7 @@ const operators = ['and', 'or', 'not'].map((operator) => ({
   displayName: t(`search:operators.${operator}`),
 }));
 
-const parseQuery = (fields, isQuery) => {
+const parseQuery = (fields, imageName, isQuery) => {
   let finalQuery = '';
 
   fields.forEach((value, index) => {
@@ -19,6 +19,12 @@ const parseQuery = (fields, isQuery) => {
       finalQuery += parseSingleQuery(value, index, isQuery);
     }
   });
+
+  if (!isQuery && imageName) {
+    if (finalQuery) finalQuery += ` OR image: ${imageName}`;
+    else finalQuery += `image: ${imageName}`;
+  }
+
   return finalQuery.trim();
 };
 
