@@ -1,9 +1,11 @@
 @import "../../../assets/styles/utilities/custom-theme";
 
 .imgWrapper {
-  width: 30%;
-  margin: 0 8px;
-  height: 130px;
+  &.smCarousel {
+    width: 30%;
+    margin: 0 8px;
+    height: 130px;
+  }
 
   .overlay {
     background-color: rgba(0, 0, 0, .5);
