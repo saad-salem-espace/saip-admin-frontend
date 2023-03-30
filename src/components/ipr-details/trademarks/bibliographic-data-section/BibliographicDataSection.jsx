@@ -100,7 +100,7 @@ const BibliographicDataSection = (
               </ShowMore>
             </p>
           </div>
-          {/*  <div className="d-flex mb-4">
+          <div className="d-flex mb-4">
             <p className="text-primary f-14 bibliographicLabel">{t('ipr.owners')}</p>
             <p className="f-12">
               <HandleEmptyAttribute checkOn={BibliographicData.Owners.join('; ')} />
@@ -117,7 +117,7 @@ const BibliographicDataSection = (
             <p className="f-12">
               <HandleEmptyAttribute checkOn={BibliographicData.Representatives.join('; ')} />
             </p>
-          </div> */}
+          </div>
           <div className="d-flex mb-4">
             <p className="text-primary f-14 bibliographicLabel">{t('classifications')}</p>
             <p className="f-12">
