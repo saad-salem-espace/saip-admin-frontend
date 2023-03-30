@@ -337,7 +337,7 @@ function SearchResults() {
                 {() => (
                   <Form className="mt-8">
                     {
-                      searchResultParams.workstreamId === '1' && (
+                      searchResultParams.workstreamId === '2' && (
                         <div className="position-relative mb-8 viewSelect">
                           <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
                           <Select
@@ -390,7 +390,6 @@ function SearchResults() {
               getNextDocument={getNextDocument}
               getPreviousDocument={getPreviousDocument}
               setActiveDocument={setActiveDocument}
-              // moreDetails for search with image
             />
           </Col>
         )}

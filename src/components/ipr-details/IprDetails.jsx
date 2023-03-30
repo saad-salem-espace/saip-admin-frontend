@@ -6,7 +6,6 @@ import {
   faTimes, faUpRightAndDownLeftFromCenter,
   faDownLeftAndUpRightToCenter, faChevronLeft, faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-// import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -18,11 +17,9 @@ import Select from 'components/shared/form/select/Select';
 import formStyle from 'components/shared/form/form.module.scss';
 import { documentApi } from 'apis/search/documentsApi';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
+import NoData from 'components/shared/empty-states/NoData';
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
-import c from '../../assets/images/search-header-bg.svg';
-// import Citation from './citation/Citation';
-// import CitationRow from './citation/CitationRow';
 import TrademarkBibliographic from './trademarks/bibliographic-data-section/BibliographicDataSection';
 import LegalStatus from './shared/legal-status/LegalStatus';
 import LegalStatusRow from './shared/legal-status/LegalStatusRow';
@@ -43,15 +40,13 @@ import ExhibitionRow from './trademarks/exhibitions/ExhibitionRow';
 import Priorities from './trademarks/priorities/Priorities';
 import PriorityRow from './trademarks/priorities/PriorityRow';
 import Description from './shared/description/Description';
-import trademarkSample from '../../testing-resources/trademarks/sampleTrademark.json';
-
+import ImageWithZoom from './shared/image-with-zoom/ImageWithZoom';
 // TODO change structure when trademarks are added
 function IprDetails({
   collapseIPR,
   isIPRExpanded,
   documentId,
   onClose,
-  moreDetails,
   getNextDocument,
   getPreviousDocument,
   setActiveDocument,
@@ -61,7 +56,7 @@ function IprDetails({
   const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
   const [document, setDocument] = useState(null);
-  const [selectedView, setSelectedView] = useState({ label: t('ipr.bibliographic'), value: 'bibliographic' });
+  const [selectedView, setSelectedView] = useState({ label: t('ipr.bibliographic'), value: 'BibliographicData' });
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -82,51 +77,51 @@ function IprDetails({
   const trademarkViewsOptions = [
     {
       label: t('ipr.bibliographic'),
-      value: 'bibliographic',
+      value: 'BibliographicData',
     },
     {
       label: t('ipr.mark'),
-      value: 'mark',
+      value: 'Mark',
     },
     {
       label: t('ipr.description'),
-      value: 'description',
+      value: 'Description',
     },
     {
       label: t('ipr.legalStatus'),
-      value: 'legalStatus',
+      value: 'LegalStatus',
     },
     {
       label: t('ipr.applicantDetails'),
-      value: 'applicants',
+      value: 'ApplicantsDetails',
     },
     {
       label: t('ipr.ownerDetails'),
-      value: 'owners',
+      value: 'OwnersDetails',
     },
     {
       label: t('ipr.representativeDetails'),
-      value: 'representatives',
+      value: 'Representative',
     },
     {
       label: t('ipr.goodsServices'),
-      value: 'goodsServices',
+      value: 'GoodsAndServices',
     },
     {
       label: t('ipr.figurativeClassification'),
-      value: 'figurative',
+      value: 'FigurativeClassification',
     },
     {
       label: t('ipr.exhibitionDetails'),
-      value: 'exhibition',
+      value: 'ExhibitionInformation',
     },
     {
       label: t('ipr.priorities'),
-      value: 'priorities',
+      value: 'Priorities',
     },
     {
       label: t('ipr.officeActions'),
-      value: 'officeActions',
+      value: 'OfficeActions',
     },
   ];
 
@@ -143,71 +138,75 @@ function IprDetails({
   };
 
   const trademarkViews = {
-    bibliographic: <TrademarkBibliographic document={document} />,
-    legalStatus: <LegalStatus>
+    BibliographicData: <TrademarkBibliographic
+      isIPRExpanded={isIPRExpanded}
+      BibliographicData={document.BibliographicData}
+    />,
+    LegalStatus: <LegalStatus>
       {
-        trademarkSample.LegalStatus.map((row) => (
+        document.LegalStatus.map((row) => (
           <LegalStatusRow row={row} />
         ))
       }
                  </LegalStatus>,
-    applicants: <Applicants>
+    ApplicantsDetails: <Applicants>
       {
-        trademarkSample.ApplicantsDetails.map((row) => (
+        document.ApplicantsDetails.map((row) => (
           <ApplicantRow row={row} />
         ))
       }
-                </Applicants>,
-    owners: <Owners>
+                       </Applicants>,
+    OwnersDetails: <Owners>
       {
-        trademarkSample.OwnersDetails.map((row) => (
+        document.OwnersDetails.map((row) => (
           <OwnerRow row={row} />
         ))
       }
-            </Owners>,
-    representatives: <Representatives>
+                   </Owners>,
+    Representative: <Representatives>
       {
-        trademarkSample.Representative.map((row) => (
+        document.Representative.map((row) => (
           <RepresentativeRow row={row} />
         ))
       }
-                     </Representatives>,
-    officeActions: <OfficeActions>
+                    </Representatives>,
+    OfficeActions: <OfficeActions>
       {
-        trademarkSample.OfficeActions.map((row) => (
+        document.OfficeActions.map((row) => (
           <OfficeActionRow row={row} />
         ))
       }
                    </OfficeActions>,
-    goodsServices: <GoodsAndServices>
+    GoodsAndServices: <GoodsAndServices>
       {
-        trademarkSample.GoodsAndServices.map((row) => (
+        document.GoodsAndServices.map((row) => (
           <GoodsAndServicesRow row={row} />
         ))
       }
-                   </GoodsAndServices>,
-    figurative: <FigurativeClassification>
+                      </GoodsAndServices>,
+    FigurativeClassification: <FigurativeClassification>
       {
-        trademarkSample.FigurativeClassification.map((row) => (
+        document.FigurativeClassification.map((row) => (
           <FigurativeClassificationRow row={row} />
         ))
       }
-                </FigurativeClassification>,
-    exhibition: <Exhibitions>
+                              </FigurativeClassification>,
+    ExhibitionInformation: <Exhibitions>
       {
-        trademarkSample.ExhibitionInformation.map((row) => (
+        document.ExhibitionInformation.map((row) => (
           <ExhibitionRow row={row} />
         ))
       }
-                </Exhibitions>,
-    priorities: <Priorities>
-                  {
-                    trademarkSample.Priorities.map((row) => (
-                      <PriorityRow row={row} />
-                    ))
-                  }
+                           </Exhibitions>,
+    Priorities: <Priorities>
+      {
+        document.Priorities.map((row) => (
+          <PriorityRow row={row} />
+        ))
+      }
                 </Priorities>,
-    description: <Description description={trademarkSample.description} />,
+    Description: <Description description={document.BibliographicData.Description} />,
+    Mark: <ImageWithZoom img={document.BibliographicData.Mark} className={style.imgWithZoom} />,
 
   };
 
@@ -216,10 +215,17 @@ function IprDetails({
   };
 
   const views = {
-    2: patentViews,
-    1: trademarkViews,
+    1: patentViews,
+    2: trademarkViews,
   };
 
+  const renderSelectedView = () => {
+    let content = <NoData />;
+    if ((document[selectedView.value]) || ((selectedView.value === 'Description' || selectedView.value === 'Mark') && (document.BibliographicData[selectedView.value]))) {
+      content = (views[searchResultParams.workstreamId])[selectedView.value];
+    }
+    return content;
+  };
   return (
     <div className={`${style.iprWrapper}`}>
       <div className="border-bottom bg-primary-01">
@@ -262,21 +268,37 @@ function IprDetails({
           </div>
         </div>
         {
-          moreDetails && (
-            <div className="ms-6 d-flex align-items-center mb-2">
-              <Badge text="ended" varient="secondary" className="text-capitalize me-2" />
-              <h5 className="text-capitalize text-primary font-regular mb-0">title</h5>
+          searchResultParams.workstreamId === '2' && (
+            <div className="ms-6 mb-2">
+              <Badge text={document.BibliographicData.TrademarkLastStatus} varient="secondary" className="text-capitalize me-2 mb-4" />
+              <div className="d-flex justify-content-between">
+                <div className="me-2 mb-md-0 mb-2">
+                  <h5 className="text-capitalize text-primary font-regular mb-2">
+                    {document.BibliographicData.BrandNameEn}
+                    <span className="d-block mt-2">
+                      {document.BibliographicData.BrandNameAr}
+                    </span>
+                  </h5>
+                  <p className="text-gray">
+                    <HandleEmptyAttribute checkOn={document.BibliographicData.owner} />
+                  </p>
+                </div>
+                {
+                  !isIPRExpanded && (
+                    <div className={`me-6 mb-2 ${style.headerImg}`}>
+                      <Image src={document.BibliographicData.Mark} />
+                    </div>
+                  )
+                }
+              </div>
             </div>
           )
         }
-        <p className="text-gray px-6">
-          <HandleEmptyAttribute checkOn={document.BibliographicData.owner} />
-        </p>
         {
-          moreDetails && (
-            <div className={`ms-6 mb-4 ${style.img}`}>
-              <Image src={c} />
-            </div>
+          searchResultParams.workstreamId === '1' && (
+            <p className="text-gray px-6">
+              <HandleEmptyAttribute checkOn={document.BibliographicData.owner} />
+            </p>
           )
         }
       </div>
@@ -287,7 +309,7 @@ function IprDetails({
               <div className="position-relative">
                 <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('viewSection')}</span>
                 <Select
-                  options={searchResultParams.workstreamId === '1' ? trademarkViewsOptions : patentViewsOptions}
+                  options={searchResultParams.workstreamId === '2' ? trademarkViewsOptions : patentViewsOptions}
                   setSelectedOption={onChangeSelect}
                   selectedOption={selectedView}
                   defaultValue={selectedView}
@@ -299,7 +321,7 @@ function IprDetails({
             </Form>
           )}
         </Formik>
-        {(views[searchResultParams.workstreamId])[selectedView.value]}
+        {renderSelectedView()}
       </div>
     </div>
   );
@@ -310,7 +332,6 @@ IprDetails.propTypes = {
   isIPRExpanded: PropTypes.bool.isRequired,
   documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onClose: PropTypes.func,
-  moreDetails: PropTypes.bool,
   getNextDocument: PropTypes.func,
   getPreviousDocument: PropTypes.func,
   setActiveDocument: PropTypes.func,
@@ -319,10 +340,9 @@ IprDetails.propTypes = {
 IprDetails.defaultProps = {
   documentId: null,
   onClose: () => { },
-  moreDetails: false,
-  getNextDocument: () => {},
-  getPreviousDocument: () => {},
-  setActiveDocument: () => {},
+  getNextDocument: () => { },
+  getPreviousDocument: () => { },
+  setActiveDocument: () => { },
 };
 
 export default IprDetails;
