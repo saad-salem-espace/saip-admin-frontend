@@ -72,7 +72,7 @@ function WorkstreamSearch() {
     const defaultConditions = new Map();
     defaultConditions.set('Text', 'hasExactly');
     defaultConditions.set('Date', 'is');
-    defaultConditions.set('Numbers', 'is');
+    defaultConditions.set('Number', 'is');
     defaultConditions.set('LKP', 'hasAny');
 
     const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
