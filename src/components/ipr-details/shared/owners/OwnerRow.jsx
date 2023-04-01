@@ -6,9 +6,7 @@ const OwnerRow = ({ row }) => (
     <td><HandleEmptyAttribute checkOn={row.OwnerName} /></td>
     <td><HandleEmptyAttribute checkOn={row.CountryCode} /></td>
     <td><HandleEmptyAttribute checkOn={row.Naionality} /></td>
-    <td><HandleEmptyAttribute checkOn={row.OwnerDetails} /></td>
-    {/* will use the blow line after some changes in the backend */}
-    {/* <td><HandleEmptyAttribute checkOn={row.OwnerDetails.join('; ')} /></td> */}
+    <td><HandleEmptyAttribute checkOn={row.OwnerDetails.join('; ')} /></td>
   </tr>
 );
 
