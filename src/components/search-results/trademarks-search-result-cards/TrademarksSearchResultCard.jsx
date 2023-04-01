@@ -2,10 +2,8 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
-import { trimStringRelativeToSubtext } from 'utils/strings';
 import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form/checkboxes/checkbox/Checkbox';
-import Highlighter from 'react-highlight-words';
 import Image from 'react-bootstrap/Image';
 import Badge from 'components/shared/badge/Badge';
 import style from '../search-result-cards/search-result-card/style.module.scss';
@@ -14,7 +12,6 @@ import './style.scss';
 
 function TrademarksSearchResultCard({
   searchResult,
-  query,
   setActiveDocument, activeDocument, selectedView,
 }) {
   const { BibliographicData } = searchResult;
@@ -38,18 +35,10 @@ function TrademarksSearchResultCard({
               </div>
             </div>
             <div className="title">
-              <Highlighter
-                highlightTag="span"
-                className="d-block text-truncate mb-3"
-                highlightClassName="font-medium"
-                textToHighlight={trimStringRelativeToSubtext(
-                  BibliographicData.BrandNameEn,
-                  query,
-                )}
-                searchWords={[query]}
-                autoEscape
-              />
-              <span className="d-block text-truncate mb-2">
+              <span className="d-block text-truncate mb-1">
+                {BibliographicData.BrandNameEn}
+              </span>
+              <span className="d-block text-truncate">
                 {BibliographicData.BrandNameAr}
               </span>
               <div>
@@ -61,7 +50,7 @@ function TrademarksSearchResultCard({
                 {
                   (selectedView.value === 'detailed' || selectedView.value === 'summary') && (
                     <p className="text-gray md-text mb-2">
-                      {BibliographicData.PrimaryApplicantName}
+                      {BibliographicData.Applicants.join('; ')}
                     </p>)
                 }
                 {
@@ -94,7 +83,7 @@ function TrademarksSearchResultCard({
 TrademarksSearchResultCard.propTypes = {
   searchResult: PropTypes.shape({
     BibliographicData: PropTypes.shape({
-      PrimaryApplicantName: PropTypes.string.isRequired,
+      Applicants: PropTypes.arrayOf(PropTypes.string),
       BrandNameEn: PropTypes.string.isRequired,
       BrandNameAr: PropTypes.string.isRequired,
       ApplicationTitle: PropTypes.string.isRequired,
@@ -107,7 +96,6 @@ TrademarksSearchResultCard.propTypes = {
       TrademarkLastStatus: PropTypes.string.isRequired,
     }),
   }).isRequired,
-  query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
   selectedView: PropTypes.shape({
