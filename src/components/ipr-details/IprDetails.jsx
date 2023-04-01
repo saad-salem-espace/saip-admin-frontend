@@ -129,7 +129,7 @@ function IprDetails({
   const patentViewsOptions = [
     {
       label: t('ipr.bibliographic'),
-      value: 'bibliographic',
+      value: 'BibliographicData',
     },
   ];
 
@@ -137,81 +137,85 @@ function IprDetails({
     setSelectedView(i);
   };
 
-  const trademarkViews = {
-    BibliographicData: <TrademarkBibliographic
-      isIPRExpanded={isIPRExpanded}
-      BibliographicData={document.BibliographicData}
-    />,
-    LegalStatus: <LegalStatus>
+  const trademarkViews = () => {
+    const content = {
+      BibliographicData: <TrademarkBibliographic
+        isIPRExpanded={isIPRExpanded}
+        BibliographicData={document.BibliographicData}
+      />,
+      LegalStatus: <LegalStatus>
       {
         document.LegalStatus.map((row) => (
           <LegalStatusRow row={row} />
         ))
       }
-                 </LegalStatus>,
-    ApplicantsDetails: <Applicants>
+                   </LegalStatus>,
+      ApplicantsDetails: <Applicants>
       {
         document.ApplicantsDetails.map((row) => (
           <ApplicantRow row={row} />
         ))
       }
-                       </Applicants>,
-    OwnersDetails: <Owners>
+                         </Applicants>,
+      OwnersDetails: <Owners>
       {
         document.OwnersDetails.map((row) => (
           <OwnerRow row={row} />
         ))
       }
-                   </Owners>,
-    Representative: <Representatives>
+                     </Owners>,
+      Representative: <Representatives>
       {
         document.Representative.map((row) => (
           <RepresentativeRow row={row} />
         ))
       }
-                    </Representatives>,
-    OfficeActions: <OfficeActions>
+                      </Representatives>,
+      OfficeActions: <OfficeActions>
       {
         document.OfficeActions.map((row) => (
           <OfficeActionRow row={row} />
         ))
       }
-                   </OfficeActions>,
-    GoodsAndServices: <GoodsAndServices>
+                     </OfficeActions>,
+      GoodsAndServices: <GoodsAndServices>
       {
         document.GoodsAndServices.map((row) => (
           <GoodsAndServicesRow row={row} />
         ))
       }
-                      </GoodsAndServices>,
-    FigurativeClassification: <FigurativeClassification>
+                        </GoodsAndServices>,
+      FigurativeClassification: <FigurativeClassification>
       {
         document.FigurativeClassification.map((row) => (
           <FigurativeClassificationRow row={row} />
         ))
       }
-                              </FigurativeClassification>,
-    ExhibitionInformation: <Exhibitions>
+                                </FigurativeClassification>,
+      ExhibitionInformation: <Exhibitions>
       {
         document.ExhibitionInformation.map((row) => (
           <ExhibitionRow row={row} />
         ))
       }
-                           </Exhibitions>,
-    Priorities: <Priorities>
+                             </Exhibitions>,
+      Priorities: <Priorities>
       {
         document.Priorities.map((row) => (
           <PriorityRow row={row} />
         ))
       }
-                </Priorities>,
-    Description: <Description description={document.BibliographicData.Description} />,
-    Mark: <ImageWithZoom img={document.BibliographicData.Mark} className={style.imgWithZoom} />,
+                  </Priorities>,
+      Description: <Description description={document.BibliographicData.Description} />,
+      Mark: <ImageWithZoom img={document.BibliographicData.Mark} className={style.imgWithZoom} />,
+    };
 
+    return content;
   };
 
-  const patentViews = {
-    bibliographic: <BibliographicDataSection document={document} />,
+  const patentViews = () => {
+    const content = { BibliographicData: <BibliographicDataSection document={document} /> };
+    return content;
   };
 
   const views = {
@@ -221,8 +225,14 @@ function IprDetails({
 
   const renderSelectedView = () => {
     let content = <NoData />;
-    if ((document[selectedView.value]) || ((selectedView.value === 'Description' || selectedView.value === 'Mark') && (document.BibliographicData[selectedView.value]))) {
-      content = (views[searchResultParams.workstreamId])[selectedView.value];
+    if (searchResultParams.workstreamId === '2') {
+      if ((document[selectedView.value]) || ((selectedView.value === 'Description' || selectedView.value === 'Mark') && (document.BibliographicData[selectedView.value]))) {
+        content = (views[searchResultParams.workstreamId]())[selectedView.value];
+      }
+    } else if (searchResultParams.workstreamId === '1') {
+      if (document[selectedView.value]) {
+        content = (views[searchResultParams.workstreamId]())[selectedView.value];
+      }
     }
     return content;
   };

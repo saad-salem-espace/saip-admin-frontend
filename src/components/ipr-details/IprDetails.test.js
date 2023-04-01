@@ -10,7 +10,7 @@ import I18n from '../../i18n';
 const mockAxios = new MockAdapter(apiInstance);
 mockAxios.onGet(/\/workstreams\/\d+\/documents\/\w+/).reply(200, { data: [samplePatent] });
 
-const searchParams = { workstreamId: 1 };
+const searchParams = { workstreamId: '1' };
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom')),
   useSearchParams: () => [
