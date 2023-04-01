@@ -40,8 +40,8 @@ describe('<IprDetails />', () => {
       expect(getByRole('heading', { level: 5, name: sampleTrademark.BibliographicData.PublicationNumber })).toBeInTheDocument();
       expect(getByTestId('expand-ipr-detail-button')).toBeInTheDocument();
       expect(getByTestId('close-ipr-detail-button')).toBeInTheDocument();
-      if (sampleTrademark.BibliographicData.owner) {
-        expect(getByText(sampleTrademark.BibliographicData.owner)).toBeInTheDocument();
+      if (sampleTrademark.BibliographicData.Description) {
+        expect(getByText(sampleTrademark.BibliographicData.Description)).toBeInTheDocument();
       } else {
         expect(queryAllByText(tDefault('emptyText')).length).toBeGreaterThanOrEqual(1);
       }
