@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 
 const Description = ({ description, children }) => (
   <Container fluid className="px-0">
     <Row className="mx-0">
       <Col lg={children ? 8 : 12} md={6}>
-        <p>{description}</p>
+        <HandleEmptyAttribute checkOn={description} />
       </Col>
       {
         children && (

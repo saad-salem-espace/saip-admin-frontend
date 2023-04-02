@@ -53,7 +53,7 @@
   "FigurativeClassification": [
     {
       "ViennaCode": "any text",
-      "Description": "any text"
+      "Description": "any text 2"
     },
     {
       "ViennaCode": "any text",
@@ -143,22 +143,22 @@
   ],
   "LegalStatus": [
     {
-      "StatusCode": "",
+      "StatusCode": "hi",
       "StatusDate": "2015-01-20",
-      "Status": "Active",
-      "EffectiveDate": "2015-01-20",
+      "Status": "Status",
+      "EffectiveDate": "2015-01-22",
       "Notes": "Active"
     },
     {
       "StatusCode": "A2, 08936998",
-      "StatusDate": "2015-01-20",
+      "StatusDate": "2015-01-22",
       "Status": "In Active",
       "EffectiveDate": "2015-01-20",
       "Notes": "Active"
     },
     {
       "StatusCode": "C2, 08936998",
-      "StatusDate": "2015-01-20",
+      "StatusDate": "2015-01-25",
       "Status": "In Active",
       "EffectiveDate": "2015-01-20",
       "Notes": "Active"
@@ -185,7 +185,7 @@
     {
       "RepresentativeName": "omnia yahia",
       "CountryCode": "01",
-      "Naionality": "",
+      "Naionality": "nationality",
       "RepresentativeDetails": [
         "country 3",
         "city 3",
@@ -252,7 +252,7 @@
     {
       "PriorityNumber": "1",
       "PriorityDate": "1/2",
-      "PriorityCountry": ""
+      "PriorityCountry": "country"
     },
     {
       "PriorityNumber": "2",
