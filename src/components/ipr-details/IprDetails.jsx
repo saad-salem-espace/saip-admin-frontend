@@ -156,7 +156,7 @@ function IprDetails({
             </Form>
           )}
         </Formik>
-        <BibliographicDataSection document={document} />
+        <BibliographicDataSection isIPRExpanded={isIPRExpanded} document={document} />
         {/* <Citation>
           {
             citation.map((row) => (
