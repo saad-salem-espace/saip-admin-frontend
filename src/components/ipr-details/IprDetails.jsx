@@ -25,9 +25,18 @@ import c from '../../assets/images/search-header-bg.svg';
 
 // TODO change structure when trademarks are added
 function IprDetails({
-  collapseIPR, isIPRExpanded, documentId, onClose, moreDetails,
+  collapseIPR,
+  isIPRExpanded,
+  documentId,
+  onClose,
+  moreDetails,
+  getNextDocument,
+  getPreviousDocument,
+  setActiveDocument,
 }) {
   const { t } = useTranslation('search');
+  const previousDocument = getPreviousDocument();
+  const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
   const [document, setDocument] = useState(null);
   useEffect(() => {
@@ -97,11 +106,15 @@ function IprDetails({
               variant="link"
               className="p-0 pe-5"
               text={<FontAwesomeIcon icon={faChevronLeft} className="md-text text-gray" />}
+              disabled={!previousDocument}
+              onClick={() => setActiveDocument(previousDocument)}
             />
             <Button
               variant="link"
               className="p-0 pe-5 border-end me-4"
               text={<FontAwesomeIcon icon={faChevronRight} className="md-text text-gray" />}
+              disabled={!nextDocument}
+              onClick={() => setActiveDocument(nextDocument)}
             />
             <Button
               variant="link"
@@ -175,12 +188,18 @@ IprDetails.propTypes = {
   documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onClose: PropTypes.func,
   moreDetails: PropTypes.bool,
+  getNextDocument: PropTypes.func,
+  getPreviousDocument: PropTypes.func,
+  setActiveDocument: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
   documentId: null,
   onClose: () => {},
   moreDetails: false,
+  getNextDocument: () => {},
+  getPreviousDocument: () => {},
+  setActiveDocument: () => {},
 };
 
 export default IprDetails;

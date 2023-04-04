@@ -11,6 +11,12 @@
     font-size: $font-size-sm;
     font-family: $font-regular;
     width: 100%;
+    html[dir="ltr"] & {
+      padding-right: 45px !important;
+    }
+    html[dir="rtl"] & {
+      padding-left: 45px !important;
+    }
   }
 
   .rmdp-container {
@@ -163,6 +169,12 @@
   &.error {
     .rmdp-input {
       border-color: $danger;
+      html[dir="ltr"] & {
+        padding-right: 65px !important;
+      }
+      html[dir="rtl"] & {
+        padding-left: 65px !important;
+      }
     }
 
     &::after {
@@ -210,21 +222,33 @@
   padding: 4px 10px;
 }
 
-.datePickerWrapper {
-  &.datePicker, .rmdp-container , .rmdp-input{
-    @extend .h-100;
+.searchBox {
+  .datePickerWrapper {
+    &.datePicker, .rmdp-container , .rmdp-input{
+      @extend .h-100;
+    }
+    .rmdp-input {
+      margin: 0;
+      border-radius: 0;
+    }
   }
-  .rmdp-input {
-    margin: 0;
-    border-radius: 0;
-  }
-  &.datePicker .icon-ic-calendar {
+  .datePicker .icon-ic-calendar {
     top: 36px;
     html[dir="ltr"] & {
-      right: 155px;
+      right: 85px;
     }
     html[dir="rtl"] & {
-      left: 155px;
+      left: 85px;
+    }
+  }
+  &.style_searchWithImage__jbGoX {
+    .datePicker .icon-ic-calendar {
+      html[dir="ltr"] & {
+        right: 155px;
+      }
+      html[dir="rtl"] & {
+        left: 155px;
+      }
     }
   }
   
