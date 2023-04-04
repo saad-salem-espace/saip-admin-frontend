@@ -59,8 +59,9 @@
     "published": "Published {{value}}"
   },
   "sortBy": "Sort by",
-  "publishDateAsc": "publish date asc",
-  "publishDateDesc": "publish date desc",
-  "earliestPriorityDateAsc": "earliest priority date asc",
-  "earliestPriorityDateDesc": "earliest priority date desc"
+  "publicationDateAsc": "Publication date asc",
+  "publicationDateDesc": "Publication date desc",
+  "priorityDateAsc": "Priority date asc",
+  "priorityDateDesc": "Priority date desc",
+  "mostRelevant": "Most Relevant"
 }

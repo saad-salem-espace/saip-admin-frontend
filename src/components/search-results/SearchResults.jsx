@@ -49,7 +49,7 @@ function SearchResults() {
   const [imageName, setImageName] = useState(null);
   const [flattenedCriteria, setFlattenedCriteria] = useState([]);
   const submitRef = useRef();
-  const [sortBy, setSortBy] = useState({ label: t('publishDateAsc'), value: 'publishDateAsc' });
+  const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -228,20 +228,24 @@ function SearchResults() {
 
   const sortByOptions = [
     {
-      label: t('publishDateAsc'),
-      value: 'publishDateAsc',
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
     },
     {
-      label: t('publishDateDesc'),
-      value: 'publishDateDesc',
+      label: t('publicationDateAsc'),
+      value: 'publicationDateAsc',
     },
     {
-      label: t('earliestPriorityDateAsc'),
-      value: 'earliestPriorityDateAsc',
+      label: t('publicationDateDesc'),
+      value: 'publicationDateDesc',
     },
     {
-      label: t('earliestPriorityDateDesc'),
-      value: 'earliestPriorityDateDesc',
+      label: t('priorityDateAsc'),
+      value: 'priorityDateAsc',
+    },
+    {
+      label: t('priorityDateDesc'),
+      value: 'priorityDateDesc',
     },
   ];
 
