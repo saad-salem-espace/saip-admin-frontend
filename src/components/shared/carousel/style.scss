@@ -67,7 +67,6 @@
   box-shadow: $box-shadow-lg;
   background-image: none;
   padding-top: 5px;
-  display: none;
   background-color: $white;
 }
 
@@ -88,10 +87,9 @@
 .carousel-thumbnails {
   .item-thumb {
     position: relative;
-    @extend .flex-fill;
     margin: 8px;
     padding: 0px;
-    width: 80px;
+    width: 84px;
     height: 111px;
     img {
       width: 100%;

@@ -11,6 +11,7 @@ import './style.scss';
 
 function Carousel({
   largeThumb,
+  className,
 }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -34,21 +35,19 @@ function Carousel({
           </div>
         </div>
       )}
-      <BootstrapCarousel indicators={false} prevLabel={null} nextLabel={null} className="mb-8">
+      <BootstrapCarousel indicators={false} prevLabel={null} nextLabel={null} className={`${className} mb-8`}>
         <BootstrapCarousel.Item>
-          <div className="d-flex carousel-thumbnails">
-            <Thumb srcThumb={ImagePath1} enLarge />
-            <Thumb srcThumb={ImagePath1} enLarge />
-            <Thumb srcThumb={ImagePath1} enLarge />
-            <Thumb srcThumb={ImagePath1} enLarge />
+          <div className="d-flex justify-content-center carousel-thumbnails">
+            <Thumb srcThumb={ImagePath1} largeThumb={largeThumb} />
+            <Thumb srcThumb={ImagePath1} largeThumb={largeThumb} />
+            <Thumb srcThumb={ImagePath1} largeThumb={largeThumb} />
           </div>
         </BootstrapCarousel.Item>
         <BootstrapCarousel.Item>
-          <div className="d-flex carousel-thumbnails">
-            <Thumb srcThumb={ImagePath2} enLarge />
-            <Thumb srcThumb={ImagePath2} enLarge />
-            <Thumb srcThumb={ImagePath2} enLarge />
-            <Thumb srcThumb={ImagePath2} enLarge />
+          <div className="d-flex justify-content-center carousel-thumbnails">
+            <Thumb srcThumb={ImagePath2} largeThumb={largeThumb} />
+            <Thumb srcThumb={ImagePath2} largeThumb={largeThumb} />
+            <Thumb srcThumb={ImagePath2} largeThumb={largeThumb} />
           </div>
         </BootstrapCarousel.Item>
       </BootstrapCarousel>
@@ -58,10 +57,12 @@ function Carousel({
 
 Carousel.propTypes = {
   largeThumb: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 Carousel.defaultProps = {
   largeThumb: false,
+  className: null,
 };
 
 export default Carousel;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ShowMore from 'components/shared/show-more/ShowMore';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
-import Carousel from './carousel/Carousel';
+import Carousel from '../shared/carousel/Carousel';
 
 const BibliographicDataSection = ({ document, isIPRExpanded }) => {
   const { t } = useTranslation('search');
@@ -72,7 +72,6 @@ const BibliographicDataSection = ({ document, isIPRExpanded }) => {
             <HandleEmptyAttribute checkOn={BibliographicData.ApplicationAbstract.join(' ')} />
           </ShowMore>
         </p>
-        <p className="text-primary f-14">{t('images')}</p>
         <HandleEmptyAttribute checkOn={document.Images} RenderedComponent={Carousel} />
       </Col>
       <Col lg={isIPRExpanded ? 5 : 12} md={isIPRExpanded ? 5 : 12} className={isIPRExpanded ? 'border-start' : ''}>
@@ -82,7 +81,10 @@ const BibliographicDataSection = ({ document, isIPRExpanded }) => {
           * Need sync onclick on small thumb to show it in large thumb
           * Add enLarge attribute to ItemThumb component to view overlay in carousel mode
         */ }
-        <Carousel largeThumb={isIPRExpanded} />
+        <div className={isIPRExpanded ? '' : 'd-flex'}>
+          <p className="text-primary f-14">{t('images')}</p>
+          <Carousel className="flex-fill" largeThumb={isIPRExpanded} />
+        </div>
       </Col>
     </Row>
   );
