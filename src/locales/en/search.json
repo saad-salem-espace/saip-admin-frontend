@@ -57,5 +57,10 @@
     "view": "View",
     "registered": "Registered {{value}}",
     "published": "Published {{value}}"
-  }
+  },
+  "sortBy": "Sort by",
+  "publishDateAsc": "publish date asc",
+  "publishDateDesc": "publish date desc",
+  "earliestPriorityDateAsc": "earliest priority date asc",
+  "earliestPriorityDateDesc": "earliest priority date desc"
 }
