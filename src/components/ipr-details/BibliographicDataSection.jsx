@@ -5,11 +5,9 @@ import ShowMore from 'components/shared/show-more/ShowMore';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import Carousel from './carousel/Carousel';
-import Thumb from './carousel/Thumb';
 
 const BibliographicDataSection = ({ document, isIPRExpanded }) => {
   const { t } = useTranslation('search');
-  const ImagePath = 'https://picsum.photos/id/250/400/400';
   const { BibliographicData } = document;
   return (
     <Row>
@@ -84,12 +82,7 @@ const BibliographicDataSection = ({ document, isIPRExpanded }) => {
           * Need sync onclick on small thumb to show it in large thumb
           * Add enLarge attribute to ItemThumb component to view overlay in carousel mode
         */ }
-        <Carousel largeThumb>
-          <Thumb srcThumb={ImagePath} enLarge />
-          <Thumb srcThumb={ImagePath} enLarge />
-          <Thumb srcThumb={ImagePath} enLarge />
-          <Thumb srcThumb={ImagePath} enLarge />
-        </Carousel>
+        <Carousel largeThumb={isIPRExpanded} />
       </Col>
     </Row>
   );
