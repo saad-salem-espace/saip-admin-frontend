@@ -1,6 +1,7 @@
 import './assets/styles/App.scss';
 import Routes from 'components/routes/Routes';
 import ThemeProvider from 'components/theme/ThemeProvider';
+import NavBar from 'components/nav-bar/NavBar';
 
 import React, {
 // useState,
@@ -20,6 +21,7 @@ function App() {
       <div className="app">
         {/* <ChangeLanguage changeLang={changeLang} /> */}
         <Routes />
+        <NavBar />
       </div>
     </ThemeProvider>
 
