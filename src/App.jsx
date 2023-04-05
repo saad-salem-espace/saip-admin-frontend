@@ -20,8 +20,8 @@ function App() {
     >
       <div className="app">
         {/* <ChangeLanguage changeLang={changeLang} /> */}
-        <Routes />
         <NavBar />
+        <Routes />
       </div>
     </ThemeProvider>
 
