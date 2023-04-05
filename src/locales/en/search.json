@@ -133,5 +133,11 @@
       "representativeName": "Representative Name",
       "representativeDetails": "Representative details"
     }
-  }
+  },
+  "sortBy": "Sort by",
+  "publicationDateAsc": "Publication date asc",
+  "publicationDateDesc": "Publication date desc",
+  "priorityDateAsc": "Priority date asc",
+  "priorityDateDesc": "Priority date desc",
+  "mostRelevant": "Most Relevant"
 }
