@@ -367,21 +367,21 @@ function SearchResults() {
                   <Form className="mt-8">
                     <div className="d-md-flex">
                       {
-                        searchResultParams.workstreamId === '1' && (
-                          <div className="position-relative mb-6 viewSelect">
-                            <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
-                            <Select
-                              options={viewOptions}
-                              setSelectedOption={onChangeView}
-                              selectedOption={selectedView}
-                              defaultValue={selectedView}
-                              id="viewSection"
-                              fieldName="viewSection"
-                              className="mb-5 select-2"
-                            />
-                          </div>
-                        )
-                      }
+                      searchResultParams.workstreamId === '2' && (
+                        <div className="position-relative mb-6 viewSelect">
+                          <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                          <Select
+                            options={viewOptions}
+                            setSelectedOption={onChangeView}
+                            selectedOption={selectedView}
+                            defaultValue={selectedView}
+                            id="viewSection"
+                            fieldName="viewSection"
+                            className="mb-5 select-2"
+                          />
+                        </div>
+                      )
+                    }
                       <div className="position-relative mb-8 sortBy ms-md-6">
                         <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
@@ -433,7 +433,6 @@ function SearchResults() {
               getNextDocument={getNextDocument}
               getPreviousDocument={getPreviousDocument}
               setActiveDocument={setActiveDocument}
-            // moreDetails for search with image
             />
           </Col>
         )}
