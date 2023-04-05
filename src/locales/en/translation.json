@@ -2,5 +2,5 @@
   "emptyText": "No data available",
   "showMore": "Show more",
   "showLess": "Show less",
-  "": "This field cannot be empty."
+  "noRelevantData": "No relevant data found"
 }

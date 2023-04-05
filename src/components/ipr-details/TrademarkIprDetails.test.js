@@ -2,15 +2,15 @@ import { render } from 'TestUtils';
 import { waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import apiInstance from 'apis/apiInstance';
-import samplePatent from 'testing-resources/patents/samplePatent.json';
 import userEvent from '@testing-library/user-event';
+import sampleTrademark from 'testing-resources/trademarks/sampleTrademark.json';
 import IprDetails from './IprDetails';
 import I18n from '../../i18n';
 
 const mockAxios = new MockAdapter(apiInstance);
-mockAxios.onGet(/\/workstreams\/\d+\/documents\/\w+/).reply(200, { data: [samplePatent] });
+mockAxios.onGet(/\/workstreams\/\d+\/documents\/\w+/).reply(200, { data: [sampleTrademark] });
 
-const searchParams = { workstreamId: '1' };
+const searchParams = { workstreamId: '2' };
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom')),
   useSearchParams: () => [
@@ -33,15 +33,15 @@ describe('<IprDetails />', () => {
       <IprDetails
         isExpanded={false}
         collapseIPR={mockFn}
-        documentId={samplePatent.BibliographicData.FilingNumber}
+        documentId={sampleTrademark.BibliographicData.FilingNumber}
       />,
     );
     await waitFor(() => {
-      expect(getByRole('heading', { level: 5, name: samplePatent.BibliographicData.PublicationNumber })).toBeInTheDocument();
+      expect(getByRole('heading', { level: 5, name: sampleTrademark.BibliographicData.PublicationNumber })).toBeInTheDocument();
       expect(getByTestId('expand-ipr-detail-button')).toBeInTheDocument();
       expect(getByTestId('close-ipr-detail-button')).toBeInTheDocument();
-      if (samplePatent.BibliographicData.owner) {
-        expect(getByText(samplePatent.BibliographicData.owner)).toBeInTheDocument();
+      if (sampleTrademark.BibliographicData.Description) {
+        expect(getByText(sampleTrademark.BibliographicData.Description)).toBeInTheDocument();
       } else {
         expect(queryAllByText(tDefault('emptyText')).length).toBeGreaterThanOrEqual(1);
       }
@@ -53,7 +53,7 @@ describe('<IprDetails />', () => {
       <IprDetails
         isExpanded={false}
         collapseIPR={mockFn}
-        documentId={samplePatent.BibliographicData.FilingNumber}
+        documentId={sampleTrademark.BibliographicData.FilingNumber}
       />,
     );
 
@@ -70,7 +70,7 @@ describe('<IprDetails />', () => {
       <IprDetails
         isExpanded={false}
         collapseIPR={() => {}}
-        documentId={samplePatent.BibliographicData.FilingNumber}
+        documentId={sampleTrademark.BibliographicData.FilingNumber}
         onClose={mockFn}
       />,
     );

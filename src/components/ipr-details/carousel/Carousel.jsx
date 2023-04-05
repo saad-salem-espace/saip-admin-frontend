@@ -17,7 +17,7 @@ function Carousel() {
     <BootstrapCarousel indicators={false} prevLabel={null} nextLabel={null} className="mb-8">
       <BootstrapCarousel.Item>
         <div className="d-flex">
-          <div className="position-relative imgWrapper">
+          <div className="position-relative smCarousel imgWrapper">
             <Image src={c} className="img" />
             <div className="overlay">
               <Button variant="transparent" onClick={handleShow} className="border-0 w-100 h-100">
@@ -30,7 +30,7 @@ function Carousel() {
               </Modal>
             </div>
           </div>
-          <div className="position-relative imgWrapper">
+          <div className="position-relative smCarousel imgWrapper">
             <Image src={c} className="img" />
             <div className="overlay">
               <Button variant="transparent" onClick={handleShow} className="border-0 w-100 h-100">
@@ -43,7 +43,7 @@ function Carousel() {
               </Modal>
             </div>
           </div>
-          <div className="position-relative imgWrapper">
+          <div className="position-relative smCarousel imgWrapper">
             <Image src={c} className="img" />
             <div className="overlay">
               <Button variant="transparent" onClick={handleShow} className="border-0 w-100 h-100">
@@ -60,7 +60,7 @@ function Carousel() {
       </BootstrapCarousel.Item>
       <BootstrapCarousel.Item>
         <div className="d-flex">
-          <div className="position-relative imgWrapper">
+          <div className="position-relative smCarousel imgWrapper">
             <Image src={c} className="img" />
             <div className="overlay">
               <Button variant="transparent" onClick={handleShow} className="border-0 w-100 h-100">
@@ -73,7 +73,7 @@ function Carousel() {
               </Modal>
             </div>
           </div>
-          <div className="position-relative imgWrapper">
+          <div className="position-relative smCarousel imgWrapper">
             <Image src={c} className="img" />
             <div className="overlay">
               <Button variant="transparent" onClick={handleShow} className="border-0 w-100 h-100">
@@ -86,7 +86,7 @@ function Carousel() {
               </Modal>
             </div>
           </div>
-          <div className="position-relative imgWrapper">
+          <div className="position-relative smCarousel imgWrapper">
             <Image src={c} className="img" />
             <div className="overlay">
               <Button variant="transparent" onClick={handleShow} className="border-0 w-100 h-100">
