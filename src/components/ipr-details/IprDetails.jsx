@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent */
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
@@ -41,7 +40,7 @@ import Priorities from './trademarks/priorities/Priorities';
 import PriorityRow from './trademarks/priorities/PriorityRow';
 import Description from './shared/description/Description';
 import ImageWithZoom from './shared/image-with-zoom/ImageWithZoom';
-// TODO change structure when trademarks are added
+
 function IprDetails({
   collapseIPR,
   isIPRExpanded,
@@ -143,69 +142,78 @@ function IprDetails({
         isIPRExpanded={isIPRExpanded}
         BibliographicData={document.BibliographicData}
       />,
-      LegalStatus: <LegalStatus>
-      {
+      LegalStatus:
+  <LegalStatus>
+    {
         document.LegalStatus.map((row) => (
           <LegalStatusRow row={row} />
         ))
       }
-                   </LegalStatus>,
-      ApplicantsDetails: <Applicants>
-      {
+  </LegalStatus>,
+      ApplicantsDetails:
+  <Applicants>
+    {
         document.ApplicantsDetails.map((row) => (
           <ApplicantRow row={row} />
         ))
       }
-                         </Applicants>,
-      OwnersDetails: <Owners>
-      {
+  </Applicants>,
+      OwnersDetails:
+  <Owners>
+    {
         document.OwnersDetails.map((row) => (
           <OwnerRow row={row} />
         ))
       }
-                     </Owners>,
-      Representative: <Representatives>
-      {
+  </Owners>,
+      Representative:
+  <Representatives>
+    {
         document.Representative.map((row) => (
           <RepresentativeRow row={row} />
         ))
       }
-                      </Representatives>,
-      OfficeActions: <OfficeActions>
-      {
+  </Representatives>,
+      OfficeActions:
+  <OfficeActions>
+    {
         document.OfficeActions.map((row) => (
           <OfficeActionRow row={row} />
         ))
       }
-                     </OfficeActions>,
-      GoodsAndServices: <GoodsAndServices>
-      {
+  </OfficeActions>,
+      GoodsAndServices:
+  <GoodsAndServices>
+    {
         document.GoodsAndServices.map((row) => (
           <GoodsAndServicesRow row={row} />
         ))
       }
-                        </GoodsAndServices>,
-      FigurativeClassification: <FigurativeClassification>
-      {
+  </GoodsAndServices>,
+      FigurativeClassification:
+  <FigurativeClassification>
+    {
         document.FigurativeClassification.map((row) => (
           <FigurativeClassificationRow row={row} />
         ))
       }
-                                </FigurativeClassification>,
-      ExhibitionInformation: <Exhibitions>
-      {
+  </FigurativeClassification>,
+      ExhibitionInformation:
+  <Exhibitions>
+    {
         document.ExhibitionInformation.map((row) => (
           <ExhibitionRow row={row} />
         ))
       }
-                             </Exhibitions>,
-      Priorities: <Priorities>
-      {
+  </Exhibitions>,
+      Priorities:
+  <Priorities>
+    {
         document.Priorities.map((row) => (
           <PriorityRow row={row} />
         ))
       }
-                  </Priorities>,
+  </Priorities>,
       Description: <Description description={document.BibliographicData.Description} />,
       Mark: <ImageWithZoom img={document.BibliographicData.Mark} className={style.imgWithZoom} />,
     };
@@ -283,7 +291,7 @@ function IprDetails({
               <Badge text={document.BibliographicData.TrademarkLastStatus} varient="secondary" className="text-capitalize me-2 mb-4" />
               <div className="d-flex justify-content-between">
                 <div className="me-2 mb-md-0 mb-2">
-                  <h5 className="text-capitalize text-primary font-regular mb-2">
+                  <h5 className="text-capitalize text-primary-dark font-regular mb-2">
                     {document.BibliographicData.BrandNameEn}
                     <span className="d-block mt-2">
                       {document.BibliographicData.BrandNameAr}
