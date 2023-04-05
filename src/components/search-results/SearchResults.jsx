@@ -245,8 +245,8 @@ function SearchResults() {
     },
   ];
 
-  const onChangeSortBy = () => {
-    setSortBy();
+  const onChangeSortBy = (i) => {
+    setSortBy(i);
   };
 
   return (
@@ -394,6 +394,7 @@ function SearchResults() {
                     <AppPagination
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
+                      sort={sortBy.value}
                       setResults={setResults}
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
@@ -411,7 +412,7 @@ function SearchResults() {
                           img={emptyState}
                           className="mt-18"
                         />)}
-                      updateDependencies={[...Object.values(searchResultParams)]}
+                      updateDependencies={[...Object.values(searchResultParams), sortBy]}
                     />
                   </Form>
                 )}
