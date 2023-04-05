@@ -298,7 +298,7 @@ function IprDetails({
                     </span>
                   </h5>
                   <p className="text-gray">
-                    <HandleEmptyAttribute checkOn={document.BibliographicData.owner} />
+                    <HandleEmptyAttribute checkOn={document.BibliographicData.Owners.join('; ')} />
                   </p>
                 </div>
                 {
