@@ -22,6 +22,10 @@ const AppPagination = ({
   };
 
   useEffect(() => {
+    setCurrentPage('1');
+  }, [sort]);
+
+  useEffect(() => {
     setCurrentPage(Number(searchParams.get('page')) || currentPage);
   }, [searchParams.get('page')]);
 
@@ -39,7 +43,7 @@ const AppPagination = ({
       setPaginationInfo(responsePaginationInfo);
       if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.total);
     });
-  }, [currentPage, ...updateDependencies]);
+  }, [currentPage, sort, ...updateDependencies]);
 
   if (!data) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
