@@ -101,7 +101,9 @@ function WorkstreamSearch() {
 
     navigate({
       pathname: '/search',
-      search: `?${createSearchParams({ workstreamId: selectedWorkStream, q: (searchQuery ? query : ''), ...(imageName && { imageName }) })}`,
+      search: `?${createSearchParams({
+        workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery ? query : ''), ...(imageName && { imageName }),
+      })}`,
     });
   };
 

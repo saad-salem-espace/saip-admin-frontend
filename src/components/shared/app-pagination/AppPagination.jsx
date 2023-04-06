@@ -11,14 +11,19 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
+  sort,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage);
 
   const axiosPaginatedConfig = {
     ...axiosConfig,
-    params: { ...axiosConfig.params, page: currentPage },
+    params: { ...axiosConfig.params, sort, page: currentPage },
   };
+
+  useEffect(() => {
+    setCurrentPage('1');
+  }, [sort]);
 
   const [{ data }, execute] = useAxios(axiosPaginatedConfig, { manual: true }, axiosInstance);
 
@@ -36,7 +41,7 @@ const AppPagination = ({
     searchParams.set('page', currentPage.toString());
     setSearchParams(searchParams);
     execute();
-  }, [currentPage, ...updateDependencies]);
+  }, [currentPage, sort, ...updateDependencies]);
 
   useEffect(() => {
     if(data){
@@ -79,11 +84,13 @@ AppPagination.propTypes = {
   emptyState: PropTypes.node,
   updateDependencies: PropTypes.arrayOf(Object),
   setResults: PropTypes.func,
+  sort: PropTypes.string,
 };
 
 AppPagination.defaultProps = {
   defaultPage: 1,
   renderedProps: {},
+  sort: '',
   axiosInstance: apiInstance,
   fetchedTotalResults: null,
   emptyState: null,

@@ -139,5 +139,7 @@
   "publicationDateDesc": "Publication date desc",
   "priorityDateAsc": "Priority date asc",
   "priorityDateDesc": "Priority date desc",
-  "mostRelevant": "Most Relevant"
+  "mostRelevant": "Most Relevant",
+  "filingDateAsc": "Filing date asc",
+  "filingDateDesc": "Filing date desc"
 }

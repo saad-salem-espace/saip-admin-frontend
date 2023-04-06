@@ -1,6 +1,7 @@
 import './assets/styles/App.scss';
 import Routes from 'components/routes/Routes';
 import ThemeProvider from 'components/theme/ThemeProvider';
+import NavBar from 'components/nav-bar/NavBar';
 // import ChangeLanguage from 'components/change-language/ChangeLanguage';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     >
       <div className="app">
         {/* <ChangeLanguage changeLang={changeLang} /> */}
+        <NavBar />
         <Routes />
       </div>
     </ThemeProvider>
