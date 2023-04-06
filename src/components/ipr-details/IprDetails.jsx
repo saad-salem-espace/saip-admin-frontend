@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 // import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Badge from 'components/shared/badge/Badge';
@@ -17,6 +17,7 @@ import Select from 'components/shared/form/select/Select';
 import formStyle from 'components/shared/form/form.module.scss';
 import { documentApi } from 'apis/search/documentsApi';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
+import useAxios from 'hooks/useAxios';
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
 import c from '../../assets/images/search-header-bg.svg';
@@ -38,13 +39,11 @@ function IprDetails({
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
-  const [document, setDocument] = useState(null);
+  const [{ data }, execute] = useAxios(documentApi({ workstreamId: searchParams.get('workstreamId'), documentId }), { manual: true });
+  const document = data?.data?.[0];
   useEffect(() => {
     if (documentId) {
-      documentApi({ workstreamId: searchParams.get('workstreamId'), documentId })
-        .then((resp) => {
-          setDocument(resp.data?.data[0]);
-        });
+      execute();
     }
   }, [documentId]);
 

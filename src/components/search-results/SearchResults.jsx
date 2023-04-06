@@ -21,6 +21,7 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
 import formStyle from 'components/shared/form/form.module.scss';
+import useAxios from 'hooks/useAxios';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
@@ -61,6 +62,21 @@ function SearchResults() {
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
+
+  const [imgData, execute] = useAxios({}, { manual: true });
+
+  useEffect(() => {
+    if (imgData.data) {
+      setImageName(imgData.data.data?.[0]);
+    } else if (imgData.error) {
+      setErrorMessage(imgData.error);
+    }
+    if (imgData.response) {
+      setIsImgUploaded(true);
+      setShowUploadImgSection(false);
+      setIsSubmitting(false);
+    }
+  }, [imgData]);
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -148,14 +164,7 @@ function SearchResults() {
 
   const uploadCurrentFile = async (file) => {
     setIsSubmitting(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    const { res, err } = await uploadFile(formData);
-    setImageName(res.data.data?.[0]);
-    if (err) setErrorMessage(err);
-    setIsImgUploaded(true);
-    setShowUploadImgSection(false);
-    setIsSubmitting(false);
+    execute(uploadFile(file));
   };
 
   const handleUploadImg = () => {
@@ -199,7 +208,7 @@ function SearchResults() {
     return size;
   };
 
-  const axiosConfig = advancedSearchApi(searchResultParams, true);
+  const axiosConfig = advancedSearchApi(searchResultParams);
 
   const viewOptions = [
     {

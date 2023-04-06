@@ -1,10 +1,6 @@
 import './assets/styles/App.scss';
 import Routes from 'components/routes/Routes';
 import ThemeProvider from 'components/theme/ThemeProvider';
-
-import React, {
-// useState,
-} from 'react';
 // import ChangeLanguage from 'components/change-language/ChangeLanguage';
 
 function App() {
