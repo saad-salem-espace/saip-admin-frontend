@@ -1,11 +1,10 @@
 @import "../../../assets/styles/utilities/custom-theme";
 
-.imgWrapper {
-  &.smCarousel {
-    width: 30%;
-    margin: 0 8px;
-    height: 130px;
-  }
+.imgWrapper,
+.item-thumb {
+  width: 30%;
+  margin: 0 8px;
+  height: 130px;
 
   .overlay {
     background-color: rgba(0, 0, 0, .5);
@@ -68,6 +67,7 @@
   box-shadow: $box-shadow-lg;
   background-image: none;
   padding-top: 5px;
+  background-color: $white;
 }
 
 .carousel-control-next-icon:after {
@@ -82,4 +82,18 @@
   font-family: FontAwesome;
   margin-left: -3px;
   color: $primary;
+}
+
+.carousel-thumbnails {
+  .item-thumb {
+    position: relative;
+    margin: 8px;
+    padding: 0px;
+    width: 84px;
+    height: 111px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
