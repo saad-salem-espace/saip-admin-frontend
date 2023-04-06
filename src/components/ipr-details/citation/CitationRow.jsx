@@ -2,21 +2,21 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const CitationRow = ({ row }) => (
-  <tr>
-    <td className="align-middle text-capitalize">{row.citationOrigin}</td>
-    <td className="align-middle text-capitalize">
+  <tr className="text-capitalize">
+    <td>{row.citationOrigin}</td>
+    <td>
       <Link
         to={row.publicationURL}
       >
         {row.publication}
       </Link>
     </td>
-    <td className="align-middle text-capitalize">{row.title}</td>
-    <td className="align-middle text-capitalize">{row.priorityDate}</td>
-    <td className="align-middle text-capitalize">{row.publicationDate}</td>
-    <td className="align-middle text-capitalize">{row.applicants}</td>
-    <td className="align-middle text-capitalize">{row.IPC}</td>
-    <td className="align-middle text-capitalize">{row.CPC}</td>
+    <td>{row.title}</td>
+    <td>{row.priorityDate}</td>
+    <td>{row.publicationDate}</td>
+    <td>{row.applicants}</td>
+    <td>{row.IPC}</td>
+    <td>{row.CPC}</td>
   </tr>
 );
 
