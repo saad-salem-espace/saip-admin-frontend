@@ -1,16 +1,11 @@
-import { useAuth } from 'react-oidc-context';
-
-const AdminDashboard = () => {
-  const auth = useAuth();
+function AdminDashboard() {
   return (
     <div>
-      {auth ? (
-        <div>
-          <h1> Admin Dashboard </h1>
-        </div>
-      ) : null /* redirect to login */ }
+      <div>
+        <h1> Admin Dashboard </h1>
+      </div>
     </div>
   );
-};
+}
 
 export default AdminDashboard;

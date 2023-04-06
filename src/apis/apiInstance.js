@@ -12,8 +12,7 @@ if (JSON.parse(auth)?.access_token) {
 
 const apiInstance = axios.create({
   baseURL: `${process.env.REACT_APP_BACKEND_URL}/api/v1`,
-  // eslint-disable-next-line object-shorthand
-  headers: headers,
+  headers,
 });
 
 export default apiInstance;
