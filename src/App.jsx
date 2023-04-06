@@ -1,12 +1,12 @@
 import './assets/styles/App.scss';
 import Routes from 'components/routes/Routes';
 import ThemeProvider from 'components/theme/ThemeProvider';
-import NavBar from 'components/nav-bar/NavBar';
+import AppNavbar from 'components/layout/app-navbar/AppNavbar';
 
 import React, {
 // useState,
 } from 'react';
-// import ChangeLanguage from 'components/change-language/ChangeLanguage';
+//  import ChangeLanguage from 'components/change-language/ChangeLanguage';
 
 function App() {
   // const [lang, setLang] = useState('en');
@@ -21,7 +21,7 @@ function App() {
       <div className="app">
         {/* <ChangeLanguage changeLang={changeLang} /> */}
         <Routes />
-        <NavBar />
+        <AppNavbar />
       </div>
     </ThemeProvider>
 
