@@ -2,21 +2,24 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { CacheProvider } from 'contexts/CacheContext';
+import ErrorBoundary from 'errors/ErrorBoundary';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
-import { CacheProvider } from './contexts/CacheContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CacheProvider>
-      <Suspense fallback="Loading ...">
+    <Suspense fallback="Loading ...">
+      <CacheProvider>
         <BrowserRouter>
-          <App />
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
         </BrowserRouter>
-      </Suspense>
-    </CacheProvider>
+      </CacheProvider>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('root'),
 );
