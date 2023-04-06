@@ -3,17 +3,38 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
+import { AuthProvider } from 'react-oidc-context';
+import { WebStorageStateStore } from 'oidc-client-ts';
+import roleMapper from 'utils/roleMapper';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
 import { CacheProvider } from './contexts/CacheContext';
 
+const oidcConfig = {
+  onSigninCallback: (userData) => {
+    if (roleMapper(userData?.profile?.clientRoles[0]) === 'External_Examiner'
+    || roleMapper(userData?.profile?.clientRoles[0]) === 'Internal_Examiner') {
+      window.location.href = escape('/dashboard');
+    } else if (roleMapper(userData?.profile?.clientRoles[0]) === 'Platform_Administrator') {
+      window.location.href = escape('/admin');
+    }
+  },
+  authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY,
+  client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
+  redirect_uri: process.env.REACT_APP_ENTITY_URL,
+  automaticSilentRenew: true,
+  loadUserInfo: true,
+  userStore: new WebStorageStateStore({ store: localStorage }),
+};
 ReactDOM.render(
   <React.StrictMode>
     <CacheProvider>
       <Suspense fallback="Loading ...">
         <BrowserRouter>
-          <App />
+          <AuthProvider {...oidcConfig} autoSignIn={false}>
+            <App />
+          </AuthProvider>
         </BrowserRouter>
       </Suspense>
     </CacheProvider>

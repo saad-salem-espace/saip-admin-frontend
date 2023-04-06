@@ -16,7 +16,7 @@ const TOTAL = 12;
 const patentList = Array(TOTAL).fill(samplePatent);
 
 const searchParams = {
-  workstreamId: 1,
+  workstreamId: '1',
   q: 'ftxt hasExactly "criteria1" AND ipc hasAll "A01B0001040000,A01B0001060000" OR pd hasAny "2023-03-15,2023-03-29,2023-03-21" NOT ti hasAll "test,sentence separated by space,next,words"',
 };
 
