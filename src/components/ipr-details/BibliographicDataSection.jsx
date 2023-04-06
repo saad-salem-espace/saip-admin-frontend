@@ -2,11 +2,13 @@ import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ShowMore from 'components/shared/show-more/ShowMore';
+import NoData from 'components/shared/empty-states/NoData';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import Carousel from '../shared/carousel/Carousel';
 
-const BibliographicDataSection = ({ document, isIPRExpanded }) => {
+// eslint-disable-next-line react/prop-types
+const BibliographicDataSection = ({ document, isIPRExpanded, samplePatent }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
   return (
@@ -74,16 +76,14 @@ const BibliographicDataSection = ({ document, isIPRExpanded }) => {
         </p>
       </Col>
       <Col lg={isIPRExpanded ? 5 : 12} md={isIPRExpanded ? 5 : 12} className={isIPRExpanded ? 'border-start' : ''}>
-        { /*
-          * Carousel with thumbnails
-          * Add largeThumb attribute to Carousel component to view large image with small thumb
-          * Need sync onclick on small thumb to show it in large thumb
-          * Add enLarge attribute to ItemThumb component to view overlay in carousel mode
-        */ }
-        <div className={isIPRExpanded ? '' : 'd-flex'}>
-          <p className="text-primary f-14">{t('images')}</p>
-          <Carousel className="flex-fill" largeThumb={isIPRExpanded} />
-        </div>
+        <h6>{t('ipr.drawings')}</h6>
+        {
+            (samplePatent.Drawings).length ? (
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={samplePatent.Drawings} />
+            ) : (
+              <NoData />
+            )
+          }
       </Col>
     </Row>
   );

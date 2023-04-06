@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 
 const Description = ({
   description, children, className, isIPRExpanded,
@@ -10,14 +9,15 @@ const Description = ({
   <Container fluid className="px-0">
     <Row className="mx-0">
       <Col lg={(children && isIPRExpanded) ? 7 : 12} md={6} className={className}>
-        <HandleEmptyAttribute checkOn={description} />
+        <p>{description.TechnicalField.title}</p>
+        <p>{description.TechnicalField.Paragraphs}</p>
       </Col>
       {
-       (children) && (
-       <Col lg={5} md={6}>
-         {children}
-       </Col>
-       )
+        (children) && (
+          <Col lg={5} md={6}>
+            {children}
+          </Col>
+        )
       }
     </Row>
   </Container>

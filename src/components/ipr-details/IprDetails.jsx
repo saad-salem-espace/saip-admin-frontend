@@ -19,6 +19,7 @@ import { documentApi } from 'apis/search/documentsApi';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import NoData from 'components/shared/empty-states/NoData';
 import samplePatent from 'testing-resources/patents/samplePatent.json';
+import Carousel from 'components/shared/carousel/Carousel';
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
 import TrademarkBibliographic from './trademarks/bibliographic-data-section/BibliographicDataSection';
@@ -41,6 +42,7 @@ import ExhibitionRow from './trademarks/exhibitions/ExhibitionRow';
 import Priorities from './shared/priorities/Priorities';
 import PriorityRow from './shared/priorities/PriorityRow';
 import Description from './shared/description/Description';
+import PatentDescription from './patent/description/Description';
 import ImageWithZoom from './shared/image-with-zoom/ImageWithZoom';
 import Citations from './patent/citations/Citations';
 import CitationRow from './patent/citations/CitationRow';
@@ -48,6 +50,7 @@ import Inventors from './patent/inventors/Inventors';
 import InventorRow from './patent/inventors/InventorRow';
 import PatentFamility from './patent/patent-famility/PatentFamility';
 import PatentFamilityRow from './patent/patent-famility/PatentFamilityRow';
+import Claims from './patent/claims/Claims';
 
 // TODO change structure when trademarks are added
 function IprDetails({
@@ -270,7 +273,11 @@ function IprDetails({
 
   const patentViews = () => {
     const content = {
-      BibliographicData: <BibliographicDataSection document={document} />,
+      BibliographicData:
+      <BibliographicDataSection
+        document={document}
+        samplePatent={samplePatent}
+      />,
       LegalStatus: <LegalStatus>
         {
           samplePatent.LegalStatus.map((row) => (
@@ -307,37 +314,59 @@ function IprDetails({
         }
                  </Citations>,
       Inventors:
-      <Inventors>
-                    {
-                      samplePatent.InventorsDetails.map((row) => (
-                        <InventorRow row={row} />
-                      ))
-                    }
-      </Inventors>,
+        <Inventors>
+          {
+            samplePatent.InventorsDetails.map((row) => (
+              <InventorRow row={row} />
+            ))
+          }
+        </Inventors>,
       OfficeActions:
-      <OfficeActions>
+        <OfficeActions>
+          {
+            samplePatent.OfficeActions.map((row) => (
+              <OfficeActionRow row={row} />
+            ))
+          }
+        </OfficeActions>,
+      PatentFamility:
+        <PatentFamility>
+          {
+            samplePatent.PatentFamility.map((row) => (
+              <PatentFamilityRow row={row} />
+            ))
+          }
+        </PatentFamility>,
+      Priorities: <Priorities>
         {
-          samplePatent.OfficeActions.map((row) => (
-            <OfficeActionRow row={row} />
+          samplePatent.Priorities.map((row) => (
+            <PriorityRow row={row} />
           ))
         }
-      </OfficeActions>,
-      PatentFamility:
-            <PatentFamility>
-              {
-                samplePatent.PatentFamility.map((row) => (
-                  <PatentFamilityRow row={row} />
-                ))
-              }
-            </PatentFamility>,
-      Priorities: <Priorities>
-                  {
-                    samplePatent.Priorities.map((row) => (
-                      <PriorityRow row={row} />
-                    ))
-                  }
                   </Priorities>,
-      Description: <Description description={document.Description.TechnicalField.Paragraphs} className="px-0" />,
+      Description:
+        <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded} className="px-0">
+          <h6>{t('ipr.drawings')}</h6>
+          {
+            (samplePatent.Drawings).length ? (
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={samplePatent.Drawings} />
+            ) : (
+              <NoData />
+            )
+          }
+        </PatentDescription>,
+      Claims:
+         <Claims claims={document.Claims} isIPRExpanded={isIPRExpanded} className="px-0">
+           <h6>{t('ipr.drawings')}</h6>
+           {
+             (samplePatent.Drawings).length ? (
+               <Carousel largeThumb={isIPRExpanded} className="drawings" images={samplePatent.Drawings} />
+             ) : (
+               <NoData />
+             )
+           }
+         </Claims>,
+      Drawings: <Carousel largeThumb className="drawings" images={samplePatent.Drawings} />,
     };
     return content;
   };
@@ -456,7 +485,7 @@ function IprDetails({
           )}
         </Formik>
         {renderSelectedView()}
-      {/*  <BibliographicDataSection isIPRExpanded={isIPRExpanded} document={document} /> */}
+        {/*  <BibliographicDataSection isIPRExpanded={isIPRExpanded} document={document} /> */}
       </div>
     </div>
   );

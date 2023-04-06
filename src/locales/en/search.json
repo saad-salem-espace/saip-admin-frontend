@@ -132,7 +132,8 @@
     "representative": {
       "representativeName": "Representative Name",
       "representativeDetails": "Representative details"
-    }
+    },
+    "drawings":"Drawings"
   },
   "patent": {
     "claims": "Claims",

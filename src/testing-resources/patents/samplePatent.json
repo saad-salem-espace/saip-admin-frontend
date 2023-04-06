@@ -285,7 +285,12 @@
       "EarliestPriorityDate": "2015-01-24"
     }
   ],
-  "Drawings": ["img1", "img2"],
+  "Drawings": ["https://picsum.photos/id/273/400/400",
+   "https://fastly.picsum.photos/id/501/200/300.jpg?hmac=fk5fWXapclFoDmPlQjOTEHRG3uPBJuPmB_5HeJsEsfY",
+  "https://fastly.picsum.photos/id/1/5000/3333.jpg?hmac=Asv2DU3rA_5D1xSe22xZK47WEAN0wjWeFOhzd13ujW4",
+   "https://fastly.picsum.photos/id/2/5000/3333.jpg?hmac=_KDkqQVttXw_nM-RyJfLImIbafFrqLsuGO5YuHqD-qQ",
+   "https://fastly.picsum.photos/id/14/2500/1667.jpg?hmac=ssQyTcZRRumHXVbQAVlXTx-MGBxm6NHWD3SryQ48G-o"
+  ],
   "InventorsDetails": [
     {
       "InventorName": "omniaaaaaa",
