@@ -1,8 +1,8 @@
 {
   "BibliographicData": {
-    "BrandNameEn": "Device English brand name",
-    "BrandNameAr": "اسم البراند",
-    "Description": "any text",
+    "BrandNameEn": "omnia",
+    "BrandNameAr": "امنيه",
+    "Description": "any text Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description",
     "TrademarkType": "combined",
     "Mark": "any text",
     "FilingNumber": "US, 13797521",
@@ -11,14 +11,13 @@
     "IPOffice": "",
     "ApplicationLanguage": "",
     "TrademarkLastStatus": "ended",
-    "PrimaryApplicantName": "applicant name",
-    "OwnerName": "",
+    "Applicants": ["name 1", "name 2"],
+    "Owners": ["name 3", "name 4"],
+    "Representatives": ["Representativ 1", "Representative 2"],
     "FilingDate": "2015-01-20",
-    "RegistrationDate": "2015-01-0",
+    "RegistrationDate": "2015-01-10",
     "PublicationNumber": "B2, 08936998",
-    "PublicationDate": "2015-01-10"
-  },
-  "GoodsAndServices": {
+    "PublicationDate": "2015-01-12",
     "NICEClassification": [
       "H01L21/30",
       "H01L21/302",
@@ -28,10 +27,33 @@
       "H01L31/0203"
     ]
   },
+  "IPCClassification": {
+    "IPC": [
+      "H01L21/30",
+      "H01L21/302",
+      "H01L21/324",
+      "H01L21/20",
+      "H01L23/00",
+      "H01L31/0203"
+    ]
+  },
+  "CPCClassification": {
+    "CPC": [""]
+  },
+  "GoodsAndServices": [
+    {
+      "NICEClassification": "1",
+      "GoodsAndServices": "any text"
+    },
+    {
+      "NICEClassification": "2",
+      "GoodsAndServices": "any text 2"
+    }
+  ],
   "FigurativeClassification": [
     {
       "ViennaCode": "any text",
-      "Description": "any text"
+      "Description": "any text 2"
     },
     {
       "ViennaCode": "any text",
@@ -40,54 +62,66 @@
   ],
   "OwnersDetails": [
     {
-      "OwnerName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "OwnerDetails": ""
+      "OwnerName": "omniaaaaaa",
+      "CountryCode": "000",
+      "Naionality": "nationality",
+      "OwnerDetails": ["country 3", "city 3", "egyptian", "omnia@gmail", "03"]
     },
     {
-      "OwnerName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "OwnerDetails": ""
-    },
-    {
-      "OwnerName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "OwnerDetails": ""
-    },
-    {
-      "OwnerName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "OwnerDetails": ""
+      "OwnerName": "test",
+      "CountryCode": "8",
+      "Naionality": "nationality",
+      "OwnerDetails": ["country 3", "city 3", "egyptian", "omnia@gmail", "03"]
     }
   ],
   "ApplicantsDetails": [
     {
-      "ApplicantName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "ApplicantDetails": ""
+      "ApplicantName": "omnia",
+      "CountryCode": "03",
+      "Naionality": "nationality",
+      "ApplicantDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
     },
     {
-      "ApplicantName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "ApplicantDetails": ""
+      "ApplicantName": "nada",
+      "CountryCode": "03",
+      "Naionality": "nationality",
+      "ApplicantDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
     },
     {
-      "ApplicantName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "ApplicantDetails": ""
+      "ApplicantName": "nesma",
+      "CountryCode": "03",
+      "Naionality": "nationality",
+      "ApplicantDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
     },
     {
-      "ApplicantName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "ApplicantDetails": ""
+      "ApplicantName": "omnia",
+      "CountryCode": "03",
+      "Naionality": "nationality",
+      "ApplicantDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
     }
   ],
   "Publications": [
@@ -109,23 +143,23 @@
   ],
   "LegalStatus": [
     {
-      "StatusCode": "B2, 08936998",
+      "StatusCode": "hi",
       "StatusDate": "2015-01-20",
-      "Status": "Active",
+      "Status": "Status",
+      "EffectiveDate": "2015-01-22",
+      "Notes": "Active"
+    },
+    {
+      "StatusCode": "A2, 08936998",
+      "StatusDate": "2015-01-22",
+      "Status": "In Active",
       "EffectiveDate": "2015-01-20",
       "Notes": "Active"
     },
     {
-      "StatusCode": "B2, 08936998",
-      "StatusDate": "2015-01-20",
-      "Status": "Active",
-      "EffectiveDate": "2015-01-20",
-      "Notes": "Active"
-    },
-    {
-      "StatusCode": "B2, 08936998",
-      "StatusDate": "2015-01-20",
-      "Status": "Active",
+      "StatusCode": "C2, 08936998",
+      "StatusDate": "2015-01-25",
+      "Status": "In Active",
       "EffectiveDate": "2015-01-20",
       "Notes": "Active"
     }
@@ -147,100 +181,108 @@
       "EventDate": "2015-01-20"
     }
   ],
-  "Agent/Representative": [
+  "Representative": [
     {
-      "RepresentativeName": "",
-      "CountryCode": "",
-      "Naionality": "",
-      "RepresentativeDetails": ""
+      "RepresentativeName": "omnia yahia",
+      "CountryCode": "01",
+      "Naionality": "nationality",
+      "RepresentativeDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
     },
     {
-      "RepresentativeName": "",
-      "CountryCode": "",
+      "RepresentativeName": "asmaa",
+      "CountryCode": "00",
       "Naionality": "",
-      "RepresentativeDetails": ""
+      "RepresentativeDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
     },
     {
-      "RepresentativeName": "",
+      "RepresentativeName": "salma",
       "CountryCode": "",
       "Naionality": "",
-      "RepresentativeDetails": ""
+      "RepresentativeDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
     },
     {
-      "RepresentativeName": "",
+      "RepresentativeName": "yasmin",
       "CountryCode": "",
       "Naionality": "",
-      "RepresentativeDetails": ""
+      "RepresentativeDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
     }
   ],
   "ExhibitionInformation": [
     {
-      "ExhibitionName": "",
-      "ExihibitionDate": "",
-      "ExibitionDetails": ""
+      "ExhibitionName": "name 1",
+      "ExihibitionDate": "1/10",
+      "ExibitionDetails": ["country 1", "city 1"]
     },
     {
-      "ExhibitionName": "",
-      "ExihibitionDate": "",
-      "ExibitionDetails": ""
+      "ExhibitionName": "name 2",
+      "ExihibitionDate": "2/10",
+      "ExibitionDetails": ["country 2", "city 2"]
     },
     {
-      "ExhibitionName": "",
-      "ExihibitionDate": "",
-      "ExibitionDetails": ""
-    },
-    {
-      "ExhibitionName": "",
-      "ExihibitionDate": "",
-      "ExibitionDetails": ""
+      "ExhibitionName": "name 3",
+      "ExihibitionDate": "1/50",
+      "ExibitionDetails": ["country 3", "city 3"]
     }
   ],
   "Priorities": [
     {
-      "PriorityNumber": "",
-      "PriorityDate": "",
-      "PriorityCountry": ""
+      "PriorityNumber": "1",
+      "PriorityDate": "1/2",
+      "PriorityCountry": "country"
     },
     {
-      "PriorityNumber": "",
-      "PriorityDate": "",
-      "PriorityCountry": ""
+      "PriorityNumber": "2",
+      "PriorityDate": "30",
+      "PriorityCountry": "counrty 2"
     },
     {
-      "PriorityNumber": "",
-      "PriorityDate": "",
-      "PriorityCountry": ""
-    },
-    {
-      "PriorityNumber": "",
-      "PriorityDate": "",
+      "PriorityNumber": "3",
+      "PriorityDate": "8/2",
       "PriorityCountry": ""
     }
   ],
   "OfficeActions": [
     {
-      "OfficeAction": "",
-      "OfficeActionDateTime": "",
-      "ExaminerName": "",
-      "ExaminerDetails": ""
+      "OfficeAction": "action 1",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
     },
     {
-      "OfficeAction": "",
-      "OfficeActionDateTime": "",
-      "ExaminerName": "",
-      "ExaminerDetails": ""
+      "OfficeAction": "action 2",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
     },
     {
-      "OfficeAction": "",
-      "OfficeActionDateTime": "",
-      "ExaminerName": "",
-      "ExaminerDetails": ""
-    },
-    {
-      "OfficeAction": "",
-      "OfficeActionDateTime": "",
-      "ExaminerName": "",
-      "ExaminerDetails": ""
+      "OfficeAction": "action 3",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
     }
   ]
 }
