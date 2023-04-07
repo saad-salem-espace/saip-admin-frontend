@@ -283,7 +283,6 @@ function IprDetails({
       BibliographicData:
   <BibliographicDataSection
     document={document}
-    samplePatent={samplePatent}
   />,
       LegalStatus:
   <LegalStatus>
@@ -352,7 +351,7 @@ function IprDetails({
       Priorities:
   <Priorities>
     {
-          samplePatent.Priorities.map((row) => (
+          samplePatent.PrioritiesDetails.map((row) => (
             <PriorityRow row={row} />
           ))
         }

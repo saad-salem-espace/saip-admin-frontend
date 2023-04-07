@@ -7,7 +7,7 @@ import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import Carousel from '../shared/carousel/Carousel';
 
-const BibliographicDataSection = ({ document, isIPRExpanded, samplePatent }) => {
+const BibliographicDataSection = ({ document, isIPRExpanded }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
   return (
@@ -77,8 +77,8 @@ const BibliographicDataSection = ({ document, isIPRExpanded, samplePatent }) => 
       <Col lg={isIPRExpanded ? 5 : 12} md={isIPRExpanded ? 5 : 12} className={isIPRExpanded ? 'border-start' : ''}>
         <h6>{t('ipr.drawings')}</h6>
         {
-            (samplePatent.Drawings).length ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={samplePatent.Drawings} />
+            document.Drawings ? (
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
             ) : (
               <NoData />
             )
