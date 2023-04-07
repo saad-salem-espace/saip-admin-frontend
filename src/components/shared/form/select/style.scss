@@ -27,11 +27,6 @@ div[class$="singleValue"] {
   }
 }
 
-div[class$="ValueContainer"] {
-  height: 85px;
-}
-
-
 ////// selectWithSibling
 .selectWithSibling {
   @include media-breakpoint-up(xl) {
@@ -70,6 +65,25 @@ div[class$="ValueContainer"] {
 
 ///// lg select
 .lgSelect {
+
+  div[class$="container"] {
+    height: 85px;
+
+    >div:first-of-type {
+      height: 87px;
+      background-color: $gray-200;
+
+      html[dir="ltr"] & {
+        border-radius: 5px 0 0 5px;
+      }
+
+      html[dir="rtl"] & {
+        border-right: $border-width solid $gray-400;
+        border-radius: 0 5px 5px 0;
+      }
+    }
+  }
+
   input {
     margin-top: 30px !important;
     margin-left: 5px !important;
@@ -78,6 +92,10 @@ div[class$="ValueContainer"] {
       margin-left: auto !important;
       margin-right: 5px !important;
     }
+  }
+
+  div[class$="singleValue"] {
+    bottom: 14px;
   }
 }
 
