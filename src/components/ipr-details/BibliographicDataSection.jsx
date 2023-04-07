@@ -7,7 +7,6 @@ import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import Carousel from '../shared/carousel/Carousel';
 
-// eslint-disable-next-line react/prop-types
 const BibliographicDataSection = ({ document, isIPRExpanded, samplePatent }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
@@ -108,7 +107,7 @@ BibliographicDataSection.propTypes = {
     Priorities: PropTypes.shape({
       PublishedAs: PropTypes.string,
     }),
-    Images: PropTypes.arrayOf(Object),
+    Drawings: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   isIPRExpanded: PropTypes.bool.isRequired,
 };

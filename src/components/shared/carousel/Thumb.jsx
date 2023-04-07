@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 function Thumb({
   largeThumb,
   srcThumb,
+  changeActiveImg,
 }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -17,7 +18,7 @@ function Thumb({
   return (
     <div>
       {largeThumb ? (
-        <Button variant="transparent" className="item-thumb">
+        <Button variant="transparent" className="item-thumb" onClick={() => changeActiveImg(srcThumb)}>
           <Image src={srcThumb} className="img-fluid" />
         </Button>
       ) : (
@@ -39,8 +40,14 @@ function Thumb({
   );
 }
 Thumb.propTypes = {
-  largeThumb: PropTypes.bool.isRequired,
+  largeThumb: PropTypes.bool,
   srcThumb: PropTypes.string.isRequired,
+  changeActiveImg: PropTypes.func,
+};
+
+Thumb.defaultProps = {
+  largeThumb: false,
+  changeActiveImg: null,
 };
 
 export default Thumb;

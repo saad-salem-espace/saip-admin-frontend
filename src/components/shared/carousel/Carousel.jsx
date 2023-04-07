@@ -16,9 +16,13 @@ function Carousel({
   children,
 }) {
   const [show, setShow] = useState(false);
+  const [activeImg, setActiveImg] = useState(images[0]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const ImagePath1 = 'https://picsum.photos/id/273/400/400';
+
+  const changeActiveImg = (selectedImg) => {
+    setActiveImg(selectedImg);
+  };
 
   let imgIndex = 0;
   const getCarouselThumbs = () => {
@@ -27,7 +31,11 @@ function Carousel({
     for (let i = 1; i <= 4; i += 1) {
       if (imgIndex < images.length) {
         carouselThumbs.push(
-          <Thumb srcThumb={images[imgIndex]} largeThumb={largeThumb} />,
+          <Thumb
+            largeThumb={largeThumb}
+            changeActiveImg={changeActiveImg}
+            srcThumb={images[imgIndex]}
+          />,
         );
       }
       imgIndex += 1;
@@ -54,14 +62,14 @@ function Carousel({
       {children}
       {largeThumb && (
         <div className="position-relative imgWrapper h-auto">
-          <Image src={ImagePath1} className="img-fluid object-fit-cover w-100 h-auto" />
+          <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" />
           <div className="overlay">
             <Button variant="transparent" onClick={handleShow} className="border-0 w-100 h-100">
               <FontAwesomeIcon icon={faMagnifyingGlass} className="f-24 text-white" />
             </Button>
             <Modal centered show={show} onHide={handleClose}>
               <Modal.Body className="p-0">
-                <Image src={ImagePath1} className="w-100 h-auto" />
+                <Image src={activeImg} className="w-100 h-auto" />
               </Modal.Body>
             </Modal>
           </div>
