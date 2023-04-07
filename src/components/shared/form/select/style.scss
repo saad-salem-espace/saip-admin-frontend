@@ -56,7 +56,7 @@ div[class$="ValueContainer"] {
   }
 }
 
-.css-2jkpo2-option{
+.css-2jkpo2-option {
   color: $white !important;
   background-color: $primary !important;
 }
@@ -75,8 +75,8 @@ div[class$="ValueContainer"] {
     margin-left: 5px !important;
 
     html[dir="rtl"] & {
-     margin-left: auto !important;
-     margin-right: 5px !important;
+      margin-left: auto !important;
+      margin-right: 5px !important;
     }
   }
 }
@@ -84,9 +84,17 @@ div[class$="ValueContainer"] {
 ////// customSelect
 .customSelect {
   div[class$="ValueContainer"] {
-    border-bottom: $border-width dashed $primary;
+    border-bottom: $border-width dashed $gray;
     font-family: $font-medium;
     height: auto;
+
+    html[dir="ltr"] & {
+      padding-left: 0;
+    }
+
+    html[dir="rtl"] & {
+      padding-right: 0;
+    }
 
     input {
       color: $primary !important;
@@ -102,10 +110,22 @@ div[class$="ValueContainer"] {
     border: none;
   }
 
-  div[class$="singleValue"], input{
+  div[class$="singleValue"],
+  input {
     color: $primary;
     font-size: 24px;
     bottom: 0;
+    position: relative;
+    margin: 0;
+    top: 4px;
+
+    html[dir="ltr"] & {
+      left: 0;
+    }
+
+    html[dir="rtl"] & {
+      right: 0;
+    }
   }
 }
 
@@ -147,10 +167,12 @@ div[class$="ValueContainer"] {
 
 ///// defaultSelect
 .defaultSelect {
+
   div[class$="indicatorContainer"],
-  div[class$="IndicatorsContainer"]{
+  div[class$="IndicatorsContainer"] {
     background-color: transparent;
   }
+
   input {
     font-size: $font-size-sm !important;
   }
@@ -163,8 +185,8 @@ div[class$="ValueContainer"] {
     margin-left: 5px !important;
 
     html[dir="rtl"] & {
-     margin-right: 5px !important;
-     margin-left: 0 !important;
+      margin-right: 5px !important;
+      margin-left: 0 !important;
     }
   }
 }
