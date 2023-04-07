@@ -133,7 +133,7 @@
       "representativeName": "Representative Name",
       "representativeDetails": "Representative details"
     },
-    "drawings":"Drawings"
+    "drawings": "Drawings"
   },
   "patent": {
     "claims": "Claims",
@@ -157,5 +157,13 @@
       "patentFamility": "Patent Famility",
       "applicationNumber": "Application number"
     }
-  }
+  },
+  "sortBy": "Sort by",
+  "publicationDateAsc": "Publication date asc",
+  "publicationDateDesc": "Publication date desc",
+  "priorityDateAsc": "Priority date asc",
+  "priorityDateDesc": "Priority date desc",
+  "mostRelevant": "Most Relevant",
+  "filingDateAsc": "Filing date asc",
+  "filingDateDesc": "Filing date desc"
 }

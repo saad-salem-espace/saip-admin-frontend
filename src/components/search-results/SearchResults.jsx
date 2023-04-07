@@ -32,7 +32,7 @@ import { flattenCriteria, parseQuery, reformatDecoder } from '../../utils/search
 
 function SearchResults() {
   const { t } = useTranslation('search');
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [activeDocument, setActiveDocument] = useState(null);
@@ -49,6 +49,7 @@ function SearchResults() {
   const [imageName, setImageName] = useState(null);
   const [flattenedCriteria, setFlattenedCriteria] = useState([]);
   const submitRef = useRef();
+  const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -57,6 +58,73 @@ function SearchResults() {
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
+
+  const sortByOptionsPatent = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('publicationDateAsc'),
+      value: 'publicationDateAsc',
+    },
+    {
+      label: t('publicationDateDesc'),
+      value: 'publicationDateDesc',
+    },
+    {
+      label: t('priorityDateAsc'),
+      value: 'priorityDateAsc',
+    },
+    {
+      label: t('priorityDateDesc'),
+      value: 'priorityDateDesc',
+    },
+  ];
+
+  const sortByOptionsTrademark = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('publicationDateAsc'),
+      value: 'publicationDateAsc',
+    },
+    {
+      label: t('publicationDateDesc'),
+      value: 'publicationDateDesc',
+    },
+    {
+      label: t('filingDateAsc'),
+      value: 'filingDateAsc',
+    },
+    {
+      label: t('filingDateAsc'),
+      value: 'filingDateDesc',
+    },
+  ];
+
+  const map = new Map();
+  map.set(1, sortByOptionsPatent);
+  map.set(2, sortByOptionsTrademark);
+
+  const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
+
+  const getSortFromUrl = (workstreamId, sortValue) => {
+    if (!workstreamId || !sortValue) return sortByOptionsPatent[0]; // default return most relevant
+
+    const workstreamSortOptions = map.get(parseInt(workstreamId, 10));
+
+    const currentOption = workstreamSortOptions.find((element) => element.value === sortValue);
+
+    return (currentOption || sortByOptionsPatent[0]);
+  };
+
+  useEffect(() => {
+    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
+  }, []);
+
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
@@ -108,6 +176,7 @@ function SearchResults() {
         q: values.searchQuery,
         ...(imageName && { imageName }),
         enableSynonyms: isEnabledSynonyms,
+        sort: sortBy.value,
         page: 1,
       })}`,
     });
@@ -224,6 +293,13 @@ function SearchResults() {
     1: SearchResultCards,
     2: TrademarksSearchResultCards,
   };
+
+  const onChangeSortBy = (sortCriteria) => {
+    searchParams.set('sort', sortCriteria.value);
+    setSearchParams(searchParams);
+    setSortBy(sortCriteria);
+  };
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -303,7 +379,7 @@ function SearchResults() {
           {
             errorMessage && (
               <span className="text-danger-dark f-12">
-                { errorMessage }
+                {errorMessage}
               </span>
             )
           }
@@ -336,9 +412,10 @@ function SearchResults() {
               <Formik>
                 {() => (
                   <Form className="mt-8">
-                    {
+                    <div className="d-md-flex">
+                      {
                       searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-8 viewSelect">
+                        <div className="position-relative mb-6 viewSelect">
                           <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
                           <Select
                             options={viewOptions}
@@ -352,10 +429,24 @@ function SearchResults() {
                         </div>
                       )
                     }
+                      <div className="position-relative mb-8 sortBy ms-md-6">
+                        <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
+                        <Select
+                          options={getSortOptions(searchResultParams.workstreamId)}
+                          setSelectedOption={onChangeSortBy}
+                          selectedOption={sortBy}
+                          defaultValue={sortBy}
+                          id="sortBy"
+                          fieldName="sortBy"
+                          className="mb-5 select-2"
+                        />
+                      </div>
+                    </div>
                     <AppPagination
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
                       setResults={setResults}
+                      sort={sortBy.value}
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
                         query: searchResultParams.query,
@@ -379,7 +470,7 @@ function SearchResults() {
               </Formik>
             </Col>
           )
-}
+        }
         {activeDocument && (
           <Col xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails

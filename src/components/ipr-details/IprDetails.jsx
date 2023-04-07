@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent */
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
@@ -52,7 +51,6 @@ import PatentFamility from './patent/patent-famility/PatentFamility';
 import PatentFamilityRow from './patent/patent-famility/PatentFamilityRow';
 import Claims from './patent/claims/Claims';
 
-// TODO change structure when trademarks are added
 function IprDetails({
   collapseIPR,
   isIPRExpanded,
@@ -201,69 +199,78 @@ function IprDetails({
         isIPRExpanded={isIPRExpanded}
         BibliographicData={document.BibliographicData}
       />,
-      LegalStatus: <LegalStatus>
-        {
-          document.LegalStatus.map((row) => (
-            <LegalStatusRow row={row} />
-          ))
-        }
-                   </LegalStatus>,
-      ApplicantsDetails: <Applicants>
-        {
-          document.ApplicantsDetails.map((row) => (
-            <ApplicantRow row={row} />
-          ))
-        }
-                         </Applicants>,
-      OwnersDetails: <Owners>
-        {
-          document.OwnersDetails.map((row) => (
-            <OwnerRow row={row} />
-          ))
-        }
-                     </Owners>,
-      Representative: <Representatives>
-        {
-          document.Representative.map((row) => (
-            <RepresentativeRow row={row} />
-          ))
-        }
-                      </Representatives>,
-      OfficeActions: <OfficeActions>
-        {
-          document.OfficeActions.map((row) => (
-            <OfficeActionRow row={row} />
-          ))
-        }
-                     </OfficeActions>,
-      GoodsAndServices: <GoodsAndServices>
-        {
-          document.GoodsAndServices.map((row) => (
-            <GoodsAndServicesRow row={row} />
-          ))
-        }
-                        </GoodsAndServices>,
-      FigurativeClassification: <FigurativeClassification>
-        {
-          document.FigurativeClassification.map((row) => (
-            <FigurativeClassificationRow row={row} />
-          ))
-        }
-                                </FigurativeClassification>,
-      ExhibitionInformation: <Exhibitions>
-        {
-          document.ExhibitionInformation.map((row) => (
-            <ExhibitionRow row={row} />
-          ))
-        }
-                             </Exhibitions>,
-      Priorities: <Priorities>
-        {
-          document.Priorities.map((row) => (
-            <PriorityRow row={row} />
-          ))
-        }
-                  </Priorities>,
+      LegalStatus:
+  <LegalStatus>
+    {
+        document.LegalStatus.map((row) => (
+          <LegalStatusRow row={row} />
+        ))
+      }
+  </LegalStatus>,
+      ApplicantsDetails:
+  <Applicants>
+    {
+        document.ApplicantsDetails.map((row) => (
+          <ApplicantRow row={row} />
+        ))
+      }
+  </Applicants>,
+      OwnersDetails:
+  <Owners>
+    {
+        document.OwnersDetails.map((row) => (
+          <OwnerRow row={row} />
+        ))
+      }
+  </Owners>,
+      Representative:
+  <Representatives>
+    {
+        document.Representative.map((row) => (
+          <RepresentativeRow row={row} />
+        ))
+      }
+  </Representatives>,
+      OfficeActions:
+  <OfficeActions>
+    {
+        document.OfficeActions.map((row) => (
+          <OfficeActionRow row={row} />
+        ))
+      }
+  </OfficeActions>,
+      GoodsAndServices:
+  <GoodsAndServices>
+    {
+        document.GoodsAndServices.map((row) => (
+          <GoodsAndServicesRow row={row} />
+        ))
+      }
+  </GoodsAndServices>,
+      FigurativeClassification:
+  <FigurativeClassification>
+    {
+        document.FigurativeClassification.map((row) => (
+          <FigurativeClassificationRow row={row} />
+        ))
+      }
+  </FigurativeClassification>,
+      ExhibitionInformation:
+  <Exhibitions>
+    {
+        document.ExhibitionInformation.map((row) => (
+          <ExhibitionRow row={row} />
+        ))
+      }
+  </Exhibitions>,
+      Priorities:
+  <Priorities>
+    {
+        document.Priorities.map((row) => (
+          <PriorityRow row={row} />
+        ))
+      }
+  </Priorities>,
       Description: <Description description={document.BibliographicData.Description} />,
       Mark: <ImageWithZoom img={document.BibliographicData.Mark} className={style.imgWithZoom} />,
     };
@@ -274,98 +281,104 @@ function IprDetails({
   const patentViews = () => {
     const content = {
       BibliographicData:
-      <BibliographicDataSection
-        document={document}
-        samplePatent={samplePatent}
-      />,
-      LegalStatus: <LegalStatus>
-        {
+  <BibliographicDataSection
+    document={document}
+    samplePatent={samplePatent}
+  />,
+      LegalStatus:
+  <LegalStatus>
+    {
           samplePatent.LegalStatus.map((row) => (
             <LegalStatusRow row={row} />
           ))
         }
-                   </LegalStatus>,
-      ApplicantsDetails: <Applicants>
-        {
+  </LegalStatus>,
+      ApplicantsDetails:
+  <Applicants>
+    {
           samplePatent.ApplicantsDetails.map((row) => (
             <ApplicantRow row={row} />
           ))
         }
-                         </Applicants>,
-      OwnersDetails: <Owners>
-        {
+  </Applicants>,
+      OwnersDetails:
+  <Owners>
+    {
           samplePatent.OwnersDetails.map((row) => (
             <OwnerRow row={row} />
           ))
         }
-                     </Owners>,
-      Representative: <Representatives>
-        {
+  </Owners>,
+      Representative:
+  <Representatives>
+    {
           samplePatent.Representative.map((row) => (
             <RepresentativeRow row={row} />
           ))
         }
-                      </Representatives>,
-      Citations: <Citations>
-        {
+  </Representatives>,
+      Citations:
+  <Citations>
+    {
           samplePatent.Citations.map((row) => (
             <CitationRow row={row} />
           ))
         }
-                 </Citations>,
+  </Citations>,
       Inventors:
-        <Inventors>
-          {
+  <Inventors>
+    {
             samplePatent.InventorsDetails.map((row) => (
               <InventorRow row={row} />
             ))
           }
-        </Inventors>,
+  </Inventors>,
       OfficeActions:
-        <OfficeActions>
-          {
+  <OfficeActions>
+    {
             samplePatent.OfficeActions.map((row) => (
               <OfficeActionRow row={row} />
             ))
           }
-        </OfficeActions>,
+  </OfficeActions>,
       PatentFamility:
-        <PatentFamility>
-          {
+  <PatentFamility>
+    {
             samplePatent.PatentFamility.map((row) => (
               <PatentFamilityRow row={row} />
             ))
           }
-        </PatentFamility>,
-      Priorities: <Priorities>
-        {
+  </PatentFamility>,
+      Priorities:
+  <Priorities>
+    {
           samplePatent.Priorities.map((row) => (
             <PriorityRow row={row} />
           ))
         }
-                  </Priorities>,
+  </Priorities>,
       Description:
-        <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded} className="px-0">
-          <h6>{t('ipr.drawings')}</h6>
-          {
+  <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded} className="px-0">
+    <h6>{t('ipr.drawings')}</h6>
+    {
             (samplePatent.Drawings).length ? (
               <Carousel largeThumb={isIPRExpanded} className="drawings" images={samplePatent.Drawings} />
             ) : (
               <NoData />
             )
           }
-        </PatentDescription>,
+  </PatentDescription>,
       Claims:
-         <Claims claims={document.Claims} isIPRExpanded={isIPRExpanded} className="px-0">
-           <h6>{t('ipr.drawings')}</h6>
-           {
+  <Claims claims={document.Claims} isIPRExpanded={isIPRExpanded} className="px-0">
+    <h6>{t('ipr.drawings')}</h6>
+    {
              (samplePatent.Drawings).length ? (
                <Carousel largeThumb={isIPRExpanded} className="drawings" images={samplePatent.Drawings} />
              ) : (
                <NoData />
              )
            }
-         </Claims>,
+  </Claims>,
       Drawings: <Carousel largeThumb className="drawings" images={samplePatent.Drawings} />,
     };
     return content;
@@ -436,7 +449,7 @@ function IprDetails({
               <Badge text={document.BibliographicData.TrademarkLastStatus} varient="secondary" className="text-capitalize me-2 mb-4" />
               <div className="d-flex justify-content-between">
                 <div className="me-2 mb-md-0 mb-2">
-                  <h5 className="text-capitalize text-primary font-regular mb-2">
+                  <h5 className="text-capitalize text-primary-dark font-regular mb-2">
                     {document.BibliographicData.BrandNameEn}
                     <span className="d-block mt-2">
                       {document.BibliographicData.BrandNameAr}
