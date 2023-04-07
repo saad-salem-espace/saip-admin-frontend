@@ -485,7 +485,6 @@ function IprDetails({
           )}
         </Formik>
         {renderSelectedView()}
-        {/*  <BibliographicDataSection isIPRExpanded={isIPRExpanded} document={document} /> */}
       </div>
     </div>
   );

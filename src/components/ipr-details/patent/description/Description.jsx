@@ -9,8 +9,12 @@ const Description = ({
   <Container fluid className="px-0">
     <Row className="mx-0">
       <Col lg={(children && isIPRExpanded) ? 7 : 12} md={6} className={className}>
-        <p>{description.TechnicalField.title}</p>
-        <p>{description.TechnicalField.Paragraphs}</p>
+        <p>{description.TechnicalField.Title}</p>
+        <p>{description.TechnicalField.Paragraphs.join('; ')}</p>
+        <p>{description.BackgroundArt.Title}</p>
+        <p>{description.BackgroundArt.Paragraphs.join('; ')}</p>
+        <p>{description.Disclosure.Title}</p>
+        <p>{description.Disclosure.Paragraphs.join('; ')}</p>
       </Col>
       {
         (children) && (

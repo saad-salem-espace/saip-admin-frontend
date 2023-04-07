@@ -1,15 +1,16 @@
 import { render } from 'TestUtils';
-import sampleTrademark from 'testing-resources/trademarks/sampleTrademark.json';
+import samplePatent from 'testing-resources/patents/samplePatent.json';
 import { waitFor } from '@testing-library/react';
 import Description from './Description';
 
 describe('<Description />', () => {
   it('renders component successfully', async () => {
     const { getByText } = render(
-      <Description description={sampleTrademark.BibliographicData.Description} />,
+      <Description description={samplePatent.Description} />,
     );
     await waitFor(() => {
-      expect(getByText(sampleTrademark.BibliographicData.Description)).toBeInTheDocument();
+      expect(getByText(samplePatent.Description.TechnicalField.Title)).toBeInTheDocument();
+      expect(getByText(samplePatent.Description.TechnicalField.Paragraphs.join('; '))).toBeInTheDocument();
     });
   });
 });
