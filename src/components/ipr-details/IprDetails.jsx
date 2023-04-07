@@ -283,6 +283,7 @@ function IprDetails({
       BibliographicData:
   <BibliographicDataSection
     document={document}
+    isIPRExpanded={isIPRExpanded}
   />,
       LegalStatus:
   <LegalStatus>
