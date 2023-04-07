@@ -1,8 +1,7 @@
 @import "../../../../assets/styles/utilities/custom-theme";
 @import "~bootstrap/scss/mixins";
 
-div[class$="indicatorContainer"],
-div[class$="indicatorsContainer"] {
+div[class$="indicatorContainer"] {
   background-color: $gray-200;
   border-radius: 0 $border-radius $border-radius 0;
 
@@ -40,10 +39,6 @@ div[class$="singleValue"] {
         border-radius: 0 5px 5px 0;
       }
     }
-
-    div[class$="IndicatorsContainer"] {
-      border-radius: 0;
-    }
   }
 }
 
@@ -62,7 +57,7 @@ div[class$="singleValue"] {
 ///// lg select
 .lgSelect {
 
-  div[class$="-container"] {
+  div[class$="container"] {
     height: 85px;
 
     >div:first-of-type {
@@ -70,11 +65,12 @@ div[class$="singleValue"] {
 
       html[dir="ltr"] & {
         border-radius: 5px 0 0 5px;
+        border-right: none;
       }
 
       html[dir="rtl"] & {
-        border-right: $border-width solid $gray-400;
         border-radius: 0 5px 5px 0;
+        border-left: none;
       }
 
       >div:nth-child(2) {
@@ -117,7 +113,6 @@ div[class$="singleValue"] {
     }
   }
 
-  div[class$="indicatorsContainer"],
   div[class$="indicatorContainer"] {
     background-color: transparent;
   }
@@ -133,9 +128,10 @@ div[class$="singleValue"] {
     bottom: 0;
     position: relative;
     margin: 0;
-    top: 4px;
     font-family: $font-medium;
     border-bottom: $border-width dashed $gray;
+    top: 1px;
+    height: 35px;
 
     html[dir="ltr"] & {
       left: 0;
@@ -147,8 +143,11 @@ div[class$="singleValue"] {
   }
 
   div[class$="container"] {
-    border: none;
     min-width: 140px;
+
+    >div:first-of-type {
+      border: none;
+    }
   }
 }
 
@@ -160,13 +159,20 @@ div[class$="singleValue"] {
     border-radius: 0;
   }
 
-  div[class$="IndicatorsContainer"],
   div[class$="indicatorContainer"] {
     background-color: transparent;
   }
 
   div[class$="singleValue"] {
     margin: 0 7px 0 0;
+
+    html[dir="ltr"] & {
+      left: 0;
+    }
+
+    html[dir="rtl"] & {
+      right: 0;
+    }
   }
 
   input {
@@ -186,13 +192,20 @@ div[class$="singleValue"] {
     background-color: transparent;
     margin-top: 25px;
   }
+
+  div[class$="container"] {
+    padding: 0;
+
+    >div:first-of-type {
+      border: none;
+    }
+  }
 }
 
 ///// defaultSelect
 .defaultSelect {
 
-  div[class$="indicatorContainer"],
-  div[class$="IndicatorsContainer"] {
+  div[class$="indicatorContainer"] {
     background-color: transparent;
   }
 
