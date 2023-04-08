@@ -130,7 +130,7 @@ div[class$="singleValue"] {
     margin: 0;
     font-family: $font-medium;
     border-bottom: $border-width dashed $gray;
-    top: 1px;
+    top: 3px;
     height: 35px;
 
     html[dir="ltr"] & {
@@ -197,7 +197,13 @@ div[class$="singleValue"] {
     padding: 0;
 
     >div:first-of-type {
-      border: none;
+      border: 0 0 $border-width 0;
+      border-radius: 0;
+      height: 50px;
+
+      >div:nth-child(1) {
+        padding: 0;
+      }
     }
   }
 }
