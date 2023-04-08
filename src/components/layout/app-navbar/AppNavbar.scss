@@ -6,12 +6,12 @@
     height: 80px;
   }
   .nav-link {
-    font-size: 14px;
+    font-size: $font-size-sm;
     color: $primary-dark;
     @extend .align-self-center;
   }
   .icon {
-    font-size: 16px;
+    font-size: $font-size-base;
     html[dir="ltr"] & {
       margin-right: 10px;
     }
@@ -61,13 +61,6 @@
   .sb-avatar , .notifications{
     @include media-breakpoint-down(lg) {
       margin: 0 5px;
-    }
-    .sb-avatar__text {
-      background-color: $primary-10 !important;
-      color: $primary !important;
-      span {
-        font-size: 14px;
-      }
     }
   }
   .avatar-btn {

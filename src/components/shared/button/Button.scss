@@ -59,5 +59,6 @@
   }
 }
 .dropdown-menu.show {
-  position: absolute;
+  position: absolute !important;
+  min-width: 100%;
 }
