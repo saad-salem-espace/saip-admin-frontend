@@ -9,6 +9,7 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
+  sort,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage);
@@ -17,8 +18,12 @@ const AppPagination = ({
 
   const axiosPaginatedConfig = {
     ...axiosConfig,
-    params: { ...axiosConfig.params, page: currentPage },
+    params: { ...axiosConfig.params, sort, page: currentPage },
   };
+
+  useEffect(() => {
+    setCurrentPage('1');
+  }, [sort]);
 
   useEffect(() => {
     setCurrentPage(Number(searchParams.get('page')) || currentPage);
@@ -38,7 +43,7 @@ const AppPagination = ({
       setPaginationInfo(responsePaginationInfo);
       if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.total);
     });
-  }, [currentPage, ...updateDependencies]);
+  }, [currentPage, sort, ...updateDependencies]);
 
   if (!data) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
@@ -76,11 +81,13 @@ AppPagination.propTypes = {
   emptyState: PropTypes.node,
   updateDependencies: PropTypes.arrayOf(Object),
   setResults: PropTypes.func,
+  sort: PropTypes.string,
 };
 
 AppPagination.defaultProps = {
   defaultPage: 1,
   renderedProps: {},
+  sort: '',
   axiosInstance: apiInstance,
   fetchedTotalResults: null,
   emptyState: null,
