@@ -130,7 +130,7 @@ div[class$="singleValue"] {
     margin: 0;
     font-family: $font-medium;
     border-bottom: $border-width dashed $gray;
-    top: 3px;
+    top: 1px;
     height: 35px;
 
     html[dir="ltr"] & {
@@ -176,7 +176,7 @@ div[class$="singleValue"] {
   }
 
   input {
-    margin: 33px 0 !important;
+    margin: 47px 0 !important;
   }
 
   div[class$="ValueContainer"] {
@@ -185,7 +185,7 @@ div[class$="singleValue"] {
   }
 
   div[class$="singleValue"] {
-    bottom: 37px;
+    bottom: 54px;
   }
 
   div[class$="indicatorContainer"] {
@@ -197,13 +197,9 @@ div[class$="singleValue"] {
     padding: 0;
 
     >div:first-of-type {
-      border: 0 0 $border-width 0;
+      border-width: 0 0 $border-width;
       border-radius: 0;
-      height: 50px;
-
-      >div:nth-child(1) {
-        padding: 0;
-      }
+      height: 79px;
     }
   }
 }
