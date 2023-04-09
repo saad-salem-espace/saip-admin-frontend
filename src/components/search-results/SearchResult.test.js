@@ -24,7 +24,10 @@ mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, patentIdentifiers)
 mockAxios.onGet(/\/workstreams/).reply(200, workstreams);
 
 mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
-  data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),
+  data: {
+    data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),
+    highlighting: [],
+  },
   pagination: {
     per_page: PER_PAGE,
     total: patentList.length,
