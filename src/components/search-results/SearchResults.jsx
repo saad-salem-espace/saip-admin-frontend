@@ -414,7 +414,7 @@ function SearchResults() {
                       {
                       searchResultParams.workstreamId === '2' && (
                         <div className="position-relative mb-6 viewSelect">
-                          <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                          <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
                           <Select
                             options={viewOptions}
                             setSelectedOption={onChangeView}
@@ -428,7 +428,7 @@ function SearchResults() {
                       )
                     }
                       <div className="position-relative mb-8 sortBy ms-md-6">
-                        <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
+                        <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
                           options={getSortOptions(searchResultParams.workstreamId)}
                           setSelectedOption={onChangeSortBy}
