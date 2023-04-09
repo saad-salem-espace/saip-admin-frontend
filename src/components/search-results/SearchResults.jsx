@@ -21,6 +21,8 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
 import formStyle from 'components/shared/form/form.module.scss';
+import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
+import Button from 'react-bootstrap/Button';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
@@ -50,6 +52,7 @@ function SearchResults() {
   const [flattenedCriteria, setFlattenedCriteria] = useState([]);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
+  const [isQuerySaved, setIsQuerySaved] = useState(false);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -405,30 +408,44 @@ function SearchResults() {
           searchResultParams.fireSearch
           && (
             <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
-              <SearchNote
-                searchKeywords={parseQuery(searchFields, searchParams.get('imageName'), false)}
-                resultsCount={totalResults}
-              />
+              <div className="d-lg-flex align-items-center">
+                <AppTooltip
+                  tooltipTrigger={
+                    <Button variant="transparent" className="p-0 me-4 border-0" onClick={() => setIsQuerySaved(!isQuerySaved)}>
+                      {
+                        isQuerySaved
+                          ? <span className="icon-filled-star f-24" />
+                          : <span className="icon-star f-24" />
+                      }
+                    </Button>
+                  }
+                  tooltipContent={t('saveSearchQuery')}
+                />
+                <SearchNote
+                  searchKeywords={parseQuery(searchFields, searchParams.get('imageName'), false)}
+                  resultsCount={totalResults}
+                />
+              </div>
               <Formik>
                 {() => (
                   <Form className="mt-8">
                     <div className="d-md-flex">
                       {
-                      searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-6 viewSelect">
-                          <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
-                          <Select
-                            options={viewOptions}
-                            setSelectedOption={onChangeView}
-                            selectedOption={selectedView}
-                            defaultValue={selectedView}
-                            id="viewSection"
-                            fieldName="viewSection"
-                            className="mb-5 select-2"
-                          />
-                        </div>
-                      )
-                    }
+                        searchResultParams.workstreamId === '2' && (
+                          <div className="position-relative mb-6 viewSelect">
+                            <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                            <Select
+                              options={viewOptions}
+                              setSelectedOption={onChangeView}
+                              selectedOption={selectedView}
+                              defaultValue={selectedView}
+                              id="viewSection"
+                              fieldName="viewSection"
+                              className="mb-5 select-2"
+                            />
+                          </div>
+                        )
+                      }
                       <div className="position-relative mb-8 sortBy ms-md-6">
                         <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
