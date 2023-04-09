@@ -75,9 +75,13 @@ function Carousel({
           </div>
         </div>
       )}
-      <BootstrapCarousel indicators={false} prevLabel={null} nextLabel={null} className="mb-8">
-        {getCarouselItems()}
-      </BootstrapCarousel>
+      {
+         ((largeThumb && images.length > 1) || (!largeThumb)) && (
+         <BootstrapCarousel controls={!((!largeThumb && images.length === 1))} indicators={false} prevLabel={null} nextLabel={null} className="mb-8">
+           {getCarouselItems()}
+         </BootstrapCarousel>
+         )
+      }
     </div>
   );
 }
