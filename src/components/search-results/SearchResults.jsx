@@ -237,17 +237,23 @@ function SearchResults() {
 
   const getIprClassName = (media) => {
     let size = 4;
-    if (media === 'xl' && isIPRExpanded) {
+    if (media === 'xxl' && isIPRExpanded) {
       size = 12;
       if (isAdvancedSearch) {
         size = isAdvancedMenuOpen ? 9 : 11;
+      }
+    }
+    if (media === 'xl' && isIPRExpanded) {
+      size = 12;
+      if (isAdvancedSearch) {
+        size = isAdvancedMenuOpen ? 8 : 11;
       }
     }
     return size;
   };
   const getSearchResultsClassName = (media) => {
     let size = 5;
-    if (media === 'xl') {
+    if (media === 'xxl') {
       if (isAdvancedSearch) {
         if (!totalResults) {
           size = 9;
@@ -263,6 +269,25 @@ function SearchResults() {
         size = 8;
       } else {
         size = 11;
+      }
+    }
+    if (media === 'xl') {
+      size = 4;
+      if (isAdvancedSearch) {
+        if (!totalResults) {
+          size = 8;
+        }
+        if (!isAdvancedMenuOpen) {
+          if (totalResults) {
+            size = 7;
+          } else {
+            size = 10;
+          }
+        }
+      } else if (totalResults) {
+        size = 7;
+      } else {
+        size = 10;
       }
     }
     return size;
@@ -388,7 +413,7 @@ function SearchResults() {
       <Row className="border-top mx-0 align-items-stretch content">
         {
           isAdvancedSearch && (
-            <Col xl={isAdvancedMenuOpen ? 3 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
+            <Col xxl={isAdvancedMenuOpen ? 3 : 1} xl={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
               <AdvancedSearch
                 toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
                 defaultInitializers={searchFields}
@@ -404,7 +429,7 @@ function SearchResults() {
         {
           searchResultParams.fireSearch
           && (
-            <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
               <SearchNote
                 searchKeywords={parseQuery(searchFields, searchParams.get('imageName'), false)}
                 resultsCount={totalResults}
@@ -472,7 +497,7 @@ function SearchResults() {
           )
         }
         {activeDocument && (
-          <Col xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
+          <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails
               collapseIPR={collapseIPR}
               isIPRExpanded={isIPRExpanded}
