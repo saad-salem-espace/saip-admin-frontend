@@ -28,7 +28,7 @@ import './style.scss';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
-import { flattenCriteria, parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -49,7 +49,6 @@ function SearchResults() {
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
-  const [flattenedCriteria, setFlattenedCriteria] = useState([]);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
 
@@ -191,7 +190,6 @@ function SearchResults() {
     setIsEnabledSynonyms(regexPattern.test(searchParams.get('enableSynonyms')));
     if (searchIdentifiers) {
       const decodedQuery = decodeQuery(searchResultParams.query);
-      setFlattenedCriteria(flattenCriteria(decodedQuery));
       const searchIdentifiersData = searchIdentifiers.data;
       const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
@@ -496,7 +494,6 @@ function SearchResults() {
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
                         query: searchResultParams.query,
-                        flattenedCriteria,
                         setActiveDocument,
                         activeDocument,
                         selectedView,

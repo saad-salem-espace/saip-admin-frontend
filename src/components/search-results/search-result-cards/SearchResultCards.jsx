@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import SearchResultCard from './search-result-card/SearchResultCard';
 
 const SearchResultCards = ({
-  data, query, setActiveDocument, activeDocument, flattenedCriteria,
+  data, query, setActiveDocument, activeDocument, highlghtWords,
 }) => (
   <>
     {data.map((searchResult) => (
@@ -12,7 +12,7 @@ const SearchResultCards = ({
         query={query}
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
-        flattenedCriteria={flattenedCriteria}
+        highlghtWords={highlghtWords}
       />
     ))}
   </>
@@ -20,10 +20,14 @@ const SearchResultCards = ({
 
 SearchResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
-  flattenedCriteria: PropTypes.arrayOf(PropTypes.string).isRequired,
+  highlghtWords: PropTypes.arrayOf(PropTypes.string),
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
+};
+
+SearchResultCards.defaultProps = {
+  highlghtWords: [],
 };
 
 export default SearchResultCards;

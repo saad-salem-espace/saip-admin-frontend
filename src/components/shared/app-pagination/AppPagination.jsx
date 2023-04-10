@@ -15,6 +15,7 @@ const AppPagination = ({
   const [currentPage, setCurrentPage] = useState(defaultPage);
   const [paginationInfo, setPaginationInfo] = useState({});
   const [data, setData] = useState(null);
+  const [highlghtWords, setHighlghtWords] = useState([]);
 
   const axiosPaginatedConfig = {
     ...axiosConfig,
@@ -38,8 +39,9 @@ const AppPagination = ({
         per_page: 10,
         total: 0,
       };
-      setData(responseData?.data || responseData);
-      setResults(responseData?.data || responseData);
+      setHighlghtWords(responseData.data?.highlighting || []);
+      setData(responseData?.data.data || responseData);
+      setResults(responseData?.data.data || responseData);
       setPaginationInfo(responsePaginationInfo);
       if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.total);
     });
@@ -55,7 +57,7 @@ const AppPagination = ({
   const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
 
   const renderedComponent = (
-    <RenderedComponent data={data} {...renderedProps} />
+    <RenderedComponent data={data} highlghtWords={highlghtWords} {...renderedProps} />
   );
 
   return (
