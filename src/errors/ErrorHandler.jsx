@@ -5,7 +5,7 @@ import DefaultErrorHandler from './error-handlers/DefaultErrorHandler';
 const ErrorHandler = ({ error }) => {
   switch (error.name) {
     case 'AxiosError': {
-      return <AxiosErrorHandler error={error} />;
+      return <AxiosErrorHandler error={error.response.data} />;
     }
     default:
       return <DefaultErrorHandler error={error} />;

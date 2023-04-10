@@ -10,8 +10,7 @@ const errorHandlers = {
 };
 
 const AxiosErrorHandler = ({ error }) => {
-  const RenderedComponent = errorHandlers[error.response.data.code] || errorHandlers.invalid_state;
-
+  const RenderedComponent = errorHandlers[error.error.code] || errorHandlers.invalid_state;
   return (
     <>
       <h1>Axios Error</h1>
@@ -24,12 +23,10 @@ const AxiosErrorHandler = ({ error }) => {
 AxiosErrorHandler.propTypes = {
   error: PropTypes.shape({
     code: PropTypes.string.isRequired,
-    response: PropTypes.shape({
-      data: PropTypes.shape({
-        status: PropTypes.number,
-        type: PropTypes.string,
-        code: PropTypes.string.isRequired,
-      }).isRequired,
+    error: PropTypes.shape({
+      status: PropTypes.number,
+      type: PropTypes.string,
+      code: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };
