@@ -176,6 +176,12 @@ div[class$="ValueContainer"] {
   input {
     font-size: $font-size-sm !important;
   }
+
+  div[class$="container"] {
+    >div:first-of-type {
+      height: 56px;
+    }
+  }
 }
 
 //// sm select with inner label
