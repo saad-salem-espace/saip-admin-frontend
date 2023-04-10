@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import useCacheRequest from '../../hooks/useCacheRequest';
-import style from './style.module.scss';
+import './workstream.scss';
 
 function WorkStreams({ selectedWorkStream, onChange }) {
   const { cachedRequests } = useContext(CacheContext);
@@ -23,11 +23,11 @@ function WorkStreams({ selectedWorkStream, onChange }) {
         workstreams.map((workStream) => (
           <Button
             variant="transparent"
-            className={`${style.card} me-4 mb-lg-0 mb-3 shadow px-6 py-2 ${style[workStream.workstreamName]} ${selectedWorkStream === workStream.id ? style.active : ''}`}
+            className={`card me-4 mb-lg-0 mb-3 shadow px-6 py-2 ${workStream.workstreamName} ${selectedWorkStream === workStream.id ? 'active' : ''}`}
             onClick={() => handleChange(workStream.id)}
             key={workStream.id}
           >
-            <span className={`f-24 mb-2 d-block ${style.icon} icon-${workStream.workstreamName}`} />
+            <span className={`f-24 mb-2 d-block workstreamIcon icon-${workStream.workstreamName}`} />
             <span className="text-capitalize">{workStream.workstreamName}</span>
           </Button>
         ))

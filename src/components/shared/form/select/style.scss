@@ -1,8 +1,7 @@
 @import "../../../../assets/styles/utilities/custom-theme";
 @import "~bootstrap/scss/mixins";
 
-div[class$="indicatorContainer"],
-div[class$="indicatorsContainer"] {
+div[class$="indicatorContainer"] {
   background-color: $gray-200;
   border-radius: 0 $border-radius $border-radius 0;
 
@@ -27,11 +26,6 @@ div[class$="singleValue"] {
   }
 }
 
-div[class$="ValueContainer"] {
-  height: 85px;
-}
-
-
 ////// selectWithSibling
 .selectWithSibling {
   @include media-breakpoint-up(xl) {
@@ -45,18 +39,10 @@ div[class$="ValueContainer"] {
         border-radius: 0 5px 5px 0;
       }
     }
-
-    div[class$="IndicatorsContainer"] {
-      border-radius: 0;
-    }
-  }
-
-  div[class$="IndicatorsContainer"] {
-    background-color: $gray-200;
   }
 }
 
-.css-2jkpo2-option{
+.css-2jkpo2-option {
   color: $white !important;
   background-color: $primary !important;
 }
@@ -70,30 +56,63 @@ div[class$="ValueContainer"] {
 
 ///// lg select
 .lgSelect {
+
+  div[class$="container"] {
+    height: 85px;
+
+    >div:first-of-type {
+      height: 87px;
+
+      html[dir="ltr"] & {
+        border-radius: 5px 0 0 5px;
+        border-right: none;
+      }
+
+      html[dir="rtl"] & {
+        border-radius: 0 5px 5px 0;
+        border-left: none;
+      }
+
+      >div:nth-child(2) {
+        background-color: $gray-200;
+      }
+    }
+  }
+
   input {
     margin-top: 30px !important;
     margin-left: 5px !important;
 
     html[dir="rtl"] & {
-     margin-left: auto !important;
-     margin-right: 5px !important;
+      margin-left: auto !important;
+      margin-right: 5px !important;
     }
+  }
+
+  div[class$="singleValue"] {
+    bottom: 14px;
   }
 }
 
 ////// customSelect
 .customSelect {
   div[class$="ValueContainer"] {
-    border-bottom: $border-width dashed $primary;
     font-family: $font-medium;
     height: auto;
+
+    html[dir="ltr"] & {
+      padding-left: 0;
+    }
+
+    html[dir="rtl"] & {
+      padding-right: 0;
+    }
 
     input {
       color: $primary !important;
     }
   }
 
-  div[class$="indicatorsContainer"],
   div[class$="indicatorContainer"] {
     background-color: transparent;
   }
@@ -102,10 +121,33 @@ div[class$="ValueContainer"] {
     border: none;
   }
 
-  div[class$="singleValue"], input{
+  div[class$="singleValue"],
+  input {
     color: $primary;
     font-size: 24px;
     bottom: 0;
+    position: relative;
+    margin: 0;
+    font-family: $font-medium;
+    border-bottom: $border-width dashed $gray;
+    top: 1px;
+    height: 35px;
+
+    html[dir="ltr"] & {
+      left: 0;
+    }
+
+    html[dir="rtl"] & {
+      right: 0;
+    }
+  }
+
+  div[class$="container"] {
+    min-width: 140px;
+
+    >div:first-of-type {
+      border: none;
+    }
   }
 }
 
@@ -117,17 +159,24 @@ div[class$="ValueContainer"] {
     border-radius: 0;
   }
 
-  div[class$="IndicatorsContainer"],
   div[class$="indicatorContainer"] {
     background-color: transparent;
   }
 
   div[class$="singleValue"] {
     margin: 0 7px 0 0;
+
+    html[dir="ltr"] & {
+      left: 0;
+    }
+
+    html[dir="rtl"] & {
+      right: 0;
+    }
   }
 
   input {
-    margin: 33px 0 !important;
+    padding-top: 19px !important;
   }
 
   div[class$="ValueContainer"] {
@@ -136,23 +185,40 @@ div[class$="ValueContainer"] {
   }
 
   div[class$="singleValue"] {
-    bottom: 37px;
+    bottom: 15px;
   }
 
   div[class$="indicatorContainer"] {
     background-color: transparent;
     margin-top: 25px;
   }
+
+  div[class$="container"] {
+    padding: 0;
+
+    >div:first-of-type {
+      border-width: 0 0 $border-width;
+      border-radius: 0;
+      height: 79px;
+    }
+  }
 }
 
 ///// defaultSelect
 .defaultSelect {
-  div[class$="indicatorContainer"],
-  div[class$="IndicatorsContainer"]{
+
+  div[class$="indicatorContainer"] {
     background-color: transparent;
   }
+
   input {
     font-size: $font-size-sm !important;
+  }
+
+  div[class$="container"] {
+    >div:first-of-type {
+      height: 56px;
+    }
   }
 }
 
@@ -163,8 +229,8 @@ div[class$="ValueContainer"] {
     margin-left: 5px !important;
 
     html[dir="rtl"] & {
-     margin-right: 5px !important;
-     margin-left: 0 !important;
+      margin-right: 5px !important;
+      margin-left: 0 !important;
     }
   }
 }

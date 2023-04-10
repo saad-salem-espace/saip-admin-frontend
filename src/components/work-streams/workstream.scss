@@ -1,26 +1,22 @@
 @import "../../assets/styles/utilities/custom-theme";
 
-.card {
+.btn.card {
   border-radius: $border-radius;
   color: $gray !important;
   text-decoration: none;
   padding: 8px 24px;
   background-color: $white;
   height: 72px;
+  border: none;
 
-  &:hover, &:focus, &:active {
-    background-color: $patents !important;
+  &.active, &:hover, &:focus, &:not(.btn-check) + .btn:active  {
     color: $white !important;
 
-    .icon::before {
+    .workstreamIcon::before {
       color: $white !important;
     }
-  }
 
-  &.active {
-    color: $white !important;
-
-    .icon::before {
+    .workstreamIcon::before {
       color: $white !important;
     }
 

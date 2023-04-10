@@ -1,0 +1,32 @@
+@import"../../../assets/styles/utilities/custom-theme";
+
+@mixin border($width,$height,$top,$left,$right,$color) {
+  @include media-breakpoint-up(xl) {
+    position: relative;
+    &::before, 
+    &::after {
+      content: "";
+      width: $width;
+      height: $height;
+      background:$color;
+      position: absolute;
+      top: $top;
+    }
+    &::before {
+      html[dir="ltr"] & {
+        left: $left;
+      }
+      html[dir="rtl"] & {
+        right: $right;
+      }
+    }
+    &::after {
+      html[dir="ltr"] & {
+        right: $right;
+      }
+      html[dir="rtl"] & {
+        left: $left;
+      }
+    }
+  }
+}

@@ -4,12 +4,18 @@ import { initReactI18next } from 'react-i18next';
 import translationEn from './locales/en/translation.json';
 import searchEn from './locales/en/search.json';
 import commonEn from './locales/en/common.json';
+import layoutEn from './locales/en/layout.json';
+import layoutAr from './locales/ar/layout.json';
 
 const resources = {
   en: {
     translation: translationEn,
     search: searchEn,
     common: commonEn,
+    layout: layoutEn,
+  },
+  ar: {
+    layout: layoutAr,
   },
 };
 
