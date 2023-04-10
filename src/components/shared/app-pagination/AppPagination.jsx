@@ -9,7 +9,7 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
-  sort,
+  sort, setIsQuerySaved,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage);
@@ -42,6 +42,7 @@ const AppPagination = ({
       setHighlghtWords(responseData.data?.highlighting || []);
       setData(responseData?.data.data || responseData);
       setResults(responseData?.data.data || responseData);
+      setIsQuerySaved(responseData.data?.isFavourite || false);
       setPaginationInfo(responsePaginationInfo);
       if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.total);
     });
@@ -84,6 +85,7 @@ AppPagination.propTypes = {
   updateDependencies: PropTypes.arrayOf(Object),
   setResults: PropTypes.func,
   sort: PropTypes.string,
+  setIsQuerySaved: PropTypes.func,
 };
 
 AppPagination.defaultProps = {
@@ -95,6 +97,7 @@ AppPagination.defaultProps = {
   emptyState: null,
   updateDependencies: [],
   setResults: () => {},
+  setIsQuerySaved: () => {},
 };
 
 export default AppPagination;

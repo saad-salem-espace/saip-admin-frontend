@@ -17,10 +17,14 @@ import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import UploadImage from 'components/shared/upload-image/UploadImage';
 import emptyState from 'assets/images/search-empty-state.svg';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
+import apiInstance from 'apis/apiInstance';
+import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
 import formStyle from 'components/shared/form/form.module.scss';
+import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
+import Button from 'react-bootstrap/Button';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
@@ -49,6 +53,7 @@ function SearchResults() {
   const [imageName, setImageName] = useState(null);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
+  const [isQuerySaved, setIsQuerySaved] = useState(false);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -298,6 +303,23 @@ function SearchResults() {
     setSortBy(sortCriteria);
   };
 
+  const saveQuery = () => {
+    if (isQuerySaved) return;
+
+    const saveQueryParams = {
+      workStreamId: searchParams.get('workstreamId'),
+      query: searchParams.get('q'),
+      resultCount: totalResults.toString(),
+      enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+    };
+
+    const saveQueryConfig = saveQueryApi(saveQueryParams, true);
+
+    apiInstance.request(saveQueryConfig).then(() => {
+      setIsQuerySaved(true);
+    });
+  };
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -403,30 +425,46 @@ function SearchResults() {
           searchResultParams.fireSearch
           && (
             <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
-              <SearchNote
-                searchKeywords={parseQuery(searchFields, searchParams.get('imageName'), false)}
-                resultsCount={totalResults}
-              />
+              <div className="d-lg-flex align-items-center">
+                <AppTooltip
+                  tooltipTrigger={
+                    <Button variant="transparent" className="p-0 me-4 border-0" onClick={saveQuery} data-testid="fav-button">
+                      {
+                        isQuerySaved
+                          ? <span className="icon-filled-star f-24" data-testid="filled-star" />
+                          : <span className="icon-star f-24" data-testid="empty-star" />
+                      }
+                    </Button>
+                  }
+                  tooltipContent={t('saveSearchQuery')}
+                />
+                <div>
+                  <SearchNote
+                    searchKeywords={parseQuery(searchFields, searchParams.get('imageName'), false)}
+                    resultsCount={totalResults}
+                  />
+                </div>
+              </div>
               <Formik>
                 {() => (
                   <Form className="mt-8">
                     <div className="d-md-flex">
                       {
-                      searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-6 viewSelect">
-                          <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
-                          <Select
-                            options={viewOptions}
-                            setSelectedOption={onChangeView}
-                            selectedOption={selectedView}
-                            defaultValue={selectedView}
-                            id="viewSection"
-                            fieldName="viewSection"
-                            className="mb-5 select-2"
-                          />
-                        </div>
-                      )
-                    }
+                        searchResultParams.workstreamId === '2' && (
+                          <div className="position-relative mb-6 viewSelect">
+                            <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                            <Select
+                              options={viewOptions}
+                              setSelectedOption={onChangeView}
+                              selectedOption={selectedView}
+                              defaultValue={selectedView}
+                              id="viewSection"
+                              fieldName="viewSection"
+                              className="mb-5 select-2"
+                            />
+                          </div>
+                        )
+                      }
                       <div className="position-relative mb-8 sortBy ms-md-6">
                         <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
@@ -444,6 +482,7 @@ function SearchResults() {
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
                       setResults={setResults}
+                      setIsQuerySaved={setIsQuerySaved}
                       sort={sortBy.value}
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
