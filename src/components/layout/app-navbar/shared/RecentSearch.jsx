@@ -1,11 +1,9 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { RxCounterClockwiseClock } from 'react-icons/rx';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-function RecentSearch({
-  children,
-}) {
+function RecentSearch() {
   const { t } = useTranslation('layout');
   return (
     <Dropdown>
@@ -19,14 +17,12 @@ function RecentSearch({
         {t('navbar.recentSearch')}
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        {children}
+        <Dropdown.Item to="#/action-1" as={Link}>Action</Dropdown.Item>
+        <Dropdown.Item to="#/action-2" as={Link}>Another action</Dropdown.Item>
+        <Dropdown.Item to="#/action-3" as={Link}>Something else</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
 }
-
-RecentSearch.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default RecentSearch;

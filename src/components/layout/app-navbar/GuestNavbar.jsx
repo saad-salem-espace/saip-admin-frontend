@@ -2,7 +2,6 @@ import {
   Container,
   Navbar,
   Nav,
-  Dropdown,
 } from 'react-bootstrap/';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from 'react-oidc-context';
@@ -20,7 +19,7 @@ function GuestNavbar() {
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
       <Container fluid className="px-lg-15">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand to="#home" as={Link}>
           <Image src={logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -39,11 +38,7 @@ function GuestNavbar() {
           {/* Right navbar */}
           <Nav>
             {/* {Recent search} */}
-            <RecentSearch>
-              <Dropdown.Item to="#/action-1" as={Link}>Action</Dropdown.Item>
-              <Dropdown.Item to="#/action-2" as={Link}>Another action</Dropdown.Item>
-              <Dropdown.Item to="#/action-3" as={Link}>Something else</Dropdown.Item>
-            </RecentSearch>
+            <RecentSearch />
             <div className="d-flex justify-content-center h-39">
               {/* Sign in / Sign up buttons */}
               <div className="edges-border d-flex mx-lg-3 px-lg-3 me-2">
