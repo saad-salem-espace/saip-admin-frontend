@@ -199,9 +199,6 @@ function SearchResults() {
   };
 
   useEffect(() => {
-    setSearchQuery(searchResultParams.query);
-    const regexPattern = /true/;
-    setIsEnabledSynonyms(regexPattern.test(searchParams.get('enableSynonyms')));
     if (searchIdentifiers) {
       const decodedQuery = decodeQuery(searchResultParams.query);
       const searchIdentifiersData = searchIdentifiers.data;
@@ -210,14 +207,18 @@ function SearchResults() {
         id: 1, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
       }]);
     }
-  }, [searchResultParams.query, searchIdentifiers, searchParams]);
+  }, [searchResultParams.query, searchIdentifiers]);
 
   useEffect(() => {
+    // eslint-disable-next-line
+    const regexPattern = new RegExp('true');
+    setIsEnabledSynonyms(regexPattern.test(searchParams.get('enableSynonyms')));
+    setSearchQuery(searchResultParams.query);
     const keywords = parseQuery(searchFields, searchParams.get('imageName'), false);
     if (keywords) {
       setSearchKeywords(keywords);
     }
-  }, [searchFields]);
+  }, [searchFields, searchParams, searchResultParams.query]);
 
   const resetSearch = (workstreamId) => {
     setActiveWorkstream(workstreamId.toString());
