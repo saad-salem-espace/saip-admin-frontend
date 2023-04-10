@@ -29,7 +29,7 @@ import './style.scss';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
-import { flattenCriteria, parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -40,6 +40,7 @@ function SearchResults() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
   const [isEnabledSynonyms, setIsEnabledSynonyms] = useState(false);
+  const [activeWorkstream, setActiveWorkstream] = useState(searchParams.get('workstreamId'));
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
   const [totalResults, setTotalResults] = useState(0);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
@@ -47,11 +48,10 @@ function SearchResults() {
   const [results, setResults] = useState(null);
   const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
+  const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
-  const [flattenedCriteria, setFlattenedCriteria] = useState([]);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
-
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
@@ -172,16 +172,16 @@ function SearchResults() {
     setIsIPRExpanded(!isIPRExpanded);
   };
 
-  const options = [
-    {
-      key: '1',
-      value: 'any field',
-    },
-    {
-      key: '2',
-      value: 'Int. Classification(IPC)',
-    },
-  ];
+  // const options = [
+  //   {
+  //     key: '1',
+  //     value: 'any field',
+  //   },
+  //   {
+  //     key: '2',
+  //     value: 'Int. Classification(IPC)',
+  //   },
+  // ];
 
   const onSubmit = (values) => {
     setActiveDocument(null);
@@ -199,16 +199,33 @@ function SearchResults() {
   };
 
   useEffect(() => {
+    setSearchQuery(searchResultParams.query);
+    const regexPattern = /true/;
+    setIsEnabledSynonyms(regexPattern.test(searchParams.get('enableSynonyms')));
     if (searchIdentifiers) {
       const decodedQuery = decodeQuery(searchResultParams.query);
-      setFlattenedCriteria(flattenCriteria(decodedQuery));
       const searchIdentifiersData = searchIdentifiers.data;
       const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
         id: 1, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
       }]);
     }
-  }, [searchResultParams.query, searchIdentifiers]);
+  }, [searchResultParams.query, searchIdentifiers, searchParams]);
+
+  useEffect(() => {
+    const keywords = parseQuery(searchFields, searchParams.get('imageName'), false);
+    if (keywords) {
+      setSearchKeywords(keywords);
+    }
+  }, [searchFields]);
+
+  const resetSearch = (workstreamId) => {
+    setActiveWorkstream(workstreamId.toString());
+    const searchIdentifiersData = searchIdentifiers.data;
+    setSearchFields([{
+      id: workstreamId, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
+    }]);
+  };
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
     label: pascalCase(workstream.workstreamName),
@@ -221,7 +238,8 @@ function SearchResults() {
   };
 
   const handleAdvancedSearch = () => {
-    setIsAdvancedSearch(true);
+    setIsAdvancedSearch(!isAdvancedSearch);
+    setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
   };
 
   const SearchModuleClassName = ({
@@ -242,21 +260,28 @@ function SearchResults() {
 
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
+    setIsAdvancedSearch(!isAdvancedSearch);
   };
 
   const getIprClassName = (media) => {
     let size = 4;
-    if (media === 'xl' && isIPRExpanded) {
+    if (media === 'xxl' && isIPRExpanded) {
       size = 12;
       if (isAdvancedSearch) {
         size = isAdvancedMenuOpen ? 9 : 11;
+      }
+    }
+    if (media === 'xl' && isIPRExpanded) {
+      size = 12;
+      if (isAdvancedSearch) {
+        size = isAdvancedMenuOpen ? 8 : 11;
       }
     }
     return size;
   };
   const getSearchResultsClassName = (media) => {
     let size = 5;
-    if (media === 'xl') {
+    if (media === 'xxl') {
       if (isAdvancedSearch) {
         if (!totalResults) {
           size = 9;
@@ -272,6 +297,25 @@ function SearchResults() {
         size = 8;
       } else {
         size = 11;
+      }
+    }
+    if (media === 'xl') {
+      size = 4;
+      if (isAdvancedSearch) {
+        if (!totalResults) {
+          size = 8;
+        }
+        if (!isAdvancedMenuOpen) {
+          if (totalResults) {
+            size = 7;
+          } else {
+            size = 10;
+          }
+        }
+      } else if (totalResults) {
+        size = 7;
+      } else {
+        size = 10;
       }
     }
     return size;
@@ -308,7 +352,6 @@ function SearchResults() {
     setSearchParams(searchParams);
     setSortBy(sortCriteria);
   };
-
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -318,9 +361,9 @@ function SearchResults() {
             enableReinitialize
             onSubmit={onSubmit}
             initialValues={{
-              searchQuery: searchQuery || searchResultParams.query,
+              searchQuery,
               selectedWorkstream: WorkStreamsOptions?.find(
-                (element) => element.value.toString() === searchResultParams.workstreamId,
+                (element) => element.value.toString() === activeWorkstream,
               ),
             }}
           >
@@ -334,13 +377,16 @@ function SearchResults() {
                       moduleClassName="menu"
                       selectedOption={values.selectedWorkstream}
                       className="workStreams me-5 ms-3 mt-1 customSelect"
-                      setSelectedOption={(data) => setFieldValue('selectedWorkstream', data)}
+                      setSelectedOption={(data) => {
+                        setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
+                        resetSearch(data?.value);
+                      }}
                     />
                   </div>
                   <div className="flex-grow-1">
                     <div className="mb-4">
                       <div className="d-md-flex">
-                        {
+                        {/* {
                           !isAdvancedSearch && (
                             <div className="position-relative mb-md-0 mb-3">
                               <Select
@@ -349,7 +395,7 @@ function SearchResults() {
                               />
                             </div>
                           )
-                        }
+                        } */}
                         <Search
                           id="search"
                           name="searchQuery"
@@ -367,7 +413,7 @@ function SearchResults() {
                     <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton
                         handleToggleButton={handleAdvancedSearch}
-                        isToggleButtonOn={false}
+                        isToggleButtonOn={isAdvancedSearch}
                         text={t('advancedSearch')}
                         className="border-md-end pe-4 me-4 mb-md-0 mb-2"
                       />
@@ -395,27 +441,23 @@ function SearchResults() {
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch content">
-        {
-          isAdvancedSearch && (
-            <Col xl={isAdvancedMenuOpen ? 3 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
-              <AdvancedSearch
-                toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
-                defaultInitializers={searchFields}
-                isAdvancedMenuOpen={isAdvancedMenuOpen}
-                submitRef={submitRef}
-                workstreamId={searchResultParams.workstreamId}
-                firstIdentifierStr={searchResultParams.identifierStrId}
-                onChangeSearchQuery={setSearchQuery}
-              />
-            </Col>
-          )
-        }
+        <Col xl={isAdvancedMenuOpen ? 3 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
+          <AdvancedSearch
+            toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
+            defaultInitializers={searchFields}
+            isAdvancedMenuOpen={isAdvancedMenuOpen}
+            submitRef={submitRef}
+            workstreamId={activeWorkstream}
+            firstIdentifierStr={searchResultParams.identifierStrId}
+            onChangeSearchQuery={setSearchQuery}
+          />
+        </Col>
         {
           searchResultParams.fireSearch
           && (
-            <Col xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
               <SearchNote
-                searchKeywords={parseQuery(searchFields, searchParams.get('imageName'), false)}
+                searchKeywords={searchKeywords}
                 resultsCount={totalResults}
               />
               <Formik>
@@ -425,7 +467,7 @@ function SearchResults() {
                       {
                       searchResultParams.workstreamId === '2' && (
                         <div className="position-relative mb-6 viewSelect">
-                          <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                          <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
                           <Select
                             options={viewOptions}
                             setSelectedOption={onChangeView}
@@ -439,7 +481,7 @@ function SearchResults() {
                       )
                     }
                       <div className="position-relative mb-8 sortBy ms-md-6">
-                        <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
+                        <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
                           options={getSortOptions(searchResultParams.workstreamId)}
                           setSelectedOption={onChangeSortBy}
@@ -459,7 +501,6 @@ function SearchResults() {
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
                         query: searchResultParams.query,
-                        flattenedCriteria,
                         setActiveDocument,
                         activeDocument,
                         selectedView,
@@ -481,7 +522,7 @@ function SearchResults() {
           )
         }
         {activeDocument && (
-          <Col xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
+          <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails
               collapseIPR={collapseIPR}
               isIPRExpanded={isIPRExpanded}

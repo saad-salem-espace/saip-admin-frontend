@@ -17,7 +17,7 @@ function SearchQuery({
 }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
-  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${workstreamId}/identifiers` });
+  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${workstreamId}/identifiers` }, { dependencies: [workstreamId] });
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);

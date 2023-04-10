@@ -326,7 +326,7 @@ function IprDetails({
           {() => (
             <Form>
               <div className="position-relative">
-                <span className={`position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('viewSection')}</span>
+                <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('viewSection')}</span>
                 <Select
                   options={searchResultParams.workstreamId === '2' ? trademarkViewsOptions : patentViewsOptions}
                   setSelectedOption={onChangeSelect}

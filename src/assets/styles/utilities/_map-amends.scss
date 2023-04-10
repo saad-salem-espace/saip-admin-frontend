@@ -1,0 +1,15 @@
+$utilities: (
+  // append new heights
+  "height": (
+      property: height,
+      class: h,
+      values: (
+        25: 25%,
+        39: 39px,
+        50: 50%,
+        75: 75%,
+        100: 100%,
+        auto: auto
+      )
+    ),
+ );

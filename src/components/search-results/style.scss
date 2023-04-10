@@ -9,10 +9,6 @@
   }
 }
 
-.workStreams {
-  width: 140px;
-}
-
 @include media-breakpoint-down(xl) {
   .closed {
     height: 60px;
