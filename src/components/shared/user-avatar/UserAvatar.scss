@@ -1,0 +1,11 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.sb-avatar {
+  .sb-avatar__text {
+    background-color: $primary-10 !important;
+    color: $primary !important;
+    span {
+      font-size: $font-size-sm;
+    }
+  }
+}

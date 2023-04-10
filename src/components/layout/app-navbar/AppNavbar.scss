@@ -1,0 +1,78 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/mixin";
+
+.app-navbar {
+  @include media-breakpoint-up(lg) {
+    height: 80px;
+  }
+  .nav-link {
+    font-size: $font-size-sm;
+    color: $primary-dark;
+    @extend .align-self-center;
+  }
+  .icon {
+    font-size: $font-size-base;
+    html[dir="ltr"] & {
+      margin-right: 10px;
+    }
+    html[dir="rtl"] & {
+      margin-left: 10px;
+    }
+    &.list {
+      transform: rotate(180deg);
+    }
+  }
+  .notifications {
+    width: 50px;
+    @include media-breakpoint-up(xl) {
+      margin: 0 24px;
+      html[dir="ltr"] & {
+        padding: 0 58px 0 19px;
+      }
+      html[dir="rtl"] & {
+        padding: 0 19px 0 58px;
+      }
+    }
+    &.new {
+      position: relative;
+      .number-notifications {
+        background-color: $danger-dark;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        color: $white;
+        position: absolute;
+        top: -9px;
+        font-size: 10px;
+        line-height: 27px;
+        text-align: center;
+        html[dir="ltr"] & {
+          right: 12px;
+        }
+        html[dir="rtl"] & {
+          left: 12px;
+        }
+      }
+    }
+    .icon {
+      font-size: 22px;
+    }
+  }
+  .sb-avatar , .notifications{
+    @include media-breakpoint-down(lg) {
+      margin: 0 5px;
+    }
+  }
+  .avatar-btn {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  &.logged {
+    .switch-language {
+      @include border(1px,25px,6px,auto,0,$border-color);
+    }
+  }
+}
+.edges-border {
+  @include border(1px,25px,6px,0,0,$border-color);
+}
