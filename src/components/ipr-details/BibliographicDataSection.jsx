@@ -10,9 +10,20 @@ import Carousel from '../shared/carousel/Carousel';
 const BibliographicDataSection = ({ document, isIPRExpanded }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
+  const getGrid = (view) => {
+    let grid = 12;
+    if (isIPRExpanded) {
+      if (view === 'drawings') {
+        grid = 5;
+      } else {
+        grid = 7;
+      }
+    }
+    return grid;
+  };
   return (
     <Row>
-      <Col lg={isIPRExpanded ? 7 : 12} md={isIPRExpanded ? 7 : 12}>
+      <Col md={getGrid('bibliographic')}>
         <h6 className="mt-8 mb-4">{t('register')}</h6>
         <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('applicants')}</p>
@@ -74,7 +85,7 @@ const BibliographicDataSection = ({ document, isIPRExpanded }) => {
           </ShowMore>
         </p>
       </Col>
-      <Col lg={isIPRExpanded ? 5 : 12} md={isIPRExpanded ? 5 : 12} className={isIPRExpanded ? 'border-start' : ''}>
+      <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
         <h6>{t('ipr.drawings')}</h6>
         {
             document.Drawings ? (
