@@ -46,11 +46,7 @@ function LoggedNavbar() {
             <Nav.Link to="#features" as={Link} className="appBtn btn btn-primary pe-lg-3 me-lg-5 px-3">
               {t('navbar.ipSearch')}
             </Nav.Link>
-            <RecentSearch>
-              <Dropdown.Item to="#/action-1" as={Link}>Action logged</Dropdown.Item>
-              <Dropdown.Item to="#/action-2" as={Link}>Another action logged</Dropdown.Item>
-              <Dropdown.Item to="#/action-3" as={Link}>Something else logged</Dropdown.Item>
-            </RecentSearch>
+            <RecentSearch />
             <div className="d-flex justify-content-center h-39">
               {/* Notifications */}
               <div className="edges-border notifications new">
@@ -75,10 +71,6 @@ function LoggedNavbar() {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </div>
-            <div>
-              {/* { Need to align with dina to handle position for this element } */}
-              {/* {roleMapper(auth.user?.profile.clientRoles[0])} */}
             </div>
           </Nav>
         </Navbar.Collapse>
