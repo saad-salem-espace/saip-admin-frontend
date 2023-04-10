@@ -91,6 +91,7 @@ $colors: (
 // scss-docs-start theme-color-variables
 $primary: $turquoise;
 $primary-01: $turquoise-01;
+$primary-10: $turquoise-10;
 $primary-dark: $turquoise-dark;
 $secondary: $turquoise-secondary;
 $success: $green !default;
@@ -107,6 +108,7 @@ $danger-dark: $danger-dark;
 $theme-colors: (
   "primary": $primary,
   "primary-01": $primary-01,
+  "primary-10": $primary-10,
   "primary-dark": $primary-dark,
   "secondary": $secondary,
   "success": $success,
@@ -358,7 +360,7 @@ $grid-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1400px) !default;
+  xxl: 1441px);
 // scss-docs-end grid-breakpoints
 
 @include _assert-ascending($grid-breakpoints, "$grid-breakpoints"
@@ -1563,3 +1565,10 @@ $pre-color: null !default;
 @import "~bootstrap/scss/mixins/utilities";
 @import "~bootstrap/scss/helpers/text-truncation";
 @import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/nav";
+@import "~bootstrap/scss/navbar";
+@import "~bootstrap/scss/helpers";
+@import "~bootstrap/scss/dropdown";
+
+// @import "~bootstrap/scss/bootstrap";
+

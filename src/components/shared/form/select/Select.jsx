@@ -12,6 +12,7 @@ function Select({
   selectedOption,
   setSelectedOption,
   defaultValue,
+  isSearchable,
 }) {
   return (
     <div className={className}>
@@ -24,6 +25,7 @@ function Select({
         getOptionValue={getOptionValue}
         placeholder={placeholder}
         value={selectedOption}
+        isSearchable={isSearchable}
       />
     </div>
   );
@@ -51,6 +53,7 @@ Select.propTypes = {
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
+  isSearchable: PropTypes.bool,
 };
 Select.defaultProps = {
   className: null,
@@ -58,5 +61,6 @@ Select.defaultProps = {
   selectedOption: {},
   setSelectedOption: () => {},
   defaultValue: null,
+  isSearchable: false,
 };
 export default Select;

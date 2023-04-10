@@ -1,0 +1,19 @@
+{
+  "head": {
+    "title": "الهيئة السعودية للملكية الفكرية"
+  },
+  "navbar": {
+    "login": "تسجيل الدخول",
+    "logOut": "تسجيل الخروج",
+    "signup": "التسجيل",
+    "recentSearch": "اخر البحث",
+    "dashboard": "لوحة التحكم",
+    "myBookmarks": "مفضلاتي",
+    "savedQueries": "الاستعلامات المحفوظة",
+    "myQueries": "إستعلاماتي",
+    "myActivity": "نشاطاتي",
+    "ipSearch": "IP بحث",
+    "english": "انجليزية",
+    "arabic": "عربي"
+  }
+}
