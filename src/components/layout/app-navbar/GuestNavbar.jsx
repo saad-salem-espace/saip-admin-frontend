@@ -26,7 +26,7 @@ function GuestNavbar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
           <Nav className="me-auto">
-            <Nav.Link to="#" as={Link} className="has-icon ps-lg-5">
+            <Nav.Link to="/savedQueries" as={Link} className="has-icon ps-lg-5">
               <BsStar className="icon" />
               {t('navbar.myQueries')}
             </Nav.Link>

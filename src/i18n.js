@@ -7,6 +7,7 @@ import layoutEn from './locales/en/layout.json';
 import layoutAr from './locales/ar/layout.json';
 import searchEn from './locales/en/search.json';
 import translationEn from './locales/en/translation.json';
+import queriesEn from './locales/en/queries.json';
 
 const resources = {
   en: {
@@ -15,6 +16,7 @@ const resources = {
     citation: citationEn,
     common: commonEn,
     layout: layoutEn,
+    queries: queriesEn,
   },
   ar: {
     layout: layoutAr,
