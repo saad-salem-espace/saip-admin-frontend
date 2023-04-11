@@ -371,8 +371,8 @@ function SearchResults() {
       // toastify(
       //   'error',
       //   <div>
-      //     <p className="font-medium text-dark mb-0 f-14">{t('couldnotSave')}</p>
-      //     <p className="text-gray f-14 mb-0">
+      //     <p className="toastifyTitle">{t('couldnotSave')}</p>
+      //     <p className="toastText">
       //       {t('failerMsg')}
       //     </p>
       //   </div>,
@@ -380,8 +380,8 @@ function SearchResults() {
       toastify(
         'success',
         <div>
-          <p className="font-medium text-dark mb-0 f-14">{t('querySaved')}</p>
-          <p className="text-gray f-14 mb-0">
+          <p className="toastifyTitle">{t('querySaved')}</p>
+          <p className="toastText">
             <Trans
               i18nKey="savedQueryMsg"
               ns="search"
