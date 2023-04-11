@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 
 import citationEn from './locales/en/citation.json';
 import commonEn from './locales/en/common.json';
+import errorEn from './locales/en/errors.json';
 import layoutEn from './locales/en/layout.json';
 import layoutAr from './locales/ar/layout.json';
 import searchEn from './locales/en/search.json';
@@ -14,6 +15,7 @@ const resources = {
     search: searchEn,
     citation: citationEn,
     common: commonEn,
+    error: errorEn,
     layout: layoutEn,
   },
   ar: {

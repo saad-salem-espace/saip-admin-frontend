@@ -1,6 +1,8 @@
 import { makeUseAxios } from 'axios-hooks';
 import apiInstance from 'apis/apiInstance';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 /**
  * useAxiosWrapper to handle errors
@@ -17,14 +19,18 @@ import { useEffect } from 'react';
 const useAxios = (config, options, customInstance) => {
   const axios = makeUseAxios({ axios: customInstance ?? apiInstance });
   const response = axios(config, options);
+  const { t } = useTranslation('error', { keyPrefix: 'serverErrors' });
 
   useEffect(() => {
-    if (response[0].error) {
-      switch (response[0].error.response.data.type) {
+    const axiosError = response[0].error;
+    if (axiosError) {
+      const errorType = axiosError.response.data?.error?.type;
+      const errorCode = axiosError.response.data?.error?.code;
+      switch (errorType) {
         case 'custom':
           break;
         case 'warning':
-          // TODO Call warning toast or flash message (use the toast/modal context)
+          toast.warn(t(errorCode));
           break;
         default:
           throw response[0].error;
