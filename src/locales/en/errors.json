@@ -1,0 +1,8 @@
+{
+  "serverErrors": {
+    "server_error": "Something went wrong.",
+    "invalid_state": "Went into an invalid state please reload.",
+    "unauthorized": "You have not authorized to perform this action.",
+    "not_found": "Requested data is not found."
+  }
+}

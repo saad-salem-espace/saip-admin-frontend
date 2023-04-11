@@ -5,6 +5,7 @@ import translationEn from './locales/en/translation.json';
 import searchEn from './locales/en/search.json';
 import citationEn from './locales/en/citation.json';
 import commonEn from './locales/en/common.json';
+import errorEn from './locales/en/errors.json';
 
 const resources = {
   en: {
@@ -12,6 +13,7 @@ const resources = {
     search: searchEn,
     citation: citationEn,
     common: commonEn,
+    error: errorEn,
   },
 };
 
