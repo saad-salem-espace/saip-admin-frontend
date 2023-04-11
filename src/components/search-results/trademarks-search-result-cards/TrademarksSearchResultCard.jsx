@@ -50,7 +50,7 @@ function TrademarksSearchResultCard({
                 {
                   (selectedView.value === 'detailed' || selectedView.value === 'summary') && (
                     <p className="text-gray md-text mb-2">
-                      {BibliographicData.Applicants.join('; ')}
+                      {BibliographicData?.Applicants?.join('; ')}
                     </p>)
                 }
                 {

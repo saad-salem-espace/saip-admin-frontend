@@ -23,17 +23,19 @@ function SearchResultCard({
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
             <Checkbox className="me-4" />
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData.ApplicationTitle,
-                query,
-              )}
-              searchWords={highlghtWords}
-              autoEscape
-            />
-
+            {
+              BibliographicData.ApplicationTitle
+              && <Highlighter
+                highlightTag="span"
+                highlightClassName="font-medium"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData?.ApplicationTitle,
+                  query,
+                )}
+                searchWords={highlghtWords}
+                autoEscape
+              />
+            }
           </div>
           <p className="mb-2 text-black">
             {BibliographicData.PublicationNumber}
@@ -52,16 +54,19 @@ function SearchResultCard({
         }
           </p>
           <p className="text-gray sm-text">
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData.ApplicationAbstract.join(' '),
-                query,
-              )}
-              searchWords={highlghtWords}
-              autoEscape
-            />
+            {
+              BibliographicData.ApplicationTitle
+              && <Highlighter
+                highlightTag="span"
+                highlightClassName="font-medium"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData.ApplicationAbstract.join(' '),
+                  query,
+                )}
+                searchWords={highlghtWords}
+                autoEscape
+              />
+              }
           </p>
         </div>
        )}
