@@ -1,6 +1,8 @@
 import './assets/styles/App.scss';
 import Routes from 'components/routes/Routes';
 import ThemeProvider from 'components/theme/ThemeProvider';
+import { ToastContainer } from 'react-toastify';
+
 // import ChangeLanguage from 'components/change-language/ChangeLanguage';
 
 function App() {
@@ -11,9 +13,10 @@ function App() {
   return (
     <ThemeProvider
       // lang={lang}
-    // eslint-disable-next-line react/jsx-closing-bracket-location
+      // eslint-disable-next-line react/jsx-closing-bracket-location
     >
       <div className="app">
+        <ToastContainer />
         {/* <ChangeLanguage changeLang={changeLang} /> */}
         <Routes />
       </div>
