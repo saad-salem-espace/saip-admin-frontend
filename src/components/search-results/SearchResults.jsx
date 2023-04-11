@@ -151,20 +151,20 @@ function SearchResults() {
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findLastIndex(
+    const index = results.data.findLastIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === results.length - 1
-      ? null : results[index + 1].BibliographicData.FilingNumber);
+    return (index === results.data.length - 1
+      ? null : results.data[index + 1].BibliographicData.FilingNumber);
   };
 
   const getPreviousDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findIndex(
+    const index = results.data.findIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === 0 ? null : results[index - 1].BibliographicData.FilingNumber);
+    return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
   };
 
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
