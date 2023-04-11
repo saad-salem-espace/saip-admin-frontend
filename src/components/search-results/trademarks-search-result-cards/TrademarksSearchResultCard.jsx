@@ -56,13 +56,13 @@ function TrademarksSearchResultCard({
                 {
                   selectedView.value === 'detailed' && (
                     <>
-                      <p className="font-medium mb-2 d-lg-flex align-items-center text-dark sm-text">
+                      <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                         {t('trademarks.registered', { value: BibliographicData.RegistrationNumber })}
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                         <span>{BibliographicData.RegistrationDate}</span>
                       </p>
-                      <p className="font-medium mb-0 d-lg-flex align-items-center text-dark sm-text">
+                      <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                         {t('trademarks.published', { value: BibliographicData.PublicationNumber })}
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
