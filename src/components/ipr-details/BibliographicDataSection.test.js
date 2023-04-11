@@ -32,7 +32,7 @@ describe('<BibliographicDataSection />', () => {
   it('renders empty handler text if not exist', async () => {
     const document = JSON.parse(JSON.stringify(samplePatent));
     document.Inventors = [];
-    document.Images = null;
+    document.Drawings = null;
 
     const { queryAllByText } = render(
       <BibliographicDataSection document={samplePatent} />,
