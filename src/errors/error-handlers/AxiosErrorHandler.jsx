@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { lazy } from 'react';
-import routes from 'components/routes/routes.json';
 
 const errorHandlers = {
   not_found: lazy(() => import('errors/error-pages/NotFoundError')),
@@ -11,12 +10,9 @@ const errorHandlers = {
 
 const AxiosErrorHandler = ({ error }) => {
   const RenderedComponent = errorHandlers[error.error.code] || errorHandlers.invalid_state;
+
   return (
-    <>
-      <h1>Axios Error</h1>
-      <RenderedComponent />
-      <a href={routes.home}>Go Home</a>
-    </>
+    <RenderedComponent />
   );
 };
 
