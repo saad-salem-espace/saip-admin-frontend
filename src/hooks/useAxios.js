@@ -1,8 +1,8 @@
 import { makeUseAxios } from 'axios-hooks';
 import apiInstance from 'apis/apiInstance';
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import toastify from '../utils/toastify';
 
 /**
  * useAxiosWrapper to handle errors
@@ -23,6 +23,7 @@ const useAxios = (config, options, customInstance) => {
 
   useEffect(() => {
     const axiosError = response[0].error;
+
     if (axiosError) {
       const errorType = axiosError.response.data?.error?.type;
       const errorCode = axiosError.response.data?.error?.code;
@@ -30,7 +31,12 @@ const useAxios = (config, options, customInstance) => {
         case 'custom':
           break;
         case 'warning':
-          toast.warn(t(errorCode));
+          toastify(
+            'warn',
+            <div>
+              <p className="toastifyTitle">{t(errorCode)}</p>
+            </div>,
+          );
           break;
         default:
           throw response[0].error;
