@@ -4,10 +4,25 @@ $utilities: (
       property: height,
       class: h,
       values: (
+        24: 24px,
         25: 25%,
         39: 39px,
         50: 50%,
+        65: 65%,
         75: 75%,
+        100: 100%,
+        auto: auto
+      )
+    ),
+    "width": (
+      property: width,
+      class: w,
+      values: (
+        25: 25%,
+        50: 50%,
+        65: 65px,
+        75: 75%,
+        80: 80%,
         100: 100%,
         auto: auto
       )

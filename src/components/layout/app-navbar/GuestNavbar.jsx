@@ -18,7 +18,7 @@ function GuestNavbar() {
   const auth = useAuth();
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
-      <Container fluid className="px-lg-15">
+      <Container fluid className="ps-lg-18">
         <Navbar.Brand to="#home" as={Link}>
           <Image src={logo} />
         </Navbar.Brand>
