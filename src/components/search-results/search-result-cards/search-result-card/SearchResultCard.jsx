@@ -55,12 +55,12 @@ function SearchResultCard({
           </p>
           <p className="text-gray sm-text">
             {
-              BibliographicData.ApplicationTitle
+              BibliographicData.ApplicationAbstract
               && <Highlighter
                 highlightTag="span"
                 highlightClassName="font-medium"
                 textToHighlight={trimStringRelativeToSubtext(
-                  BibliographicData.ApplicationAbstract.join(' '),
+                  BibliographicData?.ApplicationAbstract.join(' '),
                   query,
                 )}
                 searchWords={highlghtWords}
