@@ -127,5 +127,243 @@
       "Parent": 9,
       "Text": "10. The device manufacture method according to claim 9, wherein the sputtering of said second surface is performed simultaneously with the sputtering of said first surface."
     }
+  ],
+  "LegalStatus": [
+    {
+      "StatusCode": "hi",
+      "StatusDate": "2015-01-20",
+      "Status": "Status",
+      "EffectiveDate": "2015-01-22",
+      "Notes": "Active"
+    },
+    {
+      "StatusCode": "A2, 08936998",
+      "StatusDate": "2015-01-22",
+      "Status": "In Active",
+      "EffectiveDate": "2015-01-20",
+      "Notes": "Active"
+    },
+    {
+      "StatusCode": "C2, 08936998",
+      "StatusDate": "2015-01-25",
+      "Status": "In Active",
+      "EffectiveDate": "2015-01-20",
+      "Notes": "Active"
+    }
+  ],
+  "OwnersDetails": [
+    {
+      "OwnerName": "omniaaaaaa",
+      "CountryCode": "000",
+      "Naionality": "nationality",
+      "OwnerDetails": ["country 3", "city 3", "egyptian", "omnia@gmail", "03"]
+    },
+    {
+      "OwnerName": "test",
+      "CountryCode": "8",
+      "Naionality": "nationality",
+      "OwnerDetails": ["country 3", "city 3", "egyptian", "omnia@gmail", "03"]
+    }
+  ],
+  "ApplicantsDetails": [
+    {
+      "ApplicantName": "omnia",
+      "CountryCode": "03",
+      "Naionality": "nationality",
+      "ApplicantDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    },
+    {
+      "ApplicantName": "nada",
+      "CountryCode": "03",
+      "Naionality": "nationality",
+      "ApplicantDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    },
+    {
+      "ApplicantName": "nesma",
+      "CountryCode": "03",
+      "Naionality": "nationality",
+      "ApplicantDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    },
+    {
+      "ApplicantName": "omnia",
+      "CountryCode": "03",
+      "Naionality": "nationality",
+      "ApplicantDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    }
+  ],
+  "Representative": [
+    {
+      "RepresentativeName": "omnia yahia",
+      "CountryCode": "01",
+      "Naionality": "nationality",
+      "RepresentativeDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    },
+    {
+      "RepresentativeName": "asmaa",
+      "CountryCode": "00",
+      "Naionality": "",
+      "RepresentativeDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    },
+    {
+      "RepresentativeName": "salma",
+      "CountryCode": "",
+      "Naionality": "",
+      "RepresentativeDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    },
+    {
+      "RepresentativeName": "yasmin",
+      "CountryCode": "",
+      "Naionality": "",
+      "RepresentativeDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    }
+  ],
+  "Citations": [
+    {
+      "Type": "cited",
+      "CitationOriginCoutryCode": "03",
+      "PublicationDate": "2015-01-20",
+      "PublicationTitle": "title",
+      "PublicationNumber": "02222",
+      "Applicants": ["name 1", "name 2"],
+      "EarliestPriorityDate": "2015-01-22"
+    },
+    {
+      "Type": "Citing",
+      "CitationOriginCoutryCode": "07",
+      "PublicationDate": "2015-01-23",
+      "PublicationTitle": "title2",
+      "PublicationNumber": "02",
+      "Applicants": ["name 3", "name 4"],
+      "EarliestPriorityDate": "2015-01-24"
+    }
+  ],
+  "Drawings": [
+    "https://picsum.photos/id/273/400/400",
+    "https://fastly.picsum.photos/id/501/200/300.jpg?hmac=fk5fWXapclFoDmPlQjOTEHRG3uPBJuPmB_5HeJsEsfY",
+    "https://fastly.picsum.photos/id/1/5000/3333.jpg?hmac=Asv2DU3rA_5D1xSe22xZK47WEAN0wjWeFOhzd13ujW4",
+    "https://fastly.picsum.photos/id/2/5000/3333.jpg?hmac=_KDkqQVttXw_nM-RyJfLImIbafFrqLsuGO5YuHqD-qQ",
+    "https://fastly.picsum.photos/id/14/2500/1667.jpg?hmac=ssQyTcZRRumHXVbQAVlXTx-MGBxm6NHWD3SryQ48G-o"
+  ],
+  "InventorsDetails": [
+    {
+      "InventorName": "omniaaaaaa",
+      "CountryCode": "000",
+      "Naionality": "nationality",
+      "InventorDetails": [
+        "country 3",
+        "city 3",
+        "egyptian",
+        "omnia@gmail",
+        "03"
+      ]
+    },
+    {
+      "InventorName": "omnia 1",
+      "CountryCode": "03",
+      "Naionality": "nationality 2",
+      "InventorDetails": [
+        "country 1",
+        "city 1",
+        "egyptian2",
+        "omnia2@gmail",
+        "02"
+      ]
+    }
+  ],
+  "PrioritiesDetails": [
+    {
+      "PriorityDate": "2015-01-24",
+      "PriorityNumber": "02",
+      "PriorityCountry": "2"
+    },
+    {
+      "PriorityDate": "2015-01-20",
+      "PriorityNumber": "22",
+      "PriorityCountry": "3"
+    }
+  ],
+  "PatentFamility": [
+    {
+      "PublicationNumber": "555",
+      "PublicationDate": "2015-01-24",
+      "ApplicationTitle": "title",
+      "ApplicationNumber": "255",
+      "Applicants": ["Applicants 1", "Applicants 2"]
+    },
+    {
+      "PublicationNumber": "55",
+      "PublicationDate": "2015-01-20",
+      "ApplicationTitle": "title2",
+      "ApplicationNumber": "25",
+      "Applicants": ["Applicants 3", "Applicants 22"]
+    }
+  ],
+  "OfficeActions": [
+    {
+      "OfficeAction": "action 1",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
+    },
+    {
+      "OfficeAction": "action 2",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
+    },
+    {
+      "OfficeAction": "action 3",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
+    }
   ]
 }

@@ -19,7 +19,7 @@ function GuestNavbar() {
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
       <Container fluid className="ps-lg-18">
-        <Navbar.Brand to="#home" as={Link}>
+        <Navbar.Brand to="/" as={Link}>
           <Image src={logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

@@ -23,6 +23,7 @@ const oidcConfig = {
   authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY,
   client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
   redirect_uri: process.env.REACT_APP_ENTITY_URL,
+  post_logout_redirect_uri: process.env.REACT_APP_ENTITY_URL,
   automaticSilentRenew: true,
   loadUserInfo: true,
   userStore: new WebStorageStateStore({ store: localStorage }),
