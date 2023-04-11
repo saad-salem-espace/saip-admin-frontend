@@ -457,7 +457,7 @@ function SearchResults() {
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch content">
-        <Col xl={isAdvancedMenuOpen ? 3 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
+        <Col xxl={isAdvancedMenuOpen ? 3 : 1} xl={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
           <AdvancedSearch
             toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
             defaultInitializers={searchFields}
@@ -497,21 +497,21 @@ function SearchResults() {
                   <Form className="mt-8">
                     <div className="d-md-flex">
                       {
-                        searchResultParams.workstreamId === '2' && (
-                          <div className="position-relative mb-6 viewSelect">
-                            <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
-                            <Select
-                              options={viewOptions}
-                              setSelectedOption={onChangeView}
-                              selectedOption={selectedView}
-                              defaultValue={selectedView}
-                              id="viewSection"
-                              fieldName="viewSection"
-                              className="mb-5 select-2"
-                            />
-                          </div>
-                        )
-                      }
+                      searchResultParams.workstreamId === '2' && (
+                        <div className="position-relative mb-6 viewSelect">
+                          <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                          <Select
+                            options={viewOptions}
+                            setSelectedOption={onChangeView}
+                            selectedOption={selectedView}
+                            defaultValue={selectedView}
+                            id="viewSection"
+                            fieldName="viewSection"
+                            className="mb-md-0 mb-3 select-2"
+                          />
+                        </div>
+                      )
+                    }
                       <div className="position-relative mb-8 sortBy ms-md-6">
                         <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
@@ -521,7 +521,7 @@ function SearchResults() {
                           defaultValue={sortBy}
                           id="sortBy"
                           fieldName="sortBy"
-                          className="mb-5 select-2"
+                          className="select-2"
                         />
                       </div>
                     </div>
