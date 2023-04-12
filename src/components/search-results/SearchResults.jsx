@@ -5,8 +5,10 @@ import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { useTranslation } from 'react-i18next';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
+import {
+  createSearchParams, useNavigate, useSearchParams, Link,
+} from 'react-router-dom';
 import uploadFile from 'apis/uploadFileApi';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import EmptyState from 'components/shared/empty-state/EmptyState';
@@ -33,6 +35,7 @@ import TrademarksSearchResultCards from './trademarks-search-result-cards/Tradem
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import toastify from '../../utils/toastify';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -146,7 +149,35 @@ function SearchResults() {
   }, []);
 
   useEffect(() => {
-    if (saveQueryData?.data?.code === 200) setIsQuerySaved(true);
+    if (saveQueryData.data) {
+      if (saveQueryData.data.code === 200) {
+        setIsQuerySaved(true);
+        toastify(
+          'success',
+          <div>
+            <p className="toastifyTitle">{t('querySaved')}</p>
+            <p className="toastText">
+              <Trans
+                i18nKey="savedQueryMsg"
+                ns="search"
+              >
+                <Link className="text-primary" to="/" />
+              </Trans>
+            </p>
+          </div>,
+        );
+      } else {
+        toastify(
+          'error',
+          <div>
+            <p className="toastifyTitle">{t('couldnotSave')}</p>
+            <p className="toastText">
+              {t('failerMsg')}
+            </p>
+          </div>,
+        );
+      }
+    }
   }, [saveQueryData]);
 
   useEffect(() => {
