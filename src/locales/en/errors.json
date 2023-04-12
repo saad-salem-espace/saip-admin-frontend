@@ -10,5 +10,7 @@
   "noAuthorization": "No authorization found",
   "noAuthorizationMsg": "This page is not publicly available.",
   "notFound": "Page not found",
-  "notFoundMsg": "Oops! The page you are looking for does not exist. It might have been <0> moved or deleted.</0>"
+  "notFoundMsg": "Oops! The page you are looking for does not exist. It might have been <0> moved or deleted.</0>",
+  "badRequest": "Bad Request",
+  "badRequestMsg": "Oops! The browser sent a request that this server could not understand."
 }

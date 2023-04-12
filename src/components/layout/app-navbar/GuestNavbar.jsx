@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { BsStar } from 'react-icons/bs';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import Image from 'react-bootstrap/Image';
-import routes from 'components/routes/routes.json';
 import logo from '../../../assets/images/Logo.png';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
@@ -20,7 +19,7 @@ function GuestNavbar() {
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
       <Container fluid className="px-lg-15">
-        <Navbar.Brand to={routes.home} as={Link}>
+        <Navbar.Brand to="/" as={Link}>
           <Image src={logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
