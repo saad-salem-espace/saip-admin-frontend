@@ -16,6 +16,7 @@ import Select from 'components/shared/form/select/Select';
 import formStyle from 'components/shared/form/form.module.scss';
 import { documentApi } from 'apis/search/documentsApi';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
+import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
@@ -54,18 +55,18 @@ function IprDetails({
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
-  const [document, setDocument] = useState(null);
   const [selectedView, setSelectedView] = useState({ label: t('ipr.bibliographic'), value: 'BibliographicData' });
-
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
   };
+  const [{ data }, execute] = useAxios(
+    documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
+    { manual: true },
+  );
+  const document = data?.data?.[0];
   useEffect(() => {
     if (documentId) {
-      documentApi({ workstreamId: searchResultParams.workstreamId, documentId })
-        .then((resp) => {
-          setDocument(resp.data?.data[0]);
-        });
+      execute();
     }
   }, [documentId]);
 

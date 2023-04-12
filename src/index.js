@@ -2,6 +2,8 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { CacheProvider } from 'contexts/CacheContext';
+import ErrorBoundary from 'errors/ErrorBoundary';
 import './index.css';
 import { AuthProvider } from 'react-oidc-context';
 import { WebStorageStateStore } from 'oidc-client-ts';
@@ -9,7 +11,6 @@ import roleMapper from 'utils/roleMapper';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
-import { CacheProvider } from './contexts/CacheContext';
 
 const oidcConfig = {
   onSigninCallback: (userData) => {
@@ -29,15 +30,17 @@ const oidcConfig = {
 };
 ReactDOM.render(
   <React.StrictMode>
-    <CacheProvider>
-      <Suspense fallback="Loading ...">
+    <Suspense fallback="Loading ...">
+      <CacheProvider>
         <BrowserRouter>
-          <AuthProvider {...oidcConfig} autoSignIn={false}>
-            <App />
-          </AuthProvider>
+          <ErrorBoundary>
+            <AuthProvider {...oidcConfig} autoSignIn={false}>
+              <App />
+            </AuthProvider>
+          </ErrorBoundary>
         </BrowserRouter>
-      </Suspense>
-    </CacheProvider>
+      </CacheProvider>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('root'),
 );

@@ -17,7 +17,6 @@ import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import UploadImage from 'components/shared/upload-image/UploadImage';
 import emptyState from 'assets/images/search-empty-state.svg';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
-import apiInstance from 'apis/apiInstance';
 import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
@@ -25,6 +24,7 @@ import { pascalCase } from 'change-case';
 import formStyle from 'components/shared/form/form.module.scss';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Button from 'react-bootstrap/Button';
+import useAxios from 'hooks/useAxios';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
@@ -64,6 +64,20 @@ function SearchResults() {
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
+
+  const saveQueryParams = {
+    workStreamId: searchParams.get('workstreamId'),
+    query: searchParams.get('q'),
+    resultCount: totalResults.toString(),
+    enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+  };
+
+  const saveQueryConfig = saveQueryApi(saveQueryParams, true);
+
+  const [saveQueryData, executeSaveQuery] = useAxios(
+    saveQueryConfig,
+    { manual: true },
+  );
 
   const sortByOptionsPatent = [
     {
@@ -131,30 +145,53 @@ function SearchResults() {
     setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
   }, []);
 
+  useEffect(() => {
+    if (saveQueryData?.data?.code === 200) setIsQuerySaved(true);
+  }, [saveQueryData]);
+
+  useEffect(() => {
+    setIsQuerySaved(results?.isFavourite);
+  }, [results]);
+
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
+
+  const [imgData, execute] = useAxios({}, { manual: true });
+
+  useEffect(() => {
+    if (imgData.data) {
+      setImageName(imgData.data.data?.[0]);
+    } else if (imgData.error) {
+      setErrorMessage(imgData.error);
+    }
+    if (imgData.response) {
+      setIsImgUploaded(true);
+      setShowUploadImgSection(false);
+      setIsSubmitting(false);
+    }
+  }, [imgData]);
 
   const [searchQuery, setSearchQuery] = useState('');
 
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findLastIndex(
+    const index = results.data.findLastIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === results.length - 1
-      ? null : results[index + 1].BibliographicData.FilingNumber);
+    return (index === results.data.length - 1
+      ? null : results.data[index + 1].BibliographicData.FilingNumber);
   };
 
   const getPreviousDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findIndex(
+    const index = results.data.findIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === 0 ? null : results[index - 1].BibliographicData.FilingNumber);
+    return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
   };
 
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
@@ -242,14 +279,7 @@ function SearchResults() {
 
   const uploadCurrentFile = async (file) => {
     setIsSubmitting(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    const { res, err } = await uploadFile(formData);
-    setImageName(res.data.data?.[0]);
-    if (err) setErrorMessage(err);
-    setIsImgUploaded(true);
-    setShowUploadImgSection(false);
-    setIsSubmitting(false);
+    execute(uploadFile(file));
   };
 
   const handleUploadImg = () => {
@@ -319,7 +349,7 @@ function SearchResults() {
     return size;
   };
 
-  const axiosConfig = advancedSearchApi(searchResultParams, true);
+  const axiosConfig = advancedSearchApi(searchResultParams);
 
   const viewOptions = [
     {
@@ -353,19 +383,7 @@ function SearchResults() {
 
   const saveQuery = () => {
     if (isQuerySaved) return;
-
-    const saveQueryParams = {
-      workStreamId: searchParams.get('workstreamId'),
-      query: searchParams.get('q'),
-      resultCount: totalResults.toString(),
-      enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
-    };
-
-    const saveQueryConfig = saveQueryApi(saveQueryParams, true);
-
-    apiInstance.request(saveQueryConfig).then(() => {
-      setIsQuerySaved(true);
-    });
+    executeSaveQuery();
   };
 
   return (
@@ -529,7 +547,6 @@ function SearchResults() {
                       axiosConfig={axiosConfig}
                       defaultPage={Number(searchParams.get('page') || '1')}
                       setResults={setResults}
-                      setIsQuerySaved={setIsQuerySaved}
                       sort={sortBy.value}
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
