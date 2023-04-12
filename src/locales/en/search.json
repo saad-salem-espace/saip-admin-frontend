@@ -132,6 +132,30 @@
     "representative": {
       "representativeName": "Representative Name",
       "representativeDetails": "Representative details"
+    },
+    "drawings": "Drawings"
+  },
+  "patent": {
+    "claims": "Claims",
+    "citations": "Citations",
+    "examiners": "Examiners",
+    "drawings": "Drawings",
+    "applicants": "Applicants",
+    "publicationNumber": "Publication Number",
+    "publicationTitle": "Publication Title",
+    "publicationDate": "Publication date",
+    "citation": {
+      "type": "Type",
+      "citationOrigin": "Citation origin coutry code",
+      "earliestPriorityDate": "Earliest priority date"
+    },
+    "inventors": {
+      "inventorName": "Inventor Name",
+      "inventorDetails": "Inventor Details"
+    },
+    "patentFamility": {
+      "patentFamility": "Patent Famility",
+      "applicationNumber": "Application number"
     }
   },
   "sortBy": "Sort by",
