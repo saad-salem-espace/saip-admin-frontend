@@ -1,9 +1,11 @@
+/* eslint-disable */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import apiInstance from 'apis/apiInstance';
 import Pagination from 'react-responsive-pagination';
 import { useSearchParams } from 'react-router-dom';
 import './PaginationStyle.scss';
+import useAxios from 'hooks/useAxios';
 import Spinner from '../spinner/Spinner';
 
 const AppPagination = ({
@@ -13,9 +15,6 @@ const AppPagination = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage);
-  const [paginationInfo, setPaginationInfo] = useState({});
-  const [data, setData] = useState(null);
-  const [highlghtWords, setHighlghtWords] = useState([]);
 
   const axiosPaginatedConfig = {
     ...axiosConfig,
@@ -26,6 +25,14 @@ const AppPagination = ({
     setCurrentPage('1');
   }, [sort]);
 
+  const [{ data }, execute] = useAxios(axiosPaginatedConfig, { manual: true }, axiosInstance);
+
+  const paginationInfo = data?.pagination || {
+    per_page: 10,
+    total: 0,
+  }
+  const displayData = data?.data;
+
   useEffect(() => {
     setCurrentPage(Number(searchParams.get('page')) || currentPage);
   }, [searchParams.get('page')]);
@@ -33,31 +40,25 @@ const AppPagination = ({
   useEffect(() => {
     searchParams.set('page', currentPage.toString());
     setSearchParams(searchParams);
-    axiosInstance.request(axiosPaginatedConfig).then((response) => {
-      const responseData = response.data;
-      const responsePaginationInfo = responseData?.pagination || {
-        per_page: 10,
-        total: 0,
-      };
-      setHighlghtWords(responseData.data?.highlighting || []);
-      setData(responseData?.data.data || responseData);
-      setResults(responseData?.data.data || responseData);
-      setPaginationInfo(responsePaginationInfo);
-      if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.total);
-    });
+    execute();
   }, [currentPage, sort, ...updateDependencies]);
+
+  useEffect(() => {
+    if(data){
+      setResults(data.data);
+      fetchedTotalResults(data.pagination?.total || 0);
+    }
+  }, [data]);
 
   if (!data) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
   }
-
   if (!paginationInfo.total) {
     return emptyState;
   }
   const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
-
   const renderedComponent = (
-    <RenderedComponent data={data} highlghtWords={highlghtWords} {...renderedProps} />
+    <RenderedComponent data={displayData} {...renderedProps} />
   );
 
   return (

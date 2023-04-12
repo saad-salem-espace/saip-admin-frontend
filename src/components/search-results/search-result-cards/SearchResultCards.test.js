@@ -6,7 +6,7 @@ import SearchResultCards from './SearchResultCards';
 
 describe('<SearchResultCards />', () => {
   const ITEMS_LENGTH = 5;
-  const data = Array(ITEMS_LENGTH).fill(patentResponse);
+  const data = { data: Array(ITEMS_LENGTH).fill(patentResponse) };
   const query = 'NO_MATCH';
   it('should display all fetched data', async () => {
     const { queryAllByText } = render(

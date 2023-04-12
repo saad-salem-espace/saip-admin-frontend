@@ -16,8 +16,10 @@ import Select from 'components/shared/form/select/Select';
 import formStyle from 'components/shared/form/form.module.scss';
 import { documentApi } from 'apis/search/documentsApi';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
+import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import Carousel from 'components/shared/carousel/Carousel';
+import { getAttachmentURL } from 'utils/attachments';
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
 import TrademarkBibliographic from './trademarks/bibliographic-data-section/BibliographicDataSection';
@@ -63,24 +65,28 @@ function IprDetails({
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
-  const [document, setDocument] = useState(null);
   const [selectedView, setSelectedView] = useState({ label: t('ipr.bibliographic'), value: 'BibliographicData' });
-
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
   };
+  const [{ data }, execute] = useAxios(
+    documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
+    { manual: true },
+  );
+  const document = data?.data?.[0];
   useEffect(() => {
     if (documentId) {
-      documentApi({ workstreamId: searchResultParams.workstreamId, documentId })
-        .then((resp) => {
-          setDocument(resp.data?.data[0]);
-        });
+      execute();
     }
   }, [documentId]);
 
   if (!document) {
     return null;
   }
+
+  const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL({
+    workstreamId: searchResultParams.workstreamId, id: documentId, fileName, fileType,
+  });
 
   const trademarkViewsOptions = [
     {
@@ -197,6 +203,7 @@ function IprDetails({
       BibliographicData: <TrademarkBibliographic
         isIPRExpanded={isIPRExpanded}
         BibliographicData={document.BibliographicData}
+        getAttachmentURL={preparedGetAttachmentURL}
       />,
       LegalStatus:
   <LegalStatus>
@@ -271,7 +278,10 @@ function IprDetails({
           }
   </Priorities>,
       Description: <Description description={document.BibliographicData.Description} />,
-      Mark: <ImageWithZoom img={document.BibliographicData.Mark} className={style.imgWithZoom} />,
+      Mark: <ImageWithZoom
+        img={preparedGetAttachmentURL(document.BibliographicData.Mark)}
+        className={style.imgWithZoom}
+      />,
     };
 
     return content;
@@ -283,6 +293,7 @@ function IprDetails({
   <BibliographicDataSection
     document={document}
     isIPRExpanded={isIPRExpanded}
+    getAttachmentURL={preparedGetAttachmentURL}
   />,
       LegalStatus:
   <LegalStatus>
@@ -361,7 +372,7 @@ function IprDetails({
     <h6>{t('ipr.drawings')}</h6>
     {
             (document.Drawings).length ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
             ) : (
               <NoData />
             )
@@ -372,13 +383,13 @@ function IprDetails({
     <h6>{t('ipr.drawings')}</h6>
     {
             (document.Drawings).length ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
             ) : (
               <NoData />
             )
           }
   </Claims>,
-      Drawings: <Carousel largeThumb className="drawings" images={document.Drawings} />,
+      Drawings: <Carousel largeThumb className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />,
     };
     return content;
   };
@@ -461,7 +472,7 @@ function IprDetails({
                 {
                   !isIPRExpanded && (
                     <div className={`me-6 mb-2 ${style.headerImg}`}>
-                      <Image src={document.BibliographicData.Mark} />
+                      <Image src={preparedGetAttachmentURL(document.BibliographicData.Mark)} />
                     </div>
                   )
                 }
