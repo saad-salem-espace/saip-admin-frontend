@@ -35,7 +35,7 @@ mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
   },
 }]));
 
-mockAxios.onPost(/\/favouriteSearchQuery/).reply(200);
+mockAxios.onPost(/\/favouriteSearchQuery/).reply(200, { code: 200 });
 
 let mockCustomSearchParams;
 jest.mock('react-router-dom', () => ({
