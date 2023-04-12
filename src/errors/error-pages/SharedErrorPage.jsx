@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import routes from 'components/routes/routes.json';
 import Image from 'react-bootstrap/Image';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import './errors.scss';
@@ -15,13 +14,13 @@ const SharedErrorPage = ({ title, msg, img }) => {
         <Image src={img} className="errorImg mb-10" />
         <h3 className="text-gray-700 mb-4">{title}</h3>
         <p className="text-gray f-14 mb-8">{msg}</p>
-        <Link
-          to={routes.home}
+        <a
+          href={routes.home}
           className="btn btn-primary appBtn btn-md"
         >
           <FontAwesomeIcon icon={faHouse} className="f-20 me-3" />
           {t('homePage')}
-        </Link>
+        </a>
       </div>
     </div>
   );
