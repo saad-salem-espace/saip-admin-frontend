@@ -19,6 +19,7 @@ import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttr
 import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import Carousel from 'components/shared/carousel/Carousel';
+import { getAttachmentURL } from 'utils/attachments';
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
 import TrademarkBibliographic from './trademarks/bibliographic-data-section/BibliographicDataSection';
@@ -82,6 +83,10 @@ function IprDetails({
   if (!document) {
     return null;
   }
+
+  const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL({
+    workstreamId: searchResultParams.workstreamId, id: documentId, fileName, fileType,
+  });
 
   const trademarkViewsOptions = [
     {
@@ -198,6 +203,7 @@ function IprDetails({
       BibliographicData: <TrademarkBibliographic
         isIPRExpanded={isIPRExpanded}
         BibliographicData={document.BibliographicData}
+        getAttachmentURL={preparedGetAttachmentURL}
       />,
       LegalStatus:
   <LegalStatus>
@@ -272,7 +278,10 @@ function IprDetails({
           }
   </Priorities>,
       Description: <Description description={document.BibliographicData.Description} />,
-      Mark: <ImageWithZoom img={document.BibliographicData.Mark} className={style.imgWithZoom} />,
+      Mark: <ImageWithZoom
+        img={preparedGetAttachmentURL(document.BibliographicData.Mark)}
+        className={style.imgWithZoom}
+      />,
     };
 
     return content;
@@ -284,6 +293,7 @@ function IprDetails({
   <BibliographicDataSection
     document={document}
     isIPRExpanded={isIPRExpanded}
+    getAttachmentURL={preparedGetAttachmentURL}
   />,
       LegalStatus:
   <LegalStatus>
@@ -362,7 +372,7 @@ function IprDetails({
     <h6>{t('ipr.drawings')}</h6>
     {
             (document.Drawings).length ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
             ) : (
               <NoData />
             )
@@ -373,13 +383,13 @@ function IprDetails({
     <h6>{t('ipr.drawings')}</h6>
     {
             (document.Drawings).length ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
             ) : (
               <NoData />
             )
           }
   </Claims>,
-      Drawings: <Carousel largeThumb className="drawings" images={document.Drawings} />,
+      Drawings: <Carousel largeThumb className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />,
     };
     return content;
   };
@@ -462,7 +472,7 @@ function IprDetails({
                 {
                   !isIPRExpanded && (
                     <div className={`me-6 mb-2 ${style.headerImg}`}>
-                      <Image src={document.BibliographicData.Mark} />
+                      <Image src={preparedGetAttachmentURL(document.BibliographicData.Mark)} />
                     </div>
                   )
                 }

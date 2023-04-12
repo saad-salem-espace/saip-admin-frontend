@@ -6,8 +6,9 @@ import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form/checkboxes/checkbox/Checkbox';
 import Image from 'react-bootstrap/Image';
 import Badge from 'components/shared/badge/Badge';
+import { getAttachmentURL } from 'utils/attachments';
+import { useSearchParams } from 'react-router-dom';
 import style from '../search-result-cards/search-result-card/style.module.scss';
-import c from '../../../assets/images/search-header-bg.svg';
 import './style.scss';
 
 function TrademarksSearchResultCard({
@@ -16,6 +17,12 @@ function TrademarksSearchResultCard({
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
+  const [searchParams] = useSearchParams();
+  const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
+    {
+      workstreamId: searchParams.get('workstreamId'), id: BibliographicData.FilingNumber, fileName, fileType,
+    },
+  );
 
   return (
     <Button
@@ -31,7 +38,7 @@ function TrademarksSearchResultCard({
                 <Badge text={BibliographicData.TrademarkLastStatus} varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
-                <Image src={c} className="rounded" />
+                <Image src={preparedGetAttachmentURL(BibliographicData.Mark)} className="rounded" />
               </div>
             </div>
             <div className="title">
@@ -93,6 +100,7 @@ TrademarksSearchResultCard.propTypes = {
       RegistrationDate: PropTypes.string.isRequired,
       PublicationNumber: PropTypes.string.isRequired,
       PublicationDate: PropTypes.string.isRequired,
+      Mark: PropTypes.string.isRequired,
       TrademarkLastStatus: PropTypes.string.isRequired,
     }),
   }).isRequired,
