@@ -442,7 +442,7 @@ function SearchResults() {
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch content">
-        <Col xl={isAdvancedMenuOpen ? 3 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
+        <Col xxl={isAdvancedMenuOpen ? 3 : 1} xl={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
           <AdvancedSearch
             toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
             defaultInitializers={searchFields}
@@ -476,7 +476,7 @@ function SearchResults() {
                             defaultValue={selectedView}
                             id="viewSection"
                             fieldName="viewSection"
-                            className="mb-5 select-2"
+                            className="mb-md-0 mb-3 select-2"
                           />
                         </div>
                       )
@@ -490,7 +490,7 @@ function SearchResults() {
                           defaultValue={sortBy}
                           id="sortBy"
                           fieldName="sortBy"
-                          className="mb-5 select-2"
+                          className="select-2"
                         />
                       </div>
                     </div>
