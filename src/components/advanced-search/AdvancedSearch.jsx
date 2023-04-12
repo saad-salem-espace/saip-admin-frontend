@@ -51,7 +51,7 @@ function AdvancedSearch({
         variant="primary-dark"
         onClick={toggleAdvancedSearchMenu}
         className={`${isAdvancedMenuOpen ? ' ' : AdvancedSearchStyle.closed} ${AdvancedSearchStyle.collapseIcon} p-2 d-flex`}
-        text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="f-24 text-white" />}
+        text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="text-white" />}
       />
       <div className={`${isAdvancedMenuOpen ? 'd-block' : 'd-none'}`}>
         <h6 className="pb-6 pt-9">{t('advancedSearch')}</h6>
