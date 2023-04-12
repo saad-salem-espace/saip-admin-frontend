@@ -6,13 +6,15 @@ import Button from 'components/shared/button/Button';
 import Checkbox from 'components/shared/form/checkboxes/checkbox/Checkbox';
 import Image from 'react-bootstrap/Image';
 import Badge from 'components/shared/badge/Badge';
+import Highlighter from 'react-highlight-words';
+import { trimStringRelativeToSubtext } from 'utils/strings';
 import style from '../search-result-cards/search-result-card/style.module.scss';
 import c from '../../../assets/images/search-header-bg.svg';
 import './style.scss';
 
 function TrademarksSearchResultCard({
   searchResult,
-  setActiveDocument, activeDocument, selectedView,
+  setActiveDocument, activeDocument, selectedView, highlightWords, query,
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
@@ -36,10 +38,28 @@ function TrademarksSearchResultCard({
             </div>
             <div className="title">
               <span className="d-block text-truncate mb-1">
-                {BibliographicData.BrandNameEn}
+                <Highlighter
+                  highlightTag="span"
+                  highlightClassName="font-medium"
+                  textToHighlight={trimStringRelativeToSubtext(
+                    BibliographicData.BrandNameEn,
+                    query,
+                  )}
+                  searchWords={highlightWords}
+                  autoEscape
+                />
               </span>
               <span className="d-block text-truncate">
-                {BibliographicData.BrandNameAr}
+                <Highlighter
+                  highlightTag="span"
+                  highlightClassName="font-medium"
+                  textToHighlight={trimStringRelativeToSubtext(
+                    BibliographicData.BrandNameAr,
+                    query,
+                  )}
+                  searchWords={highlightWords}
+                  autoEscape
+                />
               </span>
               <div>
                 <p className="mb-1 text-black md-text">
@@ -102,6 +122,11 @@ TrademarksSearchResultCard.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
+  query: PropTypes.string.isRequired,
+  highlightWords: PropTypes.arrayOf(PropTypes.string),
 };
 
+TrademarksSearchResultCard.defaultProps = {
+  highlightWords: [],
+};
 export default TrademarksSearchResultCard;

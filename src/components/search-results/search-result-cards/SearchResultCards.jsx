@@ -12,7 +12,7 @@ const SearchResultCards = ({
         query={query}
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
-        highlghtWords={data.highlighting || []}
+        highlightWords={data.highlighting || []}
       />
     ))}
   </>

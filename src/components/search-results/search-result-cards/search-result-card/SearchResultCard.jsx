@@ -9,7 +9,7 @@ import Highlighter from 'react-highlight-words';
 import style from './style.module.scss';
 
 function SearchResultCard({
-  searchResult, query, setActiveDocument, activeDocument, highlghtWords,
+  searchResult, query, setActiveDocument, activeDocument, highlightWords,
 }) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
@@ -30,7 +30,7 @@ function SearchResultCard({
                 BibliographicData.ApplicationTitle,
                 query,
               )}
-              searchWords={highlghtWords}
+              searchWords={highlightWords}
               autoEscape
             />
 
@@ -59,7 +59,7 @@ function SearchResultCard({
                 BibliographicData.ApplicationAbstract.join(' '),
                 query,
               )}
-              searchWords={highlghtWords}
+              searchWords={highlightWords}
               autoEscape
             />
           </p>
@@ -81,13 +81,13 @@ SearchResultCard.propTypes = {
     Priority: PropTypes.string.isRequired,
   }).isRequired,
   query: PropTypes.string.isRequired,
-  highlghtWords: PropTypes.arrayOf(PropTypes.string),
+  highlightWords: PropTypes.arrayOf(PropTypes.string),
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
 };
 
 SearchResultCard.defaultProps = {
-  highlghtWords: [],
+  highlightWords: [],
 };
 
 export default SearchResultCard;

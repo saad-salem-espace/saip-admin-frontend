@@ -42,7 +42,7 @@ describe('<SearchResultCard />', () => {
             <SearchResultCard
               searchResult={patentResponse}
               query={query}
-              highlghtWords={[query]}
+              highlightWords={[query]}
             />
           </Formik>,
         );
