@@ -73,14 +73,6 @@ function SearchResults() {
       label: t('publicationDateDesc'),
       value: 'publicationDateDesc',
     },
-    {
-      label: t('priorityDateAsc'),
-      value: 'priorityDateAsc',
-    },
-    {
-      label: t('priorityDateDesc'),
-      value: 'priorityDateDesc',
-    },
   ];
 
   const sortByOptionsTrademark = [
