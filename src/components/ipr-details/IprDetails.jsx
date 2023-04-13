@@ -190,7 +190,7 @@ function IprDetails({
     },
     {
       label: t('ipr.priorities'),
-      value: 'Priorities',
+      value: 'PrioritiesDetails',
     },
   ];
 
@@ -296,77 +296,149 @@ function IprDetails({
     getAttachmentURL={preparedGetAttachmentURL}
   />,
       LegalStatus:
-  <LegalStatus>
+  <div>
     {
-            document.LegalStatus.map((row) => (
-              <LegalStatusRow row={row} />
-            ))
+            document.LegalStatus.length ? (
+              <LegalStatus>
+                {
+                  document.LegalStatus.map((row) => (
+                    <LegalStatusRow row={row} />
+                  ))
+                }
+              </LegalStatus>
+            ) : (
+              <NoData />
+            )
           }
-  </LegalStatus>,
+  </div>,
       ApplicantsDetails:
-  <Applicants>
+  <div>
     {
-            document.ApplicantsDetails.map((row) => (
-              <ApplicantRow row={row} />
-            ))
+            document.ApplicantsDetails.length ? (
+              <Applicants>
+                {
+                  document.ApplicantsDetails.map((row) => (
+                    <ApplicantRow row={row} />
+                  ))
+                }
+              </Applicants>
+            ) : (
+              <NoData />
+            )
           }
-  </Applicants>,
+  </div>,
       OwnersDetails:
-  <Owners>
+  <div>
     {
-            document.OwnersDetails.map((row) => (
-              <OwnerRow row={row} />
-            ))
+            document.OwnersDetails.length ? (
+              <Owners>
+                {
+                  document.OwnersDetails.map((row) => (
+                    <OwnerRow row={row} />
+                  ))
+                }
+              </Owners>
+            ) : (
+              <NoData />
+            )
           }
-  </Owners>,
+  </div>,
       Representative:
-  <Representatives>
+  <div>
     {
-            document.Representative.map((row) => (
-              <RepresentativeRow row={row} />
-            ))
+            document.Representative.length ? (
+              <Representatives>
+                {
+                  document.Representative.map((row) => (
+                    <RepresentativeRow row={row} />
+                  ))
+                }
+              </Representatives>
+            ) : (
+              <NoData />
+            )
           }
-  </Representatives>,
+  </div>,
       Citations:
-  <Citations>
+  <div>
     {
-            document.Citations.map((row) => (
-              <CitationRow row={row} />
-            ))
+            document.Citations.length ? (
+              <Citations>
+                {
+                  document.Citations.map((row) => (
+                    <CitationRow row={row} />
+                  ))
+                }
+              </Citations>
+            ) : (
+              <NoData />
+            )
           }
-  </Citations>,
+  </div>,
       Inventors:
-  <Inventors>
+  <div>
     {
-            document.InventorsDetails.map((row) => (
-              <InventorRow row={row} />
-            ))
+            document.InventorsDetails.length ? (
+              <Inventors>
+                {
+                  document.InventorsDetails.map((row) => (
+                    <InventorRow row={row} />
+                  ))
+                }
+              </Inventors>
+            ) : (
+              <NoData />
+            )
           }
-  </Inventors>,
+  </div>,
       OfficeActions:
-  <OfficeActions>
+  <div>
     {
-            document.OfficeActions.map((row) => (
-              <OfficeActionRow row={row} />
-            ))
+            document.OfficeActions.length ? (
+              <OfficeActions>
+                {
+                  document.OfficeActions.map((row) => (
+                    <OfficeActionRow row={row} />
+                  ))
+                }
+              </OfficeActions>
+            ) : (
+              <NoData />
+            )
           }
-  </OfficeActions>,
+  </div>,
       PatentFamility:
-  <PatentFamility>
+  <div>
     {
-            document.PatentFamility.map((row) => (
-              <PatentFamilityRow row={row} />
-            ))
+            document.PatentFamility.length ? (
+              <PatentFamility>
+                {
+                  document.PatentFamility.map((row) => (
+                    <PatentFamilityRow row={row} />
+                  ))
+                }
+              </PatentFamility>
+            ) : (
+              <NoData />
+            )
           }
-  </PatentFamility>,
-      Priorities:
-  <Priorities>
+  </div>,
+      PrioritiesDetails:
+  <div>
     {
-            document.PrioritiesDetails.map((row) => (
-              <PriorityRow row={row} />
-            ))
+            document.PrioritiesDetails.length ? (
+              <Priorities>
+                {
+                  document.PrioritiesDetails.map((row) => (
+                    <PriorityRow row={row} />
+                  ))
+                }
+              </Priorities>
+            ) : (
+              <NoData />
+            )
           }
-  </Priorities>,
+  </div>,
       Description:
   <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded} className="px-0">
     <h6>{t('ipr.drawings')}</h6>
@@ -389,7 +461,16 @@ function IprDetails({
             )
           }
   </Claims>,
-      Drawings: <Carousel largeThumb className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />,
+      Drawings:
+  <div>
+    {
+          document.Drawings.length ? (
+            <Carousel largeThumb className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
+          ) : (
+            <NoData />
+          )
+        }
+  </div>,
     };
     return content;
   };
