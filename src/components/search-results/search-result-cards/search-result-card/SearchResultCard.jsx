@@ -9,7 +9,7 @@ import Highlighter from 'react-highlight-words';
 import style from './style.module.scss';
 
 function SearchResultCard({
-  searchResult, query, setActiveDocument, activeDocument, highlghtWords,
+  searchResult, query, setActiveDocument, activeDocument, highlightWords,
 }) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
@@ -23,17 +23,19 @@ function SearchResultCard({
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
             <Checkbox className="me-4" />
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData.ApplicationTitle,
-                query,
-              )}
-              searchWords={highlghtWords}
-              autoEscape
-            />
-
+            {
+              BibliographicData.ApplicationTitle
+              && <Highlighter
+                highlightTag="span"
+                highlightClassName="font-medium"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData?.ApplicationTitle,
+                  query,
+                )}
+                searchWords={highlightWords}
+                autoEscape
+              />
+            }
           </div>
           <p className="mb-2 text-black">
             {BibliographicData.PublicationNumber}
@@ -52,16 +54,19 @@ function SearchResultCard({
         }
           </p>
           <p className="text-gray sm-text">
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData.ApplicationAbstract.join(' '),
-                query,
-              )}
-              searchWords={highlghtWords}
-              autoEscape
-            />
+            {
+              BibliographicData.ApplicationAbstract
+              && <Highlighter
+                highlightTag="span"
+                highlightClassName="font-medium"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData?.ApplicationAbstract.join(' '),
+                  query,
+                )}
+                searchWords={highlightWords}
+                autoEscape
+              />
+              }
           </p>
         </div>
        )}
@@ -81,13 +86,13 @@ SearchResultCard.propTypes = {
     Priority: PropTypes.string.isRequired,
   }).isRequired,
   query: PropTypes.string.isRequired,
-  highlghtWords: PropTypes.arrayOf(PropTypes.string),
+  highlightWords: PropTypes.arrayOf(PropTypes.string),
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
 };
 
 SearchResultCard.defaultProps = {
-  highlghtWords: [],
+  highlightWords: [],
 };
 
 export default SearchResultCard;

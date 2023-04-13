@@ -2,6 +2,8 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { CacheProvider } from 'contexts/CacheContext';
+import ErrorBoundary from 'errors/ErrorBoundary';
 import './index.css';
 import { AuthProvider } from 'react-oidc-context';
 import { WebStorageStateStore } from 'oidc-client-ts';
@@ -9,7 +11,6 @@ import roleMapper from 'utils/roleMapper';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
-import { CacheProvider } from './contexts/CacheContext';
 
 const oidcConfig = {
   onSigninCallback: (userData) => {
@@ -23,21 +24,24 @@ const oidcConfig = {
   authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY,
   client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
   redirect_uri: process.env.REACT_APP_ENTITY_URL,
+  post_logout_redirect_uri: process.env.REACT_APP_ENTITY_URL,
   automaticSilentRenew: true,
   loadUserInfo: true,
   userStore: new WebStorageStateStore({ store: localStorage }),
 };
 ReactDOM.render(
   <React.StrictMode>
-    <CacheProvider>
-      <Suspense fallback="Loading ...">
+    <Suspense fallback="Loading ...">
+      <CacheProvider>
         <BrowserRouter>
-          <AuthProvider {...oidcConfig} autoSignIn={false}>
-            <App />
-          </AuthProvider>
+          <ErrorBoundary>
+            <AuthProvider {...oidcConfig} autoSignIn={false}>
+              <App />
+            </AuthProvider>
+          </ErrorBoundary>
         </BrowserRouter>
-      </Suspense>
-    </CacheProvider>
+      </CacheProvider>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('root'),
 );

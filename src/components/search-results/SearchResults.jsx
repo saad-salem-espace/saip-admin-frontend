@@ -21,6 +21,7 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
 import formStyle from 'components/shared/form/form.module.scss';
+import useAxios from 'hooks/useAxios';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
@@ -51,7 +52,6 @@ function SearchResults() {
   const [imageName, setImageName] = useState(null);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
-
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
@@ -131,25 +131,40 @@ function SearchResults() {
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
 
+  const [imgData, execute] = useAxios({}, { manual: true });
+
+  useEffect(() => {
+    if (imgData.data) {
+      setImageName(imgData.data.data?.[0]);
+    } else if (imgData.error) {
+      setErrorMessage(imgData.error);
+    }
+    if (imgData.response) {
+      setIsImgUploaded(true);
+      setShowUploadImgSection(false);
+      setIsSubmitting(false);
+    }
+  }, [imgData]);
+
   const [searchQuery, setSearchQuery] = useState('');
 
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findLastIndex(
+    const index = results.data.findLastIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === results.length - 1
-      ? null : results[index + 1].BibliographicData.FilingNumber);
+    return (index === results.data.length - 1
+      ? null : results.data[index + 1].BibliographicData.FilingNumber);
   };
 
   const getPreviousDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findIndex(
+    const index = results.data.findIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === 0 ? null : results[index - 1].BibliographicData.FilingNumber);
+    return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
   };
 
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
@@ -237,14 +252,7 @@ function SearchResults() {
 
   const uploadCurrentFile = async (file) => {
     setIsSubmitting(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    const { res, err } = await uploadFile(formData);
-    setImageName(res.data.data?.[0]);
-    if (err) setErrorMessage(err);
-    setIsImgUploaded(true);
-    setShowUploadImgSection(false);
-    setIsSubmitting(false);
+    execute(uploadFile(file));
   };
 
   const handleUploadImg = () => {
@@ -314,7 +322,7 @@ function SearchResults() {
     return size;
   };
 
-  const axiosConfig = advancedSearchApi(searchResultParams, true);
+  const axiosConfig = advancedSearchApi(searchResultParams);
 
   const viewOptions = [
     {

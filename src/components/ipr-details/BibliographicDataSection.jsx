@@ -7,7 +7,7 @@ import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import Carousel from '../shared/carousel/Carousel';
 
-const BibliographicDataSection = ({ document, isIPRExpanded }) => {
+const BibliographicDataSection = ({ document, isIPRExpanded, getAttachmentURL }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
   const getGrid = (view) => {
@@ -89,7 +89,13 @@ const BibliographicDataSection = ({ document, isIPRExpanded }) => {
         <h6>{t('ipr.drawings')}</h6>
         {
             document.Drawings ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
+              <Carousel
+                largeThumb={isIPRExpanded}
+                className="drawings"
+                images={document.Drawings.map(
+                  (d) => (getAttachmentURL ? getAttachmentURL(d.FileName) : d.FileName),
+                )}
+              />
             ) : (
               <NoData />
             )
@@ -121,6 +127,11 @@ BibliographicDataSection.propTypes = {
     Drawings: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   isIPRExpanded: PropTypes.bool.isRequired,
+  getAttachmentURL: PropTypes.func,
+};
+
+BibliographicDataSection.defaultProps = {
+  getAttachmentURL: null,
 };
 
 export default BibliographicDataSection;

@@ -66,7 +66,7 @@ function LoggedNavbar() {
                   />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item variant="primary" onClick={() => auth.removeUser()}>
+                  <Dropdown.Item variant="primary" onClick={() => auth.signoutRedirect()}>
                     {t('navbar.logOut')}
                   </Dropdown.Item>
                 </Dropdown.Menu>
