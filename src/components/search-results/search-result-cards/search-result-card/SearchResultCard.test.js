@@ -13,7 +13,7 @@ describe('<SearchResultCard />', () => {
     const query = 'Manufcature';
     const { getByText } = render(
       <Formik>
-        <SearchResultCard searchResult={patentResponse} query={query} highlghtWords={['Manufcature']} />
+        <SearchResultCard searchResult={patentResponse} query={query} highlightWords={['Manufcature']} />
       </Formik>,
     );
     await waitFor(() => {
