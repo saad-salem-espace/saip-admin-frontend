@@ -115,7 +115,7 @@ function IprDetails({
     },
     {
       label: t('ipr.representativeDetails'),
-      value: 'Representative',
+      value: 'RepresentativesDetails',
     },
     {
       label: t('ipr.goodsServices'),
@@ -229,10 +229,10 @@ function IprDetails({
             ))
           }
   </Owners>,
-      Representative:
+      RepresentativesDetails:
   <Representatives>
     {
-            document.Representative.map((row) => (
+            document.RepresentativesDetails.map((row) => (
               <RepresentativeRow row={row} />
             ))
           }
