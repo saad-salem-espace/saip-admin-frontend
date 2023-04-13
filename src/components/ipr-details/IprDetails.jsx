@@ -358,7 +358,7 @@ function IprDetails({
         }
   </Priorities>,
       Description:
-  <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded} className="px-0">
+  <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded}>
     <h6>{t('ipr.drawings')}</h6>
     {
             (samplePatent.Drawings).length ? (
@@ -369,7 +369,7 @@ function IprDetails({
           }
   </PatentDescription>,
       Claims:
-  <Claims claims={document.Claims} isIPRExpanded={isIPRExpanded} className="px-0">
+  <Claims claims={document.Claims} isIPRExpanded={isIPRExpanded}>
     <h6>{t('ipr.drawings')}</h6>
     {
              (samplePatent.Drawings).length ? (
