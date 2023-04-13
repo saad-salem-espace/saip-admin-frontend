@@ -93,7 +93,7 @@ function SearchResults() {
       value: 'filingDateAsc',
     },
     {
-      label: t('filingDateAsc'),
+      label: t('filingDateDesc'),
       value: 'filingDateDesc',
     },
   ];
