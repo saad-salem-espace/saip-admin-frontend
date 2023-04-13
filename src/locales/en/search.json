@@ -144,6 +144,7 @@
     "publicationNumber": "Publication Number",
     "publicationTitle": "Publication Title",
     "publicationDate": "Publication date",
+    "applicationTitle": "Application Title",
     "citation": {
       "type": "Type",
       "citationOrigin": "Citation origin coutry code",
