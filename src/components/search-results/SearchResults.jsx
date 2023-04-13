@@ -270,12 +270,16 @@ function SearchResults() {
       size = 12;
       if (isAdvancedSearch) {
         size = isAdvancedMenuOpen ? 9 : 11;
+      } else {
+        size = 11;
       }
     }
     if (media === 'xl' && isIPRExpanded) {
       size = 12;
       if (isAdvancedSearch) {
         size = isAdvancedMenuOpen ? 8 : 11;
+      } else {
+        size = 11;
       }
     }
     return size;
@@ -295,7 +299,10 @@ function SearchResults() {
           }
         }
       } else if (totalResults) {
-        size = 8;
+        size = 7;
+        if (isIPRExpanded) {
+          size = 4;
+        }
       } else {
         size = 11;
       }
@@ -456,7 +463,7 @@ function SearchResults() {
         {
           searchResultParams.fireSearch
           && (
-            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
               <SearchNote
                 searchKeywords={searchKeywords}
                 resultsCount={totalResults}
