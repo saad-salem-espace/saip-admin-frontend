@@ -18,7 +18,7 @@ const Claims = ({
       </Col>
       {
         (children) && (
-          <Col lg={isIPRExpanded ? 5 : 12} md={isIPRExpanded ? 5 : 12} className={isIPRExpanded ? 'border-start' : ''}>
+          <Col md={isIPRExpanded ? 5 : 12} className={isIPRExpanded ? 'border-start' : ''}>
             {children}
           </Col>
         )
