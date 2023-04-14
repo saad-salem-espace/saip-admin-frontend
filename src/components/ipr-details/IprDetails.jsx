@@ -208,7 +208,7 @@ function IprDetails({
       LegalStatus:
   <LegalStatus>
     {
-            document.LegalStatus.map((row) => (
+            document?.LegalStatus?.map((row) => (
               <LegalStatusRow row={row} />
             ))
           }
@@ -298,10 +298,10 @@ function IprDetails({
       LegalStatus:
   <div>
     {
-            document.LegalStatus.length ? (
+            document?.LegalStatus?.length ? (
               <LegalStatus>
                 {
-                  document.LegalStatus.map((row) => (
+                  document?.LegalStatus.map((row) => (
                     <LegalStatusRow row={row} />
                   ))
                 }
@@ -314,10 +314,10 @@ function IprDetails({
       ApplicantsDetails:
   <div>
     {
-            document.ApplicantsDetails.length ? (
+            document?.ApplicantsDetails?.length ? (
               <Applicants>
                 {
-                  document.ApplicantsDetails.map((row) => (
+                  document?.ApplicantsDetails.map((row) => (
                     <ApplicantRow row={row} />
                   ))
                 }
@@ -330,10 +330,10 @@ function IprDetails({
       OwnersDetails:
   <div>
     {
-            document.OwnersDetails.length ? (
+            document?.OwnersDetails?.length ? (
               <Owners>
                 {
-                  document.OwnersDetails.map((row) => (
+                  document?.OwnersDetails.map((row) => (
                     <OwnerRow row={row} />
                   ))
                 }
@@ -346,10 +346,10 @@ function IprDetails({
       Representative:
   <div>
     {
-            document.Representative.length ? (
+            document?.Representative?.length ? (
               <Representatives>
                 {
-                  document.Representative.map((row) => (
+                  document?.Representative.map((row) => (
                     <RepresentativeRow row={row} />
                   ))
                 }
@@ -362,10 +362,10 @@ function IprDetails({
       Citations:
   <div>
     {
-            document.Citations.length ? (
+            document?.Citations?.length ? (
               <Citations>
                 {
-                  document.Citations.map((row) => (
+                  document?.Citations.map((row) => (
                     <CitationRow row={row} />
                   ))
                 }
@@ -378,10 +378,10 @@ function IprDetails({
       Inventors:
   <div>
     {
-            document.InventorsDetails.length ? (
+            document?.InventorsDetails?.length ? (
               <Inventors>
                 {
-                  document.InventorsDetails.map((row) => (
+                  document?.InventorsDetails.map((row) => (
                     <InventorRow row={row} />
                   ))
                 }
@@ -394,10 +394,10 @@ function IprDetails({
       OfficeActions:
   <div>
     {
-            document.OfficeActions.length ? (
+            document?.OfficeActions?.length ? (
               <OfficeActions>
                 {
-                  document.OfficeActions.map((row) => (
+                  document?.OfficeActions.map((row) => (
                     <OfficeActionRow row={row} />
                   ))
                 }
@@ -410,10 +410,10 @@ function IprDetails({
       PatentFamility:
   <div>
     {
-            document.PatentFamility.length ? (
+            document?.PatentFamility?.length ? (
               <PatentFamility>
                 {
-                  document.PatentFamility.map((row) => (
+                  document?.PatentFamility.map((row) => (
                     <PatentFamilityRow row={row} />
                   ))
                 }
@@ -426,10 +426,10 @@ function IprDetails({
       PrioritiesDetails:
   <div>
     {
-            document.PrioritiesDetails.length ? (
+            document?.PrioritiesDetails?.length ? (
               <Priorities>
                 {
-                  document.PrioritiesDetails.map((row) => (
+                  document?.PrioritiesDetails.map((row) => (
                     <PriorityRow row={row} />
                   ))
                 }
@@ -443,7 +443,7 @@ function IprDetails({
   <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded}>
     <h6>{t('ipr.drawings')}</h6>
     {
-            (document.Drawings).length ? (
+            (document.Drawings)?.length ? (
               <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
             ) : (
               <NoData />
@@ -451,10 +451,10 @@ function IprDetails({
           }
   </PatentDescription>,
       Claims:
-  <Claims claims={document.Claims} isIPRExpanded={isIPRExpanded}>
+  <Claims claims={document?.Claims} isIPRExpanded={isIPRExpanded}>
     <h6>{t('ipr.drawings')}</h6>
     {
-            (document.Drawings).length ? (
+            (document?.Drawings)?.length ? (
               <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
             ) : (
               <NoData />

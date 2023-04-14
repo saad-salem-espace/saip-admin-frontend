@@ -49,7 +49,7 @@ function TrademarksSearchResultCard({
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
-                    BibliographicData.BrandNameEn,
+                    BibliographicData?.BrandNameEn,
                     query,
                   )}
                   searchWords={highlightWords}
@@ -61,7 +61,7 @@ function TrademarksSearchResultCard({
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
-                    BibliographicData.BrandNameAr,
+                    BibliographicData?.BrandNameAr,
                     query,
                   )}
                   searchWords={highlightWords}
@@ -72,7 +72,7 @@ function TrademarksSearchResultCard({
                 <p className="mb-1 text-black md-text">
                   {t('filed', { value: BibliographicData.FilingNumber })}
                   <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                  <span>{BibliographicData.FilingDate}</span>
+                  <span>{BibliographicData?.FilingDate}</span>
                 </p>
                 {
                   (selectedView.value === 'detailed' || selectedView.value === 'summary') && (
