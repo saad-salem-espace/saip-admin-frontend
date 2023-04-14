@@ -24,8 +24,41 @@
       background-color: $white !important;
     }
   }
+  &.has-icon {
+    padding:8px 16px !important;
+  }
+
+  &.dropdown-toggle {
+    font-family: $font-regular;
+    position: relative;
+    color: $primary-dark;
+    html[dir="ltr"] & {
+      padding-right: 31px !important;
+    }
+    html[dir="rtl"] & {
+      padding-left: 31px !important;
+    }
+    &::after {
+      font-family: 'FontAwesome' !important;
+      content: "\f107" !important;
+      border: none !important;
+      position: absolute;
+      color: $primary;
+      top: 8px;
+      html[dir="ltr"] & {
+        margin: 0 5px 0 10px;
+      }
+      html[dir="rtl"] & {
+        margin: 0 10px 0 5px;
+      }
+    }
+  }
 
   &.disabled, :disabled {
     color: $gray-500;
   }
+}
+.dropdown-menu.show {
+  position: absolute !important;
+  min-width: 100%;
 }

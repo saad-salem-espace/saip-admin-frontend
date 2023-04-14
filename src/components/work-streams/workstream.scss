@@ -1,0 +1,31 @@
+@import "../../assets/styles/utilities/custom-theme";
+
+.btn.card {
+  border-radius: $border-radius;
+  color: $gray !important;
+  text-decoration: none;
+  padding: 8px 24px;
+  background-color: $white;
+  height: 72px;
+  border: none;
+
+  &.active, &:hover, &:focus, &:not(.btn-check) + .btn:active  {
+    color: $white !important;
+
+    .workstreamIcon::before {
+      color: $white !important;
+    }
+
+    .workstreamIcon::before {
+      color: $white !important;
+    }
+
+    &.patent {
+      background-color: $patents;
+    }
+
+    &.trademark {
+      background-color: $trademark;
+    }
+  }
+}

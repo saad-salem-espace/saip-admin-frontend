@@ -56,11 +56,115 @@
     "compact": "Compact",
     "view": "View",
     "registered": "Registered {{value}}",
-    "published": "Published {{value}}"
+    "published": "Published {{value}}",
+    "markNameEN": "Mark Name (EN)",
+    "markNameAR": "Mark Name (AR)",
+    "mark": "Mark",
+    "filingNumber": "Filing Number",
+    "filingDate": "Filing Date",
+    "markType": "Mark Type",
+    "markStatus": "Mark Status",
+    "registrationNumber": "Registration Number",
+    "registrationDate": "Registration Date",
+    "publicationNumber": "Publication Number",
+    "publicationDate": "Publication Date",
+    "markDescription": "Mark Description",
+    "officeActions": {
+      "officeAction": "Office Action",
+      "dateTime": "Office action date and time",
+      "examinerName": "Examiner Name",
+      "examinerDetails": "Examiner Details"
+    },
+    "goodsServices": {
+      "niceClassification": "NICE Classification",
+      "goodsServices": "Goods and Services"
+    },
+    "figurativeClassification": {
+      "viennaCode": "Vienna Code",
+      "description": "Description"
+    },
+    "exhibition": {
+      "exhibitionName": "Exhibition Name",
+      "exhibitionDate": "Exhibition Date",
+      "exhibitionDetails": "Exhibition Details"
+    },
+    "priorities": {
+      "priorityDate": "Priority Date",
+      "priorityNumber": "Priority Number",
+      "priorityCountry": "Priority Country"
+    }
+  },
+  "ipr": {
+    "bibliographic": "Bibliographic data",
+    "mark": "Mark",
+    "description": "Description",
+    "legalStatus": "Legal Status",
+    "applicantDetails": "Applicant Details",
+    "ownerDetails": "Owner Details",
+    "representativeDetails": "Representative Details",
+    "goodsServices": "Goods and services",
+    "figurativeClassification": "Figurative Classification",
+    "exhibitionDetails": "Exhibition Details",
+    "priorities": "Priorities",
+    "officeActions": "Office Actions",
+    "countryCode": "Country Code",
+    "city": "City",
+    "email": "Email",
+    "nationality": "Nationality",
+    "owners": "Owners",
+    "applicants": "Applicants",
+    "representatives": "Representatives",
+    "legal": {
+      "statusCode": "Status Code",
+      "status": "Status",
+      "statusDate": "Status Date",
+      "effectiveDate": "Effective Date",
+      "notes": "Notes"
+    },
+    "applicant": {
+      "applicantName": "Applicant Name",
+      "applicantDetails": "Applicant Details"
+    },
+    "owner": {
+      "ownerName": "Owner Name",
+      "ownerDetails": "Owner Details"
+    },
+    "representative": {
+      "representativeName": "Representative Name",
+      "representativeDetails": "Representative details"
+    },
+    "drawings": "Drawings"
+  },
+  "patent": {
+    "claims": "Claims",
+    "citations": "Citations",
+    "examiners": "Examiners",
+    "drawings": "Drawings",
+    "applicants": "Applicants",
+    "publicationNumber": "Publication Number",
+    "publicationTitle": "Publication Title",
+    "publicationDate": "Publication date",
+    "applicationTitle": "Application Title",
+    "citation": {
+      "type": "Type",
+      "citationOrigin": "Citation origin country code",
+      "earliestPriorityDate": "Earliest priority date"
+    },
+    "inventors": {
+      "inventorName": "Inventor Name",
+      "inventorDetails": "Inventor Details"
+    },
+    "patentFamility": {
+      "patentFamility": "Patent Famility",
+      "applicationNumber": "Application number"
+    }
   },
   "sortBy": "Sort by",
-  "publishDateAsc": "publish date asc",
-  "publishDateDesc": "publish date desc",
-  "earliestPriorityDateAsc": "earliest priority date asc",
-  "earliestPriorityDateDesc": "earliest priority date desc"
+  "publicationDateAsc": "Publication date asc",
+  "publicationDateDesc": "Publication date desc",
+  "priorityDateAsc": "Priority date asc",
+  "priorityDateDesc": "Priority date desc",
+  "mostRelevant": "Most Relevant",
+  "filingDateAsc": "Filing date asc",
+  "filingDateDesc": "Filing date desc"
 }

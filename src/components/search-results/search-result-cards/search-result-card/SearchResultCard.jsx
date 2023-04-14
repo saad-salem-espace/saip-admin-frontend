@@ -9,7 +9,7 @@ import Highlighter from 'react-highlight-words';
 import style from './style.module.scss';
 
 function SearchResultCard({
-  searchResult, query, setActiveDocument, activeDocument, flattenedCriteria,
+  searchResult, query, setActiveDocument, activeDocument, highlightWords,
 }) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
@@ -17,51 +17,56 @@ function SearchResultCard({
   return (
     <Button
       variant="transparent"
-      onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
-      className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0"
+      onClick={() => { setActiveDocument(BibliographicData?.FilingNumber); }}
+      className="w-100 text-start f-20 px-1 py-0 font-regular text-primary-dark border-0"
       text={(
-        <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
+        <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
             <Checkbox className="me-4" />
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData.ApplicationTitle,
-                query,
-              )}
-              searchWords={flattenedCriteria}
-              autoEscape
-            />
-
+            {
+              BibliographicData?.ApplicationTitle
+              && <Highlighter
+                highlightTag="span"
+                highlightClassName="font-medium"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData?.ApplicationTitle,
+                  query,
+                )}
+                searchWords={highlightWords}
+                autoEscape
+              />
+            }
           </div>
           <p className="mb-2 text-black">
-            {BibliographicData.PublicationNumber}
+            {BibliographicData?.PublicationNumber}
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
-            {t('priority', { value: searchResult.Priority })}
+            {t('priority', { value: searchResult?.Priority })}
             <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-            {t('filed', { value: BibliographicData.FilingNumber })}
+            {t('filed', { value: BibliographicData?.FilingNumber })}
             {
-          BibliographicData.PublicationDate && (
+          BibliographicData?.PublicationDate && (
             <>
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              {t('published', { value: BibliographicData.PublicationDate })}
+              {t('published', { value: BibliographicData?.PublicationDate })}
             </>
           )
         }
           </p>
           <p className="text-gray sm-text">
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData.ApplicationAbstract.join(' '),
-                query,
-              )}
-              searchWords={flattenedCriteria}
-              autoEscape
-            />
+            {
+              BibliographicData?.ApplicationAbstract
+              && <Highlighter
+                highlightTag="span"
+                highlightClassName="font-medium"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData?.ApplicationAbstract.join(' '),
+                  query,
+                )}
+                searchWords={highlightWords}
+                autoEscape
+              />
+              }
           </p>
         </div>
        )}
@@ -81,13 +86,13 @@ SearchResultCard.propTypes = {
     Priority: PropTypes.string.isRequired,
   }).isRequired,
   query: PropTypes.string.isRequired,
-  flattenedCriteria: PropTypes.arrayOf(PropTypes.string),
+  highlightWords: PropTypes.arrayOf(PropTypes.string),
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
 };
 
 SearchResultCard.defaultProps = {
-  flattenedCriteria: [],
+  highlightWords: [],
 };
 
 export default SearchResultCard;

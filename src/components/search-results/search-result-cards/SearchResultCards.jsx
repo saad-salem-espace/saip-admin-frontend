@@ -2,17 +2,17 @@ import PropTypes from 'prop-types';
 import SearchResultCard from './search-result-card/SearchResultCard';
 
 const SearchResultCards = ({
-  data, query, setActiveDocument, activeDocument, flattenedCriteria,
+  data, query, setActiveDocument, activeDocument,
 }) => (
   <>
-    {data.map((searchResult) => (
+    {data.data.map((searchResult) => (
       <SearchResultCard
         key={searchResult.BibliographicData.filingNumber}
         searchResult={searchResult}
         query={query}
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
-        flattenedCriteria={flattenedCriteria}
+        highlightWords={data.highlighting || []}
       />
     ))}
   </>
@@ -20,7 +20,6 @@ const SearchResultCards = ({
 
 SearchResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
-  flattenedCriteria: PropTypes.arrayOf(PropTypes.string).isRequired,
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,

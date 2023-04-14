@@ -13,7 +13,7 @@ describe('<SearchResultCard />', () => {
     const query = 'Manufcature';
     const { getByText } = render(
       <Formik>
-        <SearchResultCard searchResult={patentResponse} query={query} />
+        <SearchResultCard searchResult={patentResponse} query={query} highlightWords={['Manufcature']} />
       </Formik>,
     );
     await waitFor(() => {
@@ -42,7 +42,7 @@ describe('<SearchResultCard />', () => {
             <SearchResultCard
               searchResult={patentResponse}
               query={query}
-              flattenedCriteria={[query]}
+              highlightWords={[query]}
             />
           </Formik>,
         );

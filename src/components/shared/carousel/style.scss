@@ -1,0 +1,107 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.imgWrapper,
+.item-thumb {
+  width: 30%;
+  margin: 0 8px;
+  height: 130px;
+
+  .overlay {
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    display: none;
+
+    svg {
+      opacity: 1;
+    }
+  }
+
+  &:hover .overlay {
+    display: block;
+  }
+
+  .img {
+    max-width: 100%;
+  }
+}
+
+.innerImg {
+  width: 100%;
+  height: 600px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  opacity: 1;
+  width: 32px;
+  text-decoration: none;
+}
+
+.carousel-control-prev {
+  justify-content: flex-start;
+}
+
+.carousel-control-next {
+  justify-content: end;
+}
+
+.carousel-inner {
+  margin: auto;
+  width: calc(100% - 64px);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  align-items: start;
+  color: $primary-dark;
+  padding: 8px 12px;
+  border-radius: 50%;
+  box-shadow: $box-shadow-lg;
+  background-image: none;
+  padding-top: 5px;
+  background-color: $white;
+}
+
+.carousel-control-next-icon:after {
+  content: "\f054";
+  font-family: FontAwesome;
+  color: $primary;
+}
+
+
+.carousel-control-prev-icon:after {
+  content: "\f053";
+  font-family: FontAwesome;
+  margin-left: -3px;
+  color: $primary;
+}
+
+.carousel-thumbnails {
+  .item-thumb {
+    position: relative;
+    margin: 8px;
+    padding: 0px;
+    width: 65px;
+    height: 70px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.drawings {
+  .imgWrapper {
+    width: 300px;
+    margin: auto;
+  }
+}
