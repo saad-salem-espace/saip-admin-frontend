@@ -1,12 +1,17 @@
 import PropTypes from 'prop-types';
+import Moment from 'moment';
+import { LONG_DATETIME_12H_FORMAT } from '../../constants';
 
-const SavedQueryRow = ({ query }) => (
-  <tr className="text-capitalize">
-    <td>{query.queryString}</td>
-    <td>{query.createdAt}</td>
-    <td>{query.resultCount}</td>
-  </tr>
-);
+const SavedQueryRow = ({ query }) => {
+  const queryDate = Moment(query.createdAt).format(LONG_DATETIME_12H_FORMAT);
+  return (
+    <tr className="text-capitalize">
+      <td className="text-nowrap">{query.queryString}</td>
+      <td className="text-nowrap">{queryDate}</td>
+      <td>{query.resultCount}</td>
+    </tr>
+  );
+};
 
 SavedQueryRow.propTypes = {
   query: PropTypes.shape({

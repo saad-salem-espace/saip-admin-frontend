@@ -2,8 +2,9 @@ import { useTranslation } from 'react-i18next';
 import Table from 'react-bootstrap/Table';
 import '../../assets/styles/common/table.scss';
 import PropTypes from 'prop-types';
+import SavedQueryRow from './SavedQueryRow';
 
-const SavedQueriresTable = ({ children }) => {
+const SavedQueriresTable = ({ data }) => {
   const { t } = useTranslation('queries');
 
   return (
@@ -17,7 +18,11 @@ const SavedQueriresTable = ({ children }) => {
           </tr>
         </thead>
         <tbody>
-          {children}
+          {
+            data.map((query) => (
+              <SavedQueryRow query={query} />
+            ))
+          }
         </tbody>
       </Table>
     </div>
@@ -25,7 +30,7 @@ const SavedQueriresTable = ({ children }) => {
 };
 
 SavedQueriresTable.propTypes = {
-  children: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default SavedQueriresTable;

@@ -1,18 +1,20 @@
 import { useTranslation } from 'react-i18next';
-import apiInstance from 'apis/apiInstance';
 import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
 import Select from 'components/shared/form/select/Select';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-// import AdvancedSearch from 'components/advanced-search/AdvancedSearch';
+import AppPagination from 'components/shared/app-pagination/AppPagination';
+import NoData from 'components/shared/empty-states/NoData';
+import { useSearchParams } from 'react-router-dom';
 import SavedQueriresTable from './SavedQueriresTable';
-import SavedQueryRow from './SavedQueryRow';
 
 const SavedQuerires = () => {
   const { t } = useTranslation('queries');
   const [selectedWorkStream, setSelectedWorkStream] = useState({ label: t('patent'), value: 1 });
+  const [searchParams] = useSearchParams();
+
   const WorkStreamsOptions = [
     {
       label: t('patent'),
@@ -23,36 +25,20 @@ const SavedQuerires = () => {
       value: 2,
     },
   ];
-  const [queries, setQueries] = useState([]);
 
   const onChangeWorkStream = (i) => {
     setSelectedWorkStream(i);
   };
 
-  const config = getSavedQueryApi(1, true);
+  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, true);
 
-  useEffect(() => {
-    apiInstance.request(config).then((res) => {
-      setQueries(res.data.data);
-    });
-  }, [queries]);
-
+  const savedQueries = (
+    SavedQueriresTable
+  );
   return (
     <Container fluid>
       <Row>
-        {/* <Col xxl={isAdvancedMenuOpen ? 3 : 1} xl={isAdvancedMenuOpen ? 4 : 1}
-        className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
-          <AdvancedSearch
-            toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
-            defaultInitializers={searchFields}
-            isAdvancedMenuOpen={isAdvancedMenuOpen}
-            submitRef={submitRef}
-            workstreamId={searchResultParams.workstreamId}
-            firstIdentifierStr={searchResultParams.identifierStrId}
-            onChangeSearchQuery={setSearchQuery}
-          />
-        </Col> */}
-        <Col md={11}>
+        <Col md={12} className="px-md-19">
           <div className="d-flex my-8 p-8 bg-primary-01 rounded">
             <h5 className="mb-0 mt-4">{t('myQueries')}</h5>
             <Select
@@ -63,13 +49,15 @@ const SavedQuerires = () => {
               className="workStreams me-5 ms-3 mt-1 customSelect"
             />
           </div>
-          <SavedQueriresTable>
-            {
-          queries.map((query) => (
-            <SavedQueryRow query={query} />
-          ))
-        }
-          </SavedQueriresTable>
+          <AppPagination
+            axiosConfig={axiosConfig}
+            defaultPage={Number(searchParams.get('page') || '1')}
+            RenderedComponent={
+              savedQueries
+            }
+            emptyState={(
+              <NoData />)}
+          />
         </Col>
       </Row>
     </Container>

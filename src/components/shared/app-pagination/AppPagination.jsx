@@ -43,7 +43,7 @@ const AppPagination = ({
       setPaginationInfo(responsePaginationInfo);
       if (fetchedTotalResults) fetchedTotalResults(responsePaginationInfo.total);
     });
-  }, [currentPage, sort, ...updateDependencies]);
+  }, [currentPage, sort, ...updateDependencies, data]);
 
   if (!data) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
