@@ -45,7 +45,7 @@ function TrademarksSearchResultCard({
             </div>
             <div className="title">
               <span className="d-block text-truncate mb-1">
-                <Highlighter
+                {BibliographicData.BrandNameEn && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
@@ -54,10 +54,10 @@ function TrademarksSearchResultCard({
                   )}
                   searchWords={highlightWords}
                   autoEscape
-                />
+                />}
               </span>
               <span className="d-block text-truncate">
-                <Highlighter
+                {BibliographicData.BrandNameAr && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
@@ -66,7 +66,7 @@ function TrademarksSearchResultCard({
                   )}
                   searchWords={highlightWords}
                   autoEscape
-                />
+                />}
               </span>
               <div>
                 <p className="mb-1 text-black md-text">

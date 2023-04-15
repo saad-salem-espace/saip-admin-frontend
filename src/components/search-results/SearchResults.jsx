@@ -73,14 +73,6 @@ function SearchResults() {
       label: t('publicationDateDesc'),
       value: 'publicationDateDesc',
     },
-    {
-      label: t('priorityDateAsc'),
-      value: 'priorityDateAsc',
-    },
-    {
-      label: t('priorityDateDesc'),
-      value: 'priorityDateDesc',
-    },
   ];
 
   const sortByOptionsTrademark = [
@@ -101,7 +93,7 @@ function SearchResults() {
       value: 'filingDateAsc',
     },
     {
-      label: t('filingDateAsc'),
+      label: t('filingDateDesc'),
       value: 'filingDateDesc',
     },
   ];
