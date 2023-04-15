@@ -6,7 +6,7 @@ const ApplicantRow = ({ row }) => (
     <td><HandleEmptyAttribute checkOn={row.ApplicantName} /></td>
     <td><HandleEmptyAttribute checkOn={row.CountryCode} /></td>
     <td><HandleEmptyAttribute checkOn={row.Naionality} /></td>
-    <td><HandleEmptyAttribute checkOn={row.ApplicantDetails.join('; ')} /></td>
+    <td><HandleEmptyAttribute checkOn={row.ApplicantDetails} /></td>
   </tr>
 );
 

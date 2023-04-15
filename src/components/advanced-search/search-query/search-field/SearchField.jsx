@@ -89,7 +89,7 @@ function SearchField({
   const getInputField = useMemo(() => {
     let returnedField = null;
     if (identifierValue?.isLkp) {
-      returnedField = inputFields.lkpFields.getField();
+      returnedField = inputFields.textFields.getField();
     } else {
       exclude(Object.keys(inputFields), ['lkpFields']).forEach((inputField) => {
         if (inputFields[inputField].supports.includes(identifierValue?.identifierType)) {

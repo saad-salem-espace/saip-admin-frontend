@@ -6,7 +6,7 @@ const RepresentativeRow = ({ row }) => (
     <td><HandleEmptyAttribute checkOn={row.RepresentativeName} /></td>
     <td><HandleEmptyAttribute checkOn={row.CountryCode} /></td>
     <td><HandleEmptyAttribute checkOn={row.Naionality} /></td>
-    <td><HandleEmptyAttribute checkOn={row.RepresentativeDetails.join('; ')} /></td>
+    <td><HandleEmptyAttribute checkOn={row.RepresentativeDetails} /></td>
   </tr>
 );
 
