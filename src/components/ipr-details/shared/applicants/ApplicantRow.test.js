@@ -12,7 +12,7 @@ describe('<ApplicantRow />', () => {
       expect(getByText(sampleTrademark.ApplicantsDetails[0].ApplicantName)).toBeInTheDocument();
       expect(getByText(sampleTrademark.ApplicantsDetails[0].CountryCode)).toBeInTheDocument();
       expect(getByText(sampleTrademark.ApplicantsDetails[0].Naionality)).toBeInTheDocument();
-      expect(getByText(sampleTrademark.ApplicantsDetails[0])).toBeInTheDocument();
+      expect(getByText(sampleTrademark.ApplicantsDetails[0].ApplicantDetails)).toBeInTheDocument();
     });
   });
 });

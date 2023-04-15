@@ -14,7 +14,8 @@ describe('<RepresentativeRow />', () => {
       ).toBeInTheDocument();
       expect(getByText(sampleTrademark.RepresentativesDetails[0].CountryCode)).toBeInTheDocument();
       expect(getByText(sampleTrademark.RepresentativesDetails[0].Naionality)).toBeInTheDocument();
-      expect(getByText(sampleTrademark.RepresentativesDetails[0])).toBeInTheDocument();
+      expect(getByText(sampleTrademark.RepresentativesDetails[0]
+        .RepresentativeDetails)).toBeInTheDocument();
     });
   });
 });
