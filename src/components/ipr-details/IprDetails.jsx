@@ -293,8 +293,16 @@ function IprDetails({
   <BibliographicDataSection
     document={document}
     isIPRExpanded={isIPRExpanded}
-    getAttachmentURL={preparedGetAttachmentURL}
-  />,
+  >
+    <h6>{t('ipr.drawings')}</h6>
+    {
+            (document?.Drawings)?.length ? (
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
+            ) : (
+              <NoData />
+            )
+          }
+  </BibliographicDataSection>,
       LegalStatus:
   <div>
     {

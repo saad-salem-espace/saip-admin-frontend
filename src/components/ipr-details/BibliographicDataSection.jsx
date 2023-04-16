@@ -2,12 +2,10 @@ import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ShowMore from 'components/shared/show-more/ShowMore';
-import NoData from 'components/shared/empty-states/NoData';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
-import Carousel from '../shared/carousel/Carousel';
 
-const BibliographicDataSection = ({ document, isIPRExpanded, getAttachmentURL }) => {
+const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
   const getGrid = (view) => {
@@ -86,20 +84,7 @@ const BibliographicDataSection = ({ document, isIPRExpanded, getAttachmentURL })
         </p>
       </Col>
       <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
-        <h6>{t('ipr.drawings')}</h6>
-        {
-            (document.Drawings)?.length ? (
-              <Carousel
-                largeThumb={isIPRExpanded}
-                className="drawings"
-                images={document?.Drawings.map(
-                  (d) => (getAttachmentURL ? getAttachmentURL(d.FileName) : d.FileName),
-                )}
-              />
-            ) : (
-              <NoData />
-            )
-          }
+        {children}
       </Col>
     </Row>
   );
@@ -127,11 +112,7 @@ BibliographicDataSection.propTypes = {
     Drawings: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   isIPRExpanded: PropTypes.bool.isRequired,
-  getAttachmentURL: PropTypes.func,
-};
-
-BibliographicDataSection.defaultProps = {
-  getAttachmentURL: null,
+  children: PropTypes.node.isRequired,
 };
 
 export default BibliographicDataSection;
