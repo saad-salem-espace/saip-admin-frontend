@@ -88,7 +88,7 @@ const BibliographicDataSection = ({ document, isIPRExpanded, getAttachmentURL })
       <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
         <h6>{t('ipr.drawings')}</h6>
         {
-            document.Drawings ? (
+            (document.Drawings)?.length ? (
               <Carousel
                 largeThumb={isIPRExpanded}
                 className="drawings"
