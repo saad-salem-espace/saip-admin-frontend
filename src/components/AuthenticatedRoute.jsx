@@ -4,7 +4,7 @@ import Login from './login/Login';
 const AuthenticatedRoute = () => {
   let auth = {};
   const urlParams = new URLSearchParams(window.location.search);
-  const appType = urlParams?.get('appType');
+  const appType = urlParams?.get('app_type');
   if (appType === 'user_app') {
     auth = localStorage.getItem(`oidc.user:${process.env.REACT_APP_KEYCLOAK_AUTHORITY_EXTERNAL}:${process.env.REACT_APP_KEYCLOAK_CLIENT_ID_EXTERNAL}`);
   } else {
