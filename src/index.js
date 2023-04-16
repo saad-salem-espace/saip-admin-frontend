@@ -12,7 +12,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
 
-const oidcConfig = {
+const urlParams = new URLSearchParams(window.location.search);
+const appType = urlParams?.get('app_type');
+
+const externalRedirectUri = `${process.env.REACT_APP_ENTITY_URL}?app_type=user_app`;
+const oidcConfigExternal = {
+  authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY_EXTERNAL,
+  client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID_EXTERNAL,
+  client_secret: process.env.REACT_APP_KEYCLOAK_CLIENT_SECRET_EXTERNAL,
+  redirect_uri: externalRedirectUri,
+  post_logout_redirect_uri: externalRedirectUri,
+  automaticSilentRenew: true,
+  loadUserInfo: true,
+  userStore: new WebStorageStateStore({ store: localStorage }),
+};
+
+const oidcConfigInternal = {
   onSigninCallback: (userData) => {
     if (roleMapper(userData?.profile?.clientRoles[0]) === 'External_Examiner'
     || roleMapper(userData?.profile?.clientRoles[0]) === 'Internal_Examiner') {
@@ -21,8 +36,8 @@ const oidcConfig = {
       window.location.href = escape('/admin');
     }
   },
-  authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY,
-  client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
+  authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY_INTERNAL,
+  client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID_INTERNAL,
   redirect_uri: process.env.REACT_APP_ENTITY_URL,
   post_logout_redirect_uri: process.env.REACT_APP_ENTITY_URL,
   automaticSilentRenew: true,
@@ -35,7 +50,7 @@ ReactDOM.render(
       <CacheProvider>
         <BrowserRouter>
           <ErrorBoundary>
-            <AuthProvider {...oidcConfig} autoSignIn={false}>
+            <AuthProvider {...(appType === 'user_app' ? { ...oidcConfigExternal } : { ...oidcConfigInternal })} autoSignIn={false}>
               <App />
             </AuthProvider>
           </ErrorBoundary>
