@@ -142,7 +142,6 @@ function SearchResults() {
 
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
-
     const index = results.data.findLastIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
@@ -237,7 +236,6 @@ function SearchResults() {
 
   const SearchModuleClassName = ({
     smSearch: true,
-    searchWithSibling: !isAdvancedSearch,
     imgUploadedResultView: isImgUploaded,
     searchWithImage: true, // please set it true for workstream with search with image
   });

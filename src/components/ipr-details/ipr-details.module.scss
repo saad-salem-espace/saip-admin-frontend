@@ -30,8 +30,12 @@
 
 .imgWithZoom{
   width: 486px;
+  height: 100%;
 }
 
 .headerImg {
-  min-width: 150px;
+  width: 150px;
+  img {
+    width: 150px;
+  }
 }
