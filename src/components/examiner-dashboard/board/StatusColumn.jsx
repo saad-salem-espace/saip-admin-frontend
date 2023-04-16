@@ -8,7 +8,7 @@ function StatusColumn({
 }) {
   // const pinned = true;
   return (
-    <Col md={6} lg={3} className="mb-5">
+    <Col md={6} lg={4} xl={3} className="mb-5">
       <p className={`${className} h-px-24 border-start border-3 text-uppercase ps-3`}>
         {status}
         <Badge varient="primary-10" className="ms-2 text-primary p-2" text={count} />

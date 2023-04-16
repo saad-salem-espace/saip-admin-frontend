@@ -1,1 +1,24 @@
-{}
+{
+  "patentsBoard": "<0>براءات الاختراع</0> لوحة",
+  "queuePriority": "أولوية قائمة الانتظار",
+  "earliestPriority": "أقرب أولوية",
+  "emptyBoardTitle": "ليس لديك أي مهام حتى الآن.",
+  "emptyBoardMessage": "جرب مصطلح بحث آخر في شريط البحث أعلاه.",
+  "queue": "صف",
+  "addNote": "اضف ملاحظة",
+  "priority": "أولوية",
+  "status": {
+    "toDo": "ما يجب القيام به",
+    "done": "منجز",
+    "inProgress": "في تَقَدم",
+    "review": "مراجعة"
+  },
+  "workStream": {
+    "patent": "براءة اختراع",
+    "trademark": "علامة تجارية",
+    "copyrights": "حقوق التأليف والنشر",
+    "industrialDesign": "التصميم الصناعي",
+    "plantVarieties": "أصناف نباتية",
+    "integratedCircuits": "دوائر متكاملة"
+  }
+}
