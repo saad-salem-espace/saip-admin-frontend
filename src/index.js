@@ -12,14 +12,15 @@ import './i18n';
 import { CacheProvider } from './contexts/CacheContext';
 
 const urlParams = new URLSearchParams(window.location.search);
-const appType = urlParams?.get('appType');
+const appType = urlParams?.get('app_type');
 
+const externalRedirectUri = `${process.env.REACT_APP_ENTITY_URL}?app_type=user_app`;
 const oidcConfigExternal = {
   authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY_EXTERNAL,
   client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID_EXTERNAL,
   client_secret: process.env.REACT_APP_KEYCLOAK_CLIENT_SECRET_EXTERNAL,
-  redirect_uri: process.env.REACT_APP_ENTITY_URL,
-  post_logout_redirect_uri: process.env.REACT_APP_ENTITY_URL,
+  redirect_uri: externalRedirectUri,
+  post_logout_redirect_uri: externalRedirectUri,
   automaticSilentRenew: true,
   loadUserInfo: true,
   userStore: new WebStorageStateStore({ store: localStorage }),
