@@ -1562,6 +1562,7 @@ $pre-color: null !default;
 @import "~bootstrap/scss/maps";
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/utilities/api";
+@import "~bootstrap/scss/tooltip";
 @import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/containers";
@@ -1580,7 +1581,6 @@ $pre-color: null !default;
 @import "~bootstrap/scss/navbar";
 @import "~bootstrap/scss/helpers";
 @import "~bootstrap/scss/dropdown";
-@import "~bootstrap/scss/tooltip";
 @import "~bootstrap/scss/card";
 
 // @import "~bootstrap/scss/bootstrap";

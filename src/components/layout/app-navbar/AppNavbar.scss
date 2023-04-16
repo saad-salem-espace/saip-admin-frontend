@@ -71,6 +71,14 @@
     .switch-language {
       @include border(1px,25px,6px,auto,0,$border-color);
     }
+    .navbar-toggler {
+      html[dir="ltr"] & {
+        margin-left: auto;
+      }
+      html[dir="rtl"] & {
+        margin-right: auto;
+      }
+    }
   }
 }
 .edges-border {

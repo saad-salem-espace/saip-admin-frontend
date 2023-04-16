@@ -1,0 +1,24 @@
+{
+  "patentsBoard": "<0>Patents</0> Board",
+  "queuePriority": "Queue Priority",
+  "earliestPriority": "Earliest Priority",
+  "emptyBoardTitle": "You don’t have any tasks yet.",
+  "emptyBoardMessage": "Try another search term in the search bar above.",
+  "queue": "Queue",
+  "addNote": "Add note",
+  "priority": "Priority",
+  "status": {
+    "toDo": "To Do",
+    "done": "Done",
+    "inProgress": "In progress",
+    "review": "Review"
+  },
+  "workStream": {
+    "patent": "Patent",
+    "trademark": "Trademark",
+    "copyrights": "Copyrights",
+    "industrialDesign": "Industrial Design",
+    "plantVarieties": "Plant Varieties",
+    "integratedCircuits": "Integrated Circuits"
+  }
+}

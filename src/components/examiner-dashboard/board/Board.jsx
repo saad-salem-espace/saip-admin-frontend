@@ -3,6 +3,7 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
+import { useTranslation, Trans } from 'react-i18next';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import SortCards from './SortCards';
 import StatusColumn from './StatusColumn';
@@ -12,6 +13,7 @@ import './board.scss';
 
 function Board() {
   // to show empty state change emptyBoard to TRUE
+  const { t } = useTranslation('dashboard');
   const emptyBoard = false;
   return (
     <>
@@ -21,8 +23,11 @@ function Board() {
             <Row>
               <Col md={4} lg={6}>
                 <h4 className="text-primary-dark mt-2">
-                  <b>Patents </b>
-                  Board
+                  <Trans
+                    i18nKey="dashboard:patentsBoard"
+                  >
+                    <b />
+                  </Trans>
                 </h4>
               </Col>
               <Col md={8} lg={6}>
@@ -36,28 +41,25 @@ function Board() {
         <Container fluid className="board-container ps-18">
           {emptyBoard ? (
             <EmptyState
-              title="You don’t have any tasks yet."
-              msg="Try another search term in the search bar above."
+              title={t('dashboard:emptyBoardTitle')}
+              msg={t('dashboard:emptyBoardMessage')}
               img={EmptyBoardImage}
               className="empty-board"
             />
           ) : (
             <Row>
-              <StatusColumn status="To Do" className="border-primary" count="5">
-                <PatentCard />
-                <PatentCard />
-                <PatentCard />
+              <StatusColumn status={t('dashboard:status.toDo')} className="border-primary" count="5">
                 <PatentCard />
                 <PatentCard />
               </StatusColumn>
-              <StatusColumn status="In progress" className="border-secondary-rio-grande" count="3">
+              <StatusColumn status={t('dashboard:status.inProgress')} className="border-secondary-rio-grande" count="3">
                 <PatentCard />
               </StatusColumn>
-              <StatusColumn status="Done" className="border-primary-dark" count="2">
+              <StatusColumn status={t('dashboard:status.done')} className="border-primary-dark" count="2">
                 <PatentCard />
                 <PatentCard />
               </StatusColumn>
-              <StatusColumn status="Review" className="border-danger-dark" count="1" />
+              <StatusColumn status={t('dashboard:status.review')} className="border-danger-dark" count="1" />
             </Row>
           )}
         </Container>

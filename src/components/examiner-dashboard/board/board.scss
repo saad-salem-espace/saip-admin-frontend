@@ -4,8 +4,10 @@
 .board-container {
   .cards-container {
     overflow-x: scroll;
-    height: 70vh;
     @include scrollbar;
+    @include media-breakpoint-up(lg) {
+      height: 70vh;
+    }
   }
   .empty-board {
     height: 65vh;

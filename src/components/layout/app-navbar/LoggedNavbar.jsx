@@ -47,7 +47,7 @@ function LoggedNavbar() {
               {t('navbar.ipSearch')}
             </Nav.Link>
             <RecentSearch />
-            <div className="d-flex justify-content-center h-39">
+            <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
               <div className="edges-border notifications new">
                 <Nav.Link to="#features" as={Link} variant="transparent">

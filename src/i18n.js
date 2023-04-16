@@ -5,7 +5,9 @@ import translationEn from './locales/en/translation.json';
 import searchEn from './locales/en/search.json';
 import commonEn from './locales/en/common.json';
 import layoutEn from './locales/en/layout.json';
+import dashboardEn from './locales/en/dashboard.json';
 import layoutAr from './locales/ar/layout.json';
+import dashboardAr from './locales/ar/dashboard.json';
 
 const resources = {
   en: {
@@ -13,9 +15,11 @@ const resources = {
     search: searchEn,
     common: commonEn,
     layout: layoutEn,
+    dashboard: dashboardEn,
   },
   ar: {
     layout: layoutAr,
+    dashboard: dashboardAr,
   },
 };
 

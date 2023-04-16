@@ -1,5 +1,6 @@
-import { Col, Badge } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import Badge from 'components/shared/badge/Badge';
 import './board.scss';
 
 function StatusColumn({
@@ -7,10 +8,10 @@ function StatusColumn({
 }) {
   // const pinned = true;
   return (
-    <Col md={6} lg={3}>
-      <p className={`${className} h-24 border-start border-3 text-uppercase ps-3`}>
+    <Col md={6} lg={3} className="mb-5">
+      <p className={`${className} h-px-24 border-start border-3 text-uppercase ps-3`}>
         {status}
-        <Badge bg="primary-10" className="ms-2 text-primary p-2">{count}</Badge>
+        <Badge varient="primary-10" className="ms-2 text-primary p-2" text={count} />
       </p>
       <div className="cards-container bg-gray-200 px-3 py-5">
         {/* <p className="text-primary-dark fs-14 fw-bold">Pinned</p> */}

@@ -1,42 +1,68 @@
+import { useTranslation } from 'react-i18next';
+import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Image from 'react-bootstrap/Image';
 import { Link } from 'react-router-dom';
-import { Nav } from 'react-bootstrap';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+import { Button } from 'react-bootstrap';
 import logo from '../../../assets/images/logo-shape.png';
 import './sidebar.scss';
 
 function Sidebar() {
-  const linksList = {
-    IcPatent: 'Patent',
-    IcTrademark: 'Trademark',
-    IcCopyrights: 'Copyrights',
-    IcIndustrialDesign: 'Industrial Design',
-    IcPlantVarieties: 'Plant Varieties',
-    IcIntegratedCircuits: 'Integrated Circuits',
-  };
+  const { t } = useTranslation('dashboard');
+  const linksList = [
+    {
+      id: 1,
+      workStreamName: t('dashboard:workStream.patent'),
+      WorkStreamClass: 'IcPatent',
+    },
+    {
+      id: 2,
+      workStreamName: t('dashboard:workStream.trademark'),
+      WorkStreamClass: 'IcTrademark',
+    },
+    {
+      id: 3,
+      workStreamName: t('dashboard:workStream.copyrights'),
+      WorkStreamClass: 'IcCopyrights',
+    },
+    {
+      id: 4,
+      workStreamName: t('dashboard:workStream.industrialDesign'),
+      WorkStreamClass: 'IcIndustrialDesign',
+    },
+    {
+      id: 5,
+      workStreamName: t('dashboard:workStream.plantVarieties'),
+      WorkStreamClass: 'IcPlantVarieties',
+    },
+    {
+      id: 6,
+      workStreamName: t('dashboard:workStream.integratedCircuits'),
+      WorkStreamClass: 'IcIntegratedCircuits',
+    },
+  ];
   return (
-    <div className="dashboard-sidebar justify-content-center bg-white shadow position-fixed top-0 start-0  w-65 vh-100">
+    <div className="dashboard-sidebar justify-content-center bg-white shadow position-fixed top-0 start-0  w-px-65 vh-100">
       <Link to="/" as={Link}>
         <Image src={logo} className="d-block my-5 mx-auto" />
       </Link>
-      <Nav defaultActiveKey="/home" className="flex-column">
-        {Object.entries(linksList).map((links) => (
-          <OverlayTrigger
-            key={links[0]}
+      <div className="nav d-flex flex-column">
+        {linksList.map((button) => (
+          <AppTooltip
             placement="right"
-            overlay={
-              <Tooltip id={`tooltip-${links[0]}`}>
-                {links[1]}
-              </Tooltip>
+            tooltipId={button.WorkStreamClass}
+            tooltipContent={button.workStreamName}
+            tooltipTrigger={
+              <Button
+                onclick=""
+                variant="link"
+                className={`nav-link ${button.WorkStreamClass}`}
+              >
+                {button.workStreamName}
+              </Button>
             }
-          >
-            <Nav.Link to="/" as={Link} className={`${links[0]}`}>
-              {links[1]}
-            </Nav.Link>
-          </OverlayTrigger>
+          />
         ))}
-      </Nav>
+      </div>
     </div>
   );
 }

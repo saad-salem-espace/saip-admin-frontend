@@ -1,31 +1,34 @@
 import RadioButton from 'components/shared/form/radio-button/RadioButton';
 import RadioButtonGroup from 'components/shared/form/radio-button/RadioButtonGroup';
 import { Formik, Form } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 function SortCards() {
+  const { t } = useTranslation('search', 'dashboard');
+
   return (
     <div className="d-lg-flex align-items-center justify-content-end">
-      <span className="d-inline-block ms-4 ms-lg-0">Sort by</span>
+      <span className="d-inline-block ms-4 ms-lg-0">{t('search:sortBy')}</span>
       <Formik>
         <Form>
           <RadioButtonGroup className="mb-2" moduleClassName="customRadio">
             <RadioButton
               name="queue-priority"
-              value="Queue Priority"
+              value={t('dashboard:queuePriority')}
             >
-              Queue Priority
+              {t('dashboard:queuePriority')}
             </RadioButton>
             <RadioButton
               name="earliest-priority"
-              value="Earliest Priority"
+              value={t('dashboard:earliestPriority')}
             >
-              Earliest Priority
+              {t('dashboard:earliestPriority')}
             </RadioButton>
             <RadioButton
               name="dilling-date"
-              value="Filling Date"
+              value={t('dashboard:fillingPriority')}
             >
-              Filling Date
+              {t('dashboard:fillingPriority')}
             </RadioButton>
           </RadioButtonGroup>
         </Form>
