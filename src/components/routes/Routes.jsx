@@ -7,9 +7,11 @@ const SearchResults = lazy(() => import('components/search-results/SearchResults
 const WorkstreamSearch = lazy(() => import('components/workstream-search/WorkstreamSearch'));
 const Dashboard = lazy(() => import('components/examiner-dashboard/ExaminerDashboard'));
 const Admin = lazy(() => import('components/admin-dashboard/AdminDashboard'));
+const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
 
 const Routes = () => (
   <ReactRoutes>
+    <Route path="*" element={<NotFound />} />
     <Route path={appRoutes.home} element={<WorkstreamSearch />} />
     <Route path={appRoutes.search} element={<SearchResults />} />
     <Route element={<AuthenticatedRoute />}>
