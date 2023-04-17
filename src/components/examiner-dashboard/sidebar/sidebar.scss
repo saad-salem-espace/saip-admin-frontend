@@ -1,0 +1,56 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.dashboard-sidebar {
+  z-index: 1040;
+
+  .nav {
+    margin-top: 150px;
+    .nav-link {
+      margin-bottom: 35px;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 26px;
+      height: 26px;
+      margin: 0 auto 35px;
+      text-indent: -9999px;
+      &.IcPatent {
+        background-image: url(../../../assets/images/ic-patent.png);
+      }
+      &.IcTrademark {
+        background-image: url(../../../assets/images/ic-trademark.png);
+      }
+      &.IcCopyrights {
+        background-image: url(../../../assets/images/ic-copyrights.png);
+      }
+      &.IcIndustrialDesign {
+        background-image: url(../../../assets/images/ic-industrial-design.png);
+      }
+      &.IcPlantVarieties{
+        background-image: url(../../../assets/images/ic-plant-varieties.png);
+      }
+      &.IcIntegratedCircuits {
+        background-image: url(../../../assets/images/ic-integrated-circuits.png);
+      }
+      &.active {
+        border-right:1px solid transparent;
+        &.IcPatent {
+          border-color: $patents;
+        }
+        &.IcTrademark {
+          border-color: $trademark;
+        }
+        &.IcCopyrights {
+          border-color: $copyright;
+        }
+        &.IcIndustrialDesign {
+          border-color: $industrial-designs;
+        }
+        &.IcPlantVarieties,
+        &.IcIntegratedCircuits {
+          border-color: $gray;
+        }
+      }
+    }
+    
+  }
+}

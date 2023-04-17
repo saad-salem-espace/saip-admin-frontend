@@ -19,7 +19,7 @@ function LoggedNavbar() {
   const { t } = useTranslation('layout');
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar logged p-4 shadow">
-      <Container fluid className="px-lg-15">
+      <Container fluid className="ps-lg-18">
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
@@ -47,7 +47,7 @@ function LoggedNavbar() {
               {t('navbar.ipSearch')}
             </Nav.Link>
             <RecentSearch />
-            <div className="d-flex justify-content-center h-39">
+            <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
               <div className="edges-border notifications new">
                 <Nav.Link to="#features" as={Link} variant="transparent">
@@ -56,7 +56,7 @@ function LoggedNavbar() {
                 </Nav.Link>
               </div>
               {/* Switch language */}
-              <LanguageSwitch />
+              <LanguageSwitch className="pe-lg-5 me-lg-5" />
               {/* Avatar & control */}
               <Dropdown>
                 <Dropdown.Toggle variant="transparent" className="appBtn avatar-btn btn nav-link mx-auto" size="lg" id="dropdown-basic">
