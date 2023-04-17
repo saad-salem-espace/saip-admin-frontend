@@ -34,7 +34,7 @@ function PatentCard() {
           </p>
           <p className="fs-12 mb-2">
             <MdOutlineCalendarMonth className="text-muted me-1 fs-14" />
-            {t('dashboard:queue')}
+            {t('dashboard:priority')}
             • 2022.12.31
           </p>
         </div>
