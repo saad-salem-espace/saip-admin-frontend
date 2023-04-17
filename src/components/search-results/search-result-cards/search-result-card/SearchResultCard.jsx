@@ -37,7 +37,7 @@ function SearchResultCard({
               />
             }
           </div>
-          <p className="mb-2 text-black">
+          <p className="mb-2 text-black md-text">
             {BibliographicData.PublicationNumber}
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">

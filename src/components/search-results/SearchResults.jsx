@@ -455,11 +455,11 @@ function SearchResults() {
               />
               <Formik>
                 {() => (
-                  <Form className="mt-8">
+                  <Form className="mt-5">
                     <div className="d-md-flex">
                       {
                       searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-6 viewSelect">
+                        <div className="position-relative mb-6 viewSelect me-md-6">
                           <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
                           <Select
                             options={viewOptions}
@@ -473,7 +473,7 @@ function SearchResults() {
                         </div>
                       )
                     }
-                      <div className="position-relative mb-8 sortBy ms-md-6">
+                      <div className="position-relative mb-8 sortBy">
                         <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
                           options={getSortOptions(searchResultParams.workstreamId)}
