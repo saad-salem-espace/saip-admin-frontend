@@ -55,6 +55,7 @@ function Sidebar() {
               <Button
                 onclick=""
                 variant="link"
+                // { Add active class on current WorkStream}
                 className={`nav-link ${button.WorkStreamClass}`}
               >
                 {button.workStreamName}

@@ -1,4 +1,5 @@
 @import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/mixin";
 
 .dashboard-sidebar {
   z-index: 1040;
@@ -6,13 +7,14 @@
   .nav {
     margin-top: 150px;
     .nav-link {
-      margin-bottom: 35px;
+      margin: 18px auto;
       background-repeat: no-repeat;
       background-position: center;
       width: 26px;
       height: 26px;
-      margin: 0 auto 35px;
+      margin: 18px auto;
       text-indent: -9999px;
+      position: relative;
       &.IcPatent {
         background-image: url(../../../assets/images/ic-patent.png);
       }
@@ -32,22 +34,32 @@
         background-image: url(../../../assets/images/ic-integrated-circuits.png);
       }
       &.active {
-        border-right:1px solid transparent;
+        @include border(2px, 200%, -12px , auto ,-17px, transparent);
         &.IcPatent {
-          border-color: $patents;
+          &::after {
+            background-color: $patents;
+          }
         }
         &.IcTrademark {
-          border-color: $trademark;
+          &::after {
+            background-color: $trademark;
+          }
         }
         &.IcCopyrights {
-          border-color: $copyright;
+          &::after {
+            background-color: $copyright;
+          }
         }
         &.IcIndustrialDesign {
-          border-color: $industrial-designs;
+          &::after {
+            background-color: $industrial-designs;
+          }
         }
         &.IcPlantVarieties,
         &.IcIntegratedCircuits {
-          border-color: $gray;
+          &::after {
+            background-color: $gray;
+          }
         }
       }
     }
