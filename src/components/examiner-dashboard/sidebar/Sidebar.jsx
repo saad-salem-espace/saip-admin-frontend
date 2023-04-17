@@ -12,32 +12,32 @@ function Sidebar() {
     {
       id: 1,
       workStreamName: t('dashboard:workStream.patent'),
-      WorkStreamClass: 'IcPatent',
+      WorkStreamClass: 'ic-patent',
     },
     {
       id: 2,
       workStreamName: t('dashboard:workStream.trademark'),
-      WorkStreamClass: 'IcTrademark',
+      WorkStreamClass: 'ic-trademark',
     },
     {
       id: 3,
       workStreamName: t('dashboard:workStream.copyrights'),
-      WorkStreamClass: 'IcCopyrights',
+      WorkStreamClass: 'ic-copyrights',
     },
     {
       id: 4,
       workStreamName: t('dashboard:workStream.industrialDesign'),
-      WorkStreamClass: 'IcIndustrialDesign',
+      WorkStreamClass: 'ic-industrial-design',
     },
     {
       id: 5,
       workStreamName: t('dashboard:workStream.plantVarieties'),
-      WorkStreamClass: 'IcPlantVarieties',
+      WorkStreamClass: 'ic-plant-varieties',
     },
     {
       id: 6,
       workStreamName: t('dashboard:workStream.integratedCircuits'),
-      WorkStreamClass: 'IcIntegratedCircuits',
+      WorkStreamClass: 'ic-integrated-circuits',
     },
   ];
   return (

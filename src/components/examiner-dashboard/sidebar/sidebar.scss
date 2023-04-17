@@ -14,48 +14,48 @@
       height: 26px;
       text-indent: -9999px;
       position: relative;
-      &.IcPatent {
+      &.ic-patent {
         background-image: url(../../../assets/images/ic-patent.png);
       }
-      &.IcTrademark {
+      &.ic-trademark {
         background-image: url(../../../assets/images/ic-trademark.png);
       }
-      &.IcCopyrights {
+      &.ic-copyrights {
         background-image: url(../../../assets/images/ic-copyrights.png);
       }
-      &.IcIndustrialDesign {
+      &.ic-industrial-design {
         background-image: url(../../../assets/images/ic-industrial-design.png);
       }
-      &.IcPlantVarieties{
+      &.ic-plant-varieties {
         background-image: url(../../../assets/images/ic-plant-varieties.png);
       }
-      &.IcIntegratedCircuits {
+      &.ic-integrated-circuits {
         background-image: url(../../../assets/images/ic-integrated-circuits.png);
       }
       &.active {
         @include border(2px, 200%, -12px , auto ,-17px, transparent);
-        &.IcPatent {
+        &.ic-patent {
           &::after {
             background-color: $patents;
           }
         }
-        &.IcTrademark {
+        &.ic-trademark {
           &::after {
             background-color: $trademark;
           }
         }
-        &.IcCopyrights {
+        &.ic-copyrights {
           &::after {
             background-color: $copyright;
           }
         }
-        &.IcIndustrialDesign {
+        &.ic-industrial-design {
           &::after {
             background-color: $industrial-designs;
           }
         }
-        &.IcPlantVarieties,
-        &.IcIntegratedCircuits {
+        &.ic-plant-varieties,
+        &.ic-integrated-circuits {
           &::after {
             background-color: $gray;
           }
