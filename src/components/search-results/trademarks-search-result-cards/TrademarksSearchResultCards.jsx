@@ -15,6 +15,7 @@ const TrademarksSearchResultCards = ({
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
         selectedView={selectedView}
+        highlightWords={data.highlighting || []}
       />
     ))}
   </>

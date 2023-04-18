@@ -95,14 +95,6 @@ function SearchResults() {
       label: t('publicationDateDesc'),
       value: 'publicationDateDesc',
     },
-    {
-      label: t('priorityDateAsc'),
-      value: 'priorityDateAsc',
-    },
-    {
-      label: t('priorityDateDesc'),
-      value: 'priorityDateDesc',
-    },
   ];
 
   const sortByOptionsTrademark = [
@@ -123,7 +115,7 @@ function SearchResults() {
       value: 'filingDateAsc',
     },
     {
-      label: t('filingDateAsc'),
+      label: t('filingDateDesc'),
       value: 'filingDateDesc',
     },
   ];
@@ -150,7 +142,7 @@ function SearchResults() {
 
   useEffect(() => {
     if (saveQueryData.data) {
-      if (saveQueryData.data.code === 200) {
+      if (saveQueryData.data.status === 200) {
         setIsQuerySaved(true);
         toastify(
           'success',
@@ -208,7 +200,6 @@ function SearchResults() {
 
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
-
     const index = results.data.findLastIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
@@ -303,7 +294,6 @@ function SearchResults() {
 
   const SearchModuleClassName = ({
     smSearch: true,
-    searchWithSibling: !isAdvancedSearch,
     imgUploadedResultView: isImgUploaded,
     searchWithImage: true, // please set it true for workstream with search with image
   });
@@ -328,12 +318,16 @@ function SearchResults() {
       size = 12;
       if (isAdvancedSearch) {
         size = isAdvancedMenuOpen ? 9 : 11;
+      } else {
+        size = 11;
       }
     }
     if (media === 'xl' && isIPRExpanded) {
       size = 12;
       if (isAdvancedSearch) {
         size = isAdvancedMenuOpen ? 8 : 11;
+      } else {
+        size = 11;
       }
     }
     return size;
@@ -353,7 +347,10 @@ function SearchResults() {
           }
         }
       } else if (totalResults) {
-        size = 8;
+        size = 7;
+        if (isIPRExpanded) {
+          size = 4;
+        }
       } else {
         size = 11;
       }
@@ -520,7 +517,7 @@ function SearchResults() {
         {
           searchResultParams.fireSearch
           && (
-            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
               <div className="d-lg-flex align-items-center">
                 <AppTooltip
                   tooltipTrigger={

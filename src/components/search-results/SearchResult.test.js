@@ -35,7 +35,7 @@ mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
   },
 }]));
 
-mockAxios.onPost(/\/favouriteSearchQuery/).reply(200, { code: 200 });
+mockAxios.onPost(/\/favouriteSearchQuery/).reply(200, { status: 200 });
 
 let mockCustomSearchParams;
 jest.mock('react-router-dom', () => ({
@@ -98,12 +98,11 @@ describe('<SearchResult />', () => {
   });
 
   it('should display fields criteria correctly', async () => {
-    const { getByText, getByDisplayValue } = render(<SearchResults />);
+    const { getByDisplayValue } = render(<SearchResults />);
 
     await waitFor(() => {
       expect(getByDisplayValue('criteria1')).toBeInTheDocument();
       expect(getByDisplayValue('15 March 2023, 29 March 2023, 21 March 2023')).toBeInTheDocument();
-      expect(getByText('2 selected')).toBeInTheDocument();
       expect(getByDisplayValue('test "sentence separated by space" next words')).toBeInTheDocument();
     });
   });

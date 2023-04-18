@@ -19,6 +19,7 @@ import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttr
 import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import Carousel from 'components/shared/carousel/Carousel';
+import { getAttachmentURL } from 'utils/attachments';
 import style from './ipr-details.module.scss';
 import BibliographicDataSection from './BibliographicDataSection';
 import TrademarkBibliographic from './trademarks/bibliographic-data-section/BibliographicDataSection';
@@ -83,6 +84,10 @@ function IprDetails({
     return null;
   }
 
+  const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL({
+    workstreamId: searchResultParams.workstreamId, id: documentId, fileName, fileType,
+  });
+
   const trademarkViewsOptions = [
     {
       label: t('ipr.bibliographic'),
@@ -110,7 +115,7 @@ function IprDetails({
     },
     {
       label: t('ipr.representativeDetails'),
-      value: 'Representative',
+      value: 'RepresentativesDetails',
     },
     {
       label: t('ipr.goodsServices'),
@@ -185,7 +190,7 @@ function IprDetails({
     },
     {
       label: t('ipr.priorities'),
-      value: 'Priorities',
+      value: 'PrioritiesDetails',
     },
   ];
 
@@ -198,11 +203,12 @@ function IprDetails({
       BibliographicData: <TrademarkBibliographic
         isIPRExpanded={isIPRExpanded}
         BibliographicData={document.BibliographicData}
+        getAttachmentURL={preparedGetAttachmentURL}
       />,
       LegalStatus:
   <LegalStatus>
     {
-            document.LegalStatus.map((row) => (
+            document?.LegalStatus?.map((row) => (
               <LegalStatusRow row={row} />
             ))
           }
@@ -223,10 +229,10 @@ function IprDetails({
             ))
           }
   </Owners>,
-      Representative:
+      RepresentativesDetails:
   <Representatives>
     {
-            document.Representative.map((row) => (
+            document.RepresentativesDetails.map((row) => (
               <RepresentativeRow row={row} />
             ))
           }
@@ -272,7 +278,10 @@ function IprDetails({
           }
   </Priorities>,
       Description: <Description description={document.BibliographicData.Description} />,
-      Mark: <ImageWithZoom img={document.BibliographicData.Mark} className={style.imgWithZoom} />,
+      Mark: <ImageWithZoom
+        img={preparedGetAttachmentURL(document.BibliographicData.Mark)}
+        className={style.imgWithZoom}
+      />,
     };
 
     return content;
@@ -284,102 +293,192 @@ function IprDetails({
   <BibliographicDataSection
     document={document}
     isIPRExpanded={isIPRExpanded}
-  />,
-      LegalStatus:
-  <LegalStatus>
-    {
-            document.LegalStatus.map((row) => (
-              <LegalStatusRow row={row} />
-            ))
-          }
-  </LegalStatus>,
-      ApplicantsDetails:
-  <Applicants>
-    {
-            document.ApplicantsDetails.map((row) => (
-              <ApplicantRow row={row} />
-            ))
-          }
-  </Applicants>,
-      OwnersDetails:
-  <Owners>
-    {
-            document.OwnersDetails.map((row) => (
-              <OwnerRow row={row} />
-            ))
-          }
-  </Owners>,
-      Representative:
-  <Representatives>
-    {
-            document.Representative.map((row) => (
-              <RepresentativeRow row={row} />
-            ))
-          }
-  </Representatives>,
-      Citations:
-  <Citations>
-    {
-            document.Citations.map((row) => (
-              <CitationRow row={row} />
-            ))
-          }
-  </Citations>,
-      Inventors:
-  <Inventors>
-    {
-            document.InventorsDetails.map((row) => (
-              <InventorRow row={row} />
-            ))
-          }
-  </Inventors>,
-      OfficeActions:
-  <OfficeActions>
-    {
-            document.OfficeActions.map((row) => (
-              <OfficeActionRow row={row} />
-            ))
-          }
-  </OfficeActions>,
-      PatentFamility:
-  <PatentFamility>
-    {
-            document.PatentFamility.map((row) => (
-              <PatentFamilityRow row={row} />
-            ))
-          }
-  </PatentFamility>,
-      Priorities:
-  <Priorities>
-    {
-            document.PrioritiesDetails.map((row) => (
-              <PriorityRow row={row} />
-            ))
-          }
-  </Priorities>,
-      Description:
-  <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded} className="px-0">
+  >
     <h6>{t('ipr.drawings')}</h6>
     {
-            (document.Drawings).length ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
+            (document?.Drawings)?.length ? (
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
+            ) : (
+              <NoData />
+            )
+          }
+  </BibliographicDataSection>,
+      LegalStatus:
+  <div>
+    {
+            document?.LegalStatus?.length ? (
+              <LegalStatus>
+                {
+                  document?.LegalStatus.map((row) => (
+                    <LegalStatusRow row={row} />
+                  ))
+                }
+              </LegalStatus>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      ApplicantsDetails:
+  <div>
+    {
+            document?.ApplicantsDetails?.length ? (
+              <Applicants>
+                {
+                  document?.ApplicantsDetails.map((row) => (
+                    <ApplicantRow row={row} />
+                  ))
+                }
+              </Applicants>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      OwnersDetails:
+  <div>
+    {
+            document?.OwnersDetails?.length ? (
+              <Owners>
+                {
+                  document?.OwnersDetails.map((row) => (
+                    <OwnerRow row={row} />
+                  ))
+                }
+              </Owners>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      Representative:
+  <div>
+    {
+            document?.Representative?.length ? (
+              <Representatives>
+                {
+                  document?.Representative.map((row) => (
+                    <RepresentativeRow row={row} />
+                  ))
+                }
+              </Representatives>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      Citations:
+  <div>
+    {
+            document?.Citations?.length ? (
+              <Citations>
+                {
+                  document?.Citations.map((row) => (
+                    <CitationRow row={row} />
+                  ))
+                }
+              </Citations>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      Inventors:
+  <div>
+    {
+            document?.InventorsDetails?.length ? (
+              <Inventors>
+                {
+                  document?.InventorsDetails.map((row) => (
+                    <InventorRow row={row} />
+                  ))
+                }
+              </Inventors>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      OfficeActions:
+  <div>
+    {
+            document?.OfficeActions?.length ? (
+              <OfficeActions>
+                {
+                  document?.OfficeActions.map((row) => (
+                    <OfficeActionRow row={row} />
+                  ))
+                }
+              </OfficeActions>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      PatentFamility:
+  <div>
+    {
+            document?.PatentFamility?.length ? (
+              <PatentFamility>
+                {
+                  document?.PatentFamility.map((row) => (
+                    <PatentFamilityRow row={row} />
+                  ))
+                }
+              </PatentFamility>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      PrioritiesDetails:
+  <div>
+    {
+            document?.PrioritiesDetails?.length ? (
+              <Priorities>
+                {
+                  document?.PrioritiesDetails.map((row) => (
+                    <PriorityRow row={row} />
+                  ))
+                }
+              </Priorities>
+            ) : (
+              <NoData />
+            )
+          }
+  </div>,
+      Description:
+  <PatentDescription description={document.Description} isIPRExpanded={isIPRExpanded}>
+    <h6>{t('ipr.drawings')}</h6>
+    {
+            (document.Drawings)?.length ? (
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
             ) : (
               <NoData />
             )
           }
   </PatentDescription>,
       Claims:
-  <Claims claims={document.Claims} isIPRExpanded={isIPRExpanded} className="px-0">
+  <Claims claims={document?.Claims} isIPRExpanded={isIPRExpanded}>
     <h6>{t('ipr.drawings')}</h6>
     {
-            (document.Drawings).length ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
+            (document?.Drawings)?.length ? (
+              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
             ) : (
               <NoData />
             )
           }
   </Claims>,
-      Drawings: <Carousel largeThumb className="drawings" images={document.Drawings} />,
+      Drawings:
+  <div>
+    {
+          document.Drawings.length ? (
+            <Carousel largeThumb className="drawings" images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))} />
+          ) : (
+            <NoData />
+          )
+        }
+  </div>,
     };
     return content;
   };
@@ -462,7 +561,7 @@ function IprDetails({
                 {
                   !isIPRExpanded && (
                     <div className={`me-6 mb-2 ${style.headerImg}`}>
-                      <Image src={document.BibliographicData.Mark} />
+                      <Image src={preparedGetAttachmentURL(document.BibliographicData.Mark)} />
                     </div>
                   )
                 }

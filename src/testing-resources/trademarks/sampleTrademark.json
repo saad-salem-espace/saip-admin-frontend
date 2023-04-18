@@ -65,13 +65,13 @@
       "OwnerName": "omniaaaaaa",
       "CountryCode": "000",
       "Naionality": "nationality",
-      "OwnerDetails": ["country 3", "city 3", "egyptian", "omnia@gmail", "03"]
+      "OwnerDetails": "city"
     },
     {
       "OwnerName": "test",
       "CountryCode": "8",
       "Naionality": "nationality",
-      "OwnerDetails": ["country 3", "city 3", "egyptian", "omnia@gmail", "03"]
+      "OwnerDetails": "omnia"
     }
   ],
   "ApplicantsDetails": [
@@ -79,49 +79,25 @@
       "ApplicantName": "omnia",
       "CountryCode": "03",
       "Naionality": "nationality",
-      "ApplicantDetails": [
-        "country 3",
-        "city 3",
-        "egyptian",
-        "omnia@gmail",
-        "03"
-      ]
+      "ApplicantDetails": "applicant"
     },
     {
       "ApplicantName": "nada",
       "CountryCode": "03",
       "Naionality": "nationality",
-      "ApplicantDetails": [
-        "country 3",
-        "city 3",
-        "egyptian",
-        "omnia@gmail",
-        "03"
-      ]
+      "ApplicantDetails": "applicant"
     },
     {
       "ApplicantName": "nesma",
       "CountryCode": "03",
       "Naionality": "nationality",
-      "ApplicantDetails": [
-        "country 3",
-        "city 3",
-        "egyptian",
-        "omnia@gmail",
-        "03"
-      ]
+      "ApplicantDetails": "applicant"
     },
     {
       "ApplicantName": "omnia",
       "CountryCode": "03",
       "Naionality": "nationality",
-      "ApplicantDetails": [
-        "country 3",
-        "city 3",
-        "egyptian",
-        "omnia@gmail",
-        "03"
-      ]
+      "ApplicantDetails": "applicant"
     }
   ],
   "Publications": [
@@ -181,54 +157,30 @@
       "EventDate": "2015-01-20"
     }
   ],
-  "Representative": [
+  "RepresentativesDetails": [
     {
       "RepresentativeName": "omnia yahia",
       "CountryCode": "01",
       "Naionality": "nationality",
-      "RepresentativeDetails": [
-        "country 3",
-        "city 3",
-        "egyptian",
-        "omnia@gmail",
-        "03"
-      ]
+      "RepresentativeDetails": "rep"
     },
     {
       "RepresentativeName": "asmaa",
       "CountryCode": "00",
       "Naionality": "",
-      "RepresentativeDetails": [
-        "country 3",
-        "city 3",
-        "egyptian",
-        "omnia@gmail",
-        "03"
-      ]
+      "RepresentativeDetails": "rep"
     },
     {
       "RepresentativeName": "salma",
       "CountryCode": "",
       "Naionality": "",
-      "RepresentativeDetails": [
-        "country 3",
-        "city 3",
-        "egyptian",
-        "omnia@gmail",
-        "03"
-      ]
+      "RepresentativeDetails": "rep"
     },
     {
       "RepresentativeName": "yasmin",
       "CountryCode": "",
       "Naionality": "",
-      "RepresentativeDetails": [
-        "country 3",
-        "city 3",
-        "egyptian",
-        "omnia@gmail",
-        "03"
-      ]
+      "RepresentativeDetails": "rep"
     }
   ],
   "ExhibitionInformation": [
