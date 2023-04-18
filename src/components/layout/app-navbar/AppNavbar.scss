@@ -9,6 +9,10 @@
     font-size: $font-size-sm;
     color: $primary-dark;
     @extend .align-self-center;
+
+    &:hover {
+      color: $primary;
+    }
   }
   .icon {
     font-size: $font-size-base;
