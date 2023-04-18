@@ -4,9 +4,9 @@
   "earliestPriority": "Earliest Priority",
   "emptyBoardTitle": "You don’t have any tasks yet.",
   "emptyBoardMessage": "Try another search term in the search bar above.",
-  "queue": "Queue",
+  "queue": "Queue ",
   "addNote": "Add note",
-  "priority": "Priority",
+  "priority": "Priority ",
   "status": {
     "toDo": "To Do",
     "done": "Done",

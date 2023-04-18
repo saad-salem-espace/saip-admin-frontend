@@ -1,4 +1,5 @@
 @import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/mixin";
 
 .dashboard-sidebar {
   z-index: 1040;
@@ -6,48 +7,58 @@
   .nav {
     margin-top: 150px;
     .nav-link {
-      margin-bottom: 35px;
+      margin: 18px auto;
       background-repeat: no-repeat;
       background-position: center;
       width: 26px;
       height: 26px;
-      margin: 0 auto 35px;
       text-indent: -9999px;
-      &.IcPatent {
+      position: relative;
+      &.ic-patent {
         background-image: url(../../../assets/images/ic-patent.png);
       }
-      &.IcTrademark {
+      &.ic-trademark {
         background-image: url(../../../assets/images/ic-trademark.png);
       }
-      &.IcCopyrights {
+      &.ic-copyrights {
         background-image: url(../../../assets/images/ic-copyrights.png);
       }
-      &.IcIndustrialDesign {
+      &.ic-industrial-design {
         background-image: url(../../../assets/images/ic-industrial-design.png);
       }
-      &.IcPlantVarieties{
+      &.ic-plant-varieties {
         background-image: url(../../../assets/images/ic-plant-varieties.png);
       }
-      &.IcIntegratedCircuits {
+      &.ic-integrated-circuits {
         background-image: url(../../../assets/images/ic-integrated-circuits.png);
       }
       &.active {
-        border-right:1px solid transparent;
-        &.IcPatent {
-          border-color: $patents;
+        @include border(2px, 200%, -12px , auto ,-17px, transparent);
+        &.ic-patent {
+          &::after {
+            background-color: $patents;
+          }
         }
-        &.IcTrademark {
-          border-color: $trademark;
+        &.ic-trademark {
+          &::after {
+            background-color: $trademark;
+          }
         }
-        &.IcCopyrights {
-          border-color: $copyright;
+        &.ic-copyrights {
+          &::after {
+            background-color: $copyright;
+          }
         }
-        &.IcIndustrialDesign {
-          border-color: $industrial-designs;
+        &.ic-industrial-design {
+          &::after {
+            background-color: $industrial-designs;
+          }
         }
-        &.IcPlantVarieties,
-        &.IcIntegratedCircuits {
-          border-color: $gray;
+        &.ic-plant-varieties,
+        &.ic-integrated-circuits {
+          &::after {
+            background-color: $gray;
+          }
         }
       }
     }

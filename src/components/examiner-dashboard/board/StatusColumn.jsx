@@ -6,7 +6,8 @@ import './board.scss';
 function StatusColumn({
   status, className, count, children,
 }) {
-  // const pinned = true;
+  const pinned = false;
+  const others = false;
   return (
     <Col md={6} lg={4} xl={3} className="mb-5">
       <p className={`${className} h-px-24 border-start border-3 text-uppercase ps-3`}>
@@ -14,7 +15,12 @@ function StatusColumn({
         <Badge varient="primary-10" className="ms-2 text-primary p-2" text={count} />
       </p>
       <div className="cards-container bg-gray-200 px-3 py-5">
-        {/* <p className="text-primary-dark fs-14 fw-bold">Pinned</p> */}
+        { pinned && (
+          <p className="text -primary-dark fs-14 fw-bold">Pinned</p>
+        )}
+        { others && (
+          <p className="text -primary-dark fs-14 fw-bold">Others</p>
+        )}
         {children}
       </div>
     </Col>
