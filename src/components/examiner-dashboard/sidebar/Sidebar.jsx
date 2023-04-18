@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useTranslation } from 'react-i18next';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Image from 'react-bootstrap/Image';
@@ -6,7 +7,7 @@ import { Button } from 'react-bootstrap';
 import logo from '../../../assets/images/logo-shape.png';
 import './sidebar.scss';
 
-function Sidebar() {
+function Sidebar({setActiveWorkstream}) {
   const { t } = useTranslation('dashboard');
   const linksList = [
     {
@@ -53,7 +54,7 @@ function Sidebar() {
             tooltipContent={button.workStreamName}
             tooltipTrigger={
               <Button
-                onclick=""
+                onClick={() => setActiveWorkstream(button.id)}
                 variant="link"
                 // { Add active class on current WorkStream}
                 className={`nav-link ${button.WorkStreamClass}`}

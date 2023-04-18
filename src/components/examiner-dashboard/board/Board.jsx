@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   Container,
   Row,
@@ -11,9 +12,10 @@ import EmptyBoardImage from '../../../assets/images/empty-board-data.png';
 import PatentCard from './PatentCard';
 import './board.scss';
 
-function Board() {
+function Board({activeWorkstream}) {
   // to show empty state change emptyBoard to TRUE
   const { t } = useTranslation('dashboard');
+  console.log(activeWorkstream);
   const emptyBoard = false;
   return (
     <>
