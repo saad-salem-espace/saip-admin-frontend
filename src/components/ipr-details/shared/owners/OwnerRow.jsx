@@ -6,7 +6,7 @@ const OwnerRow = ({ row }) => (
     <td><HandleEmptyAttribute checkOn={row.OwnerName} /></td>
     <td><HandleEmptyAttribute checkOn={row.CountryCode} /></td>
     <td><HandleEmptyAttribute checkOn={row.Naionality} /></td>
-    <td><HandleEmptyAttribute checkOn={row.OwnerDetails.join('; ')} /></td>
+    <td><HandleEmptyAttribute checkOn={row.OwnerDetails} /></td>
   </tr>
 );
 
@@ -15,7 +15,7 @@ OwnerRow.propTypes = {
     OwnerName: PropTypes.string.isRequired,
     CountryCode: PropTypes.string.isRequired,
     Naionality: PropTypes.string.isRequired,
-    OwnerDetails: PropTypes.arrayOf(PropTypes.string),
+    OwnerDetails: PropTypes.string.isRequired,
   }).isRequired,
 };
 

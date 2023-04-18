@@ -2,12 +2,10 @@ import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ShowMore from 'components/shared/show-more/ShowMore';
-import NoData from 'components/shared/empty-states/NoData';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
-import Carousel from '../shared/carousel/Carousel';
 
-const BibliographicDataSection = ({ document, isIPRExpanded }) => {
+const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
   const getGrid = (view) => {
@@ -28,13 +26,13 @@ const BibliographicDataSection = ({ document, isIPRExpanded }) => {
         <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('applicants')}</p>
           <p className="f-12">
-            <HandleEmptyAttribute checkOn={document.Applicants.join('; ')} />
+            <HandleEmptyAttribute checkOn={document?.Applicants?.join('; ')} />
           </p>
         </div>
         <div className="d-flex mb-4">
           <p className={`text-primary f-14 ${style.label}`}>{t('inventors')}</p>
           <p className="f-12">
-            <HandleEmptyAttribute checkOn={document.Inventors.join('; ')} />
+            <HandleEmptyAttribute checkOn={document?.Inventors?.join('; ')} />
           </p>
         </div>
         <div>
@@ -42,58 +40,51 @@ const BibliographicDataSection = ({ document, isIPRExpanded }) => {
           <div className="d-flex f-12 mb-5">
             <p className={`${style.label}`}>{t('ipc')}</p>
             <p>
-              <HandleEmptyAttribute checkOn={document.IPCClassification.IPC.join('; ')} />
+              <HandleEmptyAttribute checkOn={document?.IPCClassification?.IPC?.join('; ')} />
             </p>
           </div>
         </div>
         <div className="d-flex f-12 mb-5">
           <p className={`${style.label}`}>{t('cpc')}</p>
           <p>
-            <HandleEmptyAttribute checkOn={document.CPCClassification.CPC.join('; ')} />
+            <HandleEmptyAttribute checkOn={document?.CPCClassification?.CPC?.join('; ')} />
           </p>
         </div>
-        <div className="d-flex">
+        {/* <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('priorities')}</p>
           <p className="f-12">
-            <HandleEmptyAttribute checkOn={document.Priorities} />
+            <HandleEmptyAttribute checkOn={document?.Priorities} />
           </p>
-        </div>
+        </div> */}
         <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('application')}</p>
           <p className="f-12">
-            <HandleEmptyAttribute checkOn={BibliographicData.Application} />
+            <HandleEmptyAttribute checkOn={BibliographicData?.Application} />
           </p>
         </div>
         <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('publication')}</p>
           <p className="f-12">
-            {BibliographicData.PublicationNumber}
+            {BibliographicData?.PublicationNumber}
             {' '}
-            {BibliographicData.PublicationDate}
+            {BibliographicData?.PublicationDate}
           </p>
         </div>
         <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('publishedAs')}</p>
           <p className="f-12">
-            <HandleEmptyAttribute checkOn={document.Priorities?.PublishedAs} />
+            <HandleEmptyAttribute checkOn={document?.Priorities?.PublishedAs} />
           </p>
         </div>
         <p className="text-primary f-14">{t('abstract')}</p>
         <p className="f-14">
           <ShowMore>
-            <HandleEmptyAttribute checkOn={BibliographicData.ApplicationAbstract.join(' ')} />
+            <HandleEmptyAttribute checkOn={BibliographicData?.ApplicationAbstract.join(' ')} />
           </ShowMore>
         </p>
       </Col>
       <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
-        <h6>{t('ipr.drawings')}</h6>
-        {
-            document.Drawings ? (
-              <Carousel largeThumb={isIPRExpanded} className="drawings" images={document.Drawings} />
-            ) : (
-              <NoData />
-            )
-          }
+        {children}
       </Col>
     </Row>
   );
@@ -121,6 +112,7 @@ BibliographicDataSection.propTypes = {
     Drawings: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   isIPRExpanded: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default BibliographicDataSection;

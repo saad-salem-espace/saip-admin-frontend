@@ -8,7 +8,7 @@ import TrademarksSearchResultCards from './TrademarksSearchResultCards';
 describe('<TrademarksSearchResultCards />', () => {
   const t = (key, options) => I18n.t(key, { ...options, ns: 'search' });
   const ITEMS_LENGTH = 5;
-  const data = Array(ITEMS_LENGTH).fill(trademarkResponse);
+  const data = { data: Array(ITEMS_LENGTH).fill(trademarkResponse) };
   const query = 'NO_MATCH';
   const selectedView = { label: t('trademarks.detailed'), value: 'detailed' };
 
