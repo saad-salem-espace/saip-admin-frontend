@@ -177,6 +177,7 @@ function SearchResults() {
 
   const onSubmit = (values) => {
     setActiveDocument(null);
+    setIsIPRExpanded(false);
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
@@ -513,6 +514,10 @@ function SearchResults() {
                           img={emptyState}
                           className="mt-18"
                         />)}
+                      onPageChange={() => {
+                        setActiveDocument(null);
+                        setIsIPRExpanded(false);
+                      }}
                       updateDependencies={[...Object.values(searchResultParams)]}
                     />
                   </Form>
