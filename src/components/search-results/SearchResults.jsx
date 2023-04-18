@@ -176,6 +176,7 @@ function SearchResults() {
 
   const onSubmit = (values) => {
     setActiveDocument(null);
+    setIsIPRExpanded(false);
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
