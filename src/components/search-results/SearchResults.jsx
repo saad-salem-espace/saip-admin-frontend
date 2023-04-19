@@ -511,6 +511,10 @@ function SearchResults() {
                           img={emptyState}
                           className="mt-18"
                         />)}
+                      onPageChange={() => {
+                        setActiveDocument(null);
+                        setIsIPRExpanded(false);
+                      }}
                       updateDependencies={[...Object.values(searchResultParams)]}
                     />
                   </Form>
