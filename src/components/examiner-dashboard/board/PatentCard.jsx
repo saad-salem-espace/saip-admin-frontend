@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/shared/button/Button';
@@ -6,18 +7,17 @@ import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaCommentAlt } from 'react-icons/fa';
 import './PatentCard.scss';
 
-function PatentCard() {
-  const pinned = true;
+function PatentCard({ assignment }) {
   const { t } = useTranslation('dashboard');
   return (
     <Card className="patent-card mb-2">
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between border-bottom mb-2">
-          <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">SA1444020848 • 2022.12.31</p>
+          <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">{`${assignment.filingNumber} • 2022.12.31`}</p>
           <Button
             variant="link"
-            className={`p-1 fs-15 text-${pinned ? 'primary' : 'gray'}`}
-            text={pinned ? <BsPinFill /> : <BsPinAngle />}
+            className={`p-1 fs-15 text-${assignment.pinned ? 'primary' : 'gray'}`}
+            text={assignment.pinned ? <BsPinFill /> : <BsPinAngle />}
           />
         </div>
         <p className="name-card">

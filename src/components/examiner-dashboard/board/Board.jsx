@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable react/forbid-prop-types */
 import {
   Container,
   Row,
@@ -6,17 +6,26 @@ import {
 } from 'react-bootstrap';
 import { useTranslation, Trans } from 'react-i18next';
 import EmptyState from 'components/shared/empty-state/EmptyState';
+import PropTypes from 'prop-types';
 import SortCards from './SortCards';
 import StatusColumn from './StatusColumn';
 import EmptyBoardImage from '../../../assets/images/empty-board-data.png';
 import PatentCard from './PatentCard';
 import './board.scss';
 
-function Board({activeWorkstream}) {
+function Board({ setSort, assignments }) {
   // to show empty state change emptyBoard to TRUE
   const { t } = useTranslation('dashboard');
-  console.log(activeWorkstream);
-  const emptyBoard = false;
+  console.log(assignments);
+  const filterByStatus = (status) => (
+    assignments.filter((assignment) => assignment.status === status)
+  );
+
+  const toDo = filterByStatus('TO_DO');
+  const inProgress = filterByStatus('IN_PROGRESS');
+  const review = filterByStatus('REVIEW');
+  const done = filterByStatus('DONE');
+
   return (
     <>
       <div className="border-bottom pb-3 mb-5">
@@ -33,7 +42,7 @@ function Board({activeWorkstream}) {
                 </h4>
               </Col>
               <Col md={8} lg={6}>
-                <SortCards />
+                <SortCards setSort={setSort} />
               </Col>
             </Row>
           </Container>
@@ -41,7 +50,7 @@ function Board({activeWorkstream}) {
       </div>
       <div className="px-4">
         <Container fluid className="board-container ps-18">
-          {emptyBoard ? (
+          {!(assignments.length) ? (
             <EmptyState
               title={t('dashboard:emptyBoardTitle')}
               msg={t('dashboard:emptyBoardMessage')}
@@ -50,18 +59,26 @@ function Board({activeWorkstream}) {
             />
           ) : (
             <Row>
-              <StatusColumn status={t('dashboard:status.toDo')} className="border-primary" count="5">
-                <PatentCard />
-                <PatentCard />
+              <StatusColumn status={t('dashboard:status.toDo')} className="border-primary" count={toDo.length}>
+                {toDo.map((assignment) => (
+                  <PatentCard assignment={assignment} />
+                ))}
               </StatusColumn>
-              <StatusColumn status={t('dashboard:status.inProgress')} className="border-secondary-rio-grande" count="3">
-                <PatentCard />
+              <StatusColumn status={t('dashboard:status.inProgress')} className="border-secondary-rio-grande" count={inProgress.length}>
+                {inProgress.map((assignment) => (
+                  <PatentCard assignment={assignment} />
+                ))}
               </StatusColumn>
-              <StatusColumn status={t('dashboard:status.done')} className="border-primary-dark" count="2">
-                <PatentCard />
-                <PatentCard />
+              <StatusColumn status={t('dashboard:status.done')} className="border-primary-dark" count={review.length}>
+                {review.map((assignment) => (
+                  <PatentCard assignment={assignment} />
+                ))}
               </StatusColumn>
-              <StatusColumn status={t('dashboard:status.review')} className="border-danger-dark" count="1" />
+              <StatusColumn status={t('dashboard:status.review')} className="border-danger-dark" count={done.length}>
+                {done.map((assignment) => (
+                  <PatentCard assignment={assignment} />
+                ))}
+              </StatusColumn>
             </Row>
           )}
         </Container>
@@ -69,5 +86,10 @@ function Board({activeWorkstream}) {
     </>
   );
 }
+
+Board.propTypes = {
+  setSort: PropTypes.func.isRequired,
+  assignments: PropTypes.array.isRequired,
+};
 
 export default Board;
