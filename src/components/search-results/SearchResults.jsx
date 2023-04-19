@@ -5,12 +5,14 @@ import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import uploadFile from 'apis/uploadFileApi';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -351,6 +353,14 @@ function SearchResults() {
     setSearchParams(searchParams);
     setSortBy(sortCriteria);
   };
+
+  const formSchema = Yup.object({
+    searchQuery: Yup.mixed()
+      .test('Is not empty', t('validationErrors.empty'), (data) => (
+        (imageName || data)
+      )),
+  });
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -359,6 +369,7 @@ function SearchResults() {
             innerRef={submitRef}
             enableReinitialize
             onSubmit={onSubmit}
+            validationSchema={formSchema}
             initialValues={{
               searchQuery,
               selectedWorkstream: WorkStreamsOptions?.find(
@@ -366,7 +377,9 @@ function SearchResults() {
               ),
             }}
           >
-            {({ setFieldValue, handleSubmit, values }) => (
+            {({
+              setFieldValue, handleSubmit, values, touched, errors,
+            }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
@@ -407,7 +420,9 @@ function SearchResults() {
                           searchWithImg
                         />
                       </div>
-                      {/* <ErrorMessage msg="" className="mt-2" /> */}
+                      {touched.searchQuery && errors.searchQuery
+                        ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
+                        ) : null}
                     </div>
                     <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton
