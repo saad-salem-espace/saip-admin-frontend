@@ -101,7 +101,7 @@ function SearchQuery({
                     }}
                     text={(
                       <>
-                        <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
+                        <FontAwesomeIcon icon={faCirclePlus} className="me-2" />
                         {t('addSearchField')}
                       </>
                     )}

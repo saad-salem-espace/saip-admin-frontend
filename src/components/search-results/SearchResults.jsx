@@ -9,10 +9,11 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   createSearchParams, useNavigate, useSearchParams, Link,
 } from 'react-router-dom';
+import * as Yup from 'yup';
 import uploadFile from 'apis/uploadFileApi';
-// import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -234,6 +235,7 @@ function SearchResults() {
 
   const onSubmit = (values) => {
     setActiveDocument(null);
+    setIsIPRExpanded(false);
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
@@ -414,6 +416,13 @@ function SearchResults() {
     executeSaveQuery();
   };
 
+  const formSchema = Yup.object({
+    searchQuery: Yup.mixed()
+      .test('Is not empty', t('validationErrors.empty'), (data) => (
+        (imageName || data)
+      )),
+  });
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -422,6 +431,7 @@ function SearchResults() {
             innerRef={submitRef}
             enableReinitialize
             onSubmit={onSubmit}
+            validationSchema={formSchema}
             initialValues={{
               searchQuery,
               selectedWorkstream: WorkStreamsOptions?.find(
@@ -429,7 +439,9 @@ function SearchResults() {
               ),
             }}
           >
-            {({ setFieldValue, handleSubmit, values }) => (
+            {({
+              setFieldValue, handleSubmit, values, touched, errors,
+            }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
@@ -470,7 +482,9 @@ function SearchResults() {
                           searchWithImg
                         />
                       </div>
-                      {/* <ErrorMessage msg="" className="mt-2" /> */}
+                      {touched.searchQuery && errors.searchQuery
+                        ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
+                        ) : null}
                     </div>
                     <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton
@@ -540,11 +554,11 @@ function SearchResults() {
               </div>
               <Formik>
                 {() => (
-                  <Form className="mt-8">
+                  <Form className="mt-5">
                     <div className="d-md-flex">
                       {
                       searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-6 viewSelect">
+                        <div className="position-relative mb-6 viewSelect me-md-6">
                           <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
                           <Select
                             options={viewOptions}
@@ -558,7 +572,7 @@ function SearchResults() {
                         </div>
                       )
                     }
-                      <div className="position-relative mb-8 sortBy ms-md-6">
+                      <div className="position-relative mb-8 sortBy">
                         <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
                           options={getSortOptions(searchResultParams.workstreamId)}
@@ -591,6 +605,10 @@ function SearchResults() {
                           img={emptyState}
                           className="mt-18"
                         />)}
+                      onPageChange={() => {
+                        setActiveDocument(null);
+                        setIsIPRExpanded(false);
+                      }}
                       updateDependencies={[...Object.values(searchResultParams)]}
                     />
                   </Form>

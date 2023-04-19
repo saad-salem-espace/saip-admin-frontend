@@ -21,8 +21,8 @@ const searchParams = {
 };
 
 mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, patentIdentifiers);
+mockAxios.onGet(/\/workstreams\/\d+\/documents\/?.*/).reply(200, { data: [samplePatent] });
 mockAxios.onGet(/\/workstreams/).reply(200, workstreams);
-
 mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
   data: {
     data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),
@@ -54,19 +54,43 @@ describe('<SearchResult />', () => {
     mockCustomSearchParams = undefined;
   });
   const t = (key, options) => I18n.t(key, { ...options });
-  it('should render pagination correctly', async () => {
-    const { queryAllByText, getByLabelText } = render(<SearchResults />);
 
-    await waitFor(() => {
-      expect(queryAllByText(trimStringRelativeToSubtext(samplePatent.BibliographicData.ApplicationTitle, 'test', 100, 100))).toHaveLength(PER_PAGE);
+  describe('pagination', () => {
+    it('should render pagination correctly', async () => {
+      const { queryAllByText, getByLabelText } = render(<SearchResults />);
+
+      await waitFor(() => {
+        expect(queryAllByText(trimStringRelativeToSubtext(samplePatent.BibliographicData.ApplicationTitle, 'test', 100, 100))).toHaveLength(PER_PAGE);
+      });
+      await waitFor(() => {
+        fireEvent.click(getByLabelText('Next').closest('a'));
+      });
+      await waitFor(() => {
+        expect(queryAllByText(trimStringRelativeToSubtext(samplePatent.BibliographicData.ApplicationTitle, 'test', 100, 100))).toHaveLength(2);
+      });
     });
-    await waitFor(() => {
-      fireEvent.click(getByLabelText('Next').closest('a'));
-    });
-    await waitFor(() => {
-      expect(queryAllByText(trimStringRelativeToSubtext(samplePatent.BibliographicData.ApplicationTitle, 'test', 100, 100))).toHaveLength(2);
+
+    it('should close active document on page change', async () => {
+      const {
+        getByLabelText, queryByRole, queryAllByRole, getByRole,
+      } = render(<SearchResults />);
+
+      await waitFor(() => {
+        const firstElement = queryAllByRole('button', { name: new RegExp(trimStringRelativeToSubtext(samplePatent.BibliographicData.ApplicationTitle, 'test', 100, 100), 'i') })[0];
+        fireEvent.click(firstElement);
+      });
+      await waitFor(() => {
+        expect(getByRole('heading', { level: 5, name: samplePatent.BibliographicData.PublicationNumber })).toBeInTheDocument();
+      });
+      await waitFor(() => {
+        fireEvent.click(getByLabelText('Next').closest('a'));
+      });
+      await waitFor(() => {
+        expect(queryByRole('heading', { level: 5, name: samplePatent.BibliographicData.PublicationNumber })).not.toBeInTheDocument();
+      });
     });
   });
+
   it('should render the component data correctly', async () => {
     const { getByText } = render(<SearchResults />);
 

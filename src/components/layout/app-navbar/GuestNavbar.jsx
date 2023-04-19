@@ -21,6 +21,7 @@ function GuestNavbar() {
       <Container fluid className="px-lg-15">
         <Navbar.Brand to="/" as={Link}>
           <Image src={logo} />
+          <span className="border-end my-1 ms-6 text-gray-400" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
