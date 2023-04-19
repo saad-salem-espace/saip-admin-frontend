@@ -27,12 +27,15 @@ mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
   data: {
     data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),
     highlighting: [],
+    isFavourite: false,
   },
   pagination: {
     per_page: PER_PAGE,
     total: patentList.length,
   },
 }]));
+
+mockAxios.onPost(/\/favouriteSearchQuery/).reply(200, { status: 200 });
 
 let mockCustomSearchParams;
 jest.mock('react-router-dom', () => ({
@@ -162,5 +165,24 @@ describe('<SearchResult />', () => {
     //     );
     //   });
     // });
+  });
+
+  describe('it should favourite', () => {
+    it('should toggle star', async () => {
+      const { queryByTestId } = render(<SearchResults />);
+
+      await waitFor(() => {
+        expect(queryByTestId('empty-star')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        fireEvent.click(queryByTestId('fav-button'));
+      });
+
+      await waitFor(() => {
+        expect(queryByTestId('filled-star')).toBeInTheDocument();
+        expect(queryByTestId('empty-star')).toBeNull();
+      });
+    });
   });
 });
