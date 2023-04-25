@@ -1,4 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
+/* eslint-disable max-len */
 import {
   Container,
   Row,
@@ -13,10 +14,11 @@ import EmptyBoardImage from '../../../assets/images/empty-board-data.png';
 import PatentCard from './PatentCard';
 import './board.scss';
 
-function Board({ setSort, assignments }) {
-  // to show empty state change emptyBoard to TRUE
+function Board({
+  setSort, assignments, setToggle, setActiveDocument,
+}) {
   const { t } = useTranslation('dashboard');
-  console.log(assignments);
+
   const filterByStatus = (status) => (
     assignments.filter((assignment) => assignment.status === status)
   );
@@ -61,22 +63,22 @@ function Board({ setSort, assignments }) {
             <Row>
               <StatusColumn status={t('dashboard:status.toDo')} className="border-primary" count={toDo.length}>
                 {toDo.map((assignment) => (
-                  <PatentCard assignment={assignment} />
+                  <PatentCard assignment={assignment} setToggle={setToggle} setActiveDocument={setActiveDocument} />
                 ))}
               </StatusColumn>
               <StatusColumn status={t('dashboard:status.inProgress')} className="border-secondary-rio-grande" count={inProgress.length}>
                 {inProgress.map((assignment) => (
-                  <PatentCard assignment={assignment} />
+                  <PatentCard assignment={assignment} setToggle={setToggle} setActiveDocument={setActiveDocument} />
                 ))}
               </StatusColumn>
               <StatusColumn status={t('dashboard:status.done')} className="border-primary-dark" count={review.length}>
                 {review.map((assignment) => (
-                  <PatentCard assignment={assignment} />
+                  <PatentCard assignment={assignment} setToggle={setToggle} setActiveDocument={setActiveDocument} />
                 ))}
               </StatusColumn>
               <StatusColumn status={t('dashboard:status.review')} className="border-danger-dark" count={done.length}>
                 {done.map((assignment) => (
-                  <PatentCard assignment={assignment} />
+                  <PatentCard assignment={assignment} setToggle={setToggle} setActiveDocument={setActiveDocument} />
                 ))}
               </StatusColumn>
             </Row>
@@ -90,6 +92,8 @@ function Board({ setSort, assignments }) {
 Board.propTypes = {
   setSort: PropTypes.func.isRequired,
   assignments: PropTypes.array.isRequired,
+  setToggle: PropTypes.func.isRequired,
+  setActiveDocument: PropTypes.func.isRequired,
 };
 
 export default Board;

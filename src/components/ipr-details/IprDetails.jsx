@@ -60,6 +60,7 @@ function IprDetails({
   getNextDocument,
   getPreviousDocument,
   setActiveDocument,
+  activeWorkstream,
 }) {
   const { t } = useTranslation('search');
   const previousDocument = getPreviousDocument();
@@ -67,13 +68,14 @@ function IprDetails({
   const [searchParams] = useSearchParams();
   const [selectedView, setSelectedView] = useState({ label: t('ipr.bibliographic'), value: 'BibliographicData' });
   const searchResultParams = {
-    workstreamId: searchParams.get('workstreamId'),
+    workstreamId: searchParams.get('workstreamId') || activeWorkstream.toString(),
   };
   const [{ data }, execute] = useAxios(
     documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
     { manual: true },
   );
   const document = data?.data?.[0];
+
   useEffect(() => {
     if (documentId) {
       execute();
@@ -610,10 +612,12 @@ IprDetails.propTypes = {
   getNextDocument: PropTypes.func,
   getPreviousDocument: PropTypes.func,
   setActiveDocument: PropTypes.func,
+  activeWorkstream: PropTypes.number,
 };
 
 IprDetails.defaultProps = {
   documentId: null,
+  activeWorkstream: null,
   onClose: () => { },
   getNextDocument: () => { },
   getPreviousDocument: () => { },
