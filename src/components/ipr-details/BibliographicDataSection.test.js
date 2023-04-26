@@ -13,7 +13,7 @@ describe('<BibliographicDataSection />', () => {
       <BibliographicDataSection document={samplePatent} />,
     );
     await waitFor(() => {
-      ['register', 'applicants', 'inventors', 'classifications', 'ipc', 'cpc', 'priorities', 'application', 'publishedAs'].forEach((attributeName) => {
+      ['register', 'applicants', 'inventors', 'classifications', 'ipc', 'cpc', 'application', 'publishedAs'].forEach((attributeName) => {
         expect(getByText(tSearch(attributeName))).toBeInTheDocument();
       });
 

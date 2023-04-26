@@ -3,27 +3,29 @@ import {
 } from 'react';
 import apiInstance from 'apis/apiInstance';
 import { getCachedRequest, setCacheResponse } from 'utils/cacheStorage';
+import useAxios from 'hooks/useAxios';
 
 const useCacheRequest = (config, axiosConfig, options = {}) => {
   const axiosInstance = options.axiosInstance || apiInstance;
   const URI = axiosInstance.getUri(axiosConfig);
+  const [{ data }, execute] = useAxios(axiosConfig, { manual: true });
   const [response, setResponse] = useState(null);
   const isMounted = useRef(false);
-  // eslint-disable-next-line
   const [reload, setReload] = useState(0);
   const refresh = () => {
     setReload(reload + 1);
   };
 
-  const updateRequest = async () => {
-    const fetchedResponse = await axiosInstance.request(axiosConfig);
-    setResponse(fetchedResponse.data);
-    setCacheResponse(config.keyName, URI, fetchedResponse.data);
-  };
+  useEffect(() => {
+    if (data) {
+      setResponse(data);
+      setCacheResponse(config.keyName, URI, data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (isMounted.current) {
-      updateRequest();
+      execute();
     }
   }, [reload]);
 
@@ -36,7 +38,7 @@ const useCacheRequest = (config, axiosConfig, options = {}) => {
     if (isValid) {
       const responseBody = getCachedRequest(config.keyName, URI, config.expiredRangeMillis);
       if (!responseBody) {
-        updateRequest();
+        execute();
       } else {
         setResponse(responseBody.response);
       }

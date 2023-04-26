@@ -2,17 +2,17 @@ import PropTypes from 'prop-types';
 import SearchResultCard from './search-result-card/SearchResultCard';
 
 const SearchResultCards = ({
-  data, query, setActiveDocument, activeDocument, highlghtWords,
+  data, query, setActiveDocument, activeDocument,
 }) => (
   <>
-    {data.map((searchResult) => (
+    {data.data.map((searchResult) => (
       <SearchResultCard
         key={searchResult.BibliographicData.filingNumber}
         searchResult={searchResult}
         query={query}
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
-        highlghtWords={highlghtWords}
+        highlightWords={data.highlighting || []}
       />
     ))}
   </>
@@ -20,14 +20,9 @@ const SearchResultCards = ({
 
 SearchResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
-  highlghtWords: PropTypes.arrayOf(PropTypes.string),
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
-};
-
-SearchResultCards.defaultProps = {
-  highlghtWords: [],
 };
 
 export default SearchResultCards;

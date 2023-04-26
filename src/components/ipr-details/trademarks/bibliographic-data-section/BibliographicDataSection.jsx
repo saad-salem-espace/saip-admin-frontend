@@ -12,6 +12,7 @@ const BibliographicDataSection = (
   {
     isIPRExpanded,
     BibliographicData,
+    getAttachmentURL,
   },
 ) => {
   const { t } = useTranslation('search');
@@ -23,7 +24,7 @@ const BibliographicDataSection = (
         isIPRExpanded && (
           <Col md={4} className="mb-md-0 mb-2">
             <div className="me-4">
-              <Image src={BibliographicData.Mark} className="mw-100" />
+              <Image src={getAttachmentURL(BibliographicData.Mark)} className="mw-100" />
             </div>
           </Col>
         )
@@ -150,6 +151,7 @@ BibliographicDataSection.propTypes = {
     NICEClassification: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   isIPRExpanded: PropTypes.string.isRequired,
+  getAttachmentURL: PropTypes.func.isRequired,
 };
 
 export default BibliographicDataSection;

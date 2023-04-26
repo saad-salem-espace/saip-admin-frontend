@@ -7,7 +7,7 @@ const TrademarksSearchResultCards = ({
   query, setActiveDocument, activeDocument, selectedView,
 }) => (
   <>
-    {data.map((searchResult) => (
+    {data.data.map((searchResult) => (
       <TrademarksSearchResultCard
         key={trademarkSample.BibliographicData.filingNumber}
         searchResult={searchResult}
@@ -15,6 +15,7 @@ const TrademarksSearchResultCards = ({
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
         selectedView={selectedView}
+        highlightWords={data.highlighting || []}
       />
     ))}
   </>
