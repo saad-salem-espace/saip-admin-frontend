@@ -43,7 +43,7 @@ function ExaminerDashboard() {
   return (
     assignments
       ? <div>
-        <Sidebar setActiveWorkstream={setActiveWorkstream} />
+        <Sidebar setActiveWorkstream={setActiveWorkstream} activeWorkstream={activeWorkstream} />
         <Board
           activeWorkstream={activeWorkstream}
           setSort={setSort}

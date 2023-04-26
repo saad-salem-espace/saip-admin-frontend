@@ -1,13 +1,13 @@
-/* eslint-disable */
 import { useTranslation } from 'react-i18next';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Image from 'react-bootstrap/Image';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import logo from '../../../assets/images/logo-shape.png';
 import './sidebar.scss';
 
-function Sidebar({setActiveWorkstream}) {
+function Sidebar({ setActiveWorkstream, activeWorkstream }) {
   const { t } = useTranslation('dashboard');
   const linksList = [
     {
@@ -56,8 +56,7 @@ function Sidebar({setActiveWorkstream}) {
               <Button
                 onClick={() => setActiveWorkstream(button.id)}
                 variant="link"
-                // { Add active class on current WorkStream}
-                className={`nav-link ${button.WorkStreamClass}`}
+                className={`nav-link ${button.id === activeWorkstream ? 'active' : ''} ${button.WorkStreamClass}`}
               >
                 {button.workStreamName}
               </Button>
@@ -68,5 +67,10 @@ function Sidebar({setActiveWorkstream}) {
     </div>
   );
 }
+
+Sidebar.propTypes = {
+  setActiveWorkstream: PropTypes.func.isRequired,
+  activeWorkstream: PropTypes.number.isRequired,
+};
 
 export default Sidebar;
