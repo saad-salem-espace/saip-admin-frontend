@@ -1,9 +1,11 @@
+import Sidebar from './sidebar/Sidebar';
+import Board from './board/Board';
+
 function ExaminerDashboard() {
   return (
     <div>
-      <div>
-        <h1> Dashboard </h1>
-      </div>
+      <Sidebar />
+      <Board />
     </div>
   );
 }

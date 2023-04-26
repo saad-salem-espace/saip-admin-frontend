@@ -18,7 +18,7 @@ function GuestNavbar() {
   const auth = useAuth();
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
-      <Container fluid className="px-lg-15">
+      <Container fluid className="ps-lg-18">
         <Navbar.Brand to="/" as={Link}>
           <Image src={logo} />
           <span className="border-end my-1 ms-6 text-gray-400" />
@@ -40,7 +40,7 @@ function GuestNavbar() {
           <Nav>
             {/* {Recent search} */}
             <RecentSearch />
-            <div className="d-flex justify-content-center h-39">
+            <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
               <div className="edges-border d-flex mx-lg-3 px-lg-3 me-2">
                 <Nav.Link onClick={() => auth.signinRedirect()} as={Link} className="appBtn btn btn-outline-primary pe-lg-3 me-lg-3 me-2 px-3">
