@@ -15,6 +15,7 @@ const AppPagination = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const changePage = (page) => {
     if(onPageChange) onPageChange(page);
@@ -45,6 +46,7 @@ const AppPagination = ({
   useEffect(() => {
     searchParams.set('page', currentPage.toString());
     setSearchParams(searchParams);
+    setIsLoading(true);
     execute();
   }, [currentPage, sort, ...updateDependencies]);
 
@@ -52,10 +54,11 @@ const AppPagination = ({
     if(data){
       setResults(data.data);
       fetchedTotalResults(data.pagination?.total || 0);
+      setIsLoading(false);
     }
   }, [data]);
 
-  if (!data) {
+  if (!data || isLoading) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
   }
   if (!paginationInfo.total) {
