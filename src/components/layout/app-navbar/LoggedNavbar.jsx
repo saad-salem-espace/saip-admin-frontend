@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { FaRegBell } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
+import roleMapper from 'utils/roleMapper';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
@@ -24,10 +25,11 @@ function LoggedNavbar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
           <Nav className="me-auto">
-            <Nav.Link to="#" as={Link} className="appBtn has-icon btn btn-primary pe-3 me-5">
-              <BsGrid className="icon" />
-              {t('navbar.dashboard')}
-            </Nav.Link>
+            {(roleMapper(auth?.user?.profile?.clientRoles[0]) === 'External_Examiner' || roleMapper(auth?.user?.profile?.clientRoles[0]) === 'Internal_Examiner') && (
+              <Nav.Link to="dashboard" as={Link} className="appBtn has-icon btn btn-primary pe-3 me-5">
+                <BsGrid className="icon" />
+                {t('navbar.dashboard')}
+              </Nav.Link>)}
             <Nav.Link to="#" as={Link} className="has-icon">
               <MdOutlineBookmarkBorder className="icon" />
               {t('navbar.myBookmarks')}
