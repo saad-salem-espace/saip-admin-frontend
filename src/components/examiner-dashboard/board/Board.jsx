@@ -5,8 +5,8 @@ import {
 } from 'react-bootstrap';
 import { useTranslation, Trans } from 'react-i18next';
 import EmptyState from 'components/shared/empty-state/EmptyState';
-import SortCards from './SortCards';
 import StatusColumn from './StatusColumn';
+import SortCards from './SortCards';
 import EmptyBoardImage from '../../../assets/images/empty-board-data.png';
 import PatentCard from './PatentCard';
 import './board.scss';
