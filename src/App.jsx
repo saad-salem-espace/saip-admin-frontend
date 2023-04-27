@@ -19,7 +19,7 @@ function App() {
       // lang={lang}
       // eslint-disable-next-line react/jsx-closing-bracket-location
     >
-      <div className="app">
+      <div className="app" translate="no">
         {/* <ChangeLanguage changeLang={changeLang} /> */}
         <Routes />
         <AppNavbar />
