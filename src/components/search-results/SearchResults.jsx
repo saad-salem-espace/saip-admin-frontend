@@ -5,22 +5,28 @@ import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { useTranslation } from 'react-i18next';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
+import {
+  createSearchParams, useNavigate, useSearchParams, Link,
+} from 'react-router-dom';
+import * as Yup from 'yup';
 import uploadFile from 'apis/uploadFileApi';
-// import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import UploadImage from 'components/shared/upload-image/UploadImage';
 import emptyState from 'assets/images/search-empty-state.svg';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
+import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
 import formStyle from 'components/shared/form/form.module.scss';
+import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
+import Button from 'react-bootstrap/Button';
 import useAxios from 'hooks/useAxios';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
@@ -30,6 +36,7 @@ import TrademarksSearchResultCards from './trademarks-search-result-cards/Tradem
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import toastify from '../../utils/toastify';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -52,6 +59,8 @@ function SearchResults() {
   const [imageName, setImageName] = useState(null);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
+  const [isQuerySaved, setIsQuerySaved] = useState(false);
+
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
@@ -59,6 +68,20 @@ function SearchResults() {
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
+
+  const saveQueryParams = {
+    workStreamId: searchParams.get('workstreamId'),
+    query: searchParams.get('q'),
+    resultCount: totalResults.toString(),
+    enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+  };
+
+  const saveQueryConfig = saveQueryApi(saveQueryParams, true);
+
+  const [saveQueryData, executeSaveQuery] = useAxios(
+    saveQueryConfig,
+    { manual: true },
+  );
 
   const sortByOptionsPatent = [
     {
@@ -118,6 +141,42 @@ function SearchResults() {
     setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
   }, []);
 
+  useEffect(() => {
+    if (saveQueryData.data) {
+      if (saveQueryData.data.status === 200) {
+        setIsQuerySaved(true);
+        toastify(
+          'success',
+          <div>
+            <p className="toastifyTitle">{t('querySaved')}</p>
+            <p className="toastText">
+              <Trans
+                i18nKey="savedQueryMsg"
+                ns="search"
+              >
+                <Link className="text-primary" to="/" />
+              </Trans>
+            </p>
+          </div>,
+        );
+      } else {
+        toastify(
+          'error',
+          <div>
+            <p className="toastifyTitle">{t('couldnotSave')}</p>
+            <p className="toastText">
+              {t('failerMsg')}
+            </p>
+          </div>,
+        );
+      }
+    }
+  }, [saveQueryData]);
+
+  useEffect(() => {
+    setIsQuerySaved(results?.isFavourite);
+  }, [results]);
+
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
@@ -176,6 +235,7 @@ function SearchResults() {
 
   const onSubmit = (values) => {
     setActiveDocument(null);
+    setIsIPRExpanded(false);
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
@@ -350,6 +410,19 @@ function SearchResults() {
     setSearchParams(searchParams);
     setSortBy(sortCriteria);
   };
+
+  const saveQuery = () => {
+    if (isQuerySaved) return;
+    executeSaveQuery();
+  };
+
+  const formSchema = Yup.object({
+    searchQuery: Yup.mixed()
+      .test('Is not empty', t('validationErrors.empty'), (data) => (
+        (imageName || data)
+      )),
+  });
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -358,6 +431,7 @@ function SearchResults() {
             innerRef={submitRef}
             enableReinitialize
             onSubmit={onSubmit}
+            validationSchema={formSchema}
             initialValues={{
               searchQuery,
               selectedWorkstream: WorkStreamsOptions?.find(
@@ -365,7 +439,9 @@ function SearchResults() {
               ),
             }}
           >
-            {({ setFieldValue, handleSubmit, values }) => (
+            {({
+              setFieldValue, handleSubmit, values, touched, errors,
+            }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
@@ -406,7 +482,9 @@ function SearchResults() {
                           searchWithImg
                         />
                       </div>
-                      {/* <ErrorMessage msg="" className="mt-2" /> */}
+                      {touched.searchQuery && errors.searchQuery
+                        ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
+                        ) : null}
                     </div>
                     <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton
@@ -454,17 +532,33 @@ function SearchResults() {
           searchResultParams.fireSearch
           && (
             <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
-              <SearchNote
-                searchKeywords={searchKeywords}
-                resultsCount={totalResults}
-              />
+              <div className="d-lg-flex align-items-center">
+                <AppTooltip
+                  tooltipTrigger={
+                    <Button variant="transparent" className="p-0 me-4 border-0" onClick={saveQuery} data-testid="fav-button">
+                      {
+                        isQuerySaved
+                          ? <span className="icon-filled-star f-24" data-testid="filled-star" />
+                          : <span className="icon-star f-24" data-testid="empty-star" />
+                      }
+                    </Button>
+                  }
+                  tooltipContent={t('saveSearchQuery')}
+                />
+                <div>
+                  <SearchNote
+                    searchKeywords={searchKeywords}
+                    resultsCount={totalResults}
+                  />
+                </div>
+              </div>
               <Formik>
                 {() => (
-                  <Form className="mt-8">
+                  <Form className="mt-5">
                     <div className="d-md-flex">
                       {
                       searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-6 viewSelect">
+                        <div className="position-relative mb-6 viewSelect me-md-6">
                           <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
                           <Select
                             options={viewOptions}
@@ -478,7 +572,7 @@ function SearchResults() {
                         </div>
                       )
                     }
-                      <div className="position-relative mb-8 sortBy ms-md-6">
+                      <div className="position-relative mb-8 sortBy">
                         <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
                         <Select
                           options={getSortOptions(searchResultParams.workstreamId)}
@@ -511,6 +605,10 @@ function SearchResults() {
                           img={emptyState}
                           className="mt-18"
                         />)}
+                      onPageChange={() => {
+                        setActiveDocument(null);
+                        setIsIPRExpanded(false);
+                      }}
                       updateDependencies={[...Object.values(searchResultParams)]}
                     />
                   </Form>

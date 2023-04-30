@@ -11,10 +11,16 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
-  sort,
+  sort, onPageChange
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(defaultPage);
+  const [currentPage, setCurrentPage] = useState(defaultPage || 1);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const changePage = (page) => {
+    if(onPageChange) onPageChange(page);
+    setCurrentPage(page);
+  }
 
   const axiosPaginatedConfig = {
     ...axiosConfig,
@@ -40,6 +46,7 @@ const AppPagination = ({
   useEffect(() => {
     searchParams.set('page', currentPage.toString());
     setSearchParams(searchParams);
+    setIsLoading(true);
     execute();
   }, [currentPage, sort, ...updateDependencies]);
 
@@ -47,10 +54,11 @@ const AppPagination = ({
     if(data){
       setResults(data.data);
       fetchedTotalResults(data.pagination?.total || 0);
+      setIsLoading(false);
     }
   }, [data]);
 
-  if (!data) {
+  if (!data || isLoading) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
   }
   if (!paginationInfo.total) {
@@ -68,7 +76,7 @@ const AppPagination = ({
         className="pagination"
         current={currentPage}
         total={totalNumberOfPages}
-        onPageChange={setCurrentPage}
+        onPageChange={changePage}
       />
     </>
   );
@@ -85,6 +93,7 @@ AppPagination.propTypes = {
   updateDependencies: PropTypes.arrayOf(Object),
   setResults: PropTypes.func,
   sort: PropTypes.string,
+  onPageChange: PropTypes.func,
 };
 
 AppPagination.defaultProps = {
@@ -96,6 +105,7 @@ AppPagination.defaultProps = {
   emptyState: null,
   updateDependencies: [],
   setResults: () => {},
+  onPageChange: null
 };
 
 export default AppPagination;

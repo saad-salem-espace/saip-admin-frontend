@@ -6,8 +6,8 @@ import {
 import { useTranslation, Trans } from 'react-i18next';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import PropTypes from 'prop-types';
-import SortCards from './SortCards';
 import StatusColumn from './StatusColumn';
+import SortCards from './SortCards';
 import EmptyBoardImage from '../../../assets/images/empty-board-data.png';
 import PatentCard from './PatentCard';
 import './board.scss';
