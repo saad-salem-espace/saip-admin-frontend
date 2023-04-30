@@ -9,6 +9,7 @@ import './PatentCard.scss';
 import useAxios from 'hooks/useAxios';
 import togglePinned from 'apis/dashboard/togglePinned';
 import { useEffect } from 'react';
+import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 
 function PatentCard({ assignment, setToggle, setActiveDocument }) {
   const { t } = useTranslation('dashboard');
@@ -29,24 +30,45 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
   };
 
   return (
-    <Card className="patent-card mb-2" onClick={() => { setActiveDocument(assignment.filingNumber); }}>
+    <Card className="patent-card mb-2">
       <Card.Body className="p-3">
-        <div className="d-flex justify-content-between border-bottom mb-2">
-          <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+        <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
           <Button
             variant="link"
-            className={`p-1 fs-15 text-${assignment.pinned ? 'primary' : 'gray'}`}
+            className="text-decoration-none text-start p-0 font-regular"
+            onClick={() => { setActiveDocument(assignment.filingNumber); }}
+            text={
+              <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+            }
+          />
+          <Button
+            variant="link"
+            className={`p-1 fs-15 text-${assignment.pinned ? 'primary' : 'gray'} position-relative`}
             text={assignment.pinned ? <BsPinFill /> : <BsPinAngle />}
             onClick={executeToggle}
           />
         </div>
-        <p className="name-card">
-          {assignment.applicationTitle}
-        </p>
-        <p className="submit-date text-gray fs-14">
-          {`${calculateDifference(assignment.statusChangeDate)} days ago`}
-        </p>
-        <div className="d-flex justify-content-between gray-700 border-bottom">
+        <Button
+          variant="link"
+          className="text-decoration-none text-start p-0 font-regular d-block"
+          onClick={() => { setActiveDocument(assignment.filingNumber); }}
+          text={
+            <p className="name-card text-black fs-16 mb-1">
+              {assignment.applicationTitle}
+            </p>
+          }
+        />
+        <AppTooltip
+          tooltipContent="text"
+          tooltipId={assignment.filingNumber}
+          tooltipTrigger={
+            <p className="submit-date text-gray fs-14 d-inline-block">
+              {`${calculateDifference(assignment.statusChangeDate)} days ago`}
+            </p>
+          }
+          placement="right"
+        />
+        <div className="d-flex justify-content-between text-gray-700 border-bottom">
           <p className="fs-12 mb-2">
             <MdOutlineCalendarMonth className="text-muted me-1 fs-14" />
             {t('dashboard:queue')}
