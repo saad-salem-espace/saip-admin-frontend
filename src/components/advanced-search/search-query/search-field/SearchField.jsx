@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 // import MultiSelect from 'components/shared/multi-select/MultiSelect';
 import formStyle from 'components/shared/form/form.module.scss';
 import Select from 'components/shared/form/select/Select';
@@ -12,7 +11,7 @@ import DatePicker from 'components/shared/date-picker/AppDatePicker';
 import { isMultipleValue, isRangeValue } from 'utils/search-query/encoder';
 import { useMemo } from 'react';
 import { exclude } from 'utils/arrays';
-import MultiSelect from 'components/shared/multi-select/MultiSelect';
+import MultiSelect from 'components/shared/form/multi-select/MultiSelect';
 import options from 'testing-resources/patents/lkps/ipcClassifications.json';
 import style from '../SearchQuery.module.scss';
 
@@ -137,10 +136,6 @@ function SearchField({
       </div>
       <div className={`position-relative ${style.criteria}`}>
         {getInputField}
-        {error && <ErrorMessage
-          msg={t(`search:validationErrors:${error.data}`)}
-          className="mt-2"
-        /> }
       </div>
     </div>
   );

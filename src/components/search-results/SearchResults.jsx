@@ -12,7 +12,6 @@ import uploadFile from 'apis/uploadFileApi';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
-import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -32,6 +31,7 @@ import TrademarksSearchResultCards from './trademarks-search-result-cards/Tradem
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import validationMessages from '../../utils/validationMessages';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -355,7 +355,7 @@ function SearchResults() {
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
-      .test('Is not empty', t('validationErrors.empty'), (data) => (
+      .test('Is not empty', validationMessages.search.required, (data) => (
         (imageName || data)
       )),
   });
@@ -377,7 +377,7 @@ function SearchResults() {
             }}
           >
             {({
-              setFieldValue, handleSubmit, values, touched, errors,
+              setFieldValue, handleSubmit, values,
             }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
@@ -419,9 +419,6 @@ function SearchResults() {
                           searchWithImg
                         />
                       </div>
-                      {touched.searchQuery && errors.searchQuery
-                        ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
-                        ) : null}
                     </div>
                     <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton
