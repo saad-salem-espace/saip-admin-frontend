@@ -5,12 +5,7 @@ import ShowMore from 'components/shared/show-more/ShowMore';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 
-const BibliographicDataSection = ({
-  document,
-  isIPRExpanded,
-  children,
-  dashboard,
-}) => {
+const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
   const getGrid = (view) => {
@@ -20,13 +15,6 @@ const BibliographicDataSection = ({
         grid = 5;
       } else {
         grid = 7;
-      }
-    }
-    if (dashboard) {
-      if (view === 'drawings') {
-        grid = 12;
-      } else {
-        grid = 6;
       }
     }
     return grid;
@@ -125,11 +113,6 @@ BibliographicDataSection.propTypes = {
   }).isRequired,
   isIPRExpanded: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-  dashboard: PropTypes.bool,
-};
-
-BibliographicDataSection.defaultProps = {
-  dashboard: false,
 };
 
 export default BibliographicDataSection;
