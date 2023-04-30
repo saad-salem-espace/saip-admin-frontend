@@ -5,12 +5,14 @@ import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import uploadFile from 'apis/uploadFileApi';
 // import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
+import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -21,6 +23,7 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
 import formStyle from 'components/shared/form/form.module.scss';
+import useAxios from 'hooks/useAxios';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
@@ -51,7 +54,6 @@ function SearchResults() {
   const [imageName, setImageName] = useState(null);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
-
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
@@ -73,14 +75,6 @@ function SearchResults() {
       label: t('publicationDateDesc'),
       value: 'publicationDateDesc',
     },
-    {
-      label: t('priorityDateAsc'),
-      value: 'priorityDateAsc',
-    },
-    {
-      label: t('priorityDateDesc'),
-      value: 'priorityDateDesc',
-    },
   ];
 
   const sortByOptionsTrademark = [
@@ -101,7 +95,7 @@ function SearchResults() {
       value: 'filingDateAsc',
     },
     {
-      label: t('filingDateAsc'),
+      label: t('filingDateDesc'),
       value: 'filingDateDesc',
     },
   ];
@@ -131,25 +125,39 @@ function SearchResults() {
 
   const [isImgUploaded, setIsImgUploaded] = useState(false);
 
+  const [imgData, execute] = useAxios({}, { manual: true });
+
+  useEffect(() => {
+    if (imgData.data) {
+      setImageName(imgData.data.data?.[0]);
+    } else if (imgData.error) {
+      setErrorMessage(imgData.error);
+    }
+    if (imgData.response) {
+      setIsImgUploaded(true);
+      setShowUploadImgSection(false);
+      setIsSubmitting(false);
+    }
+  }, [imgData]);
+
   const [searchQuery, setSearchQuery] = useState('');
 
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
-
-    const index = results.findLastIndex(
+    const index = results.data.findLastIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === results.length - 1
-      ? null : results[index + 1].BibliographicData.FilingNumber);
+    return (index === results.data.length - 1
+      ? null : results.data[index + 1].BibliographicData.FilingNumber);
   };
 
   const getPreviousDocument = () => {
     if (!results || !activeDocument) return null;
 
-    const index = results.findIndex(
+    const index = results.data.findIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === 0 ? null : results[index - 1].BibliographicData.FilingNumber);
+    return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
   };
 
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
@@ -230,21 +238,13 @@ function SearchResults() {
 
   const SearchModuleClassName = ({
     smSearch: true,
-    searchWithSibling: !isAdvancedSearch,
     imgUploadedResultView: isImgUploaded,
     searchWithImage: true, // please set it true for workstream with search with image
   });
 
   const uploadCurrentFile = async (file) => {
     setIsSubmitting(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    const { res, err } = await uploadFile(formData);
-    setImageName(res.data.data?.[0]);
-    if (err) setErrorMessage(err);
-    setIsImgUploaded(true);
-    setShowUploadImgSection(false);
-    setIsSubmitting(false);
+    execute(uploadFile(file));
   };
 
   const handleUploadImg = () => {
@@ -262,12 +262,16 @@ function SearchResults() {
       size = 12;
       if (isAdvancedSearch) {
         size = isAdvancedMenuOpen ? 9 : 11;
+      } else {
+        size = 11;
       }
     }
     if (media === 'xl' && isIPRExpanded) {
       size = 12;
       if (isAdvancedSearch) {
         size = isAdvancedMenuOpen ? 8 : 11;
+      } else {
+        size = 11;
       }
     }
     return size;
@@ -287,7 +291,10 @@ function SearchResults() {
           }
         }
       } else if (totalResults) {
-        size = 8;
+        size = 7;
+        if (isIPRExpanded) {
+          size = 4;
+        }
       } else {
         size = 11;
       }
@@ -314,7 +321,7 @@ function SearchResults() {
     return size;
   };
 
-  const axiosConfig = advancedSearchApi(searchResultParams, true);
+  const axiosConfig = advancedSearchApi(searchResultParams);
 
   const viewOptions = [
     {
@@ -345,6 +352,14 @@ function SearchResults() {
     setSearchParams(searchParams);
     setSortBy(sortCriteria);
   };
+
+  const formSchema = Yup.object({
+    searchQuery: Yup.mixed()
+      .test('Is not empty', t('validationErrors.empty'), (data) => (
+        (imageName || data)
+      )),
+  });
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -353,6 +368,7 @@ function SearchResults() {
             innerRef={submitRef}
             enableReinitialize
             onSubmit={onSubmit}
+            validationSchema={formSchema}
             initialValues={{
               searchQuery,
               selectedWorkstream: WorkStreamsOptions?.find(
@@ -360,7 +376,9 @@ function SearchResults() {
               ),
             }}
           >
-            {({ setFieldValue, handleSubmit, values }) => (
+            {({
+              setFieldValue, handleSubmit, values, touched, errors,
+            }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
@@ -401,7 +419,9 @@ function SearchResults() {
                           searchWithImg
                         />
                       </div>
-                      {/* <ErrorMessage msg="" className="mt-2" /> */}
+                      {touched.searchQuery && errors.searchQuery
+                        ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
+                        ) : null}
                     </div>
                     <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton
@@ -448,7 +468,7 @@ function SearchResults() {
         {
           searchResultParams.fireSearch
           && (
-            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${!isAdvancedSearch ? 'ps-lg-22 ps-md-8' : ''} ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
               <SearchNote
                 searchKeywords={searchKeywords}
                 resultsCount={totalResults}
@@ -506,6 +526,10 @@ function SearchResults() {
                           img={emptyState}
                           className="mt-18"
                         />)}
+                      onPageChange={() => {
+                        setActiveDocument(null);
+                        setIsIPRExpanded(false);
+                      }}
                       updateDependencies={[...Object.values(searchResultParams)]}
                     />
                   </Form>

@@ -3,8 +3,8 @@ import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttr
 
 const PriorityRow = ({ row }) => (
   <tr className="text-capitalize">
-    <td><HandleEmptyAttribute checkOn={row.PriorityNumber} /></td>
     <td><HandleEmptyAttribute checkOn={row.PriorityDate} /></td>
+    <td><HandleEmptyAttribute checkOn={row.PriorityNumber} /></td>
     <td><HandleEmptyAttribute checkOn={row.PriorityCountry} /></td>
   </tr>
 );

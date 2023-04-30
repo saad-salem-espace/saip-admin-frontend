@@ -12,13 +12,14 @@ import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
-import useCacheRequest from '../../hooks/useCacheRequest';
-import WorkStreams from '../work-streams/WorkStreams';
+import useCacheRequest from 'hooks/useCacheRequest';
+import Select from 'components/shared/form/select/Select';
+import Search from 'components/shared/form/search/Search';
+import UploadImage from 'components/shared/upload-image/UploadImage';
+import formStyle from 'components/shared/form/form.module.scss';
+import useAxios from 'hooks/useAxios';
 import style from './style.module.scss';
-import Select from '../shared/form/select/Select';
-import Search from '../shared/form/search/Search';
-import UploadImage from '../shared/upload-image/UploadImage';
-import formStyle from '../shared/form/form.module.scss';
+import WorkStreams from '../work-streams/WorkStreams';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
@@ -33,6 +34,21 @@ function WorkstreamSearch() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageName, setImageName] = useState(null);
+
+  const [imgData, execute] = useAxios({}, { manual: true });
+
+  useEffect(() => {
+    if (imgData.data) {
+      setImageName(imgData.data.data?.[0]);
+    } else if (imgData.error) {
+      setErrorMessage(imgData.error);
+    }
+    if (imgData.response) {
+      setIsImgUploaded(true);
+      setShowUploadImgSection(false);
+      setIsSubmitting(false);
+    }
+  }, [imgData]);
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
@@ -101,14 +117,7 @@ function WorkstreamSearch() {
 
   const uploadCurrentFile = async (file, setErrors, data) => {
     setIsSubmitting(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    const { res, err } = await uploadFile(formData);
-    setImageName(res.data.data?.[0]);
-    if (err) setErrorMessage(err);
-    setIsImgUploaded(true);
-    setShowUploadImgSection(false);
-    setIsSubmitting(false);
+    execute(uploadFile(file));
     if (!data.trim()) setErrors({});
   };
 

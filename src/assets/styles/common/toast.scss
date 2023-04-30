@@ -1,0 +1,80 @@
+@import '../../../assets/styles/utilities/custom-theme';
+@import "~bootstrap/scss/mixins";
+
+
+:root {
+  --toastify-toast-width: auto;
+  --toastify-color-success: #B9D000;
+  --toastify-color-error: #B50644;
+}
+
+.Toastify__toast-icon {
+  @extend.me-4;
+  width: 31px;
+}
+
+.Toastify__toast-body {
+  @extend.p-4
+}
+
+.Toastify__close-button {
+  opacity: 1;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    color: $gray;
+    margin: 0 6px;
+  }
+}
+
+.toastifyTitle {
+  font-size: $font-size-sm;
+  font-family: $font-medium ;
+  margin-bottom: 0;
+  color: $dark
+}
+
+.toastText {
+  font-size: $font-size-sm;
+  color: $gray;
+  margin-bottom: 0;
+}
+
+.Toastify__toast--error {
+  border-left: 3px solid $danger-dark;
+
+  .Toastify__toast-icon {
+    svg {
+      display: none;
+    }
+
+    &::after {
+      content: "\f057";
+      font-family: FontAwesomeSolid;
+      color: $danger-dark;
+      font-size: 30px;
+    }
+  }
+}
+
+.Toastify__toast--success {
+  border-left: 3px solid $secondary-rio-grande;
+}
+
+.Toastify__toast--warning {
+  border-left: 3px solid $secondary-tangerine;
+
+  .Toastify__toast-icon {
+    svg {
+      display: none;
+    }
+
+    &::after {
+      content: "\f06a";
+      font-family: FontAwesomeSolid;
+      color: $secondary-tangerine;
+      font-size: 30px;
+    }
+  }
+}

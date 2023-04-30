@@ -2,6 +2,8 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { CacheProvider } from 'contexts/CacheContext';
+import ErrorBoundary from 'errors/ErrorBoundary';
 import './index.css';
 import { AuthProvider } from 'react-oidc-context';
 import { WebStorageStateStore } from 'oidc-client-ts';
@@ -9,9 +11,23 @@ import roleMapper from 'utils/roleMapper';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
-import { CacheProvider } from './contexts/CacheContext';
 
-const oidcConfig = {
+const urlParams = new URLSearchParams(window.location.search);
+const appType = urlParams?.get('app_type');
+
+const externalRedirectUri = `${process.env.REACT_APP_ENTITY_URL}?app_type=user_app`;
+const oidcConfigExternal = {
+  authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY_EXTERNAL,
+  client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID_EXTERNAL,
+  client_secret: process.env.REACT_APP_KEYCLOAK_CLIENT_SECRET_EXTERNAL,
+  redirect_uri: externalRedirectUri,
+  post_logout_redirect_uri: externalRedirectUri,
+  automaticSilentRenew: true,
+  loadUserInfo: true,
+  userStore: new WebStorageStateStore({ store: localStorage }),
+};
+
+const oidcConfigInternal = {
   onSigninCallback: (userData) => {
     if (roleMapper(userData?.profile?.clientRoles[0]) === 'External_Examiner'
     || roleMapper(userData?.profile?.clientRoles[0]) === 'Internal_Examiner') {
@@ -20,8 +36,8 @@ const oidcConfig = {
       window.location.href = escape('/admin');
     }
   },
-  authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY,
-  client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID,
+  authority: process.env.REACT_APP_KEYCLOAK_AUTHORITY_INTERNAL,
+  client_id: process.env.REACT_APP_KEYCLOAK_CLIENT_ID_INTERNAL,
   redirect_uri: process.env.REACT_APP_ENTITY_URL,
   post_logout_redirect_uri: process.env.REACT_APP_ENTITY_URL,
   automaticSilentRenew: true,
@@ -30,15 +46,17 @@ const oidcConfig = {
 };
 ReactDOM.render(
   <React.StrictMode>
-    <CacheProvider>
-      <Suspense fallback="Loading ...">
+    <Suspense fallback="Loading ...">
+      <CacheProvider>
         <BrowserRouter>
-          <AuthProvider {...oidcConfig} autoSignIn={false}>
-            <App />
-          </AuthProvider>
+          <ErrorBoundary>
+            <AuthProvider {...(appType === 'user_app' ? { ...oidcConfigExternal } : { ...oidcConfigInternal })} autoSignIn={false}>
+              <App />
+            </AuthProvider>
+          </ErrorBoundary>
         </BrowserRouter>
-      </Suspense>
-    </CacheProvider>
+      </CacheProvider>
+    </Suspense>
   </React.StrictMode>,
   document.getElementById('root'),
 );

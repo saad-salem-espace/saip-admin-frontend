@@ -13,7 +13,7 @@ const PatentFamility = ({ children }) => {
           <tr className="text-uppercase">
             <th>{t('patent.publicationNumber')}</th>
             <th>{t('patent.publicationDate')}</th>
-            <th>{t('patent.publicationTitle')}</th>
+            <th>{t('patent.applicationTitle')}</th>
             <th>{t('patent.patentFamility.applicationNumber')}</th>
             <th>{t('patent.applicants')}</th>
           </tr>
