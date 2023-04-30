@@ -4,14 +4,16 @@ import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import WarningMessage from '../warning-message/WarningMessage';
+import FormikErrorMessage from '../form/formik-error-message/FormikErrorMessage';
 
 function AppDatePicker({
-  name, onChangeDate, className, range, isMulti,
+  name, onChangeDate, className, range, isMulti, errorClassName, showError,
 }) {
   const { t } = useTranslation('common', { keyPrefix: 'datePicker' });
   return (
-    <Field name={name}>
-      {
+    <>
+      <Field name={name}>
+        {
         ({ field, meta }) => (
           <div className={`datePicker position-relative
            ${className}
@@ -42,7 +44,9 @@ function AppDatePicker({
           </div>
         )
       }
-    </Field>
+      </Field>
+      {showError && <FormikErrorMessage name={name} className={errorClassName} /> }
+    </>
   );
 }
 
@@ -52,6 +56,8 @@ AppDatePicker.propTypes = {
   className: PropTypes.string,
   range: PropTypes.bool,
   isMulti: PropTypes.bool,
+  showError: PropTypes.bool,
+  errorClassName: PropTypes.string,
 };
 
 AppDatePicker.defaultProps = {
@@ -59,6 +65,8 @@ AppDatePicker.defaultProps = {
   className: '',
   range: false,
   isMulti: false,
+  showError: true,
+  errorClassName: '',
 };
 
 export default AppDatePicker;
