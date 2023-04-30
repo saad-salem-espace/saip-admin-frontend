@@ -6,6 +6,7 @@ import { BsPinAngle, BsPinFill, BsPlusLg } from 'react-icons/bs';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaCommentAlt } from 'react-icons/fa';
 import './PatentCard.scss';
+import { calculateDifference } from 'utils/dates';
 import useAxios from 'hooks/useAxios';
 import togglePinned from 'apis/dashboard/togglePinned';
 import { useEffect } from 'react';
@@ -21,12 +22,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
   }, [pinnedData]);
 
   const dateFormatSubstring = 10;
-
-  const calculateDifference = (lastStatusChange) => {
-    const date = new Date();
-    const d = new Date(lastStatusChange.substring(0, dateFormatSubstring));
-    return (Math.floor((date - d) / (1000 * 60 * 60 * 24)));
-  };
+  const isPinned = assignment.pinned;
 
   return (
     <Card className="patent-card mb-2" onClick={() => { setActiveDocument(assignment.filingNumber); }}>
@@ -35,8 +31,8 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
           <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
           <Button
             variant="link"
-            className={`p-1 fs-15 text-${assignment.pinned ? 'primary' : 'gray'}`}
-            text={assignment.pinned ? <BsPinFill /> : <BsPinAngle />}
+            className={`p-1 fs-15 text-${isPinned ? 'primary' : 'gray'}`}
+            text={isPinned ? <BsPinFill /> : <BsPinAngle />}
             onClick={executeToggle}
           />
         </div>
@@ -44,7 +40,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
           {assignment.applicationTitle}
         </p>
         <p className="submit-date text-gray fs-14">
-          {`${calculateDifference(assignment.statusChangeDate)} days ago`}
+          {`${calculateDifference(assignment.statusChangeDate, dateFormatSubstring)} days ago`}
         </p>
         <div className="d-flex justify-content-between gray-700 border-bottom">
           <p className="fs-12 mb-2">

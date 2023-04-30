@@ -25,7 +25,7 @@ function LoggedNavbar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
           <Nav className="me-auto">
-            {(roleMapper(auth?.user?.profile?.clientRoles[0]) === 'External_Examiner' || roleMapper(auth?.user?.profile?.clientRoles[0]) === 'Internal_Examiner') && (
+            {(1 || roleMapper(auth?.user?.profile?.clientRoles[0]) === 'Internal_Examiner') && (
               <Nav.Link to="dashboard" as={Link} className="appBtn has-icon btn btn-primary pe-3 me-5">
                 <BsGrid className="icon" />
                 {t('navbar.dashboard')}

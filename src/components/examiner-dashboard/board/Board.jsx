@@ -17,14 +17,16 @@ function Board({
 }) {
   const { t } = useTranslation('dashboard');
 
-  const filterByStatus = (status) => (
-    assignments.filter((assignment) => assignment.status === status)
-  );
+  const filteredAssignments = {
+    TO_DO: [],
+    REVIEW: [],
+    DONE: [],
+    IN_PROGRESS: [],
+  };
 
-  const toDo = filterByStatus('TO_DO');
-  const inProgress = filterByStatus('IN_PROGRESS');
-  const review = filterByStatus('REVIEW');
-  const done = filterByStatus('DONE');
+  for (let i = 0; i < assignments.length; i += 1) {
+    filteredAssignments[assignments[i].status].push(assignments[i]);
+  }
 
   return (
     <>
@@ -59,8 +61,8 @@ function Board({
             />
           ) : (
             <Row>
-              <StatusColumn status={t('dashboard:status.toDo')} className="border-primary" count={toDo.length}>
-                {toDo.map((assignment) => (
+              <StatusColumn status={t('dashboard:status.toDo')} className="border-primary" count={filteredAssignments.TO_DO.length}>
+                {filteredAssignments.TO_DO.map((assignment) => (
                   <PatentCard
                     assignment={assignment}
                     setToggle={setToggle}
@@ -68,8 +70,8 @@ function Board({
                   />
                 ))}
               </StatusColumn>
-              <StatusColumn status={t('dashboard:status.inProgress')} className="border-secondary-rio-grande" count={inProgress.length}>
-                {inProgress.map((assignment) => (
+              <StatusColumn status={t('dashboard:status.inProgress')} className="border-secondary-rio-grande" count={filteredAssignments.IN_PROGRESS.length}>
+                {filteredAssignments.IN_PROGRESS.map((assignment) => (
                   <PatentCard
                     assignment={assignment}
                     setToggle={setToggle}
@@ -77,8 +79,8 @@ function Board({
                   />
                 ))}
               </StatusColumn>
-              <StatusColumn status={t('dashboard:status.done')} className="border-primary-dark" count={review.length}>
-                {review.map((assignment) => (
+              <StatusColumn status={t('dashboard:status.done')} className="border-primary-dark" count={filteredAssignments.DONE.length}>
+                {filteredAssignments.DONE.map((assignment) => (
                   <PatentCard
                     assignment={assignment}
                     setToggle={setToggle}
@@ -86,8 +88,8 @@ function Board({
                   />
                 ))}
               </StatusColumn>
-              <StatusColumn status={t('dashboard:status.review')} className="border-danger-dark" count={done.length}>
-                {done.map((assignment) => (
+              <StatusColumn status={t('dashboard:status.review')} className="border-danger-dark" count={filteredAssignments.REVIEW.length}>
+                {filteredAssignments.REVIEW.map((assignment) => (
                   <PatentCard
                     assignment={assignment}
                     setToggle={setToggle}
