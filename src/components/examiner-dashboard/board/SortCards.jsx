@@ -33,9 +33,9 @@ function SortCards({ setSort }) {
               </RadioButton>
               <RadioButton
                 name="sort"
-                value="Publication"
+                value="Filing"
               >
-                {t('dashboard:fillingPriority')}
+                {t('dashboard:filingDate')}
               </RadioButton>
             </RadioButtonGroup>
           </Form>

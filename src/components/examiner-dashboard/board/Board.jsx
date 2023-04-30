@@ -1,5 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable max-len */
 import {
   Container,
   Row,
@@ -15,7 +13,7 @@ import PatentCard from './PatentCard';
 import './board.scss';
 
 function Board({
-  setSort, assignments, setToggle, setActiveDocument,
+  setSort, assignments, setToggle, setActiveDocument, activeWorkstream,
 }) {
   const { t } = useTranslation('dashboard');
 
@@ -37,7 +35,7 @@ function Board({
               <Col md={4} lg={6}>
                 <h4 className="text-primary-dark mt-2">
                   <Trans
-                    i18nKey="dashboard:patentsBoard"
+                    i18nKey={activeWorkstream.BoardName}
                   >
                     <b />
                   </Trans>
@@ -63,22 +61,38 @@ function Board({
             <Row>
               <StatusColumn status={t('dashboard:status.toDo')} className="border-primary" count={toDo.length}>
                 {toDo.map((assignment) => (
-                  <PatentCard assignment={assignment} setToggle={setToggle} setActiveDocument={setActiveDocument} />
+                  <PatentCard
+                    assignment={assignment}
+                    setToggle={setToggle}
+                    setActiveDocument={setActiveDocument}
+                  />
                 ))}
               </StatusColumn>
               <StatusColumn status={t('dashboard:status.inProgress')} className="border-secondary-rio-grande" count={inProgress.length}>
                 {inProgress.map((assignment) => (
-                  <PatentCard assignment={assignment} setToggle={setToggle} setActiveDocument={setActiveDocument} />
+                  <PatentCard
+                    assignment={assignment}
+                    setToggle={setToggle}
+                    setActiveDocument={setActiveDocument}
+                  />
                 ))}
               </StatusColumn>
               <StatusColumn status={t('dashboard:status.done')} className="border-primary-dark" count={review.length}>
                 {review.map((assignment) => (
-                  <PatentCard assignment={assignment} setToggle={setToggle} setActiveDocument={setActiveDocument} />
+                  <PatentCard
+                    assignment={assignment}
+                    setToggle={setToggle}
+                    setActiveDocument={setActiveDocument}
+                  />
                 ))}
               </StatusColumn>
               <StatusColumn status={t('dashboard:status.review')} className="border-danger-dark" count={done.length}>
                 {done.map((assignment) => (
-                  <PatentCard assignment={assignment} setToggle={setToggle} setActiveDocument={setActiveDocument} />
+                  <PatentCard
+                    assignment={assignment}
+                    setToggle={setToggle}
+                    setActiveDocument={setActiveDocument}
+                  />
                 ))}
               </StatusColumn>
             </Row>
@@ -91,9 +105,10 @@ function Board({
 
 Board.propTypes = {
   setSort: PropTypes.func.isRequired,
-  assignments: PropTypes.array.isRequired,
+  assignments: PropTypes.instanceOf(Array).isRequired,
   setToggle: PropTypes.func.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
+  activeWorkstream: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default Board;

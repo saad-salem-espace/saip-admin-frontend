@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/shared/button/Button';
+import PropTypes from 'prop-types';
 import { BsPinAngle, BsPinFill, BsPlusLg } from 'react-icons/bs';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaCommentAlt } from 'react-icons/fa';
@@ -32,7 +32,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
     <Card className="patent-card mb-2" onClick={() => { setActiveDocument(assignment.filingNumber); }}>
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between border-bottom mb-2">
-          <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.publicationDate.substring(0, dateFormatSubstring)}`}</p>
+          <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
           <Button
             variant="link"
             className={`p-1 fs-15 text-${assignment.pinned ? 'primary' : 'gray'}`}
@@ -44,7 +44,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
           {assignment.applicationTitle}
         </p>
         <p className="submit-date text-gray fs-14">
-          {`${calculateDifference(assignment.createdAt)} days ago`}
+          {`${calculateDifference(assignment.statusChangeDate)} days ago`}
         </p>
         <div className="d-flex justify-content-between gray-700 border-bottom">
           <p className="fs-12 mb-2">
@@ -86,5 +86,11 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
     </Card>
   );
 }
+
+PatentCard.propTypes = {
+  assignment: PropTypes.instanceOf(Object).isRequired,
+  setToggle: PropTypes.func.isRequired,
+  setActiveDocument: PropTypes.func.isRequired,
+};
 
 export default PatentCard;

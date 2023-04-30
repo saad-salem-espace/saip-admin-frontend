@@ -2,6 +2,7 @@
   "patentsBoard": "<0>Patents</0> Board",
   "queuePriority": "Queue Priority",
   "earliestPriority": "Earliest Priority",
+  "filingDate": "Filing Date",
   "emptyBoardTitle": "You don’t have any tasks yet.",
   "emptyBoardMessage": "Try another search term in the search bar above.",
   "queue": "Queue ",
@@ -20,5 +21,13 @@
     "industrialDesign": "Industrial Design",
     "plantVarieties": "Plant Varieties",
     "integratedCircuits": "Integrated Circuits"
+  },
+  "board": {
+    "patent": "<0>Patents</0> Board",
+    "trademark": "<0>Trademarks</0> Board",
+    "copyrights": "<0>Copyrights</0> Board",
+    "industrialDesign": "<0>Industrial Design</0> Board",
+    "plantVarieties": "<0>Plant Varieties</0> Board",
+    "integratedCircuits": "<0>Integrated Circuits</0> Board"
   }
 }
