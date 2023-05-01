@@ -1,16 +1,16 @@
 {
   "serverErrors": {
-    "server_error": "Something went wrong.",
-    "invalid_state": "Went into an invalid state please reload.",
-    "unauthorized": "You have not authorized to perform this action.",
-    "not_found": "Requested data is not found."
+    "server_error": "حدث خطأ ما!",
+    "invalid_state": "في حالة غير صحيحة. أعد المحاولة!",
+    "unauthorized": "لا يمكنك إتمام العمل بالصلاحيات الحالية.",
+    "not_found": "البيانات المطلوبة غير متاحة."
   },
-  "serverError": "Internal server error",
-  "serverErrorMsg": "The server has been deserted for a while. Please be patient to try again.",
-  "noAuthorization": "No authorization found",
-  "noAuthorizationMsg": "This page is not publicly available.",
-  "notFound": "Page not found",
-  "notFoundMsg": "Oops! The page you are looking for does not exist. It might have been <0> moved or deleted.</0>",
-  "badRequest": "Bad Request",
-  "badRequestMsg": "Oops! The browser sent a request that this server could not understand."
+  "serverError": "خطأ بالخادم الداخلي",
+  "serverErrorMsg": "يرجى المحاولة مرة أخرى لاحقا.",
+  "noAuthorization": "تعذر التحقق من الصلاحيات المطلوبة",
+  "noAuthorizationMsg": "عذرًا! تعذر الوصول للصفحة بالصلاحيات الحالية.",
+  "notFound": "صفحة غير موجودة",
+  "notFoundMsg": "عذرًا! لم يتم العثور على الصفحة المطلوبة.",
+  "badRequest": "طلب غير متوافق",
+  "badRequestMsg": "عذرًا! تعذر الخادم من فهم الطلب."
 }
