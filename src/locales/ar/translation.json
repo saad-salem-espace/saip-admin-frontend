@@ -1,7 +1,7 @@
 {
-  "emptyText": "No data available",
-  "showMore": "Show more",
-  "showLess": "Show less",
-  "noRelevantData": "No relevant data found",
-  "homePage": "Home page"
+  "emptyText": "البيانات غير متوفرة",
+  "showMore": "عرض المزيد",
+  "showLess": "عرض الأقل",
+  "noRelevantData": "البيانات غير متوفرة",
+  "homePage": "الصفحة الرئيسية"
 }
