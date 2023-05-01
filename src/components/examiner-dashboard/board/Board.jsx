@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import StatusColumn from './StatusColumn';
 import SortCards from './SortCards';
 import EmptyBoardImage from '../../../assets/images/empty-board-data.png';
-import PatentCard from './PatentCard';
 import './board.scss';
 
 function Board({
@@ -19,6 +18,12 @@ function Board({
 }) {
   const { t } = useTranslation('dashboard');
 
+  const filteredAssignments = {
+    TO_DO: [],
+    REVIEW: [],
+    DONE: [],
+    IN_PROGRESS: [],
+  };
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
@@ -29,14 +34,9 @@ function Board({
     setIsIPRExpanded(false);
   };
 
-  const filterByStatus = (status) => (
-    assignments.filter((assignment) => assignment.status === status)
-  );
-
-  const toDo = filterByStatus('TO_DO');
-  const inProgress = filterByStatus('IN_PROGRESS');
-  const review = filterByStatus('REVIEW');
-  const done = filterByStatus('DONE');
+  for (let i = 0; i < assignments.length; i += 1) {
+    filteredAssignments[assignments[i].status].push(assignments[i]);
+  }
 
   return (
     <>
@@ -86,42 +86,34 @@ function Board({
               />
             ) : (
               <Row>
-                <StatusColumn status={t('dashboard:status.toDo')} className="border-primary" count={toDo.length}>
-                  {toDo.map((assignment) => (
-                    <PatentCard
-                      assignment={assignment}
-                      setToggle={setToggle}
-                      setActiveDocument={setActiveDocument}
-                    />
-                  ))}
-                </StatusColumn>
-                <StatusColumn status={t('dashboard:status.inProgress')} className="border-secondary-rio-grande" count={inProgress.length}>
-                  {inProgress.map((assignment) => (
-                    <PatentCard
-                      assignment={assignment}
-                      setToggle={setToggle}
-                      setActiveDocument={setActiveDocument}
-                    />
-                  ))}
-                </StatusColumn>
-                <StatusColumn status={t('dashboard:status.done')} className="border-primary-dark" count={review.length}>
-                  {review.map((assignment) => (
-                    <PatentCard
-                      assignment={assignment}
-                      setToggle={setToggle}
-                      setActiveDocument={setActiveDocument}
-                    />
-                  ))}
-                </StatusColumn>
-                <StatusColumn status={t('dashboard:status.review')} className="border-danger-dark" count={done.length}>
-                  {done.map((assignment) => (
-                    <PatentCard
-                      assignment={assignment}
-                      setToggle={setToggle}
-                      setActiveDocument={setActiveDocument}
-                    />
-                  ))}
-                </StatusColumn>
+                <StatusColumn
+                  status={t('dashboard:status.toDo')}
+                  className="border-primary"
+                  data={filteredAssignments.TO_DO}
+                  setToggle={setToggle}
+                  setActiveDocument={setActiveDocument}
+                />
+                <StatusColumn
+                  status={t('dashboard:status.inProgress')}
+                  className="border-secondary-rio-grande"
+                  data={filteredAssignments.IN_PROGRESS}
+                  setToggle={setToggle}
+                  setActiveDocument={setActiveDocument}
+                />
+                <StatusColumn
+                  status={t('dashboard:status.done')}
+                  className="border-primary-dark"
+                  data={filteredAssignments.DONE}
+                  setToggle={setToggle}
+                  setActiveDocument={setActiveDocument}
+                />
+                <StatusColumn
+                  status={t('dashboard:status.review')}
+                  className="border-danger-dark"
+                  data={filteredAssignments.REVIEW}
+                  setToggle={setToggle}
+                  setActiveDocument={setActiveDocument}
+                />
               </Row>
             )}
           </Container>

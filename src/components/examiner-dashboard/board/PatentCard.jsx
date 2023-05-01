@@ -6,6 +6,7 @@ import { BsPinAngle, BsPinFill, BsPlusLg } from 'react-icons/bs';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaCommentAlt } from 'react-icons/fa';
 import './PatentCard.scss';
+import { calculateDifference, formatLongDate } from 'utils/dates';
 import useAxios from 'hooks/useAxios';
 import togglePinned from 'apis/dashboard/togglePinned';
 import { useEffect } from 'react';
@@ -22,12 +23,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
   }, [pinnedData]);
 
   const dateFormatSubstring = 10;
-
-  const calculateDifference = (lastStatusChange) => {
-    const date = new Date();
-    const d = new Date(lastStatusChange.substring(0, dateFormatSubstring));
-    return (Math.floor((date - d) / (1000 * 60 * 60 * 24)));
-  };
+  const isPinned = assignment.pinned;
 
   return (
     <Card className="patent-card mb-2">
@@ -43,8 +39,8 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
           />
           <Button
             variant="link"
-            className={`p-1 fs-15 text-${assignment.pinned ? 'primary' : 'gray'} position-relative`}
-            text={assignment.pinned ? <BsPinFill /> : <BsPinAngle />}
+            className={`p-1 fs-15 text-${isPinned ? 'primary' : 'gray'} position-relative`}
+            text={isPinned ? <BsPinFill /> : <BsPinAngle />}
             onClick={executeToggle}
           />
         </div>
@@ -59,7 +55,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
           }
         />
         <AppTooltip
-          tooltipContent="text"
+          tooltipContent={formatLongDate(assignment.statusChangeDate)}
           tooltipId={assignment.filingNumber}
           tooltipTrigger={
             <p className="submit-date text-gray fs-14 d-inline-block">
