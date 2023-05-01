@@ -35,10 +35,10 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
           <Button
             variant="link"
-            className="text-decoration-none text-start p-0 font-regular"
+            className="text-decoration-none text-start p-0 font-regular w-75"
             onClick={() => { setActiveDocument(assignment.filingNumber); }}
             text={
-              <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+              <p className="text-primary-dark fs-14 text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
             }
           />
           <Button

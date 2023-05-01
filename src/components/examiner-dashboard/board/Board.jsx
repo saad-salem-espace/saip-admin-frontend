@@ -71,7 +71,7 @@ function Board({
               onClose={handleCloseIprDetail}
               setActiveDocument={setActiveDocument}
               activeWorkstream={activeWorkstream.id}
-              className={`${isIPRExpanded ? 'col-12 ps-65' : 'col-4 border-start'} dashboard-ipr-container position-absolute end-0 bg-white me-0`}
+              className={`${isIPRExpanded ? 'col-lg-12 ps-65' : 'col-lg-4 col-12 ps-65 ps-lg-0 border-start'} dashboard-ipr-container position-absolute end-0 bg-white me-0`}
             />
           )
         }
