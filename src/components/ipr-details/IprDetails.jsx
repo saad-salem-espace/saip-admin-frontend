@@ -61,6 +61,7 @@ function IprDetails({
   getPreviousDocument,
   setActiveDocument,
   activeWorkstream,
+  className,
 }) {
   const { t } = useTranslation('search');
   const previousDocument = getPreviousDocument();
@@ -504,7 +505,7 @@ function IprDetails({
     return content;
   };
   return (
-    <div className={`${style.iprWrapper}`}>
+    <div className={`${style.iprWrapper} ${className}`}>
       <div className="border-bottom bg-primary-01">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
           <div className="d-flex align-items-center">
@@ -613,10 +614,12 @@ IprDetails.propTypes = {
   getPreviousDocument: PropTypes.func,
   setActiveDocument: PropTypes.func,
   activeWorkstream: PropTypes.number,
+  className: PropTypes.string,
 };
 
 IprDetails.defaultProps = {
   documentId: null,
+  className: null,
   activeWorkstream: null,
   onClose: () => { },
   getNextDocument: () => { },

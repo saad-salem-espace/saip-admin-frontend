@@ -1,5 +1,4 @@
 {
-  "patentsBoard": "<0>براءات الاختراع</0> لوحة",
   "queuePriority": "أولوية قائمة الانتظار",
   "earliestPriority": "أقرب أولوية",
   "emptyBoardTitle": "ليس لديك أي مهام حتى الآن.",
@@ -20,5 +19,13 @@
     "industrialDesign": "التصميم الصناعي",
     "plantVarieties": "أصناف نباتية",
     "integratedCircuits": "دوائر متكاملة"
+  },
+  "board": {
+    "patent": "لوحة <0> برءاة اختراع </0>",
+    "trademark": "لوحة <0> علامة تجارية </0>",
+    "copyrights": "لوحة <0> حقوق التأليف والنشر </0>",
+    "industrialDesign": "لوحة <0> التصميم الصناعي </0>",
+    "plantVarieties": "لوحة <0> أصناف نباتية </0>",
+    "integratedCircuits": "لوحة <0> دوائر متكاملة </0>"
   }
 }

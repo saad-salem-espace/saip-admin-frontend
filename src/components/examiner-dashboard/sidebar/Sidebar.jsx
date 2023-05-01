@@ -1,17 +1,11 @@
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
-import Image from 'react-bootstrap/Image';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
-import logo from '../../../assets/images/logo-shape.png';
 import './sidebar.scss';
 
 function Sidebar({ setActiveWorkstream, activeWorkstream, linksList }) {
   return (
     <div className="dashboard-sidebar justify-content-center bg-white shadow position-fixed top-0 start-0  w-px-65 vh-100">
-      <Link to="/" as={Link}>
-        <Image src={logo} className="d-block my-5 mx-auto" />
-      </Link>
       <div className="nav d-flex flex-column">
         {linksList.map((button) => (
           <AppTooltip

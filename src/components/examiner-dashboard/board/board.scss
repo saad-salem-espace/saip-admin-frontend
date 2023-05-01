@@ -13,3 +13,7 @@
     height: 65vh;
   }
 }
+.dashboard-ipr-container {
+  z-index: 5;
+  @include scrollbar;
+}
