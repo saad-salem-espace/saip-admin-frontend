@@ -88,21 +88,21 @@ function Board({
               <Row>
                 <StatusColumn
                   status={t('dashboard:status.toDo')}
-                  className="border-primary"
+                  className="border-secondary-rio-grande"
                   data={filteredAssignments.TO_DO}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
-                  className="border-primary"
+                  className="border-primary-dark"
                   data={filteredAssignments.IN_PROGRESS}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
                 />
                 <StatusColumn
                   status={t('dashboard:status.done')}
-                  className="border-primary"
+                  className="border-danger-dark"
                   data={filteredAssignments.DONE}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
