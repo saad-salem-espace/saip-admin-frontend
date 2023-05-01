@@ -6,6 +6,10 @@ import searchEn from './locales/en/search.json';
 import commonEn from './locales/en/common.json';
 import errorEn from './locales/en/errors.json';
 import layoutEn from './locales/en/layout.json';
+import translationAr from './locales/ar/translation.json';
+import searchAr from './locales/ar/search.json';
+import commonAr from './locales/ar/common.json';
+import errorAr from './locales/ar/errors.json';
 import layoutAr from './locales/ar/layout.json';
 
 const resources = {
@@ -17,6 +21,10 @@ const resources = {
     layout: layoutEn,
   },
   ar: {
+    translation: translationAr,
+    search: searchAr,
+    common: commonAr,
+    error: errorAr,
     layout: layoutAr,
   },
 };
@@ -24,7 +32,7 @@ const resources = {
 i18n
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
+    fallbackLng: 'ar',
     debug: false,
     resources,
 

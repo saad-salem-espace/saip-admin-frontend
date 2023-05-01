@@ -10,11 +10,12 @@ import { Link } from 'react-router-dom';
 import { FaRegBell } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
+import PropTypes from 'prop-types';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
 
-function LoggedNavbar() {
+function LoggedNavbar({ lang, changeLang }) {
   const auth = useAuth();
   const { t } = useTranslation('layout');
   return (
@@ -56,7 +57,7 @@ function LoggedNavbar() {
                 </Nav.Link>
               </div>
               {/* Switch language */}
-              <LanguageSwitch />
+              <LanguageSwitch lang={lang} changeLang={changeLang} />
               {/* Avatar & control */}
               <Dropdown>
                 <Dropdown.Toggle variant="transparent" className="appBtn avatar-btn btn nav-link mx-auto" size="lg" id="dropdown-basic">
@@ -78,5 +79,8 @@ function LoggedNavbar() {
     </Navbar>
   );
 }
-
+LoggedNavbar.propTypes = {
+  changeLang: PropTypes.func.isRequired,
+  lang: PropTypes.string.isRequired,
+};
 export default LoggedNavbar;
