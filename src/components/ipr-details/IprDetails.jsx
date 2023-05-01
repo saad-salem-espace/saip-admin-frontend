@@ -51,6 +51,7 @@ import InventorRow from './patent/inventors/InventorRow';
 import PatentFamility from './patent/patent-famility/PatentFamility';
 import PatentFamilityRow from './patent/patent-famility/PatentFamilityRow';
 import Claims from './patent/claims/Claims';
+import IprSections from './ipr-sections/IprSections';
 
 function IprDetails({
   collapseIPR,
@@ -580,6 +581,7 @@ function IprDetails({
           )
         }
       </div>
+      <IprSections />
       <div className="px-6 pt-4">
         <Formik>
           {() => (

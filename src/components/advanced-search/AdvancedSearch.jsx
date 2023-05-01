@@ -59,6 +59,7 @@ function AdvancedSearch({
           tabsItems={tabsItems}
           activeKey={activeTabId}
           handleActiveTab={handleActiveTab}
+          className="v1"
         />
       </div>
     </div>
