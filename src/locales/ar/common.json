@@ -1,5 +1,5 @@
 {
   "datePicker": {
-    "singleValueMessage": "Only the first date will be considered in the search query"
+    "singleValueMessage": "سيتم إعتبار أول تاريخ فقط في عملية الاستعلام"
   }
 }
