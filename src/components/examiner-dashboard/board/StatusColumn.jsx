@@ -17,7 +17,7 @@ function StatusColumn({
       </p>
       <div className="cards-container bg-gray-200 px-3 py-5">
         { pinned && (
-          <p className="text-primary-dark fs-14 fw-bold">Pinned</p>
+          <p className="text-primary-dark fs-sm fw-bold">Pinned</p>
         )}
         {data.map((assignment) => (
           assignment.pinned
@@ -28,7 +28,7 @@ function StatusColumn({
           />
         ))}
         { others && (
-          <p className="text-primary-dark fs-14 fw-bold">Others</p>
+          <p className="text-primary-dark fs-sm fw-bold">Others</p>
         )}
         {data.map((assignment) => (
           !(assignment.pinned)
