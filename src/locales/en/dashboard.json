@@ -7,6 +7,8 @@
   "queue": "Queue ",
   "addNote": "Add note",
   "priority": "Priority ",
+  "pinned": "Pinned",
+  "others": "Others",
   "status": {
     "toDo": "To Do",
     "done": "Done",

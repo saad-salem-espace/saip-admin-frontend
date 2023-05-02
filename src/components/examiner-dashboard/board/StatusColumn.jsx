@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Badge from 'components/shared/badge/Badge';
@@ -7,6 +8,7 @@ import PatentCard from './PatentCard';
 function StatusColumn({
   status, className, data, setActiveDocument, setToggle,
 }) {
+  const { t } = useTranslation('dashboard');
   const pinned = !!data.length;
   const others = !!data.length;
   return (
@@ -17,7 +19,7 @@ function StatusColumn({
       </p>
       <div className="cards-container bg-gray-200 px-3 py-5">
         { pinned && (
-          <p className="text-primary-dark fs-sm fw-bold">Pinned</p>
+          <p className="text-primary-dark fs-sm fw-bold">{t('dashboard:pinned')}</p>
         )}
         {data.map((assignment) => (
           assignment.pinned
@@ -28,7 +30,7 @@ function StatusColumn({
           />
         ))}
         { others && (
-          <p className="text-primary-dark fs-sm fw-bold">Others</p>
+          <p className="text-primary-dark fs-sm fw-bold">{t('dashboard:others')}</p>
         )}
         {data.map((assignment) => (
           !(assignment.pinned)

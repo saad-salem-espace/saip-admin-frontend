@@ -6,6 +6,8 @@
   "queue": "صف",
   "addNote": "اضف ملاحظة",
   "priority": "أولوية",
+  "pinned": "مثبت",
+  "others": "اخرون",
   "status": {
     "toDo": "ما يجب القيام به",
     "done": "منجز",
