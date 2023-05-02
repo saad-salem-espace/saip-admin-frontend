@@ -32,6 +32,7 @@ function IprSections() {
       activeKey={activeTabId}
       handleActiveTab={handleActiveTab}
       className="v2 mt-3"
+      tabClass="p-3"
     />
   );
 }

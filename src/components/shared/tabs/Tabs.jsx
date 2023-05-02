@@ -7,6 +7,7 @@ function Tabs({
   activeKey,
   handleActiveTab,
   className,
+  tabClass,
 }) {
   return (
     <div>
@@ -28,7 +29,7 @@ function Tabs({
           <div className="tabs-content-wrapper">
             {
               i.id === activeKey && (
-              <div className="tab-content-wrapper p-3">
+              <div className={`${tabClass} tab-content-wrapper`}>
                 {i.content}
               </div>
               )
@@ -48,11 +49,13 @@ Tabs.propTypes = {
   activeKey: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
   handleActiveTab: PropTypes.func,
   className: PropTypes.string,
+  tabClass: PropTypes.string,
 };
 
 Tabs.defaultProps = {
   handleActiveTab: () => {},
   className: '',
+  tabClass: '',
 };
 
 export default Tabs;
