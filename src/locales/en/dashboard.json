@@ -9,6 +9,8 @@
   "priority": "Priority ",
   "pinned": "Pinned",
   "others": "Others",
+  "info": "Info",
+  "notes": "Notes",
   "status": {
     "toDo": "To Do",
     "done": "Done",

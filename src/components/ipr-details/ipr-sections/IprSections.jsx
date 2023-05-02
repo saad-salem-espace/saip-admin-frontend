@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Tabs from 'components/shared/tabs/Tabs';
 import React, { useState } from 'react';
@@ -9,12 +10,15 @@ function IprSections({
   selectedView,
   renderSelectedView,
 }) {
+  const { t } = useTranslation('dashboard');
   const [activeTabId, setActiveTabId] = useState(1);
   const tabsItems = [
     {
       id: 1,
       title: (
-        <div className="d-flex align-items-center"> Info </div>
+        <div className="d-flex align-items-center">
+          {t('dashboard:info')}
+        </div>
       ),
       content: (
         <IprData
@@ -28,7 +32,9 @@ function IprSections({
     {
       id: 2,
       title: (
-        <div className="d-flex align-items-center"> Notes </div>
+        <div className="d-flex align-items-center">
+          {t('dashboard:notes')}
+        </div>
       ),
       content: (
         <p>notes content</p>
@@ -44,7 +50,6 @@ function IprSections({
       activeKey={activeTabId}
       handleActiveTab={handleActiveTab}
       className="v2 mt-3"
-      tabClass="p-3"
     />
   );
 }

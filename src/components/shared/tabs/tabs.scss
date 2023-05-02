@@ -39,7 +39,8 @@
       color: $gray;
       font-family: $font-regular;
       font-size: $font-size-base;
-      padding:8px 16px;
+      @extend .py-2;
+      @extend .px-4;
       &.active {
         background: transparent;
         color: $primary !important;
