@@ -63,6 +63,7 @@ $copyright: #C5CF01;
 $industrial-designs: #DFAF53;
 $secondary-tangerine:#ED8A00;
 $secondary-tangerine-l: #FDF0DE;
+$secondary-rio-grande:#B9D000;
 $vivid-lime-green: #B9D000; 
 // scss-docs-end color-variables
 
@@ -308,6 +309,7 @@ $spacers: (
   18: $spacer * 4,
   22: $spacer * 5.8,
   24: $spacer * 6.5,
+  65: $spacer * 4.063,
   ) !default;
 
 $negative-spacers: if($enable-negative-margins, negativify-map($spacers), null) !default;
@@ -533,6 +535,7 @@ $font-sizes: (
   12: $font-size-xs,
   14: $font-size-sm,
   15: 15px,
+  16: 16px,
   18: 18px
   );
 // scss-docs-end font-sizes

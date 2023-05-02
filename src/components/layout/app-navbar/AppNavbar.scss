@@ -2,6 +2,7 @@
 @import "../../../assets/styles/utilities/mixin";
 
 .app-navbar {
+  z-index: 1080 !important;
   @include media-breakpoint-up(lg) {
     height: 80px;
   }

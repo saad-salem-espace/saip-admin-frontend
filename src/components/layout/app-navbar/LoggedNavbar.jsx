@@ -11,16 +11,21 @@ import { FaRegBell } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
 import roleMapper from 'utils/roleMapper';
+import Image from 'react-bootstrap/Image';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
+import logo from '../../../assets/images/logo-shape.png';
 
 function LoggedNavbar() {
   const auth = useAuth();
   const { t } = useTranslation('layout');
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar logged p-4 shadow">
-      <Container fluid className="ps-lg-18">
+      <Container fluid>
+        <Navbar.Brand to="/" as={Link}>
+          <Image src={logo} className="d-block mx-auto" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
