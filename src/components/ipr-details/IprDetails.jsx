@@ -5,15 +5,12 @@ import {
   faTimes, faUpRightAndDownLeftFromCenter,
   faDownLeftAndUpRightToCenter, faChevronLeft, faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { Formik, Form } from 'formik';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Badge from 'components/shared/badge/Badge';
 import Image from 'react-bootstrap/Image';
 import Button from 'components/shared/button/Button';
-import Select from 'components/shared/form/select/Select';
-import formStyle from 'components/shared/form/form.module.scss';
 import { documentApi } from 'apis/search/documentsApi';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import useAxios from 'hooks/useAxios';
@@ -52,6 +49,7 @@ import PatentFamility from './patent/patent-famility/PatentFamility';
 import PatentFamilityRow from './patent/patent-famility/PatentFamilityRow';
 import Claims from './patent/claims/Claims';
 import IprSections from './ipr-sections/IprSections';
+import IprData from './IprData';
 
 function IprDetails({
   collapseIPR,
@@ -63,6 +61,7 @@ function IprDetails({
   setActiveDocument,
   activeWorkstream,
   className,
+  dashboard,
 }) {
   const { t } = useTranslation('search');
   const previousDocument = getPreviousDocument();
@@ -581,28 +580,21 @@ function IprDetails({
           )
         }
       </div>
-      <IprSections />
-      <div className="px-6 pt-4">
-        <Formik>
-          {() => (
-            <Form>
-              <div className="position-relative">
-                <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('viewSection')}</span>
-                <Select
-                  options={searchResultParams.workstreamId === '2' ? trademarkViewsOptions : patentViewsOptions}
-                  setSelectedOption={onChangeSelect}
-                  selectedOption={selectedView}
-                  defaultValue={selectedView}
-                  id="sections"
-                  fieldName="sections"
-                  className={`${style.select} mb-5 select-2`}
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
-        {renderSelectedView()}
-      </div>
+      { dashboard ? (
+        <IprSections
+          options={searchResultParams.workstreamId === '2' ? trademarkViewsOptions : patentViewsOptions}
+          onChangeSelect={onChangeSelect}
+          selectedView={selectedView}
+          renderSelectedView={renderSelectedView}
+        />
+      ) : (
+        <IprData
+          options={searchResultParams.workstreamId === '2' ? trademarkViewsOptions : patentViewsOptions}
+          onChangeSelect={onChangeSelect}
+          selectedView={selectedView}
+          renderSelectedView={renderSelectedView}
+        />
+      )}
     </div>
   );
 }
@@ -617,6 +609,7 @@ IprDetails.propTypes = {
   setActiveDocument: PropTypes.func,
   activeWorkstream: PropTypes.number,
   className: PropTypes.string,
+  dashboard: PropTypes.bool,
 };
 
 IprDetails.defaultProps = {
@@ -627,6 +620,7 @@ IprDetails.defaultProps = {
   getNextDocument: () => { },
   getPreviousDocument: () => { },
   setActiveDocument: () => { },
+  dashboard: false,
 };
 
 export default IprDetails;

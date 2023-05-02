@@ -1,7 +1,14 @@
+import PropTypes from 'prop-types';
 import Tabs from 'components/shared/tabs/Tabs';
 import React, { useState } from 'react';
+import IprData from '../IprData';
 
-function IprSections() {
+function IprSections({
+  options,
+  onChangeSelect,
+  selectedView,
+  renderSelectedView,
+}) {
   const [activeTabId, setActiveTabId] = useState(1);
   const tabsItems = [
     {
@@ -10,7 +17,12 @@ function IprSections() {
         <div className="d-flex align-items-center"> Info </div>
       ),
       content: (
-        <p>info content</p>
+        <IprData
+          options={options}
+          onChangeSelect={onChangeSelect}
+          selectedView={selectedView}
+          renderSelectedView={renderSelectedView}
+        />
       ),
     },
     {
@@ -36,5 +48,12 @@ function IprSections() {
     />
   );
 }
+
+IprSections.propTypes = {
+  options: PropTypes.instanceOf(Array).isRequired,
+  selectedView: PropTypes.instanceOf(Object).isRequired,
+  onChangeSelect: PropTypes.func.isRequired,
+  renderSelectedView: PropTypes.func.isRequired,
+};
 
 export default IprSections;
