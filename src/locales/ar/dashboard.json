@@ -10,6 +10,10 @@
   "others": "اخرون",
   "info": "معلومات",
   "notes": "ملاحظات",
+  "findSimilar": "البحث عن مشابه",
+  "download": "تنزيل",
+  "translateInfo": "ترجمة المعلومات",
+  "markAsDone": "اعتبره منته",
   "status": {
     "toDo": "ما يجب القيام به",
     "done": "منجز",

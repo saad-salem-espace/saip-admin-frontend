@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import StatusColumn from './StatusColumn';
 import SortCards from './SortCards';
 import EmptyBoardImage from '../../../assets/images/empty-board-data.png';
+import IprExpand from './IprExpand';
 import './board.scss';
 
 function Board({
@@ -62,7 +63,7 @@ function Board({
       </div>
       <div className="position-relative">
         {
-          activeDocument && (
+          (activeDocument && !isIPRExpanded) && (
             <IprDetails
               dashboard
               collapseIPR={collapseIPR}
@@ -72,6 +73,13 @@ function Board({
               setActiveDocument={setActiveDocument}
               activeWorkstream={activeWorkstream.id}
               className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute end-0 bg-white me-0`}
+            />
+          )
+        }
+        {
+          (activeDocument && isIPRExpanded) && (
+            <IprExpand
+              className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
             />
           )
         }

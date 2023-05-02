@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
-import {
-  faTimes, faUpRightAndDownLeftFromCenter,
-  faDownLeftAndUpRightToCenter, faChevronLeft, faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FaSearch } from 'react-icons/fa';
+import { FiDownload } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -50,6 +49,7 @@ import PatentFamilityRow from './patent/patent-famility/PatentFamilityRow';
 import Claims from './patent/claims/Claims';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
+import IprControlAction from './IprControlAction';
 
 function IprDetails({
   collapseIPR,
@@ -63,7 +63,7 @@ function IprDetails({
   className,
   dashboard,
 }) {
-  const { t } = useTranslation('search');
+  const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
@@ -515,33 +515,30 @@ function IprDetails({
             </h5>
           </div>
           <div>
-            <Button
-              variant="link"
-              className="p-0 pe-5"
-              text={<FontAwesomeIcon icon={faChevronLeft} className="md-text text-gray" />}
-              disabled={!previousDocument}
-              onClick={() => setActiveDocument(previousDocument)}
-            />
-            <Button
-              variant="link"
-              className="p-0 pe-5 border-end me-4"
-              text={<FontAwesomeIcon icon={faChevronRight} className="md-text text-gray" />}
-              disabled={!nextDocument}
-              onClick={() => setActiveDocument(nextDocument)}
-            />
-            <Button
-              variant="link"
-              onClick={collapseIPR}
-              className="p-0 pe-5 d-md-inline-block d-none"
-              data-testid="expand-ipr-detail-button"
-              text={<FontAwesomeIcon icon={isIPRExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`f-17 text-gray ${style['expand-icon']}`} />}
-            />
-            <Button
-              variant="link"
-              data-testid="close-ipr-detail-button"
-              onClick={onClose}
-              className="p-0"
-              text={<FontAwesomeIcon icon={faTimes} className="f-20 text-gray border-start ps-5" />}
+            {// TODO:IP-627
+            !dashboard && (
+              <>
+                <Button
+                  variant="link"
+                  className="p-0 pe-5"
+                  text={<FontAwesomeIcon icon={faChevronLeft} className="md-text text-gray" />}
+                  disabled={!previousDocument}
+                  onClick={() => setActiveDocument(previousDocument)}
+                />
+                <Button
+                  variant="link"
+                  className="p-0 pe-5 border-end me-4"
+                  text={<FontAwesomeIcon icon={faChevronRight} className="md-text text-gray" />}
+                  disabled={!nextDocument}
+                  onClick={() => setActiveDocument(nextDocument)}
+                />
+              </>)
+              }
+            <IprControlAction
+            // TODO:IP-627
+              collapseIPR={collapseIPR}
+              isIPRExpanded={isIPRExpanded}
+              onClose={onClose}
             />
           </div>
         </div>
@@ -579,8 +576,34 @@ function IprDetails({
             </p>
           )
         }
+        { dashboard && (
+          <div className="border-top py-3 px-6">
+            <Button
+              variant="primary"
+              text={(
+                <>
+                  <FaSearch className="md-text me-2" />
+                  {t('dashboard:findSimilar')}
+                </>
+              )}
+              className="me-4 fs-sm"
+            />
+            <Button
+              variant="primary"
+              text={(
+                <>
+                  <FiDownload className="md-text me-2" />
+                  {t('dashboard:download')}
+                </>
+              )}
+              className="me-4 fs-sm"
+            />
+          </div>
+        )}
       </div>
-      { dashboard ? (
+      {
+      // TODO:IP-627
+      dashboard ? (
         <IprSections
           options={searchResultParams.workstreamId === '2' ? trademarkViewsOptions : patentViewsOptions}
           onChangeSelect={onChangeSelect}
@@ -593,8 +616,8 @@ function IprDetails({
           onChangeSelect={onChangeSelect}
           selectedView={selectedView}
           renderSelectedView={renderSelectedView}
-        />
-      )}
+        />)
+      }
     </div>
   );
 }
