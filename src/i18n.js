@@ -10,9 +10,11 @@ import translationAr from './locales/ar/translation.json';
 import searchAr from './locales/ar/search.json';
 import commonAr from './locales/ar/common.json';
 import errorAr from './locales/ar/errors.json';
-import dashboardEn from './locales/en/dashboard.json';
 import layoutAr from './locales/ar/layout.json';
+import dashboardEn from './locales/en/dashboard.json';
 import dashboardAr from './locales/ar/dashboard.json';
+import validationsEn from './locales/en/validations.json';
+import validationsAr from './locales/ar/validations.json';
 
 const resources = {
   en: {
@@ -22,6 +24,7 @@ const resources = {
     error: errorEn,
     layout: layoutEn,
     dashboard: dashboardEn,
+    validations: validationsEn,
   },
   ar: {
     translation: translationAr,
@@ -30,6 +33,7 @@ const resources = {
     error: errorAr,
     layout: layoutAr,
     dashboard: dashboardAr,
+    validations: validationsAr,
   },
 };
 
