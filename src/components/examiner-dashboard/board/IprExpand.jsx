@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import IprControlAction from 'components/ipr-details/IprControlAction';
+import { Col } from 'react-bootstrap';
 import Button from 'components/shared/button/Button';
 import { useTranslation } from 'react-i18next';
 import { BsCheckLg } from 'react-icons/bs';
@@ -21,7 +22,7 @@ function IprExpand({
   return (
     <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 w-100`}>
       <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
-        <div className="filing-date col-12 col-lg-6 d-lg-flex justify-content-between p-4 order-2 order-lg-1">
+        <Col lg={6} className="filing-date d-lg-flex justify-content-between p-4 order-2 order-lg-1">
           <div className="d-lg-flex align-items-center text-gray-700">
             <p className="fs-12 mb-2 mb-lg-0 me-3">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
@@ -47,17 +48,17 @@ function IprExpand({
               )}
             />
           </div>
-        </div>
-        <div className="col-12 col-lg-6 px-5 d-flex justify-content-end order-1 order-lg-2">
+        </Col>
+        <Col lg={6} className="px-5 d-flex justify-content-end order-1 order-lg-2">
           <IprControlAction
             collapseIPR={collapseIPR}
             isIPRExpanded={isIPRExpanded}
             onClose={onClose}
           />
-        </div>
+        </Col>
       </div>
       <div className="d-lg-flex">
-        <div className="col-lg-6 col-12 border-end">
+        <Col lg={6} className="border-end">
           <IprDetails
             dashboard
             collapseIPR={collapseIPR}
@@ -67,12 +68,12 @@ function IprExpand({
             activeWorkstream={activeWorkstream}
             showActions={false}
           />
-        </div>
-        <div className="col-lg-6 col-12">
+        </Col>
+        <Col lg={6}>
           <IprSections
             showInfo={false}
           />
-        </div>
+        </Col>
       </div>
     </div>
   );
