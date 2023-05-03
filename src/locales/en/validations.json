@@ -1,16 +1,16 @@
 {
   "common": {
-    "required": "This field is required",
-    "select": "Please select value",
+    "required": "Reguired field",
+    "select": "Please select a value",
     "tooLong": "Letters count should not exceed {{max}}",
     "tooShort": "Letters count should not be less than {{min}}",
     "invalidNumber": "Must be a number",
-    "tooLow": "Must be greater than or equal {{min}}",
-    "tooHigh": "Must be less than or equal {{max}}",
-    "integer": "Must provide an integer value"
+    "tooLow": "Must be greater than or equal to {{min}}",
+    "tooHigh": "Must be less than or equal to {{max}}",
+    "integer": "Must be an integer value"
   },
   "search": {
-    "required": "Search criteria cannot be empty",
+    "required": "The search criteria cannot be empty",
     "wildcards": "Fuzzy search cannot be at the beginning or middle of the string, or with a wildcard"
   }
 }
