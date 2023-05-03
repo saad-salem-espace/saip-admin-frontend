@@ -11,24 +11,31 @@ import { FaRegBell } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
 import PropTypes from 'prop-types';
+import roleMapper from 'utils/roleMapper';
+import Image from 'react-bootstrap/Image';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
+import logo from '../../../assets/images/logo-shape.png';
 
 function LoggedNavbar({ lang, changeLang }) {
   const auth = useAuth();
   const { t } = useTranslation('layout');
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar logged p-4 shadow">
-      <Container fluid className="px-lg-15">
+      <Container fluid>
+        <Navbar.Brand to="/" as={Link}>
+          <Image src={logo} className="d-block mx-auto" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
           <Nav className="me-auto">
-            <Nav.Link to="#" as={Link} className="appBtn has-icon btn btn-primary pe-3 me-5">
-              <BsGrid className="icon" />
-              {t('navbar.dashboard')}
-            </Nav.Link>
+            {(roleMapper(auth?.user?.profile?.clientRoles[0]) === 'External_Examiner' || roleMapper(auth?.user?.profile?.clientRoles[0]) === 'Internal_Examiner') && (
+              <Nav.Link to="dashboard" as={Link} className="appBtn has-icon btn btn-primary pe-3 me-5">
+                <BsGrid className="icon" />
+                {t('navbar.dashboard')}
+              </Nav.Link>)}
             <Nav.Link to="#" as={Link} className="has-icon">
               <MdOutlineBookmarkBorder className="icon" />
               {t('navbar.myBookmarks')}
@@ -48,7 +55,7 @@ function LoggedNavbar({ lang, changeLang }) {
               {t('navbar.ipSearch')}
             </Nav.Link>
             <RecentSearch />
-            <div className="d-flex justify-content-center h-39">
+            <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
               <div className="edges-border notifications new">
                 <Nav.Link to="#features" as={Link} variant="transparent">
@@ -57,7 +64,7 @@ function LoggedNavbar({ lang, changeLang }) {
                 </Nav.Link>
               </div>
               {/* Switch language */}
-              <LanguageSwitch lang={lang} changeLang={changeLang} />
+              <LanguageSwitch className="pe-lg-5 me-lg-5" lang={lang} changeLang={changeLang} />
               {/* Avatar & control */}
               <Dropdown>
                 <Dropdown.Toggle variant="transparent" className="appBtn avatar-btn btn nav-link mx-auto" size="lg" id="dropdown-basic">

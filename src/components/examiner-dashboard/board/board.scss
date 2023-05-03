@@ -1,0 +1,19 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/mixin";
+
+.board-container {
+  .cards-container {
+    overflow-x: scroll;
+    @include scrollbar;
+    @include media-breakpoint-up(lg) {
+      height: 70vh;
+    }
+  }
+  .empty-board {
+    height: 65vh;
+  }
+}
+.dashboard-ipr-container {
+  z-index: 5;
+  @include scrollbar;
+}
