@@ -1,6 +1,6 @@
 {
   "common": {
-    "required": "Reguired field",
+    "required": "Required field",
     "select": "Please select a value",
     "tooLong": "Letters count should not exceed {{max}}",
     "tooShort": "Letters count should not be less than {{min}}",
