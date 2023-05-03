@@ -5,14 +5,14 @@
   "navbar": {
     "login": "تسجيل الدخول",
     "logOut": "تسجيل الخروج",
-    "signup": "التسجيل",
-    "recentSearch": "اخر البحث",
+    "signup": "حساب جديد",
+    "recentSearch": "عمليات البحث السابقة",
     "dashboard": "لوحة التحكم",
-    "myBookmarks": "التفضيلات",
+    "myBookmarks": "تفضيلاتي",
     "savedQueries": "الاستعلامات المحفوظة",
     "myQueries": "إستعلاماتي",
     "myActivity": "نشاطاتي",
-    "ipSearch": "IP بحث",
+    "ipSearch": "منصة البحث",
     "english": "انجليزية",
     "arabic": "عربي"
   }

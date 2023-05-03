@@ -98,7 +98,14 @@ const getTextFromField = (searchField) => {
   }
   return identifierOperationHandlers(searchField.condition?.optionParserName, preHandledData) || '';
 };
-
+// eslint-disable-next-line
+const currentLang = ('; ' + document.cookie).split('; lang=').pop().split(';')[0];
+function identifierName(identifier) {
+  return currentLang === 'ar' ? identifier.identiferNameAr : identifier.identiferName;
+}
+function optionName(condition) {
+  return currentLang === 'ar' ? condition.optionNameAr : condition.optionName;
+}
 // the if conditions for the condition are temporary as options are not full in database.
 // isQuery = false in case of parsing a memo. true in case of query.
 const parseSingleQuery = (searchField, index, isQuery) => {
@@ -118,14 +125,14 @@ const parseSingleQuery = (searchField, index, isQuery) => {
     searchQuery += (searchField.identifier.identiferStrId);
     searchQuery += ' ';
   } else {
-    searchQuery += (searchField.identifier.identiferName);
+    searchQuery += (identifierName(searchField.identifier));
     searchQuery += ': ';
   }
 
   if (searchField.condition && isQuery) {
     searchQuery += searchField.condition.optionParserName;
   } else if (searchField.condition && !isQuery) {
-    searchQuery += (searchField.condition.optionName);
+    searchQuery += (optionName(searchField.condition));
     searchQuery += ':';
   }
 
