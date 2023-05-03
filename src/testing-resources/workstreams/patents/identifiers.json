@@ -1,10 +1,11 @@
 {
-  "code": 200,
+  "status": 200,
   "message": "success",
   "data": [
     {
       "id": 1,
       "identiferName": "Full-text",
+      "identiferNameAr": "النص الكامل",
       "identifierType": "Text",
       "isLkp": false,
       "identiferStrId": "ftxt",
@@ -12,29 +13,34 @@
         {
           "id": 1,
           "optionName": "Has Exactly",
+          "optionNameAr": "يحوي تطابق",
           "optionParserName": "hasExactly"
         },
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
       "id": 2,
       "identiferName": "Abstract",
+      "identiferNameAr": "الملخص",
       "identifierType": "Text",
       "isLkp": false,
       "identiferStrId": "ab",
@@ -42,29 +48,69 @@
         {
           "id": 1,
           "optionName": "Has Exactly",
+          "optionNameAr": "يحوي تطابق",
           "optionParserName": "hasExactly"
         },
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
       "id": 3,
+      "identiferName": "Description",
+      "identiferNameAr": "الوصف الكامل",
+      "identifierType": "Text",
+      "isLkp": false,
+      "identiferStrId": "de",
+      "identifierOptions": [
+        {
+          "id": 1,
+          "optionName": "Has Exactly",
+          "optionNameAr": "يحوي تطابق",
+          "optionParserName": "hasExactly"
+        },
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 4,
       "identiferName": "Title",
+      "identiferNameAr": "العنوان/ مسمى الاختراع",
       "identifierType": "Text",
       "isLkp": false,
       "identiferStrId": "ti",
@@ -72,29 +118,69 @@
         {
           "id": 1,
           "optionName": "Has Exactly",
+          "optionNameAr": "يحوي تطابق",
           "optionParserName": "hasExactly"
         },
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 4,
+      "id": 5,
+      "identiferName": "Claims",
+      "identiferNameAr": "عناصر الحماية",
+      "identifierType": "Text",
+      "isLkp": false,
+      "identiferStrId": "clm",
+      "identifierOptions": [
+        {
+          "id": 1,
+          "optionName": "Has Exactly",
+          "optionNameAr": "يحوي تطابق",
+          "optionParserName": "hasExactly"
+        },
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 6,
       "identiferName": "Publication Number",
+      "identiferNameAr": "رقم النشر",
       "identifierType": "Number",
       "isLkp": false,
       "identiferStrId": "pn",
@@ -102,29 +188,34 @@
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         },
         {
           "id": 4,
           "optionName": "Is",
+          "optionNameAr": "يساوي",
           "optionParserName": "is"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 5,
+      "id": 7,
       "identiferName": "Filing Number",
+      "identiferNameAr": "رقم الطلب",
       "identifierType": "Number",
       "isLkp": false,
       "identiferStrId": "fn",
@@ -132,29 +223,34 @@
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         },
         {
           "id": 4,
           "optionName": "Is",
+          "optionNameAr": "يساوي",
           "optionParserName": "is"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 6,
+      "id": 8,
       "identiferName": "IPC",
+      "identiferNameAr": "تصنيف IPC",
       "identifierType": "Number",
       "isLkp": true,
       "identiferStrId": "ipc",
@@ -162,24 +258,28 @@
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 7,
+      "id": 9,
       "identiferName": "Applicant Name",
+      "identiferNameAr": "مقدم الطلب",
       "identifierType": "Text",
       "isLkp": false,
       "identiferStrId": "an",
@@ -187,29 +287,34 @@
         {
           "id": 1,
           "optionName": "Has Exactly",
+          "optionNameAr": "يحوي تطابق",
           "optionParserName": "hasExactly"
         },
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 8,
+      "id": 10,
       "identiferName": "Publication Date",
+      "identiferNameAr": "تاريخ النشر",
       "identifierType": "Date",
       "isLkp": false,
       "identiferStrId": "pd",
@@ -217,39 +322,46 @@
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         },
         {
           "id": 4,
           "optionName": "Is",
+          "optionNameAr": "يساوي",
           "optionParserName": "is"
         },
         {
           "id": 5,
           "optionName": "Before",
+          "optionNameAr": "قبل",
           "optionParserName": "before"
         },
         {
           "id": 6,
           "optionName": "After",
+          "optionNameAr": "بعد",
           "optionParserName": "after"
         },
         {
           "id": 7,
           "optionName": "Between",
+          "optionNameAr": "بين",
           "optionParserName": "between"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 9,
+      "id": 11,
       "identiferName": "Numbers",
+      "identiferNameAr": "الأرقام والمعرفات",
       "identifierType": "Number",
       "isLkp": false,
       "identiferStrId": "nums",
@@ -257,29 +369,34 @@
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         },
         {
           "id": 4,
           "optionName": "Is",
+          "optionNameAr": "يساوي",
           "optionParserName": "is"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 10,
+      "id": 12,
       "identiferName": "Names",
+      "identiferNameAr": "الأسماء",
       "identifierType": "Text",
       "isLkp": false,
       "identiferStrId": "names",
@@ -287,29 +404,34 @@
         {
           "id": 1,
           "optionName": "Has Exactly",
+          "optionNameAr": "يحوي تطابق",
           "optionParserName": "hasExactly"
         },
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 11,
+      "id": 13,
       "identiferName": "Dates",
+      "identiferNameAr": "التواريخ",
       "identifierType": "Date",
       "isLkp": false,
       "identiferStrId": "dates",
@@ -317,61 +439,331 @@
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         },
         {
           "id": 4,
           "optionName": "Is",
+          "optionNameAr": "يساوي",
           "optionParserName": "is"
         },
         {
           "id": 5,
           "optionName": "Before",
+          "optionNameAr": "قبل",
           "optionParserName": "before"
         },
         {
           "id": 6,
           "optionName": "After",
+          "optionNameAr": "بعد",
           "optionParserName": "after"
         },
         {
           "id": 7,
           "optionName": "Between",
+          "optionNameAr": "بين",
           "optionParserName": "between"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     },
     {
-      "id": 12,
+      "id": 14,
       "identiferName": "Classifications",
+      "identiferNameAr": "التصنيفات",
       "identifierType": "Text",
-      "isLkp": false,
+      "isLkp": true,
       "identiferStrId": "clsf",
       "identifierOptions": [
         {
           "id": 2,
           "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
           "optionParserName": "hasAll"
         },
         {
           "id": 3,
           "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
           "optionParserName": "hasAny"
         }
       ],
       "identifierWorkstreams": [
         {
           "id": 1,
-          "workstreamName": "patent"
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "identiferName": "Countries",
+      "identiferNameAr": "البلاد",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "countries",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "identiferName": "Nationalities",
+      "identiferNameAr": "الجنسيات",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "nationalities",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "identiferName": "Publication Country",
+      "identiferNameAr": "بلد النشر",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "pcountry",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "identiferName": "Applicant Country",
+      "identiferNameAr": "بلد المودع",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "acountry",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "identiferName": "Inventor Country",
+      "identiferNameAr": "بلد المخترع",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "icountry",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "identiferName": "Applicant Nationality",
+      "identiferNameAr": "جنسية المودع",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "anationality",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "identiferName": "Inventory Nationality",
+      "identiferNameAr": "جنسية المخترع",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "inationality",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "identiferName": "Legal Event",
+      "identiferNameAr": "الحالة",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "evnt",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "identiferName": "IPO Office",
+      "identiferNameAr": "مكتب الفحص",
+      "identifierType": "Text",
+      "isLkp": true,
+      "identiferStrId": "IPO",
+      "identifierOptions": [
+        {
+          "id": 2,
+          "optionName": "Has All",
+          "optionNameAr": "يحوي الكل",
+          "optionParserName": "hasAll"
+        },
+        {
+          "id": 3,
+          "optionName": "Has Any",
+          "optionNameAr": "يحوي أي من",
+          "optionParserName": "hasAny"
+        }
+      ],
+      "identifierWorkstreams": [
+        {
+          "id": 1,
+          "workstreamName": "patent",
+          "workstreamNameAr": "براءات الإختراع"
         }
       ]
     }
-  ],
-  "pagination": null
+  ]
 }

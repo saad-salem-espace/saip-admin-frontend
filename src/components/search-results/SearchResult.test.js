@@ -138,10 +138,10 @@ describe('<SearchResult />', () => {
 
       await waitFor(() => {
         expect(
-          queryAllByText(patentIdentifiers.data[0].identifierOptions[0].optionName),
+          queryAllByText(patentIdentifiers.data[0].identifierOptions[0].optionNameAr),
         ).toHaveLength(1);
         expect(queryAllByDisplayValue('').length).toBeGreaterThanOrEqual(1);
-        expect(queryAllByText(patentIdentifiers.data[0].identiferName)).toHaveLength(1);
+        expect(queryAllByText(patentIdentifiers.data[0].identiferNameAr)).toHaveLength(1);
       });
     });
 

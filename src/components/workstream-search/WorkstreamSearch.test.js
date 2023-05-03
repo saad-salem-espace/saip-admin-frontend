@@ -17,8 +17,8 @@ describe('<WorkstreamSearch />', () => {
     const { getByText, queryByText } = render(<WorkstreamSearch />);
 
     await waitFor(() => {
-      expect(getByText(WorkstreamIdentifiers.data[0].identiferName)).toBeInTheDocument();
-      expect(queryByText(WorkstreamIdentifiers.data[1].identiferName)).toBeNull();
+      expect(getByText(WorkstreamIdentifiers.data[0].identiferNameAr)).toBeInTheDocument();
+      expect(queryByText(WorkstreamIdentifiers.data[1].identiferNameAr)).toBeNull();
     });
   });
 

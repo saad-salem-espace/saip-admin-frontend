@@ -1,12 +1,15 @@
 import { render } from 'TestUtils';
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import I18n from 'i18n';
 import UploadImage from './UploadImage';
 import fileGenerator from '../../../utils/fileGenerator';
 
 const mockOnChange = jest.fn();
 
 describe('<UploadImage />', () => {
+  const t = (key, options) => I18n.t(key, { ...options });
+
   it('renders correctly', async () => {
     const { getByText } = render(<UploadImage
       changeIsImgUploaded={mockOnChange}
@@ -16,7 +19,7 @@ describe('<UploadImage />', () => {
     />);
 
     await waitFor(() => {
-      expect(getByText('Drag & Drop Files Here')).toBeInTheDocument();
+      expect(getByText(t('search:dragDrop'))).toBeInTheDocument();
     });
   });
 
@@ -42,7 +45,7 @@ describe('<UploadImage />', () => {
     />);
     const validImage = fileGenerator({ size: 12000, type: 'image/jpg', name: 'test.jpg' });
     await userEvent.upload(container.firstChild, [validImage]);
-    await waitFor(() => expect(queryAllByText('The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB.')).toHaveLength(1));
+    await waitFor(() => expect(queryAllByText(t('search:validationErrors.maxSize'))).toHaveLength(1));
   });
 
   it('should display not allow files to be anything except image in formats png, gif, jpeg, tiff and jpg', async () => {
@@ -54,7 +57,7 @@ describe('<UploadImage />', () => {
     />);
     const validImage = fileGenerator({ size: 500, type: 'zip', name: 'test.zip' });
     await userEvent.upload(container.firstChild, validImage);
-    await waitFor(() => expect(queryAllByText('The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.')).toHaveLength(1));
+    await waitFor(() => expect(queryAllByText(t('search:validationErrors.imgFormats'))).toHaveLength(1));
   });
 
   it('should display allow images', async () => {
@@ -66,7 +69,7 @@ describe('<UploadImage />', () => {
     />);
     const validImage = fileGenerator({ size: 500, type: 'image/jpg', name: 'test.jpg' });
     await userEvent.upload(container.firstChild, [validImage]);
-    await waitFor(() => expect(queryAllByText('The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.')).toHaveLength(0));
+    await waitFor(() => expect(queryAllByText(t('search:validationErrors.imgFormats'))).toHaveLength(0));
   });
 
   it('should not allow more than 10 MB image', async () => {
@@ -78,7 +81,7 @@ describe('<UploadImage />', () => {
     />);
     const validImage = fileGenerator({ size: 12000, type: 'image/jpg', name: 'test.jpg' });
     await userEvent.upload(container.firstChild, [validImage]);
-    await waitFor(() => expect(queryAllByText('The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB.')).toHaveLength(1));
+    await waitFor(() => expect(queryAllByText(t('search:validationErrors.maxSize'))).toHaveLength(1));
   });
 
   it('not render', async () => {

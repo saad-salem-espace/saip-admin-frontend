@@ -1,4 +1,5 @@
 {
+  "search": "بحث",
   "priority": "أولوية {{value}}",
   "filed": "مودع {{value}}",
   "published": "منشور {{value}}",
@@ -27,7 +28,7 @@
   "clear": "مسح",
   "apply": "بحث",
   "condition": "محدد",
-  "criteria": "Criteria",
+  "criteria": "معايير",
   "operators": {
     "and": "و",
     "or": "أو",

@@ -1,4 +1,5 @@
 {
+  "search": "Search",
   "priority": "Priority {{value}}",
   "filed": "Filed {{value}}",
   "published": "Published {{value}}",
