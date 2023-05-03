@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { DateObject } from 'react-multi-date-picker';
 
 const commonIdentifierCategoriesHandler = {
@@ -116,9 +117,15 @@ const parseSingleQuery = (searchField, index, isQuery) => {
   if (!textFromField) return searchQuery;
 
   if (index) {
-    searchQuery += ' ';
-    searchQuery += (searchField.operator);
-    searchQuery += ' ';
+    if (isQuery) {
+      searchQuery += ' ';
+      searchQuery += (searchField.operator);
+      searchQuery += ' ';
+    } else {
+      searchQuery += ' ';
+      searchQuery += t(`search:operators.${searchField.operator.toLowerCase()}`);
+      searchQuery += ' ';
+    }
   }
 
   if (isQuery) {
