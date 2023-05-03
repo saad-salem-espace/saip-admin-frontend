@@ -7,6 +7,7 @@ import samplePatent from 'testing-resources/patents/samplePatent.json';
 import workstreams from 'testing-resources/workstreams/workstreams.json';
 import { trimStringRelativeToSubtext } from 'utils/strings';
 import I18n from 'i18n';
+import { userTypes } from 'testing-resources/mocks/loggedInUserMock';
 import SearchResults from './SearchResults';
 
 const mockAxios = new MockAdapter(apiInstance);
@@ -27,12 +28,15 @@ mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
   data: {
     data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),
     highlighting: [],
+    isFavourite: false,
   },
   pagination: {
     per_page: PER_PAGE,
     total: patentList.length,
   },
 }]));
+
+mockAxios.onPost(/\/favouriteSearchQuery/).reply(200, { status: 200 });
 
 let mockCustomSearchParams;
 jest.mock('react-router-dom', () => ({
@@ -138,10 +142,10 @@ describe('<SearchResult />', () => {
 
       await waitFor(() => {
         expect(
-          queryAllByText(patentIdentifiers.data[0].identifierOptions[0].optionName),
+          queryAllByText(patentIdentifiers.data[0].identifierOptions[0].optionNameAr),
         ).toHaveLength(1);
         expect(queryAllByDisplayValue('').length).toBeGreaterThanOrEqual(1);
-        expect(queryAllByText(patentIdentifiers.data[0].identiferName)).toHaveLength(1);
+        expect(queryAllByText(patentIdentifiers.data[0].identiferNameAr)).toHaveLength(1);
       });
     });
 
@@ -162,5 +166,49 @@ describe('<SearchResult />', () => {
     //     );
     //   });
     // });
+  });
+
+  describe('it should favourite', () => {
+    describe('when user is logged in', () => {
+      it('should toggle star', async () => {
+        const { queryByTestId } = render(
+          <SearchResults />,
+          { wrapperProps: { userType: userTypes.internalUser } },
+        );
+
+        await waitFor(() => {
+          expect(queryByTestId('empty-star')).toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+          fireEvent.click(queryByTestId('fav-button'));
+        });
+
+        await waitFor(() => {
+          expect(queryByTestId('filled-star')).toBeInTheDocument();
+          expect(queryByTestId('empty-star')).toBeNull();
+        });
+      });
+    });
+    describe('when user is not logged in', () => {
+      it('should toggle star', async () => {
+        const { queryByTestId } = render(
+          <SearchResults />,
+        );
+
+        await waitFor(() => {
+          expect(queryByTestId('empty-star')).toBeInTheDocument();
+        });
+
+        await waitFor(() => {
+          fireEvent.click(queryByTestId('fav-button'));
+        });
+
+        await waitFor(() => {
+          expect(queryByTestId('filled-star')).toBeInTheDocument();
+          expect(queryByTestId('empty-star')).toBeNull();
+        });
+      });
+    });
   });
 });

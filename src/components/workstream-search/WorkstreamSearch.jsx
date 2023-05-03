@@ -22,7 +22,8 @@ import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
 
 function WorkstreamSearch() {
-  const { t } = useTranslation('search');
+  const { t, i18n } = useTranslation('search');
+  const currentLang = i18n.language;
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
@@ -125,12 +126,16 @@ function WorkstreamSearch() {
     setShowUploadImgSection(!showUploadImgSection);
   };
 
+  function identifierName(option) {
+    return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
+  }
+
   return (
     <div>
       <div className={`${style.header}`}>
         <Container className="px-0 m-auto">
           <Row className="mx-0">
-            <Col className="pt-18 pb-8">
+            <Col className="pt-24 pb-8">
               <p className="text-primary-dark f-30 text-center mb-8">
                 <Trans
                   i18nKey="searchSpecificProperty"
@@ -170,7 +175,7 @@ function WorkstreamSearch() {
                         fireSearch: false,
                       })}`,
                     }}
-                    className="d-block text-primary-dark mb-1 text-end"
+                    className="d-block text-primary mb-2 text-end"
                   >
                     {t('advancedSearch')}
                   </Link>
@@ -180,7 +185,7 @@ function WorkstreamSearch() {
                       <Select
                         options={searchOptions}
                         className={`${style.select} lgSelect selectWithSibling`}
-                        getOptionName={(option) => option.identiferName}
+                        getOptionName={(option) => identifierName(option)}
                         selectedOption={selectedOption}
                         setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
                         getOptionValue={(option) => option.identiferName}

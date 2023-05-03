@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import React, { useContext, useEffect } from 'react';
 import CacheContext from 'contexts/CacheContext';
@@ -12,7 +13,8 @@ function WorkStreams({ selectedWorkStream, onChange }) {
   const handleChange = (workstreamId) => {
     onChange(workstreamId);
   };
-
+  const { i18n } = useTranslation();
+  const currentLang = i18n.language;
   useEffect(() => {
     handleChange(workstreams?.[0].id);
   }, [workstreams]);
@@ -23,12 +25,12 @@ function WorkStreams({ selectedWorkStream, onChange }) {
         workstreams.map((workStream) => (
           <Button
             variant="transparent"
-            className={`card me-4 mb-lg-0 mb-3 shadow px-6 py-2 ${workStream.workstreamName} ${selectedWorkStream === workStream.id ? 'active' : ''}`}
+            className={`types me-4 mb-lg-0 mb-3 shadow px-6 py-2 ${workStream.workstreamName} ${selectedWorkStream === workStream.id ? 'active' : ''}`}
             onClick={() => handleChange(workStream.id)}
             key={workStream.id}
           >
             <span className={`f-24 mb-2 d-block workstreamIcon icon-${workStream.workstreamName}`} />
-            <span className="text-capitalize">{workStream.workstreamName}</span>
+            <span className="text-capitalize font-regular">{currentLang === 'ar' ? workStream.workstreamNameAr : workStream.workstreamName}</span>
           </Button>
         ))
       }

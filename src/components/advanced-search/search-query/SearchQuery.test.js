@@ -37,9 +37,9 @@ describe('<SearchQuery />', () => {
     />);
 
     await waitFor(() => {
-      expect(getByText('Search Fields')).toBeInTheDocument();
-      expect(getByText('Criteria')).toBeInTheDocument();
-      expect(getByText('Condition')).toBeInTheDocument();
+      expect(getByText(t('search:searchFields'))).toBeInTheDocument();
+      expect(getByText(t('search:criteria'))).toBeInTheDocument();
+      expect(getByText(t('search:condition'))).toBeInTheDocument();
       expect(getByDisplayValue(defaultCriteria)).toBeInTheDocument();
     });
   });
@@ -53,15 +53,15 @@ describe('<SearchQuery />', () => {
     />);
 
     await waitFor(() => {
-      expect(queryAllByText('Search Fields')).toHaveLength(1);
+      expect(queryAllByText(t('search:searchFields'))).toHaveLength(1);
     });
 
     await waitFor(() => {
-      fireEvent.click(getByText('Add Search Field').closest('button'));
+      fireEvent.click(getByText(t('search:addSearchField')).closest('button'));
     });
 
     await waitFor(() => {
-      expect(queryAllByText('Search Fields')).toHaveLength(2);
+      expect(queryAllByText(t('search:searchFields'))).toHaveLength(2);
     });
   });
 
@@ -75,11 +75,11 @@ describe('<SearchQuery />', () => {
     />);
 
     await waitFor(() => {
-      fireEvent.click(getByText('Clear').closest('button'));
+      fireEvent.click(getByText(t('search:clear')).closest('button'));
     });
 
     await waitFor(() => {
-      expect(queryAllByText('Search Fields')).toHaveLength(1);
+      expect(queryAllByText(t('search:searchFields'))).toHaveLength(1);
       expect(queryByText(defaultCriteria)).toBeNull();
     });
   });

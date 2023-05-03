@@ -5,6 +5,9 @@
   display: inline-block;
   padding: 7px 8px;
   border-radius: $border-radius;
+  label:hover {
+    cursor: pointer;
+  }
   html[dir="ltr"] & {
     margin-left: 16px;
   }

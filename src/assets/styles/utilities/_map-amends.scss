@@ -1,15 +1,18 @@
 $utilities: (
   // append new heights
-  "height": (
+  "height-px": (
       property: height,
-      class: h,
+      class: h-px,
       values: (
-        25: 25%,
+        24: 24px,
         39: 39px,
-        50: 50%,
-        75: 75%,
-        100: 100%,
-        auto: auto
       )
     ),
+  "width-px": (
+    property: width,
+    class: w-px,
+    values: (
+      65: 65px,
+    )
+  ),
  );

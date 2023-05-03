@@ -9,18 +9,20 @@ import { Link } from 'react-router-dom';
 import { BsStar } from 'react-icons/bs';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import Image from 'react-bootstrap/Image';
+import PropTypes from 'prop-types';
 import logo from '../../../assets/images/Logo.png';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 
-function GuestNavbar() {
+function GuestNavbar({ lang, changeLang }) {
   const { t } = useTranslation('layout');
   const auth = useAuth();
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
-      <Container fluid className="px-lg-15">
+      <Container fluid className="ps-lg-18">
         <Navbar.Brand to="/" as={Link}>
           <Image src={logo} />
+          <span className="border-end my-1 ms-6 text-gray-400" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -39,7 +41,7 @@ function GuestNavbar() {
           <Nav>
             {/* {Recent search} */}
             <RecentSearch />
-            <div className="d-flex justify-content-center h-39">
+            <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
               <div className="edges-border d-flex mx-lg-3 px-lg-3 me-2">
                 <Nav.Link onClick={() => auth.signinRedirect()} as={Link} className="appBtn btn btn-outline-primary pe-lg-3 me-lg-3 me-2 px-3">
@@ -50,7 +52,7 @@ function GuestNavbar() {
                 </Nav.Link>
               </div>
               {/* Switch language */}
-              <LanguageSwitch />
+              <LanguageSwitch lang={lang} changeLang={changeLang} />
             </div>
           </Nav>
         </Navbar.Collapse>
@@ -58,5 +60,8 @@ function GuestNavbar() {
     </Navbar>
   );
 }
-
+GuestNavbar.propTypes = {
+  changeLang: PropTypes.func.isRequired,
+  lang: PropTypes.string.isRequired,
+};
 export default GuestNavbar;
