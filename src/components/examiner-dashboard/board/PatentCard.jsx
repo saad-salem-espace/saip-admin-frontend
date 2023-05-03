@@ -6,7 +6,7 @@ import { BsPinAngle, BsPinFill, BsPlusLg } from 'react-icons/bs';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaCommentAlt } from 'react-icons/fa';
 import './PatentCard.scss';
-import { calculateDifference, formatLongDate } from 'utils/dates';
+import { calculateDifference, formatLongDate, dateFormatSubstring } from 'utils/dates';
 import useAxios from 'hooks/useAxios';
 import togglePinned from 'apis/dashboard/togglePinned';
 import { useEffect } from 'react';
@@ -22,7 +22,6 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
     if (pinnedData.data && pinnedData.data.status === 200) setToggle(true);
   }, [pinnedData]);
 
-  const dateFormatSubstring = 10;
   const isPinned = assignment.pinned;
 
   return (

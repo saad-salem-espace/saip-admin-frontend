@@ -34,11 +34,13 @@ function Board({
     setActiveDocument(null);
     setIsIPRExpanded(false);
   };
-
+  let activeAssignment = false;
   for (let i = 0; i < assignments.length; i += 1) {
     filteredAssignments[assignments[i].status].push(assignments[i]);
+    if (assignments[i].filingNumber === activeDocument) {
+      activeAssignment = assignments[i];
+    }
   }
-
   return (
     <>
       <div className="border-bottom pb-3 mt-4">
@@ -79,6 +81,10 @@ function Board({
         {
           (activeDocument && isIPRExpanded) && (
             <IprExpand
+              assignment={activeAssignment}
+              collapseIPR={collapseIPR}
+              isIPRExpanded={isIPRExpanded}
+              onClose={handleCloseIprDetail}
               className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
             />
           )
