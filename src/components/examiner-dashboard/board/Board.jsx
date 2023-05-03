@@ -1,17 +1,16 @@
 import {
   Container,
   Row,
-  Col,
 } from 'react-bootstrap';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import IprDetails from 'components/ipr-details/IprDetails';
 import PropTypes from 'prop-types';
 import StatusColumn from './StatusColumn';
-import SortCards from './SortCards';
 import EmptyBoardImage from '../../../assets/images/empty-board-data.png';
 import IprExpand from './IprExpand';
+import BoardTitle from './BoardTitle';
 import './board.scss';
 
 function Board({
@@ -42,27 +41,21 @@ function Board({
     }
   }
   return (
-    <>
-      <div className="border-bottom pb-3 mt-4">
-        <div className="px-4">
-          <Container fluid className="ps-18 mt-1">
-            <Row>
-              <Col md={4} lg={6}>
-                <h4 className="text-primary-dark mt-2">
-                  <Trans
-                    i18nKey={activeWorkstream.BoardName}
-                  >
-                    <b />
-                  </Trans>
-                </h4>
-              </Col>
-              <Col md={8} lg={6}>
-                <SortCards setSort={setSort} />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      </div>
+    <div className="position-relative">
+      <BoardTitle setSort={setSort} activeWorkstream={activeWorkstream} />
+      {
+        (activeDocument && isIPRExpanded) && (
+          <IprExpand
+            assignment={activeAssignment}
+            collapseIPR={collapseIPR}
+            documentId={activeDocument}
+            isIPRExpanded={isIPRExpanded}
+            onClose={handleCloseIprDetail}
+            activeWorkstream={activeWorkstream.id}
+            className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
+          />
+        )
+      }
       <div className="position-relative">
         {
           (activeDocument && !isIPRExpanded) && (
@@ -75,19 +68,6 @@ function Board({
               setActiveDocument={setActiveDocument}
               activeWorkstream={activeWorkstream.id}
               className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute end-0 bg-white me-0`}
-            />
-          )
-        }
-        {
-          (activeDocument && isIPRExpanded) && (
-            <IprExpand
-              assignment={activeAssignment}
-              collapseIPR={collapseIPR}
-              documentId={activeDocument}
-              isIPRExpanded={isIPRExpanded}
-              onClose={handleCloseIprDetail}
-              activeWorkstream={activeWorkstream.id}
-              className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
             />
           )
         }
@@ -135,7 +115,7 @@ function Board({
           </Container>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -15,17 +15,23 @@
 }
 .dashboard-ipr-container {
   z-index: 5;
+  overflow-x: hidden;
   @include scrollbar;
   &.expanded {
-    top: -80px;
     .top-info-bar {
       .filing-date {
-        @include border(1px,84px,-9px,auto,0,$border-color);
+        @include media-breakpoint-up(lg) {
+          @include border(1px,84px,-9px,auto,0,$border-color);
+        }
         &:before {
           display: none;
         }
       }
     }
   }
-  
+  .border-start {
+    @include media-breakpoint-down(md) {
+      border: none !important
+    }
+  }
 }

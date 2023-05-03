@@ -19,10 +19,10 @@ function IprExpand({
 }) {
   const { t } = useTranslation('dashboard');
   return (
-    <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 bg-white me-0 vh-100`}>
-      <div className="top-info-bar d-flex border-bottom p-2">
-        <div className="filing-date col-6 d-flex justify-content-between p-4">
-          <div className="d-flex align-items-center text-gray-700">
+    <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 w-100`}>
+      <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
+        <div className="filing-date col-12 col-lg-6 d-lg-flex justify-content-between p-4 order-2 order-lg-1">
+          <div className="d-lg-flex align-items-center text-gray-700">
             <p className="fs-12 mb-2 me-3">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:queue')}
@@ -38,7 +38,7 @@ function IprExpand({
             <Button
               variant="outline-primary"
               size="md"
-              className="fs-sm"
+              className="fs-sm mt-2 mt-lg-0"
               text={(
                 <>
                   <BsCheckLg className="md-text me-2" />
@@ -48,7 +48,7 @@ function IprExpand({
             />
           </div>
         </div>
-        <div className="col-6 px-5 d-flex justify-content-end">
+        <div className="col-12 col-lg-6 px-5 d-flex justify-content-end order-1 order-lg-2">
           <IprControlAction
             collapseIPR={collapseIPR}
             isIPRExpanded={isIPRExpanded}
@@ -56,8 +56,8 @@ function IprExpand({
           />
         </div>
       </div>
-      <div className="d-flex">
-        <div className="col-6 border-end">
+      <div className="d-lg-flex">
+        <div className="col-lg-6 col-12 border-end">
           <IprDetails
             dashboard
             collapseIPR={collapseIPR}
@@ -68,7 +68,7 @@ function IprExpand({
             showActions={false}
           />
         </div>
-        <div className="col-6">
+        <div className="col-lg-6 col-12">
           <IprSections
             showInfo={false}
           />
