@@ -167,5 +167,6 @@
   "priorityDateDesc": "تاريخ الأولوية تنازليًا",
   "mostRelevant": "الأكثر توافقا",
   "filingDateAsc": "تاريخ الإيداع تصاعديًا",
-  "filingDateDesc": "تاريخ الإيداع تنازليًا"
+  "filingDateDesc": "تاريخ الإيداع تنازليًا",
+  "saveSearchQuery": "حفظ استعلام البحث"
 }
