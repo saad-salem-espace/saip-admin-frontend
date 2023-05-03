@@ -83,8 +83,10 @@ function Board({
             <IprExpand
               assignment={activeAssignment}
               collapseIPR={collapseIPR}
+              documentId={activeDocument}
               isIPRExpanded={isIPRExpanded}
               onClose={handleCloseIprDetail}
+              activeWorkstream={activeWorkstream.id}
               className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
             />
           )

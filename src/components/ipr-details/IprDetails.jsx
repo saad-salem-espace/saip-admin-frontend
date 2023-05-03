@@ -62,6 +62,7 @@ function IprDetails({
   activeWorkstream,
   className,
   dashboard,
+  showActions,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -69,7 +70,7 @@ function IprDetails({
   const [searchParams] = useSearchParams();
   const [selectedView, setSelectedView] = useState({ label: t('ipr.bibliographic'), value: 'BibliographicData' });
   const searchResultParams = {
-    workstreamId: searchParams.get('workstreamId') || activeWorkstream.toString(),
+    workstreamId: dashboard ? '1' : (searchParams.get('workstreamId') || activeWorkstream.toString()),
   };
   const [{ data }, execute] = useAxios(
     documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
@@ -515,7 +516,7 @@ function IprDetails({
             </h5>
           </div>
           <div>
-            {// TODO:IP-627
+            {
             !dashboard && (
               <>
                 <Button
@@ -534,12 +535,14 @@ function IprDetails({
                 />
               </>)
               }
-            <IprControlAction
-            // TODO:IP-627
+            {
+                showActions
+            && <IprControlAction
               collapseIPR={collapseIPR}
               isIPRExpanded={isIPRExpanded}
               onClose={onClose}
             />
+}
           </div>
         </div>
         {
@@ -602,8 +605,7 @@ function IprDetails({
         )}
       </div>
       {
-      // TODO:IP-627
-      dashboard ? (
+      dashboard && showActions ? (
         <IprSections
           options={searchResultParams.workstreamId === '2' ? trademarkViewsOptions : patentViewsOptions}
           onChangeSelect={onChangeSelect}
@@ -633,6 +635,7 @@ IprDetails.propTypes = {
   activeWorkstream: PropTypes.number,
   className: PropTypes.string,
   dashboard: PropTypes.bool,
+  showActions: PropTypes.bool,
 };
 
 IprDetails.defaultProps = {
@@ -644,6 +647,7 @@ IprDetails.defaultProps = {
   getPreviousDocument: () => { },
   setActiveDocument: () => { },
   dashboard: false,
+  showActions: true,
 };
 
 export default IprDetails;

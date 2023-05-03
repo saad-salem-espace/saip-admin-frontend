@@ -9,6 +9,7 @@ function IprSections({
   onChangeSelect,
   selectedView,
   renderSelectedView,
+  showInfo,
 }) {
   const { t } = useTranslation('dashboard');
   const [activeTabId, setActiveTabId] = useState(1);
@@ -44,6 +45,7 @@ function IprSections({
   const handleActiveTab = (id) => {
     setActiveTabId(id);
   };
+  if (!showInfo) tabsItems.shift();
   return (
     <Tabs
       tabsItems={tabsItems}
@@ -55,10 +57,19 @@ function IprSections({
 }
 
 IprSections.propTypes = {
-  options: PropTypes.instanceOf(Array).isRequired,
-  selectedView: PropTypes.instanceOf(Object).isRequired,
-  onChangeSelect: PropTypes.func.isRequired,
-  renderSelectedView: PropTypes.func.isRequired,
+  options: PropTypes.instanceOf(Array),
+  selectedView: PropTypes.instanceOf(Object),
+  onChangeSelect: PropTypes.func,
+  renderSelectedView: PropTypes.func,
+  showInfo: PropTypes.bool,
+};
+
+IprSections.defaultProps = {
+  options: [],
+  showInfo: true,
+  selectedView: null,
+  onChangeSelect: () => { },
+  renderSelectedView: () => {},
 };
 
 export default IprSections;

@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { BsCheckLg } from 'react-icons/bs';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { dateFormatSubstring } from 'utils/dates';
-// import IprData from 'components/ipr-details/IprData';
-// import IprSections from 'components/ipr-details/ipr-sections/IprSections';
+import IprSections from 'components/ipr-details/ipr-sections/IprSections';
+import IprDetails from 'components/ipr-details/IprDetails';
 
 function IprExpand({
   collapseIPR,
@@ -14,6 +14,8 @@ function IprExpand({
   className,
   onClose,
   assignment,
+  activeWorkstream,
+  documentId,
 }) {
   const { t } = useTranslation('dashboard');
   return (
@@ -56,27 +58,20 @@ function IprExpand({
       </div>
       <div className="d-flex">
         <div className="col-6 border-end">
-          {/*
-          TODO:IP-627
-          <IprData
-            options={options}
-            onChangeSelect={onChangeSelect}
-            selectedView={selectedView}
-            renderSelectedView={renderSelectedView}
-          /> */}
+          <IprDetails
+            dashboard
+            collapseIPR={collapseIPR}
+            isIPRExpanded={false}
+            documentId={documentId}
+            onClose={onClose}
+            activeWorkstream={activeWorkstream}
+            showActions={false}
+          />
         </div>
         <div className="col-6">
-          {/*
-          TODO:IP-627
           <IprSections
-            options={
-              searchResultParams.workstreamId === '2'
-              ? trademarkViewsOptions : patentViewsOptions
-            }
-            onChangeSelect={onChangeSelect}
-            selectedView={selectedView}
-            renderSelectedView={renderSelectedView}
-          /> */}
+            showInfo={false}
+          />
         </div>
       </div>
     </div>
@@ -89,6 +84,8 @@ IprExpand.propTypes = {
   className: PropTypes.string,
   onClose: PropTypes.func,
   assignment: PropTypes.instanceOf(Object).isRequired,
+  documentId: PropTypes.string.isRequired,
+  activeWorkstream: PropTypes.number.isRequired,
 };
 
 IprExpand.defaultProps = {
