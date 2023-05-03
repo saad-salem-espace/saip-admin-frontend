@@ -16,7 +16,6 @@ function IprExpand({
   assignment,
 }) {
   const { t } = useTranslation('dashboard');
-  console.log(assignment);
   return (
     <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 bg-white me-0 vh-100`}>
       <div className="top-info-bar d-flex border-bottom p-2">
