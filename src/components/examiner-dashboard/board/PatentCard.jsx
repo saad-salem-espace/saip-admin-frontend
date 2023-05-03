@@ -6,7 +6,7 @@ import { BsPinAngle, BsPinFill, BsPlusLg } from 'react-icons/bs';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaCommentAlt } from 'react-icons/fa';
 import './PatentCard.scss';
-import { calculateDifference, formatLongDate } from 'utils/dates';
+import { calculateDifference, formatLongDate, dateFormatSubstring } from 'utils/dates';
 import useAxios from 'hooks/useAxios';
 import togglePinned from 'apis/dashboard/togglePinned';
 import { useEffect } from 'react';
@@ -22,7 +22,6 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
     if (pinnedData.data && pinnedData.data.status === 200) setToggle(true);
   }, [pinnedData]);
 
-  const dateFormatSubstring = 10;
   const isPinned = assignment.pinned;
 
   return (
@@ -31,10 +30,10 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
           <Button
             variant="link"
-            className="text-decoration-none text-start p-0 font-regular"
+            className="text-decoration-none text-start p-0 font-regular w-75"
             onClick={() => { setActiveDocument(assignment.filingNumber); }}
             text={
-              <p className="text-primary-dark w-80 fs-14 text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+              <p className="text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
             }
           />
           <Button
@@ -49,7 +48,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
           className="text-decoration-none text-start p-0 font-regular d-block"
           onClick={() => { setActiveDocument(assignment.filingNumber); }}
           text={
-            <p className="name-card text-black fs-16 mb-1">
+            <p className="name-card text-black fs-base mb-1">
               {assignment.applicationTitle}
             </p>
           }
@@ -58,7 +57,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
           tooltipContent={formatLongDate(assignment.statusChangeDate)}
           tooltipId={assignment.filingNumber}
           tooltipTrigger={
-            <p className="submit-date text-gray fs-14 d-inline-block">
+            <p className="submit-date text-gray fs-sm d-inline-block">
               {`${calculateDifference(assignment.statusChangeDate)} days ago`}
             </p>
           }
@@ -66,13 +65,13 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
         />
         <div className="d-flex justify-content-between text-gray-700 border-bottom">
           <p className="fs-12 mb-2">
-            <MdOutlineCalendarMonth className="text-muted me-1 fs-14" />
+            <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:queue')}
             •
             {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
           </p>
           <p className="fs-12 mb-2">
-            <MdOutlineCalendarMonth className="text-muted me-1 fs-14" />
+            <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:priority')}
             •
             {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}
@@ -81,7 +80,7 @@ function PatentCard({ assignment, setToggle, setActiveDocument }) {
         <div className="d-flex justify-content-between pt-3">
           <Button
             variant="link"
-            className="p-1 fs-14 text-decoration-none"
+            className="p-1 fs-sm text-decoration-none"
             text={
               <>
                 <BsPlusLg className="me-2 fs-18" />
