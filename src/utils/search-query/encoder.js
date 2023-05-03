@@ -117,15 +117,9 @@ const parseSingleQuery = (searchField, index, isQuery) => {
   if (!textFromField) return searchQuery;
 
   if (index) {
-    if (isQuery) {
-      searchQuery += ' ';
-      searchQuery += (searchField.operator);
-      searchQuery += ' ';
-    } else {
-      searchQuery += ' ';
-      searchQuery += t(`search:operators.${searchField.operator.toLowerCase()}`);
-      searchQuery += ' ';
-    }
+    searchQuery += ' ';
+    searchQuery += ((isQuery) ? searchField.operator : t(`search:operators.${searchField.operator.toLowerCase()}`));
+    searchQuery += ' ';
   }
 
   if (isQuery) {
