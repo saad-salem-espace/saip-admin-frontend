@@ -589,7 +589,7 @@ function IprDetails({
                   {t('dashboard:findSimilar')}
                 </>
               )}
-              className="me-4 fs-sm"
+              className="me-4 fs-sm mb-2 mb-lg-0"
             />
             <Button
               variant="primary"

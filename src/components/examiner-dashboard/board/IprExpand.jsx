@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import IprControlAction from 'components/ipr-details/IprControlAction';
+import { Col } from 'react-bootstrap';
 import Button from 'components/shared/button/Button';
 import { useTranslation } from 'react-i18next';
 import { BsCheckLg } from 'react-icons/bs';
@@ -19,16 +20,16 @@ function IprExpand({
 }) {
   const { t } = useTranslation('dashboard');
   return (
-    <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 bg-white me-0 vh-100`}>
-      <div className="top-info-bar d-flex border-bottom p-2">
-        <div className="filing-date col-6 d-flex justify-content-between p-4">
-          <div className="d-flex align-items-center text-gray-700">
-            <p className="fs-12 mb-2 me-3">
+    <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 w-100`}>
+      <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
+        <Col lg={6} className="filing-date d-lg-flex justify-content-between p-4 order-2 order-lg-1">
+          <div className="d-lg-flex align-items-center text-gray-700">
+            <p className="fs-12 mb-2 mb-lg-0 me-3">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:queue')}
               {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
             </p>
-            <p className="fs-12 mb-2">
+            <p className="fs-12 mb-2  mb-lg-0">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:priority')}
               {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}
@@ -38,7 +39,7 @@ function IprExpand({
             <Button
               variant="outline-primary"
               size="md"
-              className="fs-sm"
+              className="fs-sm mt-2 mt-lg-0"
               text={(
                 <>
                   <BsCheckLg className="md-text me-2" />
@@ -47,17 +48,17 @@ function IprExpand({
               )}
             />
           </div>
-        </div>
-        <div className="col-6 px-5 d-flex justify-content-end">
+        </Col>
+        <Col lg={6} className="px-5 d-flex justify-content-end order-1 order-lg-2">
           <IprControlAction
             collapseIPR={collapseIPR}
             isIPRExpanded={isIPRExpanded}
             onClose={onClose}
           />
-        </div>
+        </Col>
       </div>
-      <div className="d-flex">
-        <div className="col-6 border-end">
+      <div className="d-lg-flex">
+        <Col lg={6} className="border-end">
           <IprDetails
             dashboard
             collapseIPR={collapseIPR}
@@ -67,12 +68,12 @@ function IprExpand({
             activeWorkstream={activeWorkstream}
             showActions={false}
           />
-        </div>
-        <div className="col-6">
+        </Col>
+        <Col lg={6}>
           <IprSections
             showInfo={false}
           />
-        </div>
+        </Col>
       </div>
     </div>
   );
