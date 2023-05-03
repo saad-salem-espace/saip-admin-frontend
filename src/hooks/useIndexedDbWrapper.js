@@ -1,5 +1,6 @@
 import { useIndexedDB } from 'react-indexed-db';
 import { useCallback } from 'react';
+import db from 'db';
 
 /**
  * A Wrapper for IndexedDB
@@ -8,6 +9,18 @@ import { useCallback } from 'react';
  */
 const useIndexedDbWrapper = (tableName) => {
   const { add, getByIndex } = useIndexedDB(tableName);
+
+  const orderedBy = (instance, indexName, orderType) => {
+    if (!instance || !indexName) return instance;
+    switch (orderType.toLowerCase()) {
+      case 'asc':
+        return instance.orderBy(indexName);
+      case 'desc':
+        return instance.orderBy(indexName).reverse();
+      default:
+        return instance;
+    }
+  };
 
   const getTimeStamp = useCallback(() => {
     const currentDatetimeUTC = new Date().toISOString();
@@ -57,7 +70,26 @@ const useIndexedDbWrapper = (tableName) => {
         .then(instance.onSuccess).catch(instance.onError);
     }, []);
 
-  return { addInstanceToDb, getInstanceByIndex };
+  const indexByIndexName = useCallback(({
+    onSuccess, onError, sorted = 'NONE', sortedIndexName, indexName, indexValue, limit = 10, page = 1,
+  }) => {
+    const offset = (page - 1) * limit;
+    const stringIndex = indexValue.toString();
+    const pTotal = db[tableName].where(indexName).equals(stringIndex).count();
+    const pData = orderedBy(db[tableName], sortedIndexName, sorted)
+      .filter((data) => data[indexName] === stringIndex)
+      .offset(offset)
+      .limit(limit)
+      .toArray();
+
+    Promise.all([pData, pTotal])
+      .then(([data, total]) => {
+        onSuccess({ data, pagination: { per_page: limit, total } });
+      })
+      .catch((errors) => { onError(errors); });
+  }, []);
+
+  return { addInstanceToDb, getInstanceByIndex, indexByIndexName };
 };
 
 export default useIndexedDbWrapper;
