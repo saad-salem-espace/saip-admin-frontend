@@ -9,7 +9,7 @@ import SortCards from './SortCards';
 
 function BoardTitle({ setSort, activeWorkstream }) {
   return (
-    <div className="border-bottom pb-3 mt-4">
+    <div className="border-bottom pb-3 pt-3">
       <div className="px-4">
         <Container fluid className="ps-18 mt-1">
           <Row>
