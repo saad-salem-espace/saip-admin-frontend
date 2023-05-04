@@ -17,6 +17,8 @@ function IprExpand({
   assignment,
   activeWorkstream,
   documentId,
+  isCardInprogress,
+  selectedCardId,
 }) {
   const { t } = useTranslation('dashboard');
   return (
@@ -67,11 +69,14 @@ function IprExpand({
             onClose={onClose}
             activeWorkstream={activeWorkstream}
             showActions={false}
+            isCardInprogress={isCardInprogress}
+            selectedCardId={selectedCardId}
           />
         </Col>
         <Col lg={6}>
           <IprSections
             showInfo={false}
+            className="expand-view"
           />
         </Col>
       </div>
@@ -87,6 +92,8 @@ IprExpand.propTypes = {
   assignment: PropTypes.instanceOf(Object).isRequired,
   documentId: PropTypes.string.isRequired,
   activeWorkstream: PropTypes.number.isRequired,
+  isCardInprogress: PropTypes.bool.isRequired,
+  selectedCardId: PropTypes.number.isRequired,
 };
 
 IprExpand.defaultProps = {

@@ -9,6 +9,8 @@ import layoutEn from './locales/en/layout.json';
 import dashboardEn from './locales/en/dashboard.json';
 import layoutAr from './locales/ar/layout.json';
 import dashboardAr from './locales/ar/dashboard.json';
+import notesEn from './locales/en/notes.json';
+import notesAr from './locales/ar/notes.json';
 
 const resources = {
   en: {
@@ -18,10 +20,12 @@ const resources = {
     error: errorEn,
     layout: layoutEn,
     dashboard: dashboardEn,
+    notes: notesEn,
   },
   ar: {
     layout: layoutAr,
     dashboard: dashboardAr,
+    notes: notesAr,
   },
 };
 

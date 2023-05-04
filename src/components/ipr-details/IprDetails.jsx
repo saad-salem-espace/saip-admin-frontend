@@ -63,6 +63,9 @@ function IprDetails({
   className,
   dashboard,
   showActions,
+  activeTab,
+  isCardInprogress,
+  selectedCardId,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -611,6 +614,11 @@ function IprDetails({
           onChangeSelect={onChangeSelect}
           selectedView={selectedView}
           renderSelectedView={renderSelectedView}
+          documentId={documentId}
+          activeTab={activeTab}
+          isCardInprogress={isCardInprogress}
+          selectedCardId={selectedCardId}
+          className="notes-editor-container"
         />
       ) : (
         <IprData
@@ -636,6 +644,9 @@ IprDetails.propTypes = {
   className: PropTypes.string,
   dashboard: PropTypes.bool,
   showActions: PropTypes.bool,
+  activeTab: PropTypes.number,
+  isCardInprogress: PropTypes.bool.isRequired,
+  selectedCardId: PropTypes.number.isRequired,
 };
 
 IprDetails.defaultProps = {
@@ -648,6 +659,7 @@ IprDetails.defaultProps = {
   setActiveDocument: () => { },
   dashboard: false,
   showActions: true,
+  activeTab: 2,
 };
 
 export default IprDetails;
