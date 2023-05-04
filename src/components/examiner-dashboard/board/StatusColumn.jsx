@@ -64,7 +64,7 @@ StatusColumn.propTypes = {
   data: PropTypes.instanceOf(Array).isRequired,
   SetSelectedCard: PropTypes.func,
   activeDocument: PropTypes.string.isRequired,
-  isInProgress: PropTypes.bool.isRequired,
+  isInProgress: PropTypes.func.isRequired,
   setActiveTab: PropTypes.func,
 };
 

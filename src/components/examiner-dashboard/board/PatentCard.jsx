@@ -37,7 +37,7 @@ function PatentCard({
             onClick={() => {
               setActiveDocument(assignment.filingNumber); setActiveTab(1);
               SetSelectedCard(assignment.id);
-              isInProgress(true);
+              isInProgress(status === 'In progress');
             }}
             text={
               <p className="text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>

@@ -86,7 +86,7 @@ function Notes({
   return (
     <div className="position-relative h-100">
       <div className="notes-wrapper">
-        <div className="d-flex align-items-center justify-content-center h-100">
+        <div className={`h-100 ${notes.length === 0 ? 'd-flex align-items-center justify-content-center' : ''}`}>
           {notes.length === 0 ? (
             <EmptyState img={notesImg} title={t('noNotes')} titleClassName="md-text text-gray-600" />
           ) : (

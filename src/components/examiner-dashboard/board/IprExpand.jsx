@@ -77,6 +77,8 @@ function IprExpand({
           <IprSections
             showInfo={false}
             className="expand-view"
+            isCardInprogress={isCardInprogress}
+            selectedCardId={selectedCardId}
           />
         </Col>
       </div>

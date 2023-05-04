@@ -3,7 +3,7 @@
 .notes-wrapper {
   overflow-y: auto;
   position: relative;
-  height: calc(100vh - 650px);
+  height: calc(100vh - 677px);
 }
 
 .bottom-section {
@@ -21,7 +21,7 @@
 .notes-editor-container {
   height: calc(100% - 208px);
 
-  >div{
+  >div {
     height: 100%;
   }
 }
@@ -30,6 +30,11 @@
   height: calc(100vh - 400px);
 }
 
-.expand-view .notes-tab {
-  height: calc(100vh - 293px);
+.expand-view {
+  .notes-tab {
+    height: calc(100vh - 212px);
+  }
+  .notes-wrapper {
+    height: calc(100% - 229px);
+  }
 }

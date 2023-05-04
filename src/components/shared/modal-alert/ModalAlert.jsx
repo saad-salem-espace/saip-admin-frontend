@@ -11,7 +11,7 @@ const ModalAlert = ({
   title, msg, className, handleCancel, handleConfirm,
 }) => {
   const { t } = useTranslation('translation');
-  const [show, setShow] = useState();
+  const [show, setShow] = useState(true);
   const handleClose = () => setShow(false);
 
   return (

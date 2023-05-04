@@ -111,6 +111,7 @@ function Board({
                   data={filteredAssignments.TO_DO}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  isInProgress={isInProgress}
                   activeDocument={activeDocument}
                 />
                 <StatusColumn
@@ -129,6 +130,7 @@ function Board({
                   className="border-primary-dark"
                   data={filteredAssignments.DONE}
                   setToggle={setToggle}
+                  isInProgress={isInProgress}
                   setActiveDocument={setActiveDocument}
                   activeDocument={activeDocument}
                 />
@@ -138,6 +140,7 @@ function Board({
                   data={filteredAssignments.REVIEW}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  isInProgress={isInProgress}
                   activeDocument={activeDocument}
                 />
               </Row>

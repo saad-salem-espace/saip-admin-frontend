@@ -21,7 +21,7 @@ function NoteTextEditor({
       <UserAvatar name={auth.user?.profile.preferred_username} size="48" className="me-md-4" />
       <TextEditor
         className="flex-grow-1 notes-editor"
-        maxLength={10}
+        maxLength={1000}
         setNoteText={setNoteText}
         disableEditor={disableEditor}
         disableChangeTab={disableChangeTab}
