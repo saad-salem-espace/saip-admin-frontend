@@ -28,7 +28,7 @@ function WorkStreams({ selectedWorkStream, onChange }) {
             key={workStream.id}
           >
             <span className={`f-24 mb-2 d-block workstreamIcon icon-${workStream.workstreamName}`} />
-            <span className="text-capitalize">{workStream.workstreamName}</span>
+            <span className="text-capitalize font-regular">{workStream.workstreamName}</span>
           </Button>
         ))
       }

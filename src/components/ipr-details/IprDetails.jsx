@@ -505,9 +505,9 @@ function IprDetails({
     <div className={`${style.iprWrapper}`}>
       <div className="border-bottom bg-primary-01">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
-          <div className="d-flex">
+          <div className="d-flex align-items-center">
             <FontAwesomeIcon icon={faBookmark} className="me-3 f-22 text-primary-dark" />
-            <h5>
+            <h5 className="mb-0">
               {document.BibliographicData.PublicationNumber}
             </h5>
           </div>
