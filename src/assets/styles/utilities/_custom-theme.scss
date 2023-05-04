@@ -426,7 +426,7 @@ $border-color: $gray-400;
 // scss-docs-start border-radius-variables
 $border-radius: 4px;
 $border-radius-sm: .2rem !default;
-$border-radius-lg: 4px;
+$border-radius-lg: $border-radius;
 $border-radius-pill: 50rem !default;
 // scss-docs-end border-radius-variables
 
