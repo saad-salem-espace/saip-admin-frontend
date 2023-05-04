@@ -9,7 +9,7 @@ import Highlighter from 'react-highlight-words';
 import style from './style.module.scss';
 
 function SearchResultCard({
-  searchResult, query, setActiveDocument, activeDocument, highlghtWords,
+  searchResult, query, setActiveDocument, activeDocument, highlightWords,
 }) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
@@ -17,14 +17,14 @@ function SearchResultCard({
   return (
     <Button
       variant="transparent"
-      onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
+      onClick={() => { setActiveDocument(BibliographicData?.FilingNumber); }}
       className="w-100 text-start f-20 px-1 py-0 font-regular text-primary-dark border-0"
       text={(
-        <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
+        <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
             <Checkbox className="me-4" />
             {
-              BibliographicData.ApplicationTitle
+              BibliographicData?.ApplicationTitle
               && <Highlighter
                 highlightTag="span"
                 highlightClassName="font-medium"
@@ -32,7 +32,7 @@ function SearchResultCard({
                   BibliographicData?.ApplicationTitle,
                   query,
                 )}
-                searchWords={highlghtWords}
+                searchWords={highlightWords}
                 autoEscape
               />
             }
@@ -41,21 +41,21 @@ function SearchResultCard({
             {BibliographicData.PublicationNumber}
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
-            {t('priority', { value: searchResult.Priority })}
+            {t('priority', { value: searchResult?.Priority })}
             <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-            {t('filed', { value: BibliographicData.FilingNumber })}
+            {t('filed', { value: BibliographicData?.FilingNumber })}
             {
-          BibliographicData.PublicationDate && (
+          BibliographicData?.PublicationDate && (
             <>
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              {t('published', { value: BibliographicData.PublicationDate })}
+              {t('published', { value: BibliographicData?.PublicationDate })}
             </>
           )
         }
           </p>
           <p className="text-gray sm-text">
             {
-              BibliographicData.ApplicationAbstract
+              BibliographicData?.ApplicationAbstract
               && <Highlighter
                 highlightTag="span"
                 highlightClassName="font-medium"
@@ -63,7 +63,7 @@ function SearchResultCard({
                   BibliographicData?.ApplicationAbstract.join(' '),
                   query,
                 )}
-                searchWords={highlghtWords}
+                searchWords={highlightWords}
                 autoEscape
               />
               }
@@ -86,13 +86,13 @@ SearchResultCard.propTypes = {
     Priority: PropTypes.string.isRequired,
   }).isRequired,
   query: PropTypes.string.isRequired,
-  highlghtWords: PropTypes.arrayOf(PropTypes.string),
+  highlightWords: PropTypes.arrayOf(PropTypes.string),
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
 };
 
 SearchResultCard.defaultProps = {
-  highlghtWords: [],
+  highlightWords: [],
 };
 
 export default SearchResultCard;

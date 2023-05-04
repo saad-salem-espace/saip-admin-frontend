@@ -1,15 +1,10 @@
-import apiInstance from 'apis/apiInstance';
+import { constructFormData } from '../utils/forms';
 
-function uploadFileApi(file) {
-  return apiInstance.post('/files/upload', file, { headers: { 'Content-Type': 'multipart/form-data' } })
-    .then((res) => ({
-      res,
-      err: null,
-    }))
-    .catch((error) => ({
-      res: null,
-      err: error?.response?.data?.message,
-    }));
-}
+const uploadFileApi = (file) => ({
+  url: '/files/upload',
+  data: constructFormData({ file }),
+  method: 'POST',
+  headers: { 'Content-Type': 'multipart/form-data' },
+});
 
 export default uploadFileApi;
