@@ -14,6 +14,7 @@ const IndexedDbAppPagination = ({
   const [data, setData] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(Number(searchParams.get('page')) || defaultPage || 1);
+  const [refresh, setRefresh] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const idbMethods = useIndexedDbWrapper(tableName);
 
@@ -30,7 +31,11 @@ const IndexedDbAppPagination = ({
 
   useEffect(() => {
     if (resetPage) {
-      setCurrentPage(1);
+      if (currentPage === 1) {
+        setRefresh((prev) => prev + 1);
+      } else {
+        setCurrentPage(1);
+      }
     }
   }, [resetPage]);
 
@@ -53,7 +58,7 @@ const IndexedDbAppPagination = ({
       page: currentPage,
       limit,
     });
-  }, [currentPage, ...updateDependencies]);
+  }, [currentPage, refresh, ...updateDependencies]);
 
   useEffect(() => {
     if (data) {
