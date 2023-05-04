@@ -44,7 +44,7 @@ const SavedQuerires = () => {
   if (!isMounted.current) return <Spinner />;
 
   const resetPageNumber = () => {
-    setPageReset((page) => page + 1);
+    setPageReset(pageReset + 1);
   };
 
   const onChangeWorkStream = (i) => {
