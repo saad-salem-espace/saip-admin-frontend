@@ -13,7 +13,6 @@ import * as Yup from 'yup';
 import uploadFile from 'apis/uploadFileApi';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
-import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -28,6 +27,9 @@ import formStyle from 'components/shared/form/form.module.scss';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Button from 'react-bootstrap/Button';
 import useAxios from 'hooks/useAxios';
+import { useAuth } from 'react-oidc-context';
+import { tableNames } from 'dbConfig';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import SearchNote from './SearchNote';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
@@ -37,6 +39,7 @@ import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import toastify from '../../utils/toastify';
+import validationMessages from '../../utils/validationMessages';
 
 function SearchResults() {
   const { t, i18n } = useTranslation('search');
@@ -61,6 +64,8 @@ function SearchResults() {
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
+  const { addInstanceToDb, getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
+  const auth = useAuth();
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -83,6 +88,35 @@ function SearchResults() {
     saveQueryConfig,
     { manual: true },
   );
+
+  const onSavedQuerySuccess = () => {
+    setIsQuerySaved(true);
+    toastify(
+      'success',
+      <div>
+        <p className="toastifyTitle">{t('querySaved')}</p>
+        <p className="toastText">
+          <Trans
+            i18nKey="savedQueryMsg"
+            ns="search"
+          >
+            <Link className="text-primary" to="/" />
+          </Trans>
+        </p>
+      </div>,
+    );
+  };
+  const onSavedQueryError = () => {
+    toastify(
+      'error',
+      <div>
+        <p className="toastifyTitle">{t('couldnotSave')}</p>
+        <p className="toastText">
+          {t('failerMsg')}
+        </p>
+      </div>,
+    );
+  };
 
   const sortByOptionsPatent = [
     {
@@ -145,37 +179,24 @@ function SearchResults() {
   useEffect(() => {
     if (saveQueryData.data) {
       if (saveQueryData.data.status === 200) {
-        setIsQuerySaved(true);
-        toastify(
-          'success',
-          <div>
-            <p className="toastifyTitle">{t('querySaved')}</p>
-            <p className="toastText">
-              <Trans
-                i18nKey="savedQueryMsg"
-                ns="search"
-              >
-                <Link className="text-primary" to="/" />
-              </Trans>
-            </p>
-          </div>,
-        );
+        onSavedQuerySuccess();
       } else {
-        toastify(
-          'error',
-          <div>
-            <p className="toastifyTitle">{t('couldnotSave')}</p>
-            <p className="toastText">
-              {t('failerMsg')}
-            </p>
-          </div>,
-        );
+        onSavedQueryError();
       }
     }
   }, [saveQueryData]);
 
   useEffect(() => {
-    setIsQuerySaved(results?.isFavourite);
+    if (!(auth && auth?.user)) {
+      getInstanceByIndex({
+        indexName: 'queryString',
+        indexValue: searchParams.get('q'),
+        onSuccess: (resp) => { setIsQuerySaved(!!resp); },
+        onError: () => { setIsQuerySaved(false); },
+      });
+    } else {
+      setIsQuerySaved(results?.isFavourite);
+    }
   }, [results]);
 
   const { cachedRequests } = useContext(CacheContext);
@@ -416,12 +437,25 @@ function SearchResults() {
 
   const saveQuery = () => {
     if (isQuerySaved) return;
-    executeSaveQuery();
+    if (!(auth && auth?.user)) {
+      addInstanceToDb({
+        data: {
+          workstreamId: searchParams.get('workstreamId'),
+          queryString: searchParams.get('q'),
+          resultCount: totalResults.toString(),
+          synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
+        },
+        onSuccess: onSavedQuerySuccess,
+        onError: onSavedQueryError,
+      });
+    } else {
+      executeSaveQuery();
+    }
   };
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
-      .test('Is not empty', t('validationErrors.empty'), (data) => (
+      .test('Is not empty', validationMessages.search.required, (data) => (
         (imageName || data)
       )),
   });
@@ -443,7 +477,7 @@ function SearchResults() {
             }}
           >
             {({
-              setFieldValue, handleSubmit, values, touched, errors,
+              setFieldValue, handleSubmit, values,
             }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
@@ -485,9 +519,6 @@ function SearchResults() {
                           searchWithImg
                         />
                       </div>
-                      {touched.searchQuery && errors.searchQuery
-                        ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
-                        ) : null}
                     </div>
                     <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton

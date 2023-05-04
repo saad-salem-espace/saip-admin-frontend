@@ -7,10 +7,14 @@ import ErrorBoundary from 'errors/ErrorBoundary';
 import './index.css';
 import { AuthProvider } from 'react-oidc-context';
 import { WebStorageStateStore } from 'oidc-client-ts';
+import { initDB } from 'react-indexed-db';
 import roleMapper from 'utils/roleMapper';
+import dbConfig from 'dbConfig';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
+
+initDB(dbConfig);
 
 const urlParams = new URLSearchParams(window.location.search);
 const appType = urlParams?.get('app_type');
