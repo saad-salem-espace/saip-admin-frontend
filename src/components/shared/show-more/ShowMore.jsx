@@ -11,7 +11,7 @@ function ShowMore({ children, lines }) {
       more={t('showMore')}
       less={t('showLess')}
       expanded={false}
-      truncatedEndingComponent="... "
+      truncatedEndingComponent="..."
       anchorClass="text-primary show-more-less-clickable"
     >
       {children}
