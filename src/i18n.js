@@ -6,7 +6,9 @@ import searchEn from './locales/en/search.json';
 import commonEn from './locales/en/common.json';
 import errorEn from './locales/en/errors.json';
 import layoutEn from './locales/en/layout.json';
+import dashboardEn from './locales/en/dashboard.json';
 import layoutAr from './locales/ar/layout.json';
+import dashboardAr from './locales/ar/dashboard.json';
 
 const resources = {
   en: {
@@ -15,9 +17,11 @@ const resources = {
     common: commonEn,
     error: errorEn,
     layout: layoutEn,
+    dashboard: dashboardEn,
   },
   ar: {
     layout: layoutAr,
+    dashboard: dashboardAr,
   },
 };
 

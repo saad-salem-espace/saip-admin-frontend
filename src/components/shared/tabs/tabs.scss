@@ -1,0 +1,62 @@
+@import"../../../assets/styles/utilities/custom-theme";
+
+.tabs{
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  .btn {
+    background-color: transparent;
+  }
+  &.v1 {
+    border-color: $primary;
+    .btn {
+      border-radius: $border-radius-lg $border-radius-lg 0 0 !important;
+      border:0;
+      color: $gray !important;
+      @extend .p-4;
+      &.active {
+        background-color: $primary;
+        color: $white !important;
+      }
+    
+      &:hover, &:focus, &:active {
+        background-color: transparent;
+        color: $gray !important;
+    
+        &.active {
+          background-color: $primary;
+          color: $white !important;
+        }
+      }
+    }
+  }
+  &.v2 {
+    border-color: $gray-300;
+    .btn {
+      border-width: 0 0 3px 0;
+      border-color: transparent;
+      border-radius: 0;
+      margin-bottom: -3px;
+      color: $gray;
+      font-family: $font-regular;
+      font-size: $font-size-base;
+      @extend .py-2;
+      @extend .px-4;
+      &.active {
+        background: transparent;
+        color: $primary !important;
+        border-color: $primary;
+      }
+      &:hover, &:focus, &:active {
+        background-color: transparent;
+        color: $gray !important;
+    
+        &.active {
+          background: transparent;
+          color: $primary !important;
+          border-color: $primary;
+        }
+      }
+    }
+  }
+}
+

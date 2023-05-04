@@ -1,7 +1,7 @@
 import BootstrapCarousel from 'react-bootstrap/Carousel';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +19,10 @@ function Carousel({
   const [activeImg, setActiveImg] = useState(images[0]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    setActiveImg(images[0]);
+  }, [images]);
 
   const changeActiveImg = (selectedImg) => {
     setActiveImg(selectedImg);
@@ -77,7 +81,7 @@ function Carousel({
       )}
       {
          ((largeThumb && images.length > 1) || (!largeThumb)) && (
-         <BootstrapCarousel controls={!((!largeThumb && images.length === 1))} indicators={false} prevLabel={null} nextLabel={null} className="mb-8">
+         <BootstrapCarousel controls={images.length > 4} indicators={false} prevLabel={null} nextLabel={null} className="mb-8">
            {getCarouselItems()}
          </BootstrapCarousel>
          )

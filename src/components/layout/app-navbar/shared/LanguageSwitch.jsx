@@ -1,13 +1,14 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
-function LanguageSwitch() {
+function LanguageSwitch({ className }) {
   const { t } = useTranslation('layout');
 
   return (
-    <div className="pe-lg-5 me-lg-5 switch-language">
+    <div className={`${className} switch-language`}>
       <Dropdown>
-        <Dropdown.Toggle align="start" variant="primary-10" className="appBtn has-icon btn nav-link mx-auto" size="lg" id="dropdown-basic">
+        <Dropdown.Toggle align="start" variant="primary-10" className="rounded appBtn has-icon btn nav-link mx-auto" size="lg" id="dropdown-basic">
           {t('navbar.english')}
         </Dropdown.Toggle>
         <Dropdown.Menu>
@@ -19,5 +20,13 @@ function LanguageSwitch() {
     </div>
   );
 }
+
+LanguageSwitch.propTypes = {
+  className: PropTypes.string,
+};
+
+LanguageSwitch.defaultProps = {
+  className: '',
+};
 
 export default LanguageSwitch;
