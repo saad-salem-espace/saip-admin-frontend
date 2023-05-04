@@ -13,8 +13,6 @@ import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
 import roleMapper from 'utils/roleMapper';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
-import roleMapper from 'utils/roleMapper';
-import Image from 'react-bootstrap/Image';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
