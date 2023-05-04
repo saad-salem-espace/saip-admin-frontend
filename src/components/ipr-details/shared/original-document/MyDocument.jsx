@@ -5,6 +5,7 @@ import Button from 'components/shared/button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import './original-document.scss';
+import ViewPort from 'components/shared/view-port/ViewPort';
 
 function MyDocument() {
   const url = '/sample.pdf';
@@ -44,22 +45,25 @@ function MyDocument() {
       >
         <Container>
           <Row className="g-0">
-            <Col lg={6} className="border-end">
-              <div className="me-3">
-                <Page pageNumber={pageNumber} />
-              </div>
-            </Col>
-            <Col lg={6}>
-              <div className="ms-3">
-                <Page pageNumber={pageNumber + 1} />
-              </div>
-            </Col>
-            {/* TODO:IP-655 One page */}
-            {/* <Col lg={8} className="mx-auto shadow">
-              <div>
-                <Page pageNumber={pageNumber} />
-              </div>
-            </Col> */}
+            <ViewPort size="xl">
+              <Col lg={6} className="border-end">
+                <div className="me-3">
+                  <Page pageNumber={pageNumber} />
+                </div>
+              </Col>
+              <Col lg={6}>
+                <div className="ms-3">
+                  <Page pageNumber={pageNumber + 1} />
+                </div>
+              </Col>
+            </ViewPort>
+            <ViewPort size="ltXl" renderOnServer>
+              <Col md={12} className="mx-auto shadow">
+                <div>
+                  <Page pageNumber={pageNumber} />
+                </div>
+              </Col>
+            </ViewPort>
           </Row>
         </Container>
       </Document>
