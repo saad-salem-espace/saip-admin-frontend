@@ -8,42 +8,50 @@ import Board from './board/Board';
 
 function ExaminerDashboard() {
   const { t } = useTranslation('dashboard');
+  // const linksList = [
+  //   {
+  //     id: 1,
+  //     workStreamName: t('dashboard:workStream.patent'),
+  //     WorkStreamClass: 'ic-patent',
+  //     BoardName: 'dashboard:board.patent',
+  //   },
+  //   {
+  //     id: 2,
+  //     workStreamName: t('dashboard:workStream.trademark'),
+  //     WorkStreamClass: 'ic-trademark',
+  //     BoardName: 'dashboard:board.trademark',
+  //   },
+  //   {
+  //     id: 3,
+  //     workStreamName: t('dashboard:workStream.copyrights'),
+  //     WorkStreamClass: 'ic-copyrights',
+  //     BoardName: 'dashboard:board.copyrights',
+  //   },
+  //   {
+  //     id: 4,
+  //     workStreamName: t('dashboard:workStream.industrialDesign'),
+  //     WorkStreamClass: 'ic-industrial-design',
+  //     BoardName: 'dashboard:board.industrialDesign',
+  //   },
+  //   {
+  //     id: 5,
+  //     workStreamName: t('dashboard:workStream.plantVarieties'),
+  //     WorkStreamClass: 'ic-plant-varieties',
+  //     BoardName: 'dashboard:board.plantVarieties',
+  //   },
+  //   {
+  //     id: 6,
+  //     workStreamName: t('dashboard:workStream.integratedCircuits'),
+  //     WorkStreamClass: 'ic-integrated-circuits',
+  //     BoardName: 'dashboard:board.integratedCircuits',
+  //   },
+  // ];
   const linksList = [
     {
       id: 1,
       workStreamName: t('dashboard:workStream.patent'),
       WorkStreamClass: 'ic-patent',
       BoardName: 'dashboard:board.patent',
-    },
-    {
-      id: 2,
-      workStreamName: t('dashboard:workStream.trademark'),
-      WorkStreamClass: 'ic-trademark',
-      BoardName: 'dashboard:board.trademark',
-    },
-    {
-      id: 3,
-      workStreamName: t('dashboard:workStream.copyrights'),
-      WorkStreamClass: 'ic-copyrights',
-      BoardName: 'dashboard:board.copyrights',
-    },
-    {
-      id: 4,
-      workStreamName: t('dashboard:workStream.industrialDesign'),
-      WorkStreamClass: 'ic-industrial-design',
-      BoardName: 'dashboard:board.industrialDesign',
-    },
-    {
-      id: 5,
-      workStreamName: t('dashboard:workStream.plantVarieties'),
-      WorkStreamClass: 'ic-plant-varieties',
-      BoardName: 'dashboard:board.plantVarieties',
-    },
-    {
-      id: 6,
-      workStreamName: t('dashboard:workStream.integratedCircuits'),
-      WorkStreamClass: 'ic-integrated-circuits',
-      BoardName: 'dashboard:board.integratedCircuits',
     },
   ];
   const [activeWorkstream, setActiveWorkstream] = useState(linksList[0]);
