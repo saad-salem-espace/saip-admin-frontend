@@ -34,8 +34,8 @@ function SearchField({
     smInput: true,
     error: !!error, // please change it to true if we have error
   });
-  const { t } = useTranslation(['search', 'translation']);
-
+  const { t, i18n } = useTranslation(['search', 'translation']);
+  const currentLang = i18n.language;
   const textField = () => (
     <>
       <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>
@@ -100,6 +100,12 @@ function SearchField({
     return returnedField || inputFields.textFields.getField();
   }, [identifierValue?.identifierType, identifierValue?.isLkp, conditionValue]);
 
+  function identifierName(option) {
+    return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
+  }
+  function optionName(option) {
+    return currentLang === 'ar' ? option.optionNameAr : option.optionName;
+  }
   return (
     <div className={`p-4 bg-primary-01 mb-2 ${style.wrapper}`}>
       <div className="d-flex mb-4">
@@ -108,7 +114,7 @@ function SearchField({
           <Select
             options={identifiersList}
             className="smSelect defaultSelect smWithLabel"
-            getOptionName={(option) => option.identiferName}
+            getOptionName={(option) => identifierName(option)}
             getOptionValue={(option) => option.identiferName}
             selectedOption={identifierValue}
             setSelectedOption={onChangeIdentifier}
@@ -119,7 +125,7 @@ function SearchField({
           <Select
             options={identifierValue?.identifierOptions}
             className="smSelect defaultSelect smWithLabel"
-            getOptionName={(option) => option.optionName}
+            getOptionName={(option) => optionName(option)}
             selectedOption={conditionValue}
             setSelectedOption={onChangeCondition}
             getOptionValue={(option) => option.optionName}

@@ -9,11 +9,12 @@ import { Link } from 'react-router-dom';
 import { BsStar } from 'react-icons/bs';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import Image from 'react-bootstrap/Image';
+import PropTypes from 'prop-types';
 import logo from '../../../assets/images/Logo.png';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 
-function GuestNavbar() {
+function GuestNavbar({ lang, changeLang }) {
   const { t } = useTranslation('layout');
   const auth = useAuth();
   return (
@@ -51,7 +52,7 @@ function GuestNavbar() {
                 </Nav.Link>
               </div>
               {/* Switch language */}
-              <LanguageSwitch />
+              <LanguageSwitch lang={lang} changeLang={changeLang} />
             </div>
           </Nav>
         </Navbar.Collapse>
@@ -59,5 +60,8 @@ function GuestNavbar() {
     </Navbar>
   );
 }
-
+GuestNavbar.propTypes = {
+  changeLang: PropTypes.func.isRequired,
+  lang: PropTypes.string.isRequired,
+};
 export default GuestNavbar;

@@ -22,7 +22,8 @@ import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
 
 function WorkstreamSearch() {
-  const { t } = useTranslation('search');
+  const { t, i18n } = useTranslation('search');
+  const currentLang = i18n.language;
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
@@ -125,6 +126,10 @@ function WorkstreamSearch() {
     setShowUploadImgSection(!showUploadImgSection);
   };
 
+  function identifierName(option) {
+    return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
+  }
+
   return (
     <div>
       <div className={`${style.header}`}>
@@ -180,7 +185,7 @@ function WorkstreamSearch() {
                       <Select
                         options={searchOptions}
                         className={`${style.select} lgSelect selectWithSibling`}
-                        getOptionName={(option) => option.identiferName}
+                        getOptionName={(option) => identifierName(option)}
                         selectedOption={selectedOption}
                         setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
                         getOptionValue={(option) => option.identiferName}

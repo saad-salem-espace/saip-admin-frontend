@@ -39,7 +39,8 @@ import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import toastify from '../../utils/toastify';
 
 function SearchResults() {
-  const { t } = useTranslation('search');
+  const { t, i18n } = useTranslation('search');
+  const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
@@ -278,9 +279,11 @@ function SearchResults() {
       id: workstreamId, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
     }]);
   };
-
+  function workstreamName(workstream) {
+    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+  }
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
-    label: pascalCase(workstream.workstreamName),
+    label: workstreamName(workstream),
     value: workstream.id,
   }));
 
@@ -445,7 +448,7 @@ function SearchResults() {
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
-                    <h4 className="mb-0 mt-4">Search</h4>
+                    <h4 className="mb-0 mt-4">{t('search')}</h4>
                     <Select
                       options={WorkStreamsOptions}
                       moduleClassName="menu"

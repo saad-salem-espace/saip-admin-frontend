@@ -1,19 +1,24 @@
 import { useAuth } from 'react-oidc-context';
+import PropTypes from 'prop-types';
 import LoggedNavbar from './LoggedNavbar';
 import GuestNavbar from './GuestNavbar';
 
 import './AppNavbar.scss';
 
-function AppNavbar() {
+function AppNavbar({ lang, changeLang }) {
   const auth = useAuth();
   if (auth.isAuthenticated) {
     return (
-      <LoggedNavbar />
+      <LoggedNavbar lang={lang} changeLang={changeLang} />
     );
   }
   return (
-    <GuestNavbar />
+    <GuestNavbar lang={lang} changeLang={changeLang} />
   );
 }
 
+AppNavbar.propTypes = {
+  changeLang: PropTypes.func.isRequired,
+  lang: PropTypes.string.isRequired,
+};
 export default AppNavbar;
