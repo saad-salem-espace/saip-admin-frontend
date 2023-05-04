@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { FaRegBell } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
+import roleMapper from 'utils/roleMapper';
+import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
 import roleMapper from 'utils/roleMapper';
 import Image from 'react-bootstrap/Image';

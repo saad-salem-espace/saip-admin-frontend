@@ -1,7 +1,9 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Tabs from 'components/shared/tabs/Tabs';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ModalAlert from 'components/shared/modal-alert/ModalAlert';
+import Notes from 'components/examiner-dashboard/board/notes/Notes';
 import IprData from '../IprData';
 
 function IprSections({
@@ -9,10 +11,22 @@ function IprSections({
   onChangeSelect,
   selectedView,
   renderSelectedView,
+  documentId,
+  isCardInprogress,
+  activeTab,
+  selectedCardId,
+  className,
   showInfo,
 }) {
   const { t } = useTranslation('dashboard');
-  const [activeTabId, setActiveTabId] = useState(1);
+  const [activeTabId, setActiveTabId] = useState(activeTab);
+  const [showAlert, setShowAlert] = useState(false);
+  const [hasUnsavedNotes, setHasUnsavedNotes] = useState(false);
+  const [fireSubmit, setFireSubmit] = useState(false);
+
+  const disableChangeTab = (hasData) => {
+    setHasUnsavedNotes(!!hasData);
+  };
   const tabsItems = [
     {
       id: 1,
@@ -38,21 +52,68 @@ function IprSections({
         </div>
       ),
       content: (
-        <p>notes content</p>
+        <div className="notes-tab">
+          <Notes
+            documentId={documentId}
+            disableEditor={!isCardInprogress}
+            disableChangeTab={disableChangeTab}
+            fireSubmit={fireSubmit}
+            id={selectedCardId}
+          />
+        </div>
       ),
     },
   ];
+
+  const handleConfirm = () => {
+    setFireSubmit(true);
+  };
+
+  const ShowAlert = () => {
+    setShowAlert(true);
+  };
   const handleActiveTab = (id) => {
+    if (hasUnsavedNotes) {
+      ShowAlert();
+    }
     setActiveTabId(id);
   };
-  if (!showInfo) tabsItems.shift();
+
+  if (!showInfo) {
+    tabsItems.shift();
+  }
+  useEffect(() => {
+    if (!showInfo) {
+      setActiveTabId(2);
+    }
+  }, [showInfo]);
+
   return (
-    <Tabs
-      tabsItems={tabsItems}
-      activeKey={activeTabId}
-      handleActiveTab={handleActiveTab}
-      className="v2 mt-3"
-    />
+    <div className={`${className}`}>
+      {
+      showAlert && (
+        <ModalAlert
+          title={t('unsavedContent')}
+          msg={
+            <Trans
+              i18nKey="unsavedContentMsg"
+              ns="notes"
+              components={<span className="d-block" />}
+            />
+          }
+          btnText={t('add')}
+          className="warning"
+          handleConfirm={handleConfirm}
+        />
+      )
+    }
+      <Tabs
+        tabsItems={tabsItems}
+        activeKey={activeTabId}
+        handleActiveTab={handleActiveTab}
+        className="v2 mt-3"
+      />
+    </div>
   );
 }
 
@@ -62,6 +123,11 @@ IprSections.propTypes = {
   onChangeSelect: PropTypes.func,
   renderSelectedView: PropTypes.func,
   showInfo: PropTypes.bool,
+  activeTab: PropTypes.number,
+  documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  isCardInprogress: PropTypes.bool.isRequired,
+  selectedCardId: PropTypes.number.isRequired,
+  className: PropTypes.string,
 };
 
 IprSections.defaultProps = {
@@ -70,6 +136,8 @@ IprSections.defaultProps = {
   selectedView: null,
   onChangeSelect: () => { },
   renderSelectedView: () => {},
+  activeTab: 1,
+  className: '',
 };
 
 export default IprSections;

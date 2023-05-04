@@ -6,6 +6,7 @@ import searchEn from './locales/en/search.json';
 import commonEn from './locales/en/common.json';
 import errorEn from './locales/en/errors.json';
 import layoutEn from './locales/en/layout.json';
+import dashboardEn from './locales/en/dashboard.json';
 import translationAr from './locales/ar/translation.json';
 import searchAr from './locales/ar/search.json';
 import commonAr from './locales/ar/common.json';
@@ -13,8 +14,9 @@ import errorAr from './locales/ar/errors.json';
 import layoutAr from './locales/ar/layout.json';
 import queriesEn from './locales/en/queries.json';
 import queriesAr from './locales/ar/queries.json';
-import dashboardEn from './locales/en/dashboard.json';
 import dashboardAr from './locales/ar/dashboard.json';
+import notesEn from './locales/en/notes.json';
+import notesAr from './locales/ar/notes.json';
 import validationsEn from './locales/en/validations.json';
 import validationsAr from './locales/ar/validations.json';
 
@@ -27,6 +29,7 @@ const resources = {
     layout: layoutEn,
     queries: queriesEn,
     dashboard: dashboardEn,
+    notes: notesEn,
     validations: validationsEn,
   },
   ar: {
@@ -37,6 +40,7 @@ const resources = {
     layout: layoutAr,
     queries: queriesAr,
     dashboard: dashboardAr,
+    notes: notesAr,
     validations: validationsAr,
   },
 };
