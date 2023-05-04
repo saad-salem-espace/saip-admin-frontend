@@ -19,16 +19,16 @@ describe('<Workstreams />', () => {
     />);
 
     await waitFor(() => {
-      expect(getByText(WorkstreamList.data[0].workstreamName)).toBeInTheDocument();
-      expect(getByText(WorkstreamList.data[0].workstreamName).closest('button')).toHaveClass('active');
-      expect(getByText(WorkstreamList.data[1].workstreamName)).toBeInTheDocument();
-      expect(getByText(WorkstreamList.data[1].workstreamName).closest('button').classList.contains('active')).toBe(false);
+      expect(getByText(WorkstreamList.data[0].workstreamNameAr)).toBeInTheDocument();
+      expect(getByText(WorkstreamList.data[0].workstreamNameAr).closest('button')).toHaveClass('active');
+      expect(getByText(WorkstreamList.data[1].workstreamNameAr)).toBeInTheDocument();
+      expect(getByText(WorkstreamList.data[1].workstreamNameAr).closest('button').classList.contains('active')).toBe(false);
     });
 
     expect(mockOnChange).toHaveBeenCalledTimes(2);
 
     await waitFor(() => {
-      fireEvent.click(getByText(WorkstreamList.data[1].workstreamName).closest('button'));
+      fireEvent.click(getByText(WorkstreamList.data[1].workstreamNameAr).closest('button'));
     });
 
     expect(mockOnChange).toHaveBeenCalledTimes(3);

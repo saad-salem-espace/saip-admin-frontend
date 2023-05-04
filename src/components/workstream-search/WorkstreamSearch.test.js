@@ -1,9 +1,11 @@
 import { render } from 'TestUtils';
-import { waitFor } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import apiInstance from 'apis/apiInstance';
 import WorkstreamList from 'testing-resources/workstreams/workstreams.json';
 import WorkstreamIdentifiers from 'testing-resources/workstreams/patents/identifiers.json';
+import I18n from 'i18n';
+import validationMessages from 'utils/validationMessages';
 import WorkstreamSearch from './WorkstreamSearch';
 
 const mockAxios = new MockAdapter(apiInstance);
@@ -13,12 +15,29 @@ mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, WorkstreamIdentifi
 mockAxios.onGet('workstreams').reply(200, WorkstreamList);
 
 describe('<WorkstreamSearch />', () => {
+  const t = (key, options) => I18n.t(key, { ...options });
+
   it('renders correctly', async () => {
     const { getByText, queryByText } = render(<WorkstreamSearch />);
 
     await waitFor(() => {
-      expect(getByText(WorkstreamIdentifiers.data[0].identiferName)).toBeInTheDocument();
-      expect(queryByText(WorkstreamIdentifiers.data[1].identiferName)).toBeNull();
+      expect(getByText(WorkstreamIdentifiers.data[0].identiferNameAr)).toBeInTheDocument();
+      expect(queryByText(WorkstreamIdentifiers.data[1].identiferNameAr)).toBeNull();
+    });
+  });
+
+  it('renders errors correctly', async () => {
+    const { getByTestId, queryAllByText } = render(<WorkstreamSearch />);
+
+    await waitFor(() => {
+      const button = getByTestId('submit-simple-search');
+      fireEvent.click(button);
+    });
+
+    await waitFor(() => {
+      expect(
+        queryAllByText(t(validationMessages.search.required().key)).length,
+      ).toEqual(1);
     });
   });
 

@@ -8,7 +8,6 @@ import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
 import uploadFile from 'apis/uploadFileApi';
 import * as Yup from 'yup';
-import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
@@ -18,11 +17,13 @@ import Search from 'components/shared/form/search/Search';
 import UploadImage from 'components/shared/upload-image/UploadImage';
 import formStyle from 'components/shared/form/form.module.scss';
 import useAxios from 'hooks/useAxios';
+import validationMessages from 'utils/validationMessages';
 import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
 
 function WorkstreamSearch() {
-  const { t } = useTranslation('search');
+  const { t, i18n } = useTranslation('search');
+  const currentLang = i18n.language;
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
@@ -52,11 +53,11 @@ function WorkstreamSearch() {
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
-      .test('Is not empty', t('validationErrors.empty'), (data) => (
+      .test('Is not empty', validationMessages.search.required, (data) => (
         (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
       || data instanceof DateObject
       ))
-      .test('is Valid String', t('validationErrors.wildcards'), (data) => (
+      .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
         ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
       || data instanceof DateObject
       )),
@@ -112,7 +113,7 @@ function WorkstreamSearch() {
     searchWithSibling: true,
     searchInputWrapper: true,
     imgUploaded: isImgUploaded,
-    searchWithImage: selectedWorkStream === 2,
+    searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
   });
 
   const uploadCurrentFile = async (file, setErrors, data) => {
@@ -124,6 +125,10 @@ function WorkstreamSearch() {
   const handleUploadImg = () => {
     setShowUploadImgSection(!showUploadImgSection);
   };
+
+  function identifierName(option) {
+    return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
+  }
 
   return (
     <div>
@@ -157,7 +162,7 @@ function WorkstreamSearch() {
               validateOnBlur={false}
             >
               {({
-                handleSubmit, values, setFieldValue, errors, touched, setErrors, setTouched,
+                handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
                   <Link
@@ -180,7 +185,7 @@ function WorkstreamSearch() {
                       <Select
                         options={searchOptions}
                         className={`${style.select} lgSelect selectWithSibling`}
-                        getOptionName={(option) => option.identiferName}
+                        getOptionName={(option) => identifierName(option)}
                         selectedOption={selectedOption}
                         setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
                         getOptionValue={(option) => option.identiferName}
@@ -197,7 +202,7 @@ function WorkstreamSearch() {
                       isClearable={!!values.searchQuery}
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
-                      searchWithImg={selectedWorkStream === 2}
+                      searchWithImg={selectedWorkStream === 2 || selectedWorkStream === 1}
                       type={selectedOption?.identifierType}
                       onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
                       imageSearch={isImgUploaded}
@@ -210,9 +215,6 @@ function WorkstreamSearch() {
                       </span> */}
                     </Search>
                   </div>
-                  {touched.searchQuery && errors.searchQuery
-                    ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
-                    ) : null}
                   <div className="rounded">
                     <UploadImage
                       className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`}

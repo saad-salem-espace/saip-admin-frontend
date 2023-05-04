@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { FaRegBell } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
+import PropTypes from 'prop-types';
 import roleMapper from 'utils/roleMapper';
 import Image from 'react-bootstrap/Image';
 import LanguageSwitch from './shared/LanguageSwitch';
@@ -17,7 +18,7 @@ import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
 import logo from '../../../assets/images/logo-shape.png';
 
-function LoggedNavbar() {
+function LoggedNavbar({ lang, changeLang }) {
   const auth = useAuth();
   const { t } = useTranslation('layout');
   return (
@@ -39,7 +40,7 @@ function LoggedNavbar() {
               <MdOutlineBookmarkBorder className="icon" />
               {t('navbar.myBookmarks')}
             </Nav.Link>
-            <Nav.Link to="#" as={Link} className="has-icon ps-lg-5">
+            <Nav.Link to="/savedQueries" as={Link} className="has-icon ps-lg-5">
               <BsStar className="icon" />
               {t('navbar.savedQueries')}
             </Nav.Link>
@@ -63,7 +64,7 @@ function LoggedNavbar() {
                 </Nav.Link>
               </div>
               {/* Switch language */}
-              <LanguageSwitch className="pe-lg-5 me-lg-5" />
+              <LanguageSwitch className="pe-lg-5 me-lg-5" lang={lang} changeLang={changeLang} />
               {/* Avatar & control */}
               <Dropdown>
                 <Dropdown.Toggle variant="transparent" className="appBtn avatar-btn btn nav-link mx-auto" size="lg" id="dropdown-basic">
@@ -85,5 +86,8 @@ function LoggedNavbar() {
     </Navbar>
   );
 }
-
+LoggedNavbar.propTypes = {
+  changeLang: PropTypes.func.isRequired,
+  lang: PropTypes.string.isRequired,
+};
 export default LoggedNavbar;

@@ -1,0 +1,23 @@
+{
+  "id_token": "eyJhb...",
+  "session_state": "a93bffc5-198e-4ef9-9c99-8cfbb889d4d7",
+  "access_token": "eyJ...",
+  "refresh_token": "eyJhb...",
+  "token_type": "bearer",
+  "scope": "openid profile email",
+  "profile": {
+    "exp": 1683022437,
+    "iat": 1683021837,
+    "iss": "https://presso.saip.gov.sa/auth/realms/saipinternal",
+    "aud": "saipinternalclient",
+    "sub": "8006a988-47fc-47ab-a62f-cd537412d79c",
+    "typ": "ID",
+    "session_state": "a93bffc5-198e-4ef9-9c99-8cfbb889d4d7",
+    "email_verified": false,
+    "groups": [],
+    "preferred_username": "emptest18",
+    "clientRoles": ["C02:R501:SAIP:IPSRCH:BU:INEXM:G0ZZ:1.00"],
+    "username": "emptest18"
+  },
+  "expires_at": 1683022437
+}
