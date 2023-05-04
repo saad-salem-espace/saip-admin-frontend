@@ -64,7 +64,7 @@ function IprDetails({
   dashboard,
   showActions,
 }) {
-  const { t } = useTranslation('search', 'dashboard');
+  const { t, i18n } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
@@ -83,6 +83,32 @@ function IprDetails({
       execute();
     }
   }, [documentId]);
+
+  useEffect(() => {
+    window.googleTranslateElementInit = () => {
+    // eslint-disable-next-line no-new
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: i18n.language,
+          autoDisplay: false,
+        },
+        'google_translate_element',
+      );
+    };
+    const addScript = window.document.createElement('script');
+    addScript.setAttribute(
+      'src',
+      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
+    );
+    window.document.body.appendChild(addScript);
+    return () => {
+      window.document.body.removeChild(addScript);
+      const elements = window.document.querySelectorAll('.skiptranslate');
+      elements.forEach((element) => {
+        element.remove();
+      });
+    };
+  }, []);
 
   if (!document) {
     return null;
@@ -506,7 +532,7 @@ function IprDetails({
     return content;
   };
   return (
-    <div className={`${style.iprWrapper} ${className}`}>
+    <div className={`${style.iprWrapper} ${className}`} translate="yes">
       <div className="border-bottom bg-primary-01">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
           <div className="d-flex align-items-center">
@@ -603,6 +629,7 @@ function IprDetails({
             />
           </div>
         )}
+        <div id="google_translate_element" />
       </div>
       {
       dashboard && showActions ? (
