@@ -575,7 +575,7 @@ function IprDetails({
         {
           searchResultParams.workstreamId === '1' && (
             <p className="text-gray px-6">
-              <HandleEmptyAttribute checkOn={document.BibliographicData.owner} />
+              <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
             </p>
           )
         }
