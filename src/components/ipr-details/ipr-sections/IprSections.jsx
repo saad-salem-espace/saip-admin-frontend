@@ -73,7 +73,6 @@ function IprSections({
     setShowAlert(true);
   };
   const handleActiveTab = (id) => {
-    console.log('ss', hasUnsavedNotes);
     if (hasUnsavedNotes) {
       ShowAlert();
     }
