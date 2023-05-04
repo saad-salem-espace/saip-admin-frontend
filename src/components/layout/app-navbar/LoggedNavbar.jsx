@@ -32,7 +32,7 @@ function LoggedNavbar() {
               <MdOutlineBookmarkBorder className="icon" />
               {t('navbar.myBookmarks')}
             </Nav.Link>
-            <Nav.Link to="#" as={Link} className="has-icon ps-lg-5">
+            <Nav.Link to="/savedQueries" as={Link} className="has-icon ps-lg-5">
               <BsStar className="icon" />
               {t('navbar.savedQueries')}
             </Nav.Link>
