@@ -426,7 +426,7 @@ $border-color: $gray-400;
 // scss-docs-start border-radius-variables
 $border-radius: 4px;
 $border-radius-sm: .2rem !default;
-$border-radius-lg: $border-radius;
+$border-radius-lg: 8px;
 $border-radius-pill: 50rem !default;
 // scss-docs-end border-radius-variables
 
@@ -722,7 +722,7 @@ $btn-link-disabled-color: $gray-600 !default;
 // Allows for customizing button radius independently from global border radius
 $btn-border-radius: $border-radius !default;
 $btn-border-radius-sm: $border-radius-sm;
-$btn-border-radius-lg: $border-radius-lg !default;
+$btn-border-radius-lg: $border-radius !default;
 
 $btn-transition: color .15s ease-in-out,
   background-color .15s ease-in-out,
