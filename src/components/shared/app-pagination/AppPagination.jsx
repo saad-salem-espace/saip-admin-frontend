@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import apiInstance from 'apis/apiInstance';
@@ -11,16 +10,16 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
-  sort, onPageChange
+  sort, onPageChange,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
   const [isLoading, setIsLoading] = useState(true);
 
   const changePage = (page) => {
-    if(onPageChange) onPageChange(page);
+    if (onPageChange) onPageChange(page);
     setCurrentPage(page);
-  }
+  };
 
   const axiosPaginatedConfig = {
     ...axiosConfig,
@@ -36,7 +35,7 @@ const AppPagination = ({
   const paginationInfo = data?.pagination || {
     per_page: 10,
     total: 0,
-  }
+  };
   const displayData = data?.data;
 
   useEffect(() => {
@@ -51,7 +50,7 @@ const AppPagination = ({
   }, [currentPage, sort, ...updateDependencies]);
 
   useEffect(() => {
-    if(data){
+    if (data) {
       setResults(data.data);
       fetchedTotalResults(data.pagination?.total || 0);
       setIsLoading(false);
@@ -105,7 +104,7 @@ AppPagination.defaultProps = {
   emptyState: null,
   updateDependencies: [],
   setResults: () => {},
-  onPageChange: null
+  onPageChange: null,
 };
 
 export default AppPagination;
