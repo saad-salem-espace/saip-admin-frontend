@@ -9,7 +9,7 @@ import Spinner from '../spinner/Spinner';
 const IndexedDbAppPagination = ({
   defaultPage, RenderedComponent, renderedProps,
   fetchedTotalResults, emptyState, updateDependencies, setResults,
-  onPageChange, tableName, limit, indexMethod, indexMethodProps,
+  onPageChange, tableName, limit, indexMethod, indexMethodProps, resetPage,
 }) => {
   const [data, setData] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,8 +27,18 @@ const IndexedDbAppPagination = ({
     total: 0,
   };
   const displayData = data?.data;
+
   useEffect(() => {
-    if (Number(searchParams.get('page')) !== currentPage) setCurrentPage(Number(searchParams.get('page')));
+    if (resetPage) {
+      setCurrentPage(1);
+    }
+  }, [resetPage]);
+
+  useEffect(() => {
+    const searchParamPage = Number(searchParams.get('page'));
+    if (searchParamPage && searchParamPage !== currentPage) {
+      setCurrentPage(searchParamPage);
+    }
   }, [searchParams.get('page')]);
 
   useEffect(() => {
@@ -91,6 +101,7 @@ IndexedDbAppPagination.propTypes = {
   limit: PropTypes.number,
   indexMethod: PropTypes.string.isRequired,
   indexMethodProps: PropTypes.instanceOf(Object),
+  resetPage: PropTypes.number,
 };
 
 IndexedDbAppPagination.defaultProps = {
@@ -104,6 +115,7 @@ IndexedDbAppPagination.defaultProps = {
   onPageChange: null,
   limit: 10,
   indexMethodProps: {},
+  resetPage: 0,
 };
 
 export default IndexedDbAppPagination;

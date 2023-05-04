@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
 import Select from 'components/shared/form/select/Select';
-import { useContext, useState } from 'react';
+import {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -13,24 +15,41 @@ import { tableNames } from 'dbConfig';
 import CacheContext from 'contexts/CacheContext';
 import useCacheRequest from 'hooks/useCacheRequest';
 import { pascalCase } from 'change-case';
+import Spinner from 'components/shared/spinner/Spinner';
 import SavedQueriresTable from './SavedQueriresTable';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
 
 const SavedQuerires = () => {
   const { t } = useTranslation('queries');
-  const [selectedWorkStream, setSelectedWorkStream] = useState({ label: t('patent'), value: 1 });
+  const [selectedWorkStream, setSelectedWorkStream] = useState();
   const [searchParams] = useSearchParams();
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
+  const [pageReset, setPageReset] = useState(0);
+  const isMounted = useRef(false);
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
     label: pascalCase(workstream.workstreamName),
     value: workstream.id,
   }));
 
+  useEffect(() => {
+    if (WorkStreamsOptions?.length) {
+      setSelectedWorkStream(WorkStreamsOptions[0]);
+      isMounted.current = true;
+    }
+  }, [workstreams]);
+
+  if (!isMounted.current) return <Spinner />;
+
+  const resetPageNumber = () => {
+    setPageReset((page) => page + 1);
+  };
+
   const onChangeWorkStream = (i) => {
     setSelectedWorkStream(i);
+    resetPageNumber();
   };
 
   const axiosConfig = getSavedQueryApi(selectedWorkStream.value, true);
@@ -70,13 +89,13 @@ const SavedQuerires = () => {
               tableName={tableNames.savedQuery}
               emptyState={<NoData />}
               indexMethod="indexByIndexName"
+              resetPage={pageReset}
               indexMethodProps={{
                 sorted: 'desc',
                 sortedIndexName: 'updatedAt',
                 indexName: 'workstreamId',
                 indexValue: selectedWorkStream.value,
               }}
-              updateDependencies={[selectedWorkStream]}
             />
           )}
 
