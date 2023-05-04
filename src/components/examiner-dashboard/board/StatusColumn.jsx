@@ -29,6 +29,7 @@ function StatusColumn({
             assignment={assignment}
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
+            active={activeDocument === assignment.filingNumber}
             activeDocument={activeDocument}
             status={status}
             setActiveTab={setActiveTab}
@@ -45,6 +46,7 @@ function StatusColumn({
             assignment={assignment}
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
+            active={activeDocument === assignment.filingNumber}
             status={status}
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
@@ -62,8 +64,8 @@ StatusColumn.propTypes = {
   setActiveDocument: PropTypes.func.isRequired,
   setToggle: PropTypes.func.isRequired,
   data: PropTypes.instanceOf(Array).isRequired,
-  SetSelectedCard: PropTypes.func,
   activeDocument: PropTypes.string.isRequired,
+  SetSelectedCard: PropTypes.func,
   isInProgress: PropTypes.func.isRequired,
   setActiveTab: PropTypes.func,
 };

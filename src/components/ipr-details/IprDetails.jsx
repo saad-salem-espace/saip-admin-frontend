@@ -614,21 +614,21 @@ function IprDetails({
               variant="primary"
               text={(
                 <>
-                  <FaSearch className="md-text me-2" />
+                  <FaSearch className="fs-base me-2" />
                   {t('dashboard:findSimilar')}
                 </>
               )}
-              className="me-4 fs-sm mb-2 mb-lg-0"
+              className="me-4 fs-sm my-2 my-xl-0"
             />
             <Button
               variant="primary"
               text={(
                 <>
-                  <FiDownload className="md-text me-2" />
+                  <FiDownload className="fs-base me-2" />
                   {t('dashboard:download')}
                 </>
               )}
-              className="me-4 fs-sm"
+              className="me-4 fs-sm my-2 my-xl-0"
             />
           </div>
         )}
