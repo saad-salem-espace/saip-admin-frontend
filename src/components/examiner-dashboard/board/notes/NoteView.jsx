@@ -20,9 +20,11 @@ function NoteView({ note }) {
           {t('day')}
         </p>
       </div>
-      <ShowMore lines={500}>
-        {note.noteText}
-      </ShowMore>
+      <p className="mb-0 text-gray sm-text">
+        <ShowMore lines={500}>
+          {note.noteText}
+        </ShowMore>
+      </p>
     </div>
   );
 }
