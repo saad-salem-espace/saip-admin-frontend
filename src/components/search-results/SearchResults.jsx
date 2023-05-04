@@ -13,7 +13,6 @@ import * as Yup from 'yup';
 import uploadFile from 'apis/uploadFileApi';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
-import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -40,9 +39,11 @@ import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import toastify from '../../utils/toastify';
+import validationMessages from '../../utils/validationMessages';
 
 function SearchResults() {
-  const { t } = useTranslation('search');
+  const { t, i18n } = useTranslation('search');
+  const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
@@ -299,9 +300,11 @@ function SearchResults() {
       id: workstreamId, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
     }]);
   };
-
+  function workstreamName(workstream) {
+    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+  }
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
-    label: pascalCase(workstream.workstreamName),
+    label: workstreamName(workstream),
     value: workstream.id,
   }));
 
@@ -452,7 +455,7 @@ function SearchResults() {
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
-      .test('Is not empty', t('validationErrors.empty'), (data) => (
+      .test('Is not empty', validationMessages.search.required, (data) => (
         (imageName || data)
       )),
   });
@@ -474,12 +477,12 @@ function SearchResults() {
             }}
           >
             {({
-              setFieldValue, handleSubmit, values, touched, errors,
+              setFieldValue, handleSubmit, values,
             }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
                   <div className="d-flex mb-lg-0 mb-3">
-                    <h4 className="mb-0 mt-4">Search</h4>
+                    <h4 className="mb-0 mt-4">{t('search')}</h4>
                     <Select
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
@@ -516,9 +519,6 @@ function SearchResults() {
                           searchWithImg
                         />
                       </div>
-                      {touched.searchQuery && errors.searchQuery
-                        ? (<ErrorMessage msg={errors.searchQuery} className="mt-2" />
-                        ) : null}
                     </div>
                     <div className="d-md-flex mt-md-0 mt-14">
                       <ToggleButton
