@@ -67,7 +67,7 @@ function Board({
               onClose={handleCloseIprDetail}
               setActiveDocument={setActiveDocument}
               activeWorkstream={activeWorkstream.id}
-              className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute end-0 bg-white me-0`}
+              className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute top-0 end-0 bottom-0 h-100 bg-white me-0`}
             />
           )
         }
@@ -88,6 +88,7 @@ function Board({
                   data={filteredAssignments.TO_DO}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  activeDocument={activeDocument}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
@@ -95,6 +96,7 @@ function Board({
                   data={filteredAssignments.IN_PROGRESS}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  activeDocument={activeDocument}
                 />
                 <StatusColumn
                   status={t('dashboard:status.done')}
@@ -102,6 +104,7 @@ function Board({
                   data={filteredAssignments.DONE}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  activeDocument={activeDocument}
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
@@ -109,6 +112,7 @@ function Board({
                   data={filteredAssignments.REVIEW}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  activeDocument={activeDocument}
                 />
               </Row>
             )}
