@@ -1,0 +1,10 @@
+@import "../../../../assets/styles/utilities/custom-theme";
+
+.pdf-viewer-wrapper {
+  overflow-x: hidden;
+	.border-end {
+    @include media-breakpoint-down(lg) {
+			border: none !important;
+		}
+	}
+}
