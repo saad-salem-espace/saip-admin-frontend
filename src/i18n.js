@@ -11,6 +11,8 @@ import searchAr from './locales/ar/search.json';
 import commonAr from './locales/ar/common.json';
 import errorAr from './locales/ar/errors.json';
 import layoutAr from './locales/ar/layout.json';
+import queriesEn from './locales/en/queries.json';
+import queriesAr from './locales/ar/queries.json';
 import dashboardEn from './locales/en/dashboard.json';
 import dashboardAr from './locales/ar/dashboard.json';
 import validationsEn from './locales/en/validations.json';
@@ -23,6 +25,7 @@ const resources = {
     common: commonEn,
     error: errorEn,
     layout: layoutEn,
+    queries: queriesEn,
     dashboard: dashboardEn,
     validations: validationsEn,
   },
@@ -32,6 +35,7 @@ const resources = {
     common: commonAr,
     error: errorAr,
     layout: layoutAr,
+    queries: queriesAr,
     dashboard: dashboardAr,
     validations: validationsAr,
   },
