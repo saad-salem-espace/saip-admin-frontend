@@ -1,9 +1,9 @@
-/* eslint-disable xss/no-mixed-html */
 import UserAvatar from 'components/shared/user-avatar/UserAvatar';
 import PropTypes from 'prop-types';
 import { useAuth } from 'react-oidc-context';
 import { calculateDifference } from 'utils/dates';
 import { useTranslation } from 'react-i18next';
+import ShowMore from 'components/shared/show-more/ShowMore';
 
 function NoteView({ note }) {
   const auth = useAuth();
@@ -20,7 +20,11 @@ function NoteView({ note }) {
           {t('day')}
         </p>
       </div>
-      <p className="mb-0 text-gray sm-text" dangerouslySetInnerHTML={{ __html: note.noteText }} />
+      <p className="mb-0 text-gray sm-text">
+        <ShowMore lines={500}>
+          {note.noteText}
+        </ShowMore>
+      </p>
     </div>
   );
 }
