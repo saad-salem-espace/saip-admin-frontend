@@ -505,7 +505,7 @@ function IprDetails({
   };
 
   const renderSelectedView = () => {
-    let content = <NoData />;
+    let content = <OriginalDocument />;
     if (searchResultParams.workstreamId === '2') {
       if (
         document[selectedView.value]

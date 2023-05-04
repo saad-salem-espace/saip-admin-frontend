@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Document, Page, pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
 import Button from 'components/shared/button/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import './original-document.scss';
 import ViewPort from 'components/shared/view-port/ViewPort';
+import useAxios from 'hooks/useAxios';
+import PropTypes from 'prop-types';
 
-function MyDocument() {
-  const url = '/sample.pdf';
-  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+function MyDocument({ config }) {
   const [pageNumber, setPageNumber] = useState(1);
+  const [document, setDocument] = useState();
+  const [{ data }, execute] = useAxios(config);
+
+  useEffect(() => {
+    execute();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      setDocument(data);
+    }
+  }, [data]);
 
   const onDocumentLoadSuccess = () => {
     setPageNumber(1);
@@ -40,7 +52,7 @@ function MyDocument() {
         />
       </div>
       <Document
-        file={url}
+        file={{ data: document }}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Container>
@@ -70,5 +82,8 @@ function MyDocument() {
     </div>
   );
 }
+MyDocument.propTypes = {
+  config: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default MyDocument;
