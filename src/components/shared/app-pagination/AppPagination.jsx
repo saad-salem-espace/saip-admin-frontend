@@ -11,7 +11,7 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
-  sort, onPageChange
+  sort, onPageChange, className
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
@@ -29,13 +29,13 @@ const AppPagination = ({
 
   useEffect(() => {
     setCurrentPage('1');
-  }, [sort]);
+  }, [sort,updateDependencies ]);
 
   const [{ data }, execute] = useAxios(axiosPaginatedConfig, { manual: true }, axiosInstance);
 
   const paginationInfo = data?.pagination || {
-    per_page: 10,
-    total: 0,
+    totalElements: 0,
+    totalPages: 0
   }
   const displayData = data?.data;
 
@@ -48,12 +48,13 @@ const AppPagination = ({
     setSearchParams(searchParams);
     setIsLoading(true);
     execute();
-  }, [currentPage, sort, ...updateDependencies]);
+
+  }, [currentPage, sort, ...updateDependencies, data]);
 
   useEffect(() => {
     if(data){
       setResults(data.data);
-      fetchedTotalResults(data.pagination?.total || 0);
+      fetchedTotalResults(data.pagination?.totalElements || 0);
       setIsLoading(false);
     }
   }, [data]);
@@ -61,10 +62,10 @@ const AppPagination = ({
   if (!data || isLoading) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
   }
-  if (!paginationInfo.total) {
+  if (!paginationInfo.totalElements) {
     return emptyState;
   }
-  const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
+
   const renderedComponent = (
     <RenderedComponent data={displayData} {...renderedProps} />
   );
@@ -73,9 +74,9 @@ const AppPagination = ({
     <>
       {renderedComponent}
       <Pagination
-        className="pagination"
+        className={`pagination ${className}`}
         current={currentPage}
-        total={totalNumberOfPages}
+        total={paginationInfo.totalPages}
         onPageChange={changePage}
       />
     </>

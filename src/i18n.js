@@ -7,6 +7,8 @@ import commonEn from './locales/en/common.json';
 import errorEn from './locales/en/errors.json';
 import layoutEn from './locales/en/layout.json';
 import layoutAr from './locales/ar/layout.json';
+import queriesEn from './locales/en/queries.json';
+import queriesAr from './locales/ar/queries.json';
 
 const resources = {
   en: {
@@ -15,9 +17,11 @@ const resources = {
     common: commonEn,
     error: errorEn,
     layout: layoutEn,
+    queries: queriesEn,
   },
   ar: {
     layout: layoutAr,
+    queries: queriesAr,
   },
 };
 

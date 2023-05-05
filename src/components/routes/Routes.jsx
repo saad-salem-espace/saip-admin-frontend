@@ -8,6 +8,7 @@ const WorkstreamSearch = lazy(() => import('components/workstream-search/Workstr
 const Dashboard = lazy(() => import('components/examiner-dashboard/ExaminerDashboard'));
 const Admin = lazy(() => import('components/admin-dashboard/AdminDashboard'));
 const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
+const SavedQueries = lazy(() => import('components/saved-queries/SavedQueries'));
 
 const Routes = () => (
   <ReactRoutes>
@@ -17,6 +18,7 @@ const Routes = () => (
     <Route element={<AuthenticatedRoute />}>
       <Route path={appRoutes.dashboard} element={<Dashboard />} />
       <Route path={appRoutes.admin} element={<Admin />} />
+      <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
     </Route>
   </ReactRoutes>
 );

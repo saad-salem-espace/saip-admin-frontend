@@ -2,5 +2,6 @@
   "home": "/",
   "search": "/search",
   "dashboard": "/dashboard",
-  "admin": "/admin"
+  "admin": "/admin",
+  "savedQueries": "/savedQueries"
 }
