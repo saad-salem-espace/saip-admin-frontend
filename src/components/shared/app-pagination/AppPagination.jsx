@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import apiInstance from 'apis/apiInstance';
@@ -11,16 +10,16 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
-  sort, onPageChange, className
+  sort, onPageChange, className,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
   const [isLoading, setIsLoading] = useState(true);
 
   const changePage = (page) => {
-    if(onPageChange) onPageChange(page);
+    if (onPageChange) onPageChange(page);
     setCurrentPage(page);
-  }
+  };
 
   const axiosPaginatedConfig = {
     ...axiosConfig,
@@ -29,14 +28,14 @@ const AppPagination = ({
 
   useEffect(() => {
     setCurrentPage('1');
-  }, [sort,updateDependencies ]);
+  }, [sort, updateDependencies]);
 
   const [{ data }, execute] = useAxios(axiosPaginatedConfig, { manual: true }, axiosInstance);
 
   const paginationInfo = data?.pagination || {
     totalElements: 0,
-    totalPages: 0
-  }
+    totalPages: 0,
+  };
   const displayData = data?.data;
 
   useEffect(() => {
@@ -48,11 +47,10 @@ const AppPagination = ({
     setSearchParams(searchParams);
     setIsLoading(true);
     execute();
-
   }, [currentPage, sort, ...updateDependencies, data]);
 
   useEffect(() => {
-    if(data){
+    if (data) {
       setResults(data.data);
       fetchedTotalResults(data.pagination?.totalElements || 0);
       setIsLoading(false);
@@ -106,7 +104,7 @@ AppPagination.defaultProps = {
   emptyState: null,
   updateDependencies: [],
   setResults: () => {},
-  onPageChange: null
+  onPageChange: null,
 };
 
 export default AppPagination;

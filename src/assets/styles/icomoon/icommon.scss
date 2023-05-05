@@ -72,11 +72,19 @@
 }
 .icon-camera {
   &:before {
-    content: "\e907";
+    content: "\e90b";
   }
 }
 .icon-file-plus {
   &:before {
     content: "\e908";
   }
+}
+.icon-filled-star:before {
+  content: "\e907";
+  color: #00564c;
+}
+.icon-star:before {
+  content: "\e90a";
+  color: #00564c;
 }

@@ -1,7 +1,7 @@
 {
-  "myQueries": "My queries",
-  "query": "Query",
-  "date": "تاريخ",
-  "resultsFound": "Results found",
-  "actions": "Actions"
+  "myQueries": "استعلاماتي",
+  "query": "الاستعلام",
+  "date": "التاريخ",
+  "resultsFound": "النتائج",
+  "actions": "الإجراءات"
 }
