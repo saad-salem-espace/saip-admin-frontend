@@ -99,7 +99,7 @@ function SearchResults() {
             i18nKey="savedQueryMsg"
             ns="search"
           >
-            <Link className="text-primary" to="/" />
+            <Link className="text-primary" to="/savedQueries" />
           </Trans>
         </p>
       </div>,
