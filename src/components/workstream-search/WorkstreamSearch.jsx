@@ -190,12 +190,6 @@ function WorkstreamSearch() {
                 handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
-                  {/* <span
-                    className="d-block text-primary mb-2 text-end"
-                    onClick={() => toggleState(isAdvanced)}
-                  >
-                    {t('advancedSearch')}
-                  </span> */}
                   <ToggleButton
                     handleToggleButton={() => toggleState(isAdvanced)}
                     isToggleButtonOn={isAdvanced}
