@@ -23,6 +23,7 @@ import formStyle from 'components/shared/form/form.module.scss';
 import useAxios from 'hooks/useAxios';
 import validationMessages from 'utils/validationMessages';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
+import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
 
@@ -127,7 +128,7 @@ function WorkstreamSearch() {
 
   const SearchModuleClassName = ({
     lgSearch: true,
-    searchWithSibling: true,
+    searchWithSibling: !isAdvanced,
     searchInputWrapper: true,
     imgUploaded: isImgUploaded,
     searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
@@ -173,7 +174,7 @@ function WorkstreamSearch() {
           </Row>
         </Container>
       </div>
-      <Container className="px-0 m-auto">
+      <Container className="px-0 m-auto search-container">
         <Row className="mx-0">
           <Col className="pt-5 pb-8" lg={{ span: 8, offset: 2 }}>
             <Formik
@@ -189,12 +190,18 @@ function WorkstreamSearch() {
                 handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
-                  <span
+                  {/* <span
                     className="d-block text-primary mb-2 text-end"
                     onClick={() => toggleState(isAdvanced)}
                   >
                     {t('advancedSearch')}
-                  </span>
+                  </span> */}
+                  <ToggleButton
+                    handleToggleButton={() => toggleState(isAdvanced)}
+                    isToggleButtonOn={isAdvanced}
+                    text={t('advancedSearch')}
+                    className="d-block text-primary mb-2 text-end"
+                  />
                   <div className="d-xl-flex align-items-stretch">
                     <div className="position-relative mb-xl-0 mb-3">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
@@ -260,6 +267,7 @@ function WorkstreamSearch() {
                     }]}
                     onChangeSearchQuery={(setAdvancedQuery)}
                     submitRef={submitRef}
+                    className="mt-8 workstream-view"
                   />}
                 </Form>
               )}

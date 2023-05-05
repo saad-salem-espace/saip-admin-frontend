@@ -39,6 +39,7 @@ function Search({
       placeholder={placeholder}
       disabled={disabled}
       imageSearch={imageSearch}
+      className={`${disabled ? 'search-disabled' : ''}`}
     />
   );
 
