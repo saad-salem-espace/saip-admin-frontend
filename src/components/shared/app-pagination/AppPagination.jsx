@@ -93,6 +93,7 @@ AppPagination.propTypes = {
   setResults: PropTypes.func,
   sort: PropTypes.string,
   onPageChange: PropTypes.func,
+  className: PropTypes.string,
 };
 
 AppPagination.defaultProps = {
@@ -105,6 +106,7 @@ AppPagination.defaultProps = {
   updateDependencies: [],
   setResults: () => {},
   onPageChange: null,
+  className: '',
 };
 
 export default AppPagination;
