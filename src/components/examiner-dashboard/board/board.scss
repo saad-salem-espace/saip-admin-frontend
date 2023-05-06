@@ -6,7 +6,7 @@
     overflow-x: scroll;
     @include scrollbar;
     @include media-breakpoint-up(lg) {
-      height: 70vh;
+      height: 77vh;
     }
   }
   .empty-board {
@@ -17,6 +17,9 @@
   z-index: 5;
   overflow-x: hidden;
   @include scrollbar;
+  height: calc(100vh - 162px);
+  overflow-y: auto;
+
   &.expanded {
     .top-info-bar {
       .filing-date {

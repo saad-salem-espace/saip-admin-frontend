@@ -7,6 +7,8 @@ import PatentCard from './PatentCard';
 
 function StatusColumn({
   status, className, data, setActiveDocument, setToggle,
+  activeDocument, setActiveTab, isInProgress,
+  SetSelectedCard,
 }) {
   const { t } = useTranslation('dashboard');
   const pinned = !!data.length;
@@ -27,6 +29,11 @@ function StatusColumn({
             assignment={assignment}
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
+            activeDocument={activeDocument}
+            setActiveTab={setActiveTab}
+            isInProgress={isInProgress}
+            SetSelectedCard={SetSelectedCard}
+            active={activeDocument === assignment.filingNumber}
           />
         ))}
         { others && (
@@ -38,6 +45,10 @@ function StatusColumn({
             assignment={assignment}
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
+            setActiveTab={setActiveTab}
+            isInProgress={isInProgress}
+            SetSelectedCard={SetSelectedCard}
+            active={activeDocument === assignment.filingNumber}
           />
         ))}
       </div>
@@ -51,6 +62,15 @@ StatusColumn.propTypes = {
   setActiveDocument: PropTypes.func.isRequired,
   setToggle: PropTypes.func.isRequired,
   data: PropTypes.instanceOf(Array).isRequired,
+  SetSelectedCard: PropTypes.func,
+  activeDocument: PropTypes.string.isRequired,
+  isInProgress: PropTypes.func.isRequired,
+  setActiveTab: PropTypes.func,
+};
+
+StatusColumn.defaultProps = {
+  SetSelectedCard: null,
+  setActiveTab: () => {},
 };
 
 export default StatusColumn;

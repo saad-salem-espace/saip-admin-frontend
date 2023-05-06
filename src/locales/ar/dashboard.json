@@ -1,39 +1,39 @@
 {
-  "queuePriority": "أولوية قائمة الانتظار",
-  "earliestPriority": "أقرب أولوية",
-  "emptyBoardTitle": "ليس لديك أي مهام حتى الآن.",
-  "emptyBoardMessage": "جرب مصطلح بحث آخر في شريط البحث أعلاه.",
-  "queue": "صف",
+  "queuePriority": "أولوية الفحص",
+  "earliestPriority": "الأسبقية",
+  "emptyBoardTitle": "لا تجد الوثائق الخاضعة للفحص؟",
+  "emptyBoardMessage": "لم يتم إسناد أي من الوثائق لك. ",
+  "queue": "أولوية",
   "addNote": "اضف ملاحظة",
-  "priority": "أولوية",
+  "priority": "أسبقية",
   "pinned": "مثبت",
   "others": "اخرون",
   "info": "معلومات",
   "notes": "ملاحظات",
   "findSimilar": "البحث عن مشابه",
-  "download": "تنزيل",
-  "translateInfo": "ترجمة المعلومات",
-  "markAsDone": "اعتبره منته",
+  "download": "تحميل",
+  "translateInfo": "ترجمة",
+  "markAsDone": "تم إنجازه",
   "status": {
-    "toDo": "ما يجب القيام به",
+    "toDo": "قائمة الأعمال",
     "done": "منجز",
-    "inProgress": "في تَقَدم",
+    "inProgress": "جار العمل عليه",
     "review": "مراجعة"
   },
   "workStream": {
-    "patent": "براءة اختراع",
-    "trademark": "علامة تجارية",
-    "copyrights": "حقوق التأليف والنشر",
-    "industrialDesign": "التصميم الصناعي",
-    "plantVarieties": "أصناف نباتية",
-    "integratedCircuits": "دوائر متكاملة"
+    "patent": "براءات الإختراع",
+    "trademark": "العلامات التجارية",
+    "copyrights": "حق المؤلف",
+    "industrialDesign": "النماذج الصناعية",
+    "plantVarieties": "الأصناف النباتية",
+    "integratedCircuits": "الدوائر المتكاملة"
   },
   "board": {
-    "patent": "لوحة <0> برءاة اختراع </0>",
-    "trademark": "لوحة <0> علامة تجارية </0>",
-    "copyrights": "لوحة <0> حقوق التأليف والنشر </0>",
-    "industrialDesign": "لوحة <0> التصميم الصناعي </0>",
-    "plantVarieties": "لوحة <0> أصناف نباتية </0>",
-    "integratedCircuits": "لوحة <0> دوائر متكاملة </0>"
+    "patent": "لوحة <0> برءاات الإختراع </0>",
+    "trademark": "لوحة <0> العلامات التجارية </0>",
+    "copyrights": "لوحة <0> حق المؤلف </0>",
+    "industrialDesign": "لوحة <0> النماذج الصناعية </0>",
+    "plantVarieties": "لوحة <0> الأصناف النباتية </0>",
+    "integratedCircuits": "لوحة <0> الدوائر المتكاملة </0>"
   }
 }

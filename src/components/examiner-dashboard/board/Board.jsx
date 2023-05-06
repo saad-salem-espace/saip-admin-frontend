@@ -29,6 +29,18 @@ function Board({
     setIsIPRExpanded(!isIPRExpanded);
   };
 
+  const [activeTab, setActiveTab] = useState();
+  const [isCardInprogress, setIsCardInprogress] = useState();
+  const [selectedCardId, setSelectedCardId] = useState();
+
+  const SetSelectedCard = (id) => {
+    setSelectedCardId(id);
+  };
+
+  const changeActiveTab = (tabId) => {
+    setActiveTab(tabId);
+  };
+
   const handleCloseIprDetail = () => {
     setActiveDocument(null);
     setIsIPRExpanded(false);
@@ -40,6 +52,11 @@ function Board({
       activeAssignment = assignments[i];
     }
   }
+
+  const isInProgress = (cardStatus) => {
+    setIsCardInprogress(cardStatus);
+  };
+
   return (
     <div className="position-relative">
       <BoardTitle setSort={setSort} activeWorkstream={activeWorkstream} />
@@ -51,7 +68,10 @@ function Board({
             documentId={activeDocument}
             isIPRExpanded={isIPRExpanded}
             onClose={handleCloseIprDetail}
+            activeTab={activeTab}
             activeWorkstream={activeWorkstream.id}
+            isCardInprogress={isCardInprogress}
+            selectedCardId={selectedCardId}
             className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
           />
         )
@@ -66,8 +86,11 @@ function Board({
               documentId={activeDocument}
               onClose={handleCloseIprDetail}
               setActiveDocument={setActiveDocument}
+              activeTab={activeTab}
               activeWorkstream={activeWorkstream.id}
-              className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute end-0 bg-white me-0`}
+              isCardInprogress={isCardInprogress}
+              selectedCardId={selectedCardId}
+              className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute top-0 end-0 bottom-0 h-100 bg-white me-0`}
             />
           )
         }
@@ -88,6 +111,8 @@ function Board({
                   data={filteredAssignments.TO_DO}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  isInProgress={isInProgress}
+                  activeDocument={activeDocument}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
@@ -95,13 +120,19 @@ function Board({
                   data={filteredAssignments.IN_PROGRESS}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  activeDocument={activeDocument}
+                  setActiveTab={changeActiveTab}
+                  isInProgress={isInProgress}
+                  SetSelectedCard={SetSelectedCard}
                 />
                 <StatusColumn
                   status={t('dashboard:status.done')}
                   className="border-primary-dark"
                   data={filteredAssignments.DONE}
                   setToggle={setToggle}
+                  isInProgress={isInProgress}
                   setActiveDocument={setActiveDocument}
+                  activeDocument={activeDocument}
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
@@ -109,6 +140,8 @@ function Board({
                   data={filteredAssignments.REVIEW}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
+                  isInProgress={isInProgress}
+                  activeDocument={activeDocument}
                 />
               </Row>
             )}

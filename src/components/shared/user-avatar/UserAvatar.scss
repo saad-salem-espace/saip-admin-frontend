@@ -6,6 +6,11 @@
     color: $primary !important;
     span {
       font-size: $font-size-sm;
+      padding-top: 4px;
     }
   }
+}
+
+.xs-text.sb-avatar span {
+  font-size: $font-size-xs;
 }

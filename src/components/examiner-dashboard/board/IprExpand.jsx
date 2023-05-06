@@ -17,10 +17,12 @@ function IprExpand({
   assignment,
   activeWorkstream,
   documentId,
+  isCardInprogress,
+  selectedCardId,
 }) {
   const { t } = useTranslation('dashboard');
   return (
-    <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 w-100`}>
+    <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
       <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
         <Col lg={6} className="filing-date d-lg-flex justify-content-between p-4 order-2 order-lg-1">
           <div className="d-lg-flex align-items-center text-gray-700">
@@ -67,11 +69,16 @@ function IprExpand({
             onClose={onClose}
             activeWorkstream={activeWorkstream}
             showActions={false}
+            isCardInprogress={isCardInprogress}
+            selectedCardId={selectedCardId}
           />
         </Col>
         <Col lg={6}>
           <IprSections
             showInfo={false}
+            className="expand-view"
+            isCardInprogress={isCardInprogress}
+            selectedCardId={selectedCardId}
           />
         </Col>
       </div>
@@ -87,6 +94,8 @@ IprExpand.propTypes = {
   assignment: PropTypes.instanceOf(Object).isRequired,
   documentId: PropTypes.string.isRequired,
   activeWorkstream: PropTypes.number.isRequired,
+  isCardInprogress: PropTypes.bool.isRequired,
+  selectedCardId: PropTypes.number.isRequired,
 };
 
 IprExpand.defaultProps = {

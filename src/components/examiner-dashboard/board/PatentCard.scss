@@ -5,4 +5,7 @@
   .name-card {
     @include truncate(2);
   }
+  &.active {
+    background: $primary-01;
+  }
 }

@@ -10,8 +10,8 @@
   "typeHere": " كلمات البحث",
   "allowSynonyms": "المرادفات",
   "register": "تسجيل",
-  "applicants": "المودعين",
-  "inventors": "المخترعين",
+  "applicants": "المودعون",
+  "inventors": "المخترعون",
   "classifications": "تصنيفات",
   "ipc": "IPC",
   "cpc": "CPC",
@@ -113,7 +113,7 @@
     "email": "البريد الإلكتروني",
     "nationality": "الجنسية",
     "owners": "الملاك",
-    "applicants": "مودعي الطلبات",
+    "applicants": "المودعون",
     "representatives": "الوكلاء",
     "legal": {
       "statusCode": "كود الحالة",
@@ -141,7 +141,7 @@
     "citations": "وثائق البراءات ذات الصلة",
     "examiners": "الفاحص",
     "drawings": "الرسومات",
-    "applicants": "مودعي الطلبات",
+    "applicants": "المودعون ",
     "publicationNumber": "رقم النشر",
     "publicationTitle": "عنوان النشر",
     "publicationDate": "تاريخ النشر",
@@ -168,5 +168,9 @@
   "mostRelevant": "الأكثر توافقا",
   "filingDateAsc": "تاريخ الإيداع تصاعديًا",
   "filingDateDesc": "تاريخ الإيداع تنازليًا",
-  "saveSearchQuery": "حفظ استعلام البحث"
+  "saveSearchQuery": "حفظ استعلام البحث",
+  "querySaved": "حفظ استعلام البحث بنجاح.",
+  "savedQueryMsg": "يمكنك الوصول لاستعلاماتك المحفوظة <0>إستعلاماتي</0>",
+  "couldnotSave": "لا يمكن حفظ استعلام البحث.",
+  "failerMsg": "حدث خطأ ما! برجاء المحاولة لاحقًا."
 }

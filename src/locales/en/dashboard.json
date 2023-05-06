@@ -2,8 +2,8 @@
   "queuePriority": "Queue Priority",
   "earliestPriority": "Earliest Priority",
   "filingDate": "Filing Date",
-  "emptyBoardTitle": "You don’t have any tasks yet.",
-  "emptyBoardMessage": "Try another search term in the search bar above.",
+  "emptyBoardTitle": "Can't see your tasks?",
+  "emptyBoardMessage": "You don’t have any tasks yet",
   "queue": "Queue ",
   "addNote": "Add note",
   "priority": "Priority ",
@@ -13,19 +13,19 @@
   "notes": "Notes",
   "findSimilar": "Find Similar",
   "download": "Download",
-  "translateInfo": "Translate info",
+  "translateInfo": "Translate",
   "markAsDone": "Mark as Done",
   "status": {
     "toDo": "To Do",
     "done": "Done",
-    "inProgress": "In progress",
+    "inProgress": "In Progress",
     "review": "Review"
   },
   "workStream": {
-    "patent": "Patent",
-    "trademark": "Trademark",
+    "patent": "Patents",
+    "trademark": "Trademarks",
     "copyrights": "Copyrights",
-    "industrialDesign": "Industrial Design",
+    "industrialDesign": "Industrial Designs",
     "plantVarieties": "Plant Varieties",
     "integratedCircuits": "Integrated Circuits"
   },
@@ -33,7 +33,7 @@
     "patent": "<0>Patents</0> Board",
     "trademark": "<0>Trademarks</0> Board",
     "copyrights": "<0>Copyrights</0> Board",
-    "industrialDesign": "<0>Industrial Design</0> Board",
+    "industrialDesign": "<0>Industrial Designs</0> Board",
     "plantVarieties": "<0>Plant Varieties</0> Board",
     "integratedCircuits": "<0>Integrated Circuits</0> Board"
   }

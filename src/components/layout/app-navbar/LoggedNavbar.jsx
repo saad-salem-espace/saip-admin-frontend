@@ -10,9 +10,9 @@ import { Link } from 'react-router-dom';
 import { FaRegBell } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
-import PropTypes from 'prop-types';
 import roleMapper from 'utils/roleMapper';
 import Image from 'react-bootstrap/Image';
+import PropTypes from 'prop-types';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
@@ -40,7 +40,7 @@ function LoggedNavbar({ lang, changeLang }) {
               <MdOutlineBookmarkBorder className="icon" />
               {t('navbar.myBookmarks')}
             </Nav.Link>
-            <Nav.Link to="#" as={Link} className="has-icon ps-lg-5">
+            <Nav.Link to="/savedQueries" as={Link} className="has-icon ps-lg-5">
               <BsStar className="icon" />
               {t('navbar.savedQueries')}
             </Nav.Link>
