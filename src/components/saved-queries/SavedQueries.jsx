@@ -16,12 +16,12 @@ import CacheContext from 'contexts/CacheContext';
 import useCacheRequest from 'hooks/useCacheRequest';
 import { pascalCase } from 'change-case';
 import Spinner from 'components/shared/spinner/Spinner';
-import SavedQueriresTable from './SavedQueriresTable';
+import SavedQueriesTable from './SavedQueriesTable';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
 
-const SavedQuerires = () => {
+const SavedQueries = () => {
   const { t } = useTranslation('queries');
-  const [selectedWorkStream, setSelectedWorkStream] = useState();
+  const [selectedWorkStream, setSelectedWorkStream] = useState({ label: t('patent'), value: 1 });
   const [searchParams] = useSearchParams();
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
@@ -52,12 +52,12 @@ const SavedQuerires = () => {
     resetPageNumber();
   };
 
-  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, true);
+  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, Number(searchParams.get('page') || '1'), true);
 
   const isAuth = auth && auth.user;
 
   const savedQueries = (
-    SavedQueriresTable
+    SavedQueriesTable
   );
   return (
     <Container fluid>
@@ -75,6 +75,7 @@ const SavedQuerires = () => {
           </div>
           {isAuth ? (
             <AppPagination
+              className="mt-8"
               axiosConfig={axiosConfig}
               defaultPage={Number(searchParams.get('page') || '1')}
               RenderedComponent={
@@ -82,6 +83,7 @@ const SavedQuerires = () => {
             }
               emptyState={(
                 <NoData />)}
+              updateDependencies={[...Object.values(selectedWorkStream)]}
             />
           ) : (
             <IndexedDbAppPagination
@@ -98,11 +100,10 @@ const SavedQuerires = () => {
               }}
             />
           )}
-
         </Col>
       </Row>
     </Container>
   );
 };
 
-export default SavedQuerires;
+export default SavedQueries;

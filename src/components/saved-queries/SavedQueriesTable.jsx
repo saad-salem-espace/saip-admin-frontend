@@ -4,7 +4,7 @@ import '../../assets/styles/common/table.scss';
 import PropTypes from 'prop-types';
 import SavedQueryRow from './SavedQueryRow';
 
-const SavedQueriresTable = ({ data }) => {
+const SavedQueriesTable = ({ data }) => {
   const { t } = useTranslation('queries');
 
   return (
@@ -29,8 +29,8 @@ const SavedQueriresTable = ({ data }) => {
   );
 };
 
-SavedQueriresTable.propTypes = {
+SavedQueriesTable.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
 };
 
-export default SavedQueriresTable;
+export default SavedQueriesTable;
