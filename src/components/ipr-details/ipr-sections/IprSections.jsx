@@ -23,6 +23,8 @@ function IprSections({
   const [showAlert, setShowAlert] = useState(false);
   const [hasUnsavedNotes, setHasUnsavedNotes] = useState(false);
   const [fireSubmit, setFireSubmit] = useState(false);
+  // const [noteSaved, setNoteSaved] = useState(false);
+  const [selectedTab, setSelectedTab] = useState();
 
   const disableChangeTab = (hasData) => {
     setHasUnsavedNotes(!!hasData);
@@ -65,18 +67,25 @@ function IprSections({
     },
   ];
 
-  const handleConfirm = () => {
-    setFireSubmit(true);
-  };
-
   const ShowAlert = () => {
     setShowAlert(true);
   };
+
   const handleActiveTab = (id) => {
+    setSelectedTab(id);
     if (hasUnsavedNotes) {
       ShowAlert();
+      // if (noteSaved) {
+      //   setActiveTabId(id);
+      // }
+    } else {
+      setActiveTabId(id);
     }
-    setActiveTabId(id);
+  };
+
+  const handleConfirm = () => {
+    setFireSubmit(true);
+    handleActiveTab(selectedTab);
   };
 
   if (!showInfo) {

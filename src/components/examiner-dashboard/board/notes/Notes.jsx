@@ -22,6 +22,7 @@ function Notes({
   const [currentPage, setCurrentPage] = useState(1);
   const [noteContent, setNoteContent] = useState();
   const [totalPages, setTotalPages] = useState();
+  const [notesValue, setNotesValue] = useState();
 
   const config = getNotesApi(id, currentPage, true);
   const loadMoreItems = () => {
@@ -47,6 +48,7 @@ function Notes({
   );
   const onSubmitNote = () => {
     executeSaveNote();
+    setNotesValue();
   };
   useEffect(() => {
     if (fireSubmit) {
@@ -115,6 +117,7 @@ function Notes({
           setNoteText={setNoteText}
           disableEditor={disableEditor}
           disableChangeTab={disableChangeTab}
+          notesValue={notesValue}
         />
       </div>
     </div>

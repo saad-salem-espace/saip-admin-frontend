@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 function NoteTextEditor({
-  onSubmit, setNoteText, disableEditor, disableChangeTab,
+  onSubmit, setNoteText, disableEditor, disableChangeTab, notesValue,
 }) {
   const { t } = useTranslation('notes');
   const auth = useAuth();
@@ -26,6 +26,7 @@ function NoteTextEditor({
         disableEditor={disableEditor}
         disableChangeTab={disableChangeTab}
         SubmitNote={SubmitNote}
+        notesValue={notesValue}
       />
       <Button text={t('add')} variant="primary" className="ms-md-4" size="sm" onClick={submitNote ? onSubmit : null} />
     </div>
