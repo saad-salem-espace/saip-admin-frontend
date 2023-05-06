@@ -16,14 +16,14 @@ import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
 import useCacheRequest from 'hooks/useCacheRequest';
-import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
-import UploadImage from 'components/shared/upload-image/UploadImage';
 import formStyle from 'components/shared/form/form.module.scss';
 import useAxios from 'hooks/useAxios';
 import validationMessages from 'utils/validationMessages';
-import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
+import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
+import UploadImage from 'components/shared/upload-image/UploadImage';
+import Select from 'components/shared/form/select/Select';
 import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
 
