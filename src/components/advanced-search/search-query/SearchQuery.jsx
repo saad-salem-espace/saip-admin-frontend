@@ -52,9 +52,9 @@ function SearchQuery({
         }}
       >
         {({
-          values, setFieldValue, errors, setValues, touched, setErrors, setTouched,
+          values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form onChange={onChangeSearchQuery(parseQuery(values.searchFields, '', true))}>
+          <Form onChange={onChangeSearchQuery(parseQuery(values.searchFields, '', true))} onSubmit={handleSubmit}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -101,7 +101,7 @@ function SearchQuery({
                     }}
                     text={(
                       <>
-                        <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
+                        <FontAwesomeIcon icon={faCirclePlus} className="me-2" />
                         {t('addSearchField')}
                       </>
                     )}

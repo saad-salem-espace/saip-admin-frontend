@@ -1,0 +1,39 @@
+{
+  "queuePriority": "أولوية قائمة الانتظار",
+  "earliestPriority": "أقرب أولوية",
+  "emptyBoardTitle": "ليس لديك أي مهام حتى الآن.",
+  "emptyBoardMessage": "جرب مصطلح بحث آخر في شريط البحث أعلاه.",
+  "queue": "صف",
+  "addNote": "اضف ملاحظة",
+  "priority": "أولوية",
+  "pinned": "مثبت",
+  "others": "اخرون",
+  "info": "معلومات",
+  "notes": "ملاحظات",
+  "findSimilar": "البحث عن مشابه",
+  "download": "تنزيل",
+  "translateInfo": "ترجمة المعلومات",
+  "markAsDone": "اعتبره منته",
+  "status": {
+    "toDo": "ما يجب القيام به",
+    "done": "منجز",
+    "inProgress": "في تَقَدم",
+    "review": "مراجعة"
+  },
+  "workStream": {
+    "patent": "براءة اختراع",
+    "trademark": "علامة تجارية",
+    "copyrights": "حقوق التأليف والنشر",
+    "industrialDesign": "التصميم الصناعي",
+    "plantVarieties": "أصناف نباتية",
+    "integratedCircuits": "دوائر متكاملة"
+  },
+  "board": {
+    "patent": "لوحة <0> برءاة اختراع </0>",
+    "trademark": "لوحة <0> علامة تجارية </0>",
+    "copyrights": "لوحة <0> حقوق التأليف والنشر </0>",
+    "industrialDesign": "لوحة <0> التصميم الصناعي </0>",
+    "plantVarieties": "لوحة <0> أصناف نباتية </0>",
+    "integratedCircuits": "لوحة <0> دوائر متكاملة </0>"
+  }
+}

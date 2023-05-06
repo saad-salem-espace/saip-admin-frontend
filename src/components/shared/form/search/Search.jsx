@@ -69,6 +69,7 @@ function Search({
         {...(onSubmit && { onClick: onSubmit })}
         className={`${style.searchIcon}`}
         text={<FontAwesomeIcon icon={faSearch} />}
+        data-testid="submit-simple-search"
       />
     </div>
   );
