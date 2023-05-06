@@ -21,9 +21,9 @@ import formStyle from 'components/shared/form/form.module.scss';
 import useAxios from 'hooks/useAxios';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
+import UploadImage from 'components/shared/upload-image/UploadImage';
 import Select from 'components/shared/form/select/Select';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
-import UploadImage from 'components/shared/upload-image/UploadImage';
 import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
 
