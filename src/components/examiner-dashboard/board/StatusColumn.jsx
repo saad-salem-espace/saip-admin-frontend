@@ -29,12 +29,11 @@ function StatusColumn({
             assignment={assignment}
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
-            active={activeDocument === assignment.filingNumber}
             activeDocument={activeDocument}
-            status={status}
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
+            active={activeDocument === assignment.filingNumber}
           />
         ))}
         { others && (
@@ -46,11 +45,10 @@ function StatusColumn({
             assignment={assignment}
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
-            active={activeDocument === assignment.filingNumber}
-            status={status}
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
+            active={activeDocument === assignment.filingNumber}
           />
         ))}
       </div>
@@ -64,8 +62,8 @@ StatusColumn.propTypes = {
   setActiveDocument: PropTypes.func.isRequired,
   setToggle: PropTypes.func.isRequired,
   data: PropTypes.instanceOf(Array).isRequired,
-  activeDocument: PropTypes.string.isRequired,
   SetSelectedCard: PropTypes.func,
+  activeDocument: PropTypes.string.isRequired,
   isInProgress: PropTypes.func.isRequired,
   setActiveTab: PropTypes.func,
 };
