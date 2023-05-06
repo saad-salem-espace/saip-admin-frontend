@@ -40,6 +40,7 @@ import { decodeQuery } from '../../utils/search-query/decoder';
 import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import toastify from '../../utils/toastify';
 import validationMessages from '../../utils/validationMessages';
+import SharedSearch from 'components/workstream-search/shared/SharedSearch';
 
 function SearchResults() {
   const { t, i18n } = useTranslation('search');
@@ -476,7 +477,7 @@ function SearchResults() {
             }}
           >
             {({
-              setFieldValue, handleSubmit, values,
+              setFieldValue, handleSubmit, values, setTouched, setErrors,
             }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
@@ -493,51 +494,20 @@ function SearchResults() {
                       }}
                     />
                   </div>
-                  <div className="flex-grow-1">
-                    <div className="mb-4">
-                      <div className="d-md-flex">
-                        {/* {
-                          !isAdvancedSearch && (
-                            <div className="position-relative mb-md-0 mb-3">
-                              <Select
-                                options={options}
-                                className="searchResultsSelect select selectWithSibling smSelect"
-                              />
-                            </div>
-                          )
-                        } */}
-                        <Search
-                          id="search"
-                          name="searchQuery"
-                          className="flex-grow-1"
-                          moduleClassName={SearchModuleClassName}
-                          placeholder={t('typeHere')}
-                          onSubmit={onSubmit}
-                          handleUploadImg={handleUploadImg}
-                          disabled
-                          searchWithImg
-                        />
-                      </div>
-                    </div>
-                    <div className="d-md-flex mt-md-0 mt-14">
-                      <ToggleButton
-                        handleToggleButton={handleAdvancedSearch}
-                        isToggleButtonOn={isAdvancedSearch}
-                        text={t('advancedSearch')}
-                        className="border-md-end pe-4 me-4 mb-md-0 mb-2"
-                      />
-                      <ToggleButton
-                        handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
-                        isToggleButtonOn={isEnabledSynonyms}
-                        text={t('allowSynonyms')}
-                      />
-                    </div>
-                  </div>
+                  <SharedSearch
+                    setFieldValue={setFieldValue}
+                    values={values}
+                    setErrors={setErrors}
+                    setTouched={setTouched}
+                    selectedWorkStream={1}
+                    isAdvanced={isAdvancedSearch}
+                  />
                 </div>
               </Form>
             )}
           </Formik>
-          <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
+
+          {/* <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
             <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
           </div>
           {
@@ -546,10 +516,23 @@ function SearchResults() {
                 {errorMessage}
               </span>
             )
-          }
+          } */}
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch content">
+        <div className="d-md-flex mt-md-0 mt-14">
+          <ToggleButton
+            handleToggleButton={handleAdvancedSearch}
+            isToggleButtonOn={isAdvancedSearch}
+            text={t('advancedSearch')}
+            className="border-md-end pe-4 me-4 mb-md-0 mb-2"
+          />
+          <ToggleButton
+            handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
+            isToggleButtonOn={isEnabledSynonyms}
+            text={t('allowSynonyms')}
+          />
+        </div>
         <Col xxl={isAdvancedMenuOpen ? 3 : 1} xl={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
           <AdvancedSearch
             toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
@@ -615,7 +598,7 @@ function SearchResults() {
                     />
                   </div>
                 </div>
-                <AppPagination
+                {/* <AppPagination
                   axiosConfig={axiosConfig}
                   defaultPage={Number(searchParams.get('page') || '1')}
                   setResults={setResults}
@@ -640,7 +623,7 @@ function SearchResults() {
                     setIsIPRExpanded(false);
                   }}
                   updateDependencies={[...Object.values(searchResultParams)]}
-                />
+                /> */}
               </Form>
             )}
           </Formik>

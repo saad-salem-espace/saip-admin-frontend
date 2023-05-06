@@ -37,6 +37,7 @@ function AdvancedSearch({
         defaultInitializers={defaultInitializers}
         onChangeSearchQuery={onChangeSearchQuery}
         submitRef={submitRef}
+        isAdvancedMenuOpen={isAdvancedMenuOpen}
       />,
     },
   ];

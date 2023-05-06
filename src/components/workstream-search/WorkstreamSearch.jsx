@@ -26,6 +26,7 @@ import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
+import SharedSearch from './shared/SharedSearch';
 
 function WorkstreamSearch() {
   const { t, i18n } = useTranslation('search');
@@ -80,15 +81,15 @@ function WorkstreamSearch() {
     setSelectedWorkStream(newState);
   };
 
-  const onChangeIdentifier = (identifier, clearData, clearErrors, clearTouch) => {
-    if (identifier.identifierType === 'Date' || selectedOption.identifierType === 'Date') {
-      clearData();
-      clearErrors();
-      clearTouch();
-    }
+  // const onChangeIdentifier = (identifier, clearData, clearErrors, clearTouch) => {
+  //   if (identifier.identifierType === 'Date' || selectedOption.identifierType === 'Date') {
+  //     clearData();
+  //     clearErrors();
+  //     clearTouch();
+  //   }
 
-    setSelectedOption(identifier);
-  };
+  //   setSelectedOption(identifier);
+  // };
 
   const onSubmit = (values) => {
     let { searchQuery } = values;
@@ -126,32 +127,32 @@ function WorkstreamSearch() {
     }
   };
 
-  const SearchModuleClassName = ({
-    lgSearch: true,
-    searchWithSibling: !isAdvanced,
-    searchInputWrapper: true,
-    imgUploaded: isImgUploaded,
-    searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
-  });
+  // const SearchModuleClassName = ({
+  //   lgSearch: true,
+  //   searchWithSibling: !isAdvanced,
+  //   searchInputWrapper: true,
+  //   imgUploaded: isImgUploaded,
+  //   searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
+  // });
 
-  const uploadCurrentFile = async (file, setErrors, data) => {
-    setIsSubmitting(true);
-    execute(uploadFile(file));
-    if (!data.trim()) setErrors({});
-  };
+  // const uploadCurrentFile = async (file, setErrors, data) => {
+  //   setIsSubmitting(true);
+  //   execute(uploadFile(file));
+  //   if (!data.trim()) setErrors({});
+  // };
 
-  const handleUploadImg = () => {
-    setShowUploadImgSection(!showUploadImgSection);
-  };
+  // const handleUploadImg = () => {
+  //   setShowUploadImgSection(!showUploadImgSection);
+  // };
 
   const toggleState = (state) => {
     setIsAdvanced(!state);
     setAdvancedQuery('');
   };
 
-  function identifierName(option) {
-    return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
-  }
+  // function identifierName(option) {
+  //   return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
+  // }
 
   return (
     <div>
@@ -174,6 +175,12 @@ function WorkstreamSearch() {
           </Row>
         </Container>
       </div>
+      <ToggleButton
+        handleToggleButton={() => toggleState(isAdvanced)}
+        isToggleButtonOn={isAdvanced}
+        text={t('advancedSearch')}
+        className="d-block text-primary mb-2 text-end"
+      />
       <Container className="px-0 m-auto search-container">
         <Row className="mx-0">
           <Col className="pt-5 pb-8" lg={{ span: 8, offset: 2 }}>
@@ -190,65 +197,13 @@ function WorkstreamSearch() {
                 handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
-                  <ToggleButton
-                    handleToggleButton={() => toggleState(isAdvanced)}
-                    isToggleButtonOn={isAdvanced}
-                    text={t('advancedSearch')}
-                    className="d-block text-primary mb-2 text-end"
+                  <SharedSearch
+                    setFieldValue={setFieldValue}
+                    values={values}
+                    setErrors={setErrors}
+                    setTouched={setTouched}
+                    selectedWorkStream={selectedWorkStream}
                   />
-                  <div className="d-xl-flex align-items-stretch">
-                    <div className="position-relative mb-xl-0 mb-3">
-                      <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
-                      {!isAdvanced && <Select
-                        options={searchOptions}
-                        className={`${style.select} lgSelect selectWithSibling`}
-                        getOptionName={(option) => identifierName(option)}
-                        selectedOption={selectedOption}
-                        setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
-                        getOptionValue={(option) => option.identiferName}
-                      />}
-                    </div>
-                    <Search
-                      id="search"
-                      name="searchQuery"
-                      className="flex-grow-1 searchBox"
-                      moduleClassName={
-                        SearchModuleClassName
-                      }
-                      placeholder={isAdvanced ? null : t('typeHere')}
-                      isClearable={!!values.searchQuery}
-                      clearInput={() => { setFieldValue('searchQuery', ''); }}
-                      handleUploadImg={handleUploadImg}
-                      searchWithImg={selectedWorkStream === 2 || selectedWorkStream === 1}
-                      type={selectedOption?.identifierType}
-                      onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
-                      imageSearch={isImgUploaded}
-                      disabled={isAdvanced}
-                    >
-                      {/* please show this span if the search has text value */}
-                      {/* <span className={`position-absolute ${formStyle.label}
-                      ${isImgUploaded ? style.customLabel : ''}`}
-                      >
-                        {t('searchFields')}
-                      </span> */}
-                    </Search>
-                  </div>
-                  <div className="rounded">
-                    <UploadImage
-                      className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`}
-                      showUploadImgSection={showUploadImgSection}
-                      changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }}
-                      uploadFile={(file) => uploadCurrentFile(file, setErrors, values.searchQuery)}
-                      isSubmitting={isSubmitting}
-                    />
-                  </div>
-                  {
-                    errorMessage && (
-                      <span className="text-danger-dark f-12">
-                        { errorMessage }
-                      </span>
-                    )
-                  }
                   {isAdvanced && <SearchQuery
                     workstreamId={selectedWorkStream}
                     firstIdentifierStr={searchOptions?.[0].identifierOptions[0]}
