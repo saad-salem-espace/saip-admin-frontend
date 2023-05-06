@@ -2,13 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
-  faTimes,
-  faUpRightAndDownLeftFromCenter,
-  faDownLeftAndUpRightToCenter,
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { Formik, Form } from 'formik';
+import { FaSearch } from 'react-icons/fa';
+import { FiDownload } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { documentApi } from 'apis/search/documentsApi';
@@ -17,8 +15,6 @@ import PropTypes from 'prop-types';
 import Badge from 'components/shared/badge/Badge';
 import Image from 'react-bootstrap/Image';
 import Button from 'components/shared/button/Button';
-import Select from 'components/shared/form/select/Select';
-import formStyle from 'components/shared/form/form.module.scss';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
@@ -54,6 +50,9 @@ import InventorRow from './patent/inventors/InventorRow';
 import PatentFamility from './patent/patent-famility/PatentFamility';
 import PatentFamilityRow from './patent/patent-famility/PatentFamilityRow';
 import Claims from './patent/claims/Claims';
+import IprSections from './ipr-sections/IprSections';
+import IprData from './IprData';
+import IprControlAction from './IprControlAction';
 import OriginalDocument from './shared/original-document/OriginalDocument';
 
 function IprDetails({
@@ -64,8 +63,15 @@ function IprDetails({
   getNextDocument,
   getPreviousDocument,
   setActiveDocument,
+  activeWorkstream,
+  className,
+  dashboard,
+  showActions,
+  activeTab,
+  isCardInprogress,
+  selectedCardId,
 }) {
-  const { t } = useTranslation('search');
+  const { t, i18n } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [searchParams] = useSearchParams();
@@ -74,18 +80,45 @@ function IprDetails({
     value: 'BibliographicData',
   });
   const searchResultParams = {
-    workstreamId: searchParams.get('workstreamId'),
+    workstreamId: dashboard ? '1' : (searchParams.get('workstreamId') || activeWorkstream.toString()),
   };
   const [{ data }, execute] = useAxios(
     documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
     { manual: true },
   );
   const document = data?.data?.[0];
+
   useEffect(() => {
     if (documentId) {
       execute();
     }
   }, [documentId]);
+
+  useEffect(() => {
+    window.googleTranslateElementInit = () => {
+    // eslint-disable-next-line no-new
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: i18n.language,
+          autoDisplay: false,
+        },
+        'google_translate_element',
+      );
+    };
+    const addScript = window.document.createElement('script');
+    addScript.setAttribute(
+      'src',
+      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
+    );
+    window.document.body.appendChild(addScript);
+    return () => {
+      window.document.body.removeChild(addScript);
+      const elements = window.document.querySelectorAll('.skiptranslate');
+      elements.forEach((element) => {
+        element.remove();
+      });
+    };
+  }, []);
 
   if (!document) {
     return null;
@@ -527,69 +560,56 @@ function IprDetails({
     return content;
   };
   return (
-    <div className={`${style.iprWrapper}`}>
+    <div className={`${style.iprWrapper} ${className}`} translate="yes">
       <div className="border-bottom bg-primary-01">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
-          <div className="d-flex">
+          <div className="d-flex align-items-center">
             <FontAwesomeIcon
               icon={faBookmark}
               className="me-3 f-22 text-primary-dark"
             />
-            <h5>{document.BibliographicData.PublicationNumber}</h5>
+            <h5 className="mb-0">{document.BibliographicData.PublicationNumber}</h5>
           </div>
           <div>
-            <Button
-              variant="link"
-              className="p-0 pe-5"
-              text={
-                <FontAwesomeIcon
-                  icon={faChevronLeft}
-                  className="md-text text-gray"
-                />
+            {
+            !dashboard && (
+              <>
+                <Button
+                  variant="link"
+                  className="p-0 pe-5"
+                  text={
+                    <FontAwesomeIcon
+                      icon={faChevronLeft}
+                      className="md-text text-gray"
+                    />
               }
-              disabled={!previousDocument}
-              onClick={() => setActiveDocument(previousDocument)}
-            />
-            <Button
-              variant="link"
-              className="p-0 pe-5 border-end me-4"
-              text={
-                <FontAwesomeIcon
-                  icon={faChevronRight}
-                  className="md-text text-gray"
+                  disabled={!previousDocument}
+                  onClick={() => setActiveDocument(previousDocument)}
                 />
+                <Button
+                  variant="link"
+                  className="p-0 pe-5 border-end me-4"
+                  text={
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      className="md-text text-gray"
+                    />
               }
-              disabled={!nextDocument}
-              onClick={() => setActiveDocument(nextDocument)}
-            />
-            <Button
-              variant="link"
-              onClick={collapseIPR}
-              className="p-0 pe-5 d-md-inline-block d-none"
-              data-testid="expand-ipr-detail-button"
-              text={
-                <FontAwesomeIcon
-                  icon={
+                  disabled={!nextDocument}
+                  onClick={() => setActiveDocument(nextDocument)}
+                />
+              </>)
+              }
+            {
+                showActions
+            && <IprControlAction
+              collapseIPR={collapseIPR}
+              isIPRExpanded={
                     isIPRExpanded
-                      ? faDownLeftAndUpRightToCenter
-                      : faUpRightAndDownLeftFromCenter
-                  }
-                  className={`f-17 text-gray ${style['expand-icon']}`}
-                />
-              }
+                      }
+              onClose={onClose}
             />
-            <Button
-              variant="link"
-              data-testid="close-ipr-detail-button"
-              onClick={onClose}
-              className="p-0"
-              text={
-                <FontAwesomeIcon
-                  icon={faTimes}
-                  className="f-20 text-gray border-start ps-5"
-                />
-              }
-            />
+}
           </div>
         </div>
         {searchResultParams.workstreamId === '2' && (
@@ -627,39 +647,60 @@ function IprDetails({
         )}
         {searchResultParams.workstreamId === '1' && (
           <p className="text-gray px-6">
-            <HandleEmptyAttribute checkOn={document.BibliographicData.owner} />
+            <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
           </p>
         )}
+        { dashboard && (
+          <div className="border-top py-3 px-6">
+            <Button
+              variant="primary"
+              text={(
+                <>
+                  <FaSearch className="fs-base me-2" />
+                  {t('dashboard:findSimilar')}
+                </>
+              )}
+              className="me-4 fs-sm my-2 my-xl-0"
+            />
+            <Button
+              variant="primary"
+              text={(
+                <>
+                  <FiDownload className="fs-base me-2" />
+                  {t('dashboard:download')}
+                </>
+              )}
+              className="me-4 fs-sm my-2 my-xl-0"
+            />
+          </div>
+        )}
+        <div id="google_translate_element" />
       </div>
-      <div className="px-6 pt-4">
-        <Formik>
-          {() => (
-            <Form>
-              <div className="position-relative">
-                <span
-                  className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}
-                >
-                  {t('viewSection')}
-                </span>
-                <Select
-                  options={
+      {
+      dashboard && showActions ? (
+        <IprSections
+          options={
                     searchResultParams.workstreamId === '2'
                       ? trademarkViewsOptions
                       : patentViewsOptions
                   }
-                  setSelectedOption={onChangeSelect}
-                  selectedOption={selectedView}
-                  defaultValue={selectedView}
-                  id="sections"
-                  fieldName="sections"
-                  className={`${style.select} mb-5 select-2`}
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
-        {renderSelectedView()}
-      </div>
+          onChangeSelect={onChangeSelect}
+          selectedView={selectedView}
+          renderSelectedView={renderSelectedView}
+          documentId={documentId}
+          activeTab={activeTab}
+          isCardInprogress={isCardInprogress}
+          selectedCardId={selectedCardId}
+          className="notes-editor-container"
+        />
+      ) : (
+        <IprData
+          options={searchResultParams.workstreamId === '2' ? trademarkViewsOptions : patentViewsOptions}
+          onChangeSelect={onChangeSelect}
+          selectedView={selectedView}
+          renderSelectedView={renderSelectedView}
+        />)
+      }
     </div>
   );
 }
@@ -672,14 +713,26 @@ IprDetails.propTypes = {
   getNextDocument: PropTypes.func,
   getPreviousDocument: PropTypes.func,
   setActiveDocument: PropTypes.func,
+  activeWorkstream: PropTypes.number,
+  className: PropTypes.string,
+  dashboard: PropTypes.bool,
+  showActions: PropTypes.bool,
+  activeTab: PropTypes.number,
+  isCardInprogress: PropTypes.bool.isRequired,
+  selectedCardId: PropTypes.number.isRequired,
 };
 
 IprDetails.defaultProps = {
   documentId: null,
+  className: null,
+  activeWorkstream: null,
   onClose: () => {},
   getNextDocument: () => {},
   getPreviousDocument: () => {},
   setActiveDocument: () => {},
+  dashboard: false,
+  showActions: true,
+  activeTab: 2,
 };
 
 export default IprDetails;

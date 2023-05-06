@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
-// import ErrorMessage from '../error-message/ErrorMessage';
 import './MultiSelect.scss';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
-import Button from '../button/Button';
+import Button from '../../button/Button';
+import FormikErrorMessage from '../formik-error-message/FormikErrorMessage';
 
 function MultiSelect({
-  options, className, label, name, isClearable,
-  //  errorMsg,
+  options, className, label, name, isClearable, showError, errorClassName,
 }) {
   const { t } = useTranslation('search');
   return (
@@ -28,7 +27,7 @@ function MultiSelect({
               />
             </div>
           </div>
-          {/* <ErrorMessage msg={errorMsg} className="mt-2 mb-0" /> */}
+          {showError && <FormikErrorMessage name={name} className={errorClassName} /> }
           {isClearable && (
             <div className="border-top mt-7 pb-2 pt-5">
               <Button
@@ -56,13 +55,15 @@ MultiSelect.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   isClearable: PropTypes.bool,
-  // errorMsg: PropTypes.string,
+  showError: PropTypes.bool,
+  errorClassName: PropTypes.string,
 };
 
 MultiSelect.defaultProps = {
   label: null,
   isClearable: false,
-  // errorMsg: null,
+  showError: true,
+  errorClassName: '',
 };
 
 export default MultiSelect;

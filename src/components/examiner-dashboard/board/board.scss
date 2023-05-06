@@ -1,0 +1,40 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/mixin";
+
+.board-container {
+  .cards-container {
+    overflow-x: scroll;
+    @include scrollbar;
+    @include media-breakpoint-up(lg) {
+      height: 77vh;
+    }
+  }
+  .empty-board {
+    height: 65vh;
+  }
+}
+.dashboard-ipr-container {
+  z-index: 5;
+  overflow-x: hidden;
+  @include scrollbar;
+  height: calc(100vh - 162px);
+  overflow-y: auto;
+
+  &.expanded {
+    .top-info-bar {
+      .filing-date {
+        @include media-breakpoint-up(lg) {
+          @include border(1px,84px,-9px,auto,0,$border-color);
+        }
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+  .border-start {
+    @include media-breakpoint-down(md) {
+      border: none !important
+    }
+  }
+}

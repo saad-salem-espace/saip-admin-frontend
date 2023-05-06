@@ -1,4 +1,5 @@
 @import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/mixin";
 
 .expand-icon {
   transform: rotateY(180deg);
@@ -16,6 +17,7 @@
   height: 80vh;
   overflow-y: auto;
   @extend .me-2;
+  @include scrollbar;
 }
 
 .img {
