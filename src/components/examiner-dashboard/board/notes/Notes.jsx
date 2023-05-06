@@ -83,6 +83,7 @@ function Notes({
   if (!notes) {
     return <Spinner />;
   }
+
   return (
     <div className="position-relative h-100">
       <div className="notes-wrapper">
@@ -98,7 +99,7 @@ function Notes({
               </div>
             ))
           }
-              {currentPage < totalPages && (
+              {currentPage <= totalPages && (
               <div className="text-center">
                 <Button onClick={loadMoreItems} variant="transparent" text={t('loadMoreNotes')} className="text-primary-dark f-14 font-regular border-0 mb-4" />
               </div>

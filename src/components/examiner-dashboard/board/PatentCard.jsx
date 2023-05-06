@@ -116,7 +116,6 @@ function PatentCard({
             text={
               <>
                 <FaCommentAlt className="me-2" />
-                3
                 {assignment.notesCount}
               </>
             }
