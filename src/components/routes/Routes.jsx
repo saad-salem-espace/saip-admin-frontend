@@ -18,8 +18,8 @@ const Routes = () => (
     <Route element={<AuthenticatedRoute />}>
       <Route path={appRoutes.dashboard} element={<Dashboard />} />
       <Route path={appRoutes.admin} element={<Admin />} />
-      <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
     </Route>
+    <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
     <Route path={appRoutes.home} element={<WorkstreamSearch />} />
     <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
   </ReactRoutes>
