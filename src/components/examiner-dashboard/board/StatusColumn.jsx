@@ -34,6 +34,7 @@ function StatusColumn({
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
+            active={activeDocument === assignment.filingNumber}
           />
         ))}
         { others && (
@@ -49,6 +50,7 @@ function StatusColumn({
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
+            active={activeDocument === assignment.filingNumber}
           />
         ))}
       </div>

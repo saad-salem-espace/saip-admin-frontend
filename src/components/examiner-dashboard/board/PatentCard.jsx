@@ -13,8 +13,8 @@ import { useEffect } from 'react';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 
 function PatentCard({
-  assignment, setToggle, setActiveDocument, activeDocument,
-  status, setActiveTab, isInProgress, SetSelectedCard,
+  assignment, setToggle, setActiveDocument,
+  status, setActiveTab, isInProgress, SetSelectedCard, active,
 }) {
   const { t } = useTranslation('dashboard');
   const [pinnedData, executeToggle] = useAxios(
@@ -26,11 +26,11 @@ function PatentCard({
   }, [pinnedData]);
 
   const isPinned = assignment.pinned;
-
   return (
-    <Card className={` ${activeDocument === assignment.filingNumber ? 'active' : ''} patent-card mb-2`}>
+    <Card className={`${active ? 'active' : ''} patent-card mb-2`}>
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
+          {status}
           <Button
             variant="link"
             className="text-decoration-none text-start p-0 font-regular w-75"
@@ -132,10 +132,10 @@ PatentCard.propTypes = {
   setToggle: PropTypes.func.isRequired,
   SetSelectedCard: PropTypes.func,
   setActiveDocument: PropTypes.func.isRequired,
-  activeDocument: PropTypes.string.isRequired,
   isInProgress: PropTypes.bool.isRequired,
   setActiveTab: PropTypes.func,
   status: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
 };
 
 PatentCard.defaultProps = {

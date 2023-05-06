@@ -9,7 +9,7 @@ function Sidebar({ setActiveWorkstream, activeWorkstream, linksList }) {
       <div className="nav d-flex flex-column">
         {linksList.map((button) => (
           <AppTooltip
-            placement="right"
+            placement="auto"
             tooltipId={button.WorkStreamClass}
             tooltipContent={button.workStreamName}
             tooltipTrigger={
