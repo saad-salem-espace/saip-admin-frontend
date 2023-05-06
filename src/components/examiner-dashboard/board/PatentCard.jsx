@@ -14,7 +14,7 @@ import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 
 function PatentCard({
   assignment, setToggle, setActiveDocument,
-  status, setActiveTab, isInProgress, SetSelectedCard, active,
+  setActiveTab, isInProgress, SetSelectedCard, active,
 }) {
   const { t } = useTranslation('dashboard');
   const [pinnedData, executeToggle] = useAxios(
@@ -30,14 +30,13 @@ function PatentCard({
     <Card className={`${active ? 'active' : ''} patent-card mb-2`}>
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
-          {status}
           <Button
             variant="link"
             className="text-decoration-none text-start p-0 font-regular w-75"
             onClick={() => {
               setActiveDocument(assignment.filingNumber); setActiveTab(1);
               SetSelectedCard(assignment.id);
-              isInProgress(status === 'In progress');
+              isInProgress(assignment.status === 'IN_PROGRESS');
             }}
             text={
               <p className="text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
@@ -87,9 +86,9 @@ function PatentCard({
             {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}
           </p>
         </div>
-        <div className={`d-flex pt-3 ${status === 'In progress' ? 'justify-content-between' : 'justify-content-end'}`}>
+        <div className={`d-flex pt-3 ${assignment.status === 'IN_PROGRESS' ? 'justify-content-between' : 'justify-content-end'}`}>
           {
-            status === 'In progress' && (
+            assignment.status === 'IN_PROGRESS' && (
               <Button
                 variant="link"
                 onClick={() => {
@@ -134,7 +133,6 @@ PatentCard.propTypes = {
   setActiveDocument: PropTypes.func.isRequired,
   isInProgress: PropTypes.bool.isRequired,
   setActiveTab: PropTypes.func,
-  status: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
 };
 

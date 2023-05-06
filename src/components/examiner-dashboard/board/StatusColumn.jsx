@@ -30,7 +30,6 @@ function StatusColumn({
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
             activeDocument={activeDocument}
-            status={status}
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
@@ -46,7 +45,6 @@ function StatusColumn({
             assignment={assignment}
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
-            status={status}
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
