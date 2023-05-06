@@ -134,7 +134,8 @@
       "representativeName": "Representative Name",
       "representativeDetails": "Representative details"
     },
-    "drawings": "Drawings"
+    "drawings": "Drawings",
+    "originalDocument": "Original Document"
   },
   "patent": {
     "claims": "Claims",
