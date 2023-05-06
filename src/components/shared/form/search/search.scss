@@ -1,3 +1,6 @@
+@import "../../../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
 .searchBox {
   .datePickerWrapper + .resetSearch {
     html[dir="ltr"] & {
@@ -6,7 +9,7 @@
     html[dir="rtl"] & {
       left: 115px;
     }
-  } 
+  }
   &.style_searchWithImage__jbGoX {
     .datePickerWrapper + .resetSearch {
       html[dir="ltr"] & {
@@ -15,6 +18,12 @@
       html[dir="rtl"] & {
         left: 195px;
       }
-    } 
+    }
+  }
+}
+
+.search-container{
+  .search-disabled{
+    @extend .pt-4
   }
 }

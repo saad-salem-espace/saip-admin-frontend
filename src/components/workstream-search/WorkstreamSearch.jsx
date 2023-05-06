@@ -1,6 +1,10 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Trans, useTranslation } from 'react-i18next';
-import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate, createSearchParams, Link } from 'react-router-dom';
+import React, {
+  useState, useContext, useEffect, useRef,
+} from 'react';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -18,6 +22,8 @@ import UploadImage from 'components/shared/upload-image/UploadImage';
 import formStyle from 'components/shared/form/form.module.scss';
 import useAxios from 'hooks/useAxios';
 import validationMessages from 'utils/validationMessages';
+import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
+import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
 
@@ -27,6 +33,7 @@ function WorkstreamSearch() {
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
+  const [isAdvanced, setIsAdvanced] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
   const [searchOption] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
@@ -34,7 +41,9 @@ function WorkstreamSearch() {
   const [isImgUploaded, setIsImgUploaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitRef = useRef();
   const [imageName, setImageName] = useState(null);
+  const [advancedQuery, setAdvancedQuery] = useState('');
 
   const [imgData, execute] = useAxios({}, { manual: true });
 
@@ -84,33 +93,42 @@ function WorkstreamSearch() {
   const onSubmit = (values) => {
     let { searchQuery } = values;
 
-    if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
+    if (!isAdvanced) {
+      if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
 
-    const defaultConditions = new Map();
-    defaultConditions.set('Text', 'hasExactly');
-    defaultConditions.set('Date', 'is');
-    defaultConditions.set('Number', 'is');
-    defaultConditions.set('LKP', 'hasAny');
+      const defaultConditions = new Map();
+      defaultConditions.set('Text', 'hasExactly');
+      defaultConditions.set('Date', 'is');
+      defaultConditions.set('Number', 'is');
+      defaultConditions.set('LKP', 'hasAny');
 
-    const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
+      const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
 
-    const query = parseSingleQuery({
-      identifier: selectedOption,
-      condition: { optionParserName: defaultCondition },
-      data: searchQuery,
-    }, 0, true);
+      const query = parseSingleQuery({
+        identifier: selectedOption,
+        condition: { optionParserName: defaultCondition },
+        data: searchQuery,
+      }, 0, true);
 
-    navigate({
-      pathname: '/search',
-      search: `?${createSearchParams({
-        workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery ? query : ''), ...(imageName && { imageName }),
-      })}`,
-    });
+      navigate({
+        pathname: '/search',
+        search: `?${createSearchParams({
+          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery ? query : ''), ...(imageName && { imageName }),
+        })}`,
+      });
+    } else {
+      navigate({
+        pathname: '/search',
+        search: `?${createSearchParams({
+          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery || ''), ...(imageName && { imageName }),
+        })}`,
+      });
+    }
   };
 
   const SearchModuleClassName = ({
     lgSearch: true,
-    searchWithSibling: true,
+    searchWithSibling: !isAdvanced,
     searchInputWrapper: true,
     imgUploaded: isImgUploaded,
     searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
@@ -124,6 +142,11 @@ function WorkstreamSearch() {
 
   const handleUploadImg = () => {
     setShowUploadImgSection(!showUploadImgSection);
+  };
+
+  const toggleState = (state) => {
+    setIsAdvanced(!state);
+    setAdvancedQuery('');
   };
 
   function identifierName(option) {
@@ -151,45 +174,39 @@ function WorkstreamSearch() {
           </Row>
         </Container>
       </div>
-      <Container className="px-0 m-auto">
+      <Container className="px-0 m-auto search-container">
         <Row className="mx-0">
           <Col className="pt-5 pb-8" lg={{ span: 8, offset: 2 }}>
             <Formik
               onSubmit={onSubmit}
-              initialValues={{ searchQuery: '' }}
+              initialValues={{ searchQuery: advancedQuery, isAdvanced }}
               validationSchema={formSchema}
               validateOnChange
+              enableReinitialize
               validateOnBlur={false}
+              innerRef={submitRef}
             >
               {({
                 handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
-                  <Link
-                    to={{
-                      pathname: '/search',
-                      search: `?${createSearchParams({
-                        workstreamId: selectedWorkStream,
-                        identifierStrId: selectedOption?.identiferStrId,
-                        query: values.searchQuery,
-                        fireSearch: false,
-                      })}`,
-                    }}
+                  <ToggleButton
+                    handleToggleButton={() => toggleState(isAdvanced)}
+                    isToggleButtonOn={isAdvanced}
+                    text={t('advancedSearch')}
                     className="d-block text-primary mb-2 text-end"
-                  >
-                    {t('advancedSearch')}
-                  </Link>
+                  />
                   <div className="d-xl-flex align-items-stretch">
                     <div className="position-relative mb-xl-0 mb-3">
                       <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
-                      <Select
+                      {!isAdvanced && <Select
                         options={searchOptions}
                         className={`${style.select} lgSelect selectWithSibling`}
                         getOptionName={(option) => identifierName(option)}
                         selectedOption={selectedOption}
                         setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
                         getOptionValue={(option) => option.identiferName}
-                      />
+                      />}
                     </div>
                     <Search
                       id="search"
@@ -198,7 +215,7 @@ function WorkstreamSearch() {
                       moduleClassName={
                         SearchModuleClassName
                       }
-                      placeholder={t('typeHere')}
+                      placeholder={isAdvanced ? null : t('typeHere')}
                       isClearable={!!values.searchQuery}
                       clearInput={() => { setFieldValue('searchQuery', ''); }}
                       handleUploadImg={handleUploadImg}
@@ -206,6 +223,7 @@ function WorkstreamSearch() {
                       type={selectedOption?.identifierType}
                       onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
                       imageSearch={isImgUploaded}
+                      disabled={isAdvanced}
                     >
                       {/* please show this span if the search has text value */}
                       {/* <span className={`position-absolute ${formStyle.label}
@@ -231,6 +249,20 @@ function WorkstreamSearch() {
                       </span>
                     )
                   }
+                  {isAdvanced && <SearchQuery
+                    workstreamId={selectedWorkStream}
+                    firstIdentifierStr={searchOptions?.[0].identifierOptions[0]}
+                    defaultInitializers={[{
+                      id: selectedWorkStream,
+                      data: '',
+                      identifier: selectedOption,
+                      condition: selectedOption.identifierOptions[0],
+                      operator: '',
+                    }]}
+                    onChangeSearchQuery={(setAdvancedQuery)}
+                    submitRef={submitRef}
+                    className="mt-8 workstream-view"
+                  />}
                 </Form>
               )}
             </Formik>
