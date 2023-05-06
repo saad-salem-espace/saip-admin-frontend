@@ -52,7 +52,9 @@ const AppPagination = ({
   useEffect(() => {
     if (data) {
       setResults(data.data);
-      fetchedTotalResults(data.pagination?.totalElements || 0);
+      if (fetchedTotalResults) {
+        fetchedTotalResults(data.pagination?.totalElements || 0);
+      }
       setIsLoading(false);
     }
   }, [data]);
@@ -101,7 +103,7 @@ AppPagination.defaultProps = {
   renderedProps: {},
   sort: '',
   axiosInstance: apiInstance,
-  fetchedTotalResults: null,
+  fetchedTotalResults: () => {},
   emptyState: null,
   updateDependencies: [],
   setResults: () => {},
