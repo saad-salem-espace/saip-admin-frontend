@@ -13,8 +13,8 @@ import { useEffect } from 'react';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 
 function PatentCard({
-  assignment, setToggle, setActiveDocument, activeDocument,
-  status, setActiveTab, isInProgress, SetSelectedCard,
+  assignment, setToggle, setActiveDocument,
+  setActiveTab, isInProgress, SetSelectedCard, active,
 }) {
   const { t } = useTranslation('dashboard');
   const [pinnedData, executeToggle] = useAxios(
@@ -26,9 +26,8 @@ function PatentCard({
   }, [pinnedData]);
 
   const isPinned = assignment.pinned;
-
   return (
-    <Card className={` ${activeDocument === assignment.filingNumber ? 'active' : ''} patent-card mb-2`}>
+    <Card className={`${active ? 'active' : ''} patent-card mb-2`}>
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
           <Button
@@ -37,7 +36,7 @@ function PatentCard({
             onClick={() => {
               setActiveDocument(assignment.filingNumber); setActiveTab(1);
               SetSelectedCard(assignment.id);
-              isInProgress(status === 'In progress');
+              isInProgress(assignment.status === 'IN_PROGRESS');
             }}
             text={
               <p className="text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
@@ -87,9 +86,9 @@ function PatentCard({
             {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}
           </p>
         </div>
-        <div className={`d-flex pt-3 ${status === 'In progress' ? 'justify-content-between' : 'justify-content-end'}`}>
+        <div className={`d-flex pt-3 ${assignment.status === 'IN_PROGRESS' ? 'justify-content-between' : 'justify-content-end'}`}>
           {
-            status === 'In progress' && (
+            assignment.status === 'IN_PROGRESS' && (
               <Button
                 variant="link"
                 onClick={() => {
@@ -117,7 +116,6 @@ function PatentCard({
             text={
               <>
                 <FaCommentAlt className="me-2" />
-                3
                 {assignment.notesCount}
               </>
             }
@@ -133,10 +131,9 @@ PatentCard.propTypes = {
   setToggle: PropTypes.func.isRequired,
   SetSelectedCard: PropTypes.func,
   setActiveDocument: PropTypes.func.isRequired,
-  activeDocument: PropTypes.string.isRequired,
   isInProgress: PropTypes.bool.isRequired,
   setActiveTab: PropTypes.func,
-  status: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
 };
 
 PatentCard.defaultProps = {

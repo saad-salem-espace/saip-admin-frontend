@@ -30,10 +30,10 @@ function StatusColumn({
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
             activeDocument={activeDocument}
-            status={status}
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
+            active={activeDocument === assignment.filingNumber}
           />
         ))}
         { others && (
@@ -45,10 +45,10 @@ function StatusColumn({
             assignment={assignment}
             setToggle={setToggle}
             setActiveDocument={setActiveDocument}
-            status={status}
             setActiveTab={setActiveTab}
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
+            active={activeDocument === assignment.filingNumber}
           />
         ))}
       </div>
