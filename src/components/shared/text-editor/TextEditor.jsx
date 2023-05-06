@@ -10,10 +10,10 @@ import { BsExclamationTriangle } from 'react-icons/bs';
 import ErrorMessage from '../error-message/ErrorMessage';
 
 function TextEditor({
-  className, maxLength, setNoteText, disableEditor, disableChangeTab, SubmitNote, notesValue,
+  className, maxLength, setNoteText, disableEditor, disableChangeTab, SubmitNote,
 }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [contentState, setContentState] = useState(notesValue);
+  const [contentState, setContentState] = useState();
   const [isMaxLength, setIsMaxLength] = useState(false);
   const { t } = useTranslation(['error', 'translation']);
 
