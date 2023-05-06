@@ -40,6 +40,9 @@ div[class$="singleValue"] {
       }
     }
   }
+  div[class$="IndicatorsContainer"] {
+    background-color: $gray-200;
+  }
 }
 
 .css-2jkpo2-option {

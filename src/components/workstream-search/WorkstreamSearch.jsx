@@ -10,16 +10,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
-import uploadFile from 'apis/uploadFileApi';
 import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
 import useCacheRequest from 'hooks/useCacheRequest';
-import Select from 'components/shared/form/select/Select';
-import Search from 'components/shared/form/search/Search';
-import UploadImage from 'components/shared/upload-image/UploadImage';
-import formStyle from 'components/shared/form/form.module.scss';
 import useAxios from 'hooks/useAxios';
 import validationMessages from 'utils/validationMessages';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
@@ -29,8 +24,7 @@ import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
 
 function WorkstreamSearch() {
-  const { t, i18n } = useTranslation('search');
-  const currentLang = i18n.language;
+  const { t } = useTranslation('search');
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
@@ -127,32 +121,10 @@ function WorkstreamSearch() {
     }
   };
 
-  // const SearchModuleClassName = ({
-  //   lgSearch: true,
-  //   searchWithSibling: !isAdvanced,
-  //   searchInputWrapper: true,
-  //   imgUploaded: isImgUploaded,
-  //   searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
-  // });
-
-  // const uploadCurrentFile = async (file, setErrors, data) => {
-  //   setIsSubmitting(true);
-  //   execute(uploadFile(file));
-  //   if (!data.trim()) setErrors({});
-  // };
-
-  // const handleUploadImg = () => {
-  //   setShowUploadImgSection(!showUploadImgSection);
-  // };
-
   const toggleState = (state) => {
     setIsAdvanced(!state);
     setAdvancedQuery('');
   };
-
-  // function identifierName(option) {
-  //   return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
-  // }
 
   return (
     <div>
@@ -175,12 +147,6 @@ function WorkstreamSearch() {
           </Row>
         </Container>
       </div>
-      <ToggleButton
-        handleToggleButton={() => toggleState(isAdvanced)}
-        isToggleButtonOn={isAdvanced}
-        text={t('advancedSearch')}
-        className="d-block text-primary mb-2 text-end"
-      />
       <Container className="px-0 m-auto search-container">
         <Row className="mx-0">
           <Col className="pt-5 pb-8" lg={{ span: 8, offset: 2 }}>
@@ -197,12 +163,19 @@ function WorkstreamSearch() {
                 handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
+                  <ToggleButton
+                    handleToggleButton={() => toggleState(isAdvanced)}
+                    isToggleButtonOn={isAdvanced}
+                    text={t('advancedSearch')}
+                    className="d-block text-primary mb-2 text-end"
+                  />
                   <SharedSearch
                     setFieldValue={setFieldValue}
                     values={values}
                     setErrors={setErrors}
                     setTouched={setTouched}
                     selectedWorkStream={selectedWorkStream}
+                    resultsView
                   />
                   {isAdvanced && <SearchQuery
                     workstreamId={selectedWorkStream}

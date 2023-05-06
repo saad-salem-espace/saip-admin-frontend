@@ -10,15 +10,8 @@ import {
   createSearchParams, useNavigate, useSearchParams, Link,
 } from 'react-router-dom';
 import * as Yup from 'yup';
-import uploadFile from 'apis/uploadFileApi';
-import EmptyState from 'components/shared/empty-state/EmptyState';
-import AppPagination from 'components/shared/app-pagination/AppPagination';
 import Select from 'components/shared/form/select/Select';
-import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
-import UploadImage from 'components/shared/upload-image/UploadImage';
-import emptyState from 'assets/images/search-empty-state.svg';
-import advancedSearchApi from 'apis/search/advancedSearchApi';
 import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
@@ -30,17 +23,15 @@ import useAxios from 'hooks/useAxios';
 import { useAuth } from 'react-oidc-context';
 import { tableNames } from 'dbConfig';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import SharedSearch from 'components/workstream-search/shared/SharedSearch';
 import SearchNote from './SearchNote';
-import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
-import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import toastify from '../../utils/toastify';
 import validationMessages from '../../utils/validationMessages';
-import SharedSearch from 'components/workstream-search/shared/SharedSearch';
 
 function SearchResults() {
   const { t, i18n } = useTranslation('search');
@@ -49,14 +40,11 @@ function SearchResults() {
   const navigate = useNavigate();
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [activeDocument, setActiveDocument] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
   const [isEnabledSynonyms, setIsEnabledSynonyms] = useState(false);
   const [activeWorkstream, setActiveWorkstream] = useState(searchParams.get('workstreamId'));
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
   const [totalResults, setTotalResults] = useState(0);
-  const [showUploadImgSection, setShowUploadImgSection] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [results, setResults] = useState(null);
   const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
@@ -202,23 +190,6 @@ function SearchResults() {
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
-  const [isImgUploaded, setIsImgUploaded] = useState(false);
-
-  const [imgData, execute] = useAxios({}, { manual: true });
-
-  useEffect(() => {
-    if (imgData.data) {
-      setImageName(imgData.data.data?.[0]);
-    } else if (imgData.error) {
-      setErrorMessage(imgData.error);
-    }
-    if (imgData.response) {
-      setIsImgUploaded(true);
-      setShowUploadImgSection(false);
-      setIsSubmitting(false);
-    }
-  }, [imgData]);
-
   const [searchQuery, setSearchQuery] = useState('');
 
   const getNextDocument = () => {
@@ -318,21 +289,6 @@ function SearchResults() {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
   };
 
-  const SearchModuleClassName = ({
-    smSearch: true,
-    imgUploadedResultView: isImgUploaded,
-    searchWithImage: true, // please set it true for workstream with search with image
-  });
-
-  const uploadCurrentFile = async (file) => {
-    setIsSubmitting(true);
-    execute(uploadFile(file));
-  };
-
-  const handleUploadImg = () => {
-    setShowUploadImgSection(!showUploadImgSection);
-  };
-
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
     setIsAdvancedSearch(!isAdvancedSearch);
@@ -403,8 +359,6 @@ function SearchResults() {
     return size;
   };
 
-  const axiosConfig = advancedSearchApi(searchResultParams);
-
   const viewOptions = [
     {
       label: t('trademarks.detailed'),
@@ -422,11 +376,6 @@ function SearchResults() {
 
   const onChangeView = (i) => {
     setSelectedView(i);
-  };
-
-  const searchResult = {
-    1: SearchResultCards,
-    2: TrademarksSearchResultCards,
   };
 
   const onChangeSortBy = (sortCriteria) => {
@@ -459,7 +408,6 @@ function SearchResults() {
         (imageName || data)
       )),
   });
-
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -499,16 +447,37 @@ function SearchResults() {
                     values={values}
                     setErrors={setErrors}
                     setTouched={setTouched}
-                    selectedWorkStream={1}
+                    // selectedWorkStream={1}
                     isAdvanced={isAdvancedSearch}
-                  />
+                    className="search-results-view"
+                  >
+                    <div className="d-md-flex mt-4">
+                      <ToggleButton
+                        handleToggleButton={handleAdvancedSearch}
+                        isToggleButtonOn={isAdvancedSearch}
+                        text={t('advancedSearch')}
+                        className="border-md-end pe-4 me-4 mb-md-0 mb-2"
+                      />
+                      <ToggleButton
+                        handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
+                        isToggleButtonOn={isEnabledSynonyms}
+                        text={t('allowSynonyms')}
+                      />
+                    </div>
+                  </SharedSearch>
                 </div>
+
               </Form>
             )}
           </Formik>
 
           {/* <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
-            <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
+            <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded
+            ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`}
+            showUploadImgSection={showUploadImgSection} uploadFile={(file)
+               => uploadCurrentFile(file)}
+            isSubmitting={isSubmitting} changeIsImgUploaded={(flag) =>
+              { setIsImgUploaded(flag); setErrorMessage(''); }} />
           </div>
           {
             errorMessage && (
@@ -520,19 +489,6 @@ function SearchResults() {
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch content">
-        <div className="d-md-flex mt-md-0 mt-14">
-          <ToggleButton
-            handleToggleButton={handleAdvancedSearch}
-            isToggleButtonOn={isAdvancedSearch}
-            text={t('advancedSearch')}
-            className="border-md-end pe-4 me-4 mb-md-0 mb-2"
-          />
-          <ToggleButton
-            handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
-            isToggleButtonOn={isEnabledSynonyms}
-            text={t('allowSynonyms')}
-          />
-        </div>
         <Col xxl={isAdvancedMenuOpen ? 3 : 1} xl={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
           <AdvancedSearch
             toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
