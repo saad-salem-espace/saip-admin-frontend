@@ -1,0 +1,13 @@
+@import "../../assets/styles/utilities/custom-theme";
+
+#google_translate_element {
+  .goog-te-combo {
+    background-color: $primary-dark;
+    color: $white;
+    border-radius: $border-radius;
+    @extend .py-2;
+    @extend .px-3;
+    @extend .btn-lg;
+    @extend .m-0;
+  }
+}

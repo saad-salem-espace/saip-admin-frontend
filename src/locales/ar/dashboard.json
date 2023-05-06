@@ -1,6 +1,7 @@
 {
   "queuePriority": "أولوية الفحص",
   "earliestPriority": "الأسبقية",
+  "filingDate": "تاريخ الإيداع",
   "emptyBoardTitle": "لا تجد الوثائق الخاضعة للفحص؟",
   "emptyBoardMessage": "لم يتم إسناد أي من الوثائق لك. ",
   "queue": "أولوية",

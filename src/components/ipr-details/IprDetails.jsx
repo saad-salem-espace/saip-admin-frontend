@@ -647,7 +647,7 @@ function IprDetails({
           </p>
         )}
         { dashboard && (
-          <div className="border-top py-3 px-6">
+          <div className="border-top py-3 px-6 d-flex align-items-start">
             <Button
               variant="primary"
               text={(
@@ -668,9 +668,9 @@ function IprDetails({
               )}
               className="me-4 fs-sm my-2 my-xl-0"
             />
+            <div id="google_translate_element" className="d-inline-block" />
           </div>
         )}
-        <div id="google_translate_element" />
       </div>
       {
       dashboard && showActions ? (

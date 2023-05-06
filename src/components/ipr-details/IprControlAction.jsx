@@ -6,6 +6,7 @@ import {
 import PropTypes from 'prop-types';
 import Button from 'components/shared/button/Button';
 import style from './ipr-details.module.scss';
+import './ipr-control-action.scss';
 
 function IprControlAction({
   collapseIPR,
