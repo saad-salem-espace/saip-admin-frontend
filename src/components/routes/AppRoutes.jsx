@@ -9,7 +9,7 @@ const Dashboard = lazy(() => import('components/examiner-dashboard/ExaminerDashb
 const Admin = lazy(() => import('components/admin-dashboard/AdminDashboard'));
 const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
 
-const Routes = () => (
+const AppRoutes = () => (
   <ReactRoutes>
     <Route path="*" element={<NotFound />} />
     <Route path={appRoutes.home} element={<WorkstreamSearch />} />
@@ -21,4 +21,4 @@ const Routes = () => (
   </ReactRoutes>
 );
 
-export default Routes;
+export default AppRoutes;

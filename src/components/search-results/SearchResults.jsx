@@ -30,8 +30,7 @@ import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
-import { decodeQuery } from '../../utils/search-query/decoder';
-import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import { parseQuery, reformatArrDecoder } from '../../utils/searchQuery';
 
 function SearchResults() {
   const { t } = useTranslation('search');
@@ -54,9 +53,58 @@ function SearchResults() {
   const [imageName, setImageName] = useState(null);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
+  const [selectedIdentifiers, setSelectedIdentifiers] = useState([]);
+
+  const convertQueryStrToArr = (qStr) => {
+    let i = 0;
+    let qObjsIdx = 0;
+    let qObjsPrevIdx = 0;
+    let increment = 1;
+    let qStartIdx = 2;
+    let qLastIdx = -1;
+    const qObjs = [];
+    if (qStr) {
+      const qStrArr = qStr.match(/("[^."]* ")|(\S*)/g).filter((str) => str !== '').filter((str) => str !== '' && str !== '"');
+      while (i < qStrArr.length) {
+        if (selectedIdentifiers.includes(qStrArr[i]) || i === 0) {
+          qObjs[qObjsIdx] = {
+            identifier: qStrArr[i],
+            condition: qStrArr[i + 1],
+          };
+          if (i === 0) {
+            qObjs[qObjsIdx].operator = '';
+          } else {
+            qLastIdx = i - 2;
+            qObjs[qObjsIdx].operator = qStrArr[i - 1];
+          }
+          qObjsIdx += 1;
+
+          increment = 2;
+        }
+
+        if (i === qStrArr.length - 1) {
+          qLastIdx = qStrArr.length - 1;
+        }
+        if (qLastIdx >= qStartIdx) {
+          qObjs[qObjsPrevIdx].data = qStrArr.slice(qStartIdx, qLastIdx + 1).join(' ');
+          const qObjsLength = qObjs[qObjsPrevIdx].data.length;
+          if (qObjs[qObjsPrevIdx].data.charAt(0) === '"'
+             && qObjs[qObjsPrevIdx].data.charAt(qObjsLength - 1) === '"') {
+            qObjs[qObjsPrevIdx].data = qObjs[qObjsPrevIdx].data.substr(1, qObjsLength - 2);
+          }
+          qObjsPrevIdx += 1;
+          qStartIdx = i + 2;
+        }
+        i += increment;
+        increment = 1;
+      }
+    }
+    return qObjs;
+  };
+
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
-    query: searchParams.get('q'),
+    qArr: convertQueryStrToArr(searchParams.get('q')),
     fireSearch: searchParams.get('fireSearch') !== 'false',
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
@@ -176,6 +224,21 @@ function SearchResults() {
   //   },
   // ];
 
+  const convertQueryArrToStr = (qObjsArr) => {
+    let qStr = '';
+    const newIdentifiers = [];
+    qObjsArr.forEach((obj) => {
+      newIdentifiers.push(obj.identifier);
+      qStr = `${qStr} ${obj.operator} ${obj.identifier} ${obj.condition} "${obj.data}"`;
+    });
+    setSelectedIdentifiers(newIdentifiers);
+    return qStr.trim();
+  };
+
+  const parseAndSetSearchQuery = (qObjsArr) => {
+    setSearchQuery(convertQueryArrToStr(qObjsArr));
+  };
+
   const onSubmit = (values) => {
     setActiveDocument(null);
     navigate({
@@ -193,9 +256,10 @@ function SearchResults() {
 
   useEffect(() => {
     if (searchIdentifiers) {
-      const decodedQuery = decodeQuery(searchResultParams.query);
+      // const decodedQuery = decodeQuery(searchResultParams.query);
       const searchIdentifiersData = searchIdentifiers.data;
-      const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
+      // const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
+      const reformattedDecoder = reformatArrDecoder(searchResultParams.qArr, searchIdentifiersData);
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
         id: 1, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
       }]);
@@ -462,7 +526,7 @@ function SearchResults() {
             submitRef={submitRef}
             workstreamId={activeWorkstream}
             firstIdentifierStr={searchResultParams.identifierStrId}
-            onChangeSearchQuery={setSearchQuery}
+            onChangeSearchQuery={parseAndSetSearchQuery}
           />
         </Col>
         {

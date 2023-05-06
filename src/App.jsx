@@ -1,5 +1,5 @@
 import './assets/styles/App.scss';
-import Routes from 'components/routes/Routes';
+import AppRoutes from 'components/routes/AppRoutes';
 import ThemeProvider from 'components/theme/ThemeProvider';
 import AppNavbar from 'components/layout/app-navbar/AppNavbar';
 import { ToastContainer } from 'react-toastify';
@@ -21,7 +21,7 @@ function App() {
     >
       <div className="app">
         {/* <ChangeLanguage changeLang={changeLang} /> */}
-        <Routes />
+        <AppRoutes />
         <AppNavbar />
         <ToastContainer
           position="bottom-left"

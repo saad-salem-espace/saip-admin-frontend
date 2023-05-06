@@ -1,16 +1,17 @@
 const advancedSearchApi = ({
-  workstreamId, query, imageName, enableSynonyms, page, sort,
+  workstreamId, qArr, imageName, enableSynonyms, page, sort,
 }) => ({
   url: 'advanced-search',
-  method: 'GET',
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
   params: {
     workstreamId,
-    q: query,
     sort: sort || 'mostRelevant',
     ...(imageName && { imageName }),
     ...(enableSynonyms && { enableSynonyms }),
     page: page || 1,
   },
+  data: JSON.stringify(qArr),
 });
 
 export default advancedSearchApi;

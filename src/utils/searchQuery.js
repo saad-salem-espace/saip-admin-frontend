@@ -1,7 +1,8 @@
+/* eslint-disable */
 import { t } from 'i18next';
 import { DateObject } from 'react-multi-date-picker';
 import { search } from './arrays';
-import { isMultipleValue, parseSingleQuery } from './search-query/encoder';
+import { isMultipleValue } from './search-query/encoder';
 import { insert } from './strings';
 
 const operators = ['and', 'or', 'not'].map((operator) => ({
@@ -10,22 +11,43 @@ const operators = ['and', 'or', 'not'].map((operator) => ({
 }));
 
 const parseQuery = (fields, imageName, isQuery) => {
-  let finalQuery = '';
-
-  fields.forEach((value, index) => {
-    if (!finalQuery) {
-      finalQuery += parseSingleQuery({ ...value, operator: '' }, index, isQuery);
-    } else {
-      finalQuery += parseSingleQuery(value, index, isQuery);
-    }
+  let queryObjsArr = [];
+  fields.forEach((value) => {
+    queryObjsArr.push({
+       "identifier": value.identifier.identiferStrId,
+       "condition": value.condition.optionParserName,
+       "data": value.data,
+       "operator": value.operator,
+    });
   });
 
   if (!isQuery && imageName) {
-    if (finalQuery) finalQuery += ` OR image: ${imageName}`;
-    else finalQuery += `image: ${imageName}`;
+    queryObjsArr.push({
+      "identifier": "image",
+      "condition": ": ",
+      "data": imageName,
+      "operator": "OR",
+    });
   }
+  return queryObjsArr;
+};
 
-  return finalQuery.trim();
+const reformatArrDecoder = (queryObjsArr, searchIdentifiersData) => {
+  let values = [];
+  queryObjsArr.forEach((qObj) => {
+    if(qObj.identifier === "image"){
+       //TODO
+    } else {
+      const selectedIdentifier =  searchIdentifiersData.find((i) => i.identiferStrId === qObj.identifier);
+      values.push({
+          "identifier": selectedIdentifier,
+          "condition": selectedIdentifier.identifierOptions.find((i) => i.optionParserName === qObj.condition),
+          "data": qObj.data,
+          "operator": qObj.operator,
+      });
+    }
+  });
+  return values;
 };
 
 const reformatDecoder = (identifiers, queryResult) => {
@@ -79,5 +101,11 @@ const teldaRegex = /^[^*?!~]+?~?\d*$/;
 const noTeldaRegex = /^[^~]+$/;
 
 export {
-  operators, parseQuery, reformatDecoder, flattenCriteria, teldaRegex, noTeldaRegex,
+  operators,
+  parseQuery,
+  reformatDecoder,
+  flattenCriteria,
+  teldaRegex,
+  noTeldaRegex,
+  reformatArrDecoder,
 };
