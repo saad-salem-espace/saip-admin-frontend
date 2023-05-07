@@ -107,7 +107,7 @@ function Board({
               <Row>
                 <StatusColumn
                   status={t('dashboard:status.toDo')}
-                  className="border-primary"
+                  className="todo"
                   data={filteredAssignments.TO_DO}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
@@ -116,7 +116,7 @@ function Board({
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
-                  className="border-secondary-rio-grande"
+                  className="in-progress"
                   data={filteredAssignments.IN_PROGRESS}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}
@@ -127,7 +127,7 @@ function Board({
                 />
                 <StatusColumn
                   status={t('dashboard:status.done')}
-                  className="border-primary-dark"
+                  className="done"
                   data={filteredAssignments.DONE}
                   setToggle={setToggle}
                   isInProgress={isInProgress}
@@ -136,7 +136,7 @@ function Board({
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
-                  className="border-danger-dark"
+                  className="review"
                   data={filteredAssignments.REVIEW}
                   setToggle={setToggle}
                   setActiveDocument={setActiveDocument}

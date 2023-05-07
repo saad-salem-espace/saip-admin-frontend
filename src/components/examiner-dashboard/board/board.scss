@@ -12,6 +12,30 @@
   .empty-board {
     height: 65vh;
   }
+  .assignment-status {
+    @include border(3px,25px,0px,transparent);
+    @include border-start(0);
+    &.todo {
+      &::before {
+        background-color: $primary;
+      }
+    }
+    &.in-progress {
+      &::before {
+        background-color: $secondary-rio-grande;
+      }
+    }
+    &.done {
+      &::before {
+        background-color: $primary-dark;
+      }
+    }
+    &.review {
+      &::before {
+        background-color: $danger-dark;
+      }
+    }
+  }
 }
 .dashboard-ipr-container {
   z-index: 5;
@@ -24,7 +48,8 @@
     .top-info-bar {
       .filing-date {
         @include media-breakpoint-up(lg) {
-          @include border(1px,84px,-9px,auto,0,$border-color);
+          @include border(1px,84px,-9px,$border-color);
+          @include border-end(0);
         }
         &:before {
           display: none;

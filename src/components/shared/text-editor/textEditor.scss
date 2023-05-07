@@ -43,3 +43,10 @@ a.rdw-dropdown-selectedtext {
     border-color: $danger !important;
   }
 }
+
+.rdw-dropdown-carettoopen, .rdw-dropdown-carettoclose {
+  html[dir="rtl"] & {
+    left: 10%;
+    right: auto;
+  }
+}

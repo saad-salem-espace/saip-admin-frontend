@@ -650,13 +650,13 @@ function IprDetails({
             <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
           </p>
         )}
-        <div className="border-top py-3 px-6">
+        <div className="border-top py-3 px-6 d-flex align-items-start">
           <Button
             variant="primary"
             text={(
               <>
                 <FaSearch className="fs-base me-2" />
-                {t('dashboard:findSimilar')}
+                {t('search:findSimilar')}
               </>
             )}
             className="me-4 fs-sm my-2 my-xl-0"
@@ -666,13 +666,13 @@ function IprDetails({
             text={(
               <>
                 <FiDownload className="fs-base me-2" />
-                {t('dashboard:download')}
+                {t('search:download')}
               </>
             )}
             className="me-4 fs-sm my-2 my-xl-0"
           />
+          <div id="google_translate_element" className="d-inline-block" />
         </div>
-        <div id="google_translate_element" />
       </div>
       {
       dashboard && showActions ? (

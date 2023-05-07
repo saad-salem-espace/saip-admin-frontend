@@ -1,6 +1,7 @@
 {
   "queuePriority": "أولوية الفحص",
   "earliestPriority": "الأسبقية",
+  "filingDate": "تاريخ الإيداع",
   "emptyBoardTitle": "لا تجد الوثائق الخاضعة للفحص؟",
   "emptyBoardMessage": "لم يتم إسناد أي من الوثائق لك. ",
   "queue": "أولوية",
@@ -10,8 +11,6 @@
   "others": "اخرون",
   "info": "معلومات",
   "notes": "ملاحظات",
-  "findSimilar": "البحث عن مشابه",
-  "download": "تحميل",
   "translateInfo": "ترجمة",
   "markAsDone": "تم إنجازه",
   "status": {
