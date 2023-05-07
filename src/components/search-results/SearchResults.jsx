@@ -56,6 +56,7 @@ function SearchResults() {
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [results, setResults] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
@@ -569,9 +570,9 @@ function SearchResults() {
               <div className="d-lg-flex align-items-center">
                 <AppTooltip
                   tooltipTrigger={
-                    <Button variant="transparent" className="p-0 me-4 border-0" onClick={saveQuery} data-testid="fav-button">
+                    <Button variant="transparent" className="p-0 me-4 border-0" onClick={saveQuery} data-testid="fav-button" disabled={isLoading}>
                       {
-                        isQuerySaved
+                        isQuerySaved && !isLoading
                           ? <span className="icon-filled-star f-24" data-testid="filled-star" />
                           : <span className="icon-star f-24" data-testid="empty-star" />
                       }
@@ -624,6 +625,7 @@ function SearchResults() {
                       defaultPage={Number(searchParams.get('page') || '1')}
                       setResults={setResults}
                       sort={sortBy.value}
+                      isFetching={setIsLoading}
                       RenderedComponent={searchResult[searchResultParams.workstreamId]}
                       renderedProps={{
                         query: searchResultParams.query,
