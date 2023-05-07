@@ -78,12 +78,9 @@ const SavedQueries = () => {
               className="mt-8"
               axiosConfig={axiosConfig}
               defaultPage={Number(searchParams.get('page') || '1')}
-              RenderedComponent={
-              savedQueries
-            }
-              emptyState={(
-                <NoData />)}
-              updateDependencies={[...Object.values(selectedWorkStream)]}
+              RenderedComponent={savedQueries}
+              emptyState={<NoData />}
+              resetPage={pageReset}
             />
           ) : (
             <IndexedDbAppPagination
