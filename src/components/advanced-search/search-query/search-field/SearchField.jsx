@@ -14,6 +14,7 @@ import { exclude } from 'utils/arrays';
 import MultiSelect from 'components/shared/form/multi-select/MultiSelect';
 import options from 'testing-resources/patents/lkps/ipcClassifications.json';
 import style from '../SearchQuery.module.scss';
+import './searchField.scss';
 
 function SearchField({
   handleRemove,
@@ -106,9 +107,9 @@ function SearchField({
     return currentLang === 'ar' ? option.optionNameAr : option.optionName;
   }
   return (
-    <div className={`p-4 bg-primary-01 mb-2 ${style.wrapper}`}>
-      <div className="d-flex mb-4">
-        <div className={`position-relative mb-md-0 mb-3 me-2 ${style.searchFields}`}>
+    <div className={`p-4 bg-primary-01 mb-2 ${style.wrapper} search-query-inputs`}>
+      <div className="d-flex mb-4 search-fields-condition">
+        <div className={`position-relative mb-md-0 mb-3 me-2 search-fields ${style.searchFields}`}>
           <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>{t('searchFields')}</span>
           <Select
             options={identifiersList}
@@ -119,7 +120,7 @@ function SearchField({
             setSelectedOption={onChangeIdentifier}
           />
         </div>
-        <div className={`position-relative mb-md-0 mb-3 flex-grow-1 ${style.condition}`}>
+        <div className={`position-relative mb-md-0 mb-3 flex-grow-1 condition ${style.condition}`}>
           <span className={`position-absolute ${formStyle.label} ${formStyle.smLabel}`}>{t('condition')}</span>
           <Select
             options={identifierValue?.identifierOptions}
@@ -140,7 +141,7 @@ function SearchField({
             /> : null
         }
       </div>
-      <div className={`position-relative ${style.criteria}`}>
+      <div className={`position-relative criteria ${style.criteria}`}>
         {getInputField}
       </div>
     </div>

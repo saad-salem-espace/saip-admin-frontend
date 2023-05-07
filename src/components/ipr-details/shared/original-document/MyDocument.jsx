@@ -1,89 +1,107 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Document, Page } from 'react-pdf';
-import Button from 'components/shared/button/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import './original-document.scss';
 import ViewPort from 'components/shared/view-port/ViewPort';
-import useAxios from 'hooks/useAxios';
 import PropTypes from 'prop-types';
+import OriginalDocumentsNavButtons from './OriginalDocumentsNavButtons';
+import PageViewer from './PageViewer';
 
-function MyDocument({ config }) {
+function MyDocument({
+  documents, hasNext, hasPrevious, previousDocument, nextDocument, activeIndex,
+}) {
   const [pageNumber, setPageNumber] = useState(1);
-  const [document, setDocument] = useState();
-  const [{ data }, execute] = useAxios(config);
+  const [totalPages, setTotalPages] = useState();
+  const [isBackward, setIsBackward] = useState(false);
+  const [refreshView, setRefreshView] = useState(0);
+  const [step, setStep] = useState(2);
 
-  useEffect(() => {
-    execute();
-  }, []);
+  const forwardButtonEnabled = pageNumber < totalPages || hasNext;
+  const backwardButtonEnabled = pageNumber > 1 || hasPrevious;
 
-  useEffect(() => {
-    if (data) {
-      setDocument(data);
+  const forwardClick = () => {
+    if (pageNumber < totalPages && pageNumber + step <= totalPages) {
+      setPageNumber((page) => page + step);
+    } else {
+      nextDocument();
     }
-  }, [data]);
-
-  const onDocumentLoadSuccess = () => {
-    setPageNumber(1);
   };
+  const backwardClick = () => {
+    if (pageNumber > 1) {
+      setPageNumber((page) => page - step);
+    } else {
+      previousDocument();
+      setIsBackward(true);
+    }
+  };
+
+  const onDocumentLoadSuccess = (meta) => {
+    setPageNumber(1);
+    setTotalPages(meta.numPages);
+    setRefreshView((view) => view + 1);
+  };
+
+  useEffect(() => {
+    if (isBackward) {
+      setPageNumber(totalPages);
+      setIsBackward(false);
+    }
+  }, [refreshView]);
+
   return (
     <div className="pdf-viewer-wrapper">
-      <div className="text-center mb-5">
-        <Button
-          variant="link"
-          className="shadow me-4 rounded-circle"
-          onClick={() => setPageNumber(pageNumber - 1)}
-          text={<FontAwesomeIcon
-            icon={faChevronLeft}
-            className="text-primary fs-18"
-          />}
-          size="sm"
-        />
-        <Button
-          variant="link"
-          className="shadow rounded-circle"
-          onClick={() => setPageNumber(pageNumber + 1)}
-          text={<FontAwesomeIcon
-            icon={faChevronRight}
-            className="text-primary fs-18"
-          />}
-          size="sm"
-        />
-      </div>
+      <OriginalDocumentsNavButtons
+        forward={{ onClick: forwardClick, isDisabled: !forwardButtonEnabled }}
+        backward={{ onClick: backwardClick, isDisabled: !backwardButtonEnabled }}
+      />
       <Document
-        file={{ data: document }}
+        file={documents[activeIndex]}
         onLoadSuccess={onDocumentLoadSuccess}
       >
-        <Container>
-          <Row className="g-0">
-            <ViewPort size="xl">
-              <Col lg={6} className="border-end">
-                <div className="me-3">
-                  <Page pageNumber={pageNumber} />
-                </div>
-              </Col>
-              <Col lg={6}>
-                <div className="ms-3">
-                  <Page pageNumber={pageNumber + 1} />
-                </div>
-              </Col>
-            </ViewPort>
-            <ViewPort size="ltXl" renderOnServer>
-              <Col md={12} className="mx-auto shadow">
-                <div>
-                  <Page pageNumber={pageNumber} />
-                </div>
-              </Col>
-            </ViewPort>
-          </Row>
-        </Container>
+        {!isBackward && (
+          <Container>
+            <Row className="g-0">
+              <ViewPort size="xl">
+                <PageViewer setStep={setStep} step={2}>
+                  {pageNumber >= 1 && pageNumber <= totalPages && (
+                    <Col lg={6} className="border-end">
+                      <div className="me-3">
+                        <Page pageNumber={pageNumber} />
+                      </div>
+                    </Col>
+                  )}
+                  {pageNumber + 1 <= totalPages && (
+                    <Col lg={6}>
+                      <div className="ms-3">
+                        <Page pageNumber={pageNumber + 1} />
+                      </div>
+                    </Col>
+                  )}
+                </PageViewer>
+              </ViewPort>
+              <ViewPort size="ltXl" renderOnServer>
+                <PageViewer setStep={setStep} step={1}>
+                  <Col md={12} className="mx-auto shadow">
+                    <div>
+                      <Page pageNumber={pageNumber} />
+                    </div>
+                  </Col>
+                </PageViewer>
+              </ViewPort>
+            </Row>
+          </Container>
+        )}
       </Document>
     </div>
   );
 }
 MyDocument.propTypes = {
-  config: PropTypes.instanceOf(Object).isRequired,
+  documents: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired,
+  hasNext: PropTypes.bool.isRequired,
+  hasPrevious: PropTypes.bool.isRequired,
+  previousDocument: PropTypes.func.isRequired,
+  nextDocument: PropTypes.func.isRequired,
+  activeIndex: PropTypes.number.isRequired,
 };
 
 export default MyDocument;

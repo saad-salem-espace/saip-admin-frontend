@@ -6,6 +6,7 @@
   top: 21px;
   font-size: $font-size-sm;
   z-index: 9;
+  white-space: nowrap;
 
   html[dir="rtl"] & {
     left: 0;

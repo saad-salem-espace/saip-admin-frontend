@@ -70,7 +70,6 @@ function SearchResults() {
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
-    fireSearch: searchParams.get('fireSearch') !== 'false',
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
@@ -562,35 +561,32 @@ function SearchResults() {
             onChangeSearchQuery={setSearchQuery}
           />
         </Col>
-        {
-          searchResultParams.fireSearch
-          && (
-            <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
-              <div className="d-lg-flex align-items-center">
-                <AppTooltip
-                  tooltipTrigger={
-                    <Button variant="transparent" className="p-0 me-4 border-0" onClick={saveQuery} data-testid="fav-button">
-                      {
+        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+          <div className="d-lg-flex align-items-center">
+            <AppTooltip
+              tooltipTrigger={
+                <Button variant="transparent" className="p-0 me-4 border-0" onClick={saveQuery} data-testid="fav-button">
+                  {
                         isQuerySaved
                           ? <span className="icon-filled-star f-24" data-testid="filled-star" />
                           : <span className="icon-star f-24" data-testid="empty-star" />
                       }
-                    </Button>
+                </Button>
                   }
-                  tooltipContent={t('saveSearchQuery')}
-                />
-                <div>
-                  <SearchNote
-                    searchKeywords={searchKeywords}
-                    resultsCount={totalResults}
-                  />
-                </div>
-              </div>
-              <Formik>
-                {() => (
-                  <Form className="mt-5">
-                    <div className="d-md-flex">
-                      {
+              tooltipContent={t('saveSearchQuery')}
+            />
+            <div>
+              <SearchNote
+                searchKeywords={searchKeywords}
+                resultsCount={totalResults}
+              />
+            </div>
+          </div>
+          <Formik>
+            {() => (
+              <Form className="mt-5">
+                <div className="d-md-flex">
+                  {
                       searchResultParams.workstreamId === '2' && (
                         <div className="position-relative mb-6 viewSelect me-md-6">
                           <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
@@ -606,51 +602,49 @@ function SearchResults() {
                         </div>
                       )
                     }
-                      <div className="position-relative mb-8 sortBy">
-                        <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
-                        <Select
-                          options={getSortOptions(searchResultParams.workstreamId)}
-                          setSelectedOption={onChangeSortBy}
-                          selectedOption={sortBy}
-                          defaultValue={sortBy}
-                          id="sortBy"
-                          fieldName="sortBy"
-                          className="select-2"
-                        />
-                      </div>
-                    </div>
-                    <AppPagination
-                      axiosConfig={axiosConfig}
-                      defaultPage={Number(searchParams.get('page') || '1')}
-                      setResults={setResults}
-                      sort={sortBy.value}
-                      RenderedComponent={searchResult[searchResultParams.workstreamId]}
-                      renderedProps={{
-                        query: searchResultParams.query,
-                        setActiveDocument,
-                        activeDocument,
-                        selectedView,
-                      }}
-                      fetchedTotalResults={setTotalResults}
-                      emptyState={(
-                        <EmptyState
-                          title={t('emptyStateTitle')}
-                          msg={t('emptyStateMsg')}
-                          img={emptyState}
-                          className="mt-18"
-                        />)}
-                      onPageChange={() => {
-                        setActiveDocument(null);
-                        setIsIPRExpanded(false);
-                      }}
-                      updateDependencies={[...Object.values(searchResultParams)]}
+                  <div className="position-relative mb-8 sortBy">
+                    <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
+                    <Select
+                      options={getSortOptions(searchResultParams.workstreamId)}
+                      setSelectedOption={onChangeSortBy}
+                      selectedOption={sortBy}
+                      defaultValue={sortBy}
+                      id="sortBy"
+                      fieldName="sortBy"
+                      className="select-2"
                     />
-                  </Form>
-                )}
-              </Formik>
-            </Col>
-          )
-        }
+                  </div>
+                </div>
+                <AppPagination
+                  axiosConfig={axiosConfig}
+                  defaultPage={Number(searchParams.get('page') || '1')}
+                  setResults={setResults}
+                  sort={sortBy.value}
+                  RenderedComponent={searchResult[searchResultParams.workstreamId]}
+                  renderedProps={{
+                    query: searchResultParams.query,
+                    setActiveDocument,
+                    activeDocument,
+                    selectedView,
+                  }}
+                  fetchedTotalResults={setTotalResults}
+                  emptyState={(
+                    <EmptyState
+                      title={t('emptyStateTitle')}
+                      msg={t('emptyStateMsg')}
+                      img={emptyState}
+                      className="mt-18"
+                    />)}
+                  onPageChange={() => {
+                    setActiveDocument(null);
+                    setIsIPRExpanded(false);
+                  }}
+                  updateDependencies={[...Object.values(searchResultParams)]}
+                />
+              </Form>
+            )}
+          </Formik>
+        </Col>
         {activeDocument && (
           <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
             <IprDetails

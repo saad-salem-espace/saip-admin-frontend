@@ -182,7 +182,7 @@ function IprDetails({
     },
     {
       label: t('ipr.originalDocument'),
-      value: 'originalDocument',
+      value: 'OriginalDocuments',
     },
   ];
 
@@ -241,7 +241,7 @@ function IprDetails({
     },
     {
       label: t('ipr.originalDocument'),
-      value: 'originalDocument',
+      value: 'OriginalDocuments',
     },
   ];
 
@@ -330,8 +330,12 @@ function IprDetails({
           className={style.imgWithZoom}
         />
       ),
-      OriginalDocument: (
-        <OriginalDocument />
+      OriginalDocuments: (
+        <OriginalDocument
+          originalDocuments={document.OriginalDocuments}
+          workstreamId={searchResultParams.workstreamId}
+          documentId={documentId}
+        />
       ),
     };
 
@@ -521,12 +525,12 @@ function IprDetails({
           )}
         </div>
       ),
-      OriginalDocument: (
-        <div>
-          <OriginalDocument />
-          ) : (
-          <NoData />
-        </div>
+      OriginalDocuments: (
+        <OriginalDocument
+          originalDocuments={document.OriginalDocuments}
+          workstreamId={searchResultParams.workstreamId}
+          documentId={documentId}
+        />
       ),
     };
     return content;
@@ -538,7 +542,7 @@ function IprDetails({
   };
 
   const renderSelectedView = () => {
-    let content = <OriginalDocument />;
+    let content = <NoData />;
     if (searchResultParams.workstreamId === '2') {
       if (
         document[selectedView.value]
