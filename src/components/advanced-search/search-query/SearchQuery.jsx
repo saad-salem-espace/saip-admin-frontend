@@ -14,7 +14,6 @@ import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
-  isAdvancedMenuOpen,
 }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');

@@ -15,7 +15,6 @@ import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
 import useCacheRequest from 'hooks/useCacheRequest';
-import useAxios from 'hooks/useAxios';
 import validationMessages from 'utils/validationMessages';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -30,30 +29,12 @@ function WorkstreamSearch() {
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [isAdvanced, setIsAdvanced] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [showUploadImgSection, setShowUploadImgSection] = useState(false);
   const [searchOption] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
   const searchOptions = searchOption?.data;
   const [isImgUploaded, setIsImgUploaded] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const submitRef = useRef();
   const [imageName, setImageName] = useState(null);
   const [advancedQuery, setAdvancedQuery] = useState('');
-
-  const [imgData, execute] = useAxios({}, { manual: true });
-
-  useEffect(() => {
-    if (imgData.data) {
-      setImageName(imgData.data.data?.[0]);
-    } else if (imgData.error) {
-      setErrorMessage(imgData.error);
-    }
-    if (imgData.response) {
-      setIsImgUploaded(true);
-      setShowUploadImgSection(false);
-      setIsSubmitting(false);
-    }
-  }, [imgData]);
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
@@ -176,6 +157,9 @@ function WorkstreamSearch() {
                     setTouched={setTouched}
                     selectedWorkStream={selectedWorkStream}
                     resultsView
+                    setImageName={setImageName}
+                    isImgUploaded={isImgUploaded}
+                    setIsImgUploaded={setIsImgUploaded}
                   />
                   {isAdvanced && <SearchQuery
                     workstreamId={selectedWorkStream}

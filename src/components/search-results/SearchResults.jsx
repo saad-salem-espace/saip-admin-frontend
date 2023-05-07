@@ -24,12 +24,18 @@ import { useAuth } from 'react-oidc-context';
 import { tableNames } from 'dbConfig';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import SharedSearch from 'components/workstream-search/shared/SharedSearch';
+import emptyState from 'assets/images/search-empty-state.svg';
+import EmptyState from 'components/shared/empty-state/EmptyState';
+import AppPagination from 'components/shared/app-pagination/AppPagination';
+import advancedSearchApi from 'apis/search/advancedSearchApi';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import SearchResultCards from './search-result-cards/SearchResultCards';
+import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import toastify from '../../utils/toastify';
 import validationMessages from '../../utils/validationMessages';
 
@@ -50,6 +56,7 @@ function SearchResults() {
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
+  const [isImgUploaded, setIsImgUploaded] = useState(false);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
@@ -284,11 +291,6 @@ function SearchResults() {
     setIsIPRExpanded(false);
   };
 
-  const handleAdvancedSearch = () => {
-    setIsAdvancedSearch(!isAdvancedSearch);
-    setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
-  };
-
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
     setIsAdvancedSearch(!isAdvancedSearch);
@@ -402,6 +404,13 @@ function SearchResults() {
     }
   };
 
+  const axiosConfig = advancedSearchApi(searchResultParams);
+
+  const searchResult = {
+    1: SearchResultCards,
+    2: TrademarksSearchResultCards,
+  };
+
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
       .test('Is not empty', validationMessages.search.required, (data) => (
@@ -447,13 +456,19 @@ function SearchResults() {
                     values={values}
                     setErrors={setErrors}
                     setTouched={setTouched}
-                    // selectedWorkStream={1}
                     isAdvanced={isAdvancedSearch}
                     className="search-results-view"
+                    selectedWorkStream={values.selectedWorkstream?.value}
+                    setImageName={setImageName}
+                    isImgUploaded={isImgUploaded}
+                    setIsImgUploaded={setIsImgUploaded}
                   >
                     <div className="d-md-flex mt-4">
                       <ToggleButton
-                        handleToggleButton={handleAdvancedSearch}
+                        handleToggleButton={() => {
+                          setIsAdvancedSearch(!isAdvancedSearch);
+                          setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
+                        }}
                         isToggleButtonOn={isAdvancedSearch}
                         text={t('advancedSearch')}
                         className="border-md-end pe-4 me-4 mb-md-0 mb-2"
@@ -470,22 +485,6 @@ function SearchResults() {
               </Form>
             )}
           </Formik>
-
-          {/* <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
-            <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded
-            ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`}
-            showUploadImgSection={showUploadImgSection} uploadFile={(file)
-               => uploadCurrentFile(file)}
-            isSubmitting={isSubmitting} changeIsImgUploaded={(flag) =>
-              { setIsImgUploaded(flag); setErrorMessage(''); }} />
-          </div>
-          {
-            errorMessage && (
-              <span className="text-danger-dark f-12">
-                {errorMessage}
-              </span>
-            )
-          } */}
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch content">
@@ -554,7 +553,7 @@ function SearchResults() {
                     />
                   </div>
                 </div>
-                {/* <AppPagination
+                <AppPagination
                   axiosConfig={axiosConfig}
                   defaultPage={Number(searchParams.get('page') || '1')}
                   setResults={setResults}
@@ -579,7 +578,7 @@ function SearchResults() {
                     setIsIPRExpanded(false);
                   }}
                   updateDependencies={[...Object.values(searchResultParams)]}
-                /> */}
+                />
               </Form>
             )}
           </Formik>

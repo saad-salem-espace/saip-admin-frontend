@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useTranslation } from 'react-i18next';
 import React, {
-  useState, useContext,
+  useState, useContext, useEffect,
 } from 'react';
 import CacheContext from 'contexts/CacheContext';
 import uploadFile from 'apis/uploadFileApi';
@@ -18,19 +18,37 @@ import style from '../style.module.scss';
 function SharedSearch({
   isAdvanced, selectedWorkStream, children,
   resultsView, setTouched, setFieldValue, values, setErrors, className,
+  setImageName, setIsImgUploaded, isImgUploaded,
 }) {
   const { t, i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const { cachedRequests } = useContext(CacheContext);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
+
   const [searchOption] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
   const searchOptions = searchOption?.data;
-  const [isImgUploaded, setIsImgUploaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [imgData, execute] = useAxios({}, { manual: true });
+
+  useEffect(() => {
+    if (imgData.data) {
+      setImageName(imgData.data.data?.[0]);
+    } else if (imgData.error) {
+      setErrorMessage(imgData.error);
+    }
+    if (imgData.response) {
+      setIsImgUploaded(true);
+      setShowUploadImgSection(false);
+      setIsSubmitting(false);
+    }
+  }, [imgData]);
+
+  useEffect(() => {
+    setSelectedOption(searchOptions?.[0]);
+  }, [searchOptions]);
 
   const onChangeIdentifier = (identifier, clearData, clearErrors, clearTouch) => {
     if (identifier.identifierType === 'Date' || selectedOption.identifierType === 'Date') {
@@ -131,6 +149,10 @@ SharedSearch.propTypes = {
   setFieldValue: PropTypes.func.isRequired,
   setErrors: PropTypes.func.isRequired,
   className: PropTypes.string,
+  isImgUploaded: PropTypes.bool.isRequired,
+  setIsImgUploaded: PropTypes.func.isRequired,
+  values: PropTypes.instanceOf(Object).isRequired,
+  setImageName: PropTypes.func.isRequired,
 };
 
 SharedSearch.defaultProps = {
