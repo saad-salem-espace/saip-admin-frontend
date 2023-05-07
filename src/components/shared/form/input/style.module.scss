@@ -21,7 +21,7 @@
 .smInput input {
   height: 57px;
   padding-top: 19px;
-  html[dir="ltr"] & {
+  html[dir="rtl"] & {
     padding-right:15px;
   }
   html[dir="ltr"] & {

@@ -42,7 +42,7 @@ function LoggedNavbar({ lang, changeLang }) {
             </Nav.Link>
             <Nav.Link to="/savedQueries" as={Link} className="has-icon">
               <BsStar className="icon" />
-              {t('navbar.savedQueries')}
+              {t('navbar.myQueries')}
             </Nav.Link>
             <Nav.Link to="#" as={Link} className="has-icon">
               <BsListUl className="icon list" />
