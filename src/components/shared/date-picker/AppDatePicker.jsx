@@ -38,7 +38,6 @@ function AppDatePicker({
                 }
               }}
             />
-            {/* <span className="icon-ic-calendar f-20 colored" /> */}
             <FaRegCalendarAlt className="icon-ic-calendar fs-20 text-primary" />
             {(!isMulti && !range && Array.isArray(field.value) && field.value.length > 1) && (
             <WarningMessage className="mt-2" msg={t('singleValueMessage')} />
