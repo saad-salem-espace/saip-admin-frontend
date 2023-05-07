@@ -173,5 +173,7 @@
   "querySaved": "Query saved successfully.",
   "savedQueryMsg": "You can find all your saved queries in <0>My queries</0>",
   "couldnotSave": "Couldn't save the query.",
-  "failerMsg": "Something went wrong! Please try again later."
+  "failerMsg": "Something went wrong! Please try again later.",
+  "findSimilar": "Find Similar",
+  "download": "Download"
 }

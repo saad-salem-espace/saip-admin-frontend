@@ -652,7 +652,7 @@ function IprDetails({
             text={(
               <>
                 <FaSearch className="fs-base me-2" />
-                {t('dashboard:findSimilar')}
+                {t('search:findSimilar')}
               </>
             )}
             className="me-4 fs-sm my-2 my-xl-0"
@@ -662,7 +662,7 @@ function IprDetails({
             text={(
               <>
                 <FiDownload className="fs-base me-2" />
-                {t('dashboard:download')}
+                {t('search:download')}
               </>
             )}
             className="me-4 fs-sm my-2 my-xl-0"
