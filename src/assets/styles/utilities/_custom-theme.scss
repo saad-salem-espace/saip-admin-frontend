@@ -60,9 +60,11 @@ $danger-dark: #B50644;
 $patents: #5287BE;
 $trademark: #E08C05;
 $copyright: #C5CF01;
+$industrial-designs: #DFAF53;
 $secondary-tangerine:#ED8A00;
 $secondary-tangerine-l: #FDF0DE;
 $secondary-rio-grande:#B9D000;
+$vivid-lime-green: #B9D000;
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
@@ -80,6 +82,7 @@ $colors: (
   "white": $white,
   "gray-400": $gray-400,
   "gray": $gray-600,
+  "gray-500": $gray-500,
   "gray-700": $gray-700,
   "gray-dark": $gray-800,
   "turquoise": $turquoise,
@@ -94,6 +97,7 @@ $primary-01: $turquoise-01;
 $primary-10: $turquoise-10;
 $primary-dark: $turquoise-dark;
 $secondary: $turquoise-secondary;
+$secondary-rio-grande: $vivid-lime-green;
 $success: $green !default;
 $info: $cyan !default;
 $warning: $secondary-tangerine;
@@ -111,12 +115,16 @@ $theme-colors: (
   "primary-10": $primary-10,
   "primary-dark": $primary-dark,
   "secondary": $secondary,
+  "secondary-rio-grande": $secondary-rio-grande,
   "success": $success,
   "info": $info,
   "warning": $warning,
   "light": $light,
   "gray": $gray,
+  "gray-200": $gray-200,
   "gray-400": $gray-400,
+  "gray-500": $gray-500,
+  "gray-600": $gray-600,
   "gray-700": $gray-700,
   "dark": $dark,
   "danger": $danger,
@@ -302,7 +310,9 @@ $spacers: (
   14:$spacer * 3.5,
   15:$spacer * 3.75,
   18: $spacer * 4,
+  19: $spacer * 5,
   22: $spacer * 5.8,
+  24: $spacer * 6.5,
   ) !default;
 
 $negative-spacers: if($enable-negative-margins, negativify-map($spacers), null) !default;
@@ -426,7 +436,7 @@ $border-radius-pill: 50rem !default;
 
 // scss-docs-start box-shadow-variables
 $box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
-$box-shadow-sm: 0 .125rem .25rem rgba($black, .075) !default;
+$box-shadow-sm:  0 1px 3px 0 #10182829;
 $box-shadow-lg: 4px 4px 15px 0px rgba(0, 0, 0, 0.14);
 $box-shadow-inset: inset 0 1px 2px rgba($black, .075) !default;
 // scss-docs-end box-shadow-variables
@@ -493,6 +503,7 @@ $font-size-root: null !default;
 $font-size-base: 1rem; // Assumes the browser default, typically `16px`
 $font-size-sm: $font-size-base * .875; // 14px
 $font-size-xs: 12px;
+$font-size-xxs: 8px;
 $font-size-lg: $font-size-base * 1.25 !default;
 
 $font-weight-lighter: lighter !default;
@@ -522,7 +533,15 @@ $font-sizes: (
   3: $h3-font-size,
   4: $h4-font-size,
   5: $h5-font-size,
-  6: $h6-font-size) !default;
+  6: $h6-font-size,
+  8: $font-size-xxs,
+  12: $font-size-xs,
+  sm: $font-size-sm,
+  15: 15px,
+  base: $font-size-base,
+  18: 18px,
+  32: 32px
+  );
 // scss-docs-end font-sizes
 
 // scss-docs-start headings-variables
@@ -708,7 +727,7 @@ $btn-link-disabled-color: $gray-600 !default;
 // Allows for customizing button radius independently from global border radius
 $btn-border-radius: $border-radius !default;
 $btn-border-radius-sm: $border-radius-sm;
-$btn-border-radius-lg: $border-radius-lg !default;
+$btn-border-radius-lg: $border-radius !default;
 
 $btn-transition: color .15s ease-in-out,
   background-color .15s ease-in-out,
@@ -1248,7 +1267,7 @@ $popover-bg: $white !default;
 $popover-max-width: 276px !default;
 $popover-border-width: $border-width !default;
 $popover-border-color: rgba($black, .2) !default;
-$popover-border-radius: $border-radius-lg !default;
+$popover-border-radius: $border-radius;
 $popover-inner-border-radius: subtract($popover-border-radius, $popover-border-width) !default;
 $popover-box-shadow: $box-shadow !default;
 
@@ -1551,6 +1570,7 @@ $pre-color: null !default;
 @import "~bootstrap/scss/maps";
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/utilities/api";
+@import "~bootstrap/scss/tooltip";
 @import "~bootstrap/scss/buttons";
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/containers";
@@ -1569,5 +1589,7 @@ $pre-color: null !default;
 @import "~bootstrap/scss/navbar";
 @import "~bootstrap/scss/helpers";
 @import "~bootstrap/scss/dropdown";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/close";
 
 // @import "~bootstrap/scss/bootstrap";

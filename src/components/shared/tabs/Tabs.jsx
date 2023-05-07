@@ -1,19 +1,21 @@
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
-import tabsStyle from './tabs.module.scss';
+import './tabs.scss';
 
 function Tabs({
   tabsItems,
   activeKey,
   handleActiveTab,
+  className,
+  tabClass,
 }) {
   return (
     <div>
-      <div className={`${tabsStyle.tabs}`}>
+      <div className={`tabs ${className}`}>
         {
         tabsItems.map((item) => (
           <Button
-            className={`${tabsStyle.tab} ${activeKey === item.id ? tabsStyle.active : ''}`}
+            className={` ${activeKey === item.id ? 'active' : ''}`}
             onClick={() => handleActiveTab(item.id)}
             key={item.id}
           >
@@ -24,10 +26,10 @@ function Tabs({
       </div>
       {
         tabsItems.map((i) => (
-          <div>
+          <div className="tabs-content-wrapper">
             {
               i.id === activeKey && (
-              <div>
+              <div className={`${tabClass} tab-content-wrapper`}>
                 {i.content}
               </div>
               )
@@ -46,10 +48,14 @@ Tabs.propTypes = {
   })).isRequired,
   activeKey: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
   handleActiveTab: PropTypes.func,
+  className: PropTypes.string,
+  tabClass: PropTypes.string,
 };
 
 Tabs.defaultProps = {
   handleActiveTab: () => {},
+  className: '',
+  tabClass: '',
 };
 
 export default Tabs;

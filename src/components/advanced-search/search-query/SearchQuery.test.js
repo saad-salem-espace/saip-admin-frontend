@@ -4,6 +4,8 @@ import MockAdapter from 'axios-mock-adapter';
 import apiInstance from 'apis/apiInstance';
 import WorkstreamIdentifiers from 'testing-resources/workstreams/patents/identifiers.json';
 import WorkstreamList from 'testing-resources/workstreams/workstreams.json';
+import I18n from 'i18n';
+import validationMessages from 'utils/validationMessages';
 import SearchQuery from './SearchQuery';
 
 const mockAxios = new MockAdapter(apiInstance);
@@ -22,6 +24,8 @@ const defaultInitializers = [{
 }];
 
 describe('<SearchQuery />', () => {
+  const t = (key, options) => I18n.t(key, { ...options });
+
   it('The default field renders correctly', async () => {
     const {
       getByText, getByDisplayValue,
@@ -33,9 +37,9 @@ describe('<SearchQuery />', () => {
     />);
 
     await waitFor(() => {
-      expect(getByText('Search Fields')).toBeInTheDocument();
-      expect(getByText('Criteria')).toBeInTheDocument();
-      expect(getByText('Condition')).toBeInTheDocument();
+      expect(getByText(t('search:searchFields'))).toBeInTheDocument();
+      expect(getByText(t('search:criteria'))).toBeInTheDocument();
+      expect(getByText(t('search:condition'))).toBeInTheDocument();
       expect(getByDisplayValue(defaultCriteria)).toBeInTheDocument();
     });
   });
@@ -49,15 +53,15 @@ describe('<SearchQuery />', () => {
     />);
 
     await waitFor(() => {
-      expect(queryAllByText('Search Fields')).toHaveLength(1);
+      expect(queryAllByText(t('search:searchFields'))).toHaveLength(1);
     });
 
     await waitFor(() => {
-      fireEvent.click(getByText('Add Search Field').closest('button'));
+      fireEvent.click(getByText(t('search:addSearchField')).closest('button'));
     });
 
     await waitFor(() => {
-      expect(queryAllByText('Search Fields')).toHaveLength(2);
+      expect(queryAllByText(t('search:searchFields'))).toHaveLength(2);
     });
   });
 
@@ -71,12 +75,37 @@ describe('<SearchQuery />', () => {
     />);
 
     await waitFor(() => {
-      fireEvent.click(getByText('Clear').closest('button'));
+      fireEvent.click(getByText(t('search:clear')).closest('button'));
     });
 
     await waitFor(() => {
-      expect(queryAllByText('Search Fields')).toHaveLength(1);
+      expect(queryAllByText(t('search:searchFields'))).toHaveLength(1);
       expect(queryByText(defaultCriteria)).toBeNull();
+    });
+  });
+  it('display errors correctly', async () => {
+    const {
+      getByText, queryAllByText,
+    } = render(<SearchQuery
+      workstreamId={WorkstreamList.data[0].id}
+      firstIdentifierStr={WorkstreamIdentifiers.data[0].identifierOptions[0]}
+      onChangeSearchQuery={mockOnChange}
+      defaultInitializers={defaultInitializers}
+      submitRef={{ current: { handleSubmit: () => {} } }}
+    />);
+
+    await waitFor(() => {
+      fireEvent.click(getByText(t('search:clear')));
+    });
+
+    await waitFor(() => {
+      fireEvent.click(getByText(t('search:apply')));
+    });
+
+    await waitFor(() => {
+      expect(
+        queryAllByText(t(validationMessages.search.required().key)).length,
+      ).toEqual(1);
     });
   });
 });

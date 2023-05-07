@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import style from './style.module.scss';
+import FormikErrorMessage from '../../formik-error-message/FormikErrorMessage';
 
 function Checkbox({
   fieldFor,
@@ -11,6 +12,8 @@ function Checkbox({
   text,
   checked,
   className,
+  showError,
+  errorClassName,
 }) {
   return (
     <div className={className}>
@@ -30,6 +33,8 @@ function Checkbox({
           <FontAwesomeIcon icon={faCheck} className="text-white" />
         </span>
       </label>
+      {/* TODO remove name when we make sure we always send a name */}
+      {name && showError && <FormikErrorMessage name={name} className={errorClassName} /> }
     </div>
   );
 }
@@ -41,6 +46,8 @@ Checkbox.propTypes = {
   name: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   className: PropTypes.string,
+  showError: PropTypes.bool,
+  errorClassName: PropTypes.string,
 };
 
 Checkbox.defaultProps = {
@@ -48,6 +55,8 @@ Checkbox.defaultProps = {
   disabled: false,
   checked: undefined,
   className: '',
+  showError: true,
+  errorClassName: '',
 };
 
 export default Checkbox;

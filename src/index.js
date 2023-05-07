@@ -7,10 +7,17 @@ import ErrorBoundary from 'errors/ErrorBoundary';
 import './index.css';
 import { AuthProvider } from 'react-oidc-context';
 import { WebStorageStateStore } from 'oidc-client-ts';
+import { initDB } from 'react-indexed-db';
+import { pdfjs } from 'react-pdf';
 import roleMapper from 'utils/roleMapper';
+import dbConfig from 'dbConfig';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
+
+initDB(dbConfig);
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const urlParams = new URLSearchParams(window.location.search);
 const appType = urlParams?.get('app_type');

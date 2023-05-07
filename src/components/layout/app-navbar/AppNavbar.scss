@@ -2,6 +2,7 @@
 @import "../../../assets/styles/utilities/mixin";
 
 .app-navbar {
+  z-index: 1080 !important;
   @include media-breakpoint-up(lg) {
     height: 80px;
   }
@@ -9,6 +10,10 @@
     font-size: $font-size-sm;
     color: $primary-dark;
     @extend .align-self-center;
+
+    &:hover {
+      color: $primary;
+    }
   }
   .icon {
     font-size: $font-size-base;
@@ -70,6 +75,14 @@
   &.logged {
     .switch-language {
       @include border(1px,25px,6px,auto,0,$border-color);
+    }
+    .navbar-toggler {
+      html[dir="ltr"] & {
+        margin-left: auto;
+      }
+      html[dir="rtl"] & {
+        margin-right: auto;
+      }
     }
   }
 }
