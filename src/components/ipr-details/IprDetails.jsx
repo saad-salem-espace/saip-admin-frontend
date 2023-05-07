@@ -74,6 +74,7 @@ function IprDetails({
   const { t, i18n } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
+  const [document, setDocument] = useState(null);
   const [searchParams] = useSearchParams();
   const [selectedView, setSelectedView] = useState({
     label: t('ipr.bibliographic'),
@@ -82,43 +83,48 @@ function IprDetails({
   const searchResultParams = {
     workstreamId: dashboard ? '1' : (searchParams.get('workstreamId') || activeWorkstream.toString()),
   };
-  const [{ data }, execute] = useAxios(
+  const [, execute] = useAxios(
     documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
     { manual: true },
   );
-  const document = data?.data?.[0];
 
   useEffect(() => {
+    setDocument(null);
     if (documentId) {
-      execute();
+      execute().then(({ data }) => {
+        setDocument(data?.data?.[0]);
+      });
     }
   }, [documentId]);
 
   useEffect(() => {
-    window.googleTranslateElementInit = () => {
-    // eslint-disable-next-line no-new
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: i18n.language,
-          autoDisplay: false,
-        },
-        'google_translate_element',
+    if (document) {
+      window.googleTranslateElementInit = () => {
+        // eslint-disable-next-line no-new
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: i18n.language,
+            autoDisplay: false,
+          },
+          'google_translate_element',
+        );
+      };
+      const addScript = window.document.createElement('script');
+      addScript.setAttribute(
+        'src',
+        '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
       );
-    };
-    const addScript = window.document.createElement('script');
-    addScript.setAttribute(
-      'src',
-      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',
-    );
-    window.document.body.appendChild(addScript);
-    return () => {
-      window.document.body.removeChild(addScript);
-      const elements = window.document.querySelectorAll('.skiptranslate');
-      elements.forEach((element) => {
-        element.remove();
-      });
-    };
-  }, []);
+      window.document.body.appendChild(addScript);
+      return () => {
+        window.document.body.removeChild(addScript);
+        const elements = window.document.querySelectorAll('.skiptranslate');
+        elements.forEach((element) => {
+          element.remove();
+        });
+      };
+    }
+    return () => {};
+  }, [document]);
 
   if (!document) {
     return null;
