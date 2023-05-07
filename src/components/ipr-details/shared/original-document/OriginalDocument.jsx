@@ -17,7 +17,7 @@ function OriginalDocument({ originalDocuments, documentId, workstreamId }) {
     fileName: null,
     responseType: 'arraybuffer',
   };
-  const [, execute] = useAxios(attachmentApi(config));
+  const [, execute] = useAxios(attachmentApi(config), { manual: true });
 
   const fetchByArrayIndex = (index) => (
     execute(attachmentApi({ ...config, fileName: originalDocs[index] }))
@@ -34,12 +34,14 @@ function OriginalDocument({ originalDocuments, documentId, workstreamId }) {
     const documentsClone = [...documents];
     const fetchAndSetData = async () => {
       for (let i = startFrom; i < endAt && docsIndex < totalDocsLength; i += 1) {
-      // Disabled to keep focus on downloading the main document first
-      // eslint-disable-next-line no-await-in-loop
-        fetchedData = await fetchByArrayIndex(docsIndex);
-        documentsClone[i] = fetchedData.data;
-        setDocuments(documentsClone);
-        docsIndex += 1;
+        if (originalDocs?.[docsIndex]) {
+          // Disabled to keep focus on downloading the main document first
+          // eslint-disable-next-line no-await-in-loop
+          fetchedData = await fetchByArrayIndex(docsIndex);
+          documentsClone[i] = fetchedData.data;
+          setDocuments(documentsClone);
+          docsIndex += 1;
+        }
       }
     };
     fetchAndSetData();
