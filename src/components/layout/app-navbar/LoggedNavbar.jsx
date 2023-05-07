@@ -25,14 +25,14 @@ function LoggedNavbar({ lang, changeLang }) {
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar logged p-4 shadow">
       <Container fluid>
         <Navbar.Brand to="/" as={Link}>
-          <Image src={logo} className="d-block mx-auto" />
+          <Image src={logo} className="d-block mx-auto me-lg-5 me-0 pe-3" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
           <Nav className="me-auto">
             {(roleMapper(auth?.user?.profile?.clientRoles[0]) === 'External_Examiner' || roleMapper(auth?.user?.profile?.clientRoles[0]) === 'Internal_Examiner') && (
-              <Nav.Link to="dashboard" as={Link} className="appBtn has-icon btn btn-primary pe-3 me-5">
+              <Nav.Link to="dashboard" as={Link} className="appBtn has-icon btn btn-primary me-0 me-lg-5">
                 <BsGrid className="icon" />
                 {t('navbar.dashboard')}
               </Nav.Link>)}
@@ -40,9 +40,9 @@ function LoggedNavbar({ lang, changeLang }) {
               <MdOutlineBookmarkBorder className="icon" />
               {t('navbar.myBookmarks')}
             </Nav.Link>
-            <Nav.Link to="/savedQueries" as={Link} className="has-icon ps-lg-5">
+            <Nav.Link to="/savedQueries" as={Link} className="has-icon">
               <BsStar className="icon" />
-              {t('navbar.savedQueries')}
+              {t('navbar.myQueries')}
             </Nav.Link>
             <Nav.Link to="#" as={Link} className="has-icon">
               <BsListUl className="icon list" />
@@ -51,14 +51,14 @@ function LoggedNavbar({ lang, changeLang }) {
           </Nav>
           {/* Right navbar */}
           <Nav className="align-items-center">
-            <Nav.Link to="#features" as={Link} className="appBtn btn btn-primary pe-lg-3 me-lg-5 px-3">
+            <Nav.Link to="/" as={Link} className="appBtn btn btn-primary me-lg-5 px-3">
               {t('navbar.ipSearch')}
             </Nav.Link>
             <RecentSearch />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
               <div className="edges-border notifications new">
-                <Nav.Link to="#features" as={Link} variant="transparent">
+                <Nav.Link to="#" as={Link} variant="transparent">
                   <FaRegBell className="icon m-0" />
                   <div className="number-notifications">99+</div>
                 </Nav.Link>
