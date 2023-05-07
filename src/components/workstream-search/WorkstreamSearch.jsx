@@ -198,7 +198,7 @@ function WorkstreamSearch() {
                   />
                   <div className="d-xl-flex align-items-stretch">
                     <div className="position-relative mb-xl-0 mb-3">
-                      <span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
+                      <span className={`position-absolute ${formStyle.label} ${formStyle.top}`}>{t('searchFields')}</span>
                       {!isAdvanced && <Select
                         options={searchOptions}
                         className={`${style.select} lgSelect selectWithSibling`}
@@ -235,7 +235,7 @@ function WorkstreamSearch() {
                   </div>
                   <div className="rounded">
                     <UploadImage
-                      className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`}
+                      className={` ${showUploadImgSection ? 'mt-10 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`}
                       showUploadImgSection={showUploadImgSection}
                       changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }}
                       uploadFile={(file) => uploadCurrentFile(file, setErrors, values.searchQuery)}
