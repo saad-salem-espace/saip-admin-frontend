@@ -14,7 +14,7 @@ function TextEditor({
 }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [contentState, setContentState] = useState();
-  const [isMaxLength, setIsMaxLength] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const { t } = useTranslation(['error', 'translation']);
 
   const currentContent = editorState.getCurrentContent();
@@ -24,13 +24,13 @@ function TextEditor({
   const handleContentStateChange = (c) => {
     setContentState(draftToHtml(c));
     setNoteText(contentState);
-    SubmitNote(isMaxLength);
+    SubmitNote(hasError);
 
-    if (currentContentLength > maxLength) {
-      setIsMaxLength(true);
+    if ((currentContentLength > maxLength) || (currentContentLength === 0)) {
+      setHasError(true);
     }
-    if (currentContentLength <= maxLength) {
-      setIsMaxLength(false);
+    if ((currentContentLength <= maxLength) || (currentContentLength > 0)) {
+      setHasError(false);
     }
     disableChangeTab(hasText);
   };
@@ -41,7 +41,7 @@ function TextEditor({
 
   return (
     <div className={`${className} `}>
-      <div className={`${isMaxLength ? 'error' : ''} ${disableEditor ? 'disabled-editor' : ''}`}>
+      <div className={`${hasError ? 'error' : ''} ${disableEditor ? 'disabled-editor' : ''}`}>
         <Editor
           readOnly={disableEditor}
           editorState={editorState}
@@ -57,8 +57,8 @@ function TextEditor({
           }}
         />
       </div>
-      <div className={`mt-2 d-flex  ${isMaxLength ? 'justify-content-between' : 'justify-content-end'}`}>
-        {isMaxLength && <ErrorMessage
+      <div className={`mt-2 d-flex  ${hasError ? 'justify-content-between' : 'justify-content-end'}`}>
+        {hasError && <ErrorMessage
           className="mb-0"
           msg={
             <p className="fs-12 d-flex mb-0">
