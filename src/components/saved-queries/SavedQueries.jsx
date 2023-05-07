@@ -87,6 +87,7 @@ const SavedQueries = () => {
             />
           ) : (
             <IndexedDbAppPagination
+              className="mt-8"
               RenderedComponent={savedQueries}
               tableName={tableNames.savedQuery}
               emptyState={<NoData />}
