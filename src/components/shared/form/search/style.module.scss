@@ -48,6 +48,7 @@ button.searchIcon {
     }
     html[dir="rtl"] & {
       padding-left: 145px;
+      padding-right: 20px !important;
     }
   }
 
@@ -77,6 +78,7 @@ button.searchIcon {
     html[dir="rtl"] & {
       border-right: 0 !important;
       border-radius: $border-radius 0 0 $border-radius;
+      padding-right: 10px;
     }
   }
 }

@@ -22,7 +22,6 @@ function GuestNavbar({ lang, changeLang }) {
       <Container fluid className="ps-lg-18">
         <Navbar.Brand to="/" as={Link}>
           <Image src={logo} />
-          <span className="border-end my-1 ms-6 text-gray-400" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -44,7 +43,7 @@ function GuestNavbar({ lang, changeLang }) {
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
               <div className="edges-border d-flex mx-lg-3 px-lg-3 me-2">
-                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} className="appBtn btn btn-outline-primary pe-lg-3 me-lg-3 me-2 px-3">
+                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} className="appBtn btn btn-outline-primary me-lg-3 me-2 px-3">
                   {t('navbar.login')}
                 </Nav.Link>
                 <Nav.Link as={Link} className="appBtn btn btn-primary px-3">
