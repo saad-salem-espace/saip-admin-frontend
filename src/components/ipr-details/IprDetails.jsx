@@ -182,7 +182,7 @@ function IprDetails({
     },
     {
       label: t('ipr.originalDocument'),
-      value: 'originalDocument',
+      value: 'OriginalDocuments',
     },
   ];
 
@@ -241,7 +241,7 @@ function IprDetails({
     },
     {
       label: t('ipr.originalDocument'),
-      value: 'originalDocument',
+      value: 'OriginalDocuments',
     },
   ];
 
@@ -330,8 +330,12 @@ function IprDetails({
           className={style.imgWithZoom}
         />
       ),
-      OriginalDocument: (
-        <OriginalDocument />
+      OriginalDocuments: (
+        <OriginalDocument
+          originalDocuments={document.OriginalDocuments}
+          workstreamId={searchResultParams.workstreamId}
+          documentId={documentId}
+        />
       ),
     };
 
@@ -521,12 +525,12 @@ function IprDetails({
           )}
         </div>
       ),
-      OriginalDocument: (
-        <div>
-          <OriginalDocument />
-          ) : (
-          <NoData />
-        </div>
+      OriginalDocuments: (
+        <OriginalDocument
+          originalDocuments={document.OriginalDocuments}
+          workstreamId={searchResultParams.workstreamId}
+          documentId={documentId}
+        />
       ),
     };
     return content;
@@ -538,7 +542,7 @@ function IprDetails({
   };
 
   const renderSelectedView = () => {
-    let content = <OriginalDocument />;
+    let content = <NoData />;
     if (searchResultParams.workstreamId === '2') {
       if (
         document[selectedView.value]
@@ -646,31 +650,29 @@ function IprDetails({
             <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
           </p>
         )}
-        { dashboard && (
-          <div className="border-top py-3 px-6">
-            <Button
-              variant="primary"
-              text={(
-                <>
-                  <FaSearch className="fs-base me-2" />
-                  {t('dashboard:findSimilar')}
-                </>
-              )}
-              className="me-4 fs-sm my-2 my-xl-0"
-            />
-            <Button
-              variant="primary"
-              text={(
-                <>
-                  <FiDownload className="fs-base me-2" />
-                  {t('dashboard:download')}
-                </>
-              )}
-              className="me-4 fs-sm my-2 my-xl-0"
-            />
-          </div>
-        )}
-        <div id="google_translate_element" />
+        <div className="border-top py-3 px-6 d-flex align-items-start">
+          <Button
+            variant="primary"
+            text={(
+              <>
+                <FaSearch className="fs-base me-2" />
+                {t('search:findSimilar')}
+              </>
+            )}
+            className="me-4 fs-sm my-2 my-xl-0"
+          />
+          <Button
+            variant="primary"
+            text={(
+              <>
+                <FiDownload className="fs-base me-2" />
+                {t('search:download')}
+              </>
+            )}
+            className="me-4 fs-sm my-2 my-xl-0"
+          />
+          <div id="google_translate_element" className="d-inline-block" />
+        </div>
       </div>
       {
       dashboard && showActions ? (

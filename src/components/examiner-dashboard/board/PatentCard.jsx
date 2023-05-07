@@ -1,5 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import i18n from 'i18n';
 import Button from 'components/shared/button/Button';
 import PropTypes from 'prop-types';
 import { BsPinAngle, BsPinFill, BsPlusLg } from 'react-icons/bs';
@@ -16,7 +17,7 @@ function PatentCard({
   assignment, setToggle, setActiveDocument,
   setActiveTab, isInProgress, SetSelectedCard, active,
 }) {
-  const { t } = useTranslation('dashboard');
+  const { t } = useTranslation('dashboard', 'common');
   const [pinnedData, executeToggle] = useAxios(
     togglePinned({ Ids: [assignment.id] }),
     { manual: true },
@@ -26,6 +27,8 @@ function PatentCard({
   }, [pinnedData]);
 
   const isPinned = assignment.pinned;
+  const currentLang = i18n.language;
+
   return (
     <Card className={`${active ? 'active' : ''} patent-card mb-2`}>
       <Card.Body className="p-3">
@@ -67,7 +70,15 @@ function PatentCard({
           tooltipId={assignment.filingNumber}
           tooltipTrigger={
             <p className="submit-date text-gray fs-sm d-inline-block">
-              {`${calculateDifference(assignment.statusChangeDate)} days ago`}
+              {currentLang === 'ar' ? (
+                <div>
+                  {`${t('common:ago')} ${calculateDifference(assignment.statusChangeDate)} ${t('common:days')} `}
+                </div>
+              ) : (
+                <div>
+                  {`${calculateDifference(assignment.statusChangeDate)} ${t('common:days')} ${t('common:ago')}`}
+                </div>
+              )}
             </p>
           }
           placement="right"

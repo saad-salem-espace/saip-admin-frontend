@@ -1,36 +1,40 @@
 @import"../../../assets/styles/utilities/custom-theme";
 
-@mixin border($width,$height,$top,$left,$right,$color) {
+@mixin border($width,$height,$top,$color) {
   @include media-breakpoint-up(xl) {
     position: relative;
     &::before, 
     &::after {
-      content: "";
       width: $width;
       height: $height;
       background:$color;
       position: absolute;
       top: $top;
     }
-    &::before {
-      html[dir="ltr"] & {
-        left: $left;
-      }
-      html[dir="rtl"] & {
-        right: $right;
-      }
+  }
+}
+@mixin border-start($value) {
+  &::before {
+    content: "";
+    html[dir="ltr"] & {
+      left: $value;
     }
-    &::after {
-      html[dir="ltr"] & {
-        right: $right;
-      }
-      html[dir="rtl"] & {
-        left: $left;
-      }
+    html[dir="rtl"] & {
+      right: $value;
     }
   }
 }
-
+@mixin border-end($value) {
+  &::after {
+    content: "";
+    html[dir="ltr"] & {
+      right: $value;
+    }
+    html[dir="rtl"] & {
+      left: $value;
+    }
+  }
+}
 @mixin truncate($lines) {
   max-width: 100%;
   -webkit-line-clamp: $lines;
