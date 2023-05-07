@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
+import validationMessages from 'utils/validationMessages';
 // import { DateObject } from 'react-multi-date-picker';
 // import { identifierNameCategories, selectOption } from 'utils/searchQueryParser';
 
@@ -14,23 +15,23 @@ const SearchQueryValidationSchema = Yup.object().shape({
   searchFields: Yup.array().of(
     Yup.object().shape({
       id: Yup.number().required(),
-      condition: option.required(),
+      condition: option.required(validationMessages.required),
       identifier: Yup.object().shape({
         id: Yup.number().required(),
         identiferName: Yup.string().trim().required(),
         identiferStrId: Yup.string().trim().required(),
         identifierType: Yup.string().trim().required(),
         identifierOptions: Yup.array().of(option).required(),
-      }).required(),
+      }).required(validationMessages.required),
       operator: Yup.string().oneOf(['AND', 'OR', 'NOT']),
       // Validates according to optionCategories from 'utils/searchQueryParser'
-      data: Yup.mixed().required('empty')
-        .test('Is not empty', 'empty', (data) => (
+      data: Yup.mixed().required(validationMessages.search.required)
+        .test('Is not empty', validationMessages.search.required, (data) => (
           ((typeof data === 'string' || data instanceof String) && data.trim('empty'))
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         ))
-        .test('is Valid String', 'wildcards', (data) => (
+        .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
           ((typeof data === 'string' || data instanceof String) && data.trim('empty') && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex)))
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject

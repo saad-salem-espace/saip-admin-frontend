@@ -1,0 +1,67 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/mixin";
+
+.dashboard-sidebar {
+  z-index: 1040;
+
+  .nav {
+    margin-top: 150px;
+    .nav-link {
+      margin: 18px auto;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 26px;
+      height: 26px;
+      text-indent: -9999px;
+      position: relative;
+      &.ic-patent {
+        background-image: url(../../../assets/images/ic-patent.png);
+      }
+      &.ic-trademark {
+        background-image: url(../../../assets/images/ic-trademark.png);
+      }
+      &.ic-copyrights {
+        background-image: url(../../../assets/images/ic-copyrights.png);
+      }
+      &.ic-industrial-design {
+        background-image: url(../../../assets/images/ic-industrial-design.png);
+      }
+      &.ic-plant-varieties {
+        background-image: url(../../../assets/images/ic-plant-varieties.png);
+      }
+      &.ic-integrated-circuits {
+        background-image: url(../../../assets/images/ic-integrated-circuits.png);
+      }
+      &.active {
+        @include border(2px, 200%, -12px , auto ,-17px, transparent);
+        &.ic-patent {
+          &::after {
+            background-color: $patents;
+          }
+        }
+        &.ic-trademark {
+          &::after {
+            background-color: $trademark;
+          }
+        }
+        &.ic-copyrights {
+          &::after {
+            background-color: $copyright;
+          }
+        }
+        &.ic-industrial-design {
+          &::after {
+            background-color: $industrial-designs;
+          }
+        }
+        &.ic-plant-varieties,
+        &.ic-integrated-circuits {
+          &::after {
+            background-color: $gray;
+          }
+        }
+      }
+    }
+    
+  }
+}

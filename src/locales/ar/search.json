@@ -1,0 +1,176 @@
+{
+  "search": "بحث",
+  "priority": "أولوية {{value}}",
+  "filed": "مودع {{value}}",
+  "published": "منشور {{value}}",
+  "searchNote": "البحث ب <0>{{searchKeywords}}، </0> نتج عنه <0>{{resultsCount}}</0> نتيجة.",
+  "searchSpecificProperty": "البحث في مجالات <0>الملكية الفكرية</0>.",
+  "patents": "براءات الإختراع",
+  "searchFields": "مجالات البحث",
+  "typeHere": " كلمات البحث",
+  "allowSynonyms": "المرادفات",
+  "register": "تسجيل",
+  "applicants": "المودعون",
+  "inventors": "المخترعون",
+  "classifications": "تصنيفات",
+  "ipc": "IPC",
+  "cpc": "CPC",
+  "priorities": "أولوية",
+  "application": "طلب",
+  "publication": "نشر",
+  "publishedAs": "منشور",
+  "viewSection": "قسم",
+  "images": "الرسومات",
+  "advancedSearch": "بحث متقدم",
+  "searchQuery": "استعلام",
+  "filters": "منقيات",
+  "addSearchField": "أضف مصطلح",
+  "clear": "مسح",
+  "apply": "بحث",
+  "condition": "محدد",
+  "criteria": "معايير",
+  "operators": {
+    "and": "و",
+    "or": "أو",
+    "not": "باستثناء"
+  },
+  "abstract": "الملخص",
+  "publicationCountry": "بلد النشر",
+  "clearAll": "مسح الكل",
+  "emptyStateMsg": "لا يوجد نتائج بحث متاحة لمدخلات البحث",
+  "emptyStateTitle": "لا توجد نتائج؟",
+  "browseFiles": "تصفح الملفات",
+  "dragDrop": "إسحب الملفات هنا!",
+  "imgFormats": "الامتدادات المتاحة لإجراء عملية البحث: .jpeg .png .tiff .jpg .gif  <0> or </0>",
+  "validationErrors": {
+    "imgFormats": "إمتداد غير مدعوم. الامتدادات المتاحة لإجراء عملية البحث: .jpeg .png .tiff .jpg .gif",
+    "maxSize": "حجم الصورة يتعدى الحجم المسموح. يمكنك رفع صورة حتى حجم ١٠ ميجابايت.",
+    "maxNumber": "متاح البحث بصورة واحدة فقط.",
+    "empty": "يجب ادخال مصطلحات للبحث.",
+    "wildcards": "خطأ بالمدخلات. لا يمكن استخدام هذه الرموز في مصطلح بحث واحد"
+  },
+  "searchFieldValidationMsg": "لا يمكن إضافة مجالات بحث أخرى",
+  "SwitchToAdvancedSearch": "بحث متقدم",
+  "trademarks": {
+    "detailed": "مفصل",
+    "summary": "ملخص",
+    "compact": "محدد",
+    "view": "عرض ",
+    "registered": "مسجل {{value}}",
+    "published": "منشور {{value}}",
+    "markNameEN": "اسم العلامة (EN)",
+    "markNameAR": "اسم العلامة (AR)",
+    "mark": "العلامة",
+    "filingNumber": "رقم الإيداع",
+    "filingDate": "تاريخ الإيداع",
+    "markType": "نوع العلامة",
+    "markStatus": "الحالة",
+    "registrationNumber": "رقم التسجيل",
+    "registrationDate": "تاريخ التسجيل",
+    "publicationNumber": "رقم النشر",
+    "publicationDate": "تاريخ النشر",
+    "markDescription": "وصف العلامة",
+    "officeActions": {
+      "officeAction": "الإجراءات",
+      "dateTime": "تاريخ الإجراء",
+      "examinerName": "اسم الفاحص",
+      "examinerDetails": "بيانات الفاحص"
+    },
+    "goodsServices": {
+      "niceClassification": "تصنيف نيس",
+      "goodsServices": "الوصف"
+    },
+    "figurativeClassification": {
+      "viennaCode": "كود فيينا",
+      "description": "الوصف"
+    },
+    "exhibition": {
+      "exhibitionName": "اسم المعرض",
+      "exhibitionDate": "تاريخ المعرض",
+      "exhibitionDetails": "تفاصيل المعرض"
+    },
+    "priorities": {
+      "priorityDate": "تاريخ الأولوية",
+      "priorityNumber": "رقم الأولوية",
+      "priorityCountry": "بلد الأولوية"
+    }
+  },
+  "ipr": {
+    "bibliographic": "البيانات البيبلوغرافية",
+    "mark": "العلامة",
+    "description": "الوصف",
+    "legalStatus": "الحالة",
+    "applicantDetails": "بيانات المودع",
+    "ownerDetails": "بيانات المالك",
+    "representativeDetails": "بيانات الوكلاء",
+    "goodsServices": "الخدمات والمنتجات",
+    "figurativeClassification": "التصنيف",
+    "exhibitionDetails": "بيانات المعرض",
+    "priorities": "الأولوية",
+    "officeActions": "الإجراءات",
+    "countryCode": "كود البلد",
+    "city": "المدينة",
+    "email": "البريد الإلكتروني",
+    "nationality": "الجنسية",
+    "owners": "الملاك",
+    "applicants": "المودعون",
+    "representatives": "الوكلاء",
+    "legal": {
+      "statusCode": "كود الحالة",
+      "status": "الحالة",
+      "statusDate": "تاريج الحالة",
+      "effectiveDate": "التاريخ الفعلي",
+      "notes": "ملاحظات"
+    },
+    "applicant": {
+      "applicantName": "اسم المودع",
+      "applicantDetails": "بيانات المودع"
+    },
+    "owner": {
+      "ownerName": "اسم المالك",
+      "ownerDetails": "بيانات المالك"
+    },
+    "representative": {
+      "representativeName": "اسم الوكيل",
+      "representativeDetails": "بيانات الوكيل"
+    },
+    "drawings": "الرسومات"
+  },
+  "patent": {
+    "claims": "مطالب الحماية",
+    "citations": "وثائق البراءات ذات الصلة",
+    "examiners": "الفاحص",
+    "drawings": "الرسومات",
+    "applicants": "المودعون ",
+    "publicationNumber": "رقم النشر",
+    "publicationTitle": "عنوان النشر",
+    "publicationDate": "تاريخ النشر",
+    "applicationTitle": "عنوان الطلب",
+    "citation": {
+      "type": "النوع",
+      "citationOrigin": "بلد وثائق البراءات ذات الصلة",
+      "earliestPriorityDate": "تاريخ الأولوية"
+    },
+    "inventors": {
+      "inventorName": "اسم المخترع",
+      "inventorDetails": "بيانات المخترع"
+    },
+    "patentFamility": {
+      "patentFamility": "أسرة البراءات",
+      "applicationNumber": "رقم الطلب"
+    }
+  },
+  "sortBy": "الترتيب ب",
+  "publicationDateAsc": "تاريخ النشر تصاعديًا",
+  "publicationDateDesc": "تاريخ النشر تنازليًا",
+  "priorityDateAsc": "تاريخ الأولوية تصاعديًا",
+  "priorityDateDesc": "تاريخ الأولوية تنازليًا",
+  "mostRelevant": "الأكثر توافقا",
+  "filingDateAsc": "تاريخ الإيداع تصاعديًا",
+  "filingDateDesc": "تاريخ الإيداع تنازليًا",
+  "saveSearchQuery": "حفظ استعلام البحث",
+  "querySaved": "حفظ استعلام البحث بنجاح.",
+  "savedQueryMsg": "يمكنك الوصول لاستعلاماتك المحفوظة <0>إستعلاماتي</0>",
+  "couldnotSave": "لا يمكن حفظ استعلام البحث.",
+  "failerMsg": "حدث خطأ ما! برجاء المحاولة لاحقًا."
+}

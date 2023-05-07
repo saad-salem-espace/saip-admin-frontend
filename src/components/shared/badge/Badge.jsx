@@ -8,7 +8,7 @@ function Badge({
   className,
 }) {
   return (
-    <BootstrapBadge bg={varient} className={` bg-secondary ${className}`}>
+    <BootstrapBadge bg={varient} className={`${className}`}>
       { text }
     </BootstrapBadge>
   );

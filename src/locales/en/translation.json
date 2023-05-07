@@ -3,5 +3,8 @@
   "showMore": "Show more",
   "showLess": "Show less",
   "noRelevantData": "No relevant data found",
-  "homePage": "Home page"
+  "cancel": "Cancel",
+  "save": "Save",
+  "homePage": "Home page",
+  "character": "character"
 }
