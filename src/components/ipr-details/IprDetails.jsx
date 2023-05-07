@@ -649,7 +649,7 @@ function IprDetails({
           <p className="text-gray px-6">
             <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
           </p>
-        )} 
+        )}
         <div className="border-top py-3 px-6">
           <Button
             variant="primary"
