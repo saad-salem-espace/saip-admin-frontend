@@ -649,31 +649,29 @@ function IprDetails({
           <p className="text-gray px-6">
             <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
           </p>
-        )}
-        { dashboard && (
-          <div className="border-top py-3 px-6">
-            <Button
-              variant="primary"
-              text={(
-                <>
-                  <FaSearch className="fs-base me-2" />
-                  {t('dashboard:findSimilar')}
-                </>
-              )}
-              className="me-4 fs-sm my-2 my-xl-0"
-            />
-            <Button
-              variant="primary"
-              text={(
-                <>
-                  <FiDownload className="fs-base me-2" />
-                  {t('dashboard:download')}
-                </>
-              )}
-              className="me-4 fs-sm my-2 my-xl-0"
-            />
-          </div>
-        )}
+        )} 
+        <div className="border-top py-3 px-6">
+          <Button
+            variant="primary"
+            text={(
+              <>
+                <FaSearch className="fs-base me-2" />
+                {t('dashboard:findSimilar')}
+              </>
+            )}
+            className="me-4 fs-sm my-2 my-xl-0"
+          />
+          <Button
+            variant="primary"
+            text={(
+              <>
+                <FiDownload className="fs-base me-2" />
+                {t('dashboard:download')}
+              </>
+            )}
+            className="me-4 fs-sm my-2 my-xl-0"
+          />
+        </div>
         <div id="google_translate_element" />
       </div>
       {
