@@ -10,11 +10,12 @@ import { BsExclamationTriangle } from 'react-icons/bs';
 import ErrorMessage from '../error-message/ErrorMessage';
 
 function TextEditor({
-  className, maxLength, setNoteText, disableEditor, disableChangeTab, SubmitNote,
+  className, maxLength, setNoteText, disableEditor, disableChangeTab,
+  SubmitNote, isEmptyText, showError, hideError,
 }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [contentState, setContentState] = useState();
-  const [isMaxLength, setIsMaxLength] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const { t } = useTranslation(['error', 'translation']);
 
   const currentContent = editorState.getCurrentContent();
@@ -24,13 +25,16 @@ function TextEditor({
   const handleContentStateChange = (c) => {
     setContentState(draftToHtml(c));
     setNoteText(contentState);
-    SubmitNote(isMaxLength);
-
-    if (currentContentLength > maxLength) {
-      setIsMaxLength(true);
+    SubmitNote(hasError);
+    isEmptyText(currentContentLength === 0);
+    if (currentContentLength >= 1) {
+      hideError(currentContentLength > 0);
+    }
+    if ((currentContentLength > maxLength)) {
+      setHasError(true);
     }
     if (currentContentLength <= maxLength) {
-      setIsMaxLength(false);
+      setHasError(false);
     }
     disableChangeTab(hasText);
   };
@@ -41,7 +45,7 @@ function TextEditor({
 
   return (
     <div className={`${className} `}>
-      <div className={`${isMaxLength ? 'error' : ''} ${disableEditor ? 'disabled-editor' : ''}`}>
+      <div className={`${(hasError || showError) ? 'error' : ''} ${disableEditor ? 'disabled-editor' : ''}`}>
         <Editor
           readOnly={disableEditor}
           editorState={editorState}
@@ -57,8 +61,8 @@ function TextEditor({
           }}
         />
       </div>
-      <div className={`mt-2 d-flex  ${isMaxLength ? 'justify-content-between' : 'justify-content-end'}`}>
-        {isMaxLength && <ErrorMessage
+      <div className={`mt-2 d-flex  ${(hasError || showError) ? 'justify-content-between' : 'justify-content-end'}`}>
+        {(hasError || showError) && <ErrorMessage
           className="mb-0"
           msg={
             <p className="fs-12 d-flex mb-0">
@@ -83,6 +87,9 @@ TextEditor.propTypes = {
   disableEditor: PropTypes.bool,
   disableChangeTab: PropTypes.func,
   SubmitNote: PropTypes.func.isRequired,
+  isEmptyText: PropTypes.func.isRequired,
+  showError: PropTypes.bool.isRequired,
+  hideError: PropTypes.func.isRequired,
 };
 
 TextEditor.defaultProps = {
