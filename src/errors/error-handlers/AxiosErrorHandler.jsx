@@ -9,7 +9,7 @@ const errorHandlers = {
 };
 
 const AxiosErrorHandler = ({ error }) => {
-  const RenderedComponent = errorHandlers[error.error.code] || errorHandlers.invalid_state;
+  const RenderedComponent = errorHandlers[error.error?.code] || errorHandlers.invalid_state;
 
   return (
     <RenderedComponent />

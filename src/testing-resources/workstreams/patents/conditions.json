@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "optionName": "Has Exactly",
+    "optionNameAr": "يحوي تطابق",
+    "optionParserName": "hasExactly"
+  },
+  {
+    "id": 2,
+    "optionName": "Has All",
+    "optionNameAr": "يحوي الكل",
+    "optionParserName": "hasAll"
+  },
+  {
+    "id": 3,
+    "optionName": "Has Any",
+    "optionNameAr": "يحوي أي من",
+    "optionParserName": "hasAny"
+  },
+  {
+    "id": 4,
+    "optionName": "Is",
+    "optionNameAr": "يساوي",
+    "optionParserName": "is"
+  },
+  {
+    "id": 5,
+    "optionName": "Before",
+    "optionNameAr": "قبل",
+    "optionParserName": "before"
+  },
+  {
+    "id": 6,
+    "optionName": "After",
+    "optionNameAr": "بعد",
+    "optionParserName": "after"
+  },
+  {
+    "id": 7,
+    "optionName": "Between",
+    "optionNameAr": "بين",
+    "optionParserName": "between"
+  }
+]

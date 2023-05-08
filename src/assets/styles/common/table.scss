@@ -15,6 +15,11 @@
     @extend .pe-8;
     @extend .py-8;
     white-space: nowrap;
+
+    html[dir="rtl"] & {
+      @extend .ps-8;
+      @extend .pe-2;
+    }
   }
 
   td {
@@ -23,13 +28,24 @@
     font-size: $font-size-sm;
     @extend .pt-4;
     @extend .pb-8;
+
+    html[dir="rtl"] & {
+      direction: ltr;
+      text-align: right;
+    }
   }
 
   th,
   td {
     &:first-of-type {
-      @extend .ps-8;
 
+      html[dir="rtl"] & {
+        @extend .pe-8;
+      }
+
+      html[dir="ltr"] & {
+        @extend .ps-8;
+      }
     }
   }
 }

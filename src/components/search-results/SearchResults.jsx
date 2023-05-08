@@ -486,7 +486,7 @@ function SearchResults() {
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
                       selectedOption={values.selectedWorkstream}
-                      className="workStreams me-5 ms-3 mt-1 customSelect"
+                      className="workStreams ms-3 mt-1 customSelect"
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);
@@ -561,7 +561,7 @@ function SearchResults() {
             onChangeSearchQuery={setSearchQuery}
           />
         </Col>
-        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <div className="d-lg-flex align-items-center">
             <AppTooltip
               tooltipTrigger={

@@ -70,7 +70,7 @@ const SavedQueries = () => {
               moduleClassName="menu"
               selectedOption={selectedWorkStream}
               setSelectedOption={onChangeWorkStream}
-              className="workStreams me-5 ms-3 mt-1 customSelect"
+              className="workStreams ms-3 mt-1 customSelect"
             />
           </div>
           {isAuth ? (
@@ -78,15 +78,13 @@ const SavedQueries = () => {
               className="mt-8"
               axiosConfig={axiosConfig}
               defaultPage={Number(searchParams.get('page') || '1')}
-              RenderedComponent={
-              savedQueries
-            }
-              emptyState={(
-                <NoData />)}
-              updateDependencies={[...Object.values(selectedWorkStream)]}
+              RenderedComponent={savedQueries}
+              emptyState={<NoData />}
+              resetPage={pageReset}
             />
           ) : (
             <IndexedDbAppPagination
+              className="mt-8"
               RenderedComponent={savedQueries}
               tableName={tableNames.savedQuery}
               emptyState={<NoData />}

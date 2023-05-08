@@ -33,7 +33,8 @@
         background-image: url(../../../assets/images/ic-integrated-circuits.png);
       }
       &.active {
-        @include border(2px, 200%, -12px , auto ,-17px, transparent);
+        @include border(2px, 200%, -12px , transparent);
+        @include border-end(-17px);
         &.ic-patent {
           &::after {
             background-color: $patents;

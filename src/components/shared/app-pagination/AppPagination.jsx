@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import apiInstance from 'apis/apiInstance';
 import Pagination from 'react-responsive-pagination';
@@ -10,11 +10,13 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
-  sort, onPageChange, className,
+  sort, onPageChange, className, resetPage,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(0);
+  const isReady = useRef(false);
 
   const changePage = (page) => {
     if (onPageChange) onPageChange(page);
@@ -26,10 +28,6 @@ const AppPagination = ({
     params: { ...axiosConfig.params, sort, page: currentPage },
   };
 
-  useEffect(() => {
-    setCurrentPage('1');
-  }, [sort, updateDependencies]);
-
   const [{ data }, execute] = useAxios(axiosPaginatedConfig, { manual: true }, axiosInstance);
 
   const paginationInfo = data?.pagination || {
@@ -39,6 +37,18 @@ const AppPagination = ({
   const displayData = data?.data;
 
   useEffect(() => {
+    if (isReady.current) {
+      if (currentPage === 1) {
+        setRefresh((prev) => prev + 1);
+      } else {
+        setCurrentPage(1);
+      }
+    } else {
+      isReady.current = true;
+    }
+  }, [sort, resetPage]);
+
+  useEffect(() => {
     setCurrentPage(Number(searchParams.get('page')) || currentPage);
   }, [searchParams.get('page')]);
 
@@ -46,8 +56,10 @@ const AppPagination = ({
     searchParams.set('page', currentPage.toString());
     setSearchParams(searchParams);
     setIsLoading(true);
-    execute();
-  }, [currentPage, sort, ...updateDependencies, data]);
+    setTimeout(() => {
+      execute();
+    }, 0);
+  }, [currentPage, refresh, ...updateDependencies]);
 
   useEffect(() => {
     if (data) {
@@ -96,6 +108,7 @@ AppPagination.propTypes = {
   sort: PropTypes.string,
   onPageChange: PropTypes.func,
   className: PropTypes.string,
+  resetPage: PropTypes.number,
 };
 
 AppPagination.defaultProps = {
@@ -109,6 +122,7 @@ AppPagination.defaultProps = {
   setResults: () => {},
   onPageChange: null,
   className: '',
+  resetPage: 0,
 };
 
 export default AppPagination;
