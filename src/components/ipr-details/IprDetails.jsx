@@ -656,7 +656,7 @@ function IprDetails({
             <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
           </p>
         )}
-        <div className="border-top py-3 px-6 d-lg-flex align-items-start">
+        <div className="border-top py-3 px-6 d-xxl-flex align-items-start">
           <Button
             variant="primary"
             text={(
@@ -665,7 +665,7 @@ function IprDetails({
                 {t('search:findSimilar')}
               </>
             )}
-            className="me-4 fs-sm my-2 my-xl-0"
+            className="me-4 fs-sm my-2 my-xxl-0"
           />
           <Button
             variant="primary"
@@ -675,7 +675,7 @@ function IprDetails({
                 {t('search:download')}
               </>
             )}
-            className="me-4 fs-sm my-2 my-xl-0"
+            className="me-4 fs-sm my-2 my-xxl-0"
           />
           <div id="google_translate_element" className="d-inline-block" />
         </div>
