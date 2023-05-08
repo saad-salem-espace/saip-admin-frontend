@@ -240,8 +240,6 @@ function SearchResults() {
   // ];
 
   const onSubmit = (values) => {
-    console.log(values);
-    console.log(selectedOption);
     setActiveDocument(null);
     setIsIPRExpanded(false);
     if (!isAdvancedSearch) {
