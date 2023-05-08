@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 const SharedErrorPage = ({ title, msg, img }) => {
   const { t } = useTranslation('translation');
   return (
-    <div className="d-flex align-items-center justify-content-center errorsWrapper text-center">
+    <div className="d-flex align-items-center justify-content-center errorsWrapper text-center" translate="no">
       <div>
         <Image src={img} className="errorImg mb-10" />
         <h3 className="text-gray-700 mb-4">{title}</h3>

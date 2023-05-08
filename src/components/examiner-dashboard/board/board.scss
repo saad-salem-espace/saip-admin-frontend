@@ -1,0 +1,65 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/mixin";
+
+.board-container {
+  .cards-container {
+    overflow-x: scroll;
+    @include scrollbar;
+    @include media-breakpoint-up(lg) {
+      height: 77vh;
+    }
+  }
+  .empty-board {
+    height: 65vh;
+  }
+  .assignment-status {
+    @include border(3px,25px,0px,transparent);
+    @include border-start(0);
+    &.todo {
+      &::before {
+        background-color: $primary;
+      }
+    }
+    &.in-progress {
+      &::before {
+        background-color: $secondary-rio-grande;
+      }
+    }
+    &.done {
+      &::before {
+        background-color: $primary-dark;
+      }
+    }
+    &.review {
+      &::before {
+        background-color: $danger-dark;
+      }
+    }
+  }
+}
+.dashboard-ipr-container {
+  z-index: 5;
+  overflow-x: hidden;
+  @include scrollbar;
+  height: calc(100vh - 162px);
+  overflow-y: auto;
+
+  &.expanded {
+    .top-info-bar {
+      .filing-date {
+        @include media-breakpoint-up(lg) {
+          @include border(1px,84px,-9px,$border-color);
+          @include border-end(0);
+        }
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+  .border-start {
+    @include media-breakpoint-down(md) {
+      border: none !important
+    }
+  }
+}

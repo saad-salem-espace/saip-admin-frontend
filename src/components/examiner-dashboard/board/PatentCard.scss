@@ -1,0 +1,11 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/mixin";
+
+.patent-card {
+  .name-card {
+    @include truncate(2);
+  }
+  &.active {
+    background: $primary-01;
+  }
+}

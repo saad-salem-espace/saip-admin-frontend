@@ -1,0 +1,10 @@
+@import "..//../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.tooltip-content {
+  background-color: $gray-700;
+  color: $white;
+  font-size: $font-size-xs;
+  border-radius: $border-radius;
+  @extend .p-2
+}

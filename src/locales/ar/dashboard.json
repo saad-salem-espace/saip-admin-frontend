@@ -1,0 +1,38 @@
+{
+  "queuePriority": "أولوية الفحص",
+  "earliestPriority": "الأسبقية",
+  "filingDate": "تاريخ الإيداع",
+  "emptyBoardTitle": "لا تجد الوثائق الخاضعة للفحص؟",
+  "emptyBoardMessage": "لم يتم إسناد أي من الوثائق لك. ",
+  "queue": "أولوية",
+  "addNote": "اضف ملاحظة",
+  "priority": "أسبقية",
+  "pinned": "مثبت",
+  "others": "اخرون",
+  "info": "معلومات",
+  "notes": "ملاحظات",
+  "translateInfo": "ترجمة",
+  "markAsDone": "تم إنجازه",
+  "status": {
+    "toDo": "قائمة الأعمال",
+    "done": "منجز",
+    "inProgress": "جار العمل عليه",
+    "review": "مراجعة"
+  },
+  "workStream": {
+    "patent": "براءات الإختراع",
+    "trademark": "العلامات التجارية",
+    "copyrights": "حق المؤلف",
+    "industrialDesign": "النماذج الصناعية",
+    "plantVarieties": "الأصناف النباتية",
+    "integratedCircuits": "الدوائر المتكاملة"
+  },
+  "board": {
+    "patent": "لوحة <0> برءاات الإختراع </0>",
+    "trademark": "لوحة <0> العلامات التجارية </0>",
+    "copyrights": "لوحة <0> حق المؤلف </0>",
+    "industrialDesign": "لوحة <0> النماذج الصناعية </0>",
+    "plantVarieties": "لوحة <0> الأصناف النباتية </0>",
+    "integratedCircuits": "لوحة <0> الدوائر المتكاملة </0>"
+  }
+}

@@ -2,6 +2,7 @@ import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import style from './style.module.scss';
+import FormikErrorMessage from '../formik-error-message/FormikErrorMessage';
 
 function Input({
   id,
@@ -12,6 +13,8 @@ function Input({
   disabled,
   imageSearch,
   className,
+  showError,
+  errorClassName,
 }) {
   const styleClassNames = classNames.bind(style);
   const inputClassName = styleClassNames(moduleClassName);
@@ -37,6 +40,7 @@ function Input({
           }
         }
       </Field>
+      {showError && <FormikErrorMessage name={name} className={errorClassName} /> }
     </div>
   );
 }
@@ -51,6 +55,8 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   imageSearch: PropTypes.bool,
   className: PropTypes.string,
+  showError: PropTypes.bool,
+  errorClassName: PropTypes.string,
 };
 Input.defaultProps = {
   type: 'text',
@@ -61,6 +67,8 @@ Input.defaultProps = {
   className: '',
   disabled: false,
   imageSearch: false,
+  showError: true,
+  errorClassName: '',
 };
 
 export default Input;

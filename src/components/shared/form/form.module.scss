@@ -2,22 +2,26 @@
 
 .label {
   color: $gray;
-  left: 16px;
   top: 21px;
   font-size: $font-size-sm;
   z-index: 9;
-
+  white-space: nowrap;
+  &.top {
+    top: 13px;
+  }
+  html[dir="ltr"] & {
+    left: 16px;
+  }
   html[dir="rtl"] & {
-    left: 0;
     right: 16px;
   }
 
   &.select2 {
-    left: 0;
-
+    html[dir="ltr"] & {
+      left: 0;
+    }
     html[dir="rtl"] & {
       right: 0;
-      left: auto;
     }
   }
 }

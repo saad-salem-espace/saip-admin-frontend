@@ -1,0 +1,52 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.public-DraftEditor-content {
+  height: 107px;
+  max-width: 100%;
+  margin: 0;
+  @extend .p-4;
+}
+
+.toolbarClassName {
+  margin-bottom: 0;
+}
+
+.rdw-editor-wrapper {
+  @extend .border;
+  border-radius: $border-radius;
+}
+
+.rdw-editor-toolbar {
+  border-width: 0 0 $border-width;
+  border-color: $gray-400;
+}
+
+a.rdw-dropdown-selectedtext {
+  color: $gray
+}
+
+.public-DraftStyleDefault-block  {
+  margin: 0;
+}
+
+.disabled-editor {
+  background-color: $gray-200;
+
+  .rdw-editor-toolbar {
+    background-color: $gray-200;
+  }
+}
+
+.error {
+  .rdw-editor-wrapper {
+    border-color: $danger !important;
+  }
+}
+
+.rdw-dropdown-carettoopen, .rdw-dropdown-carettoclose {
+  html[dir="rtl"] & {
+    left: 10%;
+    right: auto;
+  }
+}

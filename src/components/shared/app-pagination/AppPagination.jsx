@@ -1,5 +1,4 @@
-/* eslint-disable */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import apiInstance from 'apis/apiInstance';
 import Pagination from 'react-responsive-pagination';
@@ -11,57 +10,80 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
-  sort, onPageChange
+  sort, onPageChange, className, resetPage, isFetching,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(0);
+  const isReady = useRef(false);
 
   const changePage = (page) => {
-    if(onPageChange) onPageChange(page);
+    if (onPageChange) onPageChange(page);
     setCurrentPage(page);
-  }
+  };
 
   const axiosPaginatedConfig = {
     ...axiosConfig,
     params: { ...axiosConfig.params, sort, page: currentPage },
   };
 
-  useEffect(() => {
-    setCurrentPage('1');
-  }, [sort]);
-
   const [{ data }, execute] = useAxios(axiosPaginatedConfig, { manual: true }, axiosInstance);
 
   const paginationInfo = data?.pagination || {
-    per_page: 10,
-    total: 0,
-  }
+    totalElements: 0,
+    totalPages: 0,
+  };
   const displayData = data?.data;
+
+  useEffect(() => {
+    if (isReady.current) {
+      if (currentPage === 1) {
+        setRefresh((prev) => prev + 1);
+      } else {
+        setCurrentPage(1);
+      }
+    } else {
+      isReady.current = true;
+    }
+  }, [sort, resetPage]);
 
   useEffect(() => {
     setCurrentPage(Number(searchParams.get('page')) || currentPage);
   }, [searchParams.get('page')]);
 
   useEffect(() => {
-    searchParams.set('page', currentPage.toString());
-    setSearchParams(searchParams);
-    execute();
-  }, [currentPage, sort, ...updateDependencies]);
+    if (isFetching !== null) {
+      isFetching(isLoading);
+    }
+  }, [isLoading]);
 
   useEffect(() => {
-    if(data){
+    searchParams.set('page', currentPage.toString());
+    setSearchParams(searchParams);
+    setIsLoading(true);
+    setTimeout(() => {
+      execute();
+    }, 0);
+  }, [currentPage, refresh, ...updateDependencies]);
+
+  useEffect(() => {
+    if (data) {
       setResults(data.data);
-      fetchedTotalResults(data.pagination?.total || 0);
+      if (fetchedTotalResults) {
+        fetchedTotalResults(data.pagination?.totalElements || 0);
+      }
+      setIsLoading(false);
     }
   }, [data]);
 
-  if (!data) {
+  if (!data || isLoading) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
   }
-  if (!paginationInfo.total) {
+  if (!paginationInfo.totalElements) {
     return emptyState;
   }
-  const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
+
   const renderedComponent = (
     <RenderedComponent data={displayData} {...renderedProps} />
   );
@@ -70,9 +92,9 @@ const AppPagination = ({
     <>
       {renderedComponent}
       <Pagination
-        className="pagination"
+        className={`pagination ${className}`}
         current={currentPage}
-        total={totalNumberOfPages}
+        total={paginationInfo.totalPages}
         onPageChange={changePage}
       />
     </>
@@ -91,6 +113,9 @@ AppPagination.propTypes = {
   setResults: PropTypes.func,
   sort: PropTypes.string,
   onPageChange: PropTypes.func,
+  className: PropTypes.string,
+  resetPage: PropTypes.number,
+  isFetching: PropTypes.func,
 };
 
 AppPagination.defaultProps = {
@@ -98,11 +123,14 @@ AppPagination.defaultProps = {
   renderedProps: {},
   sort: '',
   axiosInstance: apiInstance,
-  fetchedTotalResults: null,
+  fetchedTotalResults: () => {},
   emptyState: null,
   updateDependencies: [],
   setResults: () => {},
-  onPageChange: null
+  onPageChange: null,
+  className: '',
+  resetPage: 0,
+  isFetching: null,
 };
 
 export default AppPagination;

@@ -13,7 +13,7 @@ import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
-  workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef,
+  workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
 }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
@@ -40,7 +40,7 @@ function SearchQuery({
   };
 
   return (
-    <div>
+    <div className={`${className}`}>
       <Formik
         enableReinitialize
         validationSchema={SearchQueryValidationSchema}
@@ -52,9 +52,9 @@ function SearchQuery({
         }}
       >
         {({
-          values, setFieldValue, errors, setValues, touched, setErrors, setTouched,
+          values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form onChange={onChangeSearchQuery(parseQuery(values.searchFields, '', true))}>
+          <Form onChange={onChangeSearchQuery(parseQuery(values.searchFields, '', true))} onSubmit={handleSubmit}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -101,7 +101,7 @@ function SearchQuery({
                     }}
                     text={(
                       <>
-                        <FontAwesomeIcon icon={faCirclePlus} className="me-4" />
+                        <FontAwesomeIcon icon={faCirclePlus} className="me-2" />
                         {t('addSearchField')}
                       </>
                     )}
@@ -154,10 +154,12 @@ SearchQuery.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Object) }),
   ]).isRequired,
+  className: PropTypes.string,
 };
 
 SearchQuery.defaultProps = {
   onChangeSearchQuery: () => {},
+  className: '',
 };
 
 export default SearchQuery;

@@ -10,31 +10,39 @@ import { Link } from 'react-router-dom';
 import { FaRegBell } from 'react-icons/fa';
 import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
+import roleMapper from 'utils/roleMapper';
+import Image from 'react-bootstrap/Image';
+import PropTypes from 'prop-types';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
+import logo from '../../../assets/images/logo-shape.png';
 
-function LoggedNavbar() {
+function LoggedNavbar({ lang, changeLang }) {
   const auth = useAuth();
   const { t } = useTranslation('layout');
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar logged p-4 shadow">
-      <Container fluid className="px-lg-15">
+      <Container fluid>
+        <Navbar.Brand to="/" as={Link}>
+          <Image src={logo} className="d-block mx-auto me-lg-5 me-0 pe-3" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
           <Nav className="me-auto">
-            <Nav.Link to="#" as={Link} className="appBtn has-icon btn btn-primary pe-3 me-5">
-              <BsGrid className="icon" />
-              {t('navbar.dashboard')}
-            </Nav.Link>
+            {(roleMapper(auth?.user?.profile?.clientRoles[0]) === 'External_Examiner' || roleMapper(auth?.user?.profile?.clientRoles[0]) === 'Internal_Examiner') && (
+              <Nav.Link to="dashboard" as={Link} className="appBtn has-icon btn btn-primary me-0 me-lg-5">
+                <BsGrid className="icon" />
+                {t('navbar.dashboard')}
+              </Nav.Link>)}
             <Nav.Link to="#" as={Link} className="has-icon">
               <MdOutlineBookmarkBorder className="icon" />
               {t('navbar.myBookmarks')}
             </Nav.Link>
-            <Nav.Link to="#" as={Link} className="has-icon ps-lg-5">
+            <Nav.Link to="/savedQueries" as={Link} className="has-icon">
               <BsStar className="icon" />
-              {t('navbar.savedQueries')}
+              {t('navbar.myQueries')}
             </Nav.Link>
             <Nav.Link to="#" as={Link} className="has-icon">
               <BsListUl className="icon list" />
@@ -43,20 +51,20 @@ function LoggedNavbar() {
           </Nav>
           {/* Right navbar */}
           <Nav className="align-items-center">
-            <Nav.Link to="#features" as={Link} className="appBtn btn btn-primary pe-lg-3 me-lg-5 px-3">
+            <Nav.Link to="/" as={Link} className="appBtn btn btn-primary me-lg-5 px-3">
               {t('navbar.ipSearch')}
             </Nav.Link>
             <RecentSearch />
-            <div className="d-flex justify-content-center h-39">
+            <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
               <div className="edges-border notifications new">
-                <Nav.Link to="#features" as={Link} variant="transparent">
+                <Nav.Link to="#" as={Link} variant="transparent">
                   <FaRegBell className="icon m-0" />
                   <div className="number-notifications">99+</div>
                 </Nav.Link>
               </div>
               {/* Switch language */}
-              <LanguageSwitch />
+              <LanguageSwitch className="pe-lg-5 me-lg-5" lang={lang} changeLang={changeLang} />
               {/* Avatar & control */}
               <Dropdown>
                 <Dropdown.Toggle variant="transparent" className="appBtn avatar-btn btn nav-link mx-auto" size="lg" id="dropdown-basic">
@@ -78,5 +86,8 @@ function LoggedNavbar() {
     </Navbar>
   );
 }
-
+LoggedNavbar.propTypes = {
+  changeLang: PropTypes.func.isRequired,
+  lang: PropTypes.string.isRequired,
+};
 export default LoggedNavbar;

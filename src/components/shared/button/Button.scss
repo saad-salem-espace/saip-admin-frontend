@@ -55,7 +55,8 @@
   }
 
   &.disabled, :disabled {
-    color: $gray-500;
+    background-color: $gray-500 !important;
+    border: none;
   }
 }
 .dropdown-menu.show {

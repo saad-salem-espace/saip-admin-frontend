@@ -1,4 +1,5 @@
 {
+  "search": "Search",
   "priority": "Priority {{value}}",
   "filed": "Filed {{value}}",
   "published": "Published {{value}}",
@@ -133,7 +134,8 @@
       "representativeName": "Representative Name",
       "representativeDetails": "Representative details"
     },
-    "drawings": "Drawings"
+    "drawings": "Drawings",
+    "originalDocument": "Original Document"
   },
   "patent": {
     "claims": "Claims",
@@ -166,5 +168,12 @@
   "priorityDateDesc": "Priority date desc",
   "mostRelevant": "Most Relevant",
   "filingDateAsc": "Filing date asc",
-  "filingDateDesc": "Filing date desc"
+  "filingDateDesc": "Filing date desc",
+  "saveSearchQuery": "Save search query",
+  "querySaved": "Query saved successfully.",
+  "savedQueryMsg": "You can find all your saved queries in <0>My queries</0>",
+  "couldnotSave": "Couldn't save the query.",
+  "failerMsg": "Something went wrong! Please try again later.",
+  "findSimilar": "Find Similar",
+  "download": "Download"
 }
