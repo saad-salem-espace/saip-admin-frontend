@@ -5,7 +5,7 @@ import React from 'react';
 import Button from 'components/shared/button/Button';
 
 const OriginalDocumentsNavButtons = ({ backward, forward }) => (
-  <div className="text-center mb-5">
+  <div className="ltr text-center mb-5">
     <Button
       variant="link"
       className="shadow me-4 rounded-circle"
