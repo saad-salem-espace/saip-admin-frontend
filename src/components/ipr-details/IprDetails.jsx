@@ -71,7 +71,7 @@ function IprDetails({
   isCardInprogress,
   selectedCardId,
 }) {
-  const { t, i18n } = useTranslation('search', 'dashboard');
+  const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [document, setDocument] = useState(null);
@@ -103,7 +103,6 @@ function IprDetails({
         // eslint-disable-next-line no-new
         new window.google.translate.TranslateElement(
           {
-            pageLanguage: i18n.language,
             autoDisplay: false,
           },
           'google_translate_element',
