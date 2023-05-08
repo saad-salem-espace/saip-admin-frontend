@@ -9,9 +9,9 @@ const operators = ['and', 'or', 'not'].map((operator) => ({
   displayName: t(`search:operators.${operator}`),
 }));
 
-const parseQuery = (fields, imageName, isQuery) => {
+const parseQuery = (fields, imageName, isQuery, isAdvanced = true) => {
   let finalQuery = '';
-
+  if (!isAdvanced) return '';
   fields.forEach((value, index) => {
     if (!finalQuery) {
       finalQuery += parseSingleQuery({ ...value, operator: '' }, index, isQuery);

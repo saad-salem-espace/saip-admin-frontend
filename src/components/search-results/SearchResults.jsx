@@ -28,6 +28,7 @@ import emptyState from 'assets/images/search-empty-state.svg';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
+import { parseSingleQuery } from 'utils/search-query/encoder';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
@@ -44,6 +45,7 @@ function SearchResults() {
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState(null);
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [activeDocument, setActiveDocument] = useState(null);
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
@@ -222,6 +224,10 @@ function SearchResults() {
     setIsIPRExpanded(!isIPRExpanded);
   };
 
+  useEffect(() => {
+    setSelectedOption(searchIdentifiers?.[0]);
+  }, [searchIdentifiers]);
+
   // const options = [
   //   {
   //     key: '1',
@@ -234,19 +240,48 @@ function SearchResults() {
   // ];
 
   const onSubmit = (values) => {
+    console.log(values);
+    console.log(selectedOption);
     setActiveDocument(null);
     setIsIPRExpanded(false);
-    navigate({
-      pathname: '/search',
-      search: `?${createSearchParams({
-        workstreamId: values.selectedWorkstream.value,
-        q: values.searchQuery,
-        ...(imageName && { imageName }),
-        enableSynonyms: isEnabledSynonyms,
-        sort: sortBy.value,
-        page: 1,
-      })}`,
-    });
+    if (!isAdvancedSearch) {
+      let simpleQuery = null;
+      if (selectedOption.identifierType !== 'Date') simpleQuery = values.searchQuery.trim();
+      else simpleQuery = values.searchQuery;
+
+      const defaultConditions = new Map();
+      defaultConditions.set('Text', 'hasExactly');
+      defaultConditions.set('Date', 'is');
+      defaultConditions.set('Number', 'is');
+      defaultConditions.set('LKP', 'hasAny');
+
+      const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
+
+      const query = parseSingleQuery({
+        identifier: selectedOption,
+        condition: { optionParserName: defaultCondition },
+        data: simpleQuery,
+      }, 0, true);
+
+      navigate({
+        pathname: '/search',
+        search: `?${createSearchParams({
+          workstreamId: values.selectedWorkstream.value, sort: 'mostRelevant', q: (simpleQuery ? query : ''), ...(imageName && { imageName }),
+        })}`,
+      });
+    } else {
+      navigate({
+        pathname: '/search',
+        search: `?${createSearchParams({
+          workstreamId: values.selectedWorkstream.value,
+          q: values.searchQuery,
+          ...(imageName && { imageName }),
+          enableSynonyms: isEnabledSynonyms,
+          sort: sortBy.value,
+          page: 1,
+        })}`,
+      });
+    }
   };
 
   useEffect(() => {
@@ -456,6 +491,8 @@ function SearchResults() {
                     values={values}
                     setErrors={setErrors}
                     setTouched={setTouched}
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
                     isAdvanced={isAdvancedSearch}
                     className="search-results-view"
                     selectedWorkStream={values.selectedWorkstream?.value}

@@ -19,11 +19,11 @@ function SharedSearch({
   isAdvanced, selectedWorkStream, children,
   resultsView, setTouched, setFieldValue, values, setErrors, className,
   setImageName, setIsImgUploaded, isImgUploaded,
+  selectedOption, setSelectedOption,
 }) {
   const { t, i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const { cachedRequests } = useContext(CacheContext);
-  const [selectedOption, setSelectedOption] = useState(null);
   const [showUploadImgSection, setShowUploadImgSection] = useState(false);
 
   const [searchOption] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${selectedWorkStream}/identifiers` }, { dependencies: [selectedWorkStream] });
@@ -92,6 +92,7 @@ function SharedSearch({
               && (<span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
               )}
             {!isAdvanced && <Select
+              name="simpleIdentifier"
               options={searchOptions}
               className={`${style.select} ${resultsView ? 'lgSelect' : 'smSelect'}  selectWithSibling`}
               getOptionName={(option) => identifierName(option)}
@@ -153,6 +154,8 @@ SharedSearch.propTypes = {
   setIsImgUploaded: PropTypes.func.isRequired,
   values: PropTypes.instanceOf(Object).isRequired,
   setImageName: PropTypes.func.isRequired,
+  selectedOption: PropTypes.instanceOf(Object).isRequired,
+  setSelectedOption: PropTypes.func.isRequired,
 };
 
 SharedSearch.defaultProps = {

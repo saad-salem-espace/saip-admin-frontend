@@ -151,6 +151,7 @@ function WorkstreamSearch() {
                     className="d-block text-primary mb-2 text-end"
                   />
                   <SharedSearch
+                    isAdvanced={isAdvanced}
                     setFieldValue={setFieldValue}
                     values={values}
                     setErrors={setErrors}
@@ -160,6 +161,8 @@ function WorkstreamSearch() {
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
                     setIsImgUploaded={setIsImgUploaded}
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
                   />
                   {isAdvanced && <SearchQuery
                     workstreamId={selectedWorkStream}

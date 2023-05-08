@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesLeft, faAnglesRight, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
@@ -22,6 +22,17 @@ function AdvancedSearch({
   const [activeTabId, setActiveTabId] = useState(1);
   const lang = useContext(ThemeContext).language;
 
+  const getSearchQuery = useCallback(() => (
+    <SearchQuery
+      workstreamId={workstreamId}
+      firstIdentifierStr={firstIdentifierStr}
+      defaultInitializers={defaultInitializers}
+      onChangeSearchQuery={onChangeSearchQuery}
+      submitRef={submitRef}
+      isAdvancedMenuOpen={isAdvancedMenuOpen}
+    />
+  ), [defaultInitializers, isAdvancedMenuOpen]);
+
   const tabsItems = [
     {
       id: 1,
@@ -31,14 +42,7 @@ function AdvancedSearch({
           <FontAwesomeIcon icon={faCircleQuestion} className="f-20 ms-2" />
         </div>
       ),
-      content: <SearchQuery
-        workstreamId={workstreamId}
-        firstIdentifierStr={firstIdentifierStr}
-        defaultInitializers={defaultInitializers}
-        onChangeSearchQuery={onChangeSearchQuery}
-        submitRef={submitRef}
-        isAdvancedMenuOpen={isAdvancedMenuOpen}
-      />,
+      content: getSearchQuery(),
     },
   ];
 
