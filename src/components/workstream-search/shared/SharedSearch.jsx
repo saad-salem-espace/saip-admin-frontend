@@ -65,12 +65,12 @@ function SharedSearch({
   }
 
   const SearchModuleClassName = ({
-    lgSearch: resultsView,
+    lgSearch: !resultsView,
     searchWithSibling: !isAdvanced,
     searchInputWrapper: true,
     imgUploaded: isImgUploaded,
     searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
-    smSearch: !resultsView,
+    smSearch: resultsView,
   });
 
   const handleUploadImg = () => {
@@ -88,13 +88,13 @@ function SharedSearch({
       <div>
         <div className="d-xl-flex align-items-stretch">
           <div className="position-relative mb-xl-0 mb-3">
-            {!isAdvanced
+            {(!isAdvanced && !resultsView)
               && (<span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
               )}
             {!isAdvanced && <Select
               name="simpleIdentifier"
               options={searchOptions}
-              className={`${style.select} ${resultsView ? 'lgSelect' : 'smSelect'}  selectWithSibling`}
+              className={`${style.select} ${resultsView ? 'smSelect' : 'lgSelect'}  selectWithSibling`}
               getOptionName={(option) => identifierName(option)}
               selectedOption={selectedOption}
               setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
@@ -108,7 +108,7 @@ function SharedSearch({
             moduleClassName={
               SearchModuleClassName
             }
-            placeholder={isAdvanced ? null : t('typeHere')}
+            placeholder={t('typeHere')}
             isClearable={!!values.searchQuery}
             clearInput={() => { setFieldValue('searchQuery', ''); }}
             handleUploadImg={handleUploadImg}

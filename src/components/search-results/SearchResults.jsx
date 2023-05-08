@@ -497,6 +497,7 @@ function SearchResults() {
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
                     setIsImgUploaded={setIsImgUploaded}
+                    resultsView
                   >
                     <div className="d-md-flex mt-4">
                       <ToggleButton

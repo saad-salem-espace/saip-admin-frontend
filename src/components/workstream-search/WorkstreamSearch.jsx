@@ -157,7 +157,6 @@ function WorkstreamSearch() {
                     setErrors={setErrors}
                     setTouched={setTouched}
                     selectedWorkStream={selectedWorkStream}
-                    resultsView
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
                     setIsImgUploaded={setIsImgUploaded}
