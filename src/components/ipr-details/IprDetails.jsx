@@ -71,7 +71,7 @@ function IprDetails({
   isCardInprogress,
   selectedCardId,
 }) {
-  const { t, i18n } = useTranslation('search', 'dashboard');
+  const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [document, setDocument] = useState(null);
@@ -103,7 +103,6 @@ function IprDetails({
         // eslint-disable-next-line no-new
         new window.google.translate.TranslateElement(
           {
-            pageLanguage: i18n.language,
             autoDisplay: false,
           },
           'google_translate_element',
@@ -576,10 +575,10 @@ function IprDetails({
             />
             <h5 className="mb-0">{document.BibliographicData.PublicationNumber}</h5>
           </div>
-          <div>
+          <div className="d-flex">
             {
             !dashboard && (
-              <>
+              <div dir="ltr" className="border-end me-4">
                 <Button
                   variant="link"
                   className="p-0 pe-5"
@@ -594,7 +593,7 @@ function IprDetails({
                 />
                 <Button
                   variant="link"
-                  className="p-0 pe-5 border-end me-4"
+                  className="p-0 pe-5 "
                   text={
                     <FontAwesomeIcon
                       icon={faChevronRight}
@@ -604,7 +603,7 @@ function IprDetails({
                   disabled={!nextDocument}
                   onClick={() => setActiveDocument(nextDocument)}
                 />
-              </>)
+              </div>)
               }
             {
                 showActions

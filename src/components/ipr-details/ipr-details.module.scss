@@ -16,7 +16,6 @@
 .iprWrapper {
   height: 80vh;
   overflow-y: auto;
-  @extend .me-2;
   @include scrollbar;
 }
 

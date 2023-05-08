@@ -4,8 +4,9 @@ const saveNoteApi = ({
   id, noteText,
 }, configOnly = false) => {
   const config = {
-    url: `dashboard/${id}/notes?note_txt=${noteText}`,
+    url: `dashboard/${id}/notes`,
     method: 'POST',
+    data: noteText,
   };
   return configOnly ? config : axios.request(config);
 };
