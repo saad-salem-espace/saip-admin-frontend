@@ -22,6 +22,8 @@ function Notes({
   const [currentPage, setCurrentPage] = useState(1);
   const [noteContent, setNoteContent] = useState();
   const [totalPages, setTotalPages] = useState();
+  const [showError, setShowError] = useState(false);
+  const [emptyText, setEmptyText] = useState(true);
 
   const config = getNotesApi(id, currentPage, true);
   const loadMoreItems = () => {
@@ -45,9 +47,22 @@ function Notes({
     saveNoteConfig,
     { manual: true },
   );
-  const onSubmitNote = () => {
-    executeSaveNote();
+
+  const isEmptyText = (x) => {
+    setEmptyText(x);
   };
+
+  const onSubmitNote = () => {
+    if (!emptyText) {
+      executeSaveNote();
+    }
+    setShowError(emptyText);
+  };
+
+  const hideError = (hide) => {
+    setShowError(!hide);
+  };
+
   useEffect(() => {
     if (fireSubmit) {
       onSubmitNote();
@@ -115,6 +130,9 @@ function Notes({
           setNoteText={setNoteText}
           disableEditor={disableEditor}
           disableChangeTab={disableChangeTab}
+          isEmptyText={isEmptyText}
+          showError={showError}
+          hideError={hideError}
         />
       </div>
     </div>
