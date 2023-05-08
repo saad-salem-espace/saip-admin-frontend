@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Trans, useTranslation } from 'react-i18next';
 import React, {
   useState, useContext, useEffect, useRef,
@@ -13,7 +11,7 @@ import CacheContext from 'contexts/CacheContext';
 import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
-import { teldaRegex, noTeldaRegex } from 'utils/searchQuery';
+import { teldaRegex, noTeldaRegex, defaultConditions } from 'utils/searchQuery';
 import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -56,27 +54,11 @@ function WorkstreamSearch() {
     setSelectedWorkStream(newState);
   };
 
-  // const onChangeIdentifier = (identifier, clearData, clearErrors, clearTouch) => {
-  //   if (identifier.identifierType === 'Date' || selectedOption.identifierType === 'Date') {
-  //     clearData();
-  //     clearErrors();
-  //     clearTouch();
-  //   }
-
-  //   setSelectedOption(identifier);
-  // };
-
   const onSubmit = (values) => {
     let { searchQuery } = values;
 
     if (!isAdvanced) {
       if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
-
-      const defaultConditions = new Map();
-      defaultConditions.set('Text', 'hasExactly');
-      defaultConditions.set('Date', 'is');
-      defaultConditions.set('Number', 'is');
-      defaultConditions.set('LKP', 'hasAny');
 
       const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
 

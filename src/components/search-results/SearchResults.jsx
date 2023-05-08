@@ -32,9 +32,9 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
+import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
-import { parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import toastify from '../../utils/toastify';
@@ -246,12 +246,6 @@ function SearchResults() {
       let simpleQuery = null;
       if (selectedOption.identifierType !== 'Date') simpleQuery = values.searchQuery.trim();
       else simpleQuery = values.searchQuery;
-
-      const defaultConditions = new Map();
-      defaultConditions.set('Text', 'hasExactly');
-      defaultConditions.set('Date', 'is');
-      defaultConditions.set('Number', 'is');
-      defaultConditions.set('LKP', 'hasAny');
 
       const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
 
@@ -502,8 +496,8 @@ function SearchResults() {
                     <div className="d-md-flex mt-4">
                       <ToggleButton
                         handleToggleButton={() => {
-                          setIsAdvancedSearch(!isAdvancedSearch);
-                          setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
+                          setIsAdvancedSearch((isAdvanced) => !isAdvanced);
+                          setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
                         }}
                         isToggleButtonOn={isAdvancedSearch}
                         text={t('advancedSearch')}
