@@ -14,7 +14,11 @@
     height: 60px;
   }
 }
-
+.search-result {
+  html[dir="rtl"] & {
+    @extend .me-3;
+  }
+}
 .searchResultsView {
   position: absolute;
   background-color: $white;
