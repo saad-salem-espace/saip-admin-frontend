@@ -126,3 +126,9 @@
 .sortBy {
   width: 250px;
 }
+
+.search-results-view {
+  &.shared-search {
+    flex-grow: 1;
+  }
+}
