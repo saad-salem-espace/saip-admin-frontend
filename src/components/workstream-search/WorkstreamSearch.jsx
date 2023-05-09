@@ -144,6 +144,7 @@ function WorkstreamSearch() {
                     setIsImgUploaded={setIsImgUploaded}
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
+                    className="search-box-index"
                   />
                   {isAdvanced && <SearchQuery
                     workstreamId={selectedWorkStream}

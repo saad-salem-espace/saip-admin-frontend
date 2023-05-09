@@ -15,10 +15,18 @@
 }
 
 span.customLabel {
-  left: 154px;
-
+  html[dir="ltr"] & {
+    left: 154px;
+  }
   html[dir="rtl"] & {
     right: 154px;
-    left: auto;
+  }
+}
+
+.search-box-index {
+  div {
+    .rounded {
+      @extend .mt-10;
+    }
   }
 }
