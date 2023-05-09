@@ -134,7 +134,8 @@
       "representativeName": "اسم الوكيل",
       "representativeDetails": "بيانات الوكيل"
     },
-    "drawings": "الرسومات"
+    "drawings": "الرسومات",
+    "originalDocument": "الوثائق"
   },
   "patent": {
     "claims": "مطالب الحماية",
