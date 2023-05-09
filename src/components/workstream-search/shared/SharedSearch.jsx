@@ -76,7 +76,7 @@ function SharedSearch({
   return (
     <div className={`shared-search ${className}`}>
       <div>
-        <div className="d-xl-flex align-items-stretch">
+        <div className="d-xl-flex align-items-stretch mb-10">
           <div className="position-relative mb-xl-0 mb-3">
             {(!isAdvanced && !resultsView)
               && (<span className="position-absolute saip-label">{t('searchFields')}</span>
@@ -118,7 +118,7 @@ function SharedSearch({
         </div>
         <div className="rounded">
           <UploadImage
-            className={` ${showUploadImgSection ? 'mt-4 mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`}
+            className={` ${showUploadImgSection ? 'mb-2 rounded shadow' : ''}  workStreamView ${isImgUploaded ? 'imgUploaded' : ''}`}
             showUploadImgSection={showUploadImgSection}
             changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }}
             uploadFile={(file) => uploadCurrentFile(file, setErrors, values.searchQuery)}
