@@ -138,10 +138,10 @@ button.searchIcon {
 .smSearch {
   .uploadIcon {
     top: 17px;
-    right: 90px;
-
+    html[dir="ltr"] & {
+      right: 90px;
+    }
     html[dir="rtl"] & {
-      right: auto;
       left: 90px;
     }
   }
@@ -149,11 +149,11 @@ button.searchIcon {
   &.searchWithImage {
     .clearIcon {
       top: 16px;
-      right: 150px;
-
-      html[dir="rtl"] & {
+      html[dir="ltr"] & {
         right: 150px;
-        left: auto;
+      }
+      html[dir="rtl"] & {
+        left: 150px;
       }
     }
   }

@@ -448,7 +448,7 @@ function SearchResults() {
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
-        <Col md={{ span: 10, offset: 1 }} className="mb-8 position-relative">
+        <Col md={10} className="mb-8 position-relative mx-auto">
           <Formik
             innerRef={submitRef}
             enableReinitialize
