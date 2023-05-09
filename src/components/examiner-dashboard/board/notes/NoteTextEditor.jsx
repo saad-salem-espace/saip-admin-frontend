@@ -14,9 +14,7 @@ function NoteTextEditor({
   const [submitNote, setSubmitNote] = useState();
 
   const SubmitNote = (i) => {
-    if (!i) {
-      setSubmitNote(true);
-    }
+    setSubmitNote(!i);
   };
 
   return (
