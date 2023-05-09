@@ -40,7 +40,7 @@
   "emptyStateMsg": "No search results for the input keywords",
   "emptyStateTitle": "Searching but not finding?",
   "browseFiles": "Browse Files",
-  "dragDrop": "Drag & Drop Files Here",
+  "dragDrop": "Drag & Drop File Here",
   "imgFormats": "Only .jpeg .png .tiff .jpg .gif formats supported <0> or </0>",
   "validationErrors": {
     "imgFormats": "The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.",
