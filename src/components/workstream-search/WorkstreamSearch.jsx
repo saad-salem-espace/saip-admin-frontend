@@ -19,6 +19,7 @@ import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
 import style from './style.module.scss';
+import './workstream-search.scss';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
@@ -144,6 +145,7 @@ function WorkstreamSearch() {
                     setIsImgUploaded={setIsImgUploaded}
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
+                    className="search-box-index"
                   />
                   {isAdvanced && <SearchQuery
                     workstreamId={selectedWorkStream}

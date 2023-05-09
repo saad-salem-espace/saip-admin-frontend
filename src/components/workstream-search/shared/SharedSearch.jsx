@@ -76,7 +76,7 @@ function SharedSearch({
   return (
     <div className={`shared-search ${className}`}>
       <div>
-        <div className="d-xl-flex align-items-stretch mb-10">
+        <div className="d-xl-flex align-items-stretch">
           <div className="position-relative mb-xl-0 mb-3">
             {(!isAdvanced && !resultsView)
               && (<span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>

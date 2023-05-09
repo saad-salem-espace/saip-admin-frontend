@@ -1,0 +1,9 @@
+@import '../../assets/styles/utilities/custom-theme';
+
+.search-box-index {
+  div {
+    .rounded {
+      @extend .mt-10;
+    }
+  }
+}
