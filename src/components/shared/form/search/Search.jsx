@@ -47,7 +47,8 @@ function Search({
   dataTypes.set('LKP', textField);
   dataTypes.set('Date', dateField);
 
-  const getInputField = useMemo(() => dataTypes.get(type)(), [type, imageSearch, disabled]);
+  const getInputField = useMemo(() => dataTypes.get(type)(), [type, imageSearch,
+    disabled, placeholder]);
 
   return (
     <div className={`position-relative ${className} ${searchClassName}`}>

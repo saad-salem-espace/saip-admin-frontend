@@ -95,7 +95,7 @@ function SearchField({
       });
     }
     return returnedField || inputFields.textFields.getField();
-  }, [identifierValue?.identifierType, identifierValue?.isLkp, conditionValue]);
+  }, [identifierValue?.identifierType, identifierValue?.isLkp, conditionValue, currentLang]);
 
   function identifierName(option) {
     return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
