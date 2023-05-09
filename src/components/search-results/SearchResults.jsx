@@ -174,7 +174,7 @@ function SearchResults() {
 
   useEffect(() => {
     setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
-  }, []);
+  }, [currentLang]);
 
   useEffect(() => {
     if (saveQueryData.data) {
@@ -287,11 +287,11 @@ function SearchResults() {
     const regexPattern = new RegExp('true');
     setIsEnabledSynonyms(regexPattern.test(searchParams.get('enableSynonyms')));
     setSearchQuery(searchResultParams.query);
-    const keywords = parseQuery(searchFields, searchParams.get('imageName'), false);
+    const keywords = parseQuery(searchFields, searchParams.get('imageName'), false, currentLang);
     if (keywords) {
       setSearchKeywords(keywords);
     }
-  }, [searchFields, searchParams, searchResultParams.query]);
+  }, [searchFields, searchParams, currentLang, searchResultParams.query]);
 
   const resetSearch = (workstreamId) => {
     setActiveWorkstream(workstreamId.toString());

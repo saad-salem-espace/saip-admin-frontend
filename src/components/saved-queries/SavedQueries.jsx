@@ -54,7 +54,6 @@ const SavedQueries = () => {
   };
 
   const onChangeWorkStream = (i) => {
-    console.log(i);
     setSelectedWorkStream(WorkStreamsOptions?.find(
       (element) => element.value === i.value,
     ));
