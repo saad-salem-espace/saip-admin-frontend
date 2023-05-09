@@ -9,11 +9,11 @@ import uploadFile from 'apis/uploadFileApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
-import formStyle from 'components/shared/form/form.module.scss';
+import 'components/shared/form/form.scss';
 import useAxios from 'hooks/useAxios';
 import PropTypes from 'prop-types';
 import UploadImage from 'components/shared/upload-image/UploadImage';
-import style from '../style.module.scss';
+import '../style.scss';
 
 function SharedSearch({
   isAdvanced, selectedWorkStream, children,
@@ -79,12 +79,12 @@ function SharedSearch({
         <div className="d-xl-flex align-items-stretch">
           <div className="position-relative mb-xl-0 mb-3">
             {(!isAdvanced && !resultsView)
-              && (<span className={`position-absolute ${formStyle.label}`}>{t('searchFields')}</span>
+              && (<span className="position-absolute saip-label">{t('searchFields')}</span>
               )}
             {!isAdvanced && <Select
               name="simpleIdentifier"
               options={searchOptions}
-              className={`${style.select} ${resultsView ? 'smSelect' : 'lgSelect'}  selectWithSibling`}
+              className={` workstream-select ${resultsView ? 'smSelect' : 'lgSelect'}  selectWithSibling`}
               getOptionName={(option) => identifierName(option)}
               selectedOption={selectedOption}
               setSelectedOption={(identifier) => {
