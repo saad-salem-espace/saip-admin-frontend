@@ -6,7 +6,6 @@ import Image from 'react-bootstrap/Image';
 import { useTranslation, Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Button from '../button/Button';
-import './UploadImage.scss';
 import Spinner from '../spinner/Spinner';
 
 function UploadImage({

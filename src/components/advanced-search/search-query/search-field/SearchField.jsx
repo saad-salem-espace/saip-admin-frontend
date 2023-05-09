@@ -12,8 +12,6 @@ import { useMemo } from 'react';
 import { exclude } from 'utils/arrays';
 import MultiSelect from 'components/shared/form/multi-select/MultiSelect';
 import options from 'testing-resources/patents/lkps/ipcClassifications.json';
-import '../SearchQuery.scss';
-import './searchField.scss';
 
 function SearchField({
   handleRemove,

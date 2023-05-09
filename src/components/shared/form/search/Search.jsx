@@ -7,7 +7,6 @@ import DatePicker from 'components/shared/date-picker/AppDatePicker';
 import Input from '../input/Input';
 import style from './style.module.scss';
 import Button from '../../button/Button';
-import './search.scss';
 // import UploadImage from '../../upload-image/UploadImage';
 function Search({
   id,
