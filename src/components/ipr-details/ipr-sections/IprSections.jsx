@@ -18,17 +18,40 @@ function IprSections({
   className,
   showInfo,
 }) {
-  const { t } = useTranslation('dashboard');
+  const { t } = useTranslation(['dashboard', 'notes']);
   const [activeTabId, setActiveTabId] = useState(activeTab);
   const [showAlert, setShowAlert] = useState(false);
   const [hasUnsavedNotes, setHasUnsavedNotes] = useState(false);
   const [fireSubmit, setFireSubmit] = useState(false);
-  // const [noteSaved, setNoteSaved] = useState(false);
-  const [selectedTab, setSelectedTab] = useState();
+  const [selectedTab, setSelectedTab] = useState(activeTabId);
 
   const disableChangeTab = (hasData) => {
     setHasUnsavedNotes(!!hasData);
   };
+
+  const ShowAlert = () => {
+    setShowAlert(true);
+  };
+  const hideAlert = (s) => {
+    setShowAlert(false);
+    if (s !== 'saveBtn') {
+      setSelectedTab(activeTabId);
+    }
+  };
+  const handleActiveTab = (id) => {
+    setSelectedTab(id);
+    if (hasUnsavedNotes && activeTabId === 2) {
+      ShowAlert();
+    } else {
+      setActiveTabId(id);
+    }
+  };
+
+  const changeActiveTab = () => {
+    setActiveTabId(selectedTab);
+    setHasUnsavedNotes(false);
+  };
+
   const tabsItems = [
     {
       id: 1,
@@ -61,28 +84,13 @@ function IprSections({
             disableChangeTab={disableChangeTab}
             fireSubmit={fireSubmit}
             id={selectedCardId}
+            setFireSubmit={setFireSubmit}
+            changeActiveTab={changeActiveTab}
           />
         </div>
       ),
     },
   ];
-
-  const ShowAlert = () => {
-    setShowAlert(true);
-  };
-
-  const handleActiveTab = (id) => {
-    setSelectedTab(id);
-    if (hasUnsavedNotes) {
-      ShowAlert();
-      // if (noteSaved) {
-      //   setActiveTabId(id);
-      // }
-    } else {
-      setActiveTabId(id);
-    }
-  };
-
   const handleConfirm = () => {
     setFireSubmit(true);
     handleActiveTab(selectedTab);
@@ -101,19 +109,22 @@ function IprSections({
     <div className={`${className}`}>
       {
       showAlert && (
-        <ModalAlert
-          title={t('unsavedContent')}
-          msg={
-            <Trans
-              i18nKey="unsavedContentMsg"
-              ns="notes"
-              components={<span className="d-block" />}
-            />
+        <div>
+          <ModalAlert
+            title={t('notes:unsavedContent')}
+            msg={
+              <Trans
+                i18nKey="unsavedContentMsg"
+                ns="notes"
+                components={<span className="d-block" />}
+              />
           }
-          btnText={t('add')}
-          className="warning"
-          handleConfirm={handleConfirm}
-        />
+            btnText={t('add')}
+            className="warning"
+            handleConfirm={handleConfirm}
+            hideAlert={hideAlert}
+          />
+        </div>
       )
     }
       <Tabs

@@ -9,14 +9,14 @@ const operators = ['and', 'or', 'not'].map((operator) => ({
   displayName: t(`search:operators.${operator}`),
 }));
 
-const parseQuery = (fields, imageName, isQuery) => {
+const parseQuery = (fields, imageName, isQuery, currentLang = 'en') => {
   let finalQuery = '';
 
   fields.forEach((value, index) => {
     if (!finalQuery) {
-      finalQuery += parseSingleQuery({ ...value, operator: '' }, index, isQuery);
+      finalQuery += parseSingleQuery({ ...value, operator: '' }, index, isQuery, currentLang);
     } else {
-      finalQuery += parseSingleQuery(value, index, isQuery);
+      finalQuery += parseSingleQuery(value, index, isQuery, currentLang);
     }
   });
 
@@ -75,9 +75,16 @@ const flattenCriteria = (queryFields) => queryFields.map(
   ,
 ).flat(1000);
 
+const defaultConditions = new Map();
+defaultConditions.set('Text', 'hasExactly');
+defaultConditions.set('Date', 'is');
+defaultConditions.set('Number', 'is');
+defaultConditions.set('LKP', 'hasAny');
+
 const teldaRegex = /^[^*?!~]+?~?\d*$/;
 const noTeldaRegex = /^[^~]+$/;
 
 export {
   operators, parseQuery, reformatDecoder, flattenCriteria, teldaRegex, noTeldaRegex,
+  defaultConditions,
 };

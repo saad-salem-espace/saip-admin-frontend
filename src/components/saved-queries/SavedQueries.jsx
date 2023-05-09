@@ -4,6 +4,7 @@ import Select from 'components/shared/form/select/Select';
 import {
   useContext, useEffect, useRef, useState,
 } from 'react';
+import i18n from 'i18n';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -21,16 +22,21 @@ import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPaginat
 
 const SavedQueries = () => {
   const { t } = useTranslation('queries');
-  const [selectedWorkStream, setSelectedWorkStream] = useState({ label: t('patent'), value: 1 });
+  const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [searchParams] = useSearchParams();
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
   const [pageReset, setPageReset] = useState(0);
   const isMounted = useRef(false);
+  const currentLang = i18n.language;
+
+  function workstreamName(workstream) {
+    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+  }
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
-    label: pascalCase(workstream.workstreamName),
+    label: workstreamName(workstream),
     value: workstream.id,
   }));
 
@@ -39,7 +45,7 @@ const SavedQueries = () => {
       setSelectedWorkStream(WorkStreamsOptions[0]);
       isMounted.current = true;
     }
-  }, [workstreams]);
+  }, [workstreams, currentLang]);
 
   if (!isMounted.current) return <Spinner />;
 
@@ -48,7 +54,9 @@ const SavedQueries = () => {
   };
 
   const onChangeWorkStream = (i) => {
-    setSelectedWorkStream(i);
+    setSelectedWorkStream(WorkStreamsOptions?.find(
+      (element) => element.value === i.value,
+    ));
     resetPageNumber();
   };
 

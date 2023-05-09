@@ -14,7 +14,7 @@ function ShowMore({ children, lines }) {
       truncatedEndingComponent="..."
       anchorClass="text-primary show-more-less-clickable"
     >
-      {children}
+      <span>{children}</span>
     </ShowMoreText>
   );
 }

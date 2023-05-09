@@ -34,7 +34,7 @@
         width: 60%;
       }
 
-      .condition {
+      .search-query-condition {
         width: 40%;
 
         html[dir="rtl"] & {
@@ -47,7 +47,7 @@
       }
     }
 
-    .criteria {
+    .search-query-criteria {
       width: calc(40% - 20px) !important;
     }
   }
