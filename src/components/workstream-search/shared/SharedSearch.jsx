@@ -50,16 +50,6 @@ function SharedSearch({
     setSelectedOption(searchOptions?.[0]);
   }, [searchOptions]);
 
-  const onChangeIdentifier = (identifier, clearData, clearErrors, clearTouch) => {
-    if (identifier.identifierType === 'Date' || selectedOption.identifierType === 'Date') {
-      clearData();
-      clearErrors();
-      clearTouch();
-    }
-
-    setSelectedOption(identifier);
-  };
-
   function identifierName(option) {
     return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
   }
@@ -97,7 +87,14 @@ function SharedSearch({
               className={`${style.select} ${resultsView ? 'smSelect' : 'lgSelect'}  selectWithSibling`}
               getOptionName={(option) => identifierName(option)}
               selectedOption={selectedOption}
-              setSelectedOption={(identifier) => onChangeIdentifier(identifier, () => setFieldValue('searchQuery', ''), () => setErrors({}), () => setTouched({}))}
+              setSelectedOption={(identifier) => {
+                if (identifier.identifierType === 'Date' || selectedOption.identifierType === 'Date') {
+                  setFieldValue('searchQuery', '');
+                  setErrors({});
+                  setTouched({});
+                }
+                setSelectedOption(identifier);
+              }}
               getOptionValue={(option) => option.identiferName}
             />}
           </div>
