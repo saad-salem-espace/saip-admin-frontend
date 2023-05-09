@@ -5,10 +5,10 @@ import React from 'react';
 import Button from 'components/shared/button/Button';
 
 const OriginalDocumentsNavButtons = ({ backward, forward }) => (
-  <div className="text-center mb-5">
+  <div dir="ltr" className="text-center mb-5">
     <Button
       variant="link"
-      className="shadow me-4 rounded-circle"
+      className="shadow rounded-circle mx-2"
       onClick={backward.onClick}
       disabled={backward.isDisabled}
       text={<FontAwesomeIcon
@@ -19,7 +19,7 @@ const OriginalDocumentsNavButtons = ({ backward, forward }) => (
     />
     <Button
       variant="link"
-      className="shadow rounded-circle"
+      className="shadow rounded-circle mx-2"
       onClick={forward.onClick}
       disabled={forward.isDisabled}
       text={<FontAwesomeIcon
