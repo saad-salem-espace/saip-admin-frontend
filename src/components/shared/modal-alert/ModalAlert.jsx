@@ -1,22 +1,23 @@
 import PropTypes from 'prop-types';
 import Button from 'components/shared/button/Button';
 import Modal from 'react-bootstrap/Modal';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsExclamationTriangle } from 'react-icons/bs';
 import './modalAlert.scss';
 import '../../../assets/styles/common/modal.scss';
 
 const ModalAlert = ({
-  title, msg, className, handleCancel, handleConfirm,
+  title, msg, className, handleConfirm, showModal, hideAlert,
 }) => {
   const { t } = useTranslation('translation');
-  const [show, setShow] = useState(true);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    hideAlert();
+  };
 
   return (
     <div>
-      <Modal centered show={show} onHide={handleClose} className={`${className} border-radius`}>
+      <Modal centered show={showModal} onHide={handleClose} className={`${className} border-radius`}>
         <Modal.Header className="border-0 p-4 btn-close-wrappper align-items-start" closeButton>
           <BsExclamationTriangle className="mb-4 fs-32 ms-4" />
         </Modal.Header>
@@ -29,9 +30,9 @@ const ModalAlert = ({
             <Button
               text={t('cancel')}
               variant="transparent"
-              className="py-2 w-50 border-end text-gray-500 rounded-0"
+              className="py-2 w-50 border-end text-gray rounded-0"
               size="md"
-              onClick={() => { handleCancel(); handleClose(); }}
+              onClick={() => { handleClose(); }}
             />
             <Button
               text={t('save')}
@@ -52,12 +53,13 @@ ModalAlert.propTypes = {
   msg: PropTypes.node.isRequired,
   className: PropTypes.string,
   handleConfirm: PropTypes.func.isRequired,
-  handleCancel: PropTypes.func,
+  showModal: PropTypes.bool,
+  hideAlert: PropTypes.func.isRequired,
 };
 
 ModalAlert.defaultProps = {
   className: null,
-  handleCancel: () => {},
+  showModal: true,
 };
 
 export default ModalAlert;
