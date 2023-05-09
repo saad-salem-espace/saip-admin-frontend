@@ -33,7 +33,7 @@ function IprSections({
     {
       id: 1,
       title: (
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center" translate="no">
           {t('dashboard:info')}
         </div>
       ),
@@ -49,12 +49,12 @@ function IprSections({
     {
       id: 2,
       title: (
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center" translate="no">
           {t('dashboard:notes')}
         </div>
       ),
       content: (
-        <div className="notes-tab">
+        <div className="notes-tab" translate="no">
           <Notes
             documentId={documentId}
             disableEditor={!isCardInprogress}
