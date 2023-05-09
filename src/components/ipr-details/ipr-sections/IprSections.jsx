@@ -32,8 +32,11 @@ function IprSections({
   const ShowAlert = () => {
     setShowAlert(true);
   };
-  const hideAlert = () => {
+  const hideAlert = (s) => {
     setShowAlert(false);
+    if (s !== 'saveBtn') {
+      setSelectedTab(activeTabId);
+    }
   };
   const handleActiveTab = (id) => {
     setSelectedTab(id);

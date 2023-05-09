@@ -11,8 +11,8 @@ const ModalAlert = ({
   title, msg, className, handleConfirm, showModal, hideAlert,
 }) => {
   const { t } = useTranslation('translation');
-  const handleClose = () => {
-    hideAlert();
+  const handleClose = (s) => {
+    hideAlert(s);
   };
 
   return (
@@ -39,7 +39,7 @@ const ModalAlert = ({
               variant="primary"
               className="py-2 w-50 rounded-0"
               size="md"
-              onClick={() => { handleConfirm(); handleClose(); }}
+              onClick={() => { handleConfirm(); handleClose('saveBtn'); }}
             />
           </div>
         </Modal.Body>
