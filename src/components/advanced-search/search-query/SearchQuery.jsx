@@ -14,6 +14,7 @@ import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
+  isAdvancedMenuOpen,
 }) {
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
@@ -54,7 +55,7 @@ function SearchQuery({
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form onChange={onChangeSearchQuery(parseQuery(values.searchFields, '', true))} onSubmit={handleSubmit}>
+          <Form onChange={onChangeSearchQuery(!isAdvancedMenuOpen ? '' : parseQuery(values.searchFields, '', true))} onSubmit={handleSubmit}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -155,11 +156,13 @@ SearchQuery.propTypes = {
     PropTypes.shape({ current: PropTypes.instanceOf(Object) }),
   ]).isRequired,
   className: PropTypes.string,
+  isAdvancedMenuOpen: PropTypes.bool,
 };
 
 SearchQuery.defaultProps = {
   onChangeSearchQuery: () => {},
   className: '',
+  isAdvancedMenuOpen: true,
 };
 
 export default SearchQuery;
