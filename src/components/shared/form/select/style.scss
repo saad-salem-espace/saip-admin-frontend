@@ -28,6 +28,14 @@ div[class$="singleValue"] {
 
 ////// selectWithSibling
 .selectWithSibling {
+   html[dir="rtl"] & {
+    border-left: $border-width solid $gray-400;
+  }
+
+  html[dir="rtl"] & {
+    border-right: $border-width solid $gray-400;
+  }
+
   @include media-breakpoint-up(xl) {
     div[class$="Control"] {
       border-right: 0;
@@ -40,6 +48,9 @@ div[class$="singleValue"] {
       }
     }
   }
+  div[class$="IndicatorsContainer"] {
+    background-color: $gray-200;
+  }
 }
 
 .css-2jkpo2-option {
@@ -51,6 +62,11 @@ div[class$="singleValue"] {
 .smSelect {
   div[class$="ValueContainer"] {
     height: 57px;
+  }
+  div[class$="singleValue"] {
+    bottom: 13px;
+    color: $dark;
+    font-size: $font-size-base;
   }
 }
 
@@ -91,6 +107,7 @@ div[class$="singleValue"] {
 
   div[class$="singleValue"] {
     bottom: 14px;
+    font-size: $font-size-base;
   }
 }
 
@@ -219,6 +236,12 @@ div[class$="singleValue"] {
     >div:first-of-type {
       height: 56px;
     }
+  }
+
+  div[class$="singleValue"] {
+    bottom: 5px;
+    color: $gray-700;
+    font-size: $font-size-sm;
   }
 }
 

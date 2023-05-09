@@ -1,0 +1,367 @@
+@import "../../../src/assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+@include media-breakpoint-up(md) {
+
+  .workstream-view {
+    border: $border-width solid $gray-400;
+    border-radius: $border-radius;
+    position: relative;
+    padding: 32px 32px 0;
+
+    .search-query-inputs {
+      display: flex;
+      position: relative;
+
+      .fa-trash-can {
+        position: absolute;
+        top: 34px;
+
+        html[dir="rtl"] & {
+          left: 14px;
+        }
+
+        html[dir="ltr"] & {
+          right: 14px;
+        }
+      }
+    }
+
+    .search-fields-condition {
+      width: 60%;
+
+      .search-fields {
+        width: 60%;
+      }
+
+      .search-query-condition {
+        width: 40%;
+
+        html[dir="rtl"] & {
+          margin-left: 8px;
+        }
+
+        html[dir="ltr"] & {
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .search-query-criteria {
+      width: calc(40% - 20px) !important;
+    }
+  }
+}
+
+
+.searchFields{
+  width: calc(60% - 20px);
+}
+
+.search-query-condition {
+  width: 40%;
+}
+
+.search-query-wrapper {
+  border-radius: $border-radius-lg;
+
+  &:first-of-type {
+    border-radius: 0 0 $border-radius-lg $border-radius-lg;
+
+  }
+
+  &:not(:first-of-type){
+    .criteria, .dateWrapper, .advancedSearchSelect {
+      width: calc(100% - 26px);
+    }
+  }
+}
+
+.roundedTop0 {
+  border-radius: 0 0 $border-radius-lg $border-radius-lg;
+}
+
+.multiSelect {
+  position: relative;
+
+  div[id^="react-select"]  input {
+    display: none;
+  }
+
+  >div {
+    height: 100%;
+    width: 100%;
+  }
+
+  button {
+    height: 100%;
+    width: 100%;
+    box-shadow: none;
+    border: $border-width solid $gray-400;
+    border-radius: $border-radius;
+    @extend .p-4;
+
+    +div {
+      z-index: 10 !important;
+    }
+
+    .css-1v99tuv {
+      color: $gray;
+      font-family: $font-regular;
+      font-size: $font-size-sm;
+    }
+
+    +div {
+      border: $border-width solid $gray-400 !important;
+      @extend .p-4;
+      width: 100%;
+
+      [class$="control"] {
+        height: 56px;
+        border-color: $gray-400;
+        margin-bottom: 0;
+        cursor: text;
+        box-shadow: none;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        svg {
+          color: $gray;
+        }
+      }
+
+      [class$="placeholder"] {
+        color: $gray;
+        font-size: $font-size-sm;
+      }
+
+      .css-ik6y5r {
+        box-shadow: none;
+      }
+
+      [class$="-option"] {
+        color: $gray-700;
+        font-family: $font-regular;
+      }
+
+
+
+      .css-1vr111p-option {
+        background-color: transparent;
+
+        &:hover {
+          background-color: $gray-200;
+        }
+
+        &::before {
+          content: "\f0c8";
+          font-family: FontAwesomeRegular;
+          font-size: 22px;
+          margin-right: 10px;
+          color: $gray-400;
+
+          html[dir="rtl"] & {
+            margin-right: 0;
+            margin-left: 10px;
+          }
+        }
+      }
+
+      .css-1qprcsu-option {
+        background-color: transparent;
+
+        &:hover {
+          background-color: $gray-200;
+        }
+
+        &::before {
+          content: "\f14a";
+          font-family: FontAwesomeSolid;
+          color: $turquoise-secondary;
+          font-size: 22px;
+          margin-right: 10px;
+
+          html[dir="rtl"] & {
+            margin-right: 0;
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  &.smMultiSelect {
+    height: 56px;
+  }
+
+  .css-1gpjby2 {
+    svg {
+      color: $gray;
+    }
+  }
+
+  &.has-value {
+    .css-1v99tuv {
+      color: $gray-700;
+      @extend .mt-4;
+    }
+  }
+
+  .label {
+    z-index: 99;
+    color: $gray;
+    font-size: $font-size-xs;
+    top: 8px;
+    left: 16px;
+    font-family: $font-regular;
+
+    html[dir="rtl"] & {
+      left: auto;
+      right: 16px;
+    }
+  }
+
+  &.error {
+    button {
+      border: $border-width solid $danger;
+
+      &::after {
+        content: "\f06a";
+        font-family: FontAwesomeSolid;
+        color: $danger;
+        position: absolute;
+        right: 41px;
+        top: 19px;
+
+        html[dir="rtl"] & {
+          left: 41px;
+          right: auto;
+        }
+      }
+    }
+  }
+}
+
+.searchBox {
+  .datePickerWrapper + .resetSearch {
+    html[dir="ltr"] & {
+      right: 115px;
+    }
+    html[dir="rtl"] & {
+      left: 115px;
+    }
+  }
+  &.style_searchWithImage__jbGoX {
+    .datePickerWrapper + .resetSearch {
+      html[dir="ltr"] & {
+        right: 195px;
+      }
+      html[dir="rtl"] & {
+        left: 195px;
+      }
+    }
+  }
+}
+
+.search-container{
+  .search-disabled{
+    @extend .pt-4
+  }
+}
+
+.dashedBorder {
+  border: $border-width-md dashed $primary;
+}
+
+.uploadImageWrapper {
+  .error.dashedBorder{
+    border-color: $danger-dark;
+  }
+
+  .image-item {
+    border: $border-width solid $gray-400;
+    border-radius: $border-radius;
+    position: absolute;
+  }
+
+  .imageView {
+    width: 70px;
+    height: 46px;
+    @extend .m-2;
+  }
+}
+
+.workStreamView {
+  .image-item {
+    top: 40px;
+    left: 217px;
+
+    html[dir="rtl"] & {
+      left: auto;
+      right: 217px;
+    }
+
+    @include media-breakpoint-down(xl) {
+      left: 16px;
+      top: 138px;
+
+      html[dir="rtl"] & {
+        left: auto;
+        right: 16px;
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      left: 2px;
+      top: 241px;
+
+      html[dir="rtl"] & {
+        left: auto;
+        right: 2px;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    margin-top: 60px;
+  }
+
+  .dashedBorder {
+    padding: 32px 0;
+  }
+}
+
+.advancedMode{
+  input{
+    @include media-breakpoint-up(md) {
+      padding-left: 150px;
+
+      html[dir="rtl"] & {
+        padding-left: auto;
+        padding-right: 150px;
+      }
+    }
+  }
+
+  .image-item {
+    left: 16px;
+    top: 53px;
+
+    html[dir="rtl"] & {
+      right: 16px;
+      left: auto;
+    }
+
+    @include media-breakpoint-down(sm) {
+      top: 140px;
+      left: 0;
+
+      html[dir="rtl"] & {
+        right: 0;
+        left: auto;
+      }
+    }
+  }
+}

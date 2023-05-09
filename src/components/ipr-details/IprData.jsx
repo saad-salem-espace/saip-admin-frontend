@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import Select from 'components/shared/form/select/Select';
-import formStyle from 'components/shared/form/form.module.scss';
+import 'components/shared/form/form.scss';
 import { useTranslation } from 'react-i18next';
 import style from './ipr-details.module.scss';
 
@@ -18,7 +18,7 @@ function IprData({
         {() => (
           <Form>
             <div className="position-relative">
-              <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('viewSection')}</span>
+              <span className="ps-2 position-absolute f-12 saip-label select2">{t('viewSection')}</span>
               <Select
                 options={options}
                 setSelectedOption={onChangeSelect}

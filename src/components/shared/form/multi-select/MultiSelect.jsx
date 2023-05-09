@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
-import './MultiSelect.scss';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import Button from '../../button/Button';

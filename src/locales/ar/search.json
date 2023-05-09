@@ -40,8 +40,8 @@
   "emptyStateMsg": "لا يوجد نتائج بحث متاحة لمدخلات البحث",
   "emptyStateTitle": "لا توجد نتائج؟",
   "browseFiles": "تصفح الملفات",
-  "dragDrop": "إسحب الملفات هنا!",
-  "imgFormats": "الامتدادات المتاحة لإجراء عملية البحث: .jpeg .png .tiff .jpg .gif  <0> or </0>",
+  "dragDrop": "إسحب الملف هنا!",
+  "imgFormats": "الامتدادات المتاحة لإجراء عملية البحث: .jpeg .png .tiff .jpg .gif  <0> او </0>",
   "validationErrors": {
     "imgFormats": "إمتداد غير مدعوم. الامتدادات المتاحة لإجراء عملية البحث: .jpeg .png .tiff .jpg .gif",
     "maxSize": "حجم الصورة يتعدى الحجم المسموح. يمكنك رفع صورة حتى حجم ١٠ ميجابايت.",
@@ -134,7 +134,8 @@
       "representativeName": "اسم الوكيل",
       "representativeDetails": "بيانات الوكيل"
     },
-    "drawings": "الرسومات"
+    "drawings": "الرسومات",
+    "originalDocument": "الوثائق"
   },
   "patent": {
     "claims": "مطالب الحماية",
