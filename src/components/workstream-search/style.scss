@@ -1,14 +1,14 @@
 @import "../../assets/styles/utilities/custom-theme";
 @import "~bootstrap/scss/mixins";
 
-.header {
+.workstream-header {
   background-image: url(../../assets/images/search-header-bg.svg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom left;
 }
 
-.select {
+.workstream-select {
   @include media-breakpoint-up(xl) {
     width: 200px;
   }

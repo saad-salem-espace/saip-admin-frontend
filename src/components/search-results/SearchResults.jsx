@@ -16,7 +16,7 @@ import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
-import formStyle from 'components/shared/form/form.module.scss';
+import 'components/shared/form/form.scss';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Button from 'react-bootstrap/Button';
 import useAxios from 'hooks/useAxios';
@@ -558,7 +558,7 @@ function SearchResults() {
                   {
                       searchResultParams.workstreamId === '2' && (
                         <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                          <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
                           <Select
                             options={viewOptions}
                             setSelectedOption={onChangeView}
@@ -572,7 +572,7 @@ function SearchResults() {
                       )
                     }
                   <div className="position-relative mb-8 sortBy">
-                    <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
+                    <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
                     <Select
                       options={getSortOptions(searchResultParams.workstreamId)}
                       setSelectedOption={onChangeSortBy}
