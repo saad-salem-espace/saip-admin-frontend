@@ -10,15 +10,8 @@ import {
   createSearchParams, useNavigate, useSearchParams, Link,
 } from 'react-router-dom';
 import * as Yup from 'yup';
-import uploadFile from 'apis/uploadFileApi';
-import EmptyState from 'components/shared/empty-state/EmptyState';
-import AppPagination from 'components/shared/app-pagination/AppPagination';
 import Select from 'components/shared/form/select/Select';
-import Search from 'components/shared/form/search/Search';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
-import UploadImage from 'components/shared/upload-image/UploadImage';
-import emptyState from 'assets/images/search-empty-state.svg';
-import advancedSearchApi from 'apis/search/advancedSearchApi';
 import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
@@ -30,13 +23,19 @@ import useAxios from 'hooks/useAxios';
 import { useAuth } from 'react-oidc-context';
 import { tableNames } from 'dbConfig';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import SharedSearch from 'components/workstream-search/shared/SharedSearch';
+import emptyState from 'assets/images/search-empty-state.svg';
+import EmptyState from 'components/shared/empty-state/EmptyState';
+import AppPagination from 'components/shared/app-pagination/AppPagination';
+import advancedSearchApi from 'apis/search/advancedSearchApi';
+import { parseSingleQuery } from 'utils/search-query/encoder';
 import SearchNote from './SearchNote';
-import SearchResultCards from './search-result-cards/SearchResultCards';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
-import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
+import { defaultConditions, parseQuery, reformatArrDecoder } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
-import { parseQuery, reformatArrDecoder } from '../../utils/searchQuery';
+import SearchResultCards from './search-result-cards/SearchResultCards';
+import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import toastify from '../../utils/toastify';
 import validationMessages from '../../utils/validationMessages';
 
@@ -45,22 +44,21 @@ function SearchResults() {
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [selectedOption, setSelectedOption] = useState(null);
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [activeDocument, setActiveDocument] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
   const [isAdvancedSearch, setIsAdvancedSearch] = useState(true);
   const [isEnabledSynonyms, setIsEnabledSynonyms] = useState(false);
   const [activeWorkstream, setActiveWorkstream] = useState(searchParams.get('workstreamId'));
   const [isAdvancedMenuOpen, setIsAdvancedMenuOpen] = useState(true);
   const [totalResults, setTotalResults] = useState(0);
-  const [showUploadImgSection, setShowUploadImgSection] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
+  const [isImgUploaded, setIsImgUploaded] = useState(false);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
@@ -249,23 +247,6 @@ function SearchResults() {
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
-  const [isImgUploaded, setIsImgUploaded] = useState(false);
-
-  const [imgData, execute] = useAxios({}, { manual: true });
-
-  useEffect(() => {
-    if (imgData.data) {
-      setImageName(imgData.data.data?.[0]);
-    } else if (imgData.error) {
-      setErrorMessage(imgData.error);
-    }
-    if (imgData.response) {
-      setIsImgUploaded(true);
-      setShowUploadImgSection(false);
-      setIsSubmitting(false);
-    }
-  }, [imgData]);
-
   const [searchQuery, setSearchQuery] = useState('');
 
   const getNextDocument = () => {
@@ -290,6 +271,10 @@ function SearchResults() {
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
   };
+
+  useEffect(() => {
+    setSelectedOption(searchIdentifiers?.[0]);
+  }, [searchIdentifiers]);
 
   // const options = [
   //   {
@@ -320,17 +305,38 @@ function SearchResults() {
   const onSubmit = (values) => {
     setActiveDocument(null);
     setIsIPRExpanded(false);
-    navigate({
-      pathname: '/search',
-      search: `?${createSearchParams({
-        workstreamId: values.selectedWorkstream.value,
-        q: values.searchQuery,
-        ...(imageName && { imageName }),
-        enableSynonyms: isEnabledSynonyms,
-        sort: sortBy.value,
-        page: 1,
-      })}`,
-    });
+    if (!isAdvancedSearch) {
+      let simpleQuery = null;
+      if (selectedOption.identifierType !== 'Date') simpleQuery = values.searchQuery.trim();
+      else simpleQuery = values.searchQuery;
+
+      const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
+
+      const query = parseSingleQuery({
+        identifier: selectedOption,
+        condition: { optionParserName: defaultCondition },
+        data: simpleQuery,
+      }, 0, true);
+
+      navigate({
+        pathname: '/search',
+        search: `?${createSearchParams({
+          workstreamId: values.selectedWorkstream.value, sort: 'mostRelevant', q: (simpleQuery ? query : ''), ...(imageName && { imageName }),
+        })}`,
+      });
+    } else {
+      navigate({
+        pathname: '/search',
+        search: `?${createSearchParams({
+          workstreamId: values.selectedWorkstream.value,
+          q: values.searchQuery,
+          ...(imageName && { imageName }),
+          enableSynonyms: isEnabledSynonyms,
+          sort: sortBy.value,
+          page: 1,
+        })}`,
+      });
+    }
   };
 
   useEffect(() => {
@@ -374,26 +380,6 @@ function SearchResults() {
   const handleCloseIprDetail = () => {
     setActiveDocument(null);
     setIsIPRExpanded(false);
-  };
-
-  const handleAdvancedSearch = () => {
-    setIsAdvancedSearch(!isAdvancedSearch);
-    setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
-  };
-
-  const SearchModuleClassName = ({
-    smSearch: true,
-    imgUploadedResultView: isImgUploaded,
-    searchWithImage: true, // please set it true for workstream with search with image
-  });
-
-  const uploadCurrentFile = async (file) => {
-    setIsSubmitting(true);
-    execute(uploadFile(file));
-  };
-
-  const handleUploadImg = () => {
-    setShowUploadImgSection(!showUploadImgSection);
   };
 
   const toggleAdvancedSearchMenu = () => {
@@ -466,8 +452,6 @@ function SearchResults() {
     return size;
   };
 
-  const axiosConfig = advancedSearchApi(searchResultParams);
-
   const viewOptions = [
     {
       label: t('trademarks.detailed'),
@@ -485,11 +469,6 @@ function SearchResults() {
 
   const onChangeView = (i) => {
     setSelectedView(i);
-  };
-
-  const searchResult = {
-    1: SearchResultCards,
-    2: TrademarksSearchResultCards,
   };
 
   const onChangeSortBy = (sortCriteria) => {
@@ -516,13 +495,19 @@ function SearchResults() {
     }
   };
 
+  const axiosConfig = advancedSearchApi(searchResultParams);
+
+  const searchResult = {
+    1: SearchResultCards,
+    2: TrademarksSearchResultCards,
+  };
+
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
       .test('Is not empty', validationMessages.search.required, (data) => (
         (imageName || data)
       )),
   });
-
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -540,7 +525,7 @@ function SearchResults() {
             }}
           >
             {({
-              setFieldValue, handleSubmit, values,
+              setFieldValue, handleSubmit, values, setTouched, setErrors,
             }) => (
               <Form onSubmit={handleSubmit} className="mt-8">
                 <div className="d-lg-flex align-items-start">
@@ -557,35 +542,27 @@ function SearchResults() {
                       }}
                     />
                   </div>
-                  <div className="flex-grow-1">
-                    <div className="mb-4">
-                      <div className="d-md-flex">
-                        {/* {
-                          !isAdvancedSearch && (
-                            <div className="position-relative mb-md-0 mb-3">
-                              <Select
-                                options={options}
-                                className="searchResultsSelect select selectWithSibling smSelect"
-                              />
-                            </div>
-                          )
-                        } */}
-                        <Search
-                          id="search"
-                          name="searchQuery"
-                          className="flex-grow-1"
-                          moduleClassName={SearchModuleClassName}
-                          placeholder={t('typeHere')}
-                          onSubmit={onSubmit}
-                          handleUploadImg={handleUploadImg}
-                          disabled
-                          searchWithImg
-                        />
-                      </div>
-                    </div>
-                    <div className="d-md-flex mt-md-0 mt-14">
+                  <SharedSearch
+                    setFieldValue={setFieldValue}
+                    values={values}
+                    setErrors={setErrors}
+                    setTouched={setTouched}
+                    selectedOption={selectedOption}
+                    setSelectedOption={setSelectedOption}
+                    isAdvanced={isAdvancedSearch}
+                    className="search-results-view"
+                    selectedWorkStream={values.selectedWorkstream?.value}
+                    setImageName={setImageName}
+                    isImgUploaded={isImgUploaded}
+                    setIsImgUploaded={setIsImgUploaded}
+                    resultsView
+                  >
+                    <div className="d-md-flex mt-4">
                       <ToggleButton
-                        handleToggleButton={handleAdvancedSearch}
+                        handleToggleButton={() => {
+                          setIsAdvancedSearch((isAdvanced) => !isAdvanced);
+                          setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
+                        }}
                         isToggleButtonOn={isAdvancedSearch}
                         text={t('advancedSearch')}
                         className="border-md-end pe-4 me-4 mb-md-0 mb-2"
@@ -596,21 +573,12 @@ function SearchResults() {
                         text={t('allowSynonyms')}
                       />
                     </div>
-                  </div>
+                  </SharedSearch>
                 </div>
+
               </Form>
             )}
           </Formik>
-          <div className={` ${showUploadImgSection ? 'rounded shadow' : ''} searchResultsView`}>
-            <UploadImage className={`${showUploadImgSection ? 'pt-8 pb-2' : ''} mx-8 rounded ${isImgUploaded ? 'imgUploaded' : ''} ${isAdvancedSearch ? 'advancedMode' : ''}`} showUploadImgSection={showUploadImgSection} uploadFile={(file) => uploadCurrentFile(file)} isSubmitting={isSubmitting} changeIsImgUploaded={(flag) => { setIsImgUploaded(flag); setErrorMessage(''); }} />
-          </div>
-          {
-            errorMessage && (
-              <span className="text-danger-dark f-12">
-                {errorMessage}
-              </span>
-            )
-          }
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch content">

@@ -3,6 +3,7 @@ import './DatePicker.scss';
 import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { FaRegCalendarAlt } from 'react-icons/fa';
 import WarningMessage from '../warning-message/WarningMessage';
 import FormikErrorMessage from '../form/formik-error-message/FormikErrorMessage';
 
@@ -37,7 +38,7 @@ function AppDatePicker({
                 }
               }}
             />
-            <span className="icon-ic-calendar f-20 colored" />
+            <FaRegCalendarAlt className="icon-ic-calendar fs-20 text-primary" />
             {(!isMulti && !range && Array.isArray(field.value) && field.value.length > 1) && (
             <WarningMessage className="mt-2" msg={t('singleValueMessage')} />
             )}
