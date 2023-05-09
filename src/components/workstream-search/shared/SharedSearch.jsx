@@ -9,10 +9,10 @@ import uploadFile from 'apis/uploadFileApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import Select from 'components/shared/form/select/Select';
 import Search from 'components/shared/form/search/Search';
-import UploadImage from 'components/shared/upload-image/UploadImage';
 import formStyle from 'components/shared/form/form.module.scss';
 import useAxios from 'hooks/useAxios';
 import PropTypes from 'prop-types';
+import UploadImage from 'components/shared/upload-image/UploadImage';
 import style from '../style.module.scss';
 
 function SharedSearch({
