@@ -8,8 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from 'react-oidc-context';
 import { Link } from 'react-router-dom';
 import { FaRegBell } from 'react-icons/fa';
-import { MdOutlineBookmarkBorder } from 'react-icons/md';
-import { BsGrid, BsListUl, BsStar } from 'react-icons/bs';
+import { BsGrid, BsListUl } from 'react-icons/bs';
 import roleMapper from 'utils/roleMapper';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
@@ -17,6 +16,8 @@ import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
 import logo from '../../../assets/images/logo-shape.png';
+import MyBookmarksLink from './shared/MyBookmarksLink';
+import MyQueriesLink from './shared/MyQueriesLink';
 
 function LoggedNavbar({ lang, changeLang }) {
   const auth = useAuth();
@@ -36,14 +37,8 @@ function LoggedNavbar({ lang, changeLang }) {
                 <BsGrid className="icon" />
                 {t('navbar.dashboard')}
               </Nav.Link>)}
-            <Nav.Link to="/" disabled as={Link} className="has-icon">
-              <MdOutlineBookmarkBorder className="icon" />
-              {t('navbar.myBookmarks')}
-            </Nav.Link>
-            <Nav.Link to="/savedQueries" as={Link} className="has-icon">
-              <BsStar className="icon" />
-              {t('navbar.myQueries')}
-            </Nav.Link>
+            <MyQueriesLink />
+            <MyBookmarksLink />
             <Nav.Link to="/" disabled as={Link} className="has-icon">
               <BsListUl className="icon list" />
               {t('navbar.myActivity')}

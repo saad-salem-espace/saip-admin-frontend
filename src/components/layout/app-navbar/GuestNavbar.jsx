@@ -6,13 +6,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useAuth } from 'react-oidc-context';
 import { Link } from 'react-router-dom';
-import { BsStar } from 'react-icons/bs';
-import { MdOutlineBookmarkBorder } from 'react-icons/md';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
 import logo from '../../../assets/images/Logo.png';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
+import MyBookmarksLink from './shared/MyBookmarksLink';
+import MyQueriesLink from './shared/MyQueriesLink';
 
 function GuestNavbar({ lang, changeLang }) {
   const { t } = useTranslation('layout');
@@ -27,14 +27,8 @@ function GuestNavbar({ lang, changeLang }) {
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
           <Nav className="me-auto">
-            <Nav.Link to="/savedQueries" as={Link} className="has-icon ps-lg-5">
-              <BsStar className="icon" />
-              {t('navbar.myQueries')}
-            </Nav.Link>
-            <Nav.Link to="#" disabled as={Link} className="has-icon">
-              <MdOutlineBookmarkBorder className="icon" />
-              {t('navbar.myBookmarks')}
-            </Nav.Link>
+            <MyQueriesLink />
+            <MyBookmarksLink />
           </Nav>
           {/* Right navbar */}
           <Nav>
@@ -42,11 +36,11 @@ function GuestNavbar({ lang, changeLang }) {
             <RecentSearch />
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
-              <div className="edges-border d-flex mx-lg-3 px-lg-3 me-2">
-                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} className="appBtn btn btn-outline-primary me-lg-3 me-2 px-3">
+              <div className="edges-border d-flex mx-lg-3 px-lg-3">
+                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary me-lg-3 me-2 px-3">
                   {t('navbar.login')}
                 </Nav.Link>
-                <Nav.Link as={Link} className="appBtn btn btn-primary px-3">
+                <Nav.Link as={Link} to="/" className="appBtn btn btn-primary px-3">
                   {t('navbar.signup')}
                 </Nav.Link>
               </div>
