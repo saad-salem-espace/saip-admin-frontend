@@ -53,7 +53,7 @@ function LoggedNavbar({ lang, changeLang }) {
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
               <div className="edges-border notifications new">
-                <Nav.Link to="#" as={Link} variant="transparent">
+                <Nav.Link to="/" disabled as={Link} variant="transparent">
                   <FaRegBell className="icon m-0" />
                   <div className="number-notifications">99+</div>
                 </Nav.Link>
