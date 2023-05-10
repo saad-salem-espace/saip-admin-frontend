@@ -36,7 +36,7 @@ function LoggedNavbar({ lang, changeLang }) {
                 <BsGrid className="icon" />
                 {t('navbar.dashboard')}
               </Nav.Link>)}
-            <Nav.Link to="#" as={Link} className="has-icon">
+            <Nav.Link to="/" disabled as={Link} className="has-icon">
               <MdOutlineBookmarkBorder className="icon" />
               {t('navbar.myBookmarks')}
             </Nav.Link>
@@ -44,7 +44,7 @@ function LoggedNavbar({ lang, changeLang }) {
               <BsStar className="icon" />
               {t('navbar.myQueries')}
             </Nav.Link>
-            <Nav.Link to="#" as={Link} className="has-icon">
+            <Nav.Link to="/" disabled as={Link} className="has-icon">
               <BsListUl className="icon list" />
               {t('navbar.myActivity')}
             </Nav.Link>
