@@ -13,6 +13,8 @@
   "notes": "Notes",
   "translateInfo": "Translate",
   "markAsDone": "Mark as Done",
+  "notAssigned": "Not assigned!",
+  "emptyStateTitle": "You are not assigned on any work stream yet.",
   "status": {
     "toDo": "To Do",
     "done": "Done",
