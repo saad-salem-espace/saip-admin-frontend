@@ -655,7 +655,7 @@ function IprDetails({
             <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
           </p>
         )}
-        <div className="border-top py-3 px-6 d-xxl-flex align-items-start">
+        <div className="border-top py-3 px-6 d-xxl-flex align-items-start" translate="no">
           <Button
             variant="primary"
             text={(
