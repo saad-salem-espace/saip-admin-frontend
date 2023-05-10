@@ -131,4 +131,13 @@
   &.shared-search {
     flex-grow: 1;
   }
+  .smSelect {
+    div[class$="container"] {
+      >div:first-of-type {
+        >div:nth-child(2) {
+          background-color: $gray-200;
+        }
+      }
+    }
+  }
 }
