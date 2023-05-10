@@ -13,8 +13,8 @@
   "notes": "ملاحظات",
   "translateInfo": "ترجمة",
   "markAsDone": "تم إنجازه",
-  "notAssigned": "Not assigned!",
-  "emptyStateTitle": "You are not assigned on any work stream yet.",
+  "notAssigned": "لا تجد الوثائق الخاضعة للفحص؟",
+  "emptyStateTitle": "لم يتم إسناد أي من الوثائق لك. ",
   "status": {
     "toDo": "قائمة الأعمال",
     "done": "منجز",
