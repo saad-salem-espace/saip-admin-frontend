@@ -42,6 +42,7 @@ function IprDetails({
   activeTab,
   isCardInprogress,
   selectedCardId,
+  setNotesUpdated,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -285,6 +286,7 @@ function IprDetails({
           activeTab={activeTab}
           isCardInprogress={isCardInprogress}
           selectedCardId={selectedCardId}
+          setNotesUpdated={setNotesUpdated}
           className="notes-editor-container"
         />
       ) : (
@@ -314,6 +316,7 @@ IprDetails.propTypes = {
   activeTab: PropTypes.number,
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
+  setNotesUpdated: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -327,6 +330,7 @@ IprDetails.defaultProps = {
   dashboard: false,
   showActions: true,
   activeTab: 2,
+  setNotesUpdated: () => { },
 };
 
 export default IprDetails;
