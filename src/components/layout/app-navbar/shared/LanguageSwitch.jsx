@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 function LanguageSwitch({ className, lang, changeLang }) {
   const { t } = useTranslation('layout');
   return (
-    <div className={`${className} switch-language`}>
+    <div className={`${className} switch-language ms-2 ms-lg-0`}>
       <Dropdown>
         <Dropdown.Toggle align="start" variant="primary-10" className="rounded appBtn has-icon btn nav-link mx-auto" size="lg" id="dropdown-basic">
           {lang === 'ar' ? t('navbar.arabic') : t('navbar.english')}

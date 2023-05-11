@@ -246,6 +246,7 @@ function IprDetails({
         )}
         <div className="border-top py-3 px-6 d-xxl-flex align-items-start" translate="no">
           <Button
+            disabled
             variant="primary"
             text={(
               <>
@@ -256,6 +257,7 @@ function IprDetails({
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <Button
+            disabled
             variant="primary"
             text={(
               <>
