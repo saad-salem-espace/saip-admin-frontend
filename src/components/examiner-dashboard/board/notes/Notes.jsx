@@ -16,6 +16,7 @@ import toastify from '../../../../utils/toastify';
 
 function Notes({
   id, disableEditor, disableChangeTab, fireSubmit, changeActiveTab, setFireSubmit,
+  setNotesUpdated,
 }) {
   const { t } = useTranslation('notes');
   const [notes, setNotes] = useState([]);
@@ -25,18 +26,34 @@ function Notes({
   const [showError, setShowError] = useState(false);
   const [emptyText, setEmptyText] = useState(true);
 
-  const config = getNotesApi(id, currentPage, true);
   const loadMoreItems = () => {
+    const config = getNotesApi(id, currentPage, true);
     apiInstance.request(config).then((res) => {
       const notesList = [...notes, ...res.data.data];
-      setNotes(notesList);
+      if (currentPage === 1) setNotes(res.data.data);
+      else setNotes(notesList);
+
       setTotalPages(res.data.pagination.totalPages);
     });
-    setCurrentPage(currentPage + 1);
   };
+
   useEffect(() => {
     loadMoreItems();
-  }, []);
+  }, [currentPage]);
+
+  const resetNotes = (toastMessage) => {
+    if (currentPage === 1) loadMoreItems();
+    else setCurrentPage(1);
+
+    toastify(
+      'success',
+      <div>
+        <p className="toastifyTitle">
+          {toastMessage}
+        </p>
+      </div>,
+    );
+  };
 
   const saveNoteParams = {
     id,
@@ -73,18 +90,12 @@ function Notes({
   };
   useEffect(() => {
     if (saveNotesData.data) {
-      if (saveNotesData.data.status === 200) {
+      if (saveNotesData.data.status === 200 && !(saveNotesData.loading)) {
         setFireSubmit(false);
+        setNotesUpdated(true);
+        resetNotes(t('noteAdded'));
         changeActiveTab();
-        toastify(
-          'success',
-          <div>
-            <p className="toastifyTitle">
-              {t('noteAdded')}
-            </p>
-          </div>,
-        );
-      } else {
+      } else if (!(saveNotesData.loading)) {
         toastify(
           'error',
           <div>
@@ -116,9 +127,9 @@ function Notes({
               </div>
             ))
           }
-              {currentPage <= totalPages && (
+              {currentPage < totalPages && (
               <div className="text-center">
-                <Button onClick={loadMoreItems} variant="transparent" text={t('loadMoreNotes')} className="text-primary-dark f-14 font-regular border-0 mb-4" />
+                <Button onClick={() => setCurrentPage(currentPage + 1)} variant="transparent" text={t('loadMoreNotes')} className="text-primary-dark f-14 font-regular border-0 mb-4" />
               </div>
               )}
             </div>
@@ -148,6 +159,7 @@ Notes.propTypes = {
   fireSubmit: PropTypes.func.isRequired,
   changeActiveTab: PropTypes.func.isRequired,
   setFireSubmit: PropTypes.func.isRequired,
+  setNotesUpdated: PropTypes.func.isRequired,
 };
 
 Notes.defaultProps = {

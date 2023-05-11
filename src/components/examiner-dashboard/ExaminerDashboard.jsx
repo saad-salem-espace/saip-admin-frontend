@@ -64,15 +64,21 @@ function ExaminerDashboard() {
   const [toggle, setToggle] = useState(false);
 
   const [activeDocument, setActiveDocument] = useState(null);
+  const [notesUpdated, setNotesUpdated] = useState(false);
 
   useEffect(() => {
     execute();
-  }, [activeWorkstream, sort, toggle]);
+  }, [activeWorkstream, sort]);
+
+  useEffect(() => {
+    if (toggle || notesUpdated) execute();
+  }, [toggle, notesUpdated]);
 
   useEffect(() => {
     if (data) {
       setAssignments(data?.data);
       setToggle(false);
+      setNotesUpdated(false);
     }
   }, [data]);
 
@@ -91,6 +97,8 @@ function ExaminerDashboard() {
           setToggle={setToggle}
           setActiveDocument={setActiveDocument}
           activeDocument={activeDocument}
+          setNotesUpdated={setNotesUpdated}
+          notesUpdated={notesUpdated}
         />
         {/* eslint-disable-next-line react/jsx-closing-tag-location */}
       </div> : <div className="d-flex justify-content-center mt-18"><Spinner /></div>
