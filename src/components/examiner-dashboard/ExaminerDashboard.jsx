@@ -4,8 +4,10 @@ import useAxios from 'hooks/useAxios';
 import getAssigned from 'apis/dashboard/getAssigned';
 import getAssignedWorkstreams from 'apis/dashboard/getAssignedWorkstreams';
 import Spinner from 'components/shared/spinner/Spinner';
+import EmptyState from 'components/shared/empty-state/EmptyState';
 import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
+import notAssigned from '../../assets/images/not-assigned.svg';
 
 function ExaminerDashboard() {
   const { t } = useTranslation('dashboard');
@@ -123,7 +125,13 @@ function ExaminerDashboard() {
       ? <div>
         {DashboardView}
         {/* eslint-disable-next-line react/jsx-closing-tag-location */}
-      </div> : <div />
+      </div>
+      : <EmptyState
+          title={t('notAssigned')}
+          msg={t('emptyStateTitle')}
+          img={notAssigned}
+          className="no-assigment"
+      />
   );
 }
 
