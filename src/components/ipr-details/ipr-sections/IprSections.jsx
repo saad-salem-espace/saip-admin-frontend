@@ -17,6 +17,7 @@ function IprSections({
   selectedCardId,
   className,
   showInfo,
+  setNotesUpdated,
 }) {
   const { t } = useTranslation(['dashboard', 'notes']);
   const [activeTabId, setActiveTabId] = useState(activeTab);
@@ -56,7 +57,7 @@ function IprSections({
     {
       id: 1,
       title: (
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center" translate="no">
           {t('dashboard:info')}
         </div>
       ),
@@ -72,12 +73,12 @@ function IprSections({
     {
       id: 2,
       title: (
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center" translate="no">
           {t('dashboard:notes')}
         </div>
       ),
       content: (
-        <div className="notes-tab">
+        <div className="notes-tab" translate="no">
           <Notes
             documentId={documentId}
             disableEditor={!isCardInprogress}
@@ -86,6 +87,7 @@ function IprSections({
             id={selectedCardId}
             setFireSubmit={setFireSubmit}
             changeActiveTab={changeActiveTab}
+            setNotesUpdated={setNotesUpdated}
           />
         </div>
       ),
@@ -148,6 +150,7 @@ IprSections.propTypes = {
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
   className: PropTypes.string,
+  setNotesUpdated: PropTypes.func,
 };
 
 IprSections.defaultProps = {
@@ -158,6 +161,7 @@ IprSections.defaultProps = {
   renderSelectedView: () => {},
   activeTab: 1,
   className: '',
+  setNotesUpdated: () => { },
 };
 
 export default IprSections;

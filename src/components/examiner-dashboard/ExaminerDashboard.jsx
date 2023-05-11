@@ -64,6 +64,7 @@ function ExaminerDashboard() {
 
   const [activeDocument, setActiveDocument] = useState(null);
   const [assignedWorkstreams, setAssignedWorkstreams] = useState([]);
+  const [notesUpdated, setNotesUpdated] = useState(false);
 
   useEffect(() => {
     executeWorkstreamData();
@@ -77,12 +78,17 @@ function ExaminerDashboard() {
 
   useEffect(() => {
     executeAssignmentData();
-  }, [activeWorkstream, sort, toggle]);
+  }, [activeWorkstream, sort]);
+
+  useEffect(() => {
+    if (toggle || notesUpdated) executeAssignmentData();
+  }, [toggle, notesUpdated]);
 
   useEffect(() => {
     if (data) {
       setAssignments(data?.data);
       setToggle(false);
+      setNotesUpdated(false);
     }
   }, [data]);
 
