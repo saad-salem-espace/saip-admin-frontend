@@ -116,6 +116,7 @@ function ExaminerDashboard() {
         setToggle={setToggle}
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
+        setNotesUpdated={setNotesUpdated}
       />
     </div>
   );
