@@ -98,7 +98,6 @@ function ExaminerDashboard() {
           setActiveDocument={setActiveDocument}
           activeDocument={activeDocument}
           setNotesUpdated={setNotesUpdated}
-          notesUpdated={notesUpdated}
         />
         {/* eslint-disable-next-line react/jsx-closing-tag-location */}
       </div> : <div className="d-flex justify-content-center mt-18"><Spinner /></div>
