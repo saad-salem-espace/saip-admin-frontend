@@ -118,15 +118,15 @@ function IprDetails({
   };
 
   const views = {
-  //   1:
-  // <PatentViews
-  //   selectedView={selectedView.value}
-  //   isIPRExpanded={isIPRExpanded}
-  //   document={document}
-  //   preparedGetAttachmentURL={preparedGetAttachmentURL}
-  //   documentId={documentId}
-  //   searchResultParams={searchResultParams}
-  // />,
+    1:
+  <PatentViews
+    selectedView={selectedView.value}
+    isIPRExpanded={isIPRExpanded}
+    document={document}
+    preparedGetAttachmentURL={preparedGetAttachmentURL}
+    documentId={documentId}
+    searchResultParams={searchResultParams}
+  />,
     2: <TrademarkViews
       selectedView={selectedView.value}
       isIPRExpanded={isIPRExpanded}
@@ -135,7 +135,7 @@ function IprDetails({
       documentId={documentId}
       searchResultParams={searchResultParams}
     />,
-    1: <IndustrialDesignViews
+    3: <IndustrialDesignViews
       selectedView={selectedView.value}
       isIPRExpanded={isIPRExpanded}
       document={document}
@@ -146,9 +146,9 @@ function IprDetails({
   };
 
   const options = {
-    // 1: trademarkOptions,
+    1: trademarkOptions,
     2: patentOptions,
-    1: industrialDesignOptions,
+    3: industrialDesignOptions,
   };
 
   const renderSelectedView = () => {
