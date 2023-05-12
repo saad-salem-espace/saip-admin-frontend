@@ -34,15 +34,15 @@ const BibliographicDataSection = (
             {t('register')}
           </h6>
           <div className="d-flex">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markNameEN')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('industrialDesign.designTitleEn')}</p>
             <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.BrandNameEn} />
+              <HandleEmptyAttribute checkOn={BibliographicData.DesignTitleEn} />
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markNameAR')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('industrialDesign.designTitleAr')}</p>
             <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.BrandNameAr} />
+              <HandleEmptyAttribute checkOn={BibliographicData.DesignTitleAr} />
             </p>
           </div>
           <div className="d-flex mb-4">
@@ -58,15 +58,9 @@ const BibliographicDataSection = (
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markType')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('industrialDesign.designStatus')}</p>
             <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.TrademarkType} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markStatus')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.TrademarkLastStatus} />
+              <HandleEmptyAttribute checkOn={BibliographicData.DesignStatus} />
             </p>
           </div>
           <div className="d-flex mb-4">
@@ -93,18 +87,27 @@ const BibliographicDataSection = (
               <HandleEmptyAttribute checkOn={BibliographicData.PublicationDate} />
             </p>
           </div>
+          <div>
+            <p className="text-primary f-14">{t('classifications')}</p>
+            <div className="d-flex f-12 mb-5">
+              <p className="bibliographicLabel">{t('ipc')}</p>
+              <p>
+                <HandleEmptyAttribute checkOn={document?.IPCClassification?.IPC?.join('; ')} />
+              </p>
+            </div>
+          </div>
+          <div className="d-flex f-12 mb-5">
+            <p className="bibliographicLabel">{t('cpc')}</p>
+            <p>
+              <HandleEmptyAttribute checkOn={document?.CPCClassification?.CPC?.join('; ')} />
+            </p>
+          </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markDescription')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('industrialDesign.designDescription')}</p>
             <p className="f-12">
               <ShowMore>
                 <HandleEmptyAttribute checkOn={BibliographicData.Description} />
               </ShowMore>
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('ipr.owners')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.Owners.join('; ')} />
             </p>
           </div>
           <div className="d-flex mb-4">
@@ -119,12 +122,6 @@ const BibliographicDataSection = (
               <HandleEmptyAttribute checkOn={BibliographicData.Representatives.join('; ')} />
             </p>
           </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('classifications')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.NICEClassification.join('; ')} />
-            </p>
-          </div>
         </Col>
       </Row>
     </Container>
@@ -133,22 +130,27 @@ const BibliographicDataSection = (
 
 BibliographicDataSection.propTypes = {
   BibliographicData: PropTypes.shape({
-    BrandNameEn: PropTypes.string,
-    BrandNameAr: PropTypes.string,
+    DesignTitleEn: PropTypes.string,
+    DesignTitleAr: PropTypes.string,
     Mark: PropTypes.string,
     FilingNumber: PropTypes.string,
     FilingDate: PropTypes.string,
-    TrademarkType: PropTypes.string,
-    TrademarkLastStatus: PropTypes.string,
+    DesignStatus: PropTypes.string,
     RegistrationNumber: PropTypes.string,
     RegistrationDate: PropTypes.string,
     Description: PropTypes.string,
     PublicationNumber: PropTypes.string,
     PublicationDate: PropTypes.string,
-    Owners: PropTypes.arrayOf(PropTypes.string),
+    Designers: PropTypes.arrayOf(PropTypes.string),
     Representatives: PropTypes.arrayOf(PropTypes.string),
     Applicants: PropTypes.arrayOf(PropTypes.string),
     NICEClassification: PropTypes.arrayOf(PropTypes.string),
+    IPCClassification: PropTypes.shape({
+      IPC: PropTypes.arrayOf(PropTypes.string),
+    }),
+    CPCClassification: PropTypes.shape({
+      CPC: PropTypes.arrayOf(PropTypes.string),
+    }),
   }).isRequired,
   isIPRExpanded: PropTypes.string.isRequired,
   getAttachmentURL: PropTypes.func.isRequired,

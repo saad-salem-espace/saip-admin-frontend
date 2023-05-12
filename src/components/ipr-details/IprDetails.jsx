@@ -26,6 +26,8 @@ import PatentViews from './patent/PatentViews';
 import TrademarkViews from './trademarks/TrademarkViews';
 import patentIprOptions from './patent/PatentIprOptions';
 import trademarkIprOptions from './trademarks/TrademarkIprOptions';
+import IndustrialDesignViews from './industrial-design/IndustrialDesignViews';
+import IndustrialDesignIprOptions from './industrial-design/IndustrialDesignIprOptions';
 
 function IprDetails({
   collapseIPR,
@@ -54,6 +56,7 @@ function IprDetails({
   });
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
+  const industrialDesignOptions = IndustrialDesignIprOptions().options;
   const searchResultParams = {
     workstreamId: dashboard ? '1' : (searchParams.get('workstreamId') || activeWorkstream.toString()),
   };
@@ -115,15 +118,15 @@ function IprDetails({
   };
 
   const views = {
-    1:
-  <PatentViews
-    selectedView={selectedView.value}
-    isIPRExpanded={isIPRExpanded}
-    document={document}
-    preparedGetAttachmentURL={preparedGetAttachmentURL}
-    documentId={documentId}
-    searchResultParams={searchResultParams}
-  />,
+  //   1:
+  // <PatentViews
+  //   selectedView={selectedView.value}
+  //   isIPRExpanded={isIPRExpanded}
+  //   document={document}
+  //   preparedGetAttachmentURL={preparedGetAttachmentURL}
+  //   documentId={documentId}
+  //   searchResultParams={searchResultParams}
+  // />,
     2: <TrademarkViews
       selectedView={selectedView.value}
       isIPRExpanded={isIPRExpanded}
@@ -132,6 +135,20 @@ function IprDetails({
       documentId={documentId}
       searchResultParams={searchResultParams}
     />,
+    1: <IndustrialDesignViews
+      selectedView={selectedView.value}
+      isIPRExpanded={isIPRExpanded}
+      document={document}
+      preparedGetAttachmentURL={preparedGetAttachmentURL}
+      documentId={documentId}
+      searchResultParams={searchResultParams}
+    />,
+  };
+
+  const options = {
+    // 1: trademarkOptions,
+    2: patentOptions,
+    1: industrialDesignOptions,
   };
 
   const renderSelectedView = () => {
@@ -145,8 +162,13 @@ function IprDetails({
       ) {
         content = views[searchResultParams.workstreamId];
       }
-    } else
-    if (searchResultParams.workstreamId === '1') {
+    } else if
+    (searchResultParams.workstreamId === '1') {
+      if (document[selectedView.value]) {
+        content = views[searchResultParams.workstreamId];
+      }
+    } else if
+    (searchResultParams.workstreamId === '3') {
       if (document[selectedView.value]) {
         content = views[searchResultParams.workstreamId];
       }
@@ -239,6 +261,13 @@ function IprDetails({
             </div>
           </div>
         )}
+        {searchResultParams.workstreamId === '3' && (
+        <p className="text-gray">
+          <HandleEmptyAttribute
+            checkOn={document.BibliographicData.Designers.join('; ')}
+          />
+        </p>
+        )}
         {searchResultParams.workstreamId === '1' && (
           <p className="text-gray px-6">
             <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
@@ -271,11 +300,7 @@ function IprDetails({
       {
       dashboard && showActions ? (
         <IprSections
-          options={
-                    searchResultParams.workstreamId === '2'
-                      ? trademarkOptions
-                      : patentOptions
-                  }
+          options={options[searchResultParams.workstreamId]}
           onChangeSelect={onChangeSelect}
           selectedView={selectedView}
           renderSelectedView={renderSelectedView}
@@ -287,7 +312,7 @@ function IprDetails({
         />
       ) : (
         <IprData
-          options={searchResultParams.workstreamId === '2' ? trademarkOptions : patentOptions}
+          options={options[searchResultParams.workstreamId]}
           onChangeSelect={onChangeSelect}
           selectedView={selectedView}
           renderSelectedView={renderSelectedView}
