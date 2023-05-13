@@ -25,7 +25,6 @@ function TextEditor({
   const handleContentStateChange = (c) => {
     setContentState(draftToHtml(c));
     setNoteText(contentState);
-    SubmitNote(hasError);
     isEmptyText(currentContentLength === 0);
     if (currentContentLength >= 1) {
       hideError(currentContentLength > 0);
@@ -36,6 +35,7 @@ function TextEditor({
     if (currentContentLength <= maxLength) {
       setHasError(false);
     }
+    SubmitNote(hasError);
     disableChangeTab(hasText);
   };
 
