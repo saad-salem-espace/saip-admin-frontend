@@ -28,15 +28,15 @@ const ModalAlert = ({
           <p className="text-gray px-4 mb-8">{msg}</p>
           <div className="border-top d-flex">
             <Button
-              text={confirmBtnText}
-              variant={variant}
+              text={t('cancel')}
+              variant="transparent"
               className="py-2 w-50 border-end text-gray rounded-0"
               size="md"
               onClick={() => { handleClose(); }}
             />
             <Button
-              text={t('save')}
-              variant="primary"
+              text={confirmBtnText}
+              variant={variant}
               className="py-2 w-50 rounded-0"
               size="md"
               onClick={() => { handleConfirm(); handleClose('saveBtn'); }}
