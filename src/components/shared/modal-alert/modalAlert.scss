@@ -1,8 +1,19 @@
 @import "../../../assets/styles/utilities/custom-theme";
 
-.warning {
-  svg{
-    color: $secondary-tangerine;
+.modal-alert {
+  svg {
     width: 100%;
+  }
+}
+
+.warning {
+  svg {
+    color: $secondary-tangerine;
+  }
+}
+
+.danger {
+  svg {
+    color: $danger-dark;
   }
 }

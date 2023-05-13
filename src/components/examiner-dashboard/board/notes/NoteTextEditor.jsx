@@ -9,9 +9,11 @@ import { useState } from 'react';
 function NoteTextEditor({
   onSubmit, setNoteText, disableEditor, disableChangeTab, showError, isEmptyText, hideError,
 }) {
-  const { t } = useTranslation('notes');
+  const { t } = useTranslation(['notes', 'translation']);
   const auth = useAuth();
   const [submitNote, setSubmitNote] = useState();
+  // eslint-disable-next-line react/hook-use-state
+  const [isNewNote] = useState(true);
 
   const SubmitNote = (i) => {
     setSubmitNote(!i);
@@ -19,7 +21,7 @@ function NoteTextEditor({
 
   return (
     <div className="d-md-flex align-items-start dashboard-notes border-top px-5 pt-5 bg-white">
-      <UserAvatar name={auth.user?.profile.preferred_username} size="48" className="me-md-4" />
+      <UserAvatar name={auth.user?.profile.preferred_username} size="48" className="me-md-4 mb-md-0 mb-2" />
       <TextEditor
         className="flex-grow-1 notes-editor"
         maxLength={1000}
@@ -31,7 +33,14 @@ function NoteTextEditor({
         showError={showError}
         hideError={hideError}
       />
-      <Button text={t('add')} variant="primary" className="ms-md-4" size="sm" onClick={submitNote ? onSubmit : null} />
+      <div className="d-flex flex-column">
+        <Button text={isNewNote ? t('add') : t('update')} variant="primary" className="ms-md-4" size="sm" onClick={submitNote ? onSubmit : null} />
+        {
+        !isNewNote && (
+          <Button text={t('translation:cancel')} variant="outline-primary" className="ms-md-4 mt-4" size="sm" />
+        )
+      }
+      </div>
     </div>
   );
 }

@@ -19,7 +19,7 @@ function IprSections({
   showInfo,
   setNotesUpdated,
 }) {
-  const { t } = useTranslation(['dashboard', 'notes']);
+  const { t } = useTranslation(['dashboard', 'notes', 'translation']);
   const [activeTabId, setActiveTabId] = useState(activeTab);
   const [showAlert, setShowAlert] = useState(false);
   const [hasUnsavedNotes, setHasUnsavedNotes] = useState(false);
@@ -121,7 +121,7 @@ function IprSections({
                 components={<span className="d-block" />}
               />
           }
-            btnText={t('add')}
+            confirmBtnText={t('translation:save')}
             className="warning"
             handleConfirm={handleConfirm}
             hideAlert={hideAlert}
