@@ -5,15 +5,15 @@
   z-index: 1040;
 
   .nav {
-    margin-top: 150px;
     .nav-link {
-      margin: 18px auto;
+      margin: 18px auto 0;
       background-repeat: no-repeat;
       background-position: center;
-      width: 26px;
-      height: 26px;
+      height: 55px;
       text-indent: -9999px;
       position: relative;
+      @extend .w-100;
+      @extend .p-0;
       &.ic-patent {
         background-image: url(../../../assets/images/ic-patent.png);
       }
@@ -33,8 +33,8 @@
         background-image: url(../../../assets/images/ic-integrated-circuits.png);
       }
       &.active {
-        @include border(2px, 200%, -12px , transparent);
-        @include border-end(-17px);
+        @include border(2px, 100%, 0 , transparent);
+        @include border-end(-1px);
         &.ic-patent {
           &::after {
             background-color: $patents;

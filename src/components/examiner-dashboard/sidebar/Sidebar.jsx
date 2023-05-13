@@ -7,8 +7,8 @@ function Sidebar({
   setActiveWorkstream, activeWorkstream, linksList, assignedWorkstreams,
 }) {
   return (
-    <div className="dashboard-sidebar justify-content-center bg-white shadow position-fixed top-0 start-0  w-px-65 vh-100">
-      <div className="nav d-flex flex-column">
+    <div className="dashboard-sidebar justify-content-center bg-white shadow position-fixed top-0 start-0 w-px-65 vh-100">
+      <div className="nav d-flex flex-column justify-content-center align-items-center h-100">
         {linksList.map((button) => (
           assignedWorkstreams.includes(button.id) && <AppTooltip
             placement="auto"
