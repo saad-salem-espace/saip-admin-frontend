@@ -14,11 +14,13 @@
     height: 60px;
   }
 }
+
 .search-result {
   html[dir="rtl"] & {
     @extend .pe-4;
   }
 }
+
 .searchResultsView {
   position: absolute;
   background-color: $white;
@@ -130,5 +132,23 @@
 .search-results-view {
   &.shared-search {
     flex-grow: 1;
+  }
+
+  .smSelect {
+    div[class$="container"] {
+      >div:first-of-type {
+        html[dir="rtl"] & {
+          border-radius: 0 5px 5px 0;
+        }
+
+        html[dir="ltr"] & {
+          border-radius: 5px 0 0 5px;
+        }
+
+        >div:nth-child(2) {
+          background-color: $gray-200;
+        }
+      }
+    }
   }
 }

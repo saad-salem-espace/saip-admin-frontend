@@ -19,6 +19,7 @@ function IprExpand({
   documentId,
   isCardInprogress,
   selectedCardId,
+  setNotesUpdated,
 }) {
   const { t } = useTranslation('dashboard');
   return (
@@ -80,6 +81,7 @@ function IprExpand({
             className="expand-view"
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
+            setNotesUpdated={setNotesUpdated}
           />
         </Col>
       </div>
@@ -97,11 +99,13 @@ IprExpand.propTypes = {
   activeWorkstream: PropTypes.number.isRequired,
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
+  setNotesUpdated: PropTypes.func,
 };
 
 IprExpand.defaultProps = {
   className: null,
   onClose: () => { },
+  setNotesUpdated: () => { },
 };
 
 export default IprExpand;
