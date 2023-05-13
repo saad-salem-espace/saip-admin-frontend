@@ -2,6 +2,9 @@
 
 .pagination {
   justify-content: flex-start !important;
+  .sr-only {
+    @extend .d-none;
+  }
   .page-item {
     margin: 0 8px;
 
