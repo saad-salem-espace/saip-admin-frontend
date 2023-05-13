@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import Carousel from 'components/shared/carousel/Carousel';
 import NoData from 'components/shared/empty-states/NoData';
+import { useTranslation } from 'react-i18next';
 import LegalStatus from '../shared/legal-status/LegalStatus';
 import LegalStatusRow from '../shared/legal-status/LegalStatusRow';
 import Applicants from '../shared/applicants/Applicants';
@@ -14,12 +15,14 @@ import Description from '../shared/description/Description';
 import OriginalDocument from '../shared/original-document/OriginalDocument';
 import DesignerDetails from './designer-details/DesignerDetails';
 import DesignerDetailsRow from './designer-details/DesignerDetailsRow';
-import IndicationOfDesign from './indication-of-design/IndicationOfDesign';
-import IndicationOfDesignRow from './indication-of-design/IndicationOfDesignRow';
+import LocarnoClassification from './locarno-classification/LocarnoClassification';
+import LocarnoClassificationRow from './locarno-classification/LocarnoClassificationRow';
 
 const IndustrialDesignViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
 }) => {
+  const { t } = useTranslation('search');
+
   const content = (s) => {
     switch (s) {
       case 'BibliographicData': return (
@@ -27,7 +30,18 @@ const IndustrialDesignViews = ({
           isIPRExpanded={isIPRExpanded}
           BibliographicData={document.BibliographicData}
           getAttachmentURL={preparedGetAttachmentURL}
-        />
+        >
+          <h6>{t('ipr.drawings')}</h6>
+          {document?.Drawings?.length ? (
+            <Carousel
+              largeThumb={isIPRExpanded}
+              className="drawings"
+              images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            />
+          ) : (
+            <NoData />
+          )}
+        </BibliographicDataSection>
       );
       case 'Drawings': return (
         <div>
@@ -43,7 +57,21 @@ const IndustrialDesignViews = ({
         </div>
       );
       case 'Description': return (
-        <Description description={document.BibliographicData.Description} />
+        <Description
+          description={document.BibliographicData.DesignAbstract}
+          isIPRExpanded={isIPRExpanded}
+        >
+          <h6 className={`${!isIPRExpanded ? 'mt-4' : ''}`}>{t('ipr.drawings')}</h6>
+          {document.Drawings?.length ? (
+            <Carousel
+              largeThumb={isIPRExpanded}
+              className="drawings"
+              images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            />
+          ) : (
+            <NoData />
+          )}
+        </Description>
       );
       case 'LegalStatus': return (
         <div>
@@ -97,14 +125,14 @@ const IndustrialDesignViews = ({
           )}
         </div>
       );
-      case 'IndicationOfDesign': return (
+      case 'LocarnoClassification': return (
         <div>
-          {document.IndicationOfDesign.length ? (
-            <IndicationOfDesign>
-              {document.IndicationOfDesign.map((row) => (
-                <IndicationOfDesignRow row={row} />
+          {document.LocarnoClassification.length ? (
+            <LocarnoClassification>
+              {document.LocarnoClassification.map((row) => (
+                <LocarnoClassificationRow row={row} />
               ))}
-            </IndicationOfDesign>
+            </LocarnoClassification>
           ) : (
             <NoData />
           )}

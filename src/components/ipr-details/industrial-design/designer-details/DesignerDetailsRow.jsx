@@ -6,7 +6,7 @@ const DesignerDetailsRow = ({ row }) => (
     <td><HandleEmptyAttribute checkOn={row.DesignerName} /></td>
     <td><HandleEmptyAttribute checkOn={row.CountryCode} /></td>
     <td><HandleEmptyAttribute checkOn={row.Nationality} /></td>
-    <td><HandleEmptyAttribute checkOn={row.DesignerDetails.join('; ')} /></td>
+    <td><HandleEmptyAttribute checkOn={row.DesignerDetails} /></td>
   </tr>
 );
 

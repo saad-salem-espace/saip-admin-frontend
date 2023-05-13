@@ -10,7 +10,10 @@ describe('<BibliographicDataSection />', () => {
 
   it('renders component successfully', async () => {
     const { getByText } = render(
-      <BibliographicDataSection BibliographicData={sampleTrademark.BibliographicData} />,
+      <BibliographicDataSection
+        BibliographicData={sampleTrademark.BibliographicData}
+        isIPRExpanded
+      />,
     );
     await waitFor(() => {
       ['register', 'trademarks.markNameEN', 'trademarks.markNameAR', 'trademarks.filingNumber', 'trademarks.filingDate', 'trademarks.markType',

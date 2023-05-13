@@ -11,7 +11,7 @@ describe('<OwnerRow />', () => {
     await waitFor(() => {
       expect(getByText(sampleTrademark.OwnersDetails[0].OwnerName)).toBeInTheDocument();
       expect(getByText(sampleTrademark.OwnersDetails[0].CountryCode)).toBeInTheDocument();
-      expect(getByText(sampleTrademark.OwnersDetails[0].Naionality)).toBeInTheDocument();
+      expect(getByText(sampleTrademark.OwnersDetails[0].Nationality)).toBeInTheDocument();
       expect(getByText(sampleTrademark.OwnersDetails[0].OwnerDetails)).toBeInTheDocument();
     });
   });

@@ -11,11 +11,11 @@ import { trimStringRelativeToSubtext } from 'utils/strings';
 import { getAttachmentURL } from 'utils/attachments';
 import { useSearchParams } from 'react-router-dom';
 import style from '../search-result-cards/search-result-card/style.module.scss';
-import './style.scss';
+import '../trademarks-search-result-cards/style.scss';
 
-function TrademarksSearchResultCard({
+function IndustrialDesignResultCard({
   searchResult,
-  setActiveDocument, activeDocument, selectedView, highlightWords, query,
+  setActiveDocument, activeDocument, highlightWords, query,
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
@@ -37,19 +37,19 @@ function TrademarksSearchResultCard({
             <div>
               <div className="d-flex">
                 <Checkbox className="me-4" />
-                <Badge text={BibliographicData.TrademarkLastStatus} varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
+                <Badge text={BibliographicData.Status} varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
-                <Image src={preparedGetAttachmentURL(BibliographicData.Mark)} className="rounded" />
+                <Image src={preparedGetAttachmentURL(BibliographicData.OverallProductDrawing)} className="rounded" />
               </div>
             </div>
             <div className="title">
               <span className="d-block text-truncate mb-1">
-                {BibliographicData.BrandNameEn && <Highlighter
+                {BibliographicData.DesignTitleEN && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
-                    BibliographicData?.BrandNameEn,
+                    BibliographicData?.DesignTitleEN,
                     query,
                   )}
                   searchWords={highlightWords}
@@ -57,11 +57,11 @@ function TrademarksSearchResultCard({
                 />}
               </span>
               <span className="d-block text-truncate">
-                {BibliographicData.BrandNameAr && <Highlighter
+                {BibliographicData.DesignTitleAR && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
-                    BibliographicData?.BrandNameAr,
+                    BibliographicData?.DesignTitleAR,
                     query,
                   )}
                   searchWords={highlightWords}
@@ -74,30 +74,21 @@ function TrademarksSearchResultCard({
                   <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                   <span>{BibliographicData?.FilingDate}</span>
                 </p>
-                {
-                  (selectedView.value === 'detailed' || selectedView.value === 'summary') && (
-                    <p className="text-gray md-text mb-2">
-                      {BibliographicData?.Applicants?.join('; ')}
-                    </p>)
-                }
-                {
-                  selectedView.value === 'detailed' && (
-                    <>
-                      <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        {t('ipr.registered', { value: BibliographicData.RegistrationNumber })}
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        <span>{BibliographicData.RegistrationDate}</span>
-                      </p>
-                      <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        {t('ipr.published', { value: BibliographicData.PublicationNumber })}
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        <span>{BibliographicData.PublicationDate}</span>
-                      </p>
-                    </>
-                  )
-                }
+                <p className="text-gray md-text mb-2">
+                  {BibliographicData?.Designers?.join('; ')}
+                </p>
+                <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  {t('ipr.registered', { value: BibliographicData.RegistrationNumber })}
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  <span>{BibliographicData.RegistrationDate}</span>
+                </p>
+                <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  {t('ipr.published', { value: BibliographicData.PublicationNumber })}
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  <span>{BibliographicData.PublicationDate}</span>
+                </p>
               </div>
             </div>
           </div>
@@ -107,12 +98,12 @@ function TrademarksSearchResultCard({
   );
 }
 
-TrademarksSearchResultCard.propTypes = {
+IndustrialDesignResultCard.propTypes = {
   searchResult: PropTypes.shape({
     BibliographicData: PropTypes.shape({
-      Applicants: PropTypes.arrayOf(PropTypes.string),
-      BrandNameEn: PropTypes.string.isRequired,
-      BrandNameAr: PropTypes.string.isRequired,
+      Designers: PropTypes.arrayOf(PropTypes.string),
+      DesignTitleEN: PropTypes.string.isRequired,
+      DesignTitleAR: PropTypes.string.isRequired,
       ApplicationTitle: PropTypes.string.isRequired,
       FilingNumber: PropTypes.string.isRequired,
       FilingDate: PropTypes.string.isRequired,
@@ -120,21 +111,17 @@ TrademarksSearchResultCard.propTypes = {
       RegistrationDate: PropTypes.string.isRequired,
       PublicationNumber: PropTypes.string.isRequired,
       PublicationDate: PropTypes.string.isRequired,
-      Mark: PropTypes.string.isRequired,
-      TrademarkLastStatus: PropTypes.string.isRequired,
+      OverallProductDrawing: PropTypes.string.isRequired,
+      Status: PropTypes.string.isRequired,
     }),
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
-  selectedView: PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.string,
-  }).isRequired,
   query: PropTypes.string.isRequired,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
 };
 
-TrademarksSearchResultCard.defaultProps = {
+IndustrialDesignResultCard.defaultProps = {
   highlightWords: [],
 };
-export default TrademarksSearchResultCard;
+export default IndustrialDesignResultCard;

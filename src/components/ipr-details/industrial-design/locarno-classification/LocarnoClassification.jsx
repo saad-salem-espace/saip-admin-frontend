@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import '../../../../assets/styles/common/table.scss';
 import PropTypes from 'prop-types';
 
-const IndicationOfDesign = ({ children }) => {
+const LocarnoClassification = ({ children }) => {
   const { t } = useTranslation('search');
 
   return (
@@ -12,7 +12,7 @@ const IndicationOfDesign = ({ children }) => {
         <thead>
           <tr className="text-uppercase">
             <th>{t('industrialDesign.locarnoClassification')}</th>
-            <th>{t('industrialDesign.description')}</th>
+            <th>{t('industrialDesign.indicationDesign')}</th>
           </tr>
         </thead>
         <tbody>
@@ -23,8 +23,8 @@ const IndicationOfDesign = ({ children }) => {
   );
 };
 
-IndicationOfDesign.propTypes = {
+LocarnoClassification.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default IndicationOfDesign;
+export default LocarnoClassification;

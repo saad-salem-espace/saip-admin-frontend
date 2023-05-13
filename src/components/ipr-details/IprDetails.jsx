@@ -169,7 +169,7 @@ function IprDetails({
       }
     } else if
     (searchResultParams.workstreamId === '3') {
-      if (document[selectedView.value]) {
+      if ((document[selectedView.value]) || (selectedView.value === 'Description')) {
         content = views[searchResultParams.workstreamId];
       }
     }
@@ -262,11 +262,32 @@ function IprDetails({
           </div>
         )}
         {searchResultParams.workstreamId === '3' && (
-        <p className="text-gray">
-          <HandleEmptyAttribute
-            checkOn={document.BibliographicData.Designers.join('; ')}
-          />
-        </p>
+        <div className="ms-6 mb-2">
+          <div className="d-flex justify-content-between">
+            <div className="me-2 mb-md-0 mb-2">
+              <h5 className="text-capitalize text-primary-dark font-regular mb-2">
+                {document.BibliographicData.DesignTitleEN}
+                <span className="d-block mt-2">
+                  {document.BibliographicData.DesignTitleAR}
+                </span>
+              </h5>
+              <p className="text-gray">
+                <HandleEmptyAttribute
+                  checkOn={document.BibliographicData.Designers.join('; ')}
+                />
+              </p>
+            </div>
+            {!isIPRExpanded && (
+            <div className={`me-6 mb-2 ${style.headerImg}`}>
+              <Image
+                src={preparedGetAttachmentURL(
+                  document.BibliographicData.OverallProductDrawing,
+                )}
+              />
+            </div>
+            )}
+          </div>
+        </div>
         )}
         {searchResultParams.workstreamId === '1' && (
           <p className="text-gray px-6">

@@ -39,6 +39,7 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import toastify from '../../utils/toastify';
 import validationMessages from '../../utils/validationMessages';
+import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
 
 function SearchResults() {
   const { t, i18n } = useTranslation('search');
@@ -131,7 +132,7 @@ function SearchResults() {
     },
   ];
 
-  const sortByOptionsTrademark = [
+  const sortByPublicationAndFilingDate = [
     {
       label: t('mostRelevant'),
       value: 'mostRelevant',
@@ -156,7 +157,8 @@ function SearchResults() {
 
   const map = new Map();
   map.set(1, sortByOptionsPatent);
-  map.set(2, sortByOptionsTrademark);
+  map.set(2, sortByPublicationAndFilingDate);
+  map.set(3, sortByPublicationAndFilingDate);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
@@ -437,6 +439,7 @@ function SearchResults() {
   const searchResult = {
     1: SearchResultCards,
     2: TrademarksSearchResultCards,
+    3: IndustrialDesignResultCards,
   };
 
   const formSchema = Yup.object({
@@ -554,36 +557,40 @@ function SearchResults() {
           <Formik>
             {() => (
               <Form className="mt-5">
-                <div className="d-md-flex">
-                  {
-                      searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
-                          <Select
-                            options={viewOptions}
-                            setSelectedOption={onChangeView}
-                            selectedOption={selectedView}
-                            defaultValue={selectedView}
-                            id="viewSection"
-                            fieldName="viewSection"
-                            className="mb-md-0 mb-3 select-2"
-                          />
-                        </div>
-                      )
-                    }
-                  <div className="position-relative mb-8 sortBy">
-                    <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
-                    <Select
-                      options={getSortOptions(searchResultParams.workstreamId)}
-                      setSelectedOption={onChangeSortBy}
-                      selectedOption={sortBy}
-                      defaultValue={sortBy}
-                      id="sortBy"
-                      fieldName="sortBy"
-                      className="select-2"
-                    />
-                  </div>
-                </div>
+                {
+                  totalResults !== 0 && (
+                    <div className="d-md-flex">
+                      {
+                        searchResultParams.workstreamId === '2' && (
+                          <div className="position-relative mb-6 viewSelect me-md-6">
+                            <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
+                            <Select
+                              options={viewOptions}
+                              setSelectedOption={onChangeView}
+                              selectedOption={selectedView}
+                              defaultValue={selectedView}
+                              id="viewSection"
+                              fieldName="viewSection"
+                              className="mb-md-0 mb-3 select-2"
+                            />
+                          </div>
+                        )
+                      }
+                      <div className="position-relative mb-8 sortBy">
+                        <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                        <Select
+                          options={getSortOptions(searchResultParams.workstreamId)}
+                          setSelectedOption={onChangeSortBy}
+                          selectedOption={sortBy}
+                          defaultValue={sortBy}
+                          id="sortBy"
+                          fieldName="sortBy"
+                          className="select-2"
+                        />
+                      </div>
+                    </div>
+                  )
+                }
                 <AppPagination
                   axiosConfig={axiosConfig}
                   defaultPage={Number(searchParams.get('page') || '1')}

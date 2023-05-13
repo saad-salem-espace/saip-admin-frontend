@@ -31,15 +31,15 @@ const IndustrialDesignIprOptions = () => {
       },
       {
         label: t('ipr.representativeDetails'),
-        value: 'Representative',
+        value: 'RepresentativesDetails',
       },
       {
-        label: t('industrialDesign.indicationDesign'),
-        value: 'IndicationOfDesign',
+        label: t('industrialDesign.locarnoClassification'),
+        value: 'LocarnoClassification',
       },
       {
         label: t('ipr.priorities'),
-        value: 'PrioritiesDetails',
+        value: 'Priorities',
       },
       {
         label: t('ipr.originalDocument'),
