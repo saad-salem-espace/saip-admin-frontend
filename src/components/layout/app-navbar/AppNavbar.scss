@@ -17,8 +17,8 @@
   }
   .navbar-brand {
     html[dir="rtl"] & {
-      margin-right: auto;
       margin-left: 16px;
+      margin-right: 0px;
     }
     @include media-breakpoint-up(lg) {
       @include border(1px,25px,13px,$border-color);

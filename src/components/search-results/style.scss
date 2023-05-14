@@ -151,4 +151,21 @@
       }
     }
   }
+  .imgUploaded {
+    &.searchInputWrapper{
+      @include media-breakpoint-up(md) {
+        input {
+  
+          html[dir="ltr"] & {
+            padding-left: 100px !important;
+            padding-right: 180px !important;
+          }
+          html[dir="rtl"] & {
+            padding-right: 90px !important;
+            padding-left: 180px !important;
+          }
+        }
+      }
+    }
+  }
 }
