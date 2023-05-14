@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import './bibliographic.scss';
 import ShowMore from 'components/shared/show-more/ShowMore';
-import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,37 +11,38 @@ const BibliographicDataSection = (
   {
     isIPRExpanded,
     BibliographicData,
-    getAttachmentURL,
+    children,
   },
 ) => {
   const { t } = useTranslation('search');
-
+  const getGrid = (view) => {
+    let grid = 12;
+    if (isIPRExpanded) {
+      if (view === 'drawings') {
+        grid = 5;
+      } else {
+        grid = 7;
+      }
+    }
+    return grid;
+  };
   return (
     <Container fluid>
       <Row>
-        {
-        isIPRExpanded && (
-          <Col md={4} className="mb-md-0 mb-2">
-            <div className="me-4">
-              <Image src={getAttachmentURL(BibliographicData.Mark)} className="mw-100" />
-            </div>
-          </Col>
-        )
-      }
-        <Col md={isIPRExpanded ? 8 : 12}>
+        <Col md={getGrid('bibliographic')}>
           <h6 className="mb-4">
             {t('register')}
           </h6>
           <div className="d-flex">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markNameEN')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('industrialDesign.designTitleEn')}</p>
             <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.BrandNameEn} />
+              <HandleEmptyAttribute checkOn={BibliographicData.DesignTitleEN} />
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markNameAR')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('industrialDesign.designTitleAr')}</p>
             <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.BrandNameAr} />
+              <HandleEmptyAttribute checkOn={BibliographicData.DesignTitleAR} />
             </p>
           </div>
           <div className="d-flex mb-4">
@@ -58,15 +58,9 @@ const BibliographicDataSection = (
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markType')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('industrialDesign.designStatus')}</p>
             <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.TrademarkType} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markStatus')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.TrademarkLastStatus} />
+              <HandleEmptyAttribute checkOn={BibliographicData.Status} />
             </p>
           </div>
           <div className="d-flex mb-4">
@@ -94,17 +88,17 @@ const BibliographicDataSection = (
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markDescription')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('abstract')}</p>
             <p className="f-12">
               <ShowMore>
-                <HandleEmptyAttribute checkOn={BibliographicData.Description} />
+                <HandleEmptyAttribute checkOn={BibliographicData.DesignAbstract} />
               </ShowMore>
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('ipr.owners')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('industrialDesign.designers')}</p>
             <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.Owners.join('; ')} />
+              <HandleEmptyAttribute checkOn={BibliographicData.Designers.join('; ')} />
             </p>
           </div>
           <div className="d-flex mb-4">
@@ -122,9 +116,12 @@ const BibliographicDataSection = (
           <div className="d-flex mb-4">
             <p className="text-primary f-14 bibliographicLabel">{t('classifications')}</p>
             <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.NICEClassification.join('; ')} />
+              <HandleEmptyAttribute checkOn={BibliographicData.LocarnoClassification.join('; ')} />
             </p>
           </div>
+        </Col>
+        <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
+          {children}
         </Col>
       </Row>
     </Container>
@@ -133,25 +130,24 @@ const BibliographicDataSection = (
 
 BibliographicDataSection.propTypes = {
   BibliographicData: PropTypes.shape({
-    BrandNameEn: PropTypes.string,
-    BrandNameAr: PropTypes.string,
+    DesignTitleEN: PropTypes.string,
+    DesignTitleAR: PropTypes.string,
     Mark: PropTypes.string,
     FilingNumber: PropTypes.string,
     FilingDate: PropTypes.string,
-    TrademarkType: PropTypes.string,
-    TrademarkLastStatus: PropTypes.string,
+    Status: PropTypes.string,
     RegistrationNumber: PropTypes.string,
     RegistrationDate: PropTypes.string,
-    Description: PropTypes.string,
+    DesignAbstract: PropTypes.string,
     PublicationNumber: PropTypes.string,
     PublicationDate: PropTypes.string,
-    Owners: PropTypes.arrayOf(PropTypes.string),
+    Designers: PropTypes.arrayOf(PropTypes.string),
     Representatives: PropTypes.arrayOf(PropTypes.string),
     Applicants: PropTypes.arrayOf(PropTypes.string),
-    NICEClassification: PropTypes.arrayOf(PropTypes.string),
+    LocarnoClassification: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
-  isIPRExpanded: PropTypes.bool.isRequired,
-  getAttachmentURL: PropTypes.func.isRequired,
+  isIPRExpanded: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default BibliographicDataSection;
