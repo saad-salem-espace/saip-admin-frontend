@@ -3,7 +3,7 @@ import { render } from 'TestUtils';
 import I18n from 'i18n';
 import industrialDesignResponse from 'testing-resources/industrial-design/sampleIndustrialDesign.json';
 import { Formik } from 'formik';
-import IndustrialDesignResultCard from './IndustrialDesignResultCards';
+import IndustrialDesignResultCard from './IndustrialDesignResultCard';
 
 describe('<IndustrialDesignResultCard />', () => {
   const t = (key, options) => I18n.t(key, { ...options, ns: 'search' });
@@ -15,6 +15,7 @@ describe('<IndustrialDesignResultCard />', () => {
         <IndustrialDesignResultCard
           searchResult={industrialDesignResponse}
           query={query}
+          highlightWords={['Coffee']}
         />
       </Formik>,
     );

@@ -7,7 +7,7 @@ import IndustrialDesignResultCards from './IndustrialDesignResultCards';
 describe('<IndustrialDesignResultCards />', () => {
   const ITEMS_LENGTH = 5;
   const data = { data: Array(ITEMS_LENGTH).fill(industrialDesignResponse) };
-  const query = 'Coffee';
+  const query = 'NO_MATCH';
 
   it('should display all fetched data', async () => {
     const { queryAllByText } = render(
