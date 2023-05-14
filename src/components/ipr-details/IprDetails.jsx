@@ -58,7 +58,7 @@ function IprDetails({
   const trademarkOptions = trademarkIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
   const searchResultParams = {
-    workstreamId: dashboard ? '1' : (searchParams.get('workstreamId') || activeWorkstream.toString()),
+    workstreamId: (searchParams.get('workstreamId') || activeWorkstream.toString()),
   };
   const [, execute] = useAxios(
     documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
