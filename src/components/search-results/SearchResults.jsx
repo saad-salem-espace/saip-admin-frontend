@@ -32,6 +32,8 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
+import style from '../shared/form/search/style.module.scss';
+
 import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
@@ -472,7 +474,7 @@ function SearchResults() {
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
                       selectedOption={values.selectedWorkstream}
-                      className="workStreams ms-3 mt-1 customSelect"
+                      className="workStreams ms-3 mt-1 customSelect w-px-300"
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);
@@ -487,7 +489,7 @@ function SearchResults() {
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
                     isAdvanced={isAdvancedSearch}
-                    className="search-results-view"
+                    className={`${style.searchResultsView} search-results-view`}
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
