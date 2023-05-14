@@ -10,20 +10,12 @@ const TrademarkIprOptions = () => {
         value: 'BibliographicData',
       },
       {
+        label: t('ipr.mark'),
+        value: 'Mark',
+      },
+      {
         label: t('ipr.description'),
         value: 'Description',
-      },
-      {
-        label: t('patent.claims'),
-        value: 'Claims',
-      },
-      {
-        label: t('patent.citations'),
-        value: 'Citations',
-      },
-      {
-        label: t('patent.drawings'),
-        value: 'Drawings',
       },
       {
         label: t('ipr.legalStatus'),
@@ -34,32 +26,32 @@ const TrademarkIprOptions = () => {
         value: 'ApplicantsDetails',
       },
       {
-        label: t('inventors'),
-        value: 'Inventors',
-      },
-      {
         label: t('ipr.ownerDetails'),
         value: 'OwnersDetails',
       },
       {
         label: t('ipr.representativeDetails'),
-        value: 'Representative',
+        value: 'RepresentativesDetails',
+      },
+      {
+        label: t('ipr.goodsServices'),
+        value: 'GoodsAndServices',
+      },
+      {
+        label: t('ipr.figurativeClassification'),
+        value: 'FigurativeClassification',
+      },
+      {
+        label: t('ipr.exhibitionDetails'),
+        value: 'ExhibitionInformation',
+      },
+      {
+        label: t('ipr.priorities'),
+        value: 'Priorities',
       },
       {
         label: t('ipr.officeActions'),
         value: 'OfficeActions',
-      },
-      {
-        label: t('patent.patentFamility.patentFamility'),
-        value: 'PatentFamility',
-      },
-      {
-        label: t('ipr.priorities'),
-        value: 'PrioritiesDetails',
-      },
-      {
-        label: t('ipr.originalDocument'),
-        value: 'OriginalDocuments',
       },
     ],
   };
