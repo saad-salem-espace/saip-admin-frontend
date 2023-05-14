@@ -8,6 +8,8 @@
   "noteNotAdded": "Note not added, please try again.",
   "noteDeleted": "Note deleted successfully.",
   "noteNotDeleted": "Note not deleted, please try again.",
+  "noteUpdated": "Note updated successfully.",
+  "noteNotUpdated": "Note not updated, please try again.",
   "day": "d",
   "editNote": "Edit Note",
   "deleteNote": "Delete Note",

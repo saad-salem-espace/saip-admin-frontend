@@ -8,7 +8,9 @@ import deleteNoteApi from 'apis/notes/deleteNoteApi';
 import useAxios from 'hooks/useAxios';
 import toastify from 'utils/toastify';
 
-function EditAndDeleteMenu({ note, setNotesUpdated, resetNotes }) {
+function EditAndDeleteMenu({
+  note, setNotesUpdated, resetNotes, setActiveNote,
+}) {
   const { t } = useTranslation('notes');
   const [showAlert, setShowAlert] = useState(false);
 
@@ -43,9 +45,9 @@ function EditAndDeleteMenu({ note, setNotesUpdated, resetNotes }) {
   const handleDeleteNote = () => {
     setShowAlert(true);
   };
-  // const handleEditNote = () => {
-
-  // };
+  const handleEditNote = () => {
+    setActiveNote(note);
+  };
   const handleConfirm = () => {
     executeDeleteNote();
   };
@@ -57,9 +59,9 @@ function EditAndDeleteMenu({ note, setNotesUpdated, resetNotes }) {
       <Dropdown className="default-menu">
         <Dropdown.Toggle align="start" className="" id="dropdown-basic" />
         <Dropdown.Menu>
-          {/* <Dropdown.Item onClick={handleEditNote}>
+          <Dropdown.Item onClick={handleEditNote}>
             {t('editNote')}
-          </Dropdown.Item> */}
+          </Dropdown.Item>
           <Dropdown.Item onClick={handleDeleteNote}>
             {t('deleteNote')}
           </Dropdown.Item>
@@ -90,6 +92,7 @@ EditAndDeleteMenu.propTypes = {
   note: PropTypes.instanceOf(Object).isRequired,
   setNotesUpdated: PropTypes.func.isRequired,
   resetNotes: PropTypes.func.isRequired,
+  setActiveNote: PropTypes.func.isRequired,
 };
 
 export default EditAndDeleteMenu;

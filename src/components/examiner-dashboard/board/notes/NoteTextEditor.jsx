@@ -8,12 +8,11 @@ import { useState } from 'react';
 
 function NoteTextEditor({
   onSubmit, setNoteText, disableEditor, disableChangeTab, showError, isEmptyText, hideError,
+  activeNote, setActiveNote,
 }) {
   const { t } = useTranslation(['notes', 'translation']);
   const auth = useAuth();
   const [submitNote, setSubmitNote] = useState();
-  // eslint-disable-next-line react/hook-use-state
-  const [isNewNote] = useState(true);
 
   const SubmitNote = (i) => {
     setSubmitNote(!i);
@@ -32,12 +31,13 @@ function NoteTextEditor({
         isEmptyText={isEmptyText}
         showError={showError}
         hideError={hideError}
+        activeNote={activeNote}
       />
       <div className="d-flex flex-column">
-        <Button text={isNewNote ? t('add') : t('update')} variant="primary" className="ms-md-4" size="sm" onClick={submitNote ? onSubmit : null} />
+        <Button text={activeNote ? t('update') : t('add')} variant="primary" className="ms-md-4" size="sm" onClick={submitNote ? onSubmit : null} />
         {
-        !isNewNote && (
-          <Button text={t('translation:cancel')} variant="outline-primary" className="ms-md-4 mt-4" size="sm" />
+        activeNote && (
+          <Button text={t('translation:cancel')} variant="outline-primary" className="ms-md-4 mt-4" size="sm" onClick={() => setActiveNote(null)} />
         )
       }
       </div>
@@ -53,6 +53,8 @@ NoteTextEditor.propTypes = {
   isEmptyText: PropTypes.func.isRequired,
   showError: PropTypes.bool.isRequired,
   hideError: PropTypes.func.isRequired,
+  activeNote: PropTypes.instanceOf(Object).isRequired,
+  setActiveNote: PropTypes.func.isRequired,
 };
 
 NoteTextEditor.defaultProps = {
