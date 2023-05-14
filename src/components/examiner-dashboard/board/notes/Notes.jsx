@@ -123,7 +123,12 @@ function Notes({
               {
             notes.map((note) => (
               <div className="mx-4">
-                <NoteView note={note} key={note.id} />
+                <NoteView
+                  note={note}
+                  setNotesUpdated={setNotesUpdated}
+                  resetNotes={resetNotes}
+                  key={note.id}
+                />
               </div>
             ))
           }

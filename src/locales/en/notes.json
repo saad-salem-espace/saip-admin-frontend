@@ -6,6 +6,8 @@
   "unsavedContentMsg": "You are about to lose unsaved content,<0> would you like to save it?</0>",
   "noteAdded": "Note added successfully.",
   "noteNotAdded": "Note not added, please try again.",
+  "noteDeleted": "Note deleted successfully.",
+  "noteNotDeleted": "Note not deleted, please try again.",
   "day": "d",
   "editNote": "Edit Note",
   "deleteNote": "Delete Note",

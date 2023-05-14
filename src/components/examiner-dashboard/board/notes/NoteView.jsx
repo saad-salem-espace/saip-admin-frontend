@@ -7,7 +7,7 @@ import { calculateDifference } from 'utils/dates';
 import { useTranslation } from 'react-i18next';
 import EditAndDeleteMenu from './edit-and-delete/EditAndDeleteMenu';
 
-function NoteView({ note }) {
+function NoteView({ note, setNotesUpdated, resetNotes }) {
   const auth = useAuth();
   const { t } = useTranslation('notes');
   return (
@@ -23,18 +23,16 @@ function NoteView({ note }) {
             {t('day')}
           </p>
         </div>
-        <EditAndDeleteMenu />
+        <EditAndDeleteMenu note={note} setNotesUpdated={setNotesUpdated} resetNotes={resetNotes} />
       </div>
       <div className="mb-0 text-gray sm-text" dangerouslySetInnerHTML={{ __html: note.noteText }} />
     </div>
   );
 }
 NoteView.propTypes = {
-  note: PropTypes.shape({
-    username: PropTypes.string,
-    createdAt: PropTypes.string,
-    noteText: PropTypes.string,
-  }).isRequired,
+  note: PropTypes.instanceOf(Object).isRequired,
+  setNotesUpdated: PropTypes.func.isRequired,
+  resetNotes: PropTypes.func.isRequired,
 };
 
 export default NoteView;
