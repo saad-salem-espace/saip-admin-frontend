@@ -585,8 +585,8 @@ function SearchResults() {
                   </div>
                 </div>
                 <AppPagination
-                  PaginationWrapper="col-10 mx-auto"
-                  className="justify-content-center p-0"
+                  PaginationWrapper="col-10"
+                  className="justify-content-center p-0 paginate-ipr"
                   axiosConfig={axiosConfig}
                   defaultPage={Number(searchParams.get('page') || '1')}
                   setResults={setResults}
