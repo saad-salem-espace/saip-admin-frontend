@@ -450,6 +450,12 @@ function SearchResults() {
         (imageName || data)
       )),
   });
+  useEffect(() => {
+    document.body.classList.add('search-result-wrapper');
+    return () => {
+      document.body.classList.remove('search-result-wrapper');
+    };
+  }, []);
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">

@@ -1,4 +1,5 @@
 @import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/mixin";
 @import "~bootstrap/scss/mixins";
 
 .select {
@@ -14,11 +15,19 @@
     height: 60px;
   }
 }
-
+.search-result-wrapper {
+  @include media-breakpoint-up(xl) {
+    overflow-y: hidden;
+  }
+}
 .search-result {
   html[dir="rtl"] & {
     @extend .pe-4;
   }
+  @include scrollbar;
+  height: 80vh;
+  overflow-y: auto;
+  padding-bottom: 150px;
 }
 
 .searchResultsView {
