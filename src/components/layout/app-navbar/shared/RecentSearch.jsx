@@ -12,6 +12,7 @@ function RecentSearch() {
         className="appBtn has-icon btn nav-link mx-auto my-3 my-lg-0 rounded"
         size="lg"
         id="recent-search"
+        disabled
       >
         <RxCounterClockwiseClock className="icon" />
         {t('navbar.recentSearch')}

@@ -15,6 +15,7 @@ import './board.scss';
 
 function Board({
   setSort, assignments, setToggle, setActiveDocument, activeWorkstream, activeDocument,
+  setNotesUpdated,
 }) {
   const { t } = useTranslation('dashboard');
 
@@ -72,6 +73,7 @@ function Board({
             activeWorkstream={activeWorkstream.id}
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
+            setNotesUpdated={setNotesUpdated}
             className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
           />
         )
@@ -90,6 +92,7 @@ function Board({
               activeWorkstream={activeWorkstream.id}
               isCardInprogress={isCardInprogress}
               selectedCardId={selectedCardId}
+              setNotesUpdated={setNotesUpdated}
               className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute top-0 end-0 bottom-0 h-100 bg-white me-0`}
             />
           )
@@ -159,6 +162,7 @@ Board.propTypes = {
   setActiveDocument: PropTypes.func.isRequired,
   activeWorkstream: PropTypes.instanceOf(Object).isRequired,
   activeDocument: PropTypes.string.isRequired,
+  setNotesUpdated: PropTypes.func.isRequired,
 };
 
 export default Board;

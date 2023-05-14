@@ -1,5 +1,6 @@
 import { makeUseAxios } from 'axios-hooks';
 import apiInstance from 'apis/apiInstance';
+import { useAuth } from 'react-oidc-context';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import toastify from '../utils/toastify';
@@ -17,17 +18,9 @@ import toastify from '../utils/toastify';
  * @return {UseAxiosResult<any, any, any>}
  */
 const useAxios = (config, options, customInstance) => {
-  let auth = {};
-  const urlParams = new URLSearchParams(window.location.search);
-  const appType = urlParams?.get('app_type');
-  if (appType === 'user_app') {
-    auth = localStorage.getItem(`oidc.user:${process.env.REACT_APP_KEYCLOAK_AUTHORITY_EXTERNAL}:${process.env.REACT_APP_KEYCLOAK_CLIENT_ID_EXTERNAL}`);
-  } else {
-    auth = localStorage.getItem(`oidc.user:${process.env.REACT_APP_KEYCLOAK_AUTHORITY_INTERNAL}:${process.env.REACT_APP_KEYCLOAK_CLIENT_ID_INTERNAL}`);
-  }
-
-  if (JSON.parse(auth)?.access_token) {
-    apiInstance.defaults.headers.common.Authorization = `Bearer ${JSON.parse(auth).access_token}`;
+  const { user } = useAuth();
+  if (user?.access_token) {
+    apiInstance.defaults.headers.common.Authorization = user ? `Bearer ${user.access_token}` : undefined;
   }
 
   const axios = makeUseAxios({ axios: customInstance ?? apiInstance });
