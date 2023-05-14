@@ -16,9 +16,9 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
-import style from './style.module.scss';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
+import './style.scss';
 
 function WorkstreamSearch() {
   const { t } = useTranslation('search');
@@ -91,7 +91,7 @@ function WorkstreamSearch() {
 
   return (
     <div>
-      <div className={`${style.header}`}>
+      <div className="workstream-header">
         <Container className="px-0 m-auto">
           <Row className="mx-0">
             <Col className="pt-24 pb-8">
@@ -144,6 +144,7 @@ function WorkstreamSearch() {
                     setIsImgUploaded={setIsImgUploaded}
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
+                    className="search-box-index"
                   />
                   {isAdvanced && <SearchQuery
                     workstreamId={selectedWorkStream}

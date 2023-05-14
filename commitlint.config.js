@@ -1,6 +1,12 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
   extends: ['@commitlint/config-conventional'],
-  plugins: ['commitlint-plugin-function-rules'],
+  plugins: ['commitlint-plugin-function-rules',
+    new MiniCssExtractPlugin({
+      ignoreOrder: true,
+    }),
+  ],
   rules: {
     'header-max-length': [2, 'always', 80],
     'subject-empty': [0],

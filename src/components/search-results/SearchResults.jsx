@@ -16,7 +16,7 @@ import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import { pascalCase } from 'change-case';
-import formStyle from 'components/shared/form/form.module.scss';
+import 'components/shared/form/form.scss';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Button from 'react-bootstrap/Button';
 import useAxios from 'hooks/useAxios';
@@ -32,7 +32,9 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
-import { defaultConditions, parseQuery, reformatArrDecoder } from '../../utils/searchQuery';
+import {
+  defaultConditions, parseQuery, reformatArrDecoder, convertQueryStrToArr, convertQueryArrToStr,
+} from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
@@ -64,61 +66,18 @@ function SearchResults() {
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const { addInstanceToDb, getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const auth = useAuth();
-  const [selectedIdentifiers, setSelectedIdentifiers] = useState([]);
+  const { cachedRequests } = useContext(CacheContext);
 
-  const convertQueryStrToArr = (qStr) => {
-    let i = 0;
-    let qObjsIdx = 0;
-    let qObjsPrevIdx = 0;
-    let increment = 1;
-    let qStartIdx = 2;
-    let qLastIdx = -1;
-    const qObjs = [];
-    if (qStr) {
-      const qStrArr = qStr.match(/("[^."]* ")|(\S*)/g).filter((str) => str !== '').filter((str) => str !== '' && str !== '"');
-      while (i < qStrArr.length) {
-        if (selectedIdentifiers.includes(qStrArr[i]) || i === 0) {
-          qObjs[qObjsIdx] = {
-            identifier: qStrArr[i],
-            condition: qStrArr[i + 1],
-          };
-          if (i === 0) {
-            qObjs[qObjsIdx].operator = '';
-          } else {
-            qLastIdx = i - 2;
-            qObjs[qObjsIdx].operator = qStrArr[i - 1];
-          }
-          qObjsIdx += 1;
+  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
 
-          increment = 2;
-        }
-
-        if (i === qStrArr.length - 1) {
-          qLastIdx = qStrArr.length - 1;
-        }
-        if (qLastIdx >= qStartIdx) {
-          qObjs[qObjsPrevIdx].data = qStrArr.slice(qStartIdx, qLastIdx + 1).join(' ');
-          const qObjsLength = qObjs[qObjsPrevIdx].data.length;
-          if (qObjs[qObjsPrevIdx].data.charAt(0) === '"'
-             && qObjs[qObjsPrevIdx].data.charAt(qObjsLength - 1) === '"') {
-            qObjs[qObjsPrevIdx].data = qObjs[qObjsPrevIdx].data.substr(1, qObjsLength - 2);
-          }
-          qObjsPrevIdx += 1;
-          qStartIdx = i + 2;
-        }
-        i += increment;
-        increment = 1;
-      }
-    }
-    return qObjs;
-  };
-
-  const searchResultParams = {
-    workstreamId: searchParams.get('workstreamId'),
-    qArr: convertQueryStrToArr(searchParams.get('q')),
-    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
-    ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
-  };
+  const [searchResultParams] = useState(
+    {
+      workstreamId: searchParams.get('workstreamId'),
+      qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+      ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+      ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
+    },
+  );
 
   const saveQueryParams = {
     workStreamId: searchParams.get('workstreamId'),
@@ -133,7 +92,11 @@ function SearchResults() {
     saveQueryConfig,
     { manual: true },
   );
+  const [searchQuery, setSearchQuery] = useState('');
 
+  const parseAndSetSearchQuery = (qObjsArr) => {
+    setSearchQuery(convertQueryArrToStr(qObjsArr));
+  };
   const onSavedQuerySuccess = () => {
     setIsQuerySaved(true);
     toastify(
@@ -219,7 +182,7 @@ function SearchResults() {
 
   useEffect(() => {
     setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
-  }, []);
+  }, [currentLang]);
 
   useEffect(() => {
     if (saveQueryData.data) {
@@ -244,10 +207,7 @@ function SearchResults() {
     }
   }, [results]);
 
-  const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
-
-  const [searchQuery, setSearchQuery] = useState('');
 
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
@@ -267,7 +227,6 @@ function SearchResults() {
     return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
   };
 
-  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
   };
@@ -286,21 +245,6 @@ function SearchResults() {
   //     value: 'Int. Classification(IPC)',
   //   },
   // ];
-
-  const convertQueryArrToStr = (qObjsArr) => {
-    let qStr = '';
-    const newIdentifiers = [];
-    qObjsArr.forEach((obj) => {
-      newIdentifiers.push(obj.identifier);
-      qStr = `${qStr} ${obj.operator} ${obj.identifier} ${obj.condition} "${obj.data}"`;
-    });
-    setSelectedIdentifiers(newIdentifiers);
-    return qStr.trim();
-  };
-
-  const parseAndSetSearchQuery = (qObjsArr) => {
-    setSearchQuery(convertQueryArrToStr(qObjsArr));
-  };
 
   const onSubmit = (values) => {
     setActiveDocument(null);
@@ -341,26 +285,31 @@ function SearchResults() {
 
   useEffect(() => {
     if (searchIdentifiers) {
-      // const decodedQuery = decodeQuery(searchResultParams.query);
       const searchIdentifiersData = searchIdentifiers.data;
-      // const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
-      const reformattedDecoder = reformatArrDecoder(searchResultParams.qArr, searchIdentifiersData);
+      const reformattedDecoder = reformatArrDecoder(searchResultParams.qArr, searchIdentifiers.data);
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
-        id: 1, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
+        id: 1, data: '', identifier: searchIdentifiersData[0],
+        condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
       }]);
     }
-  }, [searchResultParams.query, searchIdentifiers]);
+  }, [searchIdentifiers]);
 
   useEffect(() => {
     // eslint-disable-next-line
     const regexPattern = new RegExp('true');
     setIsEnabledSynonyms(regexPattern.test(searchParams.get('enableSynonyms')));
-    setSearchQuery(searchResultParams.query);
-    const keywords = parseQuery(searchFields, searchParams.get('imageName'), false);
+  }, [searchParams.get('enableSynonyms')]);
+
+  useEffect(() => {
+    setSearchQuery(convertQueryArrToStr(searchResultParams.qArr));
+  }, [searchResultParams.qArr]);
+
+  useEffect(() => {
+    const keywords = parseQuery(searchFields, searchParams.get('imageName'), false, currentLang);
     if (keywords) {
-      setSearchKeywords(keywords);
+      setSearchKeywords(convertQueryArrToStr(keywords));
     }
-  }, [searchFields, searchParams, searchResultParams.query]);
+  }, [searchFields, searchParams.get('imageName'), currentLang]);
 
   const resetSearch = (workstreamId) => {
     setActiveWorkstream(workstreamId.toString());
@@ -511,7 +460,7 @@ function SearchResults() {
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
-        <Col md={{ span: 10, offset: 1 }} className="mb-8 position-relative">
+        <Col md={10} className="mb-8 position-relative mx-auto">
           <Formik
             innerRef={submitRef}
             enableReinitialize
@@ -589,7 +538,7 @@ function SearchResults() {
             isAdvancedMenuOpen={isAdvancedMenuOpen}
             submitRef={submitRef}
             workstreamId={activeWorkstream}
-            firstIdentifierStr={searchResultParams.identifierStrId}
+            firstIdentifierStr={searchIdentifiers?.data[0].identifierStrId}
             onChangeSearchQuery={parseAndSetSearchQuery}
           />
         </Col>
@@ -621,7 +570,7 @@ function SearchResults() {
                   {
                       searchResultParams.workstreamId === '2' && (
                         <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('trademarks.view')}</span>
+                          <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
                           <Select
                             options={viewOptions}
                             setSelectedOption={onChangeView}
@@ -635,7 +584,7 @@ function SearchResults() {
                       )
                     }
                   <div className="position-relative mb-8 sortBy">
-                    <span className={`ps-2 position-absolute f-12 ${formStyle.label} ${formStyle.select2}`}>{t('sortBy')}</span>
+                    <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
                     <Select
                       options={getSortOptions(searchResultParams.workstreamId)}
                       setSelectedOption={onChangeSortBy}
@@ -655,7 +604,7 @@ function SearchResults() {
                   isFetching={setIsLoading}
                   RenderedComponent={searchResult[searchResultParams.workstreamId]}
                   renderedProps={{
-                    query: searchResultParams.query,
+                    query: convertQueryArrToStr(searchResultParams.qArr),
                     setActiveDocument,
                     activeDocument,
                     selectedView,

@@ -15,7 +15,7 @@ import './notes.scss';
 import toastify from '../../../../utils/toastify';
 
 function Notes({
-  id, disableEditor, disableChangeTab, fireSubmit,
+  id, disableEditor, disableChangeTab, fireSubmit, changeActiveTab, setFireSubmit,
 }) {
   const { t } = useTranslation('notes');
   const [notes, setNotes] = useState([]);
@@ -74,6 +74,8 @@ function Notes({
   useEffect(() => {
     if (saveNotesData.data) {
       if (saveNotesData.data.status === 200) {
+        setFireSubmit(false);
+        changeActiveTab();
         toastify(
           'success',
           <div>
@@ -144,6 +146,8 @@ Notes.propTypes = {
   disableEditor: PropTypes.bool,
   disableChangeTab: PropTypes.func,
   fireSubmit: PropTypes.func.isRequired,
+  changeActiveTab: PropTypes.func.isRequired,
+  setFireSubmit: PropTypes.func.isRequired,
 };
 
 Notes.defaultProps = {

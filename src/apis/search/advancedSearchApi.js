@@ -11,7 +11,7 @@ const advancedSearchApi = ({
     ...(enableSynonyms && { enableSynonyms }),
     page: page || 1,
   },
-  data: JSON.stringify(qArr),
+  data: qArr,
 });
 
 export default advancedSearchApi;
