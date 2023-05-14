@@ -146,8 +146,8 @@ function IprDetails({
   };
 
   const options = {
-    1: trademarkOptions,
-    2: patentOptions,
+    1: patentOptions,
+    2: trademarkOptions,
     3: industrialDesignOptions,
   };
 
