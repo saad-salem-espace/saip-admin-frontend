@@ -86,7 +86,7 @@ function IprSections({
             fireSubmit={fireSubmit}
             id={selectedCardId}
             setFireSubmit={setFireSubmit}
-            changeActiveTab={changeActiveTab}
+            changeActiveTab={showInfo ? changeActiveTab : () => {}}
             setNotesUpdated={setNotesUpdated}
           />
         </div>
