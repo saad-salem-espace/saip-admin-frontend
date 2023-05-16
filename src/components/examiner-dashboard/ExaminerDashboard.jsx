@@ -50,10 +50,10 @@ function ExaminerDashboard() {
     },
   ];
 
-  const [activeWorkstream, setActiveWorkstream] = useState(linksList[0]);
+  const [activeWorkstream, setActiveWorkstream] = useState(null);
   const [sort, setSort] = useState('Queue');
   const [{ data }, executeAssignmentData] = useAxios(getAssigned({
-    workstreamId: activeWorkstream.id,
+    workstreamId: activeWorkstream?.id,
     sortBy: sort,
   }), { manual: true });
   const [workstreamsData, executeWorkstreamData] = useAxios(
@@ -63,9 +63,8 @@ function ExaminerDashboard() {
 
   const [assignments, setAssignments] = useState(null);
   const [toggle, setToggle] = useState(false);
-
   const [activeDocument, setActiveDocument] = useState(null);
-  const [assignedWorkstreams, setAssignedWorkstreams] = useState([]);
+  const [assignedWorkstreams, setAssignedWorkstreams] = useState(null);
   const [notesUpdated, setNotesUpdated] = useState(false);
 
   useEffect(() => {
@@ -75,11 +74,16 @@ function ExaminerDashboard() {
   useEffect(() => {
     if (workstreamsData?.data) {
       setAssignedWorkstreams(workstreamsData.data.data);
+      if (workstreamsData.data.data.length) {
+        setActiveWorkstream(linksList.find(
+          (element) => element.id === workstreamsData.data.data[0],
+        ));
+      }
     }
   }, [workstreamsData]);
 
   useEffect(() => {
-    executeAssignmentData();
+    if (activeWorkstream) executeAssignmentData();
   }, [activeWorkstream, sort]);
 
   useEffect(() => {
@@ -94,7 +98,7 @@ function ExaminerDashboard() {
     }
   }, [data]);
 
-  if (!assignments) return (<div className="d-flex justify-content-center mt-18"><Spinner /></div>);
+  if (!assignedWorkstreams || (assignedWorkstreams && !assignments)) return (<div className="d-flex justify-content-center mt-18"><Spinner /></div>);
 
   const changeWorkstream = (i) => {
     setActiveWorkstream(i);
