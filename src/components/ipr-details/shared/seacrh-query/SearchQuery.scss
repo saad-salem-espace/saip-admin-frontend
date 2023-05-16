@@ -1,0 +1,14 @@
+@import "../../../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.search-query-menu {
+  @extend .p-8;
+  position: absolute;
+  width: 464px;
+  @extend .border;
+  z-index: 999;
+  top: 200px;
+  height: 405px;
+  background-color: $white;
+  overflow-y: auto;
+}

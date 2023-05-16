@@ -2,8 +2,12 @@ import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ShowMore from 'components/shared/show-more/ShowMore';
+import React, {
+  useState,
+} from 'react';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
+import SearchQueryMenu from './shared/seacrh-query/SearchQueryMenu';
 
 const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
   const { t } = useTranslation('search');
@@ -19,6 +23,11 @@ const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
     }
     return grid;
   };
+
+  const [showSearchQuery, setShowSearchQuery] = useState(false);
+  const ShowSearchQueryMenu = () => {
+    setShowSearchQuery(true);
+  };
   return (
     <Row>
       <Col md={getGrid('bibliographic')}>
@@ -28,6 +37,10 @@ const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
           <p className="f-12">
             <HandleEmptyAttribute checkOn={document?.Applicants?.join('; ')} />
           </p>
+          <SearchQueryMenu
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+          />
         </div>
         <div className="d-flex mb-4">
           <p className={`text-primary f-14 ${style.label}`}>{t('inventors')}</p>
