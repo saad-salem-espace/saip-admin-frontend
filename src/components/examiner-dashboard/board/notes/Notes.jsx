@@ -26,6 +26,7 @@ function Notes({
   const [showError, setShowError] = useState(false);
   const [emptyText, setEmptyText] = useState(true);
   const [activeNote, setActiveNote] = useState(null);
+  const [newNoteToggle, setNewNoteToggle] = useState(false);
   const loadMoreItems = () => {
     const config = getNotesApi(id, currentPage, true);
     apiInstance.request(config).then((res) => {
@@ -45,6 +46,7 @@ function Notes({
     if (currentPage === 1) loadMoreItems();
     else setCurrentPage(1);
     if (activeNote) setActiveNote(null);
+    else setNewNoteToggle(!newNoteToggle);
     toastify(
       'success',
       <div>
@@ -135,6 +137,7 @@ function Notes({
                   key={note.id}
                   setNoteContent={setNoteContent}
                   setActiveNote={setActiveNote}
+                  disableEditor={disableEditor}
                 />
               </div>
             ))
@@ -160,6 +163,7 @@ function Notes({
           hideError={hideError}
           activeNote={activeNote}
           setActiveNote={setActiveNote}
+          newNoteToggle={newNoteToggle}
         />
       </div>
     </div>

@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 function NoteTextEditor({
   onSubmit, setNoteText, disableEditor, disableChangeTab, showError, isEmptyText, hideError,
-  activeNote, setActiveNote,
+  activeNote, setActiveNote, newNoteToggle,
 }) {
   const { t } = useTranslation(['notes', 'translation']);
   const auth = useAuth();
@@ -32,6 +32,7 @@ function NoteTextEditor({
         showError={showError}
         hideError={hideError}
         activeNote={activeNote}
+        newNoteToggle={newNoteToggle}
       />
       <div className="d-flex flex-column">
         <Button text={activeNote ? t('update') : t('add')} variant="primary" className="ms-md-4" size="sm" onClick={submitNote ? onSubmit : null} />
@@ -53,6 +54,7 @@ NoteTextEditor.propTypes = {
   isEmptyText: PropTypes.func.isRequired,
   showError: PropTypes.bool.isRequired,
   hideError: PropTypes.func.isRequired,
+  newNoteToggle: PropTypes.bool.isRequired,
   activeNote: PropTypes.instanceOf(Object).isRequired,
   setActiveNote: PropTypes.func.isRequired,
 };

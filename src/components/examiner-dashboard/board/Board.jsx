@@ -116,6 +116,7 @@ function Board({
                   setActiveDocument={setActiveDocument}
                   isInProgress={isInProgress}
                   activeDocument={activeDocument}
+                  SetSelectedCard={SetSelectedCard}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
@@ -136,6 +137,7 @@ function Board({
                   isInProgress={isInProgress}
                   setActiveDocument={setActiveDocument}
                   activeDocument={activeDocument}
+                  SetSelectedCard={SetSelectedCard}
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
@@ -145,6 +147,7 @@ function Board({
                   setActiveDocument={setActiveDocument}
                   isInProgress={isInProgress}
                   activeDocument={activeDocument}
+                  SetSelectedCard={SetSelectedCard}
                 />
               </Row>
             )}
