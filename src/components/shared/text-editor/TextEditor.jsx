@@ -14,6 +14,7 @@ import ErrorMessage from '../error-message/ErrorMessage';
 function TextEditor({
   className, maxLength, setNoteText, disableEditor, disableChangeTab,
   SubmitNote, isEmptyText, showError, hideError, activeNote,
+  newNoteToggle,
 }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [contentState, setContentState] = useState();
@@ -57,7 +58,7 @@ function TextEditor({
       ));
       setContentState('');
     }
-  }, [activeNote]);
+  }, [activeNote, newNoteToggle]);
 
   useEffect(() => {
     setNoteText(contentState);
@@ -108,6 +109,7 @@ TextEditor.propTypes = {
   disableChangeTab: PropTypes.func,
   SubmitNote: PropTypes.func.isRequired,
   isEmptyText: PropTypes.func.isRequired,
+  newNoteToggle: PropTypes.bool.isRequired,
   showError: PropTypes.bool.isRequired,
   hideError: PropTypes.func.isRequired,
   activeNote: PropTypes.instanceOf(Object).isRequired,
