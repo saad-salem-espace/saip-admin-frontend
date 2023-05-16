@@ -4,8 +4,9 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useState, useEffect } from 'react';
 import './textEditor.scss';
 import {
-  EditorState, ContentState, convertFromHTML, convertToRaw,
+  EditorState, ContentState, convertToRaw,
 } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import draftToHtml from 'draftjs-to-html';
 import { useTranslation } from 'react-i18next';
 import { BsExclamationTriangle } from 'react-icons/bs';
@@ -46,11 +47,12 @@ function TextEditor({
 
   useEffect(() => {
     if (activeNote) {
+      const contentBlock = htmlToDraft(activeNote.noteText);
       handleContentStateChange(convertToRaw(
-        ContentState.createFromBlockArray(convertFromHTML(activeNote.noteText)),
+        ContentState.createFromText(activeNote.noteText),
       ));
       handleEditorStateChange(EditorState.createWithContent(
-        ContentState.createFromBlockArray(convertFromHTML(activeNote.noteText)),
+        ContentState.createFromBlockArray(contentBlock.contentBlocks),
       ));
     } else {
       handleEditorStateChange(EditorState.createWithContent(
