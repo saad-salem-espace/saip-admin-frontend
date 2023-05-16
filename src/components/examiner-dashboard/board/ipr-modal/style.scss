@@ -1,0 +1,23 @@
+.full-view {
+  width: 100%;
+}
+
+.ipr-modal {
+  z-index: 9999 !important;
+
+  .modal-dialog {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+
+.modal-backdrop.show {
+  z-index: 9991;
+}
+
+.expand-icon {
+  html[dir="ltr"] &{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1) !important;
+  }
+}

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/styles/common/toast.scss';
 import { useTranslation } from 'react-i18next';
+import FocusArea from 'components/shared/focus-area/FocusArea';
 
 function App() {
   const { i18n } = useTranslation();
@@ -24,6 +25,10 @@ function App() {
     i18n.changeLanguage(lang);
   }, [lang]);
 
+  const [showFocusArea, setShowFocusArea] = useState(true);
+  const hideFocusArea = () => {
+    setShowFocusArea(false);
+  };
   return (
     <ThemeProvider
       lang={lang}
@@ -42,6 +47,11 @@ function App() {
           draggable={false}
           pauseOnHover
         />
+        {
+          showFocusArea && (
+            <FocusArea hideFocusArea={hideFocusArea} filingNumber="C, 13797000" applicationTitle="title 1 title 1 title 3 title 4 title 5 title 6 title 7" />
+          )
+        }
       </div>
     </ThemeProvider>
 

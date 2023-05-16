@@ -1,0 +1,49 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.focus-area {
+  position: absolute;
+  bottom: 140px;
+  z-index: 1;
+  color: $white;
+  width: 353px;
+  border-radius: $border-radius;
+
+  .buttons {
+    border-radius: $border-radius 0 0 $border-radius;
+
+    button {
+      &:active,
+      &:focus {
+        border: none !important;
+        outline: none !important;
+      }
+    }
+  }
+
+  html[dir="ltr"] & {
+    right: 63px;
+  }
+
+  html[dir="rtl"] & {
+    left: 63px;
+  }
+
+  .close-icon,
+  .filing-number {
+    border-radius: 0;
+
+    html[dir="ltr"] & {
+      border-right: $border-width solid $white;
+    }
+
+    html[dir="rtl"] & {
+      border-left: $border-width solid $white;
+    }
+  }
+
+  .text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

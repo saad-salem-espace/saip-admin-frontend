@@ -33,6 +33,8 @@
     "copyrights": "<0>Copyrights</0> Board",
     "industrialDesign": "<0>Industrial Designs</0> Board",
     "plantVarieties": "<0>Plant Varieties</0> Board",
-    "integratedCircuits": "<0>Integrated Circuits</0> Board"
+    "integratedCircuits": "<0>Integrated Circuits</0> Board",
+    "addtoFocus": "Add to focus area",
+    "cannotFocus": "Only one item could be added to focus area."
   }
 }
