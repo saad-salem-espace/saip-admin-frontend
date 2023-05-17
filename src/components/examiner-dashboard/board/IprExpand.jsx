@@ -61,7 +61,7 @@ function IprExpand({
         </Col>
       </div>
       <div className="d-lg-flex">
-        <Col lg={6} className="border-end">
+        <Col lg={6} className="border-end position-relative">
           <IprDetails
             dashboard
             collapseIPR={collapseIPR}

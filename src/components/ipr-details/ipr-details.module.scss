@@ -17,6 +17,11 @@
   height: 80vh;
   overflow-y: auto;
   @include scrollbar;
+
+  ::selection {
+    background: $primary-10;
+    @extend .p-2;
+  }
 }
 
 .img {
@@ -29,13 +34,14 @@
   }
 }
 
-.imgWithZoom{
+.imgWithZoom {
   width: 486px;
   height: 100%;
 }
 
 .headerImg {
   width: 150px;
+
   img {
     width: 150px;
   }

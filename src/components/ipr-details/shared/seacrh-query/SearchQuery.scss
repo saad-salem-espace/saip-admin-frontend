@@ -2,13 +2,25 @@
 @import "~bootstrap/scss/mixins";
 
 .search-query-menu {
-  @extend .p-8;
   position: absolute;
   width: 464px;
   @extend .border;
-  z-index: 999;
-  top: 200px;
-  height: 405px;
+  z-index: 9999999 !important;
+  top: 165px;
+  height: 448px;
   background-color: $white;
   overflow-y: auto;
+
+  html[dir="rtl"] & {
+    left: 0;
+  }
+
+  html[dir="ltr"] & {
+    right: 0px;
+  }
+
+  @include media-breakpoint-down(md) {
+    width: 318px;
+    top: 300px;
+  }
 }

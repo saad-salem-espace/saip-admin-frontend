@@ -5,9 +5,13 @@ import ShowMore from 'components/shared/show-more/ShowMore';
 import React, {
   useState,
 } from 'react';
+import Image from 'react-bootstrap/Image';
+import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
+import Button from 'react-bootstrap/Button';
 import style from './ipr-details.module.scss';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import SearchQueryMenu from './shared/seacrh-query/SearchQueryMenu';
+import addIcon from '../../assets/images/icons/add.svg';
 
 const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
   const { t } = useTranslation('search');
@@ -24,23 +28,46 @@ const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
     return grid;
   };
 
+  console.log('isIPRExpanded', isIPRExpanded);
+
   const [showSearchQuery, setShowSearchQuery] = useState(false);
   const ShowSearchQueryMenu = () => {
     setShowSearchQuery(true);
+  };
+  const hideSearchQueryMenu = () => {
+    setShowSearchQuery(false);
   };
   return (
     <Row>
       <Col md={getGrid('bibliographic')}>
         <h6 className="mt-8 mb-4">{t('register')}</h6>
-        <div className="d-flex">
+        <div className="d-flex align-items-center">
           <p className={`text-primary f-14 ${style.label}`}>{t('applicants')}</p>
           <p className="f-12">
             <HandleEmptyAttribute checkOn={document?.Applicants?.join('; ')} />
           </p>
           <SearchQueryMenu
             showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
-          />
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            className="mb-4 ms-2"
+          >
+            <AppTooltip
+              className="w-auto"
+              placement="top"
+              tooltipContent="Add to keyword planner"
+              tooltipTrigger={
+                <div>
+                  <Button
+                    variant="primary"
+                    className="px-2 py-1"
+                    onClick={() => ShowSearchQueryMenu()}
+                  >
+                    <Image src={addIcon} />
+                  </Button>
+                </div>
+              }
+            />
+          </SearchQueryMenu>
         </div>
         <div className="d-flex mb-4">
           <p className={`text-primary f-14 ${style.label}`}>{t('inventors')}</p>

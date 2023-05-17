@@ -1,19 +1,20 @@
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import './SearchQuery.scss';
-import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Button from 'react-bootstrap/Button';
 import React, {
   useRef,
 } from 'react';
-import Image from 'react-bootstrap/Image';
 import {
   useSearchParams,
 } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import PropTypes from 'prop-types';
-import addIcon from '../../../../assets/images/icons/add.svg';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function SearchQueryMenu({ ShowSearchQueryMenu, showSearchQuery }) {
+function SearchQueryMenu({
+  showSearchQuery, hideSearchQueryMenu, className, children,
+}) {
   const [searchParams] = useSearchParams();
 
   const searchResultParams = {
@@ -27,23 +28,8 @@ function SearchQueryMenu({ ShowSearchQueryMenu, showSearchQuery }) {
 
   };
   return (
-    <div className="search-query-wrapper">
-      <AppTooltip
-        className="w-auto"
-        placement="top"
-        tooltipContent="Add to keyword planner"
-        tooltipTrigger={
-          <div>
-            <Button
-              variant="primary"
-              className="px-2 py-1"
-              onClick={() => ShowSearchQueryMenu(true)}
-            >
-              <Image src={addIcon} />
-            </Button>
-          </div>
-        }
-      />
+    <div className={`search-query-wrapper ${className}`}>
+      {children}
       {
         showSearchQuery && (
           <Formik
@@ -56,20 +42,29 @@ function SearchQueryMenu({ ShowSearchQueryMenu, showSearchQuery }) {
             {({
               handleSubmit,
             }) => (
-              <Form className="search-query-menu shadow" onSubmit={handleSubmit}>
-                <SearchQuery
-                  workstreamId="1"
-                  firstIdentifierStr={searchResultParams.identifierStrId}
-                  defaultInitializers={[{
-                    id: 1,
-                    data: '',
-                    identifier: '',
-                    condition: '',
-                    operator: '',
-                  }]}
-                  submitRef={submitRef}
-                  isAdvancedMenuOpen
-                />
+              <Form className="search-query-menu shadow rounded" onSubmit={handleSubmit}>
+                <div className="p-8">
+                  <Button
+                    onClick={() => hideSearchQueryMenu()}
+                    variant="transparent"
+                    className="text-end w-100 px-0 pb-4 pt-0 border-0"
+                  >
+                    <FontAwesomeIcon icon={faTimes} className="fs-base text-dark" />
+                  </Button>
+                  <SearchQuery
+                    workstreamId="1"
+                    firstIdentifierStr={searchResultParams.identifierStrId}
+                    defaultInitializers={[{
+                      id: 1,
+                      data: '',
+                      identifier: '',
+                      condition: '',
+                      operator: '',
+                    }]}
+                    submitRef={submitRef}
+                    isAdvancedMenuOpen
+                  />
+                </div>
               </Form>
             )}
           </Formik>
@@ -80,8 +75,14 @@ function SearchQueryMenu({ ShowSearchQueryMenu, showSearchQuery }) {
 }
 
 SearchQueryMenu.propTypes = {
-  ShowSearchQueryMenu: PropTypes.func.isRequired,
   showSearchQuery: PropTypes.bool.isRequired,
+  hideSearchQueryMenu: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
+
+SearchQueryMenu.defaultProps = {
+  className: '',
 };
 
 export default SearchQueryMenu;
