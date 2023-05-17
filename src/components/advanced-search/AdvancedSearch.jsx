@@ -51,15 +51,19 @@ function AdvancedSearch({
   };
 
   return (
-    <div className={`px-6 h-100 position-relative ${AdvancedSearchStyle.menu}`}>
-      <Button
-        variant="primary-dark"
-        onClick={toggleAdvancedSearchMenu}
-        className={`${isAdvancedMenuOpen ? ' ' : AdvancedSearchStyle.closed} ${AdvancedSearchStyle.collapseIcon} p-2 d-flex`}
-        text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="text-white f-16" />}
-      />
-      <div className={`${isAdvancedMenuOpen ? 'd-block' : 'd-none'}`}>
-        <h5 className="pb-6 pt-9">{t('advancedSearch')}</h5>
+    <div className={`px-0 h-100 position-relative ${AdvancedSearchStyle.menu}`}>
+      <div className="">
+        <Button
+          variant="primary-dark"
+          onClick={toggleAdvancedSearchMenu}
+          className={`${isAdvancedMenuOpen ? ' ' : AdvancedSearchStyle.closed} ${AdvancedSearchStyle.collapseIcon} p-2 d-flex`}
+          text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="text-white f-16" />}
+        />
+        <div className={`${isAdvancedMenuOpen ? 'd-block' : 'd-none'}`}>
+          <h5 className="pb-6 pt-9 ms-3">{t('advancedSearch')}</h5>
+        </div>
+      </div>
+      <div className={`${isAdvancedMenuOpen ? 'd-block' : 'd-none'} fixed-panel-scrolled px-3`}>
         <Tabs
           tabsItems={tabsItems}
           activeKey={activeTabId}

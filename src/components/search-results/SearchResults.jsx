@@ -541,7 +541,7 @@ function SearchResults() {
             onChangeSearchQuery={setSearchQuery}
           />
         </Col>
-        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <div className="d-lg-flex align-items-center">
             <AppTooltip
               tooltipTrigger={
