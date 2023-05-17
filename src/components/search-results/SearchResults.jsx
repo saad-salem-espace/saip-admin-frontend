@@ -15,7 +15,6 @@ import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
-import { pascalCase } from 'change-case';
 import 'components/shared/form/form.scss';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Button from 'react-bootstrap/Button';
@@ -309,7 +308,7 @@ function SearchResults() {
     }]);
   };
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
   }
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
     label: workstreamName(workstream),

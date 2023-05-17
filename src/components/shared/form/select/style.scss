@@ -56,6 +56,7 @@ div[class$="singleValue"] {
 .css-2jkpo2-option {
   color: $white !important;
   background-color: $primary !important;
+  text-transform: capitalize;
 }
 
 ////// small select
@@ -113,6 +114,8 @@ div[class$="singleValue"] {
 
 ////// customSelect
 .customSelect {
+  text-transform: capitalize;
+
   div[class$="ValueContainer"] {
     font-family: $font-medium;
     height: auto;
