@@ -20,15 +20,6 @@
     overflow-y: hidden;
   }
 }
-.search-result {
-  html[dir="rtl"] & {
-    @extend .pe-4;
-  }
-  @include scrollbar;
-  height: 80vh;
-  overflow-y: auto;
-  padding-bottom: 150px;
-}
 
 .searchResultsView {
   position: absolute;

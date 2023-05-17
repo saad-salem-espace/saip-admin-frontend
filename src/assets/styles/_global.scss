@@ -1,3 +1,6 @@
+@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/mixin";
+
 $fontSize: (
   8,
   12,
@@ -44,4 +47,18 @@ $fontSize: (
 .container-fluid {
   padding-left: 15px !important;
   padding-right: 15px !important;
+}
+
+.workStreamResults {
+  .fixed-panel-scrolled.search-result {
+    html[dir="rtl"] & {
+      @extend .pe-4;
+    }
+  }
+  .fixed-panel-scrolled {
+    @include scrollbar;
+    height: 80vh;
+    overflow-y: auto;
+    padding-bottom: 150px;
+  }
 }
