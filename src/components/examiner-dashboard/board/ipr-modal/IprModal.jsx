@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import React, { useState } from 'react';
-import { Button as BootstrapButton, Col } from 'react-bootstrap';
-import IprSections from 'components/ipr-details/ipr-sections/IprSections';
-import IprDetails from 'components/ipr-details/IprDetails';
+import { Button as BootstrapButton } from 'react-bootstrap';
 import './style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
+import IprExpand from '../IprExpand';
 
 const IprModal = ({
   documentId,
@@ -14,6 +13,11 @@ const IprModal = ({
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const assignment = {
+    queuePriorityDate: '20-1',
+    earliestPriorityDate: '5-20',
+  };
   return (
     <>
       <BootstrapButton
@@ -26,29 +30,20 @@ const IprModal = ({
       <Modal show={show} onHide={handleClose} centered size="xl" className="full-view ipr-modal">
         <Modal.Header closeButton />
         <Modal.Body>
-          <div className="d-lg-flex">
-            <Col lg={6} className="border-end">
-              <IprDetails
-                dashboard
-                collapseIPR={false}
-                isIPRExpanded
-                documentId={documentId}
-                activeWorkstream={1}
-                showActions={false}
-                isCardInprogress
-                // selectedCardId="1"
-                className="mx-0"
-              />
-            </Col>
-            <Col lg={6}>
-              <IprSections
-                showInfo={false}
-                className="expand-view"
-                isCardInprogress
-                // selectedCardId="1"
-              />
-            </Col>
-          </div>
+          <IprExpand
+            assignment={assignment}
+            collapseIPR={false}
+            documentId={documentId}
+            isIPRExpanded
+            // onClose={handleCloseIprDetail}
+            activeTab={2}
+            activeWorkstream={1}
+            isCardInprogress
+            selectedCardId="1"
+            setNotesUpdated
+            className={`${true ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
+            focusMode
+          />
         </Modal.Body>
       </Modal>
     </>

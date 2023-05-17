@@ -20,10 +20,11 @@ function IprExpand({
   isCardInprogress,
   selectedCardId,
   setNotesUpdated,
+  focusMode,
 }) {
   const { t } = useTranslation('dashboard');
   return (
-    <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
+    <div className={`${className} ${focusMode ? '' : 'position-absolute'}dashboard-ipr-container expanded  end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
       <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
         <Col lg={6} className="filing-date d-lg-flex justify-content-between p-4 order-2 order-lg-1">
           <div className="d-lg-flex align-items-center text-gray-700">
@@ -100,12 +101,14 @@ IprExpand.propTypes = {
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
+  focusMode: PropTypes.bool,
 };
 
 IprExpand.defaultProps = {
   className: null,
   onClose: () => { },
   setNotesUpdated: () => { },
+  focusMode: false,
 };
 
 export default IprExpand;
