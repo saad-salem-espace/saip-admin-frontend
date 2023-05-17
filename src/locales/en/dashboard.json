@@ -13,6 +13,7 @@
   "notes": "Notes",
   "translateInfo": "Translate",
   "markAsDone": "Mark as Done",
+  "savedQueries":"Saved Queries",
   "status": {
     "toDo": "To Do",
     "done": "Done",

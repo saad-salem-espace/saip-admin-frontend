@@ -175,5 +175,7 @@
   "couldnotSave": "Couldn't save the query.",
   "failerMsg": "Something went wrong! Please try again later.",
   "findSimilar": "Find Similar",
-  "download": "Download"
+  "download": "Download",
+  "addtoSavedQueries":"Add to my saved queries",
+  "addtoFocusArea":"Add to card in focus area"
 }

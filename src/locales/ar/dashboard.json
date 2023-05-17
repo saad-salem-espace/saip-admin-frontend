@@ -13,6 +13,7 @@
   "notes": "ملاحظات",
   "translateInfo": "ترجمة",
   "markAsDone": "تم إنجازه",
+  "savedQueries":"الاستعلامات المحفوظه",
   "status": {
     "toDo": "قائمة الأعمال",
     "done": "منجز",

@@ -4,6 +4,7 @@ import Tabs from 'components/shared/tabs/Tabs';
 import React, { useState, useEffect } from 'react';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import Notes from 'components/examiner-dashboard/board/notes/Notes';
+import SavedQueriesTable from 'components/saved-queries/SavedQueriesTable';
 import IprData from '../IprData';
 
 function IprSections({
@@ -52,6 +53,21 @@ function IprSections({
     setActiveTabId(selectedTab);
     setHasUnsavedNotes(false);
   };
+  const savedQueriesCount = 8;
+  const savedQueriesTable = [
+    {
+      id: 1,
+      queryString: 'query 1',
+      createdAt: '70-20-2023',
+      resultCount: 40,
+    },
+    {
+      id: 2,
+      queryString: 'query 22',
+      createdAt: '70-20-2023',
+      resultCount: 40,
+    },
+  ];
 
   const tabsItems = [
     {
@@ -90,6 +106,18 @@ function IprSections({
             setNotesUpdated={setNotesUpdated}
           />
         </div>
+      ),
+    },
+    {
+      id: 3,
+      title: (
+        <div className="d-flex align-items-center" translate="no">
+          {t('dashboard:savedQueries')}
+          <span>{savedQueriesCount}</span>
+        </div>
+      ),
+      content: (
+        <SavedQueriesTable data={savedQueriesTable} />
       ),
     },
   ];

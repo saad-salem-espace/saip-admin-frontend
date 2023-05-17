@@ -65,6 +65,8 @@ function SearchResults() {
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const { addInstanceToDb, getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const auth = useAuth();
+  const [selectedSaveQueryOption, setSelectedSaveQueryOption] = useState();
+  const [showSaveQueryMenu, setShowSaveQueryMenu] = useState(false);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -414,23 +416,23 @@ function SearchResults() {
     setSortBy(sortCriteria);
   };
 
-  const saveQuery = () => {
-    if (isQuerySaved) return;
-    if (!(auth && auth?.user)) {
-      addInstanceToDb({
-        data: {
-          workstreamId: searchParams.get('workstreamId'),
-          queryString: searchParams.get('q'),
-          resultCount: totalResults.toString(),
-          synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
-        },
-        onSuccess: onSavedQuerySuccess,
-        onError: onSavedQueryError,
-      });
-    } else {
-      executeSaveQuery();
-    }
-  };
+  // const saveQuery = () => {
+  //   if (isQuerySaved) return;
+  //   if (!(auth && auth?.user)) {
+  //     addInstanceToDb({
+  //       data: {
+  //         workstreamId: searchParams.get('workstreamId'),
+  //         queryString: searchParams.get('q'),
+  //         resultCount: totalResults.toString(),
+  //         synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
+  //       },
+  //       onSuccess: onSavedQuerySuccess,
+  //       onError: onSavedQueryError,
+  //     });
+  //   } else {
+  //     executeSaveQuery();
+  //   }
+  // };
 
   const axiosConfig = advancedSearchApi(searchResultParams);
 
@@ -532,9 +534,11 @@ function SearchResults() {
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <div className="d-lg-flex align-items-center">
-            <AppTooltip
+            {/* <AppTooltip
               tooltipTrigger={
-                <Button variant="transparent" className="p-0 me-4 border-0" onClick={saveQuery} data-testid="fav-button" disabled={isLoading}>
+                <Button variant="transparent"
+                 className="p-0 me-4 border-0" onClick={saveQuery}
+                 data-testid="fav-button" disabled={isLoading}>
                   {
                         isQuerySaved && !isLoading
                           ? <span className="icon-filled-star f-24" data-testid="filled-star" />
@@ -543,7 +547,30 @@ function SearchResults() {
                 </Button>
                   }
               tooltipContent={t('saveSearchQuery')}
-            />
+            /> */}
+            {selectedSaveQueryOption}
+            <Button
+              className="position-relative save-query-menu"
+              onClick={() => setShowSaveQueryMenu(!showSaveQueryMenu)}
+            >
+              <span className="icon-star f-24" />
+              {
+                showSaveQueryMenu && (
+                  <div className="position-absolute save-query-options">
+                    <Button
+                      onClick={() => setSelectedSaveQueryOption('myList')}
+                    >
+                      {t('addtoSavedQueries')}
+                    </Button>
+                    <Button
+                      onClick={() => setSelectedSaveQueryOption('focusArea')}
+                    >
+                      {t('addtoFocusArea')}
+                    </Button>
+                  </div>
+                )
+              }
+            </Button>
             <div>
               <SearchNote
                 searchKeywords={searchKeywords}
@@ -556,21 +583,21 @@ function SearchResults() {
               <Form className="mt-5">
                 <div className="d-md-flex">
                   {
-                      searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
-                          <Select
-                            options={viewOptions}
-                            setSelectedOption={onChangeView}
-                            selectedOption={selectedView}
-                            defaultValue={selectedView}
-                            id="viewSection"
-                            fieldName="viewSection"
-                            className="mb-md-0 mb-3 select-2"
-                          />
-                        </div>
-                      )
-                    }
+                    searchResultParams.workstreamId === '2' && (
+                      <div className="position-relative mb-6 viewSelect me-md-6">
+                        <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
+                        <Select
+                          options={viewOptions}
+                          setSelectedOption={onChangeView}
+                          selectedOption={selectedView}
+                          defaultValue={selectedView}
+                          id="viewSection"
+                          fieldName="viewSection"
+                          className="mb-md-0 mb-3 select-2"
+                        />
+                      </div>
+                    )
+                  }
                   <div className="position-relative mb-8 sortBy">
                     <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
                     <Select
