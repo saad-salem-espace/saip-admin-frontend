@@ -52,7 +52,7 @@ function AdvancedSearch({
 
   return (
     <div className={`px-0 h-100 position-relative ${AdvancedSearchStyle.menu}`}>
-      <div className="">
+      <div>
         <Button
           variant="primary-dark"
           onClick={toggleAdvancedSearchMenu}
