@@ -28,8 +28,6 @@ const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
     return grid;
   };
 
-  console.log('isIPRExpanded', isIPRExpanded);
-
   const [showSearchQuery, setShowSearchQuery] = useState(false);
   const ShowSearchQueryMenu = () => {
     setShowSearchQuery(true);

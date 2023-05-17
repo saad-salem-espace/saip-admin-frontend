@@ -4,6 +4,7 @@ import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronLeft,
   faChevronRight,
+  faChevronDown, faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FaSearch } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
@@ -18,6 +19,7 @@ import Button from 'components/shared/button/Button';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
+import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -26,6 +28,8 @@ import PatentViews from './patent/PatentViews';
 import TrademarkViews from './trademarks/TrademarkViews';
 import patentIprOptions from './patent/PatentIprOptions';
 import trademarkIprOptions from './trademarks/TrademarkIprOptions';
+import SearchQueryMenu from './shared/seacrh-query/SearchQueryMenu';
+import addIcon from '../../assets/images/icons/coloredAdd.svg';
 
 function IprDetails({
   collapseIPR,
@@ -63,6 +67,8 @@ function IprDetails({
     { manual: true },
   );
 
+  const [showSearchQuery, setShowSearchQuery] = useState(false);
+
   useEffect(() => {
     setDocument(null);
     if (documentId) {
@@ -97,7 +103,7 @@ function IprDetails({
         });
       };
     }
-    return () => {};
+    return () => { };
   }, [document]);
 
   if (!document) {
@@ -141,8 +147,8 @@ function IprDetails({
       if (
         document[selectedView.value]
         || ((selectedView.value === 'Description'
-        || selectedView.value === 'Mark')
-        && document.BibliographicData[selectedView.value])
+          || selectedView.value === 'Mark')
+          && document.BibliographicData[selectedView.value])
       ) {
         content = views[searchResultParams.workstreamId];
       }
@@ -154,6 +160,14 @@ function IprDetails({
     }
     return content;
   };
+
+  const ToggleSearchQueryMenu = () => {
+    setShowSearchQuery(!showSearchQuery);
+  };
+  const hideSearchQueryMenu = () => {
+    setShowSearchQuery(false);
+  };
+
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
       <div className="border-bottom bg-primary-01">
@@ -167,44 +181,44 @@ function IprDetails({
           </div>
           <div className="d-flex">
             {
-            !dashboard && (
-              <div dir="ltr" className="border-end me-4">
-                <Button
-                  variant="link"
-                  className="p-0 pe-5"
-                  text={
-                    <FontAwesomeIcon
-                      icon={faChevronLeft}
-                      className="md-text text-gray"
-                    />
-              }
-                  disabled={!previousDocument}
-                  onClick={() => setActiveDocument(previousDocument)}
-                />
-                <Button
-                  variant="link"
-                  className="p-0 pe-5 "
-                  text={
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      className="md-text text-gray"
-                    />
-              }
-                  disabled={!nextDocument}
-                  onClick={() => setActiveDocument(nextDocument)}
-                />
-              </div>)
-              }
+              !dashboard && (
+                <div dir="ltr" className="border-end me-4">
+                  <Button
+                    variant="link"
+                    className="p-0 pe-5"
+                    text={
+                      <FontAwesomeIcon
+                        icon={faChevronLeft}
+                        className="md-text text-gray"
+                      />
+                    }
+                    disabled={!previousDocument}
+                    onClick={() => setActiveDocument(previousDocument)}
+                  />
+                  <Button
+                    variant="link"
+                    className="p-0 pe-5 "
+                    text={
+                      <FontAwesomeIcon
+                        icon={faChevronRight}
+                        className="md-text text-gray"
+                      />
+                    }
+                    disabled={!nextDocument}
+                    onClick={() => setActiveDocument(nextDocument)}
+                  />
+                </div>)
+            }
             {
-                showActions
-            && <IprControlAction
-              collapseIPR={collapseIPR}
-              isIPRExpanded={
-                    isIPRExpanded
-                      }
-              onClose={onClose}
-            />
-}
+              showActions
+              && <IprControlAction
+                collapseIPR={collapseIPR}
+                isIPRExpanded={
+                  isIPRExpanded
+                }
+                onClose={onClose}
+              />
+            }
           </div>
         </div>
         {searchResultParams.workstreamId === '2' && (
@@ -269,33 +283,62 @@ function IprDetails({
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <div id="google_translate_element" className="d-inline-block" />
+          <SearchQueryMenu
+            showSearchQuery={showSearchQuery}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            className="mb-4 ms-2"
+          >
+            <AppTooltip
+              className="w-auto"
+              placement="top"
+              tooltipContent="Add to keyword planner"
+              tooltipTrigger={
+                <div>
+                  <Button
+                    variant="link"
+                    className="text-primary-dark font-regular fs-sm text-decoration-none"
+                    onClick={() => ToggleSearchQueryMenu()}
+                    text={
+                      <>
+                        <Image src={addIcon} />
+                        <span className="px-2">
+                          {t('dashboard:board.keywordplanner')}
+                        </span>
+                        <FontAwesomeIcon icon={showSearchQuery ? faChevronUp : faChevronDown} />
+                      </>
+}
+                  />
+                </div>
+              }
+            />
+          </SearchQueryMenu>
         </div>
       </div>
       {
-      dashboard && showActions ? (
-        <IprSections
-          options={
-                    searchResultParams.workstreamId === '2'
-                      ? trademarkOptions
-                      : patentOptions
-                  }
-          onChangeSelect={onChangeSelect}
-          selectedView={selectedView}
-          renderSelectedView={renderSelectedView}
-          documentId={documentId}
-          activeTab={activeTab}
-          isCardInprogress={isCardInprogress}
-          selectedCardId={selectedCardId}
-          setNotesUpdated={setNotesUpdated}
-          className="notes-editor-container"
-        />
-      ) : (
-        <IprData
-          options={searchResultParams.workstreamId === '2' ? trademarkOptions : patentOptions}
-          onChangeSelect={onChangeSelect}
-          selectedView={selectedView}
-          renderSelectedView={renderSelectedView}
-        />)
+        dashboard && showActions ? (
+          <IprSections
+            options={
+              searchResultParams.workstreamId === '2'
+                ? trademarkOptions
+                : patentOptions
+            }
+            onChangeSelect={onChangeSelect}
+            selectedView={selectedView}
+            renderSelectedView={renderSelectedView}
+            documentId={documentId}
+            activeTab={activeTab}
+            isCardInprogress={isCardInprogress}
+            selectedCardId={selectedCardId}
+            setNotesUpdated={setNotesUpdated}
+            className="notes-editor-container"
+          />
+        ) : (
+          <IprData
+            options={searchResultParams.workstreamId === '2' ? trademarkOptions : patentOptions}
+            onChangeSelect={onChangeSelect}
+            selectedView={selectedView}
+            renderSelectedView={renderSelectedView}
+          />)
       }
     </div>
   );
@@ -323,10 +366,10 @@ IprDetails.defaultProps = {
   documentId: null,
   className: null,
   activeWorkstream: null,
-  onClose: () => {},
-  getNextDocument: () => {},
-  getPreviousDocument: () => {},
-  setActiveDocument: () => {},
+  onClose: () => { },
+  getNextDocument: () => { },
+  getPreviousDocument: () => { },
+  setActiveDocument: () => { },
   dashboard: false,
   showActions: true,
   activeTab: 2,
