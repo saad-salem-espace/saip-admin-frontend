@@ -5,6 +5,9 @@ import React, { useState, useEffect } from 'react';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import Notes from 'components/examiner-dashboard/board/notes/Notes';
 import SavedQueriesTable from 'components/saved-queries/SavedQueriesTable';
+import AppPagination from 'components/shared/app-pagination/AppPagination';
+import NoData from 'components/shared/empty-states/NoData';
+import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
 import IprData from '../IprData';
 
 function IprSections({
@@ -54,21 +57,12 @@ function IprSections({
     setHasUnsavedNotes(false);
   };
   const savedQueriesCount = 8;
-  const savedQueriesTable = [
-    {
-      id: 1,
-      queryString: 'query 1',
-      createdAt: '70-20-2023',
-      resultCount: 40,
-    },
-    {
-      id: 2,
-      queryString: 'query 22',
-      createdAt: '70-20-2023',
-      resultCount: 40,
-    },
-  ];
 
+  const axiosConfig = getSavedQueryApi(1, '1', true);
+
+  const savedQueries = (
+    SavedQueriesTable
+  );
   const tabsItems = [
     {
       id: 1,
@@ -113,11 +107,18 @@ function IprSections({
       title: (
         <div className="d-flex align-items-center" translate="no">
           {t('dashboard:savedQueries')}
-          <span>{savedQueriesCount}</span>
+          <span className="ps-1 queries-count">{savedQueriesCount}</span>
         </div>
       ),
       content: (
-        <SavedQueriesTable data={savedQueriesTable} />
+        <AppPagination
+          className="mt-8"
+          axiosConfig={axiosConfig}
+          defaultPage={1}
+          RenderedComponent={savedQueries}
+          emptyState={<NoData />}
+          // resetPage={pageReset}
+        />
       ),
     },
   ];

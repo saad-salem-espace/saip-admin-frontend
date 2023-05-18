@@ -12,21 +12,26 @@ function IprControlAction({
   collapseIPR,
   onClose,
   isIPRExpanded,
+  focusMode,
 }) {
   return (
     <>
-      <Button
-        variant="link"
-        onClick={collapseIPR}
-        className="p-0 pe-5 d-md-inline-block d-none"
-        data-testid="expand-ipr-detail-button"
-        text={<FontAwesomeIcon icon={isIPRExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`f-17 text-gray ${style['expand-icon']}`} />}
-      />
+      {
+      !focusMode && (
+        <Button
+          variant="link"
+          onClick={collapseIPR}
+          className="p-0 pe-5 d-md-inline-block d-none"
+          data-testid="expand-ipr-detail-button"
+          text={<FontAwesomeIcon icon={isIPRExpanded ? faDownLeftAndUpRightToCenter : faUpRightAndDownLeftFromCenter} className={`f-17 text-gray ${style['expand-icon']}`} />}
+        />
+      )
+    }
       <Button
         variant="link"
         data-testid="close-ipr-detail-button"
         onClick={onClose}
-        className="p-0 border-start ps-5"
+        className={`p-0 ps-5 ${focusMode ? '' : 'border-start'}`}
         text={<FontAwesomeIcon icon={faTimes} className="f-20 text-gray" />}
       />
     </>
@@ -37,10 +42,12 @@ IprControlAction.propTypes = {
   collapseIPR: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   isIPRExpanded: PropTypes.bool.isRequired,
+  focusMode: PropTypes.bool,
 };
 
 IprControlAction.defaultProps = {
   onClose: () => { },
+  focusMode: false,
 };
 
 export default IprControlAction;

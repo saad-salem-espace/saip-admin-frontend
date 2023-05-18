@@ -58,6 +58,7 @@ function IprExpand({
             collapseIPR={collapseIPR}
             isIPRExpanded={isIPRExpanded}
             onClose={onClose}
+            focusMode
           />
         </Col>
       </div>

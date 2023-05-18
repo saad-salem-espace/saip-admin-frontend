@@ -28,8 +28,7 @@ const IprModal = ({
         <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} className="me-2" />
       </BootstrapButton>
       <Modal show={show} onHide={handleClose} centered size="xl" className="full-view ipr-modal">
-        <Modal.Header closeButton />
-        <Modal.Body>
+        <Modal.Body className="px-0">
           <IprExpand
             assignment={assignment}
             collapseIPR={false}
@@ -41,7 +40,7 @@ const IprModal = ({
             isCardInprogress
             selectedCardId="1"
             setNotesUpdated
-            className={`${true ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
+            className={`${true ? 'col-lg-12' : 'col-lg-4 col-12 border-start'}`}
             focusMode
           />
         </Modal.Body>

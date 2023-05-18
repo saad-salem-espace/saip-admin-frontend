@@ -1,3 +1,6 @@
+@import "../../../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
 .full-view {
   width: 100%;
 }
@@ -9,6 +12,14 @@
     margin-right: 10px;
     margin-left: 10px;
   }
+
+  @include media-breakpoint-down(lg) {
+
+    .modal-content,
+    .modal-body {
+      width: 98vw;
+    }
+  }
 }
 
 .modal-backdrop.show {
@@ -16,7 +27,7 @@
 }
 
 .expand-icon {
-  html[dir="ltr"] &{
+  html[dir="ltr"] & {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1) !important;
   }
