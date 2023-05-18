@@ -24,3 +24,10 @@
     top: 300px;
   }
 }
+
+.search-query-wrapper  {
+  display: none;
+}
+.added .search-query-wrapper  {
+  display: block;
+}
