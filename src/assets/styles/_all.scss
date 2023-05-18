@@ -297,6 +297,7 @@
     .imageView {
       width: 50px;
       height: 45px;
+      
     }
     .image-item {
       top: 140px;
@@ -327,7 +328,13 @@
 }
 
 .workStreamView {
+  &.imgUploaded {
+    .image-item {
+      @extend .d-block;
+    }
+  }
   .image-item {
+    @extend .d-none;
     top: 91px;
     html[dir="ltr"] & {
       left: 17px;
