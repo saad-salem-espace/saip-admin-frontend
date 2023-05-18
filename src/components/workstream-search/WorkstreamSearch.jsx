@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex, defaultConditions } from 'utils/searchQuery';
+import ViewTip from 'components/shared/view-tip/ViewTip';
 import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -126,12 +127,28 @@ function WorkstreamSearch() {
                 handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
-                  <ToggleButton
-                    handleToggleButton={() => toggleState(isAdvanced)}
-                    isToggleButtonOn={isAdvanced}
-                    text={t('advancedSearch')}
-                    className="d-block text-primary mb-2 text-end"
-                  />
+                  <div className="d-flex justify-content-end align-items-center mb-2">
+                    <ToggleButton
+                      handleToggleButton={() => toggleState(isAdvanced)}
+                      isToggleButtonOn={isAdvanced}
+                      text={t('advancedSearch')}
+                      className="d-block text-primary text-end"
+                    />
+                    <ViewTip
+                      Title={
+                        <Trans
+                          i18nKey="advancedSearchTipTitle"
+                          ns="tips"
+                        />
+                      }
+                      id="advancedSearchTip"
+                    >
+                      <Trans
+                        i18nKey="advancedSearchTipContent"
+                        ns="tips"
+                      />
+                    </ViewTip>
+                  </div>
                   <SharedSearch
                     isAdvanced={isAdvanced}
                     setFieldValue={setFieldValue}

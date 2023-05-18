@@ -3,5 +3,6 @@
     "singleValueMessage": "Only the first date will be considered in the search query"
   },
   "ago": "Ago",
-  "days": "Days"
+  "days": "Days",
+  "gotIt": "Got it!"
 }
