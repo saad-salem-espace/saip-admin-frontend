@@ -46,13 +46,13 @@ const BibliographicDataSection = (
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.filingNumber')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('ipr.filingNumber')}</p>
             <p className="f-12">
               <HandleEmptyAttribute checkOn={BibliographicData.FilingNumber} />
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.filingDate')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('ipr.filingDate')}</p>
             <p className="f-12">
               <HandleEmptyAttribute checkOn={BibliographicData.FilingDate} />
             </p>
@@ -70,25 +70,25 @@ const BibliographicDataSection = (
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.registrationNumber')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('ipr.registrationNumber')}</p>
             <p className="f-12">
               <HandleEmptyAttribute checkOn={BibliographicData.RegistrationNumber} />
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.registrationDate')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('ipr.registrationDate')}</p>
             <p className="f-12">
               <HandleEmptyAttribute checkOn={BibliographicData.RegistrationDate} />
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.publicationNumber')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('ipr.publicationNumber')}</p>
             <p className="f-12">
               <HandleEmptyAttribute checkOn={BibliographicData.PublicationNumber} />
             </p>
           </div>
           <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.publicationDate')}</p>
+            <p className="text-primary f-14 bibliographicLabel">{t('ipr.publicationDate')}</p>
             <p className="f-12">
               <HandleEmptyAttribute checkOn={BibliographicData.PublicationDate} />
             </p>
@@ -150,7 +150,7 @@ BibliographicDataSection.propTypes = {
     Applicants: PropTypes.arrayOf(PropTypes.string),
     NICEClassification: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
-  isIPRExpanded: PropTypes.string.isRequired,
+  isIPRExpanded: PropTypes.bool.isRequired,
   getAttachmentURL: PropTypes.func.isRequired,
 };
 

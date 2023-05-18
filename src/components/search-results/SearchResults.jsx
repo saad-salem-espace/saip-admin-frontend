@@ -15,7 +15,6 @@ import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
-import { pascalCase } from 'change-case';
 import 'components/shared/form/form.scss';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Button from 'react-bootstrap/Button';
@@ -32,6 +31,8 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
+import style from '../shared/form/search/style.module.scss';
+
 import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
@@ -39,6 +40,7 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import toastify from '../../utils/toastify';
 import validationMessages from '../../utils/validationMessages';
+import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
 
 function SearchResults() {
   const { t, i18n } = useTranslation('search');
@@ -131,7 +133,7 @@ function SearchResults() {
     },
   ];
 
-  const sortByOptionsTrademark = [
+  const sortByPublicationAndFilingDate = [
     {
       label: t('mostRelevant'),
       value: 'mostRelevant',
@@ -156,7 +158,8 @@ function SearchResults() {
 
   const map = new Map();
   map.set(1, sortByOptionsPatent);
-  map.set(2, sortByOptionsTrademark);
+  map.set(2, sortByPublicationAndFilingDate);
+  map.set(3, sortByPublicationAndFilingDate);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
@@ -307,7 +310,7 @@ function SearchResults() {
     }]);
   };
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
   }
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
     label: workstreamName(workstream),
@@ -437,6 +440,7 @@ function SearchResults() {
   const searchResult = {
     1: SearchResultCards,
     2: TrademarksSearchResultCards,
+    3: IndustrialDesignResultCards,
   };
 
   const formSchema = Yup.object({
@@ -445,6 +449,12 @@ function SearchResults() {
         (imageName || data)
       )),
   });
+  useEffect(() => {
+    document.body.classList.add('search-result-wrapper');
+    return () => {
+      document.body.classList.remove('search-result-wrapper');
+    };
+  }, []);
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -472,7 +482,7 @@ function SearchResults() {
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
                       selectedOption={values.selectedWorkstream}
-                      className="workStreams ms-3 mt-1 customSelect"
+                      className="workStreams ms-3 mt-1 customSelect w-px-300"
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);
@@ -487,7 +497,7 @@ function SearchResults() {
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
                     isAdvanced={isAdvancedSearch}
-                    className="search-results-view"
+                    className={`${style.searchResultsView} search-results-view`}
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
@@ -530,7 +540,7 @@ function SearchResults() {
             onChangeSearchQuery={setSearchQuery}
           />
         </Col>
-        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <div className="d-lg-flex align-items-center">
             <AppTooltip
               tooltipTrigger={
@@ -554,37 +564,43 @@ function SearchResults() {
           <Formik>
             {() => (
               <Form className="mt-5">
-                <div className="d-md-flex">
-                  {
-                      searchResultParams.workstreamId === '2' && (
-                        <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
-                          <Select
-                            options={viewOptions}
-                            setSelectedOption={onChangeView}
-                            selectedOption={selectedView}
-                            defaultValue={selectedView}
-                            id="viewSection"
-                            fieldName="viewSection"
-                            className="mb-md-0 mb-3 select-2"
-                          />
-                        </div>
-                      )
-                    }
-                  <div className="position-relative mb-8 sortBy">
-                    <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
-                    <Select
-                      options={getSortOptions(searchResultParams.workstreamId)}
-                      setSelectedOption={onChangeSortBy}
-                      selectedOption={sortBy}
-                      defaultValue={sortBy}
-                      id="sortBy"
-                      fieldName="sortBy"
-                      className="select-2"
-                    />
-                  </div>
-                </div>
+                {
+                  totalResults !== 0 && (
+                    <div className="d-md-flex">
+                      {
+                        searchResultParams.workstreamId === '2' && (
+                          <div className="position-relative mb-6 viewSelect me-md-6">
+                            <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
+                            <Select
+                              options={viewOptions}
+                              setSelectedOption={onChangeView}
+                              selectedOption={selectedView}
+                              defaultValue={selectedView}
+                              id="viewSection"
+                              fieldName="viewSection"
+                              className="mb-md-0 mb-3 select-2"
+                            />
+                          </div>
+                        )
+                      }
+                      <div className="position-relative mb-8 sortBy">
+                        <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                        <Select
+                          options={getSortOptions(searchResultParams.workstreamId)}
+                          setSelectedOption={onChangeSortBy}
+                          selectedOption={sortBy}
+                          defaultValue={sortBy}
+                          id="sortBy"
+                          fieldName="sortBy"
+                          className="select-2"
+                        />
+                      </div>
+                    </div>
+                  )
+                }
                 <AppPagination
+                  PaginationWrapper="col-10"
+                  className="p-0 paginate-ipr"
                   axiosConfig={axiosConfig}
                   defaultPage={Number(searchParams.get('page') || '1')}
                   setResults={setResults}

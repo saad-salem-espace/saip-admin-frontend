@@ -5,6 +5,15 @@
   "unsavedContent": "محتوى غير محفوظ",
   "unsavedContentMsg": "لم يتم حفظ المحتوى,<0> هل تريد الحفظ ؟ </0>",
   "noteAdded": "أضيف بنجاح",
-  "noteNotAdded": "لم تتم الإضافة، برجاء المحاولة مرة أخرى.",
-  "day": "يوم"
+  "noteNotAdded": ".لم تتم الإضافة، برجاء المحاولة مرة أخرى",
+  "noteDeleted": ".تم الحذف بنجاح",
+  "noteNotDeleted": "لم يتم الحذف. حاول مرة اخرى",
+  "noteUpdated": "تم التجديد بنجاح",
+  "noteNotUpdated": "لم يتم التجديد، حاول مرة اخرى",
+  "day": "يوم",
+  "editNote": "تعديل الملاحظة",
+  "deleteNote": "مسح الملاحظة",
+  "confirmDeleteNote": "هل انت متأكد من مسح الملاحظة ؟",
+  "delete": "مسح",
+  "update": "تعديل"
 }

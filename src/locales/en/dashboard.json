@@ -13,6 +13,8 @@
   "notes": "Notes",
   "translateInfo": "Translate",
   "markAsDone": "Mark as Done",
+  "notAssigned": "Can't see your assignments?",
+  "emptyStateTitle": "You don’t have any assignments yet",
   "status": {
     "toDo": "To Do",
     "done": "Done",
