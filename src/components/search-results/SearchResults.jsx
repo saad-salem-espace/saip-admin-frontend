@@ -541,30 +541,37 @@ function SearchResults() {
                  data-testid="fav-button" disabled={isLoading}>
                   {
                         isQuerySaved && !isLoading
-                          ? <span className="icon-filled-star f-24" data-testid="filled-star" />
-                          : <span className="icon-star f-24" data-testid="empty-star" />
+                          ? <span className="icon-filled-star star-button f-24" data-testid="filled-star" />
+                          : <span className="icon-star f-24 star-button" data-testid="empty-star" />
                       }
                 </Button>
                   }
               tooltipContent={t('saveSearchQuery')}
             /> */}
-            {selectedSaveQueryOption}
             <Button
-              className="position-relative save-query-menu"
+              className={`position-relative save-query-menu pe-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
+              variant="link text-decoration-none"
               onClick={() => setShowSaveQueryMenu(!showSaveQueryMenu)}
             >
-              <span className="icon-star f-24" />
+              <span className="icon-star f-24 star-button" />
               {
                 showSaveQueryMenu && (
                   <div className="position-absolute save-query-options">
                     <Button
+                      className="save-btn"
                       onClick={() => setSelectedSaveQueryOption('myList')}
                     >
-                      {t('addtoSavedQueries')}
+                      <>
+                        <span className="icon-star fs-base me-2" />
+                        {t('addtoSavedQueries')}
+                      </>
                     </Button>
+                    {/* please add disabled class for disabled button */}
                     <Button
+                      className="btn-focus"
                       onClick={() => setSelectedSaveQueryOption('focusArea')}
                     >
+                      <span className="icon-focus fs-base me-2" />
                       {t('addtoFocusArea')}
                     </Button>
                   </div>

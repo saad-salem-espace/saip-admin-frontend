@@ -153,7 +153,75 @@
   }
 }
 
+.star-button::before {
+  color: $primary-dark !important;
+}
+
 .save-query-options {
-  background-color: $primary-10;
   z-index: 99999;
+  top: 44px;
+
+  html[dir="ltr"] & {
+    left: 0;
+  }
+
+  html[dir="rtl"] & {
+    right: 0;
+  }
+}
+
+.save-query-menu {
+  border-radius: $border-radius;
+  color: $primary-dark;
+
+  &:hover,
+  &.active {
+    background-color: $primary;
+
+    .icon-star::before {
+      color: $white !important;
+    }
+  }
+
+  button {
+    color: $white;
+    width: 233px;
+    display: inline-block;
+    @extend .fs-sm;
+    font-family: $font-regular;
+    white-space: nowrap;
+    border-radius: 0;
+    border: none;
+    @extend .p-4;
+
+    span:before {
+      color: $white;
+    }
+
+    &:hover {
+      background-color: $primary-01;
+      color: $primary;
+
+      .icon-star, .icon-focus {
+        &::before {
+          color: $primary !important;
+        }
+      }
+    }
+
+    &.save-btn {
+      border-radius: $border-radius $border-radius 0 0;
+    }
+
+    &.btn-focus {
+      border-radius: 0 0 $border-radius $border-radius;
+    }
+
+    &.disabled {
+      background-color: $gray-500;
+      color: $white;
+      opacity: 1;
+      cursor: not-allowed;
+    }
+  }
 }

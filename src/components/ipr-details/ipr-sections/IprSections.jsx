@@ -9,6 +9,7 @@ import AppPagination from 'components/shared/app-pagination/AppPagination';
 import NoData from 'components/shared/empty-states/NoData';
 import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
 import IprData from '../IprData';
+import './style.scss';
 
 function IprSections({
   options,
@@ -107,7 +108,7 @@ function IprSections({
       title: (
         <div className="d-flex align-items-center" translate="no">
           {t('dashboard:savedQueries')}
-          <span className="ps-1 queries-count">{savedQueriesCount}</span>
+          <span className="ms-1 p-1 queries-count">{savedQueriesCount}</span>
         </div>
       ),
       content: (
