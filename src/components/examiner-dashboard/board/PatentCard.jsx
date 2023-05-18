@@ -84,13 +84,13 @@ function PatentCard({
           placement="right"
         />
         <div className="d-flex justify-content-between text-gray-700 border-bottom">
-          <p className="fs-12 mb-2">
+          <p className="fs-xs mb-2">
             <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:queue')}
             •
             {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
           </p>
-          <p className="fs-12 mb-2">
+          <p className="fs-xs mb-2">
             <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:priority')}
             •
