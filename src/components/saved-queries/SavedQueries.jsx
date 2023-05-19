@@ -89,6 +89,9 @@ const SavedQueries = () => {
               RenderedComponent={savedQueries}
               emptyState={<NoData />}
               resetPage={pageReset}
+              renderedProps={{
+                selectedWorkStream: selectedWorkStream.value,
+              }}
             />
           ) : (
             <IndexedDbAppPagination
