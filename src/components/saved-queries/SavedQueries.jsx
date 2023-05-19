@@ -107,6 +107,9 @@ const SavedQueries = () => {
                 indexName: 'workstreamId',
                 indexValue: selectedWorkStream.value,
               }}
+              renderedProps={{
+                selectedWorkStream: selectedWorkStream.value,
+              }}
             />
           )}
         </Col>
