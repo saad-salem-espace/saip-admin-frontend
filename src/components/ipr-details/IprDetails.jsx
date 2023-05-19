@@ -161,6 +161,11 @@ function IprDetails({
       preparedGetAttachmentURL={preparedGetAttachmentURL}
       documentId={documentId}
       searchResultParams={searchResultParams}
+      showSearchQuery={showSearchQuery}
+      hideSearchQueryMenu={hideSearchQueryMenu}
+      ShowSearchQueryMenu={ShowSearchQueryMenu}
+      toggleIcon={toggleIcon}
+      upArrow={upArrow}
     />,
   };
 
