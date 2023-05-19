@@ -27,7 +27,7 @@ import OriginalDocument from '../shared/original-document/OriginalDocument';
 
 const PatentViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
-  selectedView, hideSearchQueryMenu, showSearchQuery, ShowSearchQueryMenu,
+  selectedView, hideSearchQueryMenu, showSearchQuery, ShowSearchQueryMenu, toggleIcon, upArrow,
 }) => {
   const { t } = useTranslation('search');
   const content = (s) => {
@@ -39,6 +39,8 @@ const PatentViews = ({
           showSearchQuery={showSearchQuery}
           hideSearchQueryMenu={hideSearchQueryMenu}
           ShowSearchQueryMenu={ShowSearchQueryMenu}
+          toggleIcon={toggleIcon}
+          upArrow={upArrow}
         >
           <h6>{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
@@ -174,6 +176,9 @@ const PatentViews = ({
         <PatentDescription
           description={document.Description}
           isIPRExpanded={isIPRExpanded}
+          showSearchQuery={showSearchQuery}
+          hideSearchQueryMenu={hideSearchQueryMenu}
+          ShowSearchQueryMenu={ShowSearchQueryMenu}
         >
           <h6>{t('ipr.drawings')}</h6>
           {document.Drawings?.length ? (
@@ -191,6 +196,9 @@ const PatentViews = ({
         <Claims
           claims={document?.Claims}
           isIPRExpanded={isIPRExpanded}
+          showSearchQuery={showSearchQuery}
+          hideSearchQueryMenu={hideSearchQueryMenu}
+          ShowSearchQueryMenu={ShowSearchQueryMenu}
         >
           <h6>{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (

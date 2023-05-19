@@ -26,6 +26,8 @@ function IprExpand({
 }) {
   const { t } = useTranslation('dashboard');
   const [showSearchQuery, setShowSearchQuery] = useState(false);
+  const [upArrow, setUpArrow] = useState(false);
+
   const ShowSearchQueryMenu = () => {
     setShowSearchQuery(true);
   };
@@ -34,6 +36,9 @@ function IprExpand({
   };
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
+  };
+  const toggleIcon = () => {
+    setUpArrow(!upArrow);
   };
   return (
     <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
@@ -90,6 +95,8 @@ function IprExpand({
             ShowSearchQueryMenu={ShowSearchQueryMenu}
             hideSearchQueryMenu={hideSearchQueryMenu}
             ToggleSearchQueryMenu={ToggleSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
           />
         </Col>
         <Col lg={6}>

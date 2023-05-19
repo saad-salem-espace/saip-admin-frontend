@@ -50,6 +50,8 @@ function IprDetails({
   showSearchQuery,
   ShowSearchQueryMenu,
   ToggleSearchQueryMenu,
+  toggleIcon,
+  upArrow,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -69,8 +71,6 @@ function IprDetails({
     documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
     { manual: true },
   );
-
-  const [upArrow, setUpArrow] = useState(false);
 
   useEffect(() => {
     setDocument(null);
@@ -123,7 +123,6 @@ function IprDetails({
   const onChangeSelect = (i) => {
     setSelectedView(i);
   };
-
   const views = {
     1:
   <PatentViews
@@ -136,6 +135,8 @@ function IprDetails({
     showSearchQuery={showSearchQuery}
     hideSearchQueryMenu={hideSearchQueryMenu}
     ShowSearchQueryMenu={ShowSearchQueryMenu}
+    toggleIcon={toggleIcon}
+    upArrow={upArrow}
   />,
     2: <TrademarkViews
       selectedView={selectedView.value}
@@ -144,6 +145,11 @@ function IprDetails({
       preparedGetAttachmentURL={preparedGetAttachmentURL}
       documentId={documentId}
       searchResultParams={searchResultParams}
+      showSearchQuery={showSearchQuery}
+      hideSearchQueryMenu={hideSearchQueryMenu}
+      ShowSearchQueryMenu={ShowSearchQueryMenu}
+      toggleIcon={toggleIcon}
+      upArrow={upArrow}
     />,
   };
 
@@ -165,10 +171,6 @@ function IprDetails({
       }
     }
     return content;
-  };
-
-  const toggleIcon = () => {
-    setUpArrow(!upArrow);
   };
 
   return (
@@ -361,6 +363,8 @@ IprDetails.propTypes = {
   hideSearchQueryMenu: PropTypes.func,
   ShowSearchQueryMenu: PropTypes.func,
   ToggleSearchQueryMenu: PropTypes.func,
+  toggleIcon: PropTypes.func.isRequired,
+  upArrow: PropTypes.bool.isRequired,
 };
 
 IprDetails.defaultProps = {

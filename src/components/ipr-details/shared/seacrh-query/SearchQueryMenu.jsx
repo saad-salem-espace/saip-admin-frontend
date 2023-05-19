@@ -13,7 +13,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function SearchQueryMenu({
-  showSearchQuery, hideSearchQueryMenu, className, children,
+  showSearchQuery, hideSearchQueryMenu, className, children, toggleIcon,
 }) {
   const [searchParams] = useSearchParams();
 
@@ -45,7 +45,7 @@ function SearchQueryMenu({
               <Form className="search-query-menu shadow rounded" onSubmit={handleSubmit}>
                 <div className="p-8">
                   <Button
-                    onClick={() => hideSearchQueryMenu()}
+                    onClick={() => { hideSearchQueryMenu(); toggleIcon(); }}
                     variant="transparent"
                     className="text-end w-100 px-0 pb-4 pt-0 border-0"
                   >
@@ -79,6 +79,7 @@ SearchQueryMenu.propTypes = {
   hideSearchQueryMenu: PropTypes.func.isRequired,
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
+  toggleIcon: PropTypes.func.isRequired,
 };
 
 SearchQueryMenu.defaultProps = {

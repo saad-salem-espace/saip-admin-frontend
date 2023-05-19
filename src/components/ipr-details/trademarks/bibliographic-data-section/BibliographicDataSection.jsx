@@ -7,12 +7,15 @@ import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
 
 const BibliographicDataSection = (
   {
     isIPRExpanded,
     BibliographicData,
     getAttachmentURL,
+    hideSearchQueryMenu, showSearchQuery,
+    ShowSearchQueryMenu, toggleIcon, upArrow,
   },
 ) => {
   const { t } = useTranslation('search');
@@ -33,98 +36,173 @@ const BibliographicDataSection = (
           <h6 className="mb-4">
             {t('register')}
           </h6>
-          <div className="d-flex">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markNameEN')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.BrandNameEn} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markNameAR')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.BrandNameAr} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.filingNumber')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.FilingNumber} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.filingDate')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.FilingDate} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markType')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.TrademarkType} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markStatus')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.TrademarkLastStatus} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.registrationNumber')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.RegistrationNumber} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.registrationDate')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.RegistrationDate} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.publicationNumber')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.PublicationNumber} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.publicationDate')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.PublicationDate} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('trademarks.markDescription')}</p>
-            <p className="f-12">
+          <LabelValue
+            label={t('trademarks.markNameEN')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.BrandNameEn}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+          />
+          <LabelValue
+            label={t('trademarks.markNameAR')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.BrandNameAr}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+          />
+          <LabelValue
+            label={t('trademarks.filingNumber')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.FilingNumber}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('trademarks.filingDate')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.FilingDate}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('trademarks.markType')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.TrademarkType}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('trademarks.markStatus')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.TrademarkLastStatus}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('trademarks.registrationNumber')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.RegistrationNumber}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('trademarks.registrationDate')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.RegistrationDate}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('trademarks.publicationNumber')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.PublicationNumber}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('trademarks.publicationDate')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.PublicationDate}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <p className="text-primary f-14">{t('trademarks.markDescription')}</p>
+          <LabelValue
+            labelClassName="bibliographicLabel"
+            value={
               <ShowMore>
                 <HandleEmptyAttribute checkOn={BibliographicData.Description} />
               </ShowMore>
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('ipr.owners')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.Owners.join('; ')} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('ipr.applicants')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.Applicants.join('; ')} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('ipr.representatives')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.Representatives.join('; ')} />
-            </p>
-          </div>
-          <div className="d-flex mb-4">
-            <p className="text-primary f-14 bibliographicLabel">{t('classifications')}</p>
-            <p className="f-12">
-              <HandleEmptyAttribute checkOn={BibliographicData.NICEClassification.join('; ')} />
-            </p>
-          </div>
+}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('ipr.owners')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.Owners.join('; ')}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('ipr.applicants')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.Applicants.join('; ')}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('ipr.representatives')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.Representatives.join('; ')}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
+          <LabelValue
+            label={t('classifications')}
+            labelClassName="bibliographicLabel"
+            value={BibliographicData.NICEClassification.join('; ')}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            toggleIcon={toggleIcon}
+            upArrow={upArrow}
+            className="mb-4"
+          />
         </Col>
       </Row>
     </Container>
@@ -152,6 +230,17 @@ BibliographicDataSection.propTypes = {
   }).isRequired,
   isIPRExpanded: PropTypes.string.isRequired,
   getAttachmentURL: PropTypes.func.isRequired,
+  showSearchQuery: PropTypes.bool,
+  hideSearchQueryMenu: PropTypes.func,
+  ShowSearchQueryMenu: PropTypes.func,
+  toggleIcon: PropTypes.func.isRequired,
+  upArrow: PropTypes.bool.isRequired,
+};
+
+BibliographicDataSection.defaultProps = {
+  hideSearchQueryMenu: () => { },
+  ShowSearchQueryMenu: () => { },
+  showSearchQuery: false,
 };
 
 export default BibliographicDataSection;
