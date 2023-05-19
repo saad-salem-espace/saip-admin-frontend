@@ -8,6 +8,9 @@ import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { dateFormatSubstring } from 'utils/dates';
 import IprSections from 'components/ipr-details/ipr-sections/IprSections';
 import IprDetails from 'components/ipr-details/IprDetails';
+import React, {
+  useState,
+} from 'react';
 
 function IprExpand({
   collapseIPR,
@@ -22,6 +25,16 @@ function IprExpand({
   setNotesUpdated,
 }) {
   const { t } = useTranslation('dashboard');
+  const [showSearchQuery, setShowSearchQuery] = useState(false);
+  const ShowSearchQueryMenu = () => {
+    setShowSearchQuery(true);
+  };
+  const hideSearchQueryMenu = () => {
+    setShowSearchQuery(false);
+  };
+  const ToggleSearchQueryMenu = () => {
+    setShowSearchQuery(!showSearchQuery);
+  };
   return (
     <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
       <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
@@ -73,6 +86,10 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             className="mx-0"
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+            ToggleSearchQueryMenu={ToggleSearchQueryMenu}
           />
         </Col>
         <Col lg={6}>

@@ -2,9 +2,6 @@ import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ShowMore from 'components/shared/show-more/ShowMore';
-import React, {
-  useState,
-} from 'react';
 import Image from 'react-bootstrap/Image';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Button from 'react-bootstrap/Button';
@@ -13,7 +10,9 @@ import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import SearchQueryMenu from './shared/seacrh-query/SearchQueryMenu';
 import addIcon from '../../assets/images/icons/add.svg';
 
-const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
+const BibliographicDataSection = ({
+  document, isIPRExpanded, children, hideSearchQueryMenu, showSearchQuery, ShowSearchQueryMenu,
+}) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
   const getGrid = (view) => {
@@ -28,13 +27,6 @@ const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
     return grid;
   };
 
-  const [showSearchQuery, setShowSearchQuery] = useState(false);
-  const ShowSearchQueryMenu = () => {
-    setShowSearchQuery(true);
-  };
-  const hideSearchQueryMenu = () => {
-    setShowSearchQuery(false);
-  };
   return (
     <Row>
       <Col md={getGrid('bibliographic')}>
@@ -151,6 +143,9 @@ BibliographicDataSection.propTypes = {
   }).isRequired,
   isIPRExpanded: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  showSearchQuery: PropTypes.bool.isRequired,
+  hideSearchQueryMenu: PropTypes.func.isRequired,
+  ShowSearchQueryMenu: PropTypes.func.isRequired,
 };
 
 export default BibliographicDataSection;

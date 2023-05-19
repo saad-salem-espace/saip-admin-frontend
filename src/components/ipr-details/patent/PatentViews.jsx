@@ -26,7 +26,8 @@ import Claims from './claims/Claims';
 import OriginalDocument from '../shared/original-document/OriginalDocument';
 
 const PatentViews = ({
-  isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
+  isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
+  selectedView, hideSearchQueryMenu, showSearchQuery, ShowSearchQueryMenu,
 }) => {
   const { t } = useTranslation('search');
   const content = (s) => {
@@ -35,6 +36,9 @@ const PatentViews = ({
         <BibliographicDataSection
           document={document}
           isIPRExpanded={isIPRExpanded}
+          showSearchQuery={showSearchQuery}
+          hideSearchQueryMenu={hideSearchQueryMenu}
+          ShowSearchQueryMenu={ShowSearchQueryMenu}
         >
           <h6>{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
@@ -234,6 +238,9 @@ PatentViews.propTypes = {
   documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   searchResultParams: PropTypes.shape.isRequired,
   preparedGetAttachmentURL: PropTypes.func.isRequired,
+  showSearchQuery: PropTypes.bool.isRequired,
+  hideSearchQueryMenu: PropTypes.func.isRequired,
+  ShowSearchQueryMenu: PropTypes.func.isRequired,
 };
 
 export default PatentViews;

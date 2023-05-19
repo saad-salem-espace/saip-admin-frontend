@@ -28,7 +28,6 @@ import PatentViews from './patent/PatentViews';
 import TrademarkViews from './trademarks/TrademarkViews';
 import patentIprOptions from './patent/PatentIprOptions';
 import trademarkIprOptions from './trademarks/TrademarkIprOptions';
-import SearchQueryMenu from './shared/seacrh-query/SearchQueryMenu';
 import addIcon from '../../assets/images/icons/coloredAdd.svg';
 
 function IprDetails({
@@ -47,6 +46,10 @@ function IprDetails({
   isCardInprogress,
   selectedCardId,
   setNotesUpdated,
+  hideSearchQueryMenu,
+  showSearchQuery,
+  ShowSearchQueryMenu,
+  ToggleSearchQueryMenu,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -67,7 +70,7 @@ function IprDetails({
     { manual: true },
   );
 
-  const [showSearchQuery, setShowSearchQuery] = useState(false);
+  const [upArrow, setUpArrow] = useState(false);
 
   useEffect(() => {
     setDocument(null);
@@ -130,6 +133,9 @@ function IprDetails({
     preparedGetAttachmentURL={preparedGetAttachmentURL}
     documentId={documentId}
     searchResultParams={searchResultParams}
+    showSearchQuery={showSearchQuery}
+    hideSearchQueryMenu={hideSearchQueryMenu}
+    ShowSearchQueryMenu={ShowSearchQueryMenu}
   />,
     2: <TrademarkViews
       selectedView={selectedView.value}
@@ -161,11 +167,8 @@ function IprDetails({
     return content;
   };
 
-  const ToggleSearchQueryMenu = () => {
-    setShowSearchQuery(!showSearchQuery);
-  };
-  const hideSearchQueryMenu = () => {
-    setShowSearchQuery(false);
+  const toggleIcon = () => {
+    setUpArrow(!upArrow);
   };
 
   return (
@@ -283,35 +286,29 @@ function IprDetails({
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <div id="google_translate_element" className="d-inline-block" />
-          <SearchQueryMenu
-            showSearchQuery={showSearchQuery}
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            className="mb-4 ms-2"
-          >
-            <AppTooltip
-              className="w-auto"
-              placement="top"
-              tooltipContent="Add to keyword planner"
-              tooltipTrigger={
-                <div>
-                  <Button
-                    variant="link"
-                    className="text-primary-dark font-regular fs-sm text-decoration-none"
-                    onClick={() => ToggleSearchQueryMenu()}
-                    text={
-                      <>
-                        <Image src={addIcon} />
-                        <span className="px-2">
-                          {t('dashboard:board.keywordplanner')}
-                        </span>
-                        <FontAwesomeIcon icon={showSearchQuery ? faChevronUp : faChevronDown} />
-                      </>
+          <AppTooltip
+            className="w-auto"
+            placement="top"
+            tooltipContent="Add to keyword planner"
+            tooltipTrigger={
+              <div>
+                <Button
+                  variant="link"
+                  className="text-primary-dark font-regular fs-sm text-decoration-none"
+                  onClick={() => { ToggleSearchQueryMenu(); toggleIcon(); }}
+                  text={
+                    <>
+                      <Image src={addIcon} />
+                      <span className="px-2">
+                        {t('dashboard:board.keywordplanner')}
+                      </span>
+                      <FontAwesomeIcon icon={upArrow ? faChevronUp : faChevronDown} />
+                    </>
 }
-                  />
-                </div>
+                />
+              </div>
               }
-            />
-          </SearchQueryMenu>
+          />
         </div>
       </div>
       {
@@ -360,6 +357,10 @@ IprDetails.propTypes = {
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
+  showSearchQuery: PropTypes.bool.isRequired,
+  hideSearchQueryMenu: PropTypes.func,
+  ShowSearchQueryMenu: PropTypes.func,
+  ToggleSearchQueryMenu: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -374,6 +375,9 @@ IprDetails.defaultProps = {
   showActions: true,
   activeTab: 2,
   setNotesUpdated: () => { },
+  hideSearchQueryMenu: () => { },
+  ShowSearchQueryMenu: () => { },
+  ToggleSearchQueryMenu: () => { },
 };
 
 export default IprDetails;
