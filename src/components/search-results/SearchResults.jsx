@@ -9,6 +9,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   createSearchParams, useNavigate, useSearchParams, Link,
 } from 'react-router-dom';
+import ViewTip from 'components/shared/view-tip/ViewTip';
 import * as Yup from 'yup';
 import Select from 'components/shared/form/select/Select';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -505,20 +506,52 @@ function SearchResults() {
                     resultsView
                   >
                     <div className="d-md-flex mt-4">
-                      <ToggleButton
-                        handleToggleButton={() => {
-                          setIsAdvancedSearch((isAdvanced) => !isAdvanced);
-                          setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
-                        }}
-                        isToggleButtonOn={isAdvancedSearch}
-                        text={t('advancedSearch')}
-                        className="border-md-end pe-4 me-4 mb-md-0 mb-2"
-                      />
-                      <ToggleButton
-                        handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
-                        isToggleButtonOn={isEnabledSynonyms}
-                        text={t('allowSynonyms')}
-                      />
+                      <div className="d-flex align-items-center me-4">
+                        <ToggleButton
+                          handleToggleButton={() => {
+                            setIsAdvancedSearch((isAdvanced) => !isAdvanced);
+                            setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
+                          }}
+                          isToggleButtonOn={isAdvancedSearch}
+                          text={t('advancedSearch')}
+                          className="border-md-end mb-md-0 mb-2"
+                        />
+                        <ViewTip
+                          Title={
+                            <Trans
+                              i18nKey="advancedSearchTipTitle"
+                              ns="tips"
+                            />
+                          }
+                          id="advancedSearchTip"
+                        >
+                          <Trans
+                            i18nKey="advancedSearchTipContent"
+                            ns="tips"
+                          />
+                        </ViewTip>
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <ToggleButton
+                          handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
+                          isToggleButtonOn={isEnabledSynonyms}
+                          text={t('allowSynonyms')}
+                        />
+                        <ViewTip
+                          Title={
+                            <Trans
+                              i18nKey="allowSynonymsTipTitle"
+                              ns="tips"
+                            />
+                          }
+                          id="allowSynonymsTip"
+                        >
+                          <Trans
+                            i18nKey="allowSynonymsTipContent"
+                            ns="tips"
+                          />
+                        </ViewTip>
+                      </div>
                     </div>
                   </SharedSearch>
                 </div>
