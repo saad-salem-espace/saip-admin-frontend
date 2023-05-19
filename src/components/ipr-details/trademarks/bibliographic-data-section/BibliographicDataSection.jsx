@@ -228,7 +228,7 @@ BibliographicDataSection.propTypes = {
     Applicants: PropTypes.arrayOf(PropTypes.string),
     NICEClassification: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
-  isIPRExpanded: PropTypes.string.isRequired,
+  isIPRExpanded: PropTypes.bool.isRequired,
   getAttachmentURL: PropTypes.func.isRequired,
   showSearchQuery: PropTypes.bool,
   hideSearchQueryMenu: PropTypes.func,

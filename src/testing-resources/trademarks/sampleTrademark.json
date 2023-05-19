@@ -64,13 +64,13 @@
     {
       "OwnerName": "omniaaaaaa",
       "CountryCode": "000",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "OwnerDetails": "city"
     },
     {
       "OwnerName": "test",
       "CountryCode": "8",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "OwnerDetails": "omnia"
     }
   ],
@@ -78,25 +78,25 @@
     {
       "ApplicantName": "omnia",
       "CountryCode": "03",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "ApplicantDetails": "applicant"
     },
     {
       "ApplicantName": "nada",
       "CountryCode": "03",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "ApplicantDetails": "applicant"
     },
     {
       "ApplicantName": "nesma",
       "CountryCode": "03",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "ApplicantDetails": "applicant"
     },
     {
       "ApplicantName": "omnia",
       "CountryCode": "03",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "ApplicantDetails": "applicant"
     }
   ],
@@ -161,25 +161,25 @@
     {
       "RepresentativeName": "omnia yahia",
       "CountryCode": "01",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "RepresentativeDetails": "rep"
     },
     {
       "RepresentativeName": "asmaa",
       "CountryCode": "00",
-      "Naionality": "",
+      "Nationality": "",
       "RepresentativeDetails": "rep"
     },
     {
       "RepresentativeName": "salma",
       "CountryCode": "",
-      "Naionality": "",
+      "Nationality": "",
       "RepresentativeDetails": "rep"
     },
     {
       "RepresentativeName": "yasmin",
       "CountryCode": "",
-      "Naionality": "",
+      "Nationality": "",
       "RepresentativeDetails": "rep"
     }
   ],
