@@ -7,6 +7,7 @@ import patentIdentifiers from 'testing-resources/workstreams/patents/identifiers
 import patentConditions from 'testing-resources/workstreams/patents/conditions.json';
 import samplePatent from 'testing-resources/patents/samplePatent.json';
 import workstreams from 'testing-resources/workstreams/workstreams.json';
+import limit from 'testing-resources/limits/limit.json';
 // import { trimStringRelativeToSubtext } from 'utils/strings';
 import I18n from 'i18n';
 import { userTypes } from 'testing-resources/mocks/loggedInUserMock';
@@ -27,6 +28,7 @@ const searchParams = {
 mockAxios.onGet(/\/workstreams\/\d+\/identifiers/).reply(200, patentIdentifiers);
 mockAxios.onGet(/\/workstreams\/\d+\/documents\/?.*/).reply(200, { data: [samplePatent] });
 mockAxios.onGet(/\/workstreams/).reply(200, workstreams);
+mockAxios.onGet(/\/limits\/\d+\/\w/).reply(200, limit);
 mockAxios.onGet(/\/advanced-search\/?.*/).reply((config) => ([200, {
   data: {
     data: patentList.slice((config.params.page - 1) * 10, config.params.page * 10),

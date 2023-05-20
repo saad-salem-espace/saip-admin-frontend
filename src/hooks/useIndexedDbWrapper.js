@@ -21,6 +21,9 @@ const useIndexedDbWrapper = (tableName) => {
         return instance;
     }
   };
+  const countAllByIndexName = ({ indexName, indexValue }) => (
+    db[tableName].where(indexName).equals(indexValue.toString()).count()
+  );
 
   const getTimeStamp = useCallback(() => {
     const currentDatetimeUTC = new Date().toISOString();
@@ -75,7 +78,7 @@ const useIndexedDbWrapper = (tableName) => {
   }) => {
     const offset = (page - 1) * limit;
     const stringIndex = indexValue.toString();
-    const pTotal = db[tableName].where(indexName).equals(stringIndex).count();
+    const pTotal = countAllByIndexName({ indexName, indexValue });
     const pData = orderedBy(db[tableName], sortedIndexName, sorted)
       .filter((data) => data[indexName] === stringIndex)
       .offset(offset)
@@ -89,7 +92,9 @@ const useIndexedDbWrapper = (tableName) => {
       .catch((errors) => { onError(errors); });
   }, []);
 
-  return { addInstanceToDb, getInstanceByIndex, indexByIndexName };
+  return {
+    addInstanceToDb, getInstanceByIndex, indexByIndexName, countAllByIndexName,
+  };
 };
 
 export default useIndexedDbWrapper;
