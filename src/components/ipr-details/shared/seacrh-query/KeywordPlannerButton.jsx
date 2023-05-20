@@ -6,12 +6,12 @@ import { useTranslation } from 'react-i18next';
 import addIcon from '../../../../assets/images/icons/add.svg';
 
 function KeywordPlannerButton({
-  handleClick,
+  handleClick, btnPosition,
 }) {
   const { t } = useTranslation('dashboard');
 
   return (
-    <div className="keyword-planner-btn">
+    <div className="keyword-planner-btn" style={btnPosition}>
       <AppTooltip
         className="w-auto"
         placement="top"
@@ -34,6 +34,10 @@ function KeywordPlannerButton({
 
 KeywordPlannerButton.propTypes = {
   handleClick: PropTypes.func.isRequired,
+  btnPosition: PropTypes.shape({
+    left: PropTypes.string.isRequired,
+    top: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default KeywordPlannerButton;
