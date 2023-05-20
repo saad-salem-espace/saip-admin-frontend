@@ -84,6 +84,7 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             setNotesUpdated={setNotesUpdated}
+            activeWorkstream={activeWorkstream}
           />
         </Col>
       </div>

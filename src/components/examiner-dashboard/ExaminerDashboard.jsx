@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import useAxios from 'hooks/useAxios';
 import getAssigned from 'apis/dashboard/getAssigned';
 import Spinner from 'components/shared/spinner/Spinner';
 import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
 
-function ExaminerDashboard() {
+const ExaminerDashboard = ({ updateFocusArea }) => {
   const { t } = useTranslation('dashboard');
   // const linksList = [
   //   {
@@ -98,10 +99,15 @@ function ExaminerDashboard() {
           setActiveDocument={setActiveDocument}
           activeDocument={activeDocument}
           setNotesUpdated={setNotesUpdated}
+          updateFocusArea={updateFocusArea}
         />
         {/* eslint-disable-next-line react/jsx-closing-tag-location */}
       </div> : <div className="d-flex justify-content-center mt-18"><Spinner /></div>
   );
-}
+};
+
+ExaminerDashboard.propTypes = {
+  updateFocusArea: PropTypes.func.isRequired,
+};
 
 export default ExaminerDashboard;

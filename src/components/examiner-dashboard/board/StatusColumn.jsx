@@ -6,11 +6,11 @@ import './board.scss';
 import { useState } from 'react';
 import PatentCard from './PatentCard';
 
-function StatusColumn({
+const StatusColumn = ({
   status, className, data, setActiveDocument, setToggle,
   activeDocument, setActiveTab, isInProgress,
-  SetSelectedCard,
-}) {
+  SetSelectedCard, updateFocusArea,
+}) => {
   const { t } = useTranslation('dashboard');
   const pinned = !!data.length;
   const others = !!data.length;
@@ -42,6 +42,7 @@ function StatusColumn({
             active={activeDocument === assignment.filingNumber}
             SetSelectedFocusArea={SetSelectedFocusArea}
             selectedFocusArea={selectedFocusArea}
+            updateFocusArea={updateFocusArea}
           />
         ))}
         { others && (
@@ -59,12 +60,13 @@ function StatusColumn({
             active={activeDocument === assignment.filingNumber}
             SetSelectedFocusArea={SetSelectedFocusArea}
             selectedFocusArea={selectedFocusArea}
+            updateFocusArea={updateFocusArea}
           />
         ))}
       </div>
     </Col>
   );
-}
+};
 
 StatusColumn.propTypes = {
   status: PropTypes.string.isRequired,
@@ -76,6 +78,7 @@ StatusColumn.propTypes = {
   activeDocument: PropTypes.string.isRequired,
   isInProgress: PropTypes.func.isRequired,
   setActiveTab: PropTypes.func,
+  updateFocusArea: PropTypes.func.isRequired,
 };
 
 StatusColumn.defaultProps = {

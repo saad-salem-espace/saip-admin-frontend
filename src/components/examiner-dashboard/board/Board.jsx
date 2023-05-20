@@ -13,12 +13,11 @@ import IprExpand from './IprExpand';
 import BoardTitle from './BoardTitle';
 import './board.scss';
 
-function Board({
+const Board = ({
   setSort, assignments, setToggle, setActiveDocument, activeWorkstream, activeDocument,
-  setNotesUpdated,
-}) {
+  setNotesUpdated, updateFocusArea,
+}) => {
   const { t } = useTranslation('dashboard');
-
   const filteredAssignments = {
     TO_DO: [],
     REVIEW: [],
@@ -116,6 +115,7 @@ function Board({
                   setActiveDocument={setActiveDocument}
                   isInProgress={isInProgress}
                   activeDocument={activeDocument}
+                  updateFocusArea={updateFocusArea}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
@@ -127,6 +127,7 @@ function Board({
                   setActiveTab={changeActiveTab}
                   isInProgress={isInProgress}
                   SetSelectedCard={SetSelectedCard}
+                  updateFocusArea={updateFocusArea}
                 />
                 <StatusColumn
                   status={t('dashboard:status.done')}
@@ -136,6 +137,7 @@ function Board({
                   isInProgress={isInProgress}
                   setActiveDocument={setActiveDocument}
                   activeDocument={activeDocument}
+                  updateFocusArea={updateFocusArea}
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
@@ -145,6 +147,7 @@ function Board({
                   setActiveDocument={setActiveDocument}
                   isInProgress={isInProgress}
                   activeDocument={activeDocument}
+                  updateFocusArea={updateFocusArea}
                 />
               </Row>
             )}
@@ -153,7 +156,7 @@ function Board({
       </div>
     </div>
   );
-}
+};
 
 Board.propTypes = {
   setSort: PropTypes.func.isRequired,
@@ -163,6 +166,7 @@ Board.propTypes = {
   activeWorkstream: PropTypes.instanceOf(Object).isRequired,
   activeDocument: PropTypes.string.isRequired,
   setNotesUpdated: PropTypes.func.isRequired,
+  updateFocusArea: PropTypes.func.isRequired,
 };
 
 export default Board;

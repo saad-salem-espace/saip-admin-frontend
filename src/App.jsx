@@ -25,17 +25,28 @@ function App() {
     i18n.changeLanguage(lang);
   }, [lang]);
 
-  const [showFocusArea, setShowFocusArea] = useState(true);
+  const focusId = JSON.parse(localStorage.getItem('FocusDoc'))?.saipId;
+  const focusTitle = JSON.parse(localStorage.getItem('FocusDoc'))?.title;
+  const [showFocusArea, setShowFocusArea] = useState(null);
   const hideFocusArea = () => {
     setShowFocusArea(false);
+    localStorage.removeItem('FocusDoc');
   };
+
+  useEffect(() => {
+    setShowFocusArea(!!focusId);
+  }, []);
+
   return (
     <ThemeProvider
       lang={lang}
       // eslint-disable-next-line react/jsx-closing-bracket-location
     >
       <div className="app" translate="no">
-        <Routes />
+        <Routes
+          updateFocusArea={(flag) => setShowFocusArea(flag)}
+          showFocusArea={showFocusArea}
+        />
         <AppNavbar lang={lang} changeLang={changeLang} />
         <ToastContainer
           position="bottom-left"
@@ -49,7 +60,11 @@ function App() {
         />
         {
           showFocusArea && (
-            <FocusArea hideFocusArea={hideFocusArea} filingNumber="C, 13797000" applicationTitle="title 1 title 1 title 3 title 4 title 5 title 6 title 7" />
+            <FocusArea
+              hideFocusArea={hideFocusArea}
+              filingNumber={focusId}
+              applicationTitle={focusTitle}
+            />
           )
         }
       </div>

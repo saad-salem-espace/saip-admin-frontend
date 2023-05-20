@@ -16,15 +16,46 @@ import Image from 'react-bootstrap/Image';
 import focusIcon from '../../../assets/images/icons/focus.svg';
 import unfocusIcon from '../../../assets/images/icons/unfocused.svg';
 
-function PatentCard({
+const PatentCard = ({
   assignment, setToggle, setActiveDocument,
-  setActiveTab, isInProgress, SetSelectedCard, active, selectedFocusArea, SetSelectedFocusArea,
-}) {
+  setActiveTab, isInProgress, SetSelectedCard,
+  active, selectedFocusArea, SetSelectedFocusArea, updateFocusArea,
+}) => {
+  const removeFromFocusArea = () => {
+    updateFocusArea(false);
+    localStorage.removeItem('FocusDoc');
+    SetSelectedFocusArea(null);
+  };
+
   const { t } = useTranslation('dashboard', 'common');
   const [pinnedData, executeToggle] = useAxios(
     togglePinned({ Ids: [assignment.id] }),
     { manual: true },
   );
+
+  useEffect(() => {
+    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.saipId);
+  }, []);
+
+  const addToFocusArea = () => {
+    updateFocusArea(true);
+    const assignmentObj = {
+      id: assignment?.id,
+      saipId: assignment?.filingNumber,
+      title: assignment?.applicationTitle,
+    };
+    localStorage.setItem('FocusDoc', JSON.stringify(assignmentObj));
+    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.saipId);
+  };
+
+  const handleFocusClick = () => {
+    if (selectedFocusArea) {
+      removeFromFocusArea();
+    } else {
+      addToFocusArea();
+    }
+  };
+
   useEffect(() => {
     if (pinnedData.data && pinnedData.data.status === 200) setToggle(true);
   }, [pinnedData]);
@@ -61,8 +92,7 @@ function PatentCard({
                         variant="link"
                         disabled={selectedFocusArea
                         && (selectedFocusArea !== assignment.filingNumber)}
-                        onClick={() => SetSelectedFocusArea(selectedFocusArea
-                          ? null : assignment.filingNumber)}
+                        onClick={() => handleFocusClick()}
                         className="p-2"
                       >
                         <Image src={selectedFocusArea === assignment.filingNumber
@@ -166,7 +196,7 @@ function PatentCard({
       </Card.Body>
     </Card>
   );
-}
+};
 
 PatentCard.propTypes = {
   assignment: PropTypes.instanceOf(Object).isRequired,
@@ -178,6 +208,7 @@ PatentCard.propTypes = {
   active: PropTypes.bool.isRequired,
   selectedFocusArea: PropTypes.string.isRequired,
   SetSelectedFocusArea: PropTypes.func.isRequired,
+  updateFocusArea: PropTypes.func.isRequired,
 };
 
 PatentCard.defaultProps = {

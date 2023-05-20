@@ -10,7 +10,7 @@ import Spinner from '../spinner/Spinner';
 const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
-  sort, onPageChange, className, resetPage, isFetching,
+  sort, onPageChange, className, resetPage, isFetching, urlPagination, setTotalElements,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
@@ -49,6 +49,10 @@ const AppPagination = ({
   }, [sort, resetPage]);
 
   useEffect(() => {
+    setTotalElements(paginationInfo?.totalElements);
+  }, [paginationInfo]);
+
+  useEffect(() => {
     setCurrentPage(Number(searchParams.get('page')) || currentPage);
   }, [searchParams.get('page')]);
 
@@ -59,8 +63,10 @@ const AppPagination = ({
   }, [isLoading]);
 
   useEffect(() => {
-    searchParams.set('page', currentPage.toString());
-    setSearchParams(searchParams);
+    if (urlPagination) {
+      searchParams.set('page', currentPage.toString());
+      setSearchParams(searchParams);
+    }
     setIsLoading(true);
     setTimeout(() => {
       execute();
@@ -116,6 +122,8 @@ AppPagination.propTypes = {
   className: PropTypes.string,
   resetPage: PropTypes.number,
   isFetching: PropTypes.func,
+  urlPagination: PropTypes.bool,
+  setTotalElements: PropTypes.func,
 };
 
 AppPagination.defaultProps = {
@@ -131,6 +139,8 @@ AppPagination.defaultProps = {
   className: '',
   resetPage: 0,
   isFetching: null,
+  urlPagination: true,
+  setTotalElements: () => {},
 };
 
 export default AppPagination;

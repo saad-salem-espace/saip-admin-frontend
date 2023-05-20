@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { Trans, useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import {
   createSearchParams, useNavigate, useSearchParams, Link,
 } from 'react-router-dom';
@@ -40,7 +41,7 @@ import TrademarksSearchResultCards from './trademarks-search-result-cards/Tradem
 import toastify from '../../utils/toastify';
 import validationMessages from '../../utils/validationMessages';
 
-function SearchResults() {
+function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -65,7 +66,6 @@ function SearchResults() {
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const { addInstanceToDb, getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const auth = useAuth();
-  const [selectedSaveQueryOption, setSelectedSaveQueryOption] = useState();
   const [showSaveQueryMenu, setShowSaveQueryMenu] = useState(false);
 
   const searchResultParams = {
@@ -80,12 +80,27 @@ function SearchResults() {
     query: searchParams.get('q'),
     resultCount: totalResults.toString(),
     enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+    documentId: null,
+    fav: true,
   };
-
   const saveQueryConfig = saveQueryApi(saveQueryParams, true);
-
   const [saveQueryData, executeSaveQuery] = useAxios(
     saveQueryConfig,
+    { manual: true },
+  );
+
+  const saveQueryParamsForDoc = {
+    workStreamId: searchParams.get('workstreamId'),
+    query: searchParams.get('q'),
+    resultCount: totalResults.toString(),
+    enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+    documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.saipId,
+    fav: isQuerySaved,
+  };
+
+  const saveQueryConfigForDoc = saveQueryApi(saveQueryParamsForDoc, true);
+  const [saveQueryDataForDoc, executeSaveQueryForDoc] = useAxios(
+    saveQueryConfigForDoc,
     { manual: true },
   );
 
@@ -106,6 +121,20 @@ function SearchResults() {
       </div>,
     );
   };
+  const onSavedQuerySuccessForDoc = () => {
+    toastify(
+      'success',
+      <div>
+        <p className="toastifyTitle">{t('querySaved')}</p>
+        <p className="toastText">
+          <Trans
+            i18nKey="savedQueryMsgForDoc"
+            ns="search"
+          />
+        </p>
+      </div>,
+    );
+  };
   const onSavedQueryError = () => {
     toastify(
       'error',
@@ -117,7 +146,24 @@ function SearchResults() {
       </div>,
     );
   };
-
+  const saveQuery = (selectedSaveQueryOption) => {
+    if (isQuerySaved && selectedSaveQueryOption !== 'focusArea') return;
+    if (!(auth && auth?.user)) {
+      addInstanceToDb({
+        data: {
+          workstreamId: searchParams.get('workstreamId'),
+          queryString: searchParams.get('q'),
+          resultCount: totalResults.toString(),
+          synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
+        },
+        onSuccess: onSavedQuerySuccess,
+        onError: onSavedQueryError,
+      });
+    } else {
+      if (selectedSaveQueryOption === 'focusArea') executeSaveQueryForDoc();
+      if (selectedSaveQueryOption === 'myList') executeSaveQuery();
+    }
+  };
   const sortByOptionsPatent = [
     {
       label: t('mostRelevant'),
@@ -185,6 +231,16 @@ function SearchResults() {
       }
     }
   }, [saveQueryData]);
+
+  useEffect(() => {
+    if (saveQueryDataForDoc.data) {
+      if (saveQueryDataForDoc.data.status === 200) {
+        onSavedQuerySuccessForDoc();
+      } else {
+        onSavedQueryError();
+      }
+    }
+  }, [saveQueryDataForDoc]);
 
   useEffect(() => {
     if (!(auth && auth?.user)) {
@@ -416,24 +472,6 @@ function SearchResults() {
     setSortBy(sortCriteria);
   };
 
-  // const saveQuery = () => {
-  //   if (isQuerySaved) return;
-  //   if (!(auth && auth?.user)) {
-  //     addInstanceToDb({
-  //       data: {
-  //         workstreamId: searchParams.get('workstreamId'),
-  //         queryString: searchParams.get('q'),
-  //         resultCount: totalResults.toString(),
-  //         synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
-  //       },
-  //       onSuccess: onSavedQuerySuccess,
-  //       onError: onSavedQueryError,
-  //     });
-  //   } else {
-  //     executeSaveQuery();
-  //   }
-  // };
-
   const axiosConfig = advancedSearchApi(searchResultParams);
 
   const searchResult = {
@@ -534,50 +572,68 @@ function SearchResults() {
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <div className="d-lg-flex align-items-center">
-            {/* <AppTooltip
-              tooltipTrigger={
-                <Button variant="transparent"
-                 className="p-0 me-4 border-0" onClick={saveQuery}
-                 data-testid="fav-button" disabled={isLoading}>
-                  {
-                        isQuerySaved && !isLoading
-                          ? <span className="icon-filled-star star-button f-24" data-testid="filled-star" />
-                          : <span className="icon-star f-24 star-button" data-testid="empty-star" />
-                      }
-                </Button>
-                  }
-              tooltipContent={t('saveSearchQuery')}
-            /> */}
-            <Button
-              className={`position-relative save-query-menu pe-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
-              variant="link text-decoration-none"
-              onClick={() => setShowSaveQueryMenu(!showSaveQueryMenu)}
-            >
-              <span className="icon-star f-24 star-button" />
-              {
-                showSaveQueryMenu && (
-                  <div className="position-absolute save-query-options">
-                    <Button
-                      className="save-btn"
-                      onClick={() => setSelectedSaveQueryOption('myList')}
-                    >
-                      <>
-                        <span className="icon-star fs-base me-2" />
-                        {t('addtoSavedQueries')}
-                      </>
-                    </Button>
-                    {/* please add disabled class for disabled button */}
-                    <Button
-                      className="btn-focus"
-                      onClick={() => setSelectedSaveQueryOption('focusArea')}
-                    >
-                      <span className="icon-focus fs-base me-2" />
-                      {t('addtoFocusArea')}
-                    </Button>
-                  </div>
-                )
-              }
-            </Button>
+            {!showFocusArea ? (
+              <AppTooltip
+                tooltipTrigger={
+                  <Button
+                    variant="transparent"
+                    className="p-0 me-4 border-0"
+                    onClick={() => {
+                      saveQuery('myList');
+                    }}
+                    data-testid="fav-button"
+                    disabled={isLoading}
+                  >
+                    {
+                          isQuerySaved && !isLoading
+                            ? <span className="icon-filled-star star-button f-24" data-testid="filled-star" />
+                            : <span className="icon-star f-24 star-button" data-testid="empty-star" />
+                        }
+                  </Button>
+                    }
+                tooltipContent={t('saveSearchQuery')}
+              />
+            ) : (
+              <Button
+                className={`position-relative save-query-menu pe-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
+                variant="link text-decoration-none"
+                onClick={() => setShowSaveQueryMenu(!showSaveQueryMenu)}
+              >
+                {
+                  isQuerySaved && !isLoading
+                    ? <span className="icon-filled-star star-button f-24" data-testid="filled-star" />
+                    : <span className="icon-star f-24 star-button" data-testid="empty-star" />
+                }
+                {
+                  showSaveQueryMenu && (
+                    <div className="position-absolute save-query-options">
+                      <Button
+                        className={`save-btn${isQuerySaved && !isLoading ? ' disable' : ''}`}
+                        disabled={(isQuerySaved && !isLoading)}
+                        onClick={() => {
+                          saveQuery('myList');
+                        }}
+                      >
+                        <>
+                          <span className="icon-star fs-base me-2" />
+                          {t('addtoSavedQueries')}
+                        </>
+                      </Button>
+                      <Button
+                        className="btn-focus"
+                        onClick={() => {
+                          saveQuery('focusArea');
+                        }}
+                      >
+                        <span className="icon-focus fs-base me-2" />
+                        {t('addtoFocusArea')}
+                      </Button>
+                    </div>
+                  )
+                }
+              </Button>
+            )}
+
             <div>
               <SearchNote
                 searchKeywords={searchKeywords}
@@ -667,4 +723,7 @@ function SearchResults() {
   );
 }
 
+SearchResults.propTypes = {
+  showFocusArea: PropTypes.bool.isRequired,
+};
 export default SearchResults;

@@ -2,11 +2,11 @@ import { useTranslation, Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Tabs from 'components/shared/tabs/Tabs';
 import React, { useState, useEffect } from 'react';
+import NoData from 'components/shared/empty-states/NoData';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import Notes from 'components/examiner-dashboard/board/notes/Notes';
 import SavedQueriesTable from 'components/saved-queries/SavedQueriesTable';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
-import NoData from 'components/shared/empty-states/NoData';
 import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
 import IprData from '../IprData';
 import './style.scss';
@@ -23,6 +23,7 @@ function IprSections({
   className,
   showInfo,
   setNotesUpdated,
+  activeWorkstream,
 }) {
   const { t } = useTranslation(['dashboard', 'notes']);
   const [activeTabId, setActiveTabId] = useState(activeTab);
@@ -30,6 +31,7 @@ function IprSections({
   const [hasUnsavedNotes, setHasUnsavedNotes] = useState(false);
   const [fireSubmit, setFireSubmit] = useState(false);
   const [selectedTab, setSelectedTab] = useState(activeTabId);
+  const [totalElements, setTotalElements] = useState(0);
 
   const disableChangeTab = (hasData) => {
     setHasUnsavedNotes(!!hasData);
@@ -57,9 +59,8 @@ function IprSections({
     setActiveTabId(selectedTab);
     setHasUnsavedNotes(false);
   };
-  const savedQueriesCount = 8;
 
-  const axiosConfig = getSavedQueryApi(1, '1', true);
+  const axiosConfig = getSavedQueryApi(activeWorkstream, JSON.parse(localStorage.getItem('FocusDoc'))?.saipId, '1', true);
 
   const savedQueries = (
     SavedQueriesTable
@@ -108,17 +109,18 @@ function IprSections({
       title: (
         <div className="d-flex align-items-center" translate="no">
           {t('dashboard:savedQueries')}
-          <span className="ms-1 p-1 queries-count">{savedQueriesCount}</span>
+          { activeTabId === 3 && (<span className="ms-1 p-1 queries-count">{totalElements}</span>)}
         </div>
       ),
       content: (
         <AppPagination
           className="mt-8"
           axiosConfig={axiosConfig}
-          defaultPage={1}
+          defaultPage="1"
           RenderedComponent={savedQueries}
           emptyState={<NoData />}
-          // resetPage={pageReset}
+          urlPagination={false}
+          setTotalElements={(totalCount) => setTotalElements(totalCount)}
         />
       ),
     },
@@ -181,6 +183,7 @@ IprSections.propTypes = {
   selectedCardId: PropTypes.number.isRequired,
   className: PropTypes.string,
   setNotesUpdated: PropTypes.func,
+  activeWorkstream: PropTypes.number,
 };
 
 IprSections.defaultProps = {
@@ -192,6 +195,7 @@ IprSections.defaultProps = {
   activeTab: 1,
   className: '',
   setNotesUpdated: () => { },
+  activeWorkstream: null,
 };
 
 export default IprSections;
