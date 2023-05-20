@@ -16,6 +16,13 @@
   }
 }
 .search-result-wrapper {
+  > .skiptranslate {
+    margin-top: -39px;
+    iframe.skiptranslate {
+      @extend .position-absolute;
+      top: 0;
+    }
+  }
   @include media-breakpoint-up(xl) {
     overflow-y: hidden;
   }
