@@ -2,7 +2,7 @@
 @import "../../../assets/styles/utilities/mixin";
 
 .dashboard-sidebar {
-  z-index: 1040;
+  z-index: 1;
 
   .nav {
     margin-top: 150px;
@@ -63,6 +63,6 @@
         }
       }
     }
-    
+
   }
 }

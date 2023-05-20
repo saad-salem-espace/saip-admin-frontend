@@ -595,7 +595,7 @@ function SearchResults({ showFocusArea }) {
               />
             ) : (
               <Button
-                className={`position-relative save-query-menu pe-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
+                className={`position-relative save-query-menu px-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
                 variant="link text-decoration-none"
                 onClick={() => setShowSaveQueryMenu(!showSaveQueryMenu)}
               >
@@ -608,7 +608,7 @@ function SearchResults({ showFocusArea }) {
                   showSaveQueryMenu && (
                     <div className="position-absolute save-query-options">
                       <Button
-                        className={`save-btn${isQuerySaved && !isLoading ? ' disable' : ''}`}
+                        className={`save-btn ${isQuerySaved && !isLoading ? 'disabled' : ''}`}
                         disabled={(isQuerySaved && !isLoading)}
                         onClick={() => {
                           saveQuery('myList');

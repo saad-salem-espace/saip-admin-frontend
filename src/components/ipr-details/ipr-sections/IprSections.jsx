@@ -113,15 +113,17 @@ function IprSections({
         </div>
       ),
       content: (
-        <AppPagination
-          className="mt-8"
-          axiosConfig={axiosConfig}
-          defaultPage="1"
-          RenderedComponent={savedQueries}
-          emptyState={<NoData />}
-          urlPagination={false}
-          setTotalElements={(totalCount) => setTotalElements(totalCount)}
-        />
+        <div className="m-4">
+          <AppPagination
+            className="mt-8"
+            axiosConfig={axiosConfig}
+            defaultPage="1"
+            RenderedComponent={savedQueries}
+            emptyState={<NoData />}
+            urlPagination={false}
+            setTotalElements={(totalCount) => setTotalElements(totalCount)}
+          />
+        </div>
       ),
     },
   ];
@@ -154,7 +156,7 @@ function IprSections({
               />
           }
             btnText={t('add')}
-            className="warning"
+            className="warning notes-modal"
             handleConfirm={handleConfirm}
             hideAlert={hideAlert}
           />
