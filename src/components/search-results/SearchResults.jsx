@@ -524,6 +524,7 @@ function SearchResults() {
                             />
                           }
                           id="advancedSearchTip"
+                          gotIt
                         >
                           <Trans
                             i18nKey="advancedSearchTipContent"
@@ -545,6 +546,7 @@ function SearchResults() {
                             />
                           }
                           id="allowSynonymsTip"
+                          gotIt
                         >
                           <Trans
                             i18nKey="allowSynonymsTipContent"

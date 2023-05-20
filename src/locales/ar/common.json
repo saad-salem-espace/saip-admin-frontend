@@ -4,5 +4,13 @@
   },
   "ago": "منذ",
   "days": "ايام",
-  "gotIt": "حسناً!"
+  "gotIt": "حسناً!",
+  "floatWidget": {
+    "userSurvey" : {
+      "widgetTitle" : "قيم موقعنا",
+      "widgetContent" : "يهدف هذا الاستطلاع إلى تحسين جودة موقعنا.",
+      "widgetActionText" : "إبدأ التقييم",
+      "widgetAction" : "https://surveys.saip.gov.sa/index.php/982283?lang=ar"
+    }
+  }
 }

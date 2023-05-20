@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex, defaultConditions } from 'utils/searchQuery';
+import FloatWidget from 'components/shared/float-widget/FloatWidget';
 import ViewTip from 'components/shared/view-tip/ViewTip';
 import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
@@ -142,6 +143,7 @@ function WorkstreamSearch() {
                         />
                       }
                       id="advancedSearchTip"
+                      gotIt
                     >
                       <Trans
                         i18nKey="advancedSearchTipContent"
@@ -183,6 +185,16 @@ function WorkstreamSearch() {
           </Col>
         </Row>
       </Container>
+      <FloatWidget
+        id="survey-widget"
+        widgetTitle={t('common:floatWidget.userSurvey.widgetTitle')}
+        widgetAction={t('common:floatWidget.userSurvey.widgetAction')}
+        widgetActionText={t('common:floatWidget.userSurvey.widgetActionText')}
+        float
+        show
+      >
+        {t('common:floatWidget.userSurvey.widgetContent')}
+      </FloatWidget>
     </div>
   );
 }
