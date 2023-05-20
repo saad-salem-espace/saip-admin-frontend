@@ -30,7 +30,7 @@
     @extend .pb-8;
 
     html[dir="rtl"] & {
-      direction: ltr;
+      direction: rtl;
       text-align: right;
     }
   }
