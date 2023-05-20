@@ -23,22 +23,6 @@ const BibliographicDataSection = ({
     }
     return grid;
   };
-  useEffect(() => {
-    const handleSelectionChange = () => {
-      const selection = window.getSelection();
-      const selectedText = selection.toString();
-      console.log(selectedText);
-
-      selection.anchorNode.parentElement.classList.add('added');
-      if ((selection.anchorNode) === (selection.focusNode)) {
-        console.log(selectedText);
-      }
-    };
-    window.document.addEventListener('selectionchange', handleSelectionChange);
-    return () => {
-      window.document.removeEventListener('selectionchange', handleSelectionChange);
-    };
-  }, []);
 
   return (
     <Row>
