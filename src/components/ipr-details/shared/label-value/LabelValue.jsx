@@ -10,7 +10,7 @@ const LabelValue = ({
 }) => (
   <div className={`d-flex align-items-center ${className}`}>
     {label && (
-    <p className={`${customLabel ? '' : 'text-primary f-14'} ${labelClassName} ${style.label}`}>{label}</p>
+    <p className={`${customLabel ? '' : 'text-primary f-14'} ${labelClassName} ${style.label} disable-highlight`}>{label}</p>
     )}
     <p className={`f-12 ${valueClassName}`}>
       <HandleEmptyAttribute checkOn={value} />

@@ -26,7 +26,7 @@ const BibliographicDataSection = ({
   return (
     <Row>
       <Col md={getGrid('bibliographic')}>
-        <h6 className="mt-8 mb-4">{t('register')}</h6>
+        <h6 className="mt-8 mb-4 disable-highlight">{t('register')}</h6>
         <LabelValue
           label={t('applicants')}
           value={document?.Applicants?.join('; ')}
@@ -39,7 +39,7 @@ const BibliographicDataSection = ({
           handleClick={handleClick}
         />
         <div>
-          <p className="text-primary f-14">{t('classifications')}</p>
+          <p className="text-primary f-14 disable-highlight">{t('classifications')}</p>
           <LabelValue
             label={t('ipc')}
             value={document?.IPCClassification?.IPC?.join('; ')}
@@ -82,7 +82,7 @@ const BibliographicDataSection = ({
           value={document?.Priorities?.PublishedAs}
           handleClick={handleClick}
         />
-        <p className="text-primary f-14">{t('abstract')}</p>
+        <p className="text-primary f-14 disable-highlight">{t('abstract')}</p>
         <LabelValue
           value={
             <ShowMore>

@@ -32,7 +32,7 @@ const BibliographicDataSection = (
         )
       }
         <Col md={isIPRExpanded ? 8 : 12}>
-          <h6 className="mb-4">
+          <h6 className="mb-4 disable-highlight">
             {t('register')}
           </h6>
           <LabelValue
@@ -76,34 +76,34 @@ const BibliographicDataSection = (
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.registrationNumber')}
+            label={t('ipr.registrationNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.RegistrationNumber}
             handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.registrationDate')}
+            label={t('ipr.registrationDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.RegistrationDate}
             handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.publicationNumber')}
+            label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.PublicationNumber}
             handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.publicationDate')}
+            label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.PublicationDate}
             handleClick={handleClick}
             className="mb-4"
           />
-          <p className="text-primary f-14">{t('trademarks.markDescription')}</p>
+          <p className="text-primary f-14 disable-highlight">{t('trademarks.markDescription')}</p>
           <LabelValue
             labelClassName="bibliographicLabel"
             value={

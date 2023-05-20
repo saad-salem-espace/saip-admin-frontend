@@ -7,7 +7,7 @@ const LabelValue = ({
 }) => (
   <div className={`${className}`}>
     {label && (
-    <p className="text-gray">{label}</p>
+    <p className="text-gray disable-highlight">{label}</p>
     )}
     <div className="d-flex align-items-center">
       <p>{value}</p>

@@ -11,22 +11,24 @@ function KeywordPlannerButton({
   const { t } = useTranslation('dashboard');
 
   return (
-    <AppTooltip
-      className="w-auto"
-      placement="top"
-      tooltipContent={t('board.addtoKeywordPlanner')}
-      tooltipTrigger={
-        <div>
-          <Button
-            variant="primary"
-            className="px-2 py-1"
-            onClick={handleClick}
-          >
-            <Image src={addIcon} />
-          </Button>
-        </div>
+    <div className="keyword-planner-btn">
+      <AppTooltip
+        className="w-auto"
+        placement="top"
+        tooltipContent={t('board.addtoKeywordPlanner')}
+        tooltipTrigger={
+          <div>
+            <Button
+              variant="primary"
+              className="px-2 py-1"
+              onClick={handleClick}
+            >
+              <Image src={addIcon} />
+            </Button>
+          </div>
       }
-    />
+      />
+    </div>
   );
 }
 
