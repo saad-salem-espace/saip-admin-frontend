@@ -6,8 +6,8 @@ import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import LabelValue from './shared/label-value/LabelValue';
 
 const BibliographicDataSection = ({
-  document, isIPRExpanded, children, hideSearchQueryMenu, showSearchQuery,
-  ShowSearchQueryMenu, toggleIcon, upArrow,
+  document, isIPRExpanded, children, handleClick,
+
 }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
@@ -30,19 +30,13 @@ const BibliographicDataSection = ({
         <LabelValue
           label={t('applicants')}
           value={document?.Applicants?.join('; ')}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
-          toggleIcon={toggleIcon}
-          upArrow={upArrow}
+          handleClick={handleClick}
         />
         <LabelValue
           label={t('inventors')}
           value={document?.Inventors?.join('; ')}
           className="mb-4"
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
         <div>
           <p className="text-primary f-14">{t('classifications')}</p>
@@ -51,9 +45,7 @@ const BibliographicDataSection = ({
             value={document?.IPCClassification?.IPC?.join('; ')}
             className="f-12 mb-5"
             customLabel
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            handleClick={handleClick}
           />
         </div>
         <LabelValue
@@ -61,9 +53,7 @@ const BibliographicDataSection = ({
           value={document?.CPCClassification?.CPC?.join('; ')}
           className="f-12 mb-5"
           customLabel
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
         {/* <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('priorities')}</p>
@@ -74,9 +64,7 @@ const BibliographicDataSection = ({
         <LabelValue
           label={t('application')}
           value={BibliographicData?.Application}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
         <LabelValue
           label={t('publication')}
@@ -87,16 +75,12 @@ const BibliographicDataSection = ({
               {BibliographicData?.PublicationDate}
             </>
           }
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
         <LabelValue
           label={t('publishedAs')}
           value={document?.Priorities?.PublishedAs}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
         <p className="text-primary f-14">{t('abstract')}</p>
         <LabelValue
@@ -106,9 +90,7 @@ const BibliographicDataSection = ({
             </ShowMore>
           }
           valueClassName="f-14"
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
       </Col>
       <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
@@ -141,17 +123,7 @@ BibliographicDataSection.propTypes = {
   }).isRequired,
   isIPRExpanded: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-  showSearchQuery: PropTypes.bool,
-  hideSearchQueryMenu: PropTypes.func,
-  ShowSearchQueryMenu: PropTypes.func,
-  toggleIcon: PropTypes.func.isRequired,
-  upArrow: PropTypes.bool.isRequired,
-};
-
-BibliographicDataSection.defaultProps = {
-  hideSearchQueryMenu: () => { },
-  ShowSearchQueryMenu: () => { },
-  showSearchQuery: false,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default BibliographicDataSection;

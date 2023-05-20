@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import addIcon from '../../../../assets/images/icons/add.svg';
 
 function KeywordPlannerButton({
-  ShowSearchQueryMenu,
+  handleClick,
 }) {
   const { t } = useTranslation('dashboard');
 
@@ -20,7 +20,7 @@ function KeywordPlannerButton({
           <Button
             variant="primary"
             className="px-2 py-1"
-            onClick={() => ShowSearchQueryMenu()}
+            onClick={handleClick}
           >
             <Image src={addIcon} />
           </Button>
@@ -31,7 +31,7 @@ function KeywordPlannerButton({
 }
 
 KeywordPlannerButton.propTypes = {
-  ShowSearchQueryMenu: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default KeywordPlannerButton;
