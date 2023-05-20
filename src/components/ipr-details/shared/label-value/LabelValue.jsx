@@ -14,8 +14,8 @@ const LabelValue = ({
     )}
     <p className={`f-12 ${valueClassName}`}>
       <HandleEmptyAttribute checkOn={value} />
+      <KeywordPlannerButton ShowSearchQueryMenu={ShowSearchQueryMenu} />
     </p>
-    <KeywordPlannerButton ShowSearchQueryMenu={ShowSearchQueryMenu} />
   </div>
 );
 

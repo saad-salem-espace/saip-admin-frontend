@@ -10,8 +10,10 @@ const LabelValue = ({
     <p className="text-gray disable-highlight">{label}</p>
     )}
     <div className="d-flex align-items-center">
-      <p>{value}</p>
-      <KeywordPlannerButton handleClick={handleClick} />
+      <p>
+        {value}
+        <KeywordPlannerButton handleClick={handleClick} />
+      </p>
     </div>
   </div>
 );

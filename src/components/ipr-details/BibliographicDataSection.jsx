@@ -2,6 +2,7 @@ import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import ShowMore from 'components/shared/show-more/ShowMore';
+import { useEffect } from 'react';
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import LabelValue from './shared/label-value/LabelValue';
 
@@ -22,6 +23,22 @@ const BibliographicDataSection = ({
     }
     return grid;
   };
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      const selectedText = selection.toString();
+      console.log(selectedText);
+
+      selection.anchorNode.parentElement.classList.add('added');
+      if ((selection.anchorNode) === (selection.focusNode)) {
+        console.log(selectedText);
+      }
+    };
+    window.document.addEventListener('selectionchange', handleSelectionChange);
+    return () => {
+      window.document.removeEventListener('selectionchange', handleSelectionChange);
+    };
+  }, []);
 
   return (
     <Row>
