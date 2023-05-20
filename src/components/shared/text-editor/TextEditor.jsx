@@ -88,13 +88,13 @@ function TextEditor({
         {(hasError || showError) && <ErrorMessage
           className="mb-0"
           msg={
-            <p className="fs-12 d-flex mb-0">
+            <p className="fs-xs d-flex mb-0">
               <BsExclamationTriangle className="me-2 fs-base" />
               {t('errorText')}
             </p>
         }
         />}
-        <p className="fs-12 text-gray-700 mb-1">
+        <p className="fs-xs text-gray-700 mb-1">
           <span className="pe-1">{maxLength}</span>
           {t('translation:character')}
         </p>
