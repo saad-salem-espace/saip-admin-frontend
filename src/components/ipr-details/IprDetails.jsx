@@ -49,11 +49,12 @@ function IprDetails({
   isCardInprogress,
   selectedCardId,
   setNotesUpdated,
-  handleClick,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
+  const [validHighlight, setValidHighlight] = useState(false);
+  const [highlightTrigger, setHighlightTrigger] = useState(false);
   const [document, setDocument] = useState(null);
   const [searchParams] = useSearchParams();
   const [selectedView, setSelectedView] = useState({
@@ -133,6 +134,20 @@ function IprDetails({
 
   const onChangeSelect = (i) => {
     setSelectedView(i);
+  };
+
+  const handleClick = () => {
+    const selection = window.getSelection();
+    const selectedText = selection.toString();
+
+    if (selectedText && (selection.anchorNode) === (selection.focusNode)) {
+      setValidHighlight(true);
+      console.log(selectedText);
+    } else {
+      setValidHighlight(false);
+    }
+
+    setHighlightTrigger((prev) => !prev);
   };
 
   const views = {
@@ -345,6 +360,8 @@ function IprDetails({
             ShowSearchQueryMenu={ShowSearchQueryMenu}
             ToggleSearchQueryMenu={ToggleSearchQueryMenu}
             hideSearchQueryMenu={hideSearchQueryMenu}
+            validHighlight={validHighlight}
+            highlightTrigger={highlightTrigger}
           >
             <AppTooltip
               className="w-auto"
@@ -414,7 +431,6 @@ IprDetails.propTypes = {
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
-  handleClick: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -422,7 +438,6 @@ IprDetails.defaultProps = {
   className: null,
   activeWorkstream: null,
   onClose: () => { },
-  handleClick: () => { },
   getNextDocument: () => { },
   getPreviousDocument: () => { },
   setActiveDocument: () => { },

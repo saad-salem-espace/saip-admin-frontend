@@ -23,18 +23,6 @@ function IprExpand({
 }) {
   const { t } = useTranslation('dashboard');
 
-  const handleClick = () => {
-    console.log('inside');
-    const selection = window.getSelection();
-    const selectedText = selection.toString();
-
-    if ((selection.anchorNode) === (selection.focusNode)) {
-      console.log(selectedText);
-    } else {
-      console.log('not working');
-    }
-  };
-
   return (
     <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
       <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
@@ -86,7 +74,6 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             className="mx-0"
-            handleClick={handleClick}
           />
         </Col>
         <Col lg={6}>
@@ -96,7 +83,6 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             setNotesUpdated={setNotesUpdated}
-            handleClick={handleClick}
           />
         </Col>
       </div>
