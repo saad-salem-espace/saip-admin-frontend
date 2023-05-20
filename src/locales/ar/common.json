@@ -12,5 +12,10 @@
       "widgetActionText" : "إبدأ التقييم",
       "widgetAction" : "https://surveys.saip.gov.sa/index.php/982283?lang=ar"
     }
+  },
+  "register": "سجل",
+  "limitReached": {
+    "register_now": "سجل الان!",
+    "register_now_msg": "لقد وصلت إلى الحد المسموح به للزائر. سجل الآن للحصول على حد نهائي."
   }
 }

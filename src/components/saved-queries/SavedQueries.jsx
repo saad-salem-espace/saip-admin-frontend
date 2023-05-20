@@ -88,6 +88,9 @@ const SavedQueries = () => {
               RenderedComponent={savedQueries}
               emptyState={<NoData />}
               resetPage={pageReset}
+              renderedProps={{
+                selectedWorkStream: selectedWorkStream.value,
+              }}
             />
           ) : (
             <IndexedDbAppPagination
@@ -102,6 +105,9 @@ const SavedQueries = () => {
                 sortedIndexName: 'updatedAt',
                 indexName: 'workstreamId',
                 indexValue: selectedWorkStream.value,
+              }}
+              renderedProps={{
+                selectedWorkStream: selectedWorkStream.value,
               }}
             />
           )}

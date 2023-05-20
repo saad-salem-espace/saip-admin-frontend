@@ -2,6 +2,7 @@ import { render } from 'TestUtils';
 import sampleTrademark from 'testing-resources/trademarks/sampleTrademark.json';
 import { waitFor } from '@testing-library/react';
 import I18n from 'i18n';
+import { getAttachmentURL } from 'utils/attachments';
 import BibliographicDataSection from './BibliographicDataSection';
 
 describe('<BibliographicDataSection />', () => {
@@ -13,12 +14,13 @@ describe('<BibliographicDataSection />', () => {
       <BibliographicDataSection
         BibliographicData={sampleTrademark.BibliographicData}
         isIPRExpanded
+        getAttachmentURL={getAttachmentURL}
       />,
     );
     await waitFor(() => {
-      ['register', 'trademarks.markNameEN', 'trademarks.markNameAR', 'trademarks.filingNumber', 'trademarks.filingDate', 'trademarks.markType',
-        'trademarks.markStatus', 'trademarks.registrationNumber', 'trademarks.registrationDate', 'trademarks.publicationNumber',
-        'trademarks.publicationDate', 'trademarks.markDescription'].forEach((attributeName) => {
+      ['register', 'trademarks.markNameEN', 'trademarks.markNameAR', 'ipr.filingNumber', 'ipr.filingDate', 'trademarks.markType',
+        'trademarks.markStatus', 'ipr.registrationNumber', 'ipr.registrationDate', 'ipr.publicationNumber',
+        'ipr.publicationDate', 'trademarks.markDescription'].forEach((attributeName) => {
         expect(getByText(tSearch(attributeName))).toBeInTheDocument();
       });
       expect(getByText(sampleTrademark.BibliographicData.BrandNameEn)).toBeInTheDocument();
@@ -30,7 +32,10 @@ describe('<BibliographicDataSection />', () => {
 
   it('renders empty handler text if not exist', async () => {
     const { queryAllByText, getByText } = render(
-      <BibliographicDataSection BibliographicData={sampleTrademark.BibliographicData} />,
+      <BibliographicDataSection
+        BibliographicData={sampleTrademark.BibliographicData}
+        getAttachmentURL={getAttachmentURL}
+      />,
     );
     if (sampleTrademark.BibliographicData.BrandNameAr) {
       expect(getByText(sampleTrademark.BibliographicData.BrandNameAr)).toBeInTheDocument();
