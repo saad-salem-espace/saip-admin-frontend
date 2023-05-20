@@ -115,7 +115,7 @@ const SaveQuery = ({
         title={t('common:limitReached.register_now')}
         hideAlert={() => { setReachedLimit(false); }}
         msg={t('common:limitReached.register_now_msg')}
-        confirmText={t('common:register')}
+        confirmBtnText={t('common:register')}
         showModal={reachedLimit}
       />
     </>

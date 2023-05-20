@@ -15,7 +15,6 @@ import { useAuth } from 'react-oidc-context';
 import { tableNames } from 'dbConfig';
 import CacheContext from 'contexts/CacheContext';
 import useCacheRequest from 'hooks/useCacheRequest';
-import { pascalCase } from 'change-case';
 import Spinner from 'components/shared/spinner/Spinner';
 import SavedQueriesTable from './SavedQueriesTable';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
@@ -32,7 +31,7 @@ const SavedQueries = () => {
   const currentLang = i18n.language;
 
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
   }
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
@@ -89,6 +88,9 @@ const SavedQueries = () => {
               RenderedComponent={savedQueries}
               emptyState={<NoData />}
               resetPage={pageReset}
+              renderedProps={{
+                selectedWorkStream: selectedWorkStream.value,
+              }}
             />
           ) : (
             <IndexedDbAppPagination
@@ -103,6 +105,9 @@ const SavedQueries = () => {
                 sortedIndexName: 'updatedAt',
                 indexName: 'workstreamId',
                 indexValue: selectedWorkStream.value,
+              }}
+              renderedProps={{
+                selectedWorkStream: selectedWorkStream.value,
               }}
             />
           )}

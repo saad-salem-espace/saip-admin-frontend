@@ -1,16 +1,14 @@
 @import"../../../assets/styles/utilities/custom-theme";
 
 @mixin border($width,$height,$top,$color) {
-  @include media-breakpoint-up(xl) {
-    position: relative;
-    &::before, 
-    &::after {
-      width: $width;
-      height: $height;
-      background:$color;
-      position: absolute;
-      top: $top;
-    }
+  position: relative;
+  &::before, 
+  &::after {
+    width: $width;
+    height: $height;
+    background:$color;
+    position: absolute;
+    top: $top;
   }
 }
 @mixin border-start($value) {

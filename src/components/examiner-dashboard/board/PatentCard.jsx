@@ -81,7 +81,7 @@ function PatentCard({
               )}
             </p>
           }
-          placement="right"
+          placement="auto"
         />
         <div className="d-flex justify-content-between text-gray-700 border-bottom">
           <p className="fs-12 mb-2">

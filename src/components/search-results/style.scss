@@ -1,4 +1,5 @@
 @import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/mixin";
 @import "~bootstrap/scss/mixins";
 
 .select {
@@ -14,10 +15,9 @@
     height: 60px;
   }
 }
-
-.search-result {
-  html[dir="rtl"] & {
-    @extend .pe-4;
+.search-result-wrapper {
+  @include media-breakpoint-up(xl) {
+    overflow-y: hidden;
   }
 }
 
@@ -147,6 +147,23 @@
 
         >div:nth-child(2) {
           background-color: $gray-200;
+        }
+      }
+    }
+  }
+  .imgUploaded {
+    &.searchInputWrapper{
+      @include media-breakpoint-up(md) {
+        input {
+  
+          html[dir="ltr"] & {
+            padding-left: 100px !important;
+            padding-right: 180px !important;
+          }
+          html[dir="rtl"] & {
+            padding-right: 90px !important;
+            padding-left: 180px !important;
+          }
         }
       }
     }

@@ -22,6 +22,7 @@
     "draftjs-to-html": "^0.9.1",
     "fake-indexeddb": "^4.0.1",
     "formik": "^2.2.9",
+    "html-to-draftjs": "^1.5.0",
     "http-proxy-middleware": "^2.0.6",
     "i18next": "^22.4.9",
     "jest-config": "^29.4.2",
