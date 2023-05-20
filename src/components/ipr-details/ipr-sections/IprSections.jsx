@@ -122,6 +122,9 @@ function IprSections({
             emptyState={<NoData />}
             urlPagination={false}
             setTotalElements={(totalCount) => setTotalElements(totalCount)}
+            renderedProps={{
+              selectedWorkStream: 1,
+            }}
           />
         </div>
       ),
