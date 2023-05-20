@@ -8,7 +8,7 @@ import './modalAlert.scss';
 import '../../../assets/styles/common/modal.scss';
 
 const ModalAlert = ({
-  title, msg, className, handleConfirm, showModal, hideAlert,
+  title, msg, className, handleConfirm, showModal, hideAlert, confirmText,
 }) => {
   const { t } = useTranslation('translation');
   const handleClose = (s) => {
@@ -35,7 +35,7 @@ const ModalAlert = ({
               onClick={() => { handleClose(); }}
             />
             <Button
-              text={t('save')}
+              text={confirmText ?? t('save')}
               variant="primary"
               className="py-2 w-50 rounded-0"
               size="md"
@@ -55,11 +55,13 @@ ModalAlert.propTypes = {
   handleConfirm: PropTypes.func.isRequired,
   showModal: PropTypes.bool,
   hideAlert: PropTypes.func.isRequired,
+  confirmText: PropTypes.string,
 };
 
 ModalAlert.defaultProps = {
   className: null,
   showModal: true,
+  confirmText: null,
 };
 
 export default ModalAlert;
