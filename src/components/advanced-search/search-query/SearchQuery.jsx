@@ -55,7 +55,7 @@ function SearchQuery({
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form onChange={onChangeSearchQuery(!isAdvancedMenuOpen ? '' : parseQuery(values.searchFields, '', true))} onSubmit={handleSubmit}>
+          <Form onChange={onChangeSearchQuery(values.searchFields)} onSubmit={handleSubmit}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -69,9 +69,11 @@ function SearchQuery({
                      searchIdentifiers={searchIdentifiers?.data}
                      identifierValue={value.identifier}
                      onChangeIdentifier={(identifier) => {
-                       setFieldValue(`searchFields.${index}.identifier`, identifier);
                        setFieldValue(`searchFields.${index}.condition`, identifier?.identifierOptions?.[0]);
-                       setFieldValue(`searchFields.${index}.data`, '');
+
+                       if (identifier.identifierType === 'Date' || value.identifier.identifierType === 'Date') setFieldValue(`searchFields.${index}.data`, '');
+
+                       setFieldValue(`searchFields.${index}.identifier`, identifier);
                      }}
                      operators={operators}
                      conditionValue={value.condition}
