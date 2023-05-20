@@ -8,8 +8,8 @@
   "floatWidget": {
     "userSurvey" : {
       "widgetTitle" : "Rate our website",
-      "widgetContent" : "This survey aims to improve the quality of our website.",
-      "widgetActionText" : "Start Rating",
+      "widgetContent" : "Share your experience with the IP Search",
+      "widgetActionText" : "Start",
       "widgetAction" : "https://surveys.saip.gov.sa/index.php/982283?lang=en"
     }
   },

@@ -7,9 +7,9 @@
   "gotIt": "حسناً!",
   "floatWidget": {
     "userSurvey" : {
-      "widgetTitle" : "قيم موقعنا",
-      "widgetContent" : "يهدف هذا الاستطلاع إلى تحسين جودة موقعنا.",
-      "widgetActionText" : "إبدأ التقييم",
+      "widgetTitle" : "شاركنا تقييمك لمنصة البحث",
+      "widgetContent" : "شاركنا تجربتك في خدمة البحث",
+      "widgetActionText" : "إبدأ",
       "widgetAction" : "https://surveys.saip.gov.sa/index.php/982283?lang=ar"
     }
   },
