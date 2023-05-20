@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import ViewTip from 'components/shared/view-tip/ViewTip';
 import * as Yup from 'yup';
@@ -439,19 +439,11 @@ function SearchResults() {
                           className="border-md-end mb-md-0 mb-2"
                         />
                         <ViewTip
-                          Title={
-                            <Trans
-                              i18nKey="advancedSearchTipTitle"
-                              ns="tips"
-                            />
-                          }
+                          Title={t('tips:advancedSearchTipTitle')}
                           id="advancedSearchTip"
                           gotIt
                         >
-                          <Trans
-                            i18nKey="advancedSearchTipContent"
-                            ns="tips"
-                          />
+                          {t('tips:advancedSearchTipContent')}
                         </ViewTip>
                       </div>
                       <div className="d-flex align-items-center">
@@ -461,19 +453,11 @@ function SearchResults() {
                           text={t('allowSynonyms')}
                         />
                         <ViewTip
-                          Title={
-                            <Trans
-                              i18nKey="allowSynonymsTipTitle"
-                              ns="tips"
-                            />
-                          }
+                          Title={t('tips:allowSynonymsTipTitle')}
                           id="allowSynonymsTip"
                           gotIt
                         >
-                          <Trans
-                            i18nKey="allowSynonymsTipContent"
-                            ns="tips"
-                          />
+                          {t('tips:allowSynonymsTipContent')}
                         </ViewTip>
                       </div>
                     </div>

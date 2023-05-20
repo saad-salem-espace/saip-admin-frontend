@@ -136,19 +136,11 @@ function WorkstreamSearch() {
                       className="d-block text-primary text-end"
                     />
                     <ViewTip
-                      Title={
-                        <Trans
-                          i18nKey="advancedSearchTipTitle"
-                          ns="tips"
-                        />
-                      }
+                      Title={t('tips:advancedSearchTipTitle')}
                       id="advancedSearchTip"
                       gotIt
                     >
-                      <Trans
-                        i18nKey="advancedSearchTipContent"
-                        ns="tips"
-                      />
+                      {t('tips:advancedSearchTipContent')}
                     </ViewTip>
                   </div>
                   <SharedSearch
