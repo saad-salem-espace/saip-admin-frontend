@@ -20,7 +20,8 @@ import LocarnoClassificationRow from './locarno-classification/LocarnoClassifica
 
 const IndustrialDesignViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
-  hideSearchQueryMenu, showSearchQuery, ShowSearchQueryMenu, toggleIcon, upArrow,
+  handleClick,
+
 }) => {
   const { t } = useTranslation('search');
 
@@ -31,11 +32,7 @@ const IndustrialDesignViews = ({
           isIPRExpanded={isIPRExpanded}
           BibliographicData={document.BibliographicData}
           getAttachmentURL={preparedGetAttachmentURL}
-          showSearchQuery={showSearchQuery}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
-          toggleIcon={toggleIcon}
-          upArrow={upArrow}
+          handleClick={handleClick}
         >
           <h6>{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
@@ -66,11 +63,7 @@ const IndustrialDesignViews = ({
         <Description
           description={document.BibliographicData.DesignAbstract}
           isIPRExpanded={isIPRExpanded}
-          showSearchQuery={showSearchQuery}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
-          toggleIcon={toggleIcon}
-          upArrow={upArrow}
+          handleClick={handleClick}
         >
           <h6 className={`${!isIPRExpanded ? 'mt-4' : ''}`}>{t('ipr.drawings')}</h6>
           {document.Drawings?.length ? (
@@ -189,9 +182,7 @@ IndustrialDesignViews.propTypes = {
   documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   searchResultParams: PropTypes.shape.isRequired,
   preparedGetAttachmentURL: PropTypes.func.isRequired,
-  showSearchQuery: PropTypes.bool.isRequired,
-  hideSearchQueryMenu: PropTypes.func.isRequired,
-  ShowSearchQueryMenu: PropTypes.func.isRequired,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default IndustrialDesignViews;

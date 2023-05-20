@@ -11,12 +11,14 @@ import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import LabelValue from './shared/label-value/LabelValue';
 
 const BibliographicDataSection = ({
-  document, isIPRExpanded, children, hideSearchQueryMenu, showSearchQuery,
-  ShowSearchQueryMenu, toggleIcon, upArrow,
+  document, isIPRExpanded, children, handleClick,
+
 }) => {
-  const { t } = useTranslation('search');
+  console.log(handleClick);
+  handleClick();
   const [highlightedText, setHighlightedText] = useState('');
   const [anchorNode, setAnchorNode] = useState(null);
+  const { t } = useTranslation('search');
   const { BibliographicData } = document;
   const getGrid = (view) => {
     let grid = 12;
@@ -30,36 +32,48 @@ const BibliographicDataSection = ({
     return grid;
   };
 
-  useEffect(() => {
-    const handleSelectionChange = () => {
-      // console.log(`Selected text: ${window.getSelection().toString()}`);
-      // console.log(window.getSelection());
-      const selection = window.getSelection();
-      const selectedText = selection.toString();
+  // useEffect(() => {
+  //   const handleSelectionChange = () => {
+  //     // console.log(`Selected text: ${window.getSelection().toString()}`);
+  //     // console.log(window.getSelection());
+  //     const selection = window.getSelection();
+  //     const selectedText = selection.toString();
+  //     console.log(selectedText);
+  //     // React.createElement()
+  //     // const para = window.document.createElement('p');
+  //     // const node = window.document.createTextNode('This is a paragraph.');
+  //     // para.appendChild(node);
+  //     // selection.anchorNode.parentElement.classList.add('added')
+  //     if ((selection.anchorNode) === (selection.focusNode)) {
+  //       setHighlightedText(selectedText);
+  //       if (selection.anchorNode !== anchorNode) {
+  //         setAnchorNode(selection.anchorNode);
+  //       }
+  //       // selection.anchorNode.parentNode.appendChild(para);
+  //     } else {
+  //       if (highlightedText) {
+  //         setHighlightedText('');
+  //       }
+  //       console.log('not working');
+  //     }
+  //   };
+  //   window.document.addEventListener('selectionchange', handleSelectionChange);
+  //   return () => {
+  //     window.document.removeEventListener('selectionchange', handleSelectionChange);
+  //   };
+  // }, []);
+
+  const addField = () => {
+    console.log('inside');
+    const selection = window.getSelection();
+    const selectedText = selection.toString();
+
+    if ((selection.anchorNode) === (selection.focusNode)) {
       console.log(selectedText);
-      // React.createElement()
-      // const para = window.document.createElement('p');
-      // const node = window.document.createTextNode('This is a paragraph.');
-      // para.appendChild(node);
-      // selection.anchorNode.parentElement.classList.add('added')
-      if ((selection.anchorNode) === (selection.focusNode)) {
-        setHighlightedText(selectedText);
-        if (selection.anchorNode !== anchorNode) {
-          setAnchorNode(selection.anchorNode);
-        }
-        // selection.anchorNode.parentNode.appendChild(para);
-      } else {
-        if (highlightedText) {
-          setHighlightedText('');
-        }
-        console.log('not working');
-      }
-    };
-    window.document.addEventListener('selectionchange', handleSelectionChange);
-    return () => {
-      window.document.removeEventListener('selectionchange', handleSelectionChange);
-    };
-  }, []);
+    } else {
+      console.log('not working');
+    }
+  };
 
   return (
     <highlightTextContext.Provider value={highlightedText}>
@@ -69,19 +83,13 @@ const BibliographicDataSection = ({
           <LabelValue
             label={t('applicants')}
             value={document?.Applicants?.join('; ')}
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
-            toggleIcon={toggleIcon}
-            upArrow={upArrow}
+            handleClick={handleClick}
           />
           <LabelValue
             label={t('inventors')}
             value={document?.Inventors?.join('; ')}
             className="mb-4"
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            handleClick={handleClick}
           />
           <div>
             <p className="text-primary f-14">{t('classifications')}</p>
@@ -90,9 +98,7 @@ const BibliographicDataSection = ({
               value={document?.IPCClassification?.IPC?.join('; ')}
               className="f-12 mb-5"
               customLabel
-              hideSearchQueryMenu={hideSearchQueryMenu}
-              showSearchQuery={showSearchQuery}
-              ShowSearchQueryMenu={ShowSearchQueryMenu}
+              handleClick={handleClick}
             />
           </div>
           <LabelValue
@@ -100,9 +106,7 @@ const BibliographicDataSection = ({
             value={document?.CPCClassification?.CPC?.join('; ')}
             className="f-12 mb-5"
             customLabel
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            handleClick={handleClick}
           />
           {/* <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('priorities')}</p>
@@ -113,9 +117,7 @@ const BibliographicDataSection = ({
           <LabelValue
             label={t('application')}
             value={BibliographicData?.Application}
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            handleClick={handleClick}
           />
           <LabelValue
             label={t('publication')}
@@ -126,16 +128,12 @@ const BibliographicDataSection = ({
                 {BibliographicData?.PublicationDate}
               </>
           }
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            handleClick={handleClick}
           />
           <LabelValue
             label={t('publishedAs')}
             value={document?.Priorities?.PublishedAs}
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            handleClick={handleClick}
           />
           <p className="text-primary f-14">{t('abstract')}</p>
           <LabelValue
@@ -145,9 +143,7 @@ const BibliographicDataSection = ({
               </ShowMore>
           }
             valueClassName="f-14"
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            handleClick={handleClick}
           />
         </Col>
         <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
@@ -181,17 +177,7 @@ BibliographicDataSection.propTypes = {
   }).isRequired,
   isIPRExpanded: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-  showSearchQuery: PropTypes.bool,
-  hideSearchQueryMenu: PropTypes.func,
-  ShowSearchQueryMenu: PropTypes.func,
-  toggleIcon: PropTypes.func.isRequired,
-  upArrow: PropTypes.bool.isRequired,
-};
-
-BibliographicDataSection.defaultProps = {
-  hideSearchQueryMenu: () => { },
-  ShowSearchQueryMenu: () => { },
-  showSearchQuery: false,
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default BibliographicDataSection;

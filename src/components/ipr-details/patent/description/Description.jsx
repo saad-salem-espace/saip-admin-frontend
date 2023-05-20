@@ -5,8 +5,7 @@ import Col from 'react-bootstrap/Col';
 import LabelValue from './LabelValue';
 
 const Description = ({
-  description, children, className, isIPRExpanded,
-  hideSearchQueryMenu, showSearchQuery, ShowSearchQueryMenu,
+  description, children, className, isIPRExpanded, handleClick,
 }) => (
   <Container fluid className="px-0">
     <Row className="mx-0">
@@ -14,23 +13,17 @@ const Description = ({
         <LabelValue
           label={description?.TechnicalField?.Title}
           value={description?.TechnicalField?.Paragraphs?.join('; ')}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
         <LabelValue
           label={description.BackgroundArt.Title}
           value={description?.BackgroundArt?.Paragraphs?.join('; ')}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
         <LabelValue
           label={description.Disclosure.Title}
           value={description?.Disclosure?.Paragraphs?.join('; ')}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          showSearchQuery={showSearchQuery}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          handleClick={handleClick}
         />
       </Col>
       {
@@ -49,17 +42,12 @@ Description.propTypes = {
   description: PropTypes.string.isRequired,
   className: PropTypes.string,
   isIPRExpanded: PropTypes.bool,
-  showSearchQuery: PropTypes.bool,
-  hideSearchQueryMenu: PropTypes.func,
-  ShowSearchQueryMenu: PropTypes.func,
+  handleClick: PropTypes.func.isRequired,
 };
 
 Description.defaultProps = {
   children: null,
   className: '',
   isIPRExpanded: false,
-  hideSearchQueryMenu: () => { },
-  ShowSearchQueryMenu: () => { },
-  showSearchQuery: false,
 };
 export default Description;

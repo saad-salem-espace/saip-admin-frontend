@@ -25,7 +25,7 @@ import style from '../ipr-details.module.scss';
 
 const TrademarkViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
-  hideSearchQueryMenu, showSearchQuery, ShowSearchQueryMenu, toggleIcon, upArrow,
+  handleClick,
 }) => {
   const content = (s) => {
     switch (s) {
@@ -34,11 +34,7 @@ const TrademarkViews = ({
           isIPRExpanded={isIPRExpanded}
           BibliographicData={document.BibliographicData}
           getAttachmentURL={preparedGetAttachmentURL}
-          showSearchQuery={showSearchQuery}
-          hideSearchQueryMenu={hideSearchQueryMenu}
-          ShowSearchQueryMenu={ShowSearchQueryMenu}
-          toggleIcon={toggleIcon}
-          upArrow={upArrow}
+          handleClick={handleClick}
         />
       );
 
@@ -106,7 +102,10 @@ const TrademarkViews = ({
         </Priorities>
       );
       case 'Description': return (
-        <Description description={document.BibliographicData.Description} />
+        <Description
+          description={document.BibliographicData.Description}
+          handleClick={handleClick}
+        />
       );
       case 'Mark': return (
         <ImageWithZoom

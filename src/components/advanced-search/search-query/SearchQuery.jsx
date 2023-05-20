@@ -22,7 +22,6 @@ function SearchQuery({
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
-  console.log(isAdvancedMenuOpen);
   const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
 
   useEffect(() => {
@@ -56,7 +55,6 @@ function SearchQuery({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
           <Form onChange={onChangeSearchQuery(values.searchFields)} onSubmit={handleSubmit}>
-            {console.log(values)}
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>

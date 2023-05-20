@@ -30,7 +30,7 @@ function SearchQueryMenu({
   const [searchFields, setSearchFields] = useState([]);
   const [lastAnchorNode, setLastAnchorNode] = useState(null);
   const [formikFields, setFormikFields] = useState([]);
-  console.log(showSearchQuery);
+
   useEffect(() => {
     if (highlightedText) {
       if ((searchFields.length === 1 && !searchFields[0].data) || lastAnchorNode === anchorNode) {

@@ -20,6 +20,7 @@ import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttr
 import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
+import SearchQueryMenu from 'components/ipr-details/shared/seacrh-query/SearchQueryMenu';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -48,12 +49,7 @@ function IprDetails({
   isCardInprogress,
   selectedCardId,
   setNotesUpdated,
-  hideSearchQueryMenu,
-  showSearchQuery,
-  ShowSearchQueryMenu,
-  ToggleSearchQueryMenu,
-  toggleIcon,
-  upArrow,
+  handleClick,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -74,6 +70,18 @@ function IprDetails({
     documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
     { manual: true },
   );
+
+  const [showSearchQuery, setShowSearchQuery] = useState(false);
+
+  const ShowSearchQueryMenu = () => {
+    setShowSearchQuery(true);
+  };
+  const hideSearchQueryMenu = () => {
+    setShowSearchQuery(false);
+  };
+  const ToggleSearchQueryMenu = () => {
+    setShowSearchQuery(!showSearchQuery);
+  };
 
   useEffect(() => {
     setDocument(null);
@@ -126,6 +134,7 @@ function IprDetails({
   const onChangeSelect = (i) => {
     setSelectedView(i);
   };
+
   const views = {
     1:
   <PatentViews
@@ -135,11 +144,7 @@ function IprDetails({
     preparedGetAttachmentURL={preparedGetAttachmentURL}
     documentId={documentId}
     searchResultParams={searchResultParams}
-    showSearchQuery={showSearchQuery}
-    hideSearchQueryMenu={hideSearchQueryMenu}
-    ShowSearchQueryMenu={ShowSearchQueryMenu}
-    toggleIcon={toggleIcon}
-    upArrow={upArrow}
+    handleClick={handleClick}
   />,
     2: <TrademarkViews
       selectedView={selectedView.value}
@@ -148,11 +153,7 @@ function IprDetails({
       preparedGetAttachmentURL={preparedGetAttachmentURL}
       documentId={documentId}
       searchResultParams={searchResultParams}
-      showSearchQuery={showSearchQuery}
-      hideSearchQueryMenu={hideSearchQueryMenu}
-      ShowSearchQueryMenu={ShowSearchQueryMenu}
-      toggleIcon={toggleIcon}
-      upArrow={upArrow}
+      handleClick={handleClick}
     />,
     3: <IndustrialDesignViews
       selectedView={selectedView.value}
@@ -161,11 +162,7 @@ function IprDetails({
       preparedGetAttachmentURL={preparedGetAttachmentURL}
       documentId={documentId}
       searchResultParams={searchResultParams}
-      showSearchQuery={showSearchQuery}
-      hideSearchQueryMenu={hideSearchQueryMenu}
-      ShowSearchQueryMenu={ShowSearchQueryMenu}
-      toggleIcon={toggleIcon}
-      upArrow={upArrow}
+      handleClick={handleClick}
     />,
   };
 
@@ -287,32 +284,32 @@ function IprDetails({
           </div>
         )}
         {searchResultParams.workstreamId === '3' && (
-        <div className="ms-6 mb-2">
-          <div className="d-flex justify-content-between">
-            <div className="me-2 mb-md-0 mb-2">
-              <h5 className="text-capitalize text-primary-dark font-regular mb-2">
-                {document.BibliographicData.DesignTitleEN}
-                <span className="d-block mt-2">
-                  {document.BibliographicData.DesignTitleAR}
-                </span>
-              </h5>
-              <p className="text-gray">
-                <HandleEmptyAttribute
-                  checkOn={document.BibliographicData.Designers.join('; ')}
-                />
-              </p>
+          <div className="ms-6 mb-2">
+            <div className="d-flex justify-content-between">
+              <div className="me-2 mb-md-0 mb-2">
+                <h5 className="text-capitalize text-primary-dark font-regular mb-2">
+                  {document.BibliographicData.DesignTitleEN}
+                  <span className="d-block mt-2">
+                    {document.BibliographicData.DesignTitleAR}
+                  </span>
+                </h5>
+                <p className="text-gray">
+                  <HandleEmptyAttribute
+                    checkOn={document.BibliographicData.Designers.join('; ')}
+                  />
+                </p>
+              </div>
+              {!isIPRExpanded && (
+                <div className={`me-6 mb-2 ${style.headerImg}`}>
+                  <Image
+                    src={preparedGetAttachmentURL(
+                      document.BibliographicData.OverallProductDrawing,
+                    )}
+                  />
+                </div>
+              )}
             </div>
-            {!isIPRExpanded && (
-            <div className={`me-6 mb-2 ${style.headerImg}`}>
-              <Image
-                src={preparedGetAttachmentURL(
-                  document.BibliographicData.OverallProductDrawing,
-                )}
-              />
-            </div>
-            )}
           </div>
-        </div>
         )}
         {searchResultParams.workstreamId === '1' && (
           <p className="text-gray px-6">
@@ -343,52 +340,59 @@ function IprDetails({
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <div id="google_translate_element" className="d-inline-block" />
-          <AppTooltip
-            className="w-auto"
-            placement="top"
-            tooltipContent="Add to keyword planner"
-            tooltipTrigger={
-              <div>
-                <Button
-                  variant="link"
-                  className="text-primary-dark font-regular fs-sm text-decoration-none"
-                  onClick={() => { ToggleSearchQueryMenu(); toggleIcon(); }}
-                  text={
-                    <>
-                      <Image src={addIcon} />
-                      <span className="px-2">
-                        {t('dashboard:board.keywordplanner')}
-                      </span>
-                      <FontAwesomeIcon icon={upArrow ? faChevronUp : faChevronDown} />
-                    </>
-}
-                />
-              </div>
-              }
-          />
+          <SearchQueryMenu
+            showSearchQuery={showSearchQuery}
+            ShowSearchQueryMenu={ShowSearchQueryMenu}
+            ToggleSearchQueryMenu={ToggleSearchQueryMenu}
+            hideSearchQueryMenu={hideSearchQueryMenu}
+          >
+            <AppTooltip
+              className="w-auto"
+              placement="top"
+              tooltipContent="Add to keyword planner"
+              tooltipTrigger={
+                <div>
+                  <Button
+                    variant="link"
+                    className="text-primary-dark font-regular fs-sm text-decoration-none"
+                    onClick={() => { ToggleSearchQueryMenu(); }}
+                    text={
+                      <>
+                        <Image src={addIcon} />
+                        <span className="px-2">
+                          {t('dashboard:board.keywordplanner')}
+                        </span>
+                        <FontAwesomeIcon icon={showSearchQuery ? faChevronUp : faChevronDown} />
+                      </>
+                  }
+                  />
+                </div>
+            }
+            />
+          </SearchQueryMenu>
         </div>
       </div>
       {
-      dashboard && showActions ? (
-        <IprSections
-          options={options[searchResultParams.workstreamId]}
-          onChangeSelect={onChangeSelect}
-          selectedView={selectedView}
-          renderSelectedView={renderSelectedView}
-          documentId={documentId}
-          activeTab={activeTab}
-          isCardInprogress={isCardInprogress}
-          selectedCardId={selectedCardId}
-          setNotesUpdated={setNotesUpdated}
-          className="notes-editor-container"
-        />
-      ) : (
-        <IprData
-          options={options[searchResultParams.workstreamId]}
-          onChangeSelect={onChangeSelect}
-          selectedView={selectedView}
-          renderSelectedView={renderSelectedView}
-        />)
+        dashboard && showActions ? (
+          <IprSections
+            options={options[searchResultParams.workstreamId]}
+            onChangeSelect={onChangeSelect}
+            selectedView={selectedView}
+            renderSelectedView={renderSelectedView}
+            documentId={documentId}
+            activeTab={activeTab}
+            isCardInprogress={isCardInprogress}
+            selectedCardId={selectedCardId}
+            setNotesUpdated={setNotesUpdated}
+            className="notes-editor-container"
+          />
+        ) : (
+          <IprData
+            options={options[searchResultParams.workstreamId]}
+            onChangeSelect={onChangeSelect}
+            selectedView={selectedView}
+            renderSelectedView={renderSelectedView}
+          />)
       }
     </div>
   );
@@ -410,12 +414,7 @@ IprDetails.propTypes = {
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
-  showSearchQuery: PropTypes.bool.isRequired,
-  hideSearchQueryMenu: PropTypes.func,
-  ShowSearchQueryMenu: PropTypes.func,
-  ToggleSearchQueryMenu: PropTypes.func,
-  toggleIcon: PropTypes.func.isRequired,
-  upArrow: PropTypes.bool.isRequired,
+  handleClick: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -423,6 +422,7 @@ IprDetails.defaultProps = {
   className: null,
   activeWorkstream: null,
   onClose: () => { },
+  handleClick: () => { },
   getNextDocument: () => { },
   getPreviousDocument: () => { },
   setActiveDocument: () => { },
@@ -430,9 +430,6 @@ IprDetails.defaultProps = {
   showActions: true,
   activeTab: 2,
   setNotesUpdated: () => { },
-  hideSearchQueryMenu: () => { },
-  ShowSearchQueryMenu: () => { },
-  ToggleSearchQueryMenu: () => { },
 };
 
 export default IprDetails;
