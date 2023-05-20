@@ -5,6 +5,7 @@ import {
   Link,
 } from 'react-router-dom';
 import { BsPlay } from 'react-icons/bs';
+import routes from 'components/routes/routes.json';
 import { LONG_DATETIME_12H_FORMAT } from '../../constants';
 import './style.scss';
 
@@ -21,7 +22,7 @@ const SavedQueryRow = ({ query, selectedWorkStream }) => {
       <td className="d-flex">
         <Link
           className={`p-2 rounded run-query ${selectedLink === query.queryString ? 'active-query' : ''}`}
-          to={`/search?workstreamId=${selectedWorkStream}&sort=mostRelevant&q=${queryStringUrl}&page=1'`}
+          to={`${routes.search}?workstreamId=${selectedWorkStream}&sort=mostRelevant&q=${queryStringUrl}&page=1'`}
           onClick={() => setSelectedLink(query.queryString)}
         >
           <BsPlay className="play-icon fs-base" />
