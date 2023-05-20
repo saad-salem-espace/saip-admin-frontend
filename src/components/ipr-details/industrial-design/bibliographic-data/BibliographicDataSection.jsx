@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import './bibliographic.scss';
 import ShowMore from 'components/shared/show-more/ShowMore';
-import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -13,51 +12,54 @@ const BibliographicDataSection = (
   {
     isIPRExpanded,
     BibliographicData,
-    getAttachmentURL,
+    children,
     hideSearchQueryMenu, showSearchQuery,
     ShowSearchQueryMenu, toggleIcon, upArrow,
   },
 ) => {
   const { t } = useTranslation('search');
-
+  const getGrid = (view) => {
+    let grid = 12;
+    if (isIPRExpanded) {
+      if (view === 'drawings') {
+        grid = 5;
+      } else {
+        grid = 7;
+      }
+    }
+    return grid;
+  };
   return (
     <Container fluid>
       <Row>
-        {
-        isIPRExpanded && (
-          <Col md={4} className="mb-md-0 mb-2">
-            <div className="me-4">
-              <Image src={getAttachmentURL(BibliographicData.Mark)} className="mw-100" />
-            </div>
-          </Col>
-        )
-      }
-        <Col md={isIPRExpanded ? 8 : 12}>
+        <Col md={getGrid('bibliographic')}>
           <h6 className="mb-4">
             {t('register')}
           </h6>
           <LabelValue
-            label={t('trademarks.markNameEN')}
+            label={t('industrialDesign.designTitleEn')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.BrandNameEn}
+            value={BibliographicData.DesignTitleEN}
             hideSearchQueryMenu={hideSearchQueryMenu}
             showSearchQuery={showSearchQuery}
             ShowSearchQueryMenu={ShowSearchQueryMenu}
             toggleIcon={toggleIcon}
             upArrow={upArrow}
+            className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.markNameAR')}
+            label={t('industrialDesign.designTitleAr')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.BrandNameAr}
+            value={BibliographicData.DesignTitleAR}
             hideSearchQueryMenu={hideSearchQueryMenu}
             showSearchQuery={showSearchQuery}
             ShowSearchQueryMenu={ShowSearchQueryMenu}
             toggleIcon={toggleIcon}
             upArrow={upArrow}
+            className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.filingNumber')}
+            label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.FilingNumber}
             hideSearchQueryMenu={hideSearchQueryMenu}
@@ -68,7 +70,7 @@ const BibliographicDataSection = (
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.filingDate')}
+            label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.FilingDate}
             hideSearchQueryMenu={hideSearchQueryMenu}
@@ -79,9 +81,9 @@ const BibliographicDataSection = (
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.markType')}
+            label={t('industrialDesign.designStatus')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.TrademarkType}
+            value={BibliographicData.Status}
             hideSearchQueryMenu={hideSearchQueryMenu}
             showSearchQuery={showSearchQuery}
             ShowSearchQueryMenu={ShowSearchQueryMenu}
@@ -90,18 +92,7 @@ const BibliographicDataSection = (
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.markStatus')}
-            labelClassName="bibliographicLabel"
-            value={BibliographicData.TrademarkLastStatus}
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
-            toggleIcon={toggleIcon}
-            upArrow={upArrow}
-            className="mb-4"
-          />
-          <LabelValue
-            label={t('trademarks.registrationNumber')}
+            label={t('ipr.registrationNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.RegistrationNumber}
             hideSearchQueryMenu={hideSearchQueryMenu}
@@ -112,7 +103,7 @@ const BibliographicDataSection = (
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.registrationDate')}
+            label={t('ipr.registrationDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.RegistrationDate}
             hideSearchQueryMenu={hideSearchQueryMenu}
@@ -123,7 +114,7 @@ const BibliographicDataSection = (
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.publicationNumber')}
+            label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.PublicationNumber}
             hideSearchQueryMenu={hideSearchQueryMenu}
@@ -134,7 +125,7 @@ const BibliographicDataSection = (
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.publicationDate')}
+            label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.PublicationDate}
             hideSearchQueryMenu={hideSearchQueryMenu}
@@ -144,14 +135,14 @@ const BibliographicDataSection = (
             upArrow={upArrow}
             className="mb-4"
           />
-          <p className="text-primary f-14">{t('trademarks.markDescription')}</p>
+          <p className="text-primary f-14">{t('abstract')}</p>
           <LabelValue
             labelClassName="bibliographicLabel"
             value={
               <ShowMore>
-                <HandleEmptyAttribute checkOn={BibliographicData.Description} />
+                <HandleEmptyAttribute checkOn={BibliographicData.DesignAbstract} />
               </ShowMore>
-}
+            }
             hideSearchQueryMenu={hideSearchQueryMenu}
             showSearchQuery={showSearchQuery}
             ShowSearchQueryMenu={ShowSearchQueryMenu}
@@ -160,9 +151,9 @@ const BibliographicDataSection = (
             className="mb-4"
           />
           <LabelValue
-            label={t('ipr.owners')}
+            label={t('industrialDesign.designers')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Owners.join('; ')}
+            value={BibliographicData.Designers.join('; ')}
             hideSearchQueryMenu={hideSearchQueryMenu}
             showSearchQuery={showSearchQuery}
             ShowSearchQueryMenu={ShowSearchQueryMenu}
@@ -195,7 +186,7 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('classifications')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.NICEClassification.join('; ')}
+            value={BibliographicData.LocarnoClassification.join('; ')}
             hideSearchQueryMenu={hideSearchQueryMenu}
             showSearchQuery={showSearchQuery}
             ShowSearchQueryMenu={ShowSearchQueryMenu}
@@ -204,6 +195,9 @@ const BibliographicDataSection = (
             className="mb-4"
           />
         </Col>
+        <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
+          {children}
+        </Col>
       </Row>
     </Container>
   );
@@ -211,25 +205,24 @@ const BibliographicDataSection = (
 
 BibliographicDataSection.propTypes = {
   BibliographicData: PropTypes.shape({
-    BrandNameEn: PropTypes.string,
-    BrandNameAr: PropTypes.string,
+    DesignTitleEN: PropTypes.string,
+    DesignTitleAR: PropTypes.string,
     Mark: PropTypes.string,
     FilingNumber: PropTypes.string,
     FilingDate: PropTypes.string,
-    TrademarkType: PropTypes.string,
-    TrademarkLastStatus: PropTypes.string,
+    Status: PropTypes.string,
     RegistrationNumber: PropTypes.string,
     RegistrationDate: PropTypes.string,
-    Description: PropTypes.string,
+    DesignAbstract: PropTypes.string,
     PublicationNumber: PropTypes.string,
     PublicationDate: PropTypes.string,
-    Owners: PropTypes.arrayOf(PropTypes.string),
+    Designers: PropTypes.arrayOf(PropTypes.string),
     Representatives: PropTypes.arrayOf(PropTypes.string),
     Applicants: PropTypes.arrayOf(PropTypes.string),
-    NICEClassification: PropTypes.arrayOf(PropTypes.string),
+    LocarnoClassification: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
-  isIPRExpanded: PropTypes.bool.isRequired,
-  getAttachmentURL: PropTypes.func.isRequired,
+  isIPRExpanded: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   showSearchQuery: PropTypes.bool,
   hideSearchQueryMenu: PropTypes.func,
   ShowSearchQueryMenu: PropTypes.func,
@@ -242,5 +235,4 @@ BibliographicDataSection.defaultProps = {
   ShowSearchQueryMenu: () => { },
   showSearchQuery: false,
 };
-
 export default BibliographicDataSection;

@@ -25,6 +25,7 @@ import style from '../ipr-details.module.scss';
 
 const TrademarkViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
+  hideSearchQueryMenu, showSearchQuery, ShowSearchQueryMenu, toggleIcon, upArrow,
 }) => {
   const content = (s) => {
     switch (s) {
@@ -33,6 +34,11 @@ const TrademarkViews = ({
           isIPRExpanded={isIPRExpanded}
           BibliographicData={document.BibliographicData}
           getAttachmentURL={preparedGetAttachmentURL}
+          showSearchQuery={showSearchQuery}
+          hideSearchQueryMenu={hideSearchQueryMenu}
+          ShowSearchQueryMenu={ShowSearchQueryMenu}
+          toggleIcon={toggleIcon}
+          upArrow={upArrow}
         />
       );
 
@@ -129,6 +135,9 @@ TrademarkViews.propTypes = {
   documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   searchResultParams: PropTypes.shape.isRequired,
   preparedGetAttachmentURL: PropTypes.func.isRequired,
+  showSearchQuery: PropTypes.bool.isRequired,
+  hideSearchQueryMenu: PropTypes.func.isRequired,
+  ShowSearchQueryMenu: PropTypes.func.isRequired,
 };
 
 export default TrademarkViews;

@@ -19,7 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import highlightTextContext from '../context/highlightTextContext';
 
 function SearchQueryMenu({
-  showSearchQuery, hideSearchQueryMenu, className, children,
+  showSearchQuery, hideSearchQueryMenu, className, children, toggleIcon,
   anchorNode,
 }) {
   const { cachedRequests } = useContext(CacheContext);
@@ -30,7 +30,7 @@ function SearchQueryMenu({
   const [searchFields, setSearchFields] = useState([]);
   const [lastAnchorNode, setLastAnchorNode] = useState(null);
   const [formikFields, setFormikFields] = useState([]);
-
+  console.log(showSearchQuery);
   useEffect(() => {
     if (highlightedText) {
       if ((searchFields.length === 1 && !searchFields[0].data) || lastAnchorNode === anchorNode) {
@@ -95,7 +95,7 @@ function SearchQueryMenu({
               <Form className="search-query-menu shadow rounded" onSubmit={handleSubmit}>
                 <div className="p-8">
                   <Button
-                    onClick={() => hideSearchQueryMenu()}
+                    onClick={() => { hideSearchQueryMenu(); toggleIcon(); }}
                     variant="transparent"
                     className="text-end w-100 px-0 pb-4 pt-0 border-0"
                   >
@@ -125,6 +125,7 @@ SearchQueryMenu.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   anchorNode: PropTypes.instanceOf(Object).isRequired,
+  toggleIcon: PropTypes.func.isRequired,
 };
 
 SearchQueryMenu.defaultProps = {
