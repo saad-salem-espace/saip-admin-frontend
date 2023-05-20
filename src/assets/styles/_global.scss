@@ -38,6 +38,7 @@ $fontSize: (
 
 .app {
   padding-top:80px;
+  padding-bottom: 50px;
 }
 
 .italicText {
@@ -59,6 +60,6 @@ $fontSize: (
     @include scrollbar;
     height: 80vh;
     overflow-y: auto;
-    padding-bottom: 150px;
+    padding-bottom: 180px;;
   }
 }

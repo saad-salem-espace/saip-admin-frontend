@@ -15,5 +15,8 @@
     "ipSearch": "IP Search",
     "english": "EN",
     "arabic": "AR"
+  },
+  "footer": {
+    "copyright": "All rights reserved for Saudi Authority for Intellectual Property © "
   }
 }
