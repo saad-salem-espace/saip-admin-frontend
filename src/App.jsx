@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './assets/styles/common/toast.scss';
 import { useTranslation } from 'react-i18next';
 import FocusArea from 'components/shared/focus-area/FocusArea';
+import Footer from 'components/layout/footer/Footer';
 
 function App() {
   const { i18n } = useTranslation();
@@ -67,6 +68,7 @@ function App() {
             />
           )
         }
+        <Footer />
       </div>
     </ThemeProvider>
 

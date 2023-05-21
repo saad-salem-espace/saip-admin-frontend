@@ -13,7 +13,9 @@
   "notes": "Notes",
   "translateInfo": "Translate",
   "markAsDone": "Mark as Done",
-  "savedQueries":"Saved Queries",
+  "savedQueries": "Saved Queries",
+  "notAssigned": "Can't see your assignments?",
+  "emptyStateTitle": "You don’t have any assignments yet",
   "status": {
     "toDo": "To Do",
     "done": "Done",

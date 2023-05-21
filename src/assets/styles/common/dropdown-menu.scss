@@ -1,0 +1,49 @@
+@import "../utilities/custom-theme";
+
+.default-menu {
+  a {
+    color: $gray;
+    font-size: $font-size-sm;
+    @extend .px-4;
+    @extend .py-2;
+
+    &:hover {
+      color: $gray;
+    }
+
+    &:active {
+      color: $white;
+    }
+  }
+
+  .dropdown-menu {
+    border: none;
+    @extend .shadow;
+    padding: 0;
+  }
+
+  .dropdown-toggle {
+    border: none;
+    @extend .py-1;
+    @extend .px-4;
+    color: $gray;
+    background-color: transparent;
+
+    &::before {
+      content: "\f142";
+      font-family: FontAwesomeSolid;
+    }
+
+    &.show,
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $primary-10 !important;
+      color: $primary !important;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+}

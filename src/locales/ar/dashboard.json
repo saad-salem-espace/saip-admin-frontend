@@ -13,7 +13,9 @@
   "notes": "ملاحظات",
   "translateInfo": "ترجمة",
   "markAsDone": "تم إنجازه",
-  "savedQueries":"الاستعلامات المحفوظه",
+  "savedQueries": "الاستعلامات المحفوظه",
+  "notAssigned": "لا تجد الوثائق الخاضعة للفحص؟",
+  "emptyStateTitle": "لم يتم إسناد أي من الوثائق لك. ",
   "status": {
     "toDo": "قائمة الأعمال",
     "done": "منجز",

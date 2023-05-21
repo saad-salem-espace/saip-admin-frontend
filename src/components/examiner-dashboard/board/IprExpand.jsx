@@ -28,12 +28,12 @@ function IprExpand({
       <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
         <Col lg={6} className="filing-date d-lg-flex justify-content-between p-4 order-2 order-lg-1">
           <div className="d-lg-flex align-items-center text-gray-700">
-            <p className="fs-12 mb-2 mb-lg-0 me-3">
+            <p className="fs-xs mb-2 mb-lg-0 me-3">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:queue')}
               {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
             </p>
-            <p className="fs-12 mb-2  mb-lg-0">
+            <p className="fs-xs mb-2  mb-lg-0">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:priority')}
               {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}

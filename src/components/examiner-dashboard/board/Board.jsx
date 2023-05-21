@@ -116,6 +116,7 @@ const Board = ({
                   isInProgress={isInProgress}
                   activeDocument={activeDocument}
                   updateFocusArea={updateFocusArea}
+                  SetSelectedCard={SetSelectedCard}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
@@ -138,6 +139,7 @@ const Board = ({
                   setActiveDocument={setActiveDocument}
                   activeDocument={activeDocument}
                   updateFocusArea={updateFocusArea}
+                  SetSelectedCard={SetSelectedCard}
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
@@ -148,6 +150,7 @@ const Board = ({
                   isInProgress={isInProgress}
                   activeDocument={activeDocument}
                   updateFocusArea={updateFocusArea}
+                  SetSelectedCard={SetSelectedCard}
                 />
               </Row>
             )}
