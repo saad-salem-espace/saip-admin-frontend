@@ -34,7 +34,7 @@ const IndustrialDesignViews = ({
           getAttachmentURL={preparedGetAttachmentURL}
           handleClick={handleClick}
         >
-          <h6>{t('ipr.drawings')}</h6>
+          <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
             <Carousel
               largeThumb={isIPRExpanded}
@@ -65,7 +65,7 @@ const IndustrialDesignViews = ({
           isIPRExpanded={isIPRExpanded}
           handleClick={handleClick}
         >
-          <h6 className={`${!isIPRExpanded ? 'mt-4' : ''}`}>{t('ipr.drawings')}</h6>
+          <h6 className={`${!isIPRExpanded ? 'mt-4' : ''} disable-highlight`}>{t('ipr.drawings')}</h6>
           {document.Drawings?.length ? (
             <Carousel
               largeThumb={isIPRExpanded}

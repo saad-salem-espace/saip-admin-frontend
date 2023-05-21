@@ -11,6 +11,9 @@
 
 .label {
   width: 145px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .iprWrapper {

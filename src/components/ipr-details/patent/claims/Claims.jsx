@@ -14,8 +14,10 @@ const Claims = ({
         {
           claims.map((c) => (
             <div className="d-flex align-items-center">
-              <p>{c.Text}</p>
-              <KeywordPlannerButton handleClick={handleClick} />
+              <p>
+                {c.Text}
+                <KeywordPlannerButton handleClick={handleClick} />
+              </p>
             </div>
           ))
         }

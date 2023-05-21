@@ -4,31 +4,34 @@ import style from 'components/ipr-details/ipr-details.module.scss';
 import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 
 const LabelValue = ({
-  label, value, ShowSearchQueryMenu,
+  label, value,
   labelClassName,
-  className, customLabel, valueClassName,
+  className, customLabel, valueClassName, btnPosition,
   handleClick,
 }) => (
   <div className={`d-flex align-items-center ${className}`}>
     {label && (
-    <p className={`${customLabel ? '' : 'text-primary f-14'} ${labelClassName} ${style.label}`}>{label}</p>
+    <p className={`${customLabel ? '' : 'text-primary f-14'} ${labelClassName} ${style.label} disable-highlight`}>{label}</p>
     )}
     <p className={`f-12 ${valueClassName}`}>
       <HandleEmptyAttribute checkOn={value} />
+      <KeywordPlannerButton btnPosition={btnPosition} handleClick={handleClick} />
     </p>
-    <KeywordPlannerButton ShowSearchQueryMenu={ShowSearchQueryMenu} handleClick={handleClick} />
   </div>
 );
 
 LabelValue.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.node.isRequired,
-  ShowSearchQueryMenu: PropTypes.func.isRequired,
   className: PropTypes.string,
   customLabel: PropTypes.bool,
   valueClassName: PropTypes.string,
   labelClassName: PropTypes.string,
   handleClick: PropTypes.func,
+  btnPosition: PropTypes.shape({
+    left: PropTypes.string.isRequired,
+    top: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 LabelValue.defaultProps = {

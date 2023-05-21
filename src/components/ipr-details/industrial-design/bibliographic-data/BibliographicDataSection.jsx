@@ -32,7 +32,7 @@ const BibliographicDataSection = (
     <Container fluid>
       <Row>
         <Col md={getGrid('bibliographic')}>
-          <h6 className="mb-4">
+          <h6 className="mb-4 disable-highlight">
             {t('register')}
           </h6>
           <LabelValue
@@ -98,7 +98,7 @@ const BibliographicDataSection = (
             handleClick={handleClick}
             className="mb-4"
           />
-          <p className="text-primary f-14">{t('abstract')}</p>
+          <p className="text-primary f-14 disable-highlight">{t('abstract')}</p>
           <LabelValue
             labelClassName="bibliographicLabel"
             value={

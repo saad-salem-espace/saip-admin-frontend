@@ -25,9 +25,10 @@
   }
 }
 
-.search-query-wrapper  {
+.keyword-planner-btn {
   display: none;
+  position: fixed;
 }
-.added .search-query-wrapper  {
+.added .keyword-planner-btn  {
   display: block;
 }

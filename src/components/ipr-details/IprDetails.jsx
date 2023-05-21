@@ -366,7 +366,7 @@ function IprDetails({
             <AppTooltip
               className="w-auto"
               placement="top"
-              tooltipContent="Add to keyword planner"
+              tooltipContent={t('dashboard:board.addtoKeywordPlanner')}
               tooltipTrigger={
                 <div>
                   <Button
