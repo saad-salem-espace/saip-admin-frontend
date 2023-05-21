@@ -60,7 +60,7 @@ function IprSections({
     setHasUnsavedNotes(false);
   };
 
-  const axiosConfig = getSavedQueryApi(activeWorkstream, JSON.parse(localStorage.getItem('FocusDoc'))?.saipId, '1', true);
+  const axiosConfig = getSavedQueryApi(activeWorkstream, JSON.parse(localStorage.getItem('FocusDoc'))?.saipId || documentId, '1', true);
 
   const savedQueries = (
     SavedQueriesTable
