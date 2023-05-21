@@ -7,6 +7,7 @@ import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/Key
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import LabelValue from './shared/label-value/LabelValue';
 
+
 const BibliographicDataSection = ({
   document, isIPRExpanded, children, handleClick,
 }) => {
@@ -29,10 +30,10 @@ const BibliographicDataSection = ({
   useEffect(() => {
     const handleSelectionChange = () => {
       const selection = window.getSelection();
-      setLeft(selection.getRangeAt(0).getBoundingClientRect().left);
-      setTop(selection.getRangeAt(0).getBoundingClientRect().top);
-      selection.anchorNode.parentElement.classList.add('added');
       if ((selection.anchorNode) === (selection.focusNode)) {
+        setLeft(selection.getRangeAt(0).getBoundingClientRect().left);
+        setTop(selection.getRangeAt(0).getBoundingClientRect().top);
+        selection.anchorNode.parentElement.classList.add('added');
         // console.log(selectedText);
       }
     };
@@ -40,7 +41,7 @@ const BibliographicDataSection = ({
     return () => {
       window.document.removeEventListener('selectionchange', handleSelectionChange);
     };
-  }, [left, top]);
+  }, []);
 
   const btnPosition = {
     left: `${left + 17}px`,

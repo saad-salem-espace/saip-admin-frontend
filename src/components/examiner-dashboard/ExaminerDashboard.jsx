@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import getAssigned from 'apis/dashboard/getAssigned';
 import Spinner from 'components/shared/spinner/Spinner';
+import activeWorkstreamContext from 'components/ipr-details/shared/context/activeWorkstreamContext';
 import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
 
@@ -84,23 +85,25 @@ function ExaminerDashboard() {
 
   return (
     assignments
-      ? <div>
-        <Sidebar
-          linksList={linksList}
-          setActiveWorkstream={setActiveWorkstream}
-          activeWorkstream={activeWorkstream}
-        />
-        <Board
-          activeWorkstream={activeWorkstream}
-          setSort={setSort}
-          assignments={assignments}
-          setToggle={setToggle}
-          setActiveDocument={setActiveDocument}
-          activeDocument={activeDocument}
-          setNotesUpdated={setNotesUpdated}
-        />
+      ? <activeWorkstreamContext.Provider value={activeWorkstream}>
+        <div>
+          <Sidebar
+            linksList={linksList}
+            setActiveWorkstream={setActiveWorkstream}
+            activeWorkstream={activeWorkstream}
+          />
+          <Board
+            activeWorkstream={activeWorkstream}
+            setSort={setSort}
+            assignments={assignments}
+            setToggle={setToggle}
+            setActiveDocument={setActiveDocument}
+            activeDocument={activeDocument}
+            setNotesUpdated={setNotesUpdated}
+          />
+        </div>
         {/* eslint-disable-next-line react/jsx-closing-tag-location */}
-      </div> : <div className="d-flex justify-content-center mt-18"><Spinner /></div>
+      </activeWorkstreamContext.Provider> : <div className="d-flex justify-content-center mt-18"><Spinner /></div>
   );
 }
 

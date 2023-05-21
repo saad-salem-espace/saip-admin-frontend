@@ -2,68 +2,58 @@ import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import './SearchQuery.scss';
 import Button from 'react-bootstrap/Button';
 import React, {
-  useRef,
   useContext,
   useEffect,
   useState,
 } from 'react';
-import {
-  useSearchParams,
-} from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import CacheContext from 'contexts/CacheContext';
 import { Formik, Form } from 'formik';
 import useCacheRequest from 'hooks/useCacheRequest';
 import PropTypes from 'prop-types';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { parseQuery } from 'utils/searchQuery';
+import activeWorkstreamContext from '../context/activeWorkstreamContext';
 
 function SearchQueryMenu({
   showSearchQuery, hideSearchQueryMenu, className, children, toggleIcon,
   validHighlight, highlightTrigger,
 }) {
+  const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
-  const [searchParams] = useSearchParams();
-  const activeWorkstream = '1';
+  const activeWorkstream = useContext(activeWorkstreamContext)?.id.toString();
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${activeWorkstream}/identifiers` }, { dependencies: [activeWorkstream] });
   const [searchFields, setSearchFields] = useState([]);
   const [formikFields, setFormikFields] = useState([]);
 
-  console.log(formikFields);
-
-  // useEffect(() => {
-  //   if (highlightedText) {
-  //     if ((searchFields.length === 1 && !searchFields[0].data) || lastAnchorNode === anchorNode) {
-  //       if (!lastAnchorNode) setLastAnchorNode(anchorNode);
-  //       const tempFields = searchFields;
-  //       tempFields[searchFields.length - 1].data = highlightedText;
-  //       setSearchFields(tempFields);
-  //     } else {
-  //       setSearchFields([...formikFields, {
-  //         id: Math.floor(Math.random() * 600),
-  //         data: highlightedText,
-  //         identifier: searchIdentifiers.data[0],
-  //         condition: searchIdentifiers.data[0].identifierOptions[0],
-  //         operator: '',
-  //       }]);
-  //       setLastAnchorNode(anchorNode);
-  //     }
-  //   }
-  // }, [highlightedText, anchorNode]);
+  const onSubmit = (values) => {
+    navigate({
+      pathname: '/search',
+      search: `?${createSearchParams({
+        workstreamId: activeWorkstream, sort: 'mostRelevant', q: parseQuery(values.searchFields, '', true),
+      })}`,
+    });
+  };
 
   useEffect(() => {
     if (!validHighlight) return;
 
     if ((formikFields.length === 1 && !formikFields[0].data)) {
-      const tempFields = formikFields;
-      tempFields[0].data = window.getSelection().toString();
-      setSearchFields(tempFields);
+      setSearchFields([{
+        id: Math.floor(Math.random() * 600),
+        data: window.getSelection().toString(),
+        identifier: searchIdentifiers.data[0],
+        condition: searchIdentifiers.data[0].identifierOptions[0],
+        operator: '',
+      }]);
     } else {
       setSearchFields([...formikFields, {
         id: Math.floor(Math.random() * 600),
         data: window.getSelection().toString(),
         identifier: searchIdentifiers.data[0],
         condition: searchIdentifiers.data[0].identifierOptions[0],
-        operator: formikFields.length ? 'AND' : '',
+        operator: 'AND',
       }]);
     }
   }, [highlightTrigger, validHighlight]);
@@ -80,47 +70,34 @@ function SearchQueryMenu({
     }
   }, [searchIdentifiers]);
 
-  const searchResultParams = {
-    workstreamId: searchParams.get('workstreamId'),
-    query: searchParams.get('q'),
-    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
-    ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
-  };
-  const submitRef = useRef();
-  const onSubmit = () => {
-
-  };
   return (
     <div className={`search-query-wrapper ${className}`}>
       {children}
       {
         showSearchQuery && (
           <Formik
-            onSubmit={onSubmit}
             validateOnChange
             enableReinitialize
             validateOnBlur={false}
-            innerRef={submitRef}
           >
-            {({
-              handleSubmit,
-            }) => (
-              <Form className="search-query-menu shadow rounded" onSubmit={handleSubmit}>
+            {() => (
+              <Form className="search-query-menu shadow rounded">
                 <div className="p-8">
                   <Button
-                    onClick={() => { hideSearchQueryMenu(); toggleIcon(); }}
+                    onClick={() => { hideSearchQueryMenu(); }}
                     variant="transparent"
                     className="text-end w-100 px-0 pb-4 pt-0 border-0"
                   >
                     <FontAwesomeIcon icon={faTimes} className="fs-base text-dark" />
                   </Button>
                   <SearchQuery
-                    workstreamId="1"
-                    firstIdentifierStr={searchResultParams.identifierStrId}
+                    workstreamId={activeWorkstream}
+                    firstIdentifierStr="ftxt"
                     defaultInitializers={searchFields}
-                    submitRef={submitRef}
-                    isAdvancedMenuOpen
+                    isAdvancedMenuOpen={false}
                     onChangeSearchQuery={setFormikFields}
+                    examinerView
+                    submitCallback={onSubmit}
                   />
                 </div>
               </Form>

@@ -142,7 +142,6 @@ function IprDetails({
 
     if (selectedText && (selection.anchorNode) === (selection.focusNode)) {
       setValidHighlight(true);
-      console.log(selectedText);
     } else {
       setValidHighlight(false);
     }
