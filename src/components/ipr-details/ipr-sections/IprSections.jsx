@@ -113,15 +113,20 @@ function IprSections({
         </div>
       ),
       content: (
-        <AppPagination
-          className="mt-8"
-          axiosConfig={axiosConfig}
-          defaultPage="1"
-          RenderedComponent={savedQueries}
-          emptyState={<NoData />}
-          urlPagination={false}
-          setTotalElements={(totalCount) => setTotalElements(totalCount)}
-        />
+        <div className="m-4">
+          <AppPagination
+            className="mt-8"
+            axiosConfig={axiosConfig}
+            defaultPage="1"
+            RenderedComponent={savedQueries}
+            emptyState={<NoData />}
+            urlPagination={false}
+            setTotalElements={(totalCount) => setTotalElements(totalCount)}
+            renderedProps={{
+              selectedWorkStream: 1,
+            }}
+          />
+        </div>
       ),
     },
   ];
@@ -154,7 +159,8 @@ function IprSections({
               />
           }
             confirmBtnText={t('translation:save')}
-            className="warning"
+            btnText={t('add')}
+            className="warning notes-modal"
             handleConfirm={handleConfirm}
             hideAlert={hideAlert}
           />

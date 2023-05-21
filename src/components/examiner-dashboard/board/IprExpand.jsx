@@ -24,7 +24,7 @@ function IprExpand({
 }) {
   const { t } = useTranslation('dashboard');
   return (
-    <div className={`${className} ${focusMode ? '' : 'position-absolute'}dashboard-ipr-container expanded  end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
+    <div className={`${className} ${focusMode ? '' : 'position-absolute'} dashboard-ipr-container expanded  end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
       <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
         <Col lg={6} className="filing-date d-lg-flex justify-content-between p-4 order-2 order-lg-1">
           <div className="d-lg-flex align-items-center text-gray-700">
@@ -53,14 +53,17 @@ function IprExpand({
             />
           </div>
         </Col>
-        <Col lg={6} className="px-5 d-flex justify-content-end order-1 order-lg-2">
-          <IprControlAction
-            collapseIPR={collapseIPR}
-            isIPRExpanded={isIPRExpanded}
-            onClose={onClose}
-            focusMode
-          />
-        </Col>
+        {
+          !focusMode && (
+            <Col lg={6} className="px-5 d-flex justify-content-end order-1 order-lg-2">
+              <IprControlAction
+                collapseIPR={collapseIPR}
+                isIPRExpanded={isIPRExpanded}
+                onClose={onClose}
+              />
+            </Col>
+          )
+        }
       </div>
       <div className="d-lg-flex">
         <Col lg={6} className="border-end">

@@ -116,7 +116,7 @@
   .workStreamResults {
     display: flex;
     flex-flow: column;
-    min-height: 100vh;
+    min-height: calc(100vh - 90px);
 
     .header {
       flex: 0 1 auto;
@@ -198,8 +198,7 @@
   border-radius: $border-radius;
   color: $primary-dark;
 
-  &:hover,
-  &.active {
+  &:hover {
     background-color: $primary;
 
     .icon-star::before {
@@ -246,6 +245,11 @@
       color: $white;
       opacity: 1;
       cursor: not-allowed;
+    }
+
+    html[dir="rtl"] & {
+      width: 290px;
+      text-align: right;
     }
   }
 }

@@ -155,7 +155,7 @@ const SaveQuery = ({
         />
       ) : (
         <Button
-          className={`position-relative save-query-menu pe-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
+          className={`position-relative save-query-menu px-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
           variant="link text-decoration-none"
           onClick={() => setShowSaveQueryMenu(!showSaveQueryMenu)}
         >
@@ -168,7 +168,7 @@ const SaveQuery = ({
             showSaveQueryMenu && (
               <div className="position-absolute save-query-options">
                 <Button
-                  className={`save-btn${isSaved && isReady ? ' disable' : ''}`}
+                  className={`save-btn ${isSaved && isReady ? 'disabled' : ''}`}
                   disabled={(isSaved && isReady)}
                   onClick={() => {
                     saveQuery('myList');

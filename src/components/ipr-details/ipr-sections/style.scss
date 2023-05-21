@@ -16,3 +16,7 @@
 .active .queries-count{
   background-color: $primary;
 }
+
+.notes-modal{
+  z-index: 99999 !important;
+}
