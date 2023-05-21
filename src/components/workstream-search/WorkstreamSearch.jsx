@@ -3,9 +3,12 @@ import React, {
   useState, useContext, useEffect, useRef,
 } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+} from 'react-bootstrap';
 import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
 import * as Yup from 'yup';
@@ -18,8 +21,10 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
+import surveyIcon from 'assets/images/icons/ic-survey.svg';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
+
 import './style.scss';
 
 function WorkstreamSearch() {
@@ -136,11 +141,16 @@ function WorkstreamSearch() {
                       className="d-block text-primary text-end"
                     />
                     <ViewTip
-                      Title={t('tips:advancedSearchTipTitle')}
                       id="advancedSearchTip"
-                      gotIt
+                      Title={t('tips:advancedSearchTipTitle')}
+                      btnText={t('common:gotIt')}
+                      variant="bg-primary-10"
                     >
-                      {t('tips:advancedSearchTipContent')}
+                      <Trans
+                        i18nKey="advancedSearchTipContent"
+                        ns="tips"
+                        components={{ bold: <b /> }}
+                      />
                     </ViewTip>
                   </div>
                   <SharedSearch
@@ -182,7 +192,8 @@ function WorkstreamSearch() {
         widgetTitle={t('common:floatWidget.userSurvey.widgetTitle')}
         widgetAction={t('common:floatWidget.userSurvey.widgetAction')}
         widgetActionText={t('common:floatWidget.userSurvey.widgetActionText')}
-        float
+        WidgetIcon={<Image src={surveyIcon} className="d-block mx-auto my-3" />}
+        variant="bg-primary-10"
         show
       >
         {t('common:floatWidget.userSurvey.widgetContent')}

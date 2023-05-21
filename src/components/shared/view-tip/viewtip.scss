@@ -1,39 +1,5 @@
 @import "../../../assets/styles/utilities/custom-theme";
-
-
-.popover {
-  min-width: 340px;
-  &.bg-primary-10 {
-    &[data-popper-placement^=left] {
-      .popover-arrow {
-        &::after {
-          border-left-color: $primary-10;
-        }
-      }
-    }
-    &[data-popper-placement^=top] {
-      .popover-arrow {
-        &::after {
-          border-top-color: $primary-10;
-        }
-      }
-    }
-    &[data-popper-placement^=bottom] {
-      .popover-arrow {
-        &::after {
-          border-bottom-color: $primary-10;
-        }
-      }
-    }
-    &[data-popper-placement^=right] {
-      .popover-arrow {
-        &::after {
-          border-right-color: $primary-10;
-        }
-      }
-    }
-  }
-}
+@import "../../../assets/styles/components/popover";
 
 .btn-view-tip {
   html[dir="ltr"] & {

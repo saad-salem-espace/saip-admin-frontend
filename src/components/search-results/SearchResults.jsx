@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import ViewTip from 'components/shared/view-tip/ViewTip';
 import * as Yup from 'yup';
@@ -441,9 +441,14 @@ function SearchResults() {
                         <ViewTip
                           Title={t('tips:advancedSearchTipTitle')}
                           id="advancedSearchTip"
-                          gotIt
+                          btnText={t('common:gotIt')}
+                          variant="bg-primary-10"
                         >
-                          {t('tips:advancedSearchTipContent')}
+                          <Trans
+                            i18nKey="advancedSearchTipContent"
+                            ns="tips"
+                            components={{ bold: <b /> }}
+                          />
                         </ViewTip>
                       </div>
                       <div className="d-flex align-items-center">
@@ -455,9 +460,14 @@ function SearchResults() {
                         <ViewTip
                           Title={t('tips:allowSynonymsTipTitle')}
                           id="allowSynonymsTip"
-                          gotIt
+                          btnText={t('common:gotIt')}
+                          variant="bg-primary-10"
                         >
-                          {t('tips:allowSynonymsTipContent')}
+                          <Trans
+                            i18nKey="allowSynonymsTipContent"
+                            ns="tips"
+                            components={{ bold: <b /> }}
+                          />
                         </ViewTip>
                       </div>
                     </div>
