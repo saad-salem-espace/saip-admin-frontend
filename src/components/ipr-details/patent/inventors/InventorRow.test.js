@@ -11,7 +11,7 @@ describe('<InventorRow />', () => {
     await waitFor(() => {
       expect(getByText(samplePatent.InventorsDetails[0].InventorName)).toBeInTheDocument();
       expect(getByText(samplePatent.InventorsDetails[0].CountryCode)).toBeInTheDocument();
-      expect(getByText(samplePatent.InventorsDetails[0].Naionality)).toBeInTheDocument();
+      expect(getByText(samplePatent.InventorsDetails[0].Nationality)).toBeInTheDocument();
       expect(getByText(samplePatent.InventorsDetails[0].InventorDetails.join('; '))).toBeInTheDocument();
     });
   });

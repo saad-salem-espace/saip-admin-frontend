@@ -13,7 +13,7 @@ describe('<RepresentativeRow />', () => {
         getByText(sampleTrademark.RepresentativesDetails[0].RepresentativeName),
       ).toBeInTheDocument();
       expect(getByText(sampleTrademark.RepresentativesDetails[0].CountryCode)).toBeInTheDocument();
-      expect(getByText(sampleTrademark.RepresentativesDetails[0].Naionality)).toBeInTheDocument();
+      expect(getByText(sampleTrademark.RepresentativesDetails[0].Nationality)).toBeInTheDocument();
       expect(getByText(sampleTrademark.RepresentativesDetails[0]
         .RepresentativeDetails)).toBeInTheDocument();
     });

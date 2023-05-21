@@ -1,0 +1,41 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/components/popover";
+
+.float-widget {
+  transform: none !important;
+  top: 70% !important;
+  html[dir="ltr"] & {
+    left: 80% !important;
+  }
+  html[dir="rtl"] & {
+    right: 80% !important;
+  }
+  .popover-arrow {
+    &::before,
+    &::after  {
+      display: none;
+      border: 0 !important;
+    }
+  }
+  .btn-dismiss {
+    position: relative;
+    top: 15px;
+    html[dir="ltr"] & {
+      left: 90%;
+    }
+    html[dir="rtl"] & {
+      right: 90%;
+    }
+  }
+  .widget-title {
+    margin-top: -20px;
+  }
+  .widget-action {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .btn-dismiss {
+    position: relative;
+    z-index: 1020;
+  }
+}

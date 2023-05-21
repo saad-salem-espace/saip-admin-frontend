@@ -535,12 +535,13 @@ $font-sizes: (
   5: $h5-font-size,
   6: $h6-font-size,
   8: $font-size-xxs,
-  12: $font-size-xs,
+  xs: $font-size-xs,
   sm: $font-size-sm,
   15: 15px,
   base: $font-size-base,
   18: 18px,
   20: 20px,
+  22: 22px,
   32: 32px
   );
 // scss-docs-end font-sizes
@@ -1592,5 +1593,6 @@ $pre-color: null !default;
 @import "~bootstrap/scss/dropdown";
 @import "~bootstrap/scss/card";
 @import "~bootstrap/scss/close";
+@import "~bootstrap/scss/popover";
 
 // @import "~bootstrap/scss/bootstrap";

@@ -155,13 +155,13 @@
     {
       "OwnerName": "omniaaaaaa",
       "CountryCode": "000",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "OwnerDetails": ["country 3", "city 3", "egyptian", "omnia@gmail", "03"]
     },
     {
       "OwnerName": "test",
       "CountryCode": "8",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "OwnerDetails": ["country 3", "city 3", "egyptian", "omnia@gmail", "03"]
     }
   ],
@@ -169,7 +169,7 @@
     {
       "ApplicantName": "omnia",
       "CountryCode": "03",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "ApplicantDetails": [
         "country 3",
         "city 3",
@@ -181,7 +181,7 @@
     {
       "ApplicantName": "nada",
       "CountryCode": "03",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "ApplicantDetails": [
         "country 3",
         "city 3",
@@ -193,7 +193,7 @@
     {
       "ApplicantName": "nesma",
       "CountryCode": "03",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "ApplicantDetails": [
         "country 3",
         "city 3",
@@ -205,7 +205,7 @@
     {
       "ApplicantName": "omnia",
       "CountryCode": "03",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "ApplicantDetails": [
         "country 3",
         "city 3",
@@ -219,7 +219,7 @@
     {
       "RepresentativeName": "omnia yahia",
       "CountryCode": "01",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "RepresentativeDetails": [
         "country 3",
         "city 3",
@@ -231,7 +231,7 @@
     {
       "RepresentativeName": "asmaa",
       "CountryCode": "00",
-      "Naionality": "",
+      "Nationality": "",
       "RepresentativeDetails": [
         "country 3",
         "city 3",
@@ -243,7 +243,7 @@
     {
       "RepresentativeName": "salma",
       "CountryCode": "",
-      "Naionality": "",
+      "Nationality": "",
       "RepresentativeDetails": [
         "country 3",
         "city 3",
@@ -255,7 +255,7 @@
     {
       "RepresentativeName": "yasmin",
       "CountryCode": "",
-      "Naionality": "",
+      "Nationality": "",
       "RepresentativeDetails": [
         "country 3",
         "city 3",
@@ -296,7 +296,7 @@
     {
       "InventorName": "omniaaaaaa",
       "CountryCode": "000",
-      "Naionality": "nationality",
+      "Nationality": "nationality",
       "InventorDetails": [
         "country 3",
         "city 3",
@@ -308,7 +308,7 @@
     {
       "InventorName": "omnia 1",
       "CountryCode": "03",
-      "Naionality": "nationality 2",
+      "Nationality": "nationality 2",
       "InventorDetails": [
         "country 1",
         "city 1",
