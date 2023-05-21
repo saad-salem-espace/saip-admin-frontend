@@ -184,8 +184,11 @@
   "saveSearchQuery": "حفظ استعلام البحث",
   "querySaved": ".حفظ استعلام البحث بنجاح",
   "savedQueryMsg": "يمكنك الوصول لاستعلاماتك المحفوظة <0>إستعلاماتي</0>",
+  "savedQueryMsgForDoc": "تم الحفظ بنجاح",
   "couldnotSave": "لا يمكن حفظ استعلام البحث.",
   "failerMsg": "حدث خطأ ما! برجاء المحاولة لاحقًا.",
   "findSimilar": "البحث عن مشابه",
-  "download": "تحميل"
+  "download": "تحميل",
+  "addtoSavedQueries": "أضافه الى الاستعلامات المحفوظة",
+  "addtoFocusArea": "أضافه الى مساحة التركيز"
 }

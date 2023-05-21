@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import useAxios from 'hooks/useAxios';
 import getAssigned from 'apis/dashboard/getAssigned';
 import getAssignedWorkstreams from 'apis/dashboard/getAssignedWorkstreams';
@@ -9,7 +10,7 @@ import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
 import notAssigned from '../../assets/images/not-assigned.svg';
 
-function ExaminerDashboard() {
+const ExaminerDashboard = ({ updateFocusArea }) => {
   const { t } = useTranslation('dashboard');
   const linksList = [
     {
@@ -121,6 +122,7 @@ function ExaminerDashboard() {
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
         setNotesUpdated={setNotesUpdated}
+        updateFocusArea={updateFocusArea}
       />
     </div>
   );
@@ -138,6 +140,10 @@ function ExaminerDashboard() {
           className="no-assigment"
       />
   );
-}
+};
+
+ExaminerDashboard.propTypes = {
+  updateFocusArea: PropTypes.func.isRequired,
+};
 
 export default ExaminerDashboard;

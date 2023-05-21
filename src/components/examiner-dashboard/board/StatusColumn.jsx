@@ -3,16 +3,22 @@ import { Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Badge from 'components/shared/badge/Badge';
 import './board.scss';
+import { useState } from 'react';
 import PatentCard from './PatentCard';
 
-function StatusColumn({
+const StatusColumn = ({
   status, className, data, setActiveDocument, setToggle,
   activeDocument, setActiveTab, isInProgress,
-  SetSelectedCard,
-}) {
+  SetSelectedCard, updateFocusArea,
+}) => {
   const { t } = useTranslation('dashboard');
   const pinned = !!data.length;
   const others = !!data.length;
+
+  const [selectedFocusArea, setSelectedFocusArea] = useState();
+  const SetSelectedFocusArea = (i) => {
+    setSelectedFocusArea(i);
+  };
   return (
     <Col md={6} lg={4} xl={3} className="mb-5">
       <p className={`${className} h-px-24 assignment-status text-uppercase ps-3`}>
@@ -34,6 +40,9 @@ function StatusColumn({
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
             active={activeDocument === assignment.filingNumber}
+            SetSelectedFocusArea={SetSelectedFocusArea}
+            selectedFocusArea={selectedFocusArea}
+            updateFocusArea={updateFocusArea}
           />
         ))}
         { others && (
@@ -49,12 +58,15 @@ function StatusColumn({
             isInProgress={isInProgress}
             SetSelectedCard={SetSelectedCard}
             active={activeDocument === assignment.filingNumber}
+            SetSelectedFocusArea={SetSelectedFocusArea}
+            selectedFocusArea={selectedFocusArea}
+            updateFocusArea={updateFocusArea}
           />
         ))}
       </div>
     </Col>
   );
-}
+};
 
 StatusColumn.propTypes = {
   status: PropTypes.string.isRequired,
@@ -66,6 +78,7 @@ StatusColumn.propTypes = {
   activeDocument: PropTypes.string.isRequired,
   isInProgress: PropTypes.func.isRequired,
   setActiveTab: PropTypes.func,
+  updateFocusArea: PropTypes.func.isRequired,
 };
 
 StatusColumn.defaultProps = {
