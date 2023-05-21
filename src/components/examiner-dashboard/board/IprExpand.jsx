@@ -53,14 +53,17 @@ function IprExpand({
             />
           </div>
         </Col>
-        <Col lg={6} className="px-5 d-flex justify-content-end order-1 order-lg-2">
-          <IprControlAction
-            collapseIPR={collapseIPR}
-            isIPRExpanded={isIPRExpanded}
-            onClose={onClose}
-            focusMode
-          />
-        </Col>
+        {
+          !focusMode && (
+            <Col lg={6} className="px-5 d-flex justify-content-end order-1 order-lg-2">
+              <IprControlAction
+                collapseIPR={collapseIPR}
+                isIPRExpanded={isIPRExpanded}
+                onClose={onClose}
+              />
+            </Col>
+          )
+        }
       </div>
       <div className="d-lg-flex">
         <Col lg={6} className="border-end">
