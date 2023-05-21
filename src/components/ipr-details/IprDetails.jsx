@@ -49,6 +49,7 @@ function IprDetails({
   isCardInprogress,
   selectedCardId,
   setNotesUpdated,
+  examinerView,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -159,6 +160,7 @@ function IprDetails({
     documentId={documentId}
     searchResultParams={searchResultParams}
     handleClick={handleClick}
+    examinerView={examinerView}
   />,
     2: <TrademarkViews
       selectedView={selectedView.value}
@@ -168,6 +170,7 @@ function IprDetails({
       documentId={documentId}
       searchResultParams={searchResultParams}
       handleClick={handleClick}
+      examinerView={examinerView}
     />,
     3: <IndustrialDesignViews
       selectedView={selectedView.value}
@@ -177,6 +180,7 @@ function IprDetails({
       documentId={documentId}
       searchResultParams={searchResultParams}
       handleClick={handleClick}
+      examinerView={examinerView}
     />,
   };
 
@@ -354,38 +358,41 @@ function IprDetails({
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <div id="google_translate_element" className="d-inline-block" />
-          <SearchQueryMenu
-            showSearchQuery={showSearchQuery}
-            ShowSearchQueryMenu={ShowSearchQueryMenu}
-            ToggleSearchQueryMenu={ToggleSearchQueryMenu}
-            hideSearchQueryMenu={hideSearchQueryMenu}
-            validHighlight={validHighlight}
-            highlightTrigger={highlightTrigger}
-          >
-            <AppTooltip
-              className="w-auto"
-              placement="top"
-              tooltipContent={t('dashboard:board.addtoKeywordPlanner')}
-              tooltipTrigger={
-                <div>
-                  <Button
-                    variant="link"
-                    className="text-primary-dark font-regular fs-sm text-decoration-none"
-                    onClick={() => { ToggleSearchQueryMenu(); }}
-                    text={
-                      <>
-                        <Image src={addIcon} />
-                        <span className="px-2">
-                          {t('dashboard:board.keywordplanner')}
-                        </span>
-                        <FontAwesomeIcon icon={showSearchQuery ? faChevronUp : faChevronDown} />
-                      </>
+          {
+            examinerView && <SearchQueryMenu
+              showSearchQuery={showSearchQuery}
+              ShowSearchQueryMenu={ShowSearchQueryMenu}
+              ToggleSearchQueryMenu={ToggleSearchQueryMenu}
+              hideSearchQueryMenu={hideSearchQueryMenu}
+              validHighlight={validHighlight}
+              highlightTrigger={highlightTrigger}
+            >
+              <AppTooltip
+                className="w-auto"
+                placement="top"
+                tooltipContent={t('dashboard:board.addtoKeywordPlanner')}
+                tooltipTrigger={
+                  <div>
+                    <Button
+                      variant="link"
+                      className="text-primary-dark font-regular fs-sm text-decoration-none"
+                      onClick={() => { ToggleSearchQueryMenu(); }}
+                      text={
+                        <>
+                          <Image src={addIcon} />
+                          <span className="px-2">
+                            {t('dashboard:board.keywordplanner')}
+                          </span>
+                          <FontAwesomeIcon icon={showSearchQuery ? faChevronUp : faChevronDown} />
+                        </>
                   }
-                  />
-                </div>
+                    />
+                  </div>
             }
-            />
-          </SearchQueryMenu>
+              />
+              {/* eslint-disable-next-line react/jsx-closing-tag-location */}
+            </SearchQueryMenu>
+}
         </div>
       </div>
       {
@@ -430,6 +437,7 @@ IprDetails.propTypes = {
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
+  examinerView: PropTypes.bool,
 };
 
 IprDetails.defaultProps = {
@@ -442,6 +450,7 @@ IprDetails.defaultProps = {
   setActiveDocument: () => { },
   dashboard: false,
   showActions: true,
+  examinerView: false,
   activeTab: 2,
   setNotesUpdated: () => { },
 };

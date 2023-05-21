@@ -74,6 +74,7 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             className="mx-0"
+            examinerView
           />
         </Col>
         <Col lg={6}>

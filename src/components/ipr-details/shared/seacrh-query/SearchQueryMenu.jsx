@@ -17,7 +17,7 @@ import { parseQuery } from 'utils/searchQuery';
 import activeWorkstreamContext from '../context/activeWorkstreamContext';
 
 function SearchQueryMenu({
-  showSearchQuery, hideSearchQueryMenu, className, children, toggleIcon,
+  showSearchQuery, hideSearchQueryMenu, className, children,
   validHighlight, highlightTrigger,
 }) {
   const navigate = useNavigate();
@@ -114,7 +114,6 @@ SearchQueryMenu.propTypes = {
   hideSearchQueryMenu: PropTypes.func.isRequired,
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
-  toggleIcon: PropTypes.func.isRequired,
   validHighlight: PropTypes.bool.isRequired,
   highlightTrigger: PropTypes.bool.isRequired,
 };

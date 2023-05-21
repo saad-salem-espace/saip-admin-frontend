@@ -7,9 +7,9 @@ import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/Key
 import HandleEmptyAttribute from '../shared/empty-states/HandleEmptyAttribute';
 import LabelValue from './shared/label-value/LabelValue';
 
-
 const BibliographicDataSection = ({
   document, isIPRExpanded, children, handleClick,
+  examinerView,
 }) => {
   const { t } = useTranslation('search');
   const { BibliographicData } = document;
@@ -30,14 +30,20 @@ const BibliographicDataSection = ({
   useEffect(() => {
     const handleSelectionChange = () => {
       const selection = window.getSelection();
-      if ((selection.anchorNode) === (selection.focusNode)) {
+
+      if (!selection.toString()) {
+        window.document.getElementById('col').classList.remove('added');
+      } else if ((selection.anchorNode) === (selection.focusNode)) {
         setLeft(selection.getRangeAt(0).getBoundingClientRect().left);
         setTop(selection.getRangeAt(0).getBoundingClientRect().top);
-        selection.anchorNode.parentElement.classList.add('added');
-        // console.log(selectedText);
+        if (window.document.getElementById('col').contains(selection.anchorNode)) {
+          window.document.getElementById('col').classList.add('added');
+        }
       }
     };
-    window.document.addEventListener('selectionchange', handleSelectionChange);
+    if (examinerView) {
+      window.document.addEventListener('selectionchange', handleSelectionChange);
+    }
     return () => {
       window.document.removeEventListener('selectionchange', handleSelectionChange);
     };
@@ -48,53 +54,19 @@ const BibliographicDataSection = ({
     top: `${top - 38}px`,
   };
 
-  // useEffect(() => {
-  //   const handleSelectionChange = () => {
-  //     // console.log(`Selected text: ${window.getSelection().toString()}`);
-  //     // console.log(window.getSelection());
-  //     const selection = window.getSelection();
-  //     const selectedText = selection.toString();
-  //     console.log(selectedText);
-  //     // React.createElement()
-  //     // const para = window.document.createElement('p');
-  //     // const node = window.document.createTextNode('This is a paragraph.');
-  //     // para.appendChild(node);
-  //     // selection.anchorNode.parentElement.classList.add('added')
-  //     if ((selection.anchorNode) === (selection.focusNode)) {
-  //       setHighlightedText(selectedText);
-  //       if (selection.anchorNode !== anchorNode) {
-  //         setAnchorNode(selection.anchorNode);
-  //       }
-  //       // selection.anchorNode.parentNode.appendChild(para);
-  //     } else {
-  //       if (highlightedText) {
-  //         setHighlightedText('');
-  //       }
-  //       console.log('not working');
-  //     }
-  //   };
-  //   window.document.addEventListener('selectionchange', handleSelectionChange);
-  //   return () => {
-  //     window.document.removeEventListener('selectionchange', handleSelectionChange);
-  //   };
-  // }, []);
-
   return (
     <Row>
-      <Col md={getGrid('bibliographic')}>
+      <Col md={getGrid('bibliographic')} id="col">
         <h6 className="mt-8 mb-4 disable-highlight">{t('register')}</h6>
+        <KeywordPlannerButton btnPosition={btnPosition} handleClick={handleClick} />
         <LabelValue
           label={t('applicants')}
           value={document?.Applicants?.join('; ')}
-          handleClick={handleClick}
-          btnPosition={btnPosition}
         />
         <LabelValue
           label={t('inventors')}
           value={document?.Inventors?.join('; ')}
           className="mb-4"
-          handleClick={handleClick}
-          btnPosition={btnPosition}
         />
         <div>
           <p className="text-primary f-14 disable-highlight">{t('classifications')}</p>
@@ -103,8 +75,6 @@ const BibliographicDataSection = ({
             value={document?.IPCClassification?.IPC?.join('; ')}
             className="f-12 mb-5"
             customLabel
-            handleClick={handleClick}
-            btnPosition={btnPosition}
           />
         </div>
         <LabelValue
@@ -112,8 +82,6 @@ const BibliographicDataSection = ({
           value={document?.CPCClassification?.CPC?.join('; ')}
           className="f-12 mb-5"
           customLabel
-          handleClick={handleClick}
-          btnPosition={btnPosition}
         />
         {/* <div className="d-flex">
           <p className={`text-primary f-14 ${style.label}`}>{t('priorities')}</p>
@@ -124,8 +92,6 @@ const BibliographicDataSection = ({
         <LabelValue
           label={t('application')}
           value={BibliographicData?.Application}
-          handleClick={handleClick}
-          btnPosition={btnPosition}
         />
         <LabelValue
           label={t('publication')}
@@ -136,24 +102,16 @@ const BibliographicDataSection = ({
               {BibliographicData?.PublicationDate}
             </>
           }
-          handleClick={handleClick}
-          btnPosition={btnPosition}
         />
         <LabelValue
           label={t('publishedAs')}
           value={document?.Priorities?.PublishedAs}
-          handleClick={handleClick}
-          btnPosition={btnPosition}
         />
         <p className="text-primary f-14 disable-highlight">{t('abstract')}</p>
         <div className="fs-sm">
           <ShowMore>
             <HandleEmptyAttribute checkOn={BibliographicData?.ApplicationAbstract.join(' ')} />
           </ShowMore>
-          <KeywordPlannerButton
-            btnPosition={btnPosition}
-            handleClick={handleClick}
-          />
         </div>
       </Col>
       <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
@@ -187,6 +145,11 @@ BibliographicDataSection.propTypes = {
   isIPRExpanded: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   handleClick: PropTypes.func.isRequired,
+  examinerView: PropTypes.bool,
+};
+
+BibliographicDataSection.defaultProps = {
+  examinerView: false,
 };
 
 export default BibliographicDataSection;

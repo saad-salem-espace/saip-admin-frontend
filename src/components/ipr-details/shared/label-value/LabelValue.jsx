@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import style from 'components/ipr-details/ipr-details.module.scss';
-import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 
 const LabelValue = ({
   label, value,
   labelClassName,
-  className, customLabel, valueClassName, btnPosition,
-  handleClick,
+  className, customLabel, valueClassName,
 }) => (
   <div className={`d-flex align-items-center ${className}`}>
     {label && (
@@ -15,7 +13,6 @@ const LabelValue = ({
     )}
     <p className={`f-12 ${valueClassName}`}>
       <HandleEmptyAttribute checkOn={value} />
-      <KeywordPlannerButton btnPosition={btnPosition} handleClick={handleClick} />
     </p>
   </div>
 );
@@ -27,7 +24,6 @@ LabelValue.propTypes = {
   customLabel: PropTypes.bool,
   valueClassName: PropTypes.string,
   labelClassName: PropTypes.string,
-  handleClick: PropTypes.func,
   btnPosition: PropTypes.shape({
     left: PropTypes.string.isRequired,
     top: PropTypes.string.isRequired,
@@ -39,6 +35,5 @@ LabelValue.defaultProps = {
   customLabel: false,
   valueClassName: '',
   labelClassName: '',
-  handleClick: () => {},
 };
 export default LabelValue;
