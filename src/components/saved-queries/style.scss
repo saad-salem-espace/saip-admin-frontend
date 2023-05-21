@@ -1,0 +1,17 @@
+@import "../../assets/styles/utilities/custom-theme";
+
+.play-icon {
+  color: $primary-dark;
+
+  html[dir="rtl"] & {
+    transform: rotateY(180deg);
+  }
+}
+
+.active-query, .run-query:hover {
+  background-color: $primary;
+
+  .play-icon {
+    color: $white;
+  }
+}
