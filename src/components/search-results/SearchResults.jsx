@@ -2,9 +2,12 @@ import {
   useContext, useEffect, useRef, useState,
 } from 'react';
 import { Formik, Form } from 'formik';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+} from 'react-bootstrap';
 import { useTranslation, Trans } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import ViewTip from 'components/shared/view-tip/ViewTip';
@@ -21,6 +24,7 @@ import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
+import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
 import { LIMITS } from 'utils/manageLimits';
 import SearchNote from './SearchNote';
@@ -443,6 +447,11 @@ function SearchResults() {
                           id="advancedSearchTip"
                           btnText={t('common:gotIt')}
                           variant="bg-primary-10"
+                          viewTipTrigger={
+                            <Button variant="link" className="btn-view-tip">
+                              <BsQuestionCircle className="text-primary" />
+                            </Button>
+                          }
                         >
                           <Trans
                             i18nKey="advancedSearchTipContent"
@@ -462,6 +471,11 @@ function SearchResults() {
                           id="allowSynonymsTip"
                           btnText={t('common:gotIt')}
                           variant="bg-primary-10"
+                          viewTipTrigger={
+                            <Button variant="link" className="btn-view-tip">
+                              <BsQuestionCircle className="text-primary" />
+                            </Button>
+                          }
                         >
                           <Trans
                             i18nKey="allowSynonymsTipContent"

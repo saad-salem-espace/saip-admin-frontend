@@ -5,7 +5,6 @@ import {
   Popover,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { BsQuestionCircle } from 'react-icons/bs';
 import { GrFormClose } from 'react-icons/gr';
 import './viewtip.scss';
 
@@ -16,6 +15,8 @@ const ViewTip = ({
   btnText,
   className,
   variant,
+  viewTipTrigger,
+  btnVariant,
 }) => {
   const [show, setShow] = useState();
   const handleToggle = () => {
@@ -40,7 +41,7 @@ const ViewTip = ({
           <Button
             onClick={handleDismiss}
             size="sm"
-            variant="primary"
+            variant={btnVariant}
             className="appBtn ms-auto py-1 fs-14"
           >
             {btnText}
@@ -57,9 +58,7 @@ const ViewTip = ({
       onToggle={handleToggle}
       show={show}
     >
-      <Button variant="link" className="btn-view-tip">
-        <BsQuestionCircle className="text-primary" />
-      </Button>
+      {viewTipTrigger}
     </OverlayTrigger>
   );
 };
@@ -68,15 +67,18 @@ ViewTip.propTypes = {
   id: PropTypes.string.isRequired,
   Title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  viewTipTrigger: PropTypes.node.isRequired,
   btnText: PropTypes.string,
   className: PropTypes.string,
   variant: PropTypes.string,
+  btnVariant: PropTypes.string,
 };
 
 ViewTip.defaultProps = {
   btnText: '',
   className: '',
   variant: '',
+  btnVariant: 'primary',
 };
 
 export default ViewTip;

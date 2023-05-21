@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Image,
+  Button,
 } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
@@ -16,6 +17,7 @@ import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex, defaultConditions } from 'utils/searchQuery';
 import FloatWidget from 'components/shared/float-widget/FloatWidget';
+import { BsQuestionCircle } from 'react-icons/bs';
 import ViewTip from 'components/shared/view-tip/ViewTip';
 import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
@@ -144,6 +146,11 @@ function WorkstreamSearch() {
                       id="advancedSearchTip"
                       Title={t('tips:advancedSearchTipTitle')}
                       btnText={t('common:gotIt')}
+                      viewTipTrigger={
+                        <Button variant="link" className="btn-view-tip">
+                          <BsQuestionCircle className="text-primary" />
+                        </Button>
+                      }
                       variant="bg-primary-10"
                     >
                       <Trans
