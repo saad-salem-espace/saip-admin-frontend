@@ -1,12 +1,17 @@
-const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    plugins: [
-      new FilterWarningsPlugin({
-        exclude:
-          /mini-css-extract-plugin[^]*Conflicting order. Following module has been added:/,
-      }),
+module.exports = {
+  plugins: [
+    new MiniCssExtractPlugin({
+      ignoreOrder: true,
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
     ],
-  });
+  },
 };
