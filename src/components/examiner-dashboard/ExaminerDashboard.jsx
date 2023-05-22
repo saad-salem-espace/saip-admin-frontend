@@ -10,7 +10,7 @@ import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
 import notAssigned from '../../assets/images/not-assigned.svg';
 
-const ExaminerDashboard = ({ updateFocusArea }) => {
+const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   const { t } = useTranslation('dashboard');
   const linksList = [
     {
@@ -88,6 +88,12 @@ const ExaminerDashboard = ({ updateFocusArea }) => {
   }, [activeWorkstream, sort]);
 
   useEffect(() => {
+    if (activeWorkstream !== linksList[0]) {
+      updateFocusArea(false);
+    }
+  }, [activeWorkstream]);
+
+  useEffect(() => {
     if (toggle || notesUpdated) executeAssignmentData();
   }, [toggle, notesUpdated]);
 
@@ -123,6 +129,7 @@ const ExaminerDashboard = ({ updateFocusArea }) => {
         activeDocument={activeDocument}
         setNotesUpdated={setNotesUpdated}
         updateFocusArea={updateFocusArea}
+        showFocusArea={showFocusArea}
       />
     </div>
   );
@@ -144,6 +151,7 @@ const ExaminerDashboard = ({ updateFocusArea }) => {
 
 ExaminerDashboard.propTypes = {
   updateFocusArea: PropTypes.func.isRequired,
+  showFocusArea: PropTypes.bool.isRequired,
 };
 
 export default ExaminerDashboard;
