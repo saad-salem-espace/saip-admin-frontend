@@ -4,11 +4,40 @@
 .float-widget {
   transform: none !important;
   top: 70% !important;
-  html[dir="ltr"] & {
-    left: 80% !important;
+  @include media-breakpoint-up(lg) {
+    html[dir="ltr"] & {
+      left: 70% !important;
+    }
+    html[dir="rtl"] & {
+      right: 70% !important;
+    }
   }
-  html[dir="rtl"] & {
-    right: 80% !important;
+  @include media-breakpoint-up(xl) {
+    html[dir="ltr"] & {
+      left: 74% !important;
+    }
+    html[dir="rtl"] & {
+      right: 74% !important;
+    }
+  }
+  @include media-breakpoint-up(xxl) {
+    html[dir="ltr"] & {
+      left: 80% !important;
+    }
+    html[dir="rtl"] & {
+      right: 80% !important;
+    }
+  }
+  @media screen and (max-width: 1200px) {
+    position: fixed !important;
+    transform: translate(-50%, 0%) !important;
+    html[dir="ltr"] & {
+      left: 50% !important;
+    }
+    html[dir="rtl"] & {
+      right: 50% !important;
+    }
+
   }
   .popover-arrow {
     &::before,
