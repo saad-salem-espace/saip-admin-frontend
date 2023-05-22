@@ -55,7 +55,7 @@ function IprDetails({
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [validHighlight, setValidHighlight] = useState(false);
-  const [highlightTrigger, setHighlightTrigger] = useState(false);
+  const [highlightTrigger, setHighlightTrigger] = useState(0);
   const [document, setDocument] = useState(null);
   const [searchParams] = useSearchParams();
   const [selectedView, setSelectedView] = useState({
@@ -147,7 +147,7 @@ function IprDetails({
       setValidHighlight(false);
     }
 
-    setHighlightTrigger((prev) => !prev);
+    setHighlightTrigger((prev) => prev + 1);
   };
 
   const views = {

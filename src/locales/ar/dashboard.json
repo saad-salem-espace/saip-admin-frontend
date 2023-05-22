@@ -40,6 +40,9 @@
     "keywordplanner": "مخطط الكلمات الرئيسية",
     "addtoKeywordPlanner": "أضافه الى مخطط الكلمات الرئيسيه",
     "addtoFocus": "أضافه الى مساحة التركيز",
-    "cannotFocus": "يمكنك أختيار واحد فقط"
+    "cannotFocus": "يمكنك أختيار واحد فقط",
+    "addedToKeywordPlanner": "تمت الاضافة بنجاح",
+    "invalidHighlight": "لم يتم الاضافة. يرجو الاختيار من قسم واحد فقط",
+    "maximumFields": "وصلت الى عدد خانات البحث المسموح بها"
   }
 }

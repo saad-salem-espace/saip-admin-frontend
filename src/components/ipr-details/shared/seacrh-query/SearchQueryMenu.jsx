@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import CacheContext from 'contexts/CacheContext';
 import { Formik, Form } from 'formik';
@@ -14,18 +15,21 @@ import PropTypes from 'prop-types';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { parseQuery } from 'utils/searchQuery';
+import toastify from 'utils/toastify';
 import activeWorkstreamContext from '../context/activeWorkstreamContext';
 
 function SearchQueryMenu({
   showSearchQuery, hideSearchQueryMenu, className, children,
   validHighlight, highlightTrigger,
 }) {
+  const { t } = useTranslation('dashboard');
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
   const activeWorkstream = useContext(activeWorkstreamContext)?.id.toString();
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${activeWorkstream}/identifiers` }, { dependencies: [activeWorkstream] });
   const [searchFields, setSearchFields] = useState([]);
   const [formikFields, setFormikFields] = useState([]);
+  const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
 
   const onSubmit = (values) => {
     navigate({
@@ -37,7 +41,31 @@ function SearchQueryMenu({
   };
 
   useEffect(() => {
-    if (!validHighlight) return;
+    if (!highlightTrigger) return;
+
+    if (!validHighlight) {
+      toastify(
+        'error',
+        <div>
+          <p className="toastifyTitle">
+            {t('dashboard:board:invalidHighlight')}
+          </p>
+        </div>,
+      );
+      return;
+    }
+
+    if (formikFields.length === maximumSearchFields) {
+      toastify(
+        'error',
+        <div>
+          <p className="toastifyTitle">
+            {t('dashboard:board:maximumFields')}
+          </p>
+        </div>,
+      );
+      return;
+    }
 
     if ((formikFields.length === 1 && !formikFields[0].data)) {
       setSearchFields([{
@@ -56,6 +84,15 @@ function SearchQueryMenu({
         operator: 'AND',
       }]);
     }
+
+    toastify(
+      'success',
+      <div>
+        <p className="toastifyTitle">
+          {t('dashboard:board:addedToKeywordPlanner')}
+        </p>
+      </div>,
+    );
   }, [highlightTrigger, validHighlight]);
 
   useEffect(() => {
@@ -115,7 +152,7 @@ SearchQueryMenu.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   validHighlight: PropTypes.bool.isRequired,
-  highlightTrigger: PropTypes.bool.isRequired,
+  highlightTrigger: PropTypes.number.isRequired,
 };
 
 SearchQueryMenu.defaultProps = {

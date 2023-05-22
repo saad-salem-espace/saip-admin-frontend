@@ -40,6 +40,9 @@
     "keywordplanner": "Keyword Planner",
     "addtoKeywordPlanner": "Add to keyword planner",
     "addtoFocus": "Add to focus area",
-    "cannotFocus": "Only one item could be added to focus area."
+    "cannotFocus": "Only one item could be added to focus area.",
+    "addedToKeywordPlanner": "Added to keyword planner successfully",
+    "invalidHighlight": "Please select from one section only",
+    "maximumFields": "You have added the maximum number of fields"
   }
 }
