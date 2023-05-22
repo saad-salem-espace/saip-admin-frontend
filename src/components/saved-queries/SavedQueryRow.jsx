@@ -67,8 +67,18 @@ const SavedQueryRow = ({
     executeDeleteQuery();
   };
 
-  const handleDeleteQuery = () => {
-    deleteInstance({ indexName: 'id', indexValue: query.id, onSuccess: () => setRefreshQueriesList((prev) => prev + 1) });
+  const onSuccessDelete = () => {
+    setRefreshQueriesList((prev) => prev + 1);
+    toastify(
+      'success',
+      <div>
+        <p className="toastifyTitle">{t('queryDeleted')}</p>
+      </div>,
+    );
+  };
+
+  const handleDeleteQueryForLoggedout = () => {
+    deleteInstance({ indexName: 'id', indexValue: query.id, onSuccess: onSuccessDelete() });
   };
 
   return (
@@ -91,9 +101,9 @@ const SavedQueryRow = ({
           variant="bg-primary-10"
           placement="bottom"
           btnVariant="danger"
-          handleCallback={isAuthenticated ? handleDelete : handleDeleteQuery}
+          handleCallback={isAuthenticated ? handleDelete : handleDeleteQueryForLoggedout}
           popoverTrigger={
-            <Button variant="link" className="">
+            <Button variant="link">
               <BsTrash className="text-danger fs-base" />
             </Button>
           }
