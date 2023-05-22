@@ -2,7 +2,7 @@
 
 .focus-area {
   position: fixed;
-  bottom: 4vh;
+  bottom: 6vh;
   z-index: 99;
   color: $white;
   width: 353px;
@@ -28,7 +28,7 @@
   }
 
   html[dir="ltr"] & {
-    right: 63px;
+    right: 30px;
 
     @include media-breakpoint-down(sm) {
       right: 5px;
@@ -36,7 +36,7 @@
   }
 
   html[dir="rtl"] & {
-    left: 63px;
+    left: 30px;
 
     @include media-breakpoint-down(sm) {
       left: 5px;
