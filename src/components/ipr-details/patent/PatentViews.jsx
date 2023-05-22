@@ -39,7 +39,7 @@ const PatentViews = ({
           handleClick={handleClick}
           examinerView={examinerView}
         >
-          <h6>{t('ipr.drawings')}</h6>
+          <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
             <Carousel
               largeThumb={isIPRExpanded}
@@ -176,7 +176,7 @@ const PatentViews = ({
           handleClick={handleClick}
           examinerView={examinerView}
         >
-          <h6>{t('ipr.drawings')}</h6>
+          <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
           {document.Drawings?.length ? (
             <Carousel
               largeThumb={isIPRExpanded}
@@ -195,7 +195,7 @@ const PatentViews = ({
           handleClick={handleClick}
           examinerView={examinerView}
         >
-          <h6>{t('ipr.drawings')}</h6>
+          <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
             <Carousel
               largeThumb={isIPRExpanded}

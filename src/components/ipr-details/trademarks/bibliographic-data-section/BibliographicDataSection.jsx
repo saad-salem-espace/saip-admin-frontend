@@ -72,69 +72,49 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('trademarks.markNameEN')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.BrandNameEn}
-            handleClick={handleClick}
           />
           <LabelValue
             label={t('trademarks.markNameAR')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.BrandNameAr}
-            handleClick={handleClick}
           />
           <LabelValue
             label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.FilingNumber}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.FilingDate}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('trademarks.markType')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.TrademarkType}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('trademarks.markStatus')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.TrademarkLastStatus}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.registrationNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.RegistrationNumber}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.registrationDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.RegistrationDate}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PublicationNumber}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PublicationDate}
-            handleClick={handleClick}
             className="mb-4"
           />
           <p className="text-primary f-14 disable-highlight">{t('trademarks.markDescription')}</p>
@@ -152,28 +132,24 @@ const BibliographicDataSection = (
             label={t('ipr.owners')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.Owners.join('; ')}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.applicants')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.Applicants.join('; ')}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.representatives')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.Representatives.join('; ')}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('classifications')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.NICEClassification.join('; ')}
-            handleClick={handleClick}
             className="mb-4"
           />
         </Col>

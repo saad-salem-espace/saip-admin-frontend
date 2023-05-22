@@ -74,63 +74,54 @@ const BibliographicDataSection = (
             label={t('industrialDesign.designTitleEn')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.DesignTitleEN}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('industrialDesign.designTitleAr')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.DesignTitleAR}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.FilingNumber}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.FilingDate}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('industrialDesign.designStatus')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.Status}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.registrationNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.RegistrationNumber}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.registrationDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.RegistrationDate}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.PublicationNumber}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.PublicationDate}
-            handleClick={handleClick}
             className="mb-4"
           />
           <p className="text-primary f-14 disable-highlight">{t('abstract')}</p>
@@ -141,35 +132,30 @@ const BibliographicDataSection = (
                 <HandleEmptyAttribute checkOn={BibliographicData.DesignAbstract} />
               </ShowMore>
             }
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('industrialDesign.designers')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.Designers.join('; ')}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.applicants')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.Applicants.join('; ')}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.representatives')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.Representatives.join('; ')}
-            handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
             label={t('classifications')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.LocarnoClassification.join('; ')}
-            handleClick={handleClick}
             className="mb-4"
           />
         </Col>
