@@ -44,10 +44,10 @@ button.searchIcon {
   input {
     height: 59px !important;
     html[dir="ltr"] & {
-      padding-right: 145px;
+      padding-right: 180px;
     }
     html[dir="rtl"] & {
-      padding-left: 145px;
+      padding-left: 180px;
       padding-right: 20px !important;
     }
   }
@@ -67,19 +67,65 @@ button.searchIcon {
   height: 87px !important;
 }
 
-
 //// searchWithSibling
 .searchWithSibling  input{
   border-radius: $border-radius $border-radius;
-
   @include media-breakpoint-up(xl) {
     border-left: 0 !important;
     border-radius: 0 $border-radius $border-radius 0;
-
+    html[dir="ltr"] & {
+      padding-right: 180px;
+      padding-left:10px;
+      
+    }
     html[dir="rtl"] & {
       border-right: 0 !important;
       border-radius: $border-radius 0 0 $border-radius;
+      padding-left: 180px;
       padding-right: 10px;
+    }
+  }
+  @include media-breakpoint-down(xl) {
+    html[dir="ltr"] & {
+      padding-right: 190px !important;
+      padding-left: 20px;
+    }
+    html[dir="rtl"] & {
+      padding-left: 190px;
+      padding-right: 20px;
+    }
+  }
+}
+.searchResultsView {
+  
+  .imgUploaded {
+    &.searchInputWrapper{
+      @include media-breakpoint-up(md) {
+        input {
+  
+          html[dir="ltr"] & {
+            padding-left: 100px !important;
+            padding-right: 180px !important;
+          }
+          html[dir="rtl"] & {
+            padding-right: 90px !important;
+            padding-left: 180px !important;
+          }
+        }
+      }
+      @include media-breakpoint-down(md) {
+        input {
+  
+          html[dir="ltr"] & {
+            padding-left: 90px;
+            padding-right: 180px;
+          }
+          html[dir="rtl"] & {
+            padding-right: 90px !important;
+            padding-left: 180px;
+          }
+        }
+      }
     }
   }
 }
@@ -87,11 +133,27 @@ button.searchIcon {
   &.searchInputWrapper{
     @include media-breakpoint-up(md) {
       input {
-        padding-left: 154px !important;
 
+        html[dir="ltr"] & {
+          padding-left: 130px !important;
+          padding-right: 180px !important;
+        }
         html[dir="rtl"] & {
-          padding-right: 154px;
-          padding-left: auto;
+          padding-right: 110px !important;
+          padding-left: 180px !important;
+        }
+      }
+    }
+    @include media-breakpoint-down(md) {
+      input {
+
+        html[dir="ltr"] & {
+          padding-left: 130px !important;
+          padding-right: 180px !important;
+        }
+        html[dir="rtl"] & {
+          padding-right: 110px !important;
+          padding-left: 180px !important;
         }
       }
     }

@@ -396,26 +396,27 @@ function IprDetails({
         </div>
       </div>
       {
-        dashboard && showActions ? (
-          <IprSections
-            options={options[searchResultParams.workstreamId]}
-            onChangeSelect={onChangeSelect}
-            selectedView={selectedView}
-            renderSelectedView={renderSelectedView}
-            documentId={documentId}
-            activeTab={activeTab}
-            isCardInprogress={isCardInprogress}
-            selectedCardId={selectedCardId}
-            setNotesUpdated={setNotesUpdated}
-            className="notes-editor-container"
-          />
-        ) : (
-          <IprData
-            options={options[searchResultParams.workstreamId]}
-            onChangeSelect={onChangeSelect}
-            selectedView={selectedView}
-            renderSelectedView={renderSelectedView}
-          />)
+      dashboard && showActions ? (
+        <IprSections
+          options={options[searchResultParams.workstreamId]}
+          onChangeSelect={onChangeSelect}
+          selectedView={selectedView}
+          renderSelectedView={renderSelectedView}
+          documentId={documentId}
+          activeTab={activeTab}
+          isCardInprogress={isCardInprogress}
+          selectedCardId={selectedCardId}
+          setNotesUpdated={setNotesUpdated}
+          className="notes-editor-container"
+          activeWorkstream={activeWorkstream}
+        />
+      ) : (
+        <IprData
+          options={options[searchResultParams.workstreamId]}
+          onChangeSelect={onChangeSelect}
+          selectedView={selectedView}
+          renderSelectedView={renderSelectedView}
+        />)
       }
     </div>
   );

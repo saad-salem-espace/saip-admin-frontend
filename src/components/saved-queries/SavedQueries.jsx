@@ -59,7 +59,7 @@ const SavedQueries = () => {
     resetPageNumber();
   };
 
-  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, Number(searchParams.get('page') || '1'), true);
+  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, null, Number(searchParams.get('page') || '1'), true);
 
   const isAuth = auth && auth.user;
 
@@ -88,6 +88,9 @@ const SavedQueries = () => {
               RenderedComponent={savedQueries}
               emptyState={<NoData />}
               resetPage={pageReset}
+              renderedProps={{
+                selectedWorkStream: selectedWorkStream.value,
+              }}
             />
           ) : (
             <IndexedDbAppPagination
@@ -102,6 +105,9 @@ const SavedQueries = () => {
                 sortedIndexName: 'updatedAt',
                 indexName: 'workstreamId',
                 indexValue: selectedWorkStream.value,
+              }}
+              renderedProps={{
+                selectedWorkStream: selectedWorkStream.value,
               }}
             />
           )}

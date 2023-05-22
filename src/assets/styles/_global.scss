@@ -1,3 +1,6 @@
+@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/mixin";
+
 $fontSize: (
   8,
   12,
@@ -34,7 +37,8 @@ $fontSize: (
 }
 
 .app {
-  padding-top:90px;
+  padding-top:80px;
+  padding-bottom: 50px;
 }
 
 .italicText {
@@ -45,4 +49,23 @@ $fontSize: (
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.container-fluid {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.workStreamResults {
+  .fixed-panel-scrolled.search-result {
+    html[dir="rtl"] & {
+      @extend .pe-4;
+    }
+  }
+  .fixed-panel-scrolled {
+    @include scrollbar;
+    height: 80vh;
+    overflow-y: auto;
+    padding-bottom: 180px;;
+  }
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const saveQueryApi = ({
-  workStreamId, query, resultCount, enableSynonyms,
+  workStreamId, query, resultCount, enableSynonyms, documentId, fav,
 }, configOnly = false) => {
   const config = {
     url: 'favouriteSearchQuery',
@@ -11,6 +11,8 @@ const saveQueryApi = ({
       resultCount,
       queryString: query,
       synonyms: enableSynonyms || false,
+      documentId,
+      fav,
     },
   };
   return configOnly ? config : axios.request(config);

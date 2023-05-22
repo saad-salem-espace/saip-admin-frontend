@@ -13,6 +13,9 @@
   "notes": "ملاحظات",
   "translateInfo": "ترجمة",
   "markAsDone": "تم إنجازه",
+  "savedQueries": "الاستعلامات المحفوظه",
+  "notAssigned": "لا تجد الوثائق الخاضعة للفحص؟",
+  "emptyStateTitle": "لم يتم إسناد أي من الوثائق لك. ",
   "status": {
     "toDo": "قائمة الأعمال",
     "done": "منجز",
@@ -35,6 +38,8 @@
     "plantVarieties": "لوحة <0> الأصناف النباتية </0>",
     "integratedCircuits": "لوحة <0> الدوائر المتكاملة </0>",
     "keywordplanner": "مخطط الكلمات الرئيسية",
-    "addtoKeywordPlanner": "أضافه الى مخطط الكلمات الرئيسيه"
+    "addtoKeywordPlanner": "أضافه الى مخطط الكلمات الرئيسيه",
+    "addtoFocus": "أضافه الى مساحة التركيز",
+    "cannotFocus": "يمكنك أختيار واحد فقط"
   }
 }

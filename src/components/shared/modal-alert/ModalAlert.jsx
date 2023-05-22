@@ -8,7 +8,7 @@ import './modalAlert.scss';
 import '../../../assets/styles/common/modal.scss';
 
 const ModalAlert = ({
-  title, msg, className, handleConfirm, showModal, hideAlert,
+  title, msg, className, handleConfirm, showModal, hideAlert, confirmBtnText, variant,
 }) => {
   const { t } = useTranslation('translation');
   const handleClose = (s) => {
@@ -17,9 +17,9 @@ const ModalAlert = ({
 
   return (
     <div>
-      <Modal centered show={showModal} onHide={handleClose} className={`${className} border-radius`}>
-        <Modal.Header className="border-0 p-4 btn-close-wrappper align-items-start" closeButton>
-          <BsExclamationTriangle className="mb-4 fs-32 ms-4" />
+      <Modal centered show={showModal} onHide={handleClose} className={`${className} border-radius modal-alert`}>
+        <Modal.Header className="border-0 px-4 pt-4 pb-0 btn-close-wrappper align-items-start" closeButton>
+          <BsExclamationTriangle className="mb-4 fs-32 ms-3" />
         </Modal.Header>
         <Modal.Body className="p-0 text-center">
           <h6 className="mb-4">
@@ -35,8 +35,8 @@ const ModalAlert = ({
               onClick={() => { handleClose(); }}
             />
             <Button
-              text={t('save')}
-              variant="primary"
+              text={confirmBtnText}
+              variant={variant}
               className="py-2 w-50 rounded-0"
               size="md"
               onClick={() => { handleConfirm(); handleClose('saveBtn'); }}
@@ -55,11 +55,13 @@ ModalAlert.propTypes = {
   handleConfirm: PropTypes.func.isRequired,
   showModal: PropTypes.bool,
   hideAlert: PropTypes.func.isRequired,
+  confirmBtnText: PropTypes.string.isRequired,
+  variant: PropTypes.string,
 };
 
 ModalAlert.defaultProps = {
   className: null,
   showModal: true,
+  variant: 'primary',
 };
-
 export default ModalAlert;

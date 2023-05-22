@@ -25,7 +25,8 @@ function Notes({
   const [totalPages, setTotalPages] = useState();
   const [showError, setShowError] = useState(false);
   const [emptyText, setEmptyText] = useState(true);
-
+  const [activeNote, setActiveNote] = useState(null);
+  const [newNoteToggle, setNewNoteToggle] = useState(false);
   const loadMoreItems = () => {
     const config = getNotesApi(id, currentPage, true);
     apiInstance.request(config).then((res) => {
@@ -44,7 +45,8 @@ function Notes({
   const resetNotes = (toastMessage) => {
     if (currentPage === 1) loadMoreItems();
     else setCurrentPage(1);
-
+    if (activeNote) setActiveNote(null);
+    else setNewNoteToggle(!newNoteToggle);
     toastify(
       'success',
       <div>
@@ -58,7 +60,9 @@ function Notes({
   const saveNoteParams = {
     id,
     noteText: noteContent,
+    activeNote,
   };
+
   const saveNoteConfig = saveNoteApi(saveNoteParams, true);
   const [saveNotesData, executeSaveNote] = useAxios(
     saveNoteConfig,
@@ -93,7 +97,10 @@ function Notes({
       if (saveNotesData.data.status === 200 && !(saveNotesData.loading)) {
         setFireSubmit(false);
         setNotesUpdated(true);
-        resetNotes(t('noteAdded'));
+
+        if (activeNote) resetNotes(t('noteUpdated'));
+        else resetNotes(t('noteAdded'));
+
         changeActiveTab();
       } else if (!(saveNotesData.loading)) {
         toastify(
@@ -123,7 +130,15 @@ function Notes({
               {
             notes.map((note) => (
               <div className="mx-4">
-                <NoteView note={note} key={note.id} />
+                <NoteView
+                  note={note}
+                  setNotesUpdated={setNotesUpdated}
+                  resetNotes={resetNotes}
+                  key={note.id}
+                  setNoteContent={setNoteContent}
+                  setActiveNote={setActiveNote}
+                  disableEditor={disableEditor}
+                />
               </div>
             ))
           }
@@ -146,6 +161,9 @@ function Notes({
           isEmptyText={isEmptyText}
           showError={showError}
           hideError={hideError}
+          activeNote={activeNote}
+          setActiveNote={setActiveNote}
+          newNoteToggle={newNoteToggle}
         />
       </div>
     </div>

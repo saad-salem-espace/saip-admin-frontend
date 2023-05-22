@@ -13,6 +13,9 @@
   "notes": "Notes",
   "translateInfo": "Translate",
   "markAsDone": "Mark as Done",
+  "savedQueries": "Saved Queries",
+  "notAssigned": "Can't see your assignments?",
+  "emptyStateTitle": "You don’t have any assignments yet",
   "status": {
     "toDo": "To Do",
     "done": "Done",
@@ -35,6 +38,8 @@
     "plantVarieties": "<0>Plant Varieties</0> Board",
     "integratedCircuits": "<0>Integrated Circuits</0> Board",
     "keywordplanner": "Keyword Planner",
-    "addtoKeywordPlanner": "Add to keyword planner"
+    "addtoKeywordPlanner": "Add to keyword planner",
+    "addtoFocus": "Add to focus area",
+    "cannotFocus": "Only one item could be added to focus area."
   }
 }

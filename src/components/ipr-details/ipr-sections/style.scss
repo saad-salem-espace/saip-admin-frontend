@@ -1,0 +1,22 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.queries-count {
+  background-color: $gray;
+  border-radius: 50%;
+  color: $white;
+  line-height: 1;
+  font-size: 12px;
+  min-width: 24px;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active .queries-count{
+  background-color: $primary;
+}
+
+.notes-modal{
+  z-index: 99999 !important;
+}

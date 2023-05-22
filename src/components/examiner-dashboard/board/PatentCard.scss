@@ -5,7 +5,15 @@
   .name-card {
     @include truncate(2);
   }
-  &.active {
+  &.active , &:hover{
     background: $primary-01;
+  }
+  .icon-wrapper{
+    display: none;
+  }
+  &:hover {
+    .icon-wrapper{
+      display: block;
+    }
   }
 }

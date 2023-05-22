@@ -1,6 +1,9 @@
+import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, FieldArray } from 'formik';
-import { useContext, useState, useEffect } from 'react';
+import {
+  useContext, useState, useEffect, useMemo,
+} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
@@ -8,7 +11,7 @@ import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import Button from 'components/shared/button/Button';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
-import { operators, parseQuery } from 'utils/searchQuery';
+import { parseQuery } from 'utils/searchQuery';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
@@ -16,12 +19,18 @@ function SearchQuery({
   workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
   isAdvancedMenuOpen, examinerView, submitCallback,
 }) {
+  const currentLang = i18n.language;
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${workstreamId}/identifiers` }, { dependencies: [workstreamId] });
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
+  const operators = ['and', 'or', 'not'].map((operator) => ({
+    operator: operator.toUpperCase(),
+    displayName: t(`operators.${operator}`),
+  }));
+
   const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
 
   useEffect(() => {
@@ -34,6 +43,8 @@ function SearchQuery({
   useEffect(() => {
     setDefaultCondition(defaultIdentifier?.identifierOptions?.[0]);
   }, [defaultIdentifier, firstIdentifier]);
+
+  const getTranslatedOperators = useMemo(() => operators, [currentLang]);
 
   const handleOnChange = (values) => {
     if (examinerView) {
@@ -83,7 +94,7 @@ function SearchQuery({
 
                        setFieldValue(`searchFields.${index}.identifier`, identifier);
                      }}
-                     operators={operators}
+                     operators={getTranslatedOperators}
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
                      error={touched.searchFields?.[index] && errors.searchFields?.[index]}
