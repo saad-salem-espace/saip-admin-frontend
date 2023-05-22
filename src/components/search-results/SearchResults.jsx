@@ -2,14 +2,16 @@ import {
   useContext, useEffect, useRef, useState,
 } from 'react';
 import { Formik, Form } from 'formik';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import {
-  createSearchParams, useNavigate, useSearchParams,
-} from 'react-router-dom';
+  Container,
+  Row,
+  Col,
+  Button,
+} from 'react-bootstrap';
+import { useTranslation, Trans } from 'react-i18next';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import ViewTip from 'components/shared/view-tip/ViewTip';
 import * as Yup from 'yup';
 import Select from 'components/shared/form/select/Select';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -23,6 +25,7 @@ import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
+import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
 import { LIMITS } from 'utils/manageLimits';
 import SearchNote from './SearchNote';
@@ -457,20 +460,58 @@ function SearchResults({ showFocusArea }) {
                     resultsView
                   >
                     <div className="d-md-flex mt-4">
-                      <ToggleButton
-                        handleToggleButton={() => {
-                          setIsAdvancedSearch((isAdvanced) => !isAdvanced);
-                          setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
-                        }}
-                        isToggleButtonOn={isAdvancedSearch}
-                        text={t('advancedSearch')}
-                        className="border-md-end pe-4 me-4 mb-md-0 mb-2"
-                      />
-                      <ToggleButton
-                        handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
-                        isToggleButtonOn={isEnabledSynonyms}
-                        text={t('allowSynonyms')}
-                      />
+                      <div className="d-flex align-items-center me-4">
+                        <ToggleButton
+                          handleToggleButton={() => {
+                            setIsAdvancedSearch((isAdvanced) => !isAdvanced);
+                            setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
+                          }}
+                          isToggleButtonOn={isAdvancedSearch}
+                          text={t('advancedSearch')}
+                          className="border-md-end mb-md-0 mb-2"
+                        />
+                        <ViewTip
+                          Title={t('tips:advancedSearchTipTitle')}
+                          id="advancedSearchTip"
+                          btnText={t('common:gotIt')}
+                          variant="bg-primary-10"
+                          viewTipTrigger={
+                            <Button variant="link" className="btn-view-tip">
+                              <BsQuestionCircle className="text-primary" />
+                            </Button>
+                          }
+                        >
+                          <Trans
+                            i18nKey="advancedSearchTipContent"
+                            ns="tips"
+                            components={{ bold: <b />, break: <br /> }}
+                          />
+                        </ViewTip>
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <ToggleButton
+                          handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
+                          isToggleButtonOn={isEnabledSynonyms}
+                          text={t('allowSynonyms')}
+                        />
+                        <ViewTip
+                          Title={t('tips:allowSynonymsTipTitle')}
+                          id="allowSynonymsTip"
+                          btnText={t('common:gotIt')}
+                          variant="bg-primary-10"
+                          viewTipTrigger={
+                            <Button variant="link" className="btn-view-tip">
+                              <BsQuestionCircle className="text-primary" />
+                            </Button>
+                          }
+                        >
+                          <Trans
+                            i18nKey="allowSynonymsTipContent"
+                            ns="tips"
+                            components={{ bold: <b />, break: <br /> }}
+                          />
+                        </ViewTip>
+                      </div>
                     </div>
                   </SharedSearch>
                 </div>

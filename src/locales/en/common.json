@@ -4,6 +4,15 @@
   },
   "ago": "Ago",
   "days": "Days",
+  "gotIt": "Got it!",
+  "floatWidget": {
+    "userSurvey" : {
+      "widgetTitle" : "Rate our website",
+      "widgetContent" : "Share your experience with the IP Search",
+      "widgetActionText" : "Start",
+      "widgetAction" : "https://surveys.saip.gov.sa/index.php/982283?lang=en"
+    }
+  },
   "register": "Register",
   "limitReached": {
     "register_now": "Register now!",
