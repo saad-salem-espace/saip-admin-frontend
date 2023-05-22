@@ -20,7 +20,7 @@ import LocarnoClassificationRow from './locarno-classification/LocarnoClassifica
 
 const IndustrialDesignViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
-  handleClick,
+  handleClick, examinerView,
 
 }) => {
   const { t } = useTranslation('search');
@@ -33,6 +33,7 @@ const IndustrialDesignViews = ({
           BibliographicData={document.BibliographicData}
           getAttachmentURL={preparedGetAttachmentURL}
           handleClick={handleClick}
+          examinerView={examinerView}
         >
           <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
@@ -64,6 +65,7 @@ const IndustrialDesignViews = ({
           description={document.BibliographicData.DesignAbstract}
           isIPRExpanded={isIPRExpanded}
           handleClick={handleClick}
+          examinerView={examinerView}
         >
           <h6 className={`${!isIPRExpanded ? 'mt-4' : ''} disable-highlight`}>{t('ipr.drawings')}</h6>
           {document.Drawings?.length ? (
@@ -183,6 +185,11 @@ IndustrialDesignViews.propTypes = {
   searchResultParams: PropTypes.shape.isRequired,
   preparedGetAttachmentURL: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  examinerView: PropTypes.bool,
+};
+
+IndustrialDesignViews.defaultProps = {
+  examinerView: false,
 };
 
 export default IndustrialDesignViews;

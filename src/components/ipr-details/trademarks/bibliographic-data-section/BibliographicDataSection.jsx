@@ -2,11 +2,13 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import './bibliographic.scss';
+import React, { useEffect, useState } from 'react';
 import ShowMore from 'components/shared/show-more/ShowMore';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
 
 const BibliographicDataSection = (
@@ -15,9 +17,40 @@ const BibliographicDataSection = (
     BibliographicData,
     getAttachmentURL,
     handleClick,
+    examinerView,
   },
 ) => {
   const { t } = useTranslation('search');
+
+  const [left, setLeft] = useState();
+  const [top, setTop] = useState();
+
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+
+      if (!selection.toString()) {
+        window.document.getElementById('col').classList.remove('added');
+      } else if ((selection.anchorNode) === (selection.focusNode)) {
+        setLeft(selection.getRangeAt(0).getBoundingClientRect().left);
+        setTop(selection.getRangeAt(0).getBoundingClientRect().top);
+        if (window.document.getElementById('col').contains(selection.anchorNode)) {
+          window.document.getElementById('col').classList.add('added');
+        }
+      }
+    };
+    if (examinerView) {
+      window.document.addEventListener('selectionchange', handleSelectionChange);
+    }
+    return () => {
+      window.document.removeEventListener('selectionchange', handleSelectionChange);
+    };
+  }, []);
+
+  const btnPosition = {
+    left: `${left + 17}px`,
+    top: `${top - 38}px`,
+  };
 
   return (
     <Container fluid>
@@ -31,7 +64,8 @@ const BibliographicDataSection = (
           </Col>
         )
       }
-        <Col md={isIPRExpanded ? 8 : 12}>
+        <Col md={isIPRExpanded ? 8 : 12} id="col">
+          <KeywordPlannerButton btnPosition={btnPosition} handleClick={handleClick} />
           <h6 className="mb-4 disable-highlight">
             {t('register')}
           </h6>
@@ -48,14 +82,14 @@ const BibliographicDataSection = (
             handleClick={handleClick}
           />
           <LabelValue
-            label={t('trademarks.filingNumber')}
+            label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.FilingNumber}
             handleClick={handleClick}
             className="mb-4"
           />
           <LabelValue
-            label={t('trademarks.filingDate')}
+            label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData.FilingDate}
             handleClick={handleClick}
@@ -170,6 +204,11 @@ BibliographicDataSection.propTypes = {
   isIPRExpanded: PropTypes.bool.isRequired,
   getAttachmentURL: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  examinerView: PropTypes.bool,
+};
+
+BibliographicDataSection.defaultProps = {
+  examinerView: false,
 };
 
 export default BibliographicDataSection;

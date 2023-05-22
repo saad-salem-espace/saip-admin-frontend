@@ -13,12 +13,13 @@ describe('<BibliographicDataSection />', () => {
       <BibliographicDataSection
         BibliographicData={sampleTrademark.BibliographicData}
         isIPRExpanded
+        getAttachmentURL={() => {}}
       />,
     );
     await waitFor(() => {
-      ['register', 'trademarks.markNameEN', 'trademarks.markNameAR', 'trademarks.filingNumber', 'trademarks.filingDate', 'trademarks.markType',
-        'trademarks.markStatus', 'trademarks.registrationNumber', 'trademarks.registrationDate', 'trademarks.publicationNumber',
-        'trademarks.publicationDate', 'trademarks.markDescription'].forEach((attributeName) => {
+      ['register', 'trademarks.markNameEN', 'trademarks.markNameAR', 'ipr.filingNumber', 'ipr.filingDate', 'trademarks.markType',
+        'trademarks.markStatus', 'ipr.registrationNumber', 'ipr.registrationDate', 'ipr.publicationNumber',
+        'ipr.publicationDate', 'trademarks.markDescription'].forEach((attributeName) => {
         expect(getByText(tSearch(attributeName))).toBeInTheDocument();
       });
       expect(getByText(sampleTrademark.BibliographicData.BrandNameEn)).toBeInTheDocument();

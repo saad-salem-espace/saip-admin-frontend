@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import './bibliographic.scss';
 import ShowMore from 'components/shared/show-more/ShowMore';
+import React, { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
+import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 
 const BibliographicDataSection = (
   {
@@ -14,6 +16,7 @@ const BibliographicDataSection = (
     BibliographicData,
     children,
     handleClick,
+    examinerView,
   },
 ) => {
   const { t } = useTranslation('search');
@@ -28,10 +31,42 @@ const BibliographicDataSection = (
     }
     return grid;
   };
+
+  const [left, setLeft] = useState();
+  const [top, setTop] = useState();
+
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+
+      if (!selection.toString()) {
+        window.document.getElementById('col').classList.remove('added');
+      } else if ((selection.anchorNode) === (selection.focusNode)) {
+        setLeft(selection.getRangeAt(0).getBoundingClientRect().left);
+        setTop(selection.getRangeAt(0).getBoundingClientRect().top);
+        if (window.document.getElementById('col').contains(selection.anchorNode)) {
+          window.document.getElementById('col').classList.add('added');
+        }
+      }
+    };
+    if (examinerView) {
+      window.document.addEventListener('selectionchange', handleSelectionChange);
+    }
+    return () => {
+      window.document.removeEventListener('selectionchange', handleSelectionChange);
+    };
+  }, []);
+
+  const btnPosition = {
+    left: `${left + 17}px`,
+    top: `${top - 38}px`,
+  };
+
   return (
     <Container fluid>
       <Row>
-        <Col md={getGrid('bibliographic')}>
+        <Col md={getGrid('bibliographic')} id="col">
+          <KeywordPlannerButton handleClick={handleClick} btnPosition={btnPosition} />
           <h6 className="mb-4 disable-highlight">
             {t('register')}
           </h6>
@@ -167,6 +202,11 @@ BibliographicDataSection.propTypes = {
   isIPRExpanded: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   handleClick: PropTypes.func.isRequired,
+  examinerView: PropTypes.bool,
+};
+
+BibliographicDataSection.defaultProps = {
+  examinerView: false,
 };
 
 export default BibliographicDataSection;

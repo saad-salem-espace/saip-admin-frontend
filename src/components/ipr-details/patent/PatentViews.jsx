@@ -174,6 +174,7 @@ const PatentViews = ({
           description={document.Description}
           isIPRExpanded={isIPRExpanded}
           handleClick={handleClick}
+          examinerView={examinerView}
         >
           <h6>{t('ipr.drawings')}</h6>
           {document.Drawings?.length ? (
@@ -192,6 +193,7 @@ const PatentViews = ({
           claims={document?.Claims}
           isIPRExpanded={isIPRExpanded}
           handleClick={handleClick}
+          examinerView={examinerView}
         >
           <h6>{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
