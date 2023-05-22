@@ -21,6 +21,7 @@ function IprExpand({
   selectedCardId,
   setNotesUpdated,
   focusMode,
+  updateIprModal,
 }) {
   const { t } = useTranslation('dashboard');
   return (
@@ -88,6 +89,7 @@ function IprExpand({
             selectedCardId={selectedCardId}
             setNotesUpdated={setNotesUpdated}
             activeWorkstream={activeWorkstream}
+            updateIprModal={updateIprModal}
           />
         </Col>
       </div>
@@ -107,6 +109,7 @@ IprExpand.propTypes = {
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
   focusMode: PropTypes.bool,
+  updateIprModal: PropTypes.func,
 };
 
 IprExpand.defaultProps = {
@@ -114,6 +117,7 @@ IprExpand.defaultProps = {
   onClose: () => { },
   setNotesUpdated: () => { },
   focusMode: false,
+  updateIprModal: () => { },
 };
 
 export default IprExpand;

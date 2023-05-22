@@ -33,16 +33,17 @@ const IprModal = ({
           <IprExpand
             assignment={assignment}
             collapseIPR={false}
-            documentId={documentId}
+            documentId={JSON.parse(localStorage.getItem('FocusDoc'))?.saipId || documentId}
             isIPRExpanded
             // onClose={handleCloseIprDetail}
             activeTab={2}
             activeWorkstream={1}
             isCardInprogress
             selectedCardId="1"
-            setNotesUpdated
+            setNotesUpdated={() => {}}
             className="col-lg-12"
             focusMode
+            updateIprModal={() => setShow(false)}
           />
         </Modal.Body>
       </Modal>

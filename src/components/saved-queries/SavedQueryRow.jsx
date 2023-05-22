@@ -19,7 +19,7 @@ import { tableNames } from 'dbConfig';
 import { LONG_DATETIME_12H_FORMAT } from '../../constants';
 
 const SavedQueryRow = ({
-  query, selectedWorkStream, setRefreshQueriesList,
+  query, selectedWorkStream, setRefreshQueriesList, updateIprModal,
 }) => {
   const queryDate = Moment(query.createdAt).format(LONG_DATETIME_12H_FORMAT);
   const queryStringUrl = query.queryString.replace(/\s/g, '+');
@@ -90,7 +90,10 @@ const SavedQueryRow = ({
         <Link
           className={`p-2 rounded run-query ${selectedLink === query.queryString ? 'active-query' : ''}`}
           to={`${routes.search}?workstreamId=${selectedWorkStream}&sort=mostRelevant&q=${queryStringUrl}&page=1'`}
-          onClick={() => setSelectedLink(query.queryString)}
+          onClick={() => {
+            setSelectedLink(query.queryString);
+            updateIprModal();
+          }}
         >
           <BsPlay className="play-icon fs-base" />
         </Link>
@@ -123,7 +126,12 @@ SavedQueryRow.propTypes = {
     id: PropTypes.number.isRequired,
   }).isRequired,
   selectedWorkStream: PropTypes.number.isRequired,
+  updateIprModal: PropTypes.func,
   setRefreshQueriesList: PropTypes.func.isRequired,
+};
+
+SavedQueryRow.defaultProps = {
+  updateIprModal: () => { },
 };
 
 export default SavedQueryRow;

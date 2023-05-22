@@ -24,6 +24,7 @@ function IprSections({
   showInfo,
   setNotesUpdated,
   activeWorkstream,
+  updateIprModal,
 }) {
   const { t } = useTranslation(['dashboard', 'notes', 'translation']);
   const [activeTabId, setActiveTabId] = useState(activeTab);
@@ -92,7 +93,7 @@ function IprSections({
       content: (
         <div className="notes-tab" translate="no">
           <Notes
-            documentId={documentId}
+            documentId={JSON.parse(localStorage.getItem('FocusDoc'))?.saipId || documentId}
             disableEditor={!isCardInprogress}
             disableChangeTab={disableChangeTab}
             fireSubmit={fireSubmit}
@@ -124,6 +125,7 @@ function IprSections({
             setTotalElements={(totalCount) => setTotalElements(totalCount)}
             renderedProps={{
               selectedWorkStream: 1,
+              updateIprModal,
             }}
           />
         </div>
@@ -190,6 +192,7 @@ IprSections.propTypes = {
   className: PropTypes.string,
   setNotesUpdated: PropTypes.func,
   activeWorkstream: PropTypes.number,
+  updateIprModal: PropTypes.func,
 };
 
 IprSections.defaultProps = {
@@ -202,6 +205,7 @@ IprSections.defaultProps = {
   className: '',
   setNotesUpdated: () => { },
   activeWorkstream: null,
+  updateIprModal: () => { },
 };
 
 export default IprSections;
