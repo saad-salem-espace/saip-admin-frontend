@@ -21,7 +21,7 @@ function FocusArea({
         />
       </div>
       <p className="mb-0 px-2 text">
-        <span className="font-bold pe-2 me-2 filing-number">{filingNumber}</span>
+        <span className="font-bold filing-number">{filingNumber}</span>
         {applicationTitle}
       </p>
     </div>
