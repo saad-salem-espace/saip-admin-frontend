@@ -4,9 +4,8 @@ import '../../assets/styles/common/table.scss';
 import PropTypes from 'prop-types';
 import SavedQueryRow from './SavedQueryRow';
 
-const SavedQueriesTable = ({ data, selectedWorkStream }) => {
+const SavedQueriesTable = ({ data, selectedWorkStream, setRefreshQueriesList }) => {
   const { t } = useTranslation('queries');
-
   return (
     <div className="table-responsive shadow">
       <Table className="appTable">
@@ -20,10 +19,14 @@ const SavedQueriesTable = ({ data, selectedWorkStream }) => {
         </thead>
         <tbody>
           {
-            data.map((query) => (
-              <SavedQueryRow query={query} selectedWorkStream={selectedWorkStream} />
-            ))
-          }
+              data.map((query) => (
+                <SavedQueryRow
+                  query={query}
+                  selectedWorkStream={selectedWorkStream}
+                  setRefreshQueriesList={setRefreshQueriesList}
+                />
+              ))
+            }
         </tbody>
       </Table>
     </div>
@@ -33,6 +36,7 @@ const SavedQueriesTable = ({ data, selectedWorkStream }) => {
 SavedQueriesTable.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
   selectedWorkStream: PropTypes.number.isRequired,
+  setRefreshQueriesList: PropTypes.func.isRequired,
 };
 
 export default SavedQueriesTable;

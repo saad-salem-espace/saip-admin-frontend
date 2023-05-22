@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import { useTranslation, Trans } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
-import ViewTip from 'components/shared/view-tip/ViewTip';
+import AppPopover from 'components/shared/app-popover/AppPopover';
 import * as Yup from 'yup';
 import Select from 'components/shared/form/select/Select';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -470,12 +470,12 @@ function SearchResults({ showFocusArea }) {
                           text={t('advancedSearch')}
                           className="border-md-end mb-md-0 mb-2"
                         />
-                        <ViewTip
+                        <AppPopover
                           Title={t('tips:advancedSearchTipTitle')}
                           id="advancedSearchTip"
                           btnText={t('common:gotIt')}
                           variant="bg-primary-10"
-                          viewTipTrigger={
+                          popoverTrigger={
                             <Button variant="link" className="btn-view-tip">
                               <BsQuestionCircle className="text-primary" />
                             </Button>
@@ -486,7 +486,7 @@ function SearchResults({ showFocusArea }) {
                             ns="tips"
                             components={{ bold: <b />, break: <br /> }}
                           />
-                        </ViewTip>
+                        </AppPopover>
                       </div>
                       <div className="d-flex align-items-center">
                         <ToggleButton
@@ -494,12 +494,12 @@ function SearchResults({ showFocusArea }) {
                           isToggleButtonOn={isEnabledSynonyms}
                           text={t('allowSynonyms')}
                         />
-                        <ViewTip
+                        <AppPopover
                           Title={t('tips:allowSynonymsTipTitle')}
                           id="allowSynonymsTip"
                           btnText={t('common:gotIt')}
                           variant="bg-primary-10"
-                          viewTipTrigger={
+                          popoverTrigger={
                             <Button variant="link" className="btn-view-tip">
                               <BsQuestionCircle className="text-primary" />
                             </Button>
@@ -510,7 +510,7 @@ function SearchResults({ showFocusArea }) {
                             ns="tips"
                             components={{ bold: <b />, break: <br /> }}
                           />
-                        </ViewTip>
+                        </AppPopover>
                       </div>
                     </div>
                   </SharedSearch>

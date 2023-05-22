@@ -6,17 +6,19 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { GrFormClose } from 'react-icons/gr';
-import './viewtip.scss';
+import './AppPopover.scss';
 
-const ViewTip = ({
+const AppPopover = ({
   Title,
   children,
   id,
   btnText,
   className,
   variant,
-  viewTipTrigger,
+  popoverTrigger,
   btnVariant,
+  placement,
+  handleCallback,
 }) => {
   const [show, setShow] = useState();
   const handleToggle = () => {
@@ -39,7 +41,7 @@ const ViewTip = ({
         </div>
         { btnText && (
           <Button
-            onClick={handleDismiss}
+            onClick={() => { handleDismiss(); handleCallback(); }}
             size="sm"
             variant={btnVariant}
             className="appBtn ms-auto py-1 fs-14"
@@ -53,32 +55,36 @@ const ViewTip = ({
   return (
     <OverlayTrigger
       trigger="click"
-      placement="auto"
+      placement={placement}
       overlay={popover}
       onToggle={handleToggle}
       show={show}
     >
-      {viewTipTrigger}
+      {popoverTrigger}
     </OverlayTrigger>
   );
 };
 
-ViewTip.propTypes = {
+AppPopover.propTypes = {
   id: PropTypes.string.isRequired,
   Title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  viewTipTrigger: PropTypes.node.isRequired,
+  popoverTrigger: PropTypes.node.isRequired,
   btnText: PropTypes.string,
   className: PropTypes.string,
   variant: PropTypes.string,
   btnVariant: PropTypes.string,
+  placement: PropTypes.string,
+  handleCallback: PropTypes.func,
 };
 
-ViewTip.defaultProps = {
+AppPopover.defaultProps = {
   btnText: '',
   className: '',
   variant: '',
   btnVariant: 'primary',
+  placement: 'auto',
+  handleCallback: () => {},
 };
 
-export default ViewTip;
+export default AppPopover;
