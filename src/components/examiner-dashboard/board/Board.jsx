@@ -15,7 +15,7 @@ import './board.scss';
 
 const Board = ({
   setSort, assignments, setToggle, setActiveDocument, activeWorkstream, activeDocument,
-  setNotesUpdated, updateFocusArea,
+  setNotesUpdated, updateFocusArea, showFocusArea,
 }) => {
   const { t } = useTranslation('dashboard');
   const filteredAssignments = {
@@ -117,6 +117,7 @@ const Board = ({
                   activeDocument={activeDocument}
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
+                  showFocusArea={showFocusArea}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
@@ -129,6 +130,7 @@ const Board = ({
                   isInProgress={isInProgress}
                   SetSelectedCard={SetSelectedCard}
                   updateFocusArea={updateFocusArea}
+                  showFocusArea={showFocusArea}
                 />
                 <StatusColumn
                   status={t('dashboard:status.done')}
@@ -140,6 +142,7 @@ const Board = ({
                   activeDocument={activeDocument}
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
+                  showFocusArea={showFocusArea}
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
@@ -151,6 +154,7 @@ const Board = ({
                   activeDocument={activeDocument}
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
+                  showFocusArea={showFocusArea}
                 />
               </Row>
             )}
@@ -170,6 +174,7 @@ Board.propTypes = {
   activeDocument: PropTypes.string.isRequired,
   setNotesUpdated: PropTypes.func.isRequired,
   updateFocusArea: PropTypes.func.isRequired,
+  showFocusArea: PropTypes.bool.isRequired,
 };
 
 export default Board;

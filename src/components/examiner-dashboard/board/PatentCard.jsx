@@ -19,7 +19,7 @@ import unfocusIcon from '../../../assets/images/icons/unfocused.svg';
 const PatentCard = ({
   assignment, setToggle, setActiveDocument,
   setActiveTab, isInProgress, SetSelectedCard,
-  active, selectedFocusArea, SetSelectedFocusArea, updateFocusArea,
+  active, selectedFocusArea, SetSelectedFocusArea, updateFocusArea, showFocusArea,
 }) => {
   const removeFromFocusArea = () => {
     updateFocusArea(false);
@@ -55,6 +55,12 @@ const PatentCard = ({
       addToFocusArea();
     }
   };
+
+  useEffect(() => {
+    if (!showFocusArea) {
+      removeFromFocusArea();
+    }
+  }, [showFocusArea]);
 
   useEffect(() => {
     if (pinnedData.data && pinnedData.data.status === 200) setToggle(true);
@@ -209,6 +215,7 @@ PatentCard.propTypes = {
   selectedFocusArea: PropTypes.string.isRequired,
   SetSelectedFocusArea: PropTypes.func.isRequired,
   updateFocusArea: PropTypes.func.isRequired,
+  showFocusArea: PropTypes.bool.isRequired,
 };
 
 PatentCard.defaultProps = {

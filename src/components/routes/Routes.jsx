@@ -22,6 +22,7 @@ const Routes = ({ updateFocusArea, showFocusArea }) => (
         element={
           <Dashboard
             updateFocusArea={updateFocusArea}
+            showFocusArea={showFocusArea}
           />
         }
       />

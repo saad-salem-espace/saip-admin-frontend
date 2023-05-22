@@ -9,7 +9,7 @@ import PatentCard from './PatentCard';
 const StatusColumn = ({
   status, className, data, setActiveDocument, setToggle,
   activeDocument, setActiveTab, isInProgress,
-  SetSelectedCard, updateFocusArea,
+  SetSelectedCard, updateFocusArea, showFocusArea,
 }) => {
   const { t } = useTranslation('dashboard');
   const pinned = !!data.length;
@@ -43,6 +43,7 @@ const StatusColumn = ({
             SetSelectedFocusArea={SetSelectedFocusArea}
             selectedFocusArea={selectedFocusArea}
             updateFocusArea={updateFocusArea}
+            showFocusArea={showFocusArea}
           />
         ))}
         { others && (
@@ -61,6 +62,7 @@ const StatusColumn = ({
             SetSelectedFocusArea={SetSelectedFocusArea}
             selectedFocusArea={selectedFocusArea}
             updateFocusArea={updateFocusArea}
+            showFocusArea={showFocusArea}
           />
         ))}
       </div>
@@ -79,6 +81,8 @@ StatusColumn.propTypes = {
   isInProgress: PropTypes.func.isRequired,
   setActiveTab: PropTypes.func,
   updateFocusArea: PropTypes.func.isRequired,
+  showFocusArea: PropTypes.bool.isRequired,
+
 };
 
 StatusColumn.defaultProps = {
