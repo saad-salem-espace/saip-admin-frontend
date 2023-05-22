@@ -2,7 +2,7 @@
 
 .focus-area {
   position: absolute;
-  bottom: 30px;
+  bottom: 60px;
   z-index: 99;
   color: $white;
   width: 353px;
@@ -36,14 +36,9 @@
   .close-icon,
   .filing-number {
     border-radius: 0;
-
-    html[dir="ltr"] & {
-      border-right: $border-width solid $white;
-    }
-
-    html[dir="rtl"] & {
-      border-left: $border-width solid $white;
-    }
+    border-right: $border-width solid $white;
+    margin-right: 4px;
+    padding-right: 4px;
   }
 
   .text {
