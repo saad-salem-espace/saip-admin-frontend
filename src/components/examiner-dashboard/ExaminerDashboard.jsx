@@ -7,7 +7,7 @@ import Spinner from 'components/shared/spinner/Spinner';
 import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
 
-const ExaminerDashboard = ({ updateFocusArea }) => {
+const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   const { t } = useTranslation('dashboard');
   // const linksList = [
   //   {
@@ -72,6 +72,12 @@ const ExaminerDashboard = ({ updateFocusArea }) => {
   }, [activeWorkstream, sort]);
 
   useEffect(() => {
+    if (activeWorkstream !== linksList[0]) {
+      updateFocusArea(false);
+    }
+  }, [activeWorkstream]);
+
+  useEffect(() => {
     if (toggle || notesUpdated) execute();
   }, [toggle, notesUpdated]);
 
@@ -100,6 +106,7 @@ const ExaminerDashboard = ({ updateFocusArea }) => {
           activeDocument={activeDocument}
           setNotesUpdated={setNotesUpdated}
           updateFocusArea={updateFocusArea}
+          showFocusArea={showFocusArea}
         />
         {/* eslint-disable-next-line react/jsx-closing-tag-location */}
       </div> : <div className="d-flex justify-content-center mt-18"><Spinner /></div>
@@ -108,6 +115,7 @@ const ExaminerDashboard = ({ updateFocusArea }) => {
 
 ExaminerDashboard.propTypes = {
   updateFocusArea: PropTypes.func.isRequired,
+  showFocusArea: PropTypes.bool.isRequired,
 };
 
 export default ExaminerDashboard;
