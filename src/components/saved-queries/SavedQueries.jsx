@@ -29,6 +29,7 @@ const SavedQueries = () => {
   const [pageReset, setPageReset] = useState(0);
   const isMounted = useRef(false);
   const currentLang = i18n.language;
+  const [refreshQueriesList, setRefreshQueriesList] = useState(0);
 
   function workstreamName(workstream) {
     return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
@@ -66,6 +67,10 @@ const SavedQueries = () => {
   const savedQueries = (
     SavedQueriesTable
   );
+
+  const dependencies = {
+    refreshQueriesList,
+  };
   return (
     <Container fluid>
       <Row>
@@ -90,7 +95,9 @@ const SavedQueries = () => {
               resetPage={pageReset}
               renderedProps={{
                 selectedWorkStream: selectedWorkStream.value,
+                setRefreshQueriesList,
               }}
+              updateDependencies={[...Object.values(dependencies)]}
             />
           ) : (
             <IndexedDbAppPagination
@@ -108,7 +115,9 @@ const SavedQueries = () => {
               }}
               renderedProps={{
                 selectedWorkStream: selectedWorkStream.value,
+                setRefreshQueriesList,
               }}
+              updateDependencies={[...Object.values(dependencies)]}
             />
           )}
         </Col>

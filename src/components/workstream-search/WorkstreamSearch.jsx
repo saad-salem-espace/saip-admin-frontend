@@ -18,7 +18,7 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex, defaultConditions } from 'utils/searchQuery';
 import FloatWidget from 'components/shared/float-widget/FloatWidget';
 import { BsQuestionCircle } from 'react-icons/bs';
-import ViewTip from 'components/shared/view-tip/ViewTip';
+import AppPopover from 'components/shared/app-popover/AppPopover';
 import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
@@ -142,11 +142,11 @@ function WorkstreamSearch() {
                       text={t('advancedSearch')}
                       className="d-block text-primary text-end"
                     />
-                    <ViewTip
+                    <AppPopover
                       id="advancedSearchTip"
                       Title={t('tips:advancedSearchTipTitle')}
                       btnText={t('common:gotIt')}
-                      viewTipTrigger={
+                      popoverTrigger={
                         <Button variant="link" className="btn-view-tip">
                           <BsQuestionCircle className="text-primary" />
                         </Button>
@@ -158,7 +158,7 @@ function WorkstreamSearch() {
                         ns="tips"
                         components={{ bold: <b /> }}
                       />
-                    </ViewTip>
+                    </AppPopover>
                   </div>
                   <SharedSearch
                     isAdvanced={isAdvanced}

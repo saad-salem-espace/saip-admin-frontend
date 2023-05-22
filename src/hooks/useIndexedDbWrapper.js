@@ -21,6 +21,18 @@ const useIndexedDbWrapper = (tableName) => {
         return instance;
     }
   };
+
+  const deleteInstance = ({
+    indexValue, onSuccess, onError,
+  }) => {
+    db[tableName].delete(indexValue).then(
+      onSuccess,
+    )
+      .catch(
+        onError,
+      );
+  };
+
   const countAllByIndexName = ({ indexName, indexValue }) => (
     db[tableName].where(indexName).equals(indexValue.toString()).count()
   );
@@ -93,7 +105,7 @@ const useIndexedDbWrapper = (tableName) => {
   }, []);
 
   return {
-    addInstanceToDb, getInstanceByIndex, indexByIndexName, countAllByIndexName,
+    addInstanceToDb, getInstanceByIndex, indexByIndexName, countAllByIndexName, deleteInstance,
   };
 };
 
