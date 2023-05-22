@@ -94,7 +94,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   }, [activeWorkstream]);
 
   useEffect(() => {
-    if (toggle || notesUpdated) execute();
+    if (toggle || notesUpdated) executeAssignmentData();
   }, [toggle, notesUpdated]);
 
   useEffect(() => {
@@ -129,7 +129,6 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
         activeDocument={activeDocument}
         setNotesUpdated={setNotesUpdated}
         updateFocusArea={updateFocusArea}
-        showFocusArea={showFocusArea}
       />
     </div>
   );
@@ -137,7 +136,26 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   return (
     assignedWorkstreams.length
       ? <div>
+<<<<<<< HEAD
         {DashboardView}
+=======
+        <Sidebar
+          linksList={linksList}
+          setActiveWorkstream={setActiveWorkstream}
+          activeWorkstream={activeWorkstream}
+        />
+        <Board
+          activeWorkstream={activeWorkstream}
+          setSort={setSort}
+          assignments={assignments}
+          setToggle={setToggle}
+          setActiveDocument={setActiveDocument}
+          activeDocument={activeDocument}
+          setNotesUpdated={setNotesUpdated}
+          updateFocusArea={updateFocusArea}
+          showFocusArea={showFocusArea}
+        />
+>>>>>>> 1827eaf... IP-2145-fix-bugs
         {/* eslint-disable-next-line react/jsx-closing-tag-location */}
       </div>
       : <EmptyState
