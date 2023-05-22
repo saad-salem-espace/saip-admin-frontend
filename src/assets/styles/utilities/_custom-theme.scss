@@ -541,6 +541,7 @@ $font-sizes: (
   base: $font-size-base,
   18: 18px,
   20: 20px,
+  21: 21px,
   22: 22px,
   32: 32px
   );
@@ -1357,7 +1358,7 @@ $modal-header-padding: $modal-header-padding-y $modal-header-padding-x !default;
 $modal-sm: 300px !default;
 $modal-md: 500px !default;
 $modal-lg: 800px !default;
-$modal-xl: 1140px !default;
+$modal-xl: 100vw;
 
 $modal-fade-transform: translate(0, -50px) !default;
 $modal-show-transform: none !default;

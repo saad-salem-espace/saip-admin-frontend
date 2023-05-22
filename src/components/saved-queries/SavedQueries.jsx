@@ -59,7 +59,7 @@ const SavedQueries = () => {
     resetPageNumber();
   };
 
-  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, Number(searchParams.get('page') || '1'), true);
+  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, null, Number(searchParams.get('page') || '1'), true);
 
   const isAuth = auth && auth.user;
 

@@ -334,6 +334,7 @@ function IprDetails({
           selectedCardId={selectedCardId}
           setNotesUpdated={setNotesUpdated}
           className="notes-editor-container"
+          activeWorkstream={activeWorkstream}
         />
       ) : (
         <IprData

@@ -1,5 +1,4 @@
 import { useIndexedDB } from 'react-indexed-db';
-import { useCallback } from 'react';
 import db from 'db';
 
 /**
@@ -25,13 +24,13 @@ const useIndexedDbWrapper = (tableName) => {
     db[tableName].where(indexName).equals(indexValue.toString()).count()
   );
 
-  const getTimeStamp = useCallback(() => {
+  const getTimeStamp = () => {
     const currentDatetimeUTC = new Date().toISOString();
     return { createdAt: currentDatetimeUTC, updatedAt: currentDatetimeUTC };
-  }, []);
+  };
 
-  // eslint-disable-next-line function-paren-newline
-  const addInstanceToDb = useCallback(
+  // eslint-disable-next-line operator-linebreak
+  const addInstanceToDb =
     /**
    * Saving data to indexedDB
    *
@@ -54,10 +53,10 @@ const useIndexedDbWrapper = (tableName) => {
         return true;
       }
       return false;
-    }, []);
+    };
 
-  // eslint-disable-next-line function-paren-newline
-  const getInstanceByIndex = useCallback(
+  // eslint-disable-next-line operator-linebreak
+  const getInstanceByIndex =
     /**
    * Get instance by index
    *
@@ -71,9 +70,9 @@ const useIndexedDbWrapper = (tableName) => {
     (instance) => {
       getByIndex(instance.indexName, instance.indexValue)
         .then(instance.onSuccess).catch(instance.onError);
-    }, []);
+    };
 
-  const indexByIndexName = useCallback(({
+  const indexByIndexName = ({
     onSuccess, onError, sorted = 'NONE', sortedIndexName, indexName, indexValue, limit = 10, page = 1,
   }) => {
     const offset = (page - 1) * limit;
@@ -90,7 +89,7 @@ const useIndexedDbWrapper = (tableName) => {
         onSuccess({ data, pagination: { per_page: limit, total } });
       })
       .catch((errors) => { onError(errors); });
-  }, []);
+  };
 
   return {
     addInstanceToDb, getInstanceByIndex, indexByIndexName, countAllByIndexName,

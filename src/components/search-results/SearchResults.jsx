@@ -2,6 +2,7 @@ import {
   useContext, useEffect, useRef, useState,
 } from 'react';
 import { Formik, Form } from 'formik';
+import PropTypes from 'prop-types';
 import {
   Container,
   Row,
@@ -39,8 +40,9 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
+import getInstanceByIndex from '../../hooks/useIndexedDbWrapper';
 
-function SearchResults() {
+function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -72,18 +74,31 @@ function SearchResults() {
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
 
+  const saveQueryParamsForDoc = {
+    workStreamId: searchParams.get('workstreamId'),
+    query: searchParams.get('q'),
+    resultCount: totalResults.toString(),
+    enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+    documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.saipId,
+    fav: isQuerySaved,
+  };
+
   const saveQueryParams = auth.isAuthenticated ? {
     workStreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
     resultCount: totalResults.toString(),
     enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
     workstreamKey: 'workStreamId',
+    documentId: null,
+    fav: true,
   } : {
     workstreamId: searchParams.get('workstreamId'),
     queryString: searchParams.get('q'),
     resultCount: totalResults.toString(),
     synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
     workstreamKey: 'workstreamId',
+    documentId: null,
+    fav: true,
   };
 
   const sortByOptionsPatent = [
@@ -144,6 +159,19 @@ function SearchResults() {
   useEffect(() => {
     setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
   }, [currentLang]);
+
+  useEffect(() => {
+    if (!(auth && auth?.user)) {
+      getInstanceByIndex({
+        indexName: 'queryString',
+        indexValue: searchParams.get('q'),
+        onSuccess: (resp) => { setIsQuerySaved(!!resp); },
+        onError: () => { setIsQuerySaved(false); },
+      });
+    } else {
+      setIsQuerySaved(results?.isFavourite);
+    }
+  }, [results]);
 
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
@@ -513,6 +541,8 @@ function SearchResults() {
               saveQueryParams={saveQueryParams}
               isReady={!isLoading}
               limitCode={LIMITS.SAVED_QUERY_LIMIT}
+              showFocusArea={showFocusArea}
+              saveQueryParamsForDoc={saveQueryParamsForDoc}
             />
             <div>
               <SearchNote
@@ -609,4 +639,7 @@ function SearchResults() {
   );
 }
 
+SearchResults.propTypes = {
+  showFocusArea: PropTypes.bool.isRequired,
+};
 export default SearchResults;
