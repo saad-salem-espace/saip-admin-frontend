@@ -19,6 +19,8 @@ import notesEn from './locales/en/notes.json';
 import notesAr from './locales/ar/notes.json';
 import validationsEn from './locales/en/validations.json';
 import validationsAr from './locales/ar/validations.json';
+import tipsEn from './locales/en/tips.json';
+import tipsAr from './locales/ar/tips.json';
 
 const resources = {
   en: {
@@ -31,6 +33,7 @@ const resources = {
     dashboard: dashboardEn,
     notes: notesEn,
     validations: validationsEn,
+    tips: tipsEn,
   },
   ar: {
     translation: translationAr,
@@ -42,6 +45,7 @@ const resources = {
     dashboard: dashboardAr,
     notes: notesAr,
     validations: validationsAr,
+    tips: tipsAr,
   },
 };
 

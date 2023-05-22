@@ -1,0 +1,11 @@
+@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/components/popover";
+
+.btn-view-tip {
+  html[dir="ltr"] & {
+    padding-right: 0;
+  }
+  html[dir="rtl"] & {
+    padding-left: 0;
+  }
+}

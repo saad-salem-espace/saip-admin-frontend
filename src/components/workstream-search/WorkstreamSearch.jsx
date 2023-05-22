@@ -3,21 +3,30 @@ import React, {
   useState, useContext, useEffect, useRef,
 } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Button,
+} from 'react-bootstrap';
 import { Formik, Form } from 'formik';
 import CacheContext from 'contexts/CacheContext';
 import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { teldaRegex, noTeldaRegex, defaultConditions } from 'utils/searchQuery';
+import FloatWidget from 'components/shared/float-widget/FloatWidget';
+import { BsQuestionCircle } from 'react-icons/bs';
+import AppPopover from 'components/shared/app-popover/AppPopover';
 import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
+import surveyIcon from 'assets/images/icons/ic-survey.svg';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
+
 import './style.scss';
 
 function WorkstreamSearch() {
@@ -126,12 +135,31 @@ function WorkstreamSearch() {
                 handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
                 <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
-                  <ToggleButton
-                    handleToggleButton={() => toggleState(isAdvanced)}
-                    isToggleButtonOn={isAdvanced}
-                    text={t('advancedSearch')}
-                    className="d-block text-primary mb-2 text-end"
-                  />
+                  <div className="d-flex justify-content-end align-items-center mb-2">
+                    <ToggleButton
+                      handleToggleButton={() => toggleState(isAdvanced)}
+                      isToggleButtonOn={isAdvanced}
+                      text={t('advancedSearch')}
+                      className="d-block text-primary text-end"
+                    />
+                    <AppPopover
+                      id="advancedSearchTip"
+                      Title={t('tips:advancedSearchTipTitle')}
+                      btnText={t('common:gotIt')}
+                      popoverTrigger={
+                        <Button variant="link" className="btn-view-tip">
+                          <BsQuestionCircle className="text-primary" />
+                        </Button>
+                      }
+                      variant="bg-primary-10"
+                    >
+                      <Trans
+                        i18nKey="advancedSearchTipContent"
+                        ns="tips"
+                        components={{ bold: <b />, break: <br /> }}
+                      />
+                    </AppPopover>
+                  </div>
                   <SharedSearch
                     isAdvanced={isAdvanced}
                     setFieldValue={setFieldValue}
@@ -166,6 +194,17 @@ function WorkstreamSearch() {
           </Col>
         </Row>
       </Container>
+      <FloatWidget
+        id="survey-widget"
+        widgetTitle={t('common:floatWidget.userSurvey.widgetTitle')}
+        widgetAction={t('common:floatWidget.userSurvey.widgetAction')}
+        widgetActionText={t('common:floatWidget.userSurvey.widgetActionText')}
+        WidgetIcon={<Image src={surveyIcon} className="d-block mx-auto my-3" />}
+        variant="bg-primary-10"
+        show
+      >
+        {t('common:floatWidget.userSurvey.widgetContent')}
+      </FloatWidget>
     </div>
   );
 }
