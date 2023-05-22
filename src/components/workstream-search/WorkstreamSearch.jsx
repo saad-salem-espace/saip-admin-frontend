@@ -156,7 +156,7 @@ function WorkstreamSearch() {
                       <Trans
                         i18nKey="advancedSearchTipContent"
                         ns="tips"
-                        components={{ bold: <b /> }}
+                        components={{ bold: <b />, break: <br /> }}
                       />
                     </ViewTip>
                   </div>

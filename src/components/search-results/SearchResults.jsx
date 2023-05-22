@@ -484,7 +484,7 @@ function SearchResults({ showFocusArea }) {
                           <Trans
                             i18nKey="advancedSearchTipContent"
                             ns="tips"
-                            components={{ bold: <b /> }}
+                            components={{ bold: <b />, break: <br /> }}
                           />
                         </ViewTip>
                       </div>
@@ -508,7 +508,7 @@ function SearchResults({ showFocusArea }) {
                           <Trans
                             i18nKey="allowSynonymsTipContent"
                             ns="tips"
-                            components={{ bold: <b /> }}
+                            components={{ bold: <b />, break: <br /> }}
                           />
                         </ViewTip>
                       </div>
