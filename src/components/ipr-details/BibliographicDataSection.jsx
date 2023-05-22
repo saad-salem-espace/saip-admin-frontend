@@ -83,7 +83,7 @@ const BibliographicDataSection = ({ document, isIPRExpanded, children }) => {
           </ShowMore>
         </p>
       </Col>
-      <Col md={getGrid('drawings')} className={isIPRExpanded ? 'border-start' : ''}>
+      <Col md={getGrid('drawings')} className={`mb-4 ${isIPRExpanded ? 'border-start' : ''}`}>
         {children}
       </Col>
     </Row>

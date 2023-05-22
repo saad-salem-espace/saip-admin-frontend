@@ -5,9 +5,10 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import Thumb from './Thumb';
 import './style.scss';
+import searchImg from '../../../assets/images/icons/search-image.svg';
 
 function Carousel({
   largeThumb,
@@ -32,7 +33,7 @@ function Carousel({
   const getCarouselThumbs = () => {
     const carouselThumbs = [];
 
-    for (let i = 1; i <= 4; i += 1) {
+    for (let i = 1; i <= 3; i += 1) {
       if (imgIndex < images.length) {
         carouselThumbs.push(
           <Thumb
@@ -47,7 +48,7 @@ function Carousel({
     return carouselThumbs;
   };
   const getCarouselItems = () => {
-    const loopCount = (images.length) / 4;
+    const loopCount = (images.length) / 3;
     const carouselItem = [];
     for (let i = 0; i < loopCount; i += 1) {
       carouselItem.push(
@@ -68,8 +69,14 @@ function Carousel({
         <div className="position-relative imgWrapper h-auto">
           <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" />
           <div className="overlay">
-            <Button variant="transparent" onClick={handleShow} className="border-0 w-100 h-100">
-              <FontAwesomeIcon icon={faMagnifyingGlass} className="f-24 text-white" />
+            <Button variant="transparent" className="border-0 icon">
+              <Image
+                src={searchImg}
+                className="fs-base"
+              />
+            </Button>
+            <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
+              <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="f-24 text-white" />
             </Button>
             <Modal centered show={show} onHide={handleClose}>
               <Modal.Body className="p-0">
@@ -81,7 +88,7 @@ function Carousel({
       )}
       {
          ((largeThumb && images.length > 1) || (!largeThumb)) && (
-         <BootstrapCarousel controls={images.length > 4} indicators={false} prevLabel={null} nextLabel={null} className="mb-8">
+         <BootstrapCarousel controls={images.length > 3} indicators={false} prevLabel={null} nextLabel={null} className="mb-8">
            {getCarouselItems()}
          </BootstrapCarousel>
          )
