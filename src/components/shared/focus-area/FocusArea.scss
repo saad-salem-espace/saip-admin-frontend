@@ -14,9 +14,11 @@
     }
 
     html[dir="rtl"] & {
-      border-radius:0 $border-radius $border-radius 0;
+      border-radius: 0 $border-radius $border-radius 0;
     }
+
     button {
+
       &:active,
       &:focus {
         border: none !important;
@@ -36,9 +38,23 @@
   .close-icon,
   .filing-number {
     border-radius: 0;
-    border-right: $border-width solid $white;
     margin-right: 4px;
     padding-right: 4px;
+  }
+
+  .filing-number {
+    border-right: $border-width solid $white;
+
+  }
+
+  .close-icon {
+    html[dir="ltr"] & {
+      border-right: $border-width solid $white;
+    }
+
+    html[dir="rtl"] & {
+      border-left: $border-width solid $white;
+    }
   }
 
   .text {
