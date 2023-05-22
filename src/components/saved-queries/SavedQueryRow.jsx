@@ -9,7 +9,7 @@ import routes from 'components/routes/routes.json';
 import { LONG_DATETIME_12H_FORMAT } from '../../constants';
 import './style.scss';
 
-const SavedQueryRow = ({ query, selectedWorkStream }) => {
+const SavedQueryRow = ({ query, selectedWorkStream, updateIprModal }) => {
   const queryDate = Moment(query.createdAt).format(LONG_DATETIME_12H_FORMAT);
   const queryStringUrl = query.queryString.replace(/\s/g, '+');
   const [selectedLink, setSelectedLink] = useState(false);
@@ -23,7 +23,10 @@ const SavedQueryRow = ({ query, selectedWorkStream }) => {
         <Link
           className={`p-2 rounded run-query ${selectedLink === query.queryString ? 'active-query' : ''}`}
           to={`${routes.search}?workstreamId=${selectedWorkStream}&sort=mostRelevant&q=${queryStringUrl}&page=1'`}
-          onClick={() => setSelectedLink(query.queryString)}
+          onClick={() => {
+            setSelectedLink(query.queryString);
+            updateIprModal();
+          }}
         >
           <BsPlay className="play-icon fs-base" />
         </Link>
@@ -39,6 +42,11 @@ SavedQueryRow.propTypes = {
     createdAt: PropTypes.string.isRequired,
   }).isRequired,
   selectedWorkStream: PropTypes.number.isRequired,
+  updateIprModal: PropTypes.func,
+};
+
+SavedQueryRow.defaultProps = {
+  updateIprModal: () => { },
 };
 
 export default SavedQueryRow;

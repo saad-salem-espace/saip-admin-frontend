@@ -4,7 +4,7 @@ import '../../assets/styles/common/table.scss';
 import PropTypes from 'prop-types';
 import SavedQueryRow from './SavedQueryRow';
 
-const SavedQueriesTable = ({ data, selectedWorkStream }) => {
+const SavedQueriesTable = ({ data, selectedWorkStream, updateIprModal }) => {
   const { t } = useTranslation('queries');
 
   return (
@@ -21,7 +21,11 @@ const SavedQueriesTable = ({ data, selectedWorkStream }) => {
         <tbody>
           {
             data.map((query) => (
-              <SavedQueryRow query={query} selectedWorkStream={selectedWorkStream} />
+              <SavedQueryRow
+                query={query}
+                selectedWorkStream={selectedWorkStream}
+                updateIprModal={updateIprModal}
+              />
             ))
           }
         </tbody>
@@ -33,6 +37,11 @@ const SavedQueriesTable = ({ data, selectedWorkStream }) => {
 SavedQueriesTable.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
   selectedWorkStream: PropTypes.number.isRequired,
+  updateIprModal: PropTypes.func,
+};
+
+SavedQueriesTable.defaultProps = {
+  updateIprModal: () => { },
 };
 
 export default SavedQueriesTable;

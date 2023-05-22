@@ -67,6 +67,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   const [activeDocument, setActiveDocument] = useState(null);
   const [assignedWorkstreams, setAssignedWorkstreams] = useState(null);
   const [notesUpdated, setNotesUpdated] = useState(false);
+  const [workstreamChange, setWorkstreamChange] = useState(false);
 
   useEffect(() => {
     executeWorkstreamData();
@@ -79,6 +80,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
         setActiveWorkstream(linksList.find(
           (element) => element.id === workstreamsData.data.data[0],
         ));
+        setWorkstreamChange(true);
       }
     }
   }, [workstreamsData]);
@@ -88,10 +90,12 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   }, [activeWorkstream, sort]);
 
   useEffect(() => {
-    if (activeWorkstream !== linksList[0]) {
-      updateFocusArea(false);
+    if (workstreamsData.data) {
+      if (workstreamChange && (activeWorkstream?.id !== workstreamsData.data.data[0])) {
+        updateFocusArea(false);
+      }
     }
-  }, [activeWorkstream]);
+  }, [activeWorkstream, workstreamsData, workstreamChange]);
 
   useEffect(() => {
     if (toggle || notesUpdated) executeAssignmentData();
