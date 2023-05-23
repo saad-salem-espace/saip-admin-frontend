@@ -69,7 +69,6 @@ function IprDetails({
   const searchResultParams = {
     workstreamId: (searchParams.get('workstreamId') || activeWorkstream.toString()),
   };
-  console.log('ddd', fromFocusArea);
   const [, execute] = useAxios(
     documentApi({ workstreamId: fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId, documentId }),
     { manual: true },
