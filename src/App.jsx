@@ -26,8 +26,8 @@ function App() {
     i18n.changeLanguage(lang);
   }, [lang]);
 
-  const focusId = JSON.parse(localStorage.getItem('FocusDoc'))?.saipId;
-  const focusTitle = JSON.parse(localStorage.getItem('FocusDoc'))?.title;
+  const focusId = JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber;
+  const focusTitle = JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.applicationTitle;
   const [showFocusArea, setShowFocusArea] = useState(null);
   const hideFocusArea = () => {
     setShowFocusArea(false);
@@ -48,7 +48,7 @@ function App() {
           updateFocusArea={(flag) => setShowFocusArea(flag)}
           showFocusArea={showFocusArea}
         />
-        <AppNavbar lang={lang} changeLang={changeLang} />
+        <AppNavbar lang={lang} changeLang={changeLang} hideFocusArea={hideFocusArea} />
         <ToastContainer
           position="bottom-left"
           autoClose={8000}
