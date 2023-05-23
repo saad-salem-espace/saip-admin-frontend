@@ -24,6 +24,7 @@ function IprExpand({
   updateIprModal,
 }) {
   const { t } = useTranslation('dashboard');
+
   return (
     <div className={`${className} ${focusMode ? '' : 'position-absolute'} dashboard-ipr-container expanded  end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
       <div className="top-info-bar row d-lg-flex border-bottom p-0 m-1">
@@ -67,7 +68,7 @@ function IprExpand({
         }
       </div>
       <div className="d-lg-flex">
-        <Col lg={6} className="border-end">
+        <Col lg={6} className="border-end position-relative">
           <IprDetails
             dashboard
             collapseIPR={collapseIPR}
@@ -79,6 +80,7 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             className="mx-0"
+            examinerView
           />
         </Col>
         <Col lg={6}>

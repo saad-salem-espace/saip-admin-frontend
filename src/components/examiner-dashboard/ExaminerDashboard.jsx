@@ -5,6 +5,7 @@ import useAxios from 'hooks/useAxios';
 import getAssigned from 'apis/dashboard/getAssigned';
 import getAssignedWorkstreams from 'apis/dashboard/getAssignedWorkstreams';
 import Spinner from 'components/shared/spinner/Spinner';
+import activeWorkstreamContext from 'components/ipr-details/shared/context/activeWorkstreamContext';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
@@ -140,10 +141,12 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
 
   return (
     assignedWorkstreams.length
-      ? <div>
-        {DashboardView}
-        {/* eslint-disable-next-line react/jsx-closing-tag-location */}
-      </div>
+      ? <activeWorkstreamContext.Provider value={activeWorkstream}>
+        <div>
+          {DashboardView}
+        </div>
+        {/* eslint-disable-next-line react/jsx-indent */}
+        </activeWorkstreamContext.Provider>
       : <EmptyState
           title={t('notAssigned')}
           msg={t('emptyStateTitle')}
