@@ -7,6 +7,7 @@ import ShowMore from 'components/shared/show-more/ShowMore';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import { highlightListener } from 'utils/eventListeners';
 import Row from 'react-bootstrap/Row';
 import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
@@ -27,17 +28,7 @@ const BibliographicDataSection = (
 
   useEffect(() => {
     const handleSelectionChange = () => {
-      const selection = window.getSelection();
-
-      if (!selection.toString()) {
-        window.document.getElementById('col').classList.remove('added');
-      } else if ((selection.anchorNode) === (selection.focusNode)) {
-        setLeft(selection.getRangeAt(0).getBoundingClientRect().left);
-        setTop(selection.getRangeAt(0).getBoundingClientRect().top);
-        if (window.document.getElementById('col').contains(selection.anchorNode)) {
-          window.document.getElementById('col').classList.add('added');
-        }
-      }
+      highlightListener(setLeft, setTop);
     };
     if (examinerView) {
       window.document.addEventListener('selectionchange', handleSelectionChange);
