@@ -2,7 +2,7 @@
 @import "../../../assets/styles/utilities/mixin";
 
 .app-navbar {
-  z-index: 1080 !important;
+  z-index: 2 !important;
   @include media-breakpoint-up(lg) {
     height: 80px;
   }
@@ -17,11 +17,13 @@
   }
   .navbar-brand {
     html[dir="rtl"] & {
-      margin-right: auto;
       margin-left: 16px;
+      margin-right: 0px;
     }
-    @include border(1px,25px,13px,$border-color);
-    @include border-end(10px);
+    @include media-breakpoint-up(lg) {
+      @include border(1px,25px,13px,$border-color);
+      @include border-end(10px);
+    }
   }
   &.guest {
     .navbar-brand {
@@ -95,8 +97,10 @@
   }
   &.logged {
     .switch-language {
-      @include border(1px,25px,6px,$border-color);
-      @include border-end(0);
+      @include media-breakpoint-up(xl) {
+        @include border(1px,25px,6px,$border-color);
+        @include border-end(0);
+      }
     }
     .navbar-toggler {
       html[dir="ltr"] & {
@@ -109,7 +113,9 @@
   }
 }
 .edges-border {
-  @include border(1px,25px,6px,$border-color);
-  @include border-start(0);
-  @include border-end(0);
+  @include media-breakpoint-up(xl) {
+    @include border-start(0);
+    @include border(1px,25px,6px,$border-color);
+    @include border-end(0);
+  }
 }

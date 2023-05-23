@@ -34,11 +34,11 @@
     }
   }
 }
-.icon-ic-calendar {
-  &:before {
-    content: "\e909";
-  }
+
+.icon-Industrial:before {
+  content: "\e909";
 }
+
 .icon-layout {
   &:before {
     content: "\e900";
@@ -50,11 +50,7 @@
     content: "\e901";
   }
 }
-.icon-industrial-design{
-  &:before {
-    content: "\e902";
-  }
-}
+
 .icon-copyrights {
   &:before {
     content: "\e903";
@@ -86,5 +82,8 @@
 }
 .icon-star:before {
   content: "\e90a";
-  color: #00564c;
+}
+
+.icon-focus:before {
+  content: "\e90c";
 }

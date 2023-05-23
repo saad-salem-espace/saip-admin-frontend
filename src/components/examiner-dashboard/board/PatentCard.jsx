@@ -1,4 +1,4 @@
-import { Card } from 'react-bootstrap';
+import { Card, Button as BootstrapButton } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18n';
 import Button from 'components/shared/button/Button';
@@ -12,16 +12,56 @@ import useAxios from 'hooks/useAxios';
 import togglePinned from 'apis/dashboard/togglePinned';
 import { useEffect } from 'react';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
+import Image from 'react-bootstrap/Image';
+import focusIcon from '../../../assets/images/icons/focus.svg';
+import unfocusIcon from '../../../assets/images/icons/unfocused.svg';
 
-function PatentCard({
+const PatentCard = ({
   assignment, setToggle, setActiveDocument,
-  setActiveTab, isInProgress, SetSelectedCard, active,
-}) {
+  setActiveTab, isInProgress, SetSelectedCard,
+  active, selectedFocusArea, SetSelectedFocusArea, updateFocusArea, showFocusArea,
+}) => {
+  const removeFromFocusArea = () => {
+    updateFocusArea(false);
+    localStorage.removeItem('FocusDoc');
+    SetSelectedFocusArea(null);
+  };
+
   const { t } = useTranslation('dashboard', 'common');
   const [pinnedData, executeToggle] = useAxios(
     togglePinned({ Ids: [assignment.id] }),
     { manual: true },
   );
+
+  useEffect(() => {
+    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.saipId);
+  }, []);
+
+  const addToFocusArea = () => {
+    updateFocusArea(true);
+    const assignmentObj = {
+      id: assignment?.id,
+      saipId: assignment?.filingNumber,
+      title: assignment?.applicationTitle,
+    };
+    localStorage.setItem('FocusDoc', JSON.stringify(assignmentObj));
+    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.saipId);
+  };
+
+  const handleFocusClick = () => {
+    if (selectedFocusArea) {
+      removeFromFocusArea();
+    } else {
+      addToFocusArea();
+    }
+  };
+
+  useEffect(() => {
+    if (!showFocusArea) {
+      removeFromFocusArea();
+    }
+  }, [showFocusArea]);
+
   useEffect(() => {
     if (pinnedData.data && pinnedData.data.status === 200) setToggle(true);
   }, [pinnedData]);
@@ -45,12 +85,39 @@ function PatentCard({
               <p className="text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
             }
           />
-          <Button
-            variant="link"
-            className={`p-1 fs-15 text-${isPinned ? 'primary' : 'gray'} position-relative`}
-            text={isPinned ? <BsPinFill /> : <BsPinAngle />}
-            onClick={executeToggle}
-          />
+          <div className="d-flex">
+            {
+            assignment.status === 'IN_PROGRESS' && (
+              <div className="icon-wrapper">
+                <AppTooltip
+                  placement="top"
+                  tooltipContent={selectedFocusArea && (selectedFocusArea !== assignment.filingNumber) ? t('board.cannotFocus') : t('board.addtoFocus')}
+                  tooltipTrigger={
+                    <div>
+                      <BootstrapButton
+                        variant="link"
+                        disabled={selectedFocusArea
+                        && (selectedFocusArea !== assignment.filingNumber)}
+                        onClick={() => handleFocusClick()}
+                        className="p-2"
+                      >
+                        <Image src={selectedFocusArea === assignment.filingNumber
+                          ? unfocusIcon : focusIcon}
+                        />
+                      </BootstrapButton>
+                    </div>
+                }
+                />
+              </div>
+            )
+          }
+            <Button
+              variant="link"
+              className={`p-2 fs-15 text-${isPinned ? 'primary' : 'gray'} position-relative`}
+              text={isPinned ? <BsPinFill /> : <BsPinAngle />}
+              onClick={executeToggle}
+            />
+          </div>
         </div>
         <Button
           variant="link"
@@ -81,16 +148,16 @@ function PatentCard({
               )}
             </p>
           }
-          placement="right"
+          placement="auto"
         />
         <div className="d-flex justify-content-between text-gray-700 border-bottom">
-          <p className="fs-12 mb-2">
+          <p className="fs-xs mb-2">
             <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:queue')}
             •
             {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
           </p>
-          <p className="fs-12 mb-2">
+          <p className="fs-xs mb-2">
             <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:priority')}
             •
@@ -135,7 +202,7 @@ function PatentCard({
       </Card.Body>
     </Card>
   );
-}
+};
 
 PatentCard.propTypes = {
   assignment: PropTypes.instanceOf(Object).isRequired,
@@ -145,11 +212,15 @@ PatentCard.propTypes = {
   isInProgress: PropTypes.bool.isRequired,
   setActiveTab: PropTypes.func,
   active: PropTypes.bool.isRequired,
+  selectedFocusArea: PropTypes.string.isRequired,
+  SetSelectedFocusArea: PropTypes.func.isRequired,
+  updateFocusArea: PropTypes.func.isRequired,
+  showFocusArea: PropTypes.bool.isRequired,
 };
 
 PatentCard.defaultProps = {
   SetSelectedCard: null,
-  setActiveTab: () => {},
+  setActiveTab: () => { },
 };
 
 export default PatentCard;

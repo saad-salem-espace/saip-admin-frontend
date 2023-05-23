@@ -2,6 +2,17 @@
 
 .pagination {
   justify-content: flex-start !important;
+  &.paginate-ipr {
+    html[dir="ltr"] & {
+      margin-left: 35px;
+    }
+    html[dir="rtl"] & {
+      margin-right: 35px;
+    }
+  }
+  .sr-only {
+    @extend .d-none;
+  }
   .page-item {
     margin: 0 8px;
 

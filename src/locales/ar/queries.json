@@ -3,5 +3,11 @@
   "query": "الاستعلام",
   "date": "التاريخ",
   "resultsFound": "النتائج",
-  "actions": "الإجراءات"
+  "actions": "الإجراءات",
+  "deleteQuery": "مسح الاستعلام",
+  "confirmDeleteQuery": "هل انت متأكد من مسح هذا الاستعلام؟",
+  "delete": "مسح",
+  "queryDeleted": "تم مسح الاستعلام",
+  "deleteFailedTitle": "لم يتم مسح الاستعلام.",
+  "deleteFailedText": ".برجاء المحاولة مرة أخرى"
 }

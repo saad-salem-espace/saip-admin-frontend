@@ -26,6 +26,8 @@ import PatentViews from './patent/PatentViews';
 import TrademarkViews from './trademarks/TrademarkViews';
 import patentIprOptions from './patent/PatentIprOptions';
 import trademarkIprOptions from './trademarks/TrademarkIprOptions';
+import IndustrialDesignViews from './industrial-design/IndustrialDesignViews';
+import IndustrialDesignIprOptions from './industrial-design/IndustrialDesignIprOptions';
 
 function IprDetails({
   collapseIPR,
@@ -55,8 +57,9 @@ function IprDetails({
   });
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
+  const industrialDesignOptions = IndustrialDesignIprOptions().options;
   const searchResultParams = {
-    workstreamId: dashboard ? '1' : (searchParams.get('workstreamId') || activeWorkstream.toString()),
+    workstreamId: (searchParams.get('workstreamId') || activeWorkstream.toString()),
   };
   const [, execute] = useAxios(
     documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
@@ -133,6 +136,20 @@ function IprDetails({
       documentId={documentId}
       searchResultParams={searchResultParams}
     />,
+    3: <IndustrialDesignViews
+      selectedView={selectedView.value}
+      isIPRExpanded={isIPRExpanded}
+      document={document}
+      preparedGetAttachmentURL={preparedGetAttachmentURL}
+      documentId={documentId}
+      searchResultParams={searchResultParams}
+    />,
+  };
+
+  const options = {
+    1: patentOptions,
+    2: trademarkOptions,
+    3: industrialDesignOptions,
   };
 
   const renderSelectedView = () => {
@@ -146,9 +163,14 @@ function IprDetails({
       ) {
         content = views[searchResultParams.workstreamId];
       }
-    } else
-    if (searchResultParams.workstreamId === '1') {
+    } else if
+    (searchResultParams.workstreamId === '1') {
       if (document[selectedView.value]) {
+        content = views[searchResultParams.workstreamId];
+      }
+    } else if
+    (searchResultParams.workstreamId === '3') {
+      if ((document[selectedView.value]) || (selectedView.value === 'Description')) {
         content = views[searchResultParams.workstreamId];
       }
     }
@@ -240,6 +262,34 @@ function IprDetails({
             </div>
           </div>
         )}
+        {searchResultParams.workstreamId === '3' && (
+        <div className="ms-6 mb-2">
+          <div className="d-flex justify-content-between">
+            <div className="me-2 mb-md-0 mb-2">
+              <h5 className="text-capitalize text-primary-dark font-regular mb-2">
+                {document.BibliographicData.DesignTitleEN}
+                <span className="d-block mt-2">
+                  {document.BibliographicData.DesignTitleAR}
+                </span>
+              </h5>
+              <p className="text-gray">
+                <HandleEmptyAttribute
+                  checkOn={document.BibliographicData.Designers.join('; ')}
+                />
+              </p>
+            </div>
+            {!isIPRExpanded && (
+            <div className={`me-6 mb-2 ${style.headerImg}`}>
+              <Image
+                src={preparedGetAttachmentURL(
+                  document.BibliographicData.OverallProductDrawing,
+                )}
+              />
+            </div>
+            )}
+          </div>
+        </div>
+        )}
         {searchResultParams.workstreamId === '1' && (
           <p className="text-gray px-6">
             <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
@@ -274,11 +324,7 @@ function IprDetails({
       {
       dashboard && showActions ? (
         <IprSections
-          options={
-                    searchResultParams.workstreamId === '2'
-                      ? trademarkOptions
-                      : patentOptions
-                  }
+          options={options[searchResultParams.workstreamId]}
           onChangeSelect={onChangeSelect}
           selectedView={selectedView}
           renderSelectedView={renderSelectedView}
@@ -288,10 +334,11 @@ function IprDetails({
           selectedCardId={selectedCardId}
           setNotesUpdated={setNotesUpdated}
           className="notes-editor-container"
+          activeWorkstream={activeWorkstream}
         />
       ) : (
         <IprData
-          options={searchResultParams.workstreamId === '2' ? trademarkOptions : patentOptions}
+          options={options[searchResultParams.workstreamId]}
           onChangeSelect={onChangeSelect}
           selectedView={selectedView}
           renderSelectedView={renderSelectedView}

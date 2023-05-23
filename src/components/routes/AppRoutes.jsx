@@ -1,5 +1,6 @@
 import { Routes as ReactRoutes, Route } from 'react-router-dom';
 import { lazy } from 'react';
+import PropTypes from 'prop-types';
 import appRoutes from './routes.json';
 import AuthenticatedRoute from '../AuthenticatedRoute';
 
@@ -10,13 +11,21 @@ const Admin = lazy(() => import('components/admin-dashboard/AdminDashboard'));
 const SavedQueries = lazy(() => import('components/saved-queries/SavedQueries'));
 const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
 
-const AppRoutes = () => (
+const AppRoutes = ({ updateFocusArea, showFocusArea }) => (
   <ReactRoutes>
     <Route path="*" element={<NotFound />} />
     <Route path={appRoutes.home} element={<WorkstreamSearch />} />
-    <Route path={appRoutes.search} element={<SearchResults />} />
+    <Route path={appRoutes.search} element={<SearchResults showFocusArea={showFocusArea} />} />
     <Route element={<AuthenticatedRoute />}>
-      <Route path={appRoutes.dashboard} element={<Dashboard />} />
+      <Route
+        path={appRoutes.dashboard}
+        element={
+          <Dashboard
+            updateFocusArea={updateFocusArea}
+            showFocusArea={showFocusArea}
+          />
+        }
+      />
       <Route path={appRoutes.admin} element={<Admin />} />
     </Route>
     <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
@@ -25,4 +34,8 @@ const AppRoutes = () => (
   </ReactRoutes>
 );
 
+AppRoutes.propTypes = {
+  updateFocusArea: PropTypes.func.isRequired,
+  showFocusArea: PropTypes.bool.isRequired,
+};
 export default AppRoutes;

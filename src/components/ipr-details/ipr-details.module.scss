@@ -17,6 +17,7 @@
   height: 80vh;
   overflow-y: auto;
   @include scrollbar;
+  padding-bottom: 150px;
 }
 
 .img {

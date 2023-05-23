@@ -1,0 +1,13 @@
+{
+  "status": 200,
+  "message": "success",
+  "data": [
+    {
+      "id": 2,
+      "code": "saved_query_limit",
+      "limitValue": 100,
+      "createdAt": "2023-05-13T08:29:10.560+00:00",
+      "updatedAt": "2023-05-16T13:20:10.815+00:00"
+    }
+  ]
+}

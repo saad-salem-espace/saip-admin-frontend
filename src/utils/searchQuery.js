@@ -1,5 +1,3 @@
-/* eslint-disable */
-import { t } from 'i18next';
 import { DateObject } from 'react-multi-date-picker';
 import { search } from './arrays';
 import { isMultipleValue } from './search-query/encoder';
@@ -10,7 +8,7 @@ const operators = ['and', 'or', 'not'].map((operator) => ({
   displayName: t(`search:operators.${operator}`),
 }));
 
-const parseQuery = (fields, imageName, isQuery, currentLang = 'ar') => {
+const parseQuery = (fields, imageName, isQuery, currentLang = 'en') => {
   let finalQuery = '';
   let queryObjsArr = [];
     

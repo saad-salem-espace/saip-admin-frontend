@@ -12,6 +12,7 @@
     font-family: $font-medium;
     color: $primary-dark;
     font-size: $font-size-base;
+    background-color: $white;
     @extend .pe-8;
     @extend .py-8;
     white-space: nowrap;
@@ -23,15 +24,22 @@
   }
 
   td {
-    background-color: #FAFCFB;
     color: $gray-700;
     font-size: $font-size-sm;
     @extend .pt-4;
     @extend .pb-8;
 
     html[dir="rtl"] & {
-      direction: ltr;
+      direction: rtl;
       text-align: right;
+    }
+  }
+
+  tr {
+    background-color: #FAFCFB;
+
+    &:nth-child(2n) {
+      background-color: $white;
     }
   }
 

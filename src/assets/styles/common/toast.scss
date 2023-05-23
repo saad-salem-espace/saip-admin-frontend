@@ -14,7 +14,7 @@
 }
 
 .Toastify__toast-body {
-  @extend.p-4
+  @extend.p-4;
 }
 
 .Toastify__close-button {
@@ -77,4 +77,8 @@
       font-size: 30px;
     }
   }
+}
+
+.Toastify__toast-container {
+  z-index: 10000 !important;
 }
