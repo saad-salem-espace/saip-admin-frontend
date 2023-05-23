@@ -118,6 +118,7 @@ const Board = ({
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
                   showFocusArea={showFocusArea}
+                  activeWorkstream={activeWorkstream.id}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
@@ -131,6 +132,7 @@ const Board = ({
                   SetSelectedCard={SetSelectedCard}
                   updateFocusArea={updateFocusArea}
                   showFocusArea={showFocusArea}
+                  activeWorkstream={activeWorkstream.id}
                 />
                 <StatusColumn
                   status={t('dashboard:status.done')}
@@ -143,6 +145,7 @@ const Board = ({
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
                   showFocusArea={showFocusArea}
+                  activeWorkstream={activeWorkstream.id}
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
@@ -155,6 +158,7 @@ const Board = ({
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
                   showFocusArea={showFocusArea}
+                  activeWorkstream={activeWorkstream.id}
                 />
               </Row>
             )}

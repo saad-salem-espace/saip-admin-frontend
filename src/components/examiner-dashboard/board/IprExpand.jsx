@@ -22,6 +22,7 @@ function IprExpand({
   setNotesUpdated,
   focusMode,
   updateIprModal,
+  fromFocusArea,
 }) {
   const { t } = useTranslation('dashboard');
 
@@ -81,6 +82,7 @@ function IprExpand({
             selectedCardId={selectedCardId}
             className="mx-0"
             examinerView
+            fromFocusArea={fromFocusArea}
           />
         </Col>
         <Col lg={6}>
@@ -92,6 +94,7 @@ function IprExpand({
             setNotesUpdated={setNotesUpdated}
             activeWorkstream={activeWorkstream}
             updateIprModal={updateIprModal}
+            fromFocusArea={fromFocusArea}
           />
         </Col>
       </div>
@@ -112,6 +115,7 @@ IprExpand.propTypes = {
   setNotesUpdated: PropTypes.func,
   focusMode: PropTypes.bool,
   updateIprModal: PropTypes.func,
+  fromFocusArea: PropTypes.bool,
 };
 
 IprExpand.defaultProps = {
@@ -120,6 +124,7 @@ IprExpand.defaultProps = {
   setNotesUpdated: () => { },
   focusMode: false,
   updateIprModal: () => { },
+  fromFocusArea: false,
 };
 
 export default IprExpand;

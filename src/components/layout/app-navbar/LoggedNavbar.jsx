@@ -19,8 +19,12 @@ import logo from '../../../assets/images/logo-shape.png';
 import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
 
-function LoggedNavbar({ lang, changeLang }) {
+function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
   const auth = useAuth();
+  const logout = (() => {
+    hideFocusArea();
+    auth.signoutRedirect();
+  });
   const { t } = useTranslation('layout');
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar logged p-4 shadow">
@@ -69,7 +73,7 @@ function LoggedNavbar({ lang, changeLang }) {
                   />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item variant="primary" onClick={() => auth.signoutRedirect()}>
+                  <Dropdown.Item variant="primary" onClick={logout}>
                     {t('navbar.logOut')}
                   </Dropdown.Item>
                 </Dropdown.Menu>
@@ -84,5 +88,6 @@ function LoggedNavbar({ lang, changeLang }) {
 LoggedNavbar.propTypes = {
   changeLang: PropTypes.func.isRequired,
   lang: PropTypes.string.isRequired,
+  hideFocusArea: PropTypes.func.isRequired,
 };
 export default LoggedNavbar;

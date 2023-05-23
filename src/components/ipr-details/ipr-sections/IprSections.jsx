@@ -25,6 +25,7 @@ function IprSections({
   setNotesUpdated,
   activeWorkstream,
   updateIprModal,
+  fromFocusArea,
 }) {
   const { t } = useTranslation(['dashboard', 'notes', 'translation']);
   const [activeTabId, setActiveTabId] = useState(activeTab);
@@ -61,7 +62,7 @@ function IprSections({
     setHasUnsavedNotes(false);
   };
 
-  const axiosConfig = getSavedQueryApi(activeWorkstream, JSON.parse(localStorage.getItem('FocusDoc'))?.saipId || documentId, '1', true);
+  const axiosConfig = getSavedQueryApi(activeWorkstream, fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber : documentId, '1', true);
 
   const savedQueries = (
     SavedQueriesTable
@@ -93,7 +94,7 @@ function IprSections({
       content: (
         <div className="notes-tab" translate="no">
           <Notes
-            documentId={JSON.parse(localStorage.getItem('FocusDoc'))?.saipId || documentId}
+            documentId={fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber : documentId}
             disableEditor={!isCardInprogress}
             disableChangeTab={disableChangeTab}
             fireSubmit={fireSubmit}
@@ -101,6 +102,7 @@ function IprSections({
             setFireSubmit={setFireSubmit}
             changeActiveTab={showInfo ? changeActiveTab : () => {}}
             setNotesUpdated={setNotesUpdated}
+            fromFocusArea={fromFocusArea}
           />
         </div>
       ),
@@ -193,6 +195,7 @@ IprSections.propTypes = {
   setNotesUpdated: PropTypes.func,
   activeWorkstream: PropTypes.number,
   updateIprModal: PropTypes.func,
+  fromFocusArea: PropTypes.bool,
 };
 
 IprSections.defaultProps = {
@@ -206,6 +209,7 @@ IprSections.defaultProps = {
   setNotesUpdated: () => { },
   activeWorkstream: null,
   updateIprModal: () => { },
+  fromFocusArea: false,
 };
 
 export default IprSections;

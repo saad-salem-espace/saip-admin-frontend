@@ -16,7 +16,7 @@ import toastify from '../../../../utils/toastify';
 
 function Notes({
   id, disableEditor, disableChangeTab, fireSubmit, changeActiveTab, setFireSubmit,
-  setNotesUpdated,
+  setNotesUpdated, fromFocusArea,
 }) {
   const { t } = useTranslation('notes');
   const [notes, setNotes] = useState([]);
@@ -56,9 +56,10 @@ function Notes({
       </div>,
     );
   };
+  const docId = fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.id : id;
 
   const saveNoteParams = {
-    id,
+    id: docId,
     noteText: noteContent,
     activeNote,
   };
@@ -178,11 +179,13 @@ Notes.propTypes = {
   changeActiveTab: PropTypes.func.isRequired,
   setFireSubmit: PropTypes.func.isRequired,
   setNotesUpdated: PropTypes.func.isRequired,
+  fromFocusArea: PropTypes.bool,
 };
 
 Notes.defaultProps = {
   disableEditor: false,
   disableChangeTab: () => {},
+  fromFocusArea: false,
 };
 
 export default Notes;

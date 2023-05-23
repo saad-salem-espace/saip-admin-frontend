@@ -55,6 +55,9 @@ const AppPagination = ({
 
   useEffect(() => {
     setCurrentPage(Number(searchParams.get('page')) || currentPage);
+    if (!urlPagination) {
+      setCurrentPage(currentPage);
+    }
   }, [searchParams.get('page')]);
 
   useEffect(() => {
