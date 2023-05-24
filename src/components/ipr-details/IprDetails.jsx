@@ -194,7 +194,7 @@ function IprDetails({
   const renderSelectedView = () => {
     let content = <NoData />;
     const workstreamId = fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId;
-    if (workstreamId === '2') {
+    if (workstreamId.toString() === '2') {
       if (
         document[selectedView.value]
         || ((selectedView.value === 'Description'
@@ -204,12 +204,12 @@ function IprDetails({
         content = views[workstreamId];
       }
     } else if
-    (workstreamId === '1') {
+    (workstreamId.toString() === '1') {
       if (document[selectedView.value]) {
         content = views[workstreamId];
       }
     } else if
-    (workstreamId === '3') {
+    (workstreamId.toString() === '3') {
       if ((document[selectedView.value]) || (selectedView.value === 'Description')) {
         content = views[workstreamId];
       }
@@ -287,7 +287,7 @@ function IprDetails({
                 </h5>
                 <p className="text-gray">
                   <HandleEmptyAttribute
-                    checkOn={document.BibliographicData.Owners.join('; ')}
+                    checkOn={document?.BibliographicData?.Owners?.join('; ')}
                   />
                 </p>
               </div>
