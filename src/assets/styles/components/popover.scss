@@ -1,6 +1,8 @@
 @import "../utilities/custom-theme";
 
 .popover {
+  z-index: 9999 !important;
+
   &.app {
     min-width: 340px;
   }
