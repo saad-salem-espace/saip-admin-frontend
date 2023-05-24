@@ -126,7 +126,7 @@ function IprSections({
             urlPagination={false}
             setTotalElements={(totalCount) => setTotalElements(totalCount)}
             renderedProps={{
-              selectedWorkStream: 1,
+              selectedWorkStream: activeWorkstream,
               updateIprModal,
             }}
           />

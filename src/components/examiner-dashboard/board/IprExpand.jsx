@@ -94,6 +94,7 @@ function IprExpand({
             setNotesUpdated={setNotesUpdated}
             activeWorkstream={activeWorkstream}
             updateIprModal={updateIprModal}
+            documentId={documentId}
             fromFocusArea={fromFocusArea}
           />
         </Col>
