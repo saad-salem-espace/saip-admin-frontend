@@ -3,7 +3,7 @@ import IndustrialDesignResultCard from './IndustrialDesignResultCard';
 
 const IndustrialDesignResultCards = ({
   data,
-  query, setActiveDocument, activeDocument,
+  query, setActiveDocument, activeDocument, selectedView,
 }) => (
   <>
     {data.data.map((searchResult) => (
@@ -14,6 +14,7 @@ const IndustrialDesignResultCards = ({
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
         highlightWords={data.highlighting || []}
+        selectedView={selectedView}
       />
     ))}
   </>
@@ -24,6 +25,10 @@ IndustrialDesignResultCards.propTypes = {
   query: PropTypes.string.isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
+  selectedView: PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string,
+  }).isRequired,
 };
 
 export default IndustrialDesignResultCards;

@@ -553,28 +553,24 @@ function SearchResults({ showFocusArea }) {
           </div>
           <Formik>
             {() => (
-              <Form className="mt-5">
+              <Form className="mt-12">
                 {
                   totalResults !== 0 && (
                     <div className="d-md-flex">
-                      {
-                        searchResultParams.workstreamId === '2' && (
-                          <div className="position-relative mb-6 viewSelect me-md-6">
-                            <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
-                            <Select
-                              options={viewOptions}
-                              setSelectedOption={onChangeView}
-                              selectedOption={selectedView}
-                              defaultValue={selectedView}
-                              id="viewSection"
-                              fieldName="viewSection"
-                              className="mb-md-0 mb-3 select-2"
-                            />
-                          </div>
-                        )
-                      }
+                      <div className="position-relative mb-6 viewSelect me-md-6">
+                        <span className="position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
+                        <Select
+                          options={viewOptions}
+                          setSelectedOption={onChangeView}
+                          selectedOption={selectedView}
+                          defaultValue={selectedView}
+                          id="viewSection"
+                          fieldName="viewSection"
+                          className="mb-md-0 mb-3 select-2"
+                        />
+                      </div>
                       <div className="position-relative mb-8 sortBy">
-                        <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                        <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
                         <Select
                           options={getSortOptions(searchResultParams.workstreamId)}
                           setSelectedOption={onChangeSortBy}

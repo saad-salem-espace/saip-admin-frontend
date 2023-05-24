@@ -182,14 +182,12 @@ div[class$="singleValue"] {
   }
 
   div[class$="singleValue"] {
-    margin: 0 7px 0 0;
-
     html[dir="ltr"] & {
-      left: 0;
+      left: 16px;
     }
 
     html[dir="rtl"] & {
-      right: 0;
+      right: 16px;
     }
   }
 
@@ -198,17 +196,17 @@ div[class$="singleValue"] {
   }
 
   div[class$="ValueContainer"] {
-    height: 72px;
+    height: 61px;
     padding: 2px 0;
   }
 
   div[class$="singleValue"] {
-    bottom: 15px;
+    bottom: 16px;
+    margin-left: 0;
   }
 
   div[class$="indicatorContainer"] {
     background-color: transparent;
-    margin-top: 25px;
   }
 
   div[class$="container"] {
@@ -217,7 +215,7 @@ div[class$="singleValue"] {
     >div:first-of-type {
       border-width: 0 0 $border-width;
       border-radius: 0;
-      height: 79px;
+      height: 63px;
     }
   }
 }
