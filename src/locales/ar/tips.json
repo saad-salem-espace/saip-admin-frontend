@@ -1,5 +1,5 @@
 {
-  "advancedSearchTipTitle": "<bold>البحث المتقدم</bold>",
+  "advancedSearchTipTitle": "البحث المتقدم",
   "advancedSearchTipContent": "مع تفعيل <bold>البحث المتقدم</bold> يمكنك البحث في<bold>أحد مجالات البحث</bold> باستخدام<bold>محددات البحث: و، أو، باستثناء.</bold> وإدخال معايير البحث.<break/>",
   "allowSynonymsTipTitle": "المرادفات",
   "allowSynonymsTipContent": " تفعيل <bold>المرادفات</bold> يعمل على تغطية الكلمات البحثية بشكل أوسع، بالبحث في الكلمة وبدائلها المتاحة. "
