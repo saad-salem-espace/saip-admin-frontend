@@ -24,10 +24,6 @@ LabelValue.propTypes = {
   customLabel: PropTypes.bool,
   valueClassName: PropTypes.string,
   labelClassName: PropTypes.string,
-  btnPosition: PropTypes.shape({
-    left: PropTypes.string.isRequired,
-    top: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 LabelValue.defaultProps = {
