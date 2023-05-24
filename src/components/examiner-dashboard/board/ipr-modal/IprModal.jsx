@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import React, { useState } from 'react';
 import { Button as BootstrapButton } from 'react-bootstrap';
@@ -7,17 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpRightAndDownLeftFromCenter } from '@fortawesome/free-solid-svg-icons';
 import IprExpand from '../IprExpand';
 
-const IprModal = ({
-  documentId,
-}) => {
+const IprModal = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const assignment = {
-    queuePriorityDate: '20-1',
-    earliestPriorityDate: '5-20',
-  };
   return (
     <>
       <BootstrapButton
@@ -31,26 +24,25 @@ const IprModal = ({
         <Modal.Header className="border-0 py-0 px-4 mt-4 btn-close-wrappper align-items-start fs-base" closeButton />
         <Modal.Body className="px-0 pt-0">
           <IprExpand
-            assignment={assignment}
+            assignment={JSON.parse(localStorage.getItem('FocusDoc'))?.doc}
             collapseIPR={false}
-            documentId={JSON.parse(localStorage.getItem('FocusDoc'))?.saipId || documentId}
+            documentId={JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber}
             isIPRExpanded
             // onClose={handleCloseIprDetail}
             activeTab={2}
-            activeWorkstream={1}
+            activeWorkstream={JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId}
             isCardInprogress
-            selectedCardId="1"
+            selectedCardId={JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.id}
             setNotesUpdated={() => {}}
             className="col-lg-12"
             focusMode
             updateIprModal={() => setShow(false)}
+            fromFocusArea="true"
           />
         </Modal.Body>
       </Modal>
     </>
   );
 };
-IprModal.propTypes = {
-  documentId: PropTypes.string.isRequired,
-};
+
 export default IprModal;

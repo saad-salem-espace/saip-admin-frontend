@@ -63,50 +63,60 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('trademarks.markNameEN')}
             labelClassName="bibliographicLabel"
+            value={BibliographicData.BrandNameEn}
           />
           <LabelValue
             label={t('trademarks.markNameAR')}
             labelClassName="bibliographicLabel"
+            value={BibliographicData.BrandNameAr}
           />
           <LabelValue
             label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
             className="mb-4"
+            value={BibliographicData.FilingNumber}
           />
           <LabelValue
             label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
             className="mb-4"
+            value={BibliographicData.FilingDate}
           />
           <LabelValue
             label={t('trademarks.markType')}
             labelClassName="bibliographicLabel"
             className="mb-4"
+            value={BibliographicData.TrademarkType}
           />
           <LabelValue
             label={t('trademarks.markStatus')}
             labelClassName="bibliographicLabel"
             className="mb-4"
+            value={BibliographicData.TrademarkLastStatus}
           />
           <LabelValue
             label={t('ipr.registrationNumber')}
             labelClassName="bibliographicLabel"
             className="mb-4"
+            value={BibliographicData.RegistrationNumber}
           />
           <LabelValue
             label={t('ipr.registrationDate')}
             labelClassName="bibliographicLabel"
             className="mb-4"
+            value={BibliographicData.RegistrationDate}
           />
           <LabelValue
             label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
             className="mb-4"
+            value={BibliographicData.PublicationNumber}
           />
           <LabelValue
             label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
             className="mb-4"
+            value={BibliographicData.PublicationDate}
           />
           <p className="text-primary f-14 disable-highlight">{t('trademarks.markDescription')}</p>
           <LabelValue

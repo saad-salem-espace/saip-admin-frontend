@@ -50,6 +50,7 @@ function IprDetails({
   selectedCardId,
   setNotesUpdated,
   examinerView,
+  fromFocusArea,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -69,7 +70,7 @@ function IprDetails({
     workstreamId: (searchParams.get('workstreamId') || activeWorkstream.toString()),
   };
   const [, execute] = useAxios(
-    documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
+    documentApi({ workstreamId: fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId, documentId }),
     { manual: true },
   );
 
@@ -192,24 +193,25 @@ function IprDetails({
 
   const renderSelectedView = () => {
     let content = <NoData />;
-    if (searchResultParams.workstreamId === '2') {
+    const workstreamId = fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId;
+    if (workstreamId === '2') {
       if (
         document[selectedView.value]
         || ((selectedView.value === 'Description'
           || selectedView.value === 'Mark')
           && document.BibliographicData[selectedView.value])
       ) {
-        content = views[searchResultParams.workstreamId];
+        content = views[workstreamId];
       }
     } else if
-    (searchResultParams.workstreamId === '1') {
+    (workstreamId === '1') {
       if (document[selectedView.value]) {
-        content = views[searchResultParams.workstreamId];
+        content = views[workstreamId];
       }
     } else if
-    (searchResultParams.workstreamId === '3') {
+    (workstreamId === '3') {
       if ((document[selectedView.value]) || (selectedView.value === 'Description')) {
-        content = views[searchResultParams.workstreamId];
+        content = views[workstreamId];
       }
     }
     return content;
@@ -409,6 +411,7 @@ function IprDetails({
           setNotesUpdated={setNotesUpdated}
           className="notes-editor-container"
           activeWorkstream={activeWorkstream}
+          fromFocusArea={fromFocusArea}
         />
       ) : (
         <IprData
@@ -439,6 +442,7 @@ IprDetails.propTypes = {
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
   examinerView: PropTypes.bool,
+  fromFocusArea: PropTypes.bool,
 };
 
 IprDetails.defaultProps = {
@@ -454,6 +458,7 @@ IprDetails.defaultProps = {
   examinerView: false,
   activeTab: 2,
   setNotesUpdated: () => { },
+  fromFocusArea: false,
 };
 
 export default IprDetails;

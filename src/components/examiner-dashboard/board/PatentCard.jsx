@@ -20,6 +20,7 @@ const PatentCard = ({
   assignment, setToggle, setActiveDocument,
   setActiveTab, isInProgress, SetSelectedCard,
   active, selectedFocusArea, SetSelectedFocusArea, updateFocusArea, showFocusArea,
+  activeWorkstream,
 }) => {
   const removeFromFocusArea = () => {
     updateFocusArea(false);
@@ -34,18 +35,16 @@ const PatentCard = ({
   );
 
   useEffect(() => {
-    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.saipId);
+    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber);
   }, []);
-
   const addToFocusArea = () => {
     updateFocusArea(true);
     const assignmentObj = {
-      id: assignment?.id,
-      saipId: assignment?.filingNumber,
-      title: assignment?.applicationTitle,
+      workstreamId: activeWorkstream,
+      doc: assignment,
     };
     localStorage.setItem('FocusDoc', JSON.stringify(assignmentObj));
-    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.saipId);
+    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber);
   };
 
   const handleFocusClick = () => {
@@ -216,6 +215,7 @@ PatentCard.propTypes = {
   SetSelectedFocusArea: PropTypes.func.isRequired,
   updateFocusArea: PropTypes.func.isRequired,
   showFocusArea: PropTypes.bool.isRequired,
+  activeWorkstream: PropTypes.number.isRequired,
 };
 
 PatentCard.defaultProps = {

@@ -202,6 +202,7 @@ const SaveQuery = ({
         msg={t('common:limitReached.register_now_msg')}
         confirmBtnText={t('common:register')}
         showModal={reachedLimit}
+        classIcon="text-warning"
       />
     </>
   );

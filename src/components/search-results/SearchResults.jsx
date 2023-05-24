@@ -79,7 +79,7 @@ function SearchResults({ showFocusArea }) {
     query: searchParams.get('q'),
     resultCount: totalResults.toString(),
     enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
-    documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.saipId,
+    documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber,
     fav: isQuerySaved,
   };
 
@@ -627,6 +627,7 @@ function SearchResults({ showFocusArea }) {
               getNextDocument={getNextDocument}
               getPreviousDocument={getPreviousDocument}
               setActiveDocument={setActiveDocument}
+              fromFocusArea={false}
             />
           </Col>
         )}

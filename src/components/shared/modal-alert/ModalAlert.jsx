@@ -8,7 +8,7 @@ import './modalAlert.scss';
 import '../../../assets/styles/common/modal.scss';
 
 const ModalAlert = ({
-  title, msg, className, handleConfirm, showModal, hideAlert, confirmBtnText, variant,
+  title, msg, className, handleConfirm, showModal, hideAlert, confirmBtnText, variant, classIcon,
 }) => {
   const { t } = useTranslation('translation');
   const handleClose = (s) => {
@@ -19,7 +19,7 @@ const ModalAlert = ({
     <div>
       <Modal centered show={showModal} onHide={handleClose} className={`${className} border-radius modal-alert`}>
         <Modal.Header className="border-0 px-4 pt-4 pb-0 btn-close-wrappper align-items-start" closeButton>
-          <BsExclamationTriangle className="mb-4 fs-32 ms-3" />
+          <BsExclamationTriangle className={`${classIcon} mb-4 fs-32 ms-3`} />
         </Modal.Header>
         <Modal.Body className="p-0 text-center">
           <h6 className="mb-4">
@@ -57,11 +57,13 @@ ModalAlert.propTypes = {
   hideAlert: PropTypes.func.isRequired,
   confirmBtnText: PropTypes.string.isRequired,
   variant: PropTypes.string,
+  classIcon: PropTypes.string,
 };
 
 ModalAlert.defaultProps = {
   className: null,
   showModal: true,
   variant: 'primary',
+  classIcon: '',
 };
 export default ModalAlert;
