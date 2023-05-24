@@ -66,7 +66,7 @@ function SearchResultCard({
           </p>
           <div className="d-flex">
             {
-            (firstDrawing && selectedView.value === 'detailed') && (
+            (firstDrawing && (selectedView.value === 'detailed')) && (
             <div className={`${style['patent-img']} me-2`}>
               <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
             </div>
@@ -106,7 +106,7 @@ SearchResultCard.propTypes = {
       PublicationNumber: PropTypes.string.isRequired,
       PublicationDate: PropTypes.string.isRequired,
     }),
-    Priority: PropTypes.string.isRequired,
+    Priority: PropTypes.string,
     Drawings: PropTypes.arrayOf(PropTypes.shape({
       FileName: PropTypes.string.isRequired,
     })).isRequired,

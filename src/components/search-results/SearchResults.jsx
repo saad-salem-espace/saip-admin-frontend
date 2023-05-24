@@ -57,7 +57,7 @@ function SearchResults({ showFocusArea }) {
   const [totalResults, setTotalResults] = useState(0);
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
+  const [selectedView, setSelectedView] = useState({ label: t('detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
@@ -367,15 +367,15 @@ function SearchResults({ showFocusArea }) {
 
   const viewOptions = [
     {
-      label: t('trademarks.detailed'),
+      label: t('detailed'),
       value: 'detailed',
     },
     {
-      label: t('trademarks.summary'),
+      label: t('summary'),
       value: 'summary',
     },
     {
-      label: t('trademarks.compact'),
+      label: t('compact'),
       value: 'compact',
     },
   ];
@@ -558,7 +558,7 @@ function SearchResults({ showFocusArea }) {
                   totalResults !== 0 && (
                     <div className="d-md-flex">
                       <div className="position-relative mb-6 viewSelect me-md-6">
-                        <span className="position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
+                        <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
                         <Select
                           options={viewOptions}
                           setSelectedOption={onChangeView}
