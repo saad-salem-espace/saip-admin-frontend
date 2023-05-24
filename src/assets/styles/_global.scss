@@ -58,6 +58,7 @@ $fontSize: (
 
 .workStreamResults {
   .fixed-panel-scrolled.search-result {
+    z-index: 1;
     html[dir="rtl"] & {
       @extend .pe-4;
     }
