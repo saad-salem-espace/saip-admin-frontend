@@ -34,6 +34,7 @@ function IprSections({
   const [fireSubmit, setFireSubmit] = useState(false);
   const [selectedTab, setSelectedTab] = useState(activeTabId);
   const [totalElements, setTotalElements] = useState(0);
+  const [refreshQueriesList, setRefreshQueriesList] = useState(0);
 
   const disableChangeTab = (hasData) => {
     setHasUnsavedNotes(!!hasData);
@@ -67,6 +68,10 @@ function IprSections({
   const savedQueries = (
     SavedQueriesTable
   );
+
+  const dependencies = {
+    refreshQueriesList,
+  };
   const tabsItems = [
     {
       id: 1,
@@ -128,7 +133,9 @@ function IprSections({
             renderedProps={{
               selectedWorkStream: activeWorkstream,
               updateIprModal,
+              setRefreshQueriesList,
             }}
+            updateDependencies={[...Object.values(dependencies)]}
           />
         </div>
       ),
