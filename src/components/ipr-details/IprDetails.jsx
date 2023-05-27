@@ -4,7 +4,8 @@ import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronLeft,
   faChevronRight,
-  faChevronDown, faChevronUp,
+  faChevronDown,
+  faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FaSearch } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
@@ -67,10 +68,16 @@ function IprDetails({
   const trademarkOptions = trademarkIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
   const searchResultParams = {
-    workstreamId: (searchParams.get('workstreamId') || activeWorkstream.toString()),
+    workstreamId:
+      searchParams.get('workstreamId') || activeWorkstream.toString(),
   };
   const [, execute] = useAxios(
-    documentApi({ workstreamId: fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId, documentId }),
+    documentApi({
+      workstreamId: fromFocusArea
+        ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+        : searchResultParams.workstreamId,
+      documentId,
+    }),
     { manual: true },
   );
 
@@ -120,7 +127,7 @@ function IprDetails({
         });
       };
     }
-    return () => { };
+    return () => {};
   }, [document]);
 
   if (!document) {
@@ -142,7 +149,7 @@ function IprDetails({
     const selection = window.getSelection();
     const selectedText = selection.toString();
 
-    if (selectedText && (selection.anchorNode) === (selection.focusNode)) {
+    if (selectedText && selection.anchorNode === selection.focusNode) {
       setValidHighlight(true);
     } else {
       setValidHighlight(false);
@@ -152,37 +159,42 @@ function IprDetails({
   };
 
   const views = {
-    1:
-  <PatentViews
-    selectedView={selectedView.value}
-    isIPRExpanded={isIPRExpanded}
-    document={document}
-    preparedGetAttachmentURL={preparedGetAttachmentURL}
-    documentId={documentId}
-    searchResultParams={searchResultParams}
-    handleClick={handleClick}
-    examinerView={examinerView}
-  />,
-    2: <TrademarkViews
-      selectedView={selectedView.value}
-      isIPRExpanded={isIPRExpanded}
-      document={document}
-      preparedGetAttachmentURL={preparedGetAttachmentURL}
-      documentId={documentId}
-      searchResultParams={searchResultParams}
-      handleClick={handleClick}
-      examinerView={examinerView}
-    />,
-    3: <IndustrialDesignViews
-      selectedView={selectedView.value}
-      isIPRExpanded={isIPRExpanded}
-      document={document}
-      preparedGetAttachmentURL={preparedGetAttachmentURL}
-      documentId={documentId}
-      searchResultParams={searchResultParams}
-      handleClick={handleClick}
-      examinerView={examinerView}
-    />,
+    1: (
+      <PatentViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    2: (
+      <TrademarkViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    3: (
+      <IndustrialDesignViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
   };
 
   const options = {
@@ -193,7 +205,9 @@ function IprDetails({
 
   const renderSelectedView = () => {
     let content = <NoData />;
-    const workstreamId = fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId;
+    const workstreamId = fromFocusArea
+      ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+      : searchResultParams.workstreamId;
     if (workstreamId.toString() === '2') {
       if (
         document[selectedView.value]
@@ -203,14 +217,15 @@ function IprDetails({
       ) {
         content = views[workstreamId];
       }
-    } else if
-    (workstreamId.toString() === '1') {
+    } else if (workstreamId.toString() === '1') {
       if (document[selectedView.value]) {
         content = views[workstreamId];
       }
-    } else if
-    (workstreamId.toString() === '3') {
-      if ((document[selectedView.value]) || (selectedView.value === 'Description')) {
+    } else if (workstreamId.toString() === '3') {
+      if (
+        document[selectedView.value]
+        || selectedView.value === 'Description'
+      ) {
         content = views[workstreamId];
       }
     }
@@ -226,48 +241,46 @@ function IprDetails({
               icon={faBookmark}
               className="me-3 f-22 text-primary-dark"
             />
-            <h5 className="mb-0">{document.BibliographicData.PublicationNumber}</h5>
+            <h5 className="mb-0">
+              {document.BibliographicData.PublicationNumber}
+            </h5>
           </div>
           <div className="d-flex">
-            {
-              !dashboard && (
-                <div dir="ltr" className="border-end me-4">
-                  <Button
-                    variant="link"
-                    className="p-0 pe-5"
-                    text={
-                      <FontAwesomeIcon
-                        icon={faChevronLeft}
-                        className="md-text text-gray"
-                      />
-                    }
-                    disabled={!previousDocument}
-                    onClick={() => setActiveDocument(previousDocument)}
-                  />
-                  <Button
-                    variant="link"
-                    className="p-0 pe-5 "
-                    text={
-                      <FontAwesomeIcon
-                        icon={faChevronRight}
-                        className="md-text text-gray"
-                      />
-                    }
-                    disabled={!nextDocument}
-                    onClick={() => setActiveDocument(nextDocument)}
-                  />
-                </div>)
-            }
-            {
-              showActions
-              && <IprControlAction
+            {!dashboard && (
+              <div dir="ltr" className="border-end me-4">
+                <Button
+                  variant="link"
+                  className="p-0 pe-5"
+                  text={
+                    <FontAwesomeIcon
+                      icon={faChevronLeft}
+                      className="md-text text-gray"
+                    />
+                  }
+                  disabled={!previousDocument}
+                  onClick={() => setActiveDocument(previousDocument)}
+                />
+                <Button
+                  variant="link"
+                  className="p-0 pe-5 "
+                  text={
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      className="md-text text-gray"
+                    />
+                  }
+                  disabled={!nextDocument}
+                  onClick={() => setActiveDocument(nextDocument)}
+                />
+              </div>
+            )}
+            {showActions && (
+              <IprControlAction
                 collapseIPR={collapseIPR}
-                isIPRExpanded={
-                  isIPRExpanded
-                }
+                isIPRExpanded={isIPRExpanded}
                 onClose={onClose}
               />
-            }
+            )}
           </div>
         </div>
         {searchResultParams.workstreamId === '2' && (
@@ -315,7 +328,7 @@ function IprDetails({
                 </h5>
                 <p className="text-gray">
                   <HandleEmptyAttribute
-                    checkOn={document.BibliographicData.Designers.join('; ')}
+                    checkOn={document?.BibliographicData?.Designers.join('; ')}
                   />
                 </p>
               </div>
@@ -323,7 +336,7 @@ function IprDetails({
                 <div className={`me-6 mb-2 ${style.headerImg}`}>
                   <Image
                     src={preparedGetAttachmentURL(
-                      document.BibliographicData.OverallProductDrawing,
+                      document?.BibliographicData?.OverallProductDrawing,
                     )}
                   />
                 </div>
@@ -333,35 +346,40 @@ function IprDetails({
         )}
         {searchResultParams.workstreamId === '1' && (
           <p className="text-gray px-6">
-            <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
+            <HandleEmptyAttribute
+              checkOn={document.BibliographicData.ApplicationTitle}
+            />
           </p>
         )}
-        <div className="border-top py-3 px-6 d-xxl-flex align-items-start" translate="no">
+        <div
+          className="border-top py-3 px-6 d-xxl-flex align-items-start"
+          translate="no"
+        >
           <Button
             disabled
             variant="primary"
-            text={(
+            text={
               <>
                 <FaSearch className="fs-base me-2" />
                 {t('search:findSimilar')}
               </>
-            )}
+            }
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <Button
             disabled
             variant="primary"
-            text={(
+            text={
               <>
                 <FiDownload className="fs-base me-2" />
                 {t('search:download')}
               </>
-            )}
+            }
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <div id="google_translate_element" className="d-inline-block" />
-          {
-            examinerView && <SearchQueryMenu
+          {examinerView && (
+            <SearchQueryMenu
               showSearchQuery={showSearchQuery}
               ShowSearchQueryMenu={ShowSearchQueryMenu}
               ToggleSearchQueryMenu={ToggleSearchQueryMenu}
@@ -378,27 +396,30 @@ function IprDetails({
                     <Button
                       variant="link"
                       className="text-primary-dark font-regular fs-sm text-decoration-none"
-                      onClick={() => { ToggleSearchQueryMenu(); }}
+                      onClick={() => {
+                        ToggleSearchQueryMenu();
+                      }}
                       text={
                         <>
                           <Image src={addIcon} />
                           <span className="px-2">
                             {t('dashboard:board.keywordplanner')}
                           </span>
-                          <FontAwesomeIcon icon={showSearchQuery ? faChevronUp : faChevronDown} />
+                          <FontAwesomeIcon
+                            icon={showSearchQuery ? faChevronUp : faChevronDown}
+                          />
                         </>
-                  }
+                      }
                     />
                   </div>
-            }
+                }
               />
               {/* eslint-disable-next-line react/jsx-closing-tag-location */}
             </SearchQueryMenu>
-}
+          )}
         </div>
       </div>
-      {
-      dashboard && showActions ? (
+      {dashboard && showActions ? (
         <IprSections
           options={options[searchResultParams.workstreamId]}
           onChangeSelect={onChangeSelect}
@@ -419,8 +440,8 @@ function IprDetails({
           onChangeSelect={onChangeSelect}
           selectedView={selectedView}
           renderSelectedView={renderSelectedView}
-        />)
-      }
+        />
+      )}
     </div>
   );
 }
@@ -449,15 +470,15 @@ IprDetails.defaultProps = {
   documentId: null,
   className: null,
   activeWorkstream: null,
-  onClose: () => { },
-  getNextDocument: () => { },
-  getPreviousDocument: () => { },
-  setActiveDocument: () => { },
+  onClose: () => {},
+  getNextDocument: () => {},
+  getPreviousDocument: () => {},
+  setActiveDocument: () => {},
   dashboard: false,
   showActions: true,
   examinerView: false,
   activeTab: 2,
-  setNotesUpdated: () => { },
+  setNotesUpdated: () => {},
   fromFocusArea: false,
 };
 
