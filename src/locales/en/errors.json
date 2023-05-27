@@ -13,5 +13,9 @@
   "notFoundMsg": "Oops! The page you are looking for does not exist. It might have been <0> moved or deleted.</0>",
   "badRequest": "Bad Request",
   "badRequestMsg": "Oops! The browser sent a request that this server could not understand.",
-  "errorText": "Error Text"
+  "errorText": "Error Text",
+  "authorization": {
+    "accessDenied": "Access Denied",
+    "accessDeniedMsg": "Insufficient permissions to view this page."
+  }
 }
