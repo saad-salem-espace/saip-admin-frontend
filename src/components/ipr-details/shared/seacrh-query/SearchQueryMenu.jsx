@@ -108,7 +108,7 @@ function SearchQueryMenu({
   }, [searchIdentifiers]);
 
   return (
-    <div className={`search-query-wrapper ${className}`}>
+    <div className={`${className}`}>
       {children}
       {
         showSearchQuery && (
