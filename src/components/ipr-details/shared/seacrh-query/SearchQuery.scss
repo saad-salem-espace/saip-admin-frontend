@@ -25,6 +25,16 @@
   }
 }
 
+.custom-position .search-query-menu {
+
+  @include media-breakpoint-up(1838px) {
+    top: 240px;
+  }
+  @include media-breakpoint-up(1848px) {
+    top: 288px;
+  }
+}
+
 .keyword-planner-btn {
   display: none;
   position: fixed;

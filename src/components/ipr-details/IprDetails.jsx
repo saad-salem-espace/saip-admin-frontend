@@ -231,7 +231,6 @@ function IprDetails({
     }
     return content;
   };
-
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
       <div className="border-bottom bg-primary-01">
@@ -386,6 +385,7 @@ function IprDetails({
               hideSearchQueryMenu={hideSearchQueryMenu}
               validHighlight={validHighlight}
               highlightTrigger={highlightTrigger}
+              className={`${searchResultParams.workstreamId === '2' || searchResultParams.workstreamId === '3' ? 'custom-position' : ''}`}
             >
               <AppTooltip
                 className="w-auto"
