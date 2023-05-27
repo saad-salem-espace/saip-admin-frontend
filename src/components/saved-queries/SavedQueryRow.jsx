@@ -1,18 +1,85 @@
 import PropTypes from 'prop-types';
 import Moment from 'moment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Link,
 } from 'react-router-dom';
-import { BsPlay } from 'react-icons/bs';
+import { BsPlay, BsTrash } from 'react-icons/bs';
 import routes from 'components/routes/routes.json';
-import { LONG_DATETIME_12H_FORMAT } from '../../constants';
 import './style.scss';
+import AppPopover from 'components/shared/app-popover/AppPopover';
+import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
+import deleteQueryApi from 'apis/save-query/deleteQueryApi';
+import useAxios from 'hooks/useAxios';
+import toastify from 'utils/toastify';
+import { useAuth } from 'react-oidc-context';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
+import { LONG_DATETIME_12H_FORMAT } from '../../constants';
 
-const SavedQueryRow = ({ query, selectedWorkStream }) => {
+const SavedQueryRow = ({
+  query, selectedWorkStream, setRefreshQueriesList, updateIprModal,
+}) => {
   const queryDate = Moment(query.createdAt).format(LONG_DATETIME_12H_FORMAT);
   const queryStringUrl = query.queryString.replace(/\s/g, '+');
   const [selectedLink, setSelectedLink] = useState(false);
+  const { t } = useTranslation('queries');
+  const { deleteInstance } = useIndexedDbWrapper(tableNames.savedQuery);
+  const { isAuthenticated } = useAuth();
+
+  const deleteQueryParams = {
+    queryId: query.id,
+  };
+  const deleteQueryConfig = deleteQueryApi(deleteQueryParams, true);
+
+  const [deleteQueryData, executeDeleteQuery] = useAxios(
+    deleteQueryConfig,
+    { manual: true },
+  );
+  useEffect(() => {
+    if (deleteQueryData.data) {
+      if (deleteQueryData.data.status === 200 && !(deleteQueryData.loading)) {
+        toastify(
+          'success',
+          <div>
+            <p className="toastifyTitle">{t('queryDeleted')}</p>
+          </div>,
+        );
+        setRefreshQueriesList((prev) => prev + 1);
+      } else if (!(deleteQueryData.loading)) {
+        toastify(
+          'error',
+          <div>
+            <p className="toastifyTitle">
+              {t('deleteFailedTitle')}
+            </p>
+            <p className="toastText">
+              {t('deleteFailedText')}
+            </p>
+          </div>,
+        );
+      }
+    }
+  }, [deleteQueryData]);
+
+  const handleDelete = () => {
+    executeDeleteQuery();
+  };
+
+  const onSuccessDelete = () => {
+    setRefreshQueriesList((prev) => prev + 1);
+    toastify(
+      'success',
+      <div>
+        <p className="toastifyTitle">{t('queryDeleted')}</p>
+      </div>,
+    );
+  };
+
+  const handleDeleteQueryForLoggedout = () => {
+    deleteInstance({ indexName: 'id', indexValue: query.id, onSuccess: onSuccessDelete() });
+  };
 
   return (
     <tr className="text-capitalize">
@@ -23,10 +90,29 @@ const SavedQueryRow = ({ query, selectedWorkStream }) => {
         <Link
           className={`p-2 rounded run-query ${selectedLink === query.queryString ? 'active-query' : ''}`}
           to={`${routes.search}?workstreamId=${selectedWorkStream}&sort=mostRelevant&q=${queryStringUrl}&page=1'`}
-          onClick={() => setSelectedLink(query.queryString)}
+          onClick={() => {
+            setSelectedLink(query.queryString);
+            updateIprModal();
+          }}
         >
           <BsPlay className="play-icon fs-base" />
         </Link>
+        <AppPopover
+          Title={t('deleteQuery')}
+          id="deleteQuery"
+          btnText={t('delete')}
+          variant="bg-primary-10"
+          placement="bottom"
+          btnVariant="danger"
+          handleCallback={isAuthenticated ? handleDelete : handleDeleteQueryForLoggedout}
+          popoverTrigger={
+            <Button variant="link">
+              <BsTrash className="text-danger fs-base" />
+            </Button>
+          }
+        >
+          <p>{t('confirmDeleteQuery')}</p>
+        </AppPopover>
       </td>
     </tr>
   );
@@ -37,8 +123,15 @@ SavedQueryRow.propTypes = {
     queryString: PropTypes.string.isRequired,
     resultCount: PropTypes.number.isRequired,
     createdAt: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   }).isRequired,
   selectedWorkStream: PropTypes.number.isRequired,
+  updateIprModal: PropTypes.func,
+  setRefreshQueriesList: PropTypes.func.isRequired,
+};
+
+SavedQueryRow.defaultProps = {
+  updateIprModal: () => { },
 };
 
 export default SavedQueryRow;

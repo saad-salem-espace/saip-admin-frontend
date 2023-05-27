@@ -1,0 +1,73 @@
+@import "../../../assets/styles/utilities/custom-theme";
+
+.focus-area {
+  position: fixed;
+  bottom: 6vh;
+  z-index: 99;
+  color: $white;
+  width: 353px;
+  border-radius: $border-radius;
+
+  .buttons {
+    html[dir="ltr"] & {
+      border-radius: $border-radius 0 0 $border-radius;
+    }
+
+    html[dir="rtl"] & {
+      border-radius: 0 $border-radius $border-radius 0;
+    }
+
+    button {
+
+      &:active,
+      &:focus {
+        border: none !important;
+        outline: none !important;
+      }
+    }
+  }
+
+  html[dir="ltr"] & {
+    right: 30px;
+
+    @include media-breakpoint-down(sm) {
+      right: 5px;
+    }
+  }
+
+  html[dir="rtl"] & {
+    left: 30px;
+
+    @include media-breakpoint-down(sm) {
+      left: 5px;
+    }
+  }
+
+  .close-icon,
+  .filing-number {
+    border-radius: 0;
+    margin-right: 4px;
+    padding-right: 4px;
+  }
+
+  .filing-number {
+    border-right: $border-width solid $white;
+
+  }
+
+  .close-icon {
+    html[dir="ltr"] & {
+      border-right: $border-width solid $white;
+    }
+
+    html[dir="rtl"] & {
+      border-left: $border-width solid $white;
+    }
+  }
+
+  .text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

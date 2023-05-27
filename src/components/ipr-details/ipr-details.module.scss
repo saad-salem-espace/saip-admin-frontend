@@ -11,12 +11,21 @@
 
 .label {
   width: 145px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .iprWrapper {
   height: 80vh;
   overflow-y: auto;
   @include scrollbar;
+  padding-bottom: 150px;
+
+  ::selection {
+    background: $primary-10;
+    @extend .p-2;
+  }
 }
 
 .img {
@@ -29,13 +38,14 @@
   }
 }
 
-.imgWithZoom{
+.imgWithZoom {
   width: 486px;
   height: 100%;
 }
 
 .headerImg {
   width: 150px;
+
   img {
     width: 150px;
   }

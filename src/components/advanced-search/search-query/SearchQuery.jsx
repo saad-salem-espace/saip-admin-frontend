@@ -1,6 +1,9 @@
+import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, FieldArray } from 'formik';
-import { useContext, useState, useEffect } from 'react';
+import {
+  useContext, useState, useEffect, useMemo,
+} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import useCacheRequest from 'hooks/useCacheRequest';
@@ -8,20 +11,25 @@ import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import Button from 'components/shared/button/Button';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
-import { operators, parseQuery } from 'utils/searchQuery';
+import { parseQuery } from 'utils/searchQuery';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
-  isAdvancedMenuOpen,
+  isAdvancedMenuOpen, examinerView, submitCallback,
 }) {
+  const currentLang = i18n.language;
   const { cachedRequests } = useContext(CacheContext);
   const { t } = useTranslation('search');
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${workstreamId}/identifiers` }, { dependencies: [workstreamId] });
   const [defaultIdentifier, setDefaultIdentifier] = useState(null);
   const [defaultCondition, setDefaultCondition] = useState(null);
   const [firstIdentifier, setFirstIdentifier] = useState(null);
+  const operators = ['and', 'or', 'not'].map((operator) => ({
+    operator: operator.toUpperCase(),
+    displayName: t(`operators.${operator}`),
+  }));
 
   const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
 
@@ -36,8 +44,19 @@ function SearchQuery({
     setDefaultCondition(defaultIdentifier?.identifierOptions?.[0]);
   }, [defaultIdentifier, firstIdentifier]);
 
-  const onSubmit = () => {
-    submitRef.current.handleSubmit();
+  const getTranslatedOperators = useMemo(() => operators, [currentLang]);
+
+  const handleOnChange = (values) => {
+    if (examinerView) {
+      onChangeSearchQuery(values.searchFields);
+    } else {
+      onChangeSearchQuery('');
+    }
+  };
+
+  const onSubmit = (values) => {
+    if (submitRef) submitRef.current.handleSubmit(values);
+    else submitCallback(values);
   };
 
   return (
@@ -55,7 +74,7 @@ function SearchQuery({
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form onChange={onChangeSearchQuery(!isAdvancedMenuOpen ? '' : parseQuery(values.searchFields, '', true))} onSubmit={handleSubmit}>
+          <Form onChange={isAdvancedMenuOpen ? onChangeSearchQuery(parseQuery(values.searchFields, '', true)) : handleOnChange(values)} onSubmit={handleSubmit}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -69,11 +88,13 @@ function SearchQuery({
                      searchIdentifiers={searchIdentifiers?.data}
                      identifierValue={value.identifier}
                      onChangeIdentifier={(identifier) => {
-                       setFieldValue(`searchFields.${index}.identifier`, identifier);
                        setFieldValue(`searchFields.${index}.condition`, identifier?.identifierOptions?.[0]);
-                       setFieldValue(`searchFields.${index}.data`, '');
+
+                       if (identifier.identifierType === 'Date' || value.identifier.identifierType === 'Date') setFieldValue(`searchFields.${index}.data`, '');
+
+                       setFieldValue(`searchFields.${index}.identifier`, identifier);
                      }}
-                     operators={operators}
+                     operators={getTranslatedOperators}
                      conditionValue={value.condition}
                      onChangeCondition={(condition) => setFieldValue(`searchFields.${index}.condition`, condition)}
                      error={touched.searchFields?.[index] && errors.searchFields?.[index]}
@@ -154,15 +175,20 @@ SearchQuery.propTypes = {
   submitRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Object) }),
-  ]).isRequired,
+  ]),
   className: PropTypes.string,
   isAdvancedMenuOpen: PropTypes.bool,
+  examinerView: PropTypes.bool,
+  submitCallback: PropTypes.func,
 };
 
 SearchQuery.defaultProps = {
   onChangeSearchQuery: () => {},
+  submitCallback: () => {},
   className: '',
+  submitRef: null,
   isAdvancedMenuOpen: true,
+  examinerView: false,
 };
 
 export default SearchQuery;

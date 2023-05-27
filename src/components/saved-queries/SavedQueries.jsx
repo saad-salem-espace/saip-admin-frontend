@@ -15,7 +15,6 @@ import { useAuth } from 'react-oidc-context';
 import { tableNames } from 'dbConfig';
 import CacheContext from 'contexts/CacheContext';
 import useCacheRequest from 'hooks/useCacheRequest';
-import { pascalCase } from 'change-case';
 import Spinner from 'components/shared/spinner/Spinner';
 import SavedQueriesTable from './SavedQueriesTable';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
@@ -30,9 +29,10 @@ const SavedQueries = () => {
   const [pageReset, setPageReset] = useState(0);
   const isMounted = useRef(false);
   const currentLang = i18n.language;
+  const [refreshQueriesList, setRefreshQueriesList] = useState(0);
 
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
   }
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
@@ -60,13 +60,17 @@ const SavedQueries = () => {
     resetPageNumber();
   };
 
-  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, Number(searchParams.get('page') || '1'), true);
+  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, null, Number(searchParams.get('page') || '1'), true);
 
   const isAuth = auth && auth.user;
 
   const savedQueries = (
     SavedQueriesTable
   );
+
+  const dependencies = {
+    refreshQueriesList,
+  };
   return (
     <Container fluid>
       <Row>
@@ -91,7 +95,9 @@ const SavedQueries = () => {
               resetPage={pageReset}
               renderedProps={{
                 selectedWorkStream: selectedWorkStream.value,
+                setRefreshQueriesList,
               }}
+              updateDependencies={[...Object.values(dependencies)]}
             />
           ) : (
             <IndexedDbAppPagination
@@ -109,7 +115,9 @@ const SavedQueries = () => {
               }}
               renderedProps={{
                 selectedWorkStream: selectedWorkStream.value,
+                setRefreshQueriesList,
               }}
+              updateDependencies={[...Object.values(dependencies)]}
             />
           )}
         </Col>

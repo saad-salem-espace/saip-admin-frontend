@@ -1,0 +1,6 @@
+{
+  "advancedSearchTipTitle": "Advanced Search",
+  "advancedSearchTipContent": "Advanced search enables you to select a <bold>search field</bold>, a <bold>condition</bold> and enters search <bold>keywords</bold> to search with.<break/>You can combine a complex search query using Boolean Operators: <bold>AND, OR, NOT</bold>.<break/>You can enable the <bold>Fuzzy Search</bold> by entering <bold>~</bold> at the end of the search keyword.",
+  "allowSynonymsTipTitle": "Synonyms",
+  "allowSynonymsTipContent": "Activating <bold>Synonyms</bold> will enable a wide coverage for the input search field. <break/>A keyword alternatives will be looked for when Synonyms is enabed."
+}
