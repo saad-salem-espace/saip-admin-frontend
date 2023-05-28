@@ -13,6 +13,7 @@ import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
+import Accessibility from './shared/Accessibility';
 
 function GuestNavbar({ lang, changeLang }) {
   const { t } = useTranslation('layout');
@@ -34,6 +35,7 @@ function GuestNavbar({ lang, changeLang }) {
           <Nav>
             {/* {Recent search} */}
             <RecentSearch />
+            <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
               <div className="edges-border d-flex mx-lg-3 px-lg-3">

@@ -1,6 +1,7 @@
 @import "../../assets/styles/utilities/custom-theme";
 @import "../../assets/styles/utilities/mixin";
 
+
 $fontSize: (
   8,
   12,
@@ -68,4 +69,14 @@ $fontSize: (
     overflow-y: auto;
     padding-bottom: 180px;;
   }
+}
+
+[data-bs-theme="dark"] {
+  body {
+    background-color: var(--bs-primary);
+  }
+}
+
+* {
+  transition: all 0.1s ease-in-out;
 }

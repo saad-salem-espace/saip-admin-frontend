@@ -106,6 +106,29 @@ $dark: $black;
 $danger: $danger;
 $danger-dark: $danger-dark;
 
+[data-bs-theme="light"] {
+  --bs-primary: #{$turquoise} !important;
+  --bs-primary-10: #{$turquoise-10} !important;
+}
+[data-bs-theme="dark"] {
+  --bs-primary: #{$gray-800} !important;
+  --bs-primary-10: #{$gray-600} !important;
+  --bs-primary-dark: #{$black} !important;
+  --bs-primary-01: #{$gray-700};
+  --bs-primary-10: #{$gray-600};
+  --bs-secondary: #{$gray-600};
+  --bs-secondary-rio-grande: #{$gray-600};
+  --bs-success: #{$gray-600};
+  --bs-info: #{$gray-600};
+  --bs-warning: #{$gray-600};
+  --bs-light: #{$gray-100};
+  --bs-dark: #{$gray-600};
+  --bs-danger: #{$gray-600};
+  --bs-danger-dark: #{$gray-600};
+  --bs-white: #{$gray-600};
+  --bs-gray: #{$gray-600};
+}
+
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
@@ -970,7 +993,7 @@ $form-floating-transition: opacity .1s ease-in-out,
 $form-feedback-margin-top: $form-text-margin-top !default;
 $form-feedback-font-size: $form-text-font-size !default;
 $form-feedback-font-style: $form-text-font-style !default;
-$form-feedback-valid-color: $success !default;
+$form-feedback-valid-color: var(--bs-success) !default;
 $form-feedback-invalid-color: $danger !default;
 
 $form-feedback-icon-valid-color: $form-feedback-valid-color !default;
@@ -1157,7 +1180,7 @@ $pagination-hover-bg: $gray-200 !default;
 $pagination-hover-border-color: $gray-300 !default;
 
 $pagination-active-color: $white;
-$pagination-active-bg: $primary-dark;
+$pagination-active-bg: var(--bs-primary-dark);
 $pagination-active-border-color: $pagination-active-bg !default;
 
 $pagination-disabled-color: $gray-600;
