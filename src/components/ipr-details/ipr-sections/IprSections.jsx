@@ -105,7 +105,7 @@ function IprSections({
             fireSubmit={fireSubmit}
             id={selectedCardId}
             setFireSubmit={setFireSubmit}
-            changeActiveTab={showInfo ? changeActiveTab : () => {}}
+            changeActiveTab={changeActiveTab}
             setNotesUpdated={setNotesUpdated}
             fromFocusArea={fromFocusArea}
           />
@@ -151,6 +151,7 @@ function IprSections({
   }
   useEffect(() => {
     if (!showInfo) {
+      setSelectedTab(2);
       setActiveTabId(2);
     }
   }, [showInfo]);
