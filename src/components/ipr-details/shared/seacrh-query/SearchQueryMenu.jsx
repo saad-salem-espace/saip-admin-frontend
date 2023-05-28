@@ -25,12 +25,11 @@ function SearchQueryMenu({
   const { t } = useTranslation('dashboard');
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
-  const activeWorkstream = useContext(activeWorkstreamContext)?.id.toString();
+  const activeWorkstream = useContext(activeWorkstreamContext)?.id.toString() || JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId.toString();
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${activeWorkstream}/identifiers` }, { dependencies: [activeWorkstream] });
   const [searchFields, setSearchFields] = useState([]);
   const [formikFields, setFormikFields] = useState([]);
   const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
-
   const onSubmit = (values) => {
     navigate({
       pathname: '/search',
