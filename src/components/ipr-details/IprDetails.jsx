@@ -328,7 +328,7 @@ function IprDetails({
                 </h5>
                 <p className="text-gray">
                   <HandleEmptyAttribute
-                    checkOn={document?.BibliographicData?.Designers.join('; ')}
+                    checkOn={document?.BibliographicData?.Designers?.join('; ')}
                   />
                 </p>
               </div>
