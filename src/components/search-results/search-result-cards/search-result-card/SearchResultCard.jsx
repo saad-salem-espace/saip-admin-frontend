@@ -16,7 +16,7 @@ function SearchResultCard({
 }) {
   const { t } = useTranslation('search');
   const { BibliographicData } = searchResult;
-  const firstDrawing = searchResult?.Drawings[0];
+  const firstDrawing = searchResult?.Drawings?.[0];
   const [searchParams] = useSearchParams();
 
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL({
