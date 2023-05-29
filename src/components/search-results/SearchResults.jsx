@@ -157,10 +157,6 @@ function SearchResults({ showFocusArea }) {
   };
 
   useEffect(() => {
-    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
-  }, [currentLang]);
-
-  useEffect(() => {
     if (!(auth && auth?.user)) {
       getInstanceByIndex({
         indexName: 'queryString',
@@ -410,6 +406,12 @@ function SearchResults({ showFocusArea }) {
       document.body.classList.remove('search-result-wrapper');
     };
   }, []);
+
+  useEffect(() => {
+    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
+    setSelectedView(viewOptions.find((temp) => temp.value === selectedView.value));
+  }, [currentLang]);
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
