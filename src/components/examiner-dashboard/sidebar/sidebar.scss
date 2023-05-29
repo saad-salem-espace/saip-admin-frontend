@@ -2,7 +2,7 @@
 @import "../../../assets/styles/utilities/mixin";
 
 .dashboard-sidebar {
-  z-index: 1040;
+  z-index: 6;
 
   .nav {
     .nav-link {
@@ -63,6 +63,6 @@
         }
       }
     }
-    
+
   }
 }

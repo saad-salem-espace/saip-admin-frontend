@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   OverlayTrigger,
   Popover,
 } from 'react-bootstrap';
+import i18n from 'i18n';
 import PropTypes from 'prop-types';
 import { GrFormClose } from 'react-icons/gr';
 import './AppPopover.scss';
@@ -27,6 +28,10 @@ const AppPopover = ({
   const handleDismiss = () => {
     setShow(false);
   };
+  const currentLang = i18n.language;
+  useEffect(() => {
+    setShow(false);
+  }, [currentLang]);
   const popover = (
     <Popover id={id} className={`app ${className} ${variant} p-4`}>
       <Popover.Header className={`${variant} border-0 p-0 m-0 d-flex justify-content-between align-items-center`}>

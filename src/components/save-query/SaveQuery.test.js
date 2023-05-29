@@ -38,6 +38,8 @@ describe('<SaveQuery />', () => {
               isSaved={false}
               limitCode={LIMITS.SAVED_QUERY_LIMIT}
               saveQueryParams={{ workstreamId: 1, workstreamKey: 'workstreamId' }}
+              showFocusArea={false}
+              saveQueryParamsForDoc={{}}
             />,
           );
           await act(async () => {

@@ -29,6 +29,10 @@
   "apply": "Apply",
   "condition": "Condition",
   "criteria": "Criteria",
+  "detailed": "Detailed",
+  "summary": "Summary",
+  "compact": "Compact",
+  "view": "View",
   "operators": {
     "and": "AND",
     "or": "OR",
@@ -52,10 +56,6 @@
   "searchFieldValidationMsg": "You have reached the maximum number of search fields",
   "SwitchToAdvancedSearch": "Switch to advanced search",
   "trademarks": {
-    "detailed": "Detailed",
-    "summary": "Summary",
-    "compact": "Compact",
-    "view": "View",
     "markNameEN": "Mark Name (EN)",
     "markNameAR": "Mark Name (AR)",
     "mark": "Mark",
@@ -184,8 +184,11 @@
   "saveSearchQuery": "Save search query",
   "querySaved": "Query saved successfully.",
   "savedQueryMsg": "You can find all your saved queries in <0>My queries</0>",
+  "savedQueryMsgForDoc": "Saved Successfully!",
   "couldnotSave": "Couldn't save the query.",
   "failerMsg": "Something went wrong! Please try again later.",
   "findSimilar": "Find Similar",
-  "download": "Download"
+  "download": "Download",
+  "addtoSavedQueries": "Add to my saved queries",
+  "addtoFocusArea": "Add to card in focus area"
 }

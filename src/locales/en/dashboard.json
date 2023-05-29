@@ -13,6 +13,7 @@
   "notes": "Notes",
   "translateInfo": "Translate",
   "markAsDone": "Mark as Done",
+  "savedQueries": "Saved Queries",
   "notAssigned": "Can't see your assignments?",
   "emptyStateTitle": "You don’t have any assignments yet",
   "status": {
@@ -35,6 +36,13 @@
     "copyrights": "<0>Copyrights</0> Board",
     "industrialDesign": "<0>Industrial Designs</0> Board",
     "plantVarieties": "<0>Plant Varieties</0> Board",
-    "integratedCircuits": "<0>Integrated Circuits</0> Board"
+    "integratedCircuits": "<0>Integrated Circuits</0> Board",
+    "keywordplanner": "Keyword Planner",
+    "addtoKeywordPlanner": "Add to keyword planner",
+    "addtoFocus": "Add to focus area",
+    "cannotFocus": "Only one item could be added to focus area.",
+    "addedToKeywordPlanner": "Added to keyword planner successfully",
+    "invalidHighlight": "Please select from one section only",
+    "maximumFields": "You have added the maximum number of fields"
   }
 }

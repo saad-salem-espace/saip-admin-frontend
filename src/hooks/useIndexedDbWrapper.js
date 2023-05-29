@@ -1,5 +1,4 @@
 import { useIndexedDB } from 'react-indexed-db';
-import { useCallback } from 'react';
 import db from 'db';
 
 /**
@@ -34,10 +33,10 @@ const useIndexedDbWrapper = (tableName) => {
     db[tableName].where(indexName).equals(indexValue.toString()).count()
   );
 
-  const getTimeStamp = useCallback(() => {
+  const getTimeStamp = () => {
     const currentDatetimeUTC = new Date().toISOString();
     return { createdAt: currentDatetimeUTC, updatedAt: currentDatetimeUTC };
-  }, []);
+  };
 
   /**
    * Saving data to indexedDB

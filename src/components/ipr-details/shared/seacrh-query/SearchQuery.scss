@@ -1,0 +1,44 @@
+@import "../../../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.search-query-menu {
+  position: absolute;
+  width: 464px;
+  @extend .border;
+  z-index: 9999999 !important;
+  top: 165px;
+  height: 448px;
+  background-color: $white;
+  overflow-y: auto;
+
+  html[dir="rtl"] & {
+    left: 0;
+  }
+
+  html[dir="ltr"] & {
+    right: 0px;
+  }
+
+  @include media-breakpoint-down(md) {
+    width: 318px;
+    top: 300px;
+  }
+}
+
+.custom-position .search-query-menu {
+
+  @include media-breakpoint-up(1838px) {
+    top: 240px;
+  }
+  @include media-breakpoint-up(1848px) {
+    top: 288px;
+  }
+}
+
+.keyword-planner-btn {
+  display: none;
+  position: fixed;
+}
+.added .keyword-planner-btn  {
+  display: block;
+}

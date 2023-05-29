@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import useAxios from 'hooks/useAxios';
 import getAssigned from 'apis/dashboard/getAssigned';
 import getAssignedWorkstreams from 'apis/dashboard/getAssignedWorkstreams';
 import Spinner from 'components/shared/spinner/Spinner';
+import activeWorkstreamContext from 'components/ipr-details/shared/context/activeWorkstreamContext';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
 import notAssigned from '../../assets/images/not-assigned.svg';
 
-function ExaminerDashboard() {
+const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   const { t } = useTranslation('dashboard');
   const linksList = [
     {
@@ -51,6 +53,7 @@ function ExaminerDashboard() {
   ];
 
   const [activeWorkstream, setActiveWorkstream] = useState(null);
+
   const [sort, setSort] = useState('Queue');
   const [{ data }, executeAssignmentData] = useAxios(getAssigned({
     workstreamId: activeWorkstream?.id,
@@ -66,6 +69,7 @@ function ExaminerDashboard() {
   const [activeDocument, setActiveDocument] = useState(null);
   const [assignedWorkstreams, setAssignedWorkstreams] = useState(null);
   const [notesUpdated, setNotesUpdated] = useState(false);
+  const [workstreamChange, setWorkstreamChange] = useState(false);
 
   useEffect(() => {
     executeWorkstreamData();
@@ -78,6 +82,7 @@ function ExaminerDashboard() {
         setActiveWorkstream(linksList.find(
           (element) => element.id === workstreamsData.data.data[0],
         ));
+        setWorkstreamChange(true);
       }
     }
   }, [workstreamsData]);
@@ -85,6 +90,14 @@ function ExaminerDashboard() {
   useEffect(() => {
     if (activeWorkstream) executeAssignmentData();
   }, [activeWorkstream, sort]);
+
+  useEffect(() => {
+    if (workstreamsData.data) {
+      if (workstreamChange && (activeWorkstream?.id !== workstreamsData.data.data[0])) {
+        updateFocusArea(false);
+      }
+    }
+  }, [activeWorkstream, workstreamsData, workstreamChange]);
 
   useEffect(() => {
     if (toggle || notesUpdated) executeAssignmentData();
@@ -98,7 +111,7 @@ function ExaminerDashboard() {
     }
   }, [data]);
 
-  if (!assignedWorkstreams || (assignedWorkstreams && !assignments)) return (<div className="d-flex justify-content-center mt-18"><Spinner /></div>);
+  if (!assignedWorkstreams || ((assignedWorkstreams.length > 0) && !assignments)) return (<div className="d-flex justify-content-center mt-18"><Spinner /></div>);
 
   const changeWorkstream = (i) => {
     setActiveWorkstream(i);
@@ -121,16 +134,20 @@ function ExaminerDashboard() {
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
         setNotesUpdated={setNotesUpdated}
+        updateFocusArea={updateFocusArea}
+        showFocusArea={showFocusArea}
       />
     </div>
   );
 
   return (
     assignedWorkstreams.length
-      ? <div>
-        {DashboardView}
-        {/* eslint-disable-next-line react/jsx-closing-tag-location */}
-      </div>
+      ? <activeWorkstreamContext.Provider value={activeWorkstream}>
+        <div>
+          {DashboardView}
+        </div>
+        {/* eslint-disable-next-line react/jsx-indent */}
+        </activeWorkstreamContext.Provider>
       : <EmptyState
           title={t('notAssigned')}
           msg={t('emptyStateTitle')}
@@ -138,6 +155,11 @@ function ExaminerDashboard() {
           className="no-assigment"
       />
   );
-}
+};
+
+ExaminerDashboard.propTypes = {
+  updateFocusArea: PropTypes.func.isRequired,
+  showFocusArea: PropTypes.bool.isRequired,
+};
 
 export default ExaminerDashboard;

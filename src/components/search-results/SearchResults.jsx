@@ -2,6 +2,7 @@ import {
   useContext, useEffect, useRef, useState,
 } from 'react';
 import { Formik, Form } from 'formik';
+import PropTypes from 'prop-types';
 import {
   Container,
   Row,
@@ -42,7 +43,7 @@ import TrademarksSearchResultCards from './trademarks-search-result-cards/Tradem
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
 
-function SearchResults() {
+function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,7 +58,7 @@ function SearchResults() {
   const [totalResults, setTotalResults] = useState(0);
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
+  const [selectedView, setSelectedView] = useState({ label: t('detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
@@ -75,18 +76,31 @@ function SearchResults() {
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
 
+  const saveQueryParamsForDoc = {
+    workStreamId: searchParams.get('workstreamId'),
+    query: searchParams.get('q'),
+    resultCount: totalResults.toString(),
+    enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+    documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber,
+    fav: isQuerySaved,
+  };
+
   const saveQueryParams = auth.isAuthenticated ? {
     workStreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
     resultCount: totalResults.toString(),
     enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
     workstreamKey: 'workStreamId',
+    documentId: null,
+    fav: true,
   } : {
     workstreamId: searchParams.get('workstreamId'),
     queryString: searchParams.get('q'),
     resultCount: totalResults.toString(),
     synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
     workstreamKey: 'workstreamId',
+    documentId: null,
+    fav: true,
   };
 
   const sortByOptionsPatent = [
@@ -145,15 +159,11 @@ function SearchResults() {
   };
 
   useEffect(() => {
-    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
-  }, [currentLang]);
-
-  useEffect(() => {
     if (!auth.isAuthenticated) {
       getInstanceByIndex({
         indexName: 'queryString',
         indexValue: searchParams.get('q'),
-        onSuccess: (resp) => { console.log(resp); setIsQuerySaved(!!resp); },
+        onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
       });
     } else {
@@ -355,15 +365,15 @@ function SearchResults() {
 
   const viewOptions = [
     {
-      label: t('trademarks.detailed'),
+      label: t('detailed'),
       value: 'detailed',
     },
     {
-      label: t('trademarks.summary'),
+      label: t('summary'),
       value: 'summary',
     },
     {
-      label: t('trademarks.compact'),
+      label: t('compact'),
       value: 'compact',
     },
   ];
@@ -398,6 +408,12 @@ function SearchResults() {
       document.body.classList.remove('search-result-wrapper');
     };
   }, []);
+
+  useEffect(() => {
+    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
+    setSelectedView(viewOptions.find((temp) => temp.value === selectedView.value));
+  }, [currentLang]);
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -472,7 +488,7 @@ function SearchResults() {
                           <Trans
                             i18nKey="advancedSearchTipContent"
                             ns="tips"
-                            components={{ bold: <b /> }}
+                            components={{ bold: <b />, break: <br /> }}
                           />
                         </AppPopover>
                       </div>
@@ -496,7 +512,7 @@ function SearchResults() {
                           <Trans
                             i18nKey="allowSynonymsTipContent"
                             ns="tips"
-                            components={{ bold: <b /> }}
+                            components={{ bold: <b />, break: <br /> }}
                           />
                         </AppPopover>
                       </div>
@@ -529,6 +545,8 @@ function SearchResults() {
               saveQueryParams={saveQueryParams}
               isReady={!isLoading}
               limitCode={LIMITS.SAVED_QUERY_LIMIT}
+              showFocusArea={showFocusArea}
+              saveQueryParamsForDoc={saveQueryParamsForDoc}
             />
             <div>
               <SearchNote
@@ -539,28 +557,24 @@ function SearchResults() {
           </div>
           <Formik>
             {() => (
-              <Form className="mt-5">
+              <Form className="mt-12">
                 {
                   totalResults !== 0 && (
                     <div className="d-md-flex">
-                      {
-                        searchResultParams.workstreamId === '2' && (
-                          <div className="position-relative mb-6 viewSelect me-md-6">
-                            <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
-                            <Select
-                              options={viewOptions}
-                              setSelectedOption={onChangeView}
-                              selectedOption={selectedView}
-                              defaultValue={selectedView}
-                              id="viewSection"
-                              fieldName="viewSection"
-                              className="mb-md-0 mb-3 select-2"
-                            />
-                          </div>
-                        )
-                      }
+                      <div className="position-relative mb-6 viewSelect me-md-6">
+                        <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
+                        <Select
+                          options={viewOptions}
+                          setSelectedOption={onChangeView}
+                          selectedOption={selectedView}
+                          defaultValue={selectedView}
+                          id="viewSection"
+                          fieldName="viewSection"
+                          className="mb-md-0 mb-3 select-2"
+                        />
+                      </div>
                       <div className="position-relative mb-8 sortBy">
-                        <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                        <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
                         <Select
                           options={getSortOptions(searchResultParams.workstreamId)}
                           setSelectedOption={onChangeSortBy}
@@ -617,6 +631,7 @@ function SearchResults() {
               getNextDocument={getNextDocument}
               getPreviousDocument={getPreviousDocument}
               setActiveDocument={setActiveDocument}
+              fromFocusArea={false}
             />
           </Col>
         )}
@@ -625,4 +640,7 @@ function SearchResults() {
   );
 }
 
+SearchResults.propTypes = {
+  showFocusArea: PropTypes.bool.isRequired,
+};
 export default SearchResults;

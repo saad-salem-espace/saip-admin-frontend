@@ -45,6 +45,12 @@ $fontSize: (
   font-style: italic;
 }
 
+.disable-highlight {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .container-fluid {
   padding-left: 15px !important;
   padding-right: 15px !important;
@@ -52,6 +58,7 @@ $fontSize: (
 
 .workStreamResults {
   .fixed-panel-scrolled.search-result {
+    z-index: 1;
     html[dir="rtl"] & {
       @extend .pe-4;
     }
