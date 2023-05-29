@@ -190,5 +190,6 @@
   "findSimilar": "البحث عن مشابه",
   "download": "تحميل",
   "addtoSavedQueries": "أضافه الى الاستعلامات المحفوظة",
-  "addtoFocusArea": "أضافه الى مساحة التركيز"
+  "addtoFocusArea": "أضافه الى مساحة التركيز",
+  "noDocument": "عذرًا! لا يوجد مستند متاح للتنزيل"
 }

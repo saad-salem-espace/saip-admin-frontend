@@ -21,6 +21,11 @@ import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import SearchQueryMenu from 'components/ipr-details/shared/seacrh-query/SearchQueryMenu';
+import attachmentApi from 'apis/common/attachmentApi';
+import ModalAlert from 'components/shared/modal-alert/ModalAlert';
+import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
+import { useAuth } from 'react-oidc-context';
+import toastify from 'utils/toastify';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -63,6 +68,10 @@ function IprDetails({
     label: t('ipr.bibliographic'),
     value: 'BibliographicData',
   });
+  const [reachedLimit, setReachedLimit] = useState(false);
+
+  const { isAuthenticated } = useAuth();
+
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
@@ -73,6 +82,14 @@ function IprDetails({
     documentApi({ workstreamId: fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId, documentId }),
     { manual: true },
   );
+  useEffect(() => {
+    setDocument(null);
+    if (documentId) {
+      execute().then(({ data }) => {
+        setDocument(data?.data?.[0]);
+      });
+    }
+  }, [documentId]);
 
   const [showSearchQuery, setShowSearchQuery] = useState(false);
 
@@ -85,15 +102,6 @@ function IprDetails({
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
   };
-
-  useEffect(() => {
-    setDocument(null);
-    if (documentId) {
-      execute().then(({ data }) => {
-        setDocument(data?.data?.[0]);
-      });
-    }
-  }, [documentId]);
 
   useEffect(() => {
     if (document) {
@@ -122,6 +130,69 @@ function IprDetails({
     }
     return () => { };
   }, [document]);
+
+  let documentIndex = 0;
+
+  const config = {
+    workstreamId: searchResultParams.workstreamId,
+    fileType: 'pdf',
+    id: documentId,
+    responseType: 'blob',
+    fileName: document?.OriginalDocuments ? document?.OriginalDocuments[documentIndex]?.FileName : '',
+  };
+
+  const [, executeDownload] = useAxios(attachmentApi(
+    config,
+  ), { manual: true });
+
+  const afterExecuteDownload = (data) => {
+    const url = window.URL.createObjectURL(data?.data);
+    const link = window.document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', document?.OriginalDocuments[documentIndex - 1]?.FileName);
+    window.document.body.appendChild(link);
+    link.click();
+  };
+
+  const executeDownloadDocuments = () => {
+    for (; documentIndex < document?.OriginalDocuments.length; documentIndex += 1) {
+      executeDownload({
+        ...config,
+        fileName: document?.OriginalDocuments[documentIndex]?.FileName,
+      }).then((data) => {
+        afterExecuteDownload(data);
+      });
+    }
+  };
+
+  const downloadOriginalDocuments = () => {
+    if (document.OriginalDocuments) {
+      if (!isAuthenticated) {
+        const count = Number(localStorage.getItem('downloadCount') || 0);
+        executeAfterLimitValidation(
+          {
+            data: { workstreamId: 1, code: LIMITS.DOWNLOAD_LIMIT, count },
+            onSuccess: () => {
+              executeDownloadDocuments();
+              localStorage.setItem('downloadCount', (count + 1).toString());
+            },
+            onRichLimit: () => { setReachedLimit(true); },
+          },
+        );
+      } else {
+        executeDownloadDocuments();
+      }
+    } else {
+      toastify(
+        'error',
+        <div>
+          <p className="toastifyTitle">
+            {t('noDocument')}
+          </p>
+        </div>,
+      );
+    }
+  };
 
   if (!document) {
     return null;
@@ -277,6 +348,7 @@ function IprDetails({
               varient="secondary"
               className="text-capitalize me-2 mb-4"
             />
+
             <div className="d-flex justify-content-between">
               <div className="me-2 mb-md-0 mb-2">
                 <h5 className="text-capitalize text-primary-dark font-regular mb-2">
@@ -349,7 +421,6 @@ function IprDetails({
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <Button
-            disabled
             variant="primary"
             text={(
               <>
@@ -358,6 +429,20 @@ function IprDetails({
               </>
             )}
             className="me-4 fs-sm my-2 my-xxl-0"
+            onClick={
+              downloadOriginalDocuments
+            }
+          />
+          <ModalAlert
+            title={t('common:limitReached.register_now')}
+            msg={t('common:limitReached.register_now_msg')}
+            confirmBtnText={t('common:register')}
+            className="warning"
+            handleConfirm={() => {
+              // TODO to be written once receive URL
+            }}
+            hideAlert={() => { setReachedLimit(false); }}
+            showModal={reachedLimit}
           />
           <div id="google_translate_element" className="d-inline-block" />
           {
@@ -387,39 +472,39 @@ function IprDetails({
                           </span>
                           <FontAwesomeIcon icon={showSearchQuery ? faChevronUp : faChevronDown} />
                         </>
-                  }
+                      }
                     />
                   </div>
-            }
+                }
               />
               {/* eslint-disable-next-line react/jsx-closing-tag-location */}
             </SearchQueryMenu>
-}
+          }
         </div>
       </div>
       {
-      dashboard && showActions ? (
-        <IprSections
-          options={options[searchResultParams.workstreamId]}
-          onChangeSelect={onChangeSelect}
-          selectedView={selectedView}
-          renderSelectedView={renderSelectedView}
-          documentId={documentId}
-          activeTab={activeTab}
-          isCardInprogress={isCardInprogress}
-          selectedCardId={selectedCardId}
-          setNotesUpdated={setNotesUpdated}
-          className="notes-editor-container"
-          activeWorkstream={activeWorkstream}
-          fromFocusArea={fromFocusArea}
-        />
-      ) : (
-        <IprData
-          options={options[searchResultParams.workstreamId]}
-          onChangeSelect={onChangeSelect}
-          selectedView={selectedView}
-          renderSelectedView={renderSelectedView}
-        />)
+        dashboard && showActions ? (
+          <IprSections
+            options={options[searchResultParams.workstreamId]}
+            onChangeSelect={onChangeSelect}
+            selectedView={selectedView}
+            renderSelectedView={renderSelectedView}
+            documentId={documentId}
+            activeTab={activeTab}
+            isCardInprogress={isCardInprogress}
+            selectedCardId={selectedCardId}
+            setNotesUpdated={setNotesUpdated}
+            className="notes-editor-container"
+            activeWorkstream={activeWorkstream}
+            fromFocusArea={fromFocusArea}
+          />
+        ) : (
+          <IprData
+            options={options[searchResultParams.workstreamId]}
+            onChangeSelect={onChangeSelect}
+            selectedView={selectedView}
+            renderSelectedView={renderSelectedView}
+          />)
       }
     </div>
   );
