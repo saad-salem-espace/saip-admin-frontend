@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const saveNoteApi = ({
-  id, noteText,
+  id, noteText, activeNote,
 }, configOnly = false) => {
   const config = {
-    url: `dashboard/${id}/notes`,
+    url: `dashboard/${id}/notes?noteId=${activeNote ? activeNote.id : '0'}`,
     method: 'POST',
     data: noteText,
   };

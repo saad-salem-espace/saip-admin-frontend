@@ -2,9 +2,14 @@ import { useTranslation, Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Tabs from 'components/shared/tabs/Tabs';
 import React, { useState, useEffect } from 'react';
+import NoData from 'components/shared/empty-states/NoData';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import Notes from 'components/examiner-dashboard/board/notes/Notes';
+import SavedQueriesTable from 'components/saved-queries/SavedQueriesTable';
+import AppPagination from 'components/shared/app-pagination/AppPagination';
+import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
 import IprData from '../IprData';
+import './style.scss';
 
 function IprSections({
   options,
@@ -18,13 +23,18 @@ function IprSections({
   className,
   showInfo,
   setNotesUpdated,
+  activeWorkstream,
+  updateIprModal,
+  fromFocusArea,
 }) {
-  const { t } = useTranslation(['dashboard', 'notes']);
+  const { t } = useTranslation(['dashboard', 'notes', 'translation']);
   const [activeTabId, setActiveTabId] = useState(activeTab);
   const [showAlert, setShowAlert] = useState(false);
   const [hasUnsavedNotes, setHasUnsavedNotes] = useState(false);
   const [fireSubmit, setFireSubmit] = useState(false);
   const [selectedTab, setSelectedTab] = useState(activeTabId);
+  const [totalElements, setTotalElements] = useState(0);
+  const [refreshQueriesList, setRefreshQueriesList] = useState(0);
 
   const disableChangeTab = (hasData) => {
     setHasUnsavedNotes(!!hasData);
@@ -53,6 +63,15 @@ function IprSections({
     setHasUnsavedNotes(false);
   };
 
+  const axiosConfig = getSavedQueryApi(activeWorkstream, fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber : documentId, '1', true);
+
+  const savedQueries = (
+    SavedQueriesTable
+  );
+
+  const dependencies = {
+    refreshQueriesList,
+  };
   const tabsItems = [
     {
       id: 1,
@@ -80,7 +99,7 @@ function IprSections({
       content: (
         <div className="notes-tab" translate="no">
           <Notes
-            documentId={documentId}
+            documentId={fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber : documentId}
             disableEditor={!isCardInprogress}
             disableChangeTab={disableChangeTab}
             fireSubmit={fireSubmit}
@@ -88,6 +107,35 @@ function IprSections({
             setFireSubmit={setFireSubmit}
             changeActiveTab={changeActiveTab}
             setNotesUpdated={setNotesUpdated}
+            fromFocusArea={fromFocusArea}
+          />
+        </div>
+      ),
+    },
+    {
+      id: 3,
+      title: (
+        <div className="d-flex align-items-center" translate="no">
+          {t('dashboard:savedQueries')}
+          { activeTabId === 3 && (<span className="ms-1 p-1 queries-count">{totalElements}</span>)}
+        </div>
+      ),
+      content: (
+        <div className="m-4">
+          <AppPagination
+            className="mt-8"
+            axiosConfig={axiosConfig}
+            defaultPage="1"
+            RenderedComponent={savedQueries}
+            emptyState={<NoData />}
+            urlPagination={false}
+            setTotalElements={(totalCount) => setTotalElements(totalCount)}
+            renderedProps={{
+              selectedWorkStream: activeWorkstream,
+              updateIprModal,
+              setRefreshQueriesList,
+            }}
+            updateDependencies={[...Object.values(dependencies)]}
           />
         </div>
       ),
@@ -103,6 +151,7 @@ function IprSections({
   }
   useEffect(() => {
     if (!showInfo) {
+      setSelectedTab(2);
       setActiveTabId(2);
     }
   }, [showInfo]);
@@ -121,8 +170,9 @@ function IprSections({
                 components={<span className="d-block" />}
               />
           }
+            confirmBtnText={t('translation:save')}
             btnText={t('add')}
-            className="warning"
+            className="warning notes-modal"
             handleConfirm={handleConfirm}
             hideAlert={hideAlert}
           />
@@ -151,6 +201,9 @@ IprSections.propTypes = {
   selectedCardId: PropTypes.number.isRequired,
   className: PropTypes.string,
   setNotesUpdated: PropTypes.func,
+  activeWorkstream: PropTypes.number,
+  updateIprModal: PropTypes.func,
+  fromFocusArea: PropTypes.bool,
 };
 
 IprSections.defaultProps = {
@@ -162,6 +215,9 @@ IprSections.defaultProps = {
   activeTab: 1,
   className: '',
   setNotesUpdated: () => { },
+  activeWorkstream: null,
+  updateIprModal: () => { },
+  fromFocusArea: false,
 };
 
 export default IprSections;

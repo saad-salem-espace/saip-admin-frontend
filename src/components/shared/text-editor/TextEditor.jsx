@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './textEditor.scss';
-import { EditorState } from 'draft-js';
+import {
+  EditorState, ContentState, convertToRaw,
+} from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import draftToHtml from 'draftjs-to-html';
 import { useTranslation } from 'react-i18next';
 import { BsExclamationTriangle } from 'react-icons/bs';
@@ -11,20 +14,23 @@ import ErrorMessage from '../error-message/ErrorMessage';
 
 function TextEditor({
   className, maxLength, setNoteText, disableEditor, disableChangeTab,
-  SubmitNote, isEmptyText, showError, hideError,
+  SubmitNote, isEmptyText, showError, hideError, activeNote,
+  newNoteToggle,
 }) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [contentState, setContentState] = useState();
   const [hasError, setHasError] = useState(false);
   const { t } = useTranslation(['error', 'translation']);
-
   const currentContent = editorState.getCurrentContent();
   const currentContentLength = currentContent.getPlainText('').length;
   const hasText = editorState.getCurrentContent().hasText();
 
+  const handleEditorStateChange = (e) => {
+    setEditorState(e);
+  };
+
   const handleContentStateChange = (c) => {
     setContentState(draftToHtml(c));
-    setNoteText(contentState);
     isEmptyText(currentContentLength === 0);
     if (currentContentLength >= 1) {
       hideError(currentContentLength > 0);
@@ -39,9 +45,26 @@ function TextEditor({
     disableChangeTab(hasText);
   };
 
-  const handleEditorStateChange = (e) => {
-    setEditorState(e);
-  };
+  useEffect(() => {
+    if (activeNote) {
+      const contentBlock = htmlToDraft(activeNote.noteText);
+      handleContentStateChange(convertToRaw(
+        ContentState.createFromText(activeNote.noteText),
+      ));
+      handleEditorStateChange(EditorState.createWithContent(
+        ContentState.createFromBlockArray(contentBlock.contentBlocks),
+      ));
+    } else {
+      handleEditorStateChange(EditorState.createWithContent(
+        ContentState.createFromText(''),
+      ));
+      setContentState('');
+    }
+  }, [activeNote, newNoteToggle]);
+
+  useEffect(() => {
+    setNoteText(contentState);
+  }, [contentState]);
 
   return (
     <div className={`${className} `}>
@@ -65,13 +88,13 @@ function TextEditor({
         {(hasError || showError) && <ErrorMessage
           className="mb-0"
           msg={
-            <p className="fs-12 d-flex mb-0">
+            <p className="fs-xs d-flex mb-0">
               <BsExclamationTriangle className="me-2 fs-base" />
               {t('errorText')}
             </p>
         }
         />}
-        <p className="fs-12 text-gray-700 mb-1">
+        <p className="fs-xs text-gray-700 mb-1">
           <span className="pe-1">{maxLength}</span>
           {t('translation:character')}
         </p>
@@ -88,8 +111,10 @@ TextEditor.propTypes = {
   disableChangeTab: PropTypes.func,
   SubmitNote: PropTypes.func.isRequired,
   isEmptyText: PropTypes.func.isRequired,
+  newNoteToggle: PropTypes.bool.isRequired,
   showError: PropTypes.bool.isRequired,
   hideError: PropTypes.func.isRequired,
+  activeNote: PropTypes.instanceOf(Object).isRequired,
 };
 
 TextEditor.defaultProps = {

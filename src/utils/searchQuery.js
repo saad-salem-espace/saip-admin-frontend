@@ -1,13 +1,7 @@
-import { t } from 'i18next';
 import { DateObject } from 'react-multi-date-picker';
 import { search } from './arrays';
 import { isMultipleValue, parseSingleQuery } from './search-query/encoder';
 import { insert } from './strings';
-
-const operators = ['and', 'or', 'not'].map((operator) => ({
-  operator: operator.toUpperCase(),
-  displayName: t(`search:operators.${operator}`),
-}));
 
 const parseQuery = (fields, imageName, isQuery, currentLang = 'en') => {
   let finalQuery = '';
@@ -85,6 +79,6 @@ const teldaRegex = /^[^*?!~]+?~?\d*$/;
 const noTeldaRegex = /^[^~]+$/;
 
 export {
-  operators, parseQuery, reformatDecoder, flattenCriteria, teldaRegex, noTeldaRegex,
+  parseQuery, reformatDecoder, flattenCriteria, teldaRegex, noTeldaRegex,
   defaultConditions,
 };
