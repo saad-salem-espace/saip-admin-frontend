@@ -53,6 +53,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   ];
 
   const [activeWorkstream, setActiveWorkstream] = useState(null);
+
   const [sort, setSort] = useState('Queue');
   const [{ data }, executeAssignmentData] = useAxios(getAssigned({
     workstreamId: activeWorkstream?.id,
@@ -110,7 +111,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
     }
   }, [data]);
 
-  if (!assignedWorkstreams || (assignedWorkstreams && !assignments)) return (<div className="d-flex justify-content-center mt-18"><Spinner /></div>);
+  if (!assignedWorkstreams || ((assignedWorkstreams.length > 0) && !assignments)) return (<div className="d-flex justify-content-center mt-18"><Spinner /></div>);
 
   const changeWorkstream = (i) => {
     setActiveWorkstream(i);
