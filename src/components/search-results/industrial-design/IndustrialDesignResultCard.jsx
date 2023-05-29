@@ -15,7 +15,7 @@ import '../trademarks-search-result-cards/style.scss';
 
 function IndustrialDesignResultCard({
   searchResult,
-  setActiveDocument, activeDocument, highlightWords, query,
+  setActiveDocument, activeDocument, highlightWords, query, selectedView,
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
@@ -74,21 +74,31 @@ function IndustrialDesignResultCard({
                   <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                   <span>{BibliographicData?.FilingDate}</span>
                 </p>
-                <p className="text-gray md-text mb-2">
-                  {BibliographicData?.Designers?.join('; ')}
-                </p>
-                <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                  {t('ipr.registered', { value: BibliographicData.RegistrationNumber })}
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                  <span>{BibliographicData.RegistrationDate}</span>
-                </p>
-                <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                  {t('ipr.published', { value: BibliographicData.PublicationNumber })}
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                  <span>{BibliographicData.PublicationDate}</span>
-                </p>
+                {
+                  selectedView.value !== 'compact' && (
+                    <p className="text-gray md-text mb-2">
+                      {BibliographicData?.Designers?.join('; ')}
+                    </p>
+                  )
+                }
+                {
+                  selectedView.value === 'detailed' && (
+                    <>
+                      <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        {t('ipr.registered', { value: BibliographicData.RegistrationNumber })}
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        <span>{BibliographicData.RegistrationDate}</span>
+                      </p>
+                      <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        {t('ipr.published', { value: BibliographicData.PublicationNumber })}
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        <span>{BibliographicData.PublicationDate}</span>
+                      </p>
+                    </>
+                  )
+                }
               </div>
             </div>
           </div>
@@ -119,6 +129,10 @@ IndustrialDesignResultCard.propTypes = {
   activeDocument: PropTypes.number.isRequired,
   query: PropTypes.string.isRequired,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
+  selectedView: PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string,
+  }).isRequired,
 };
 
 IndustrialDesignResultCard.defaultProps = {

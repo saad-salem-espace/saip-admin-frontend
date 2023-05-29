@@ -57,7 +57,7 @@ function SearchResults({ showFocusArea }) {
   const [totalResults, setTotalResults] = useState(0);
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
+  const [selectedView, setSelectedView] = useState({ label: t('detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
@@ -155,10 +155,6 @@ function SearchResults({ showFocusArea }) {
 
     return (currentOption || sortByOptionsPatent[0]);
   };
-
-  useEffect(() => {
-    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
-  }, [currentLang]);
 
   useEffect(() => {
     if (!(auth && auth?.user)) {
@@ -367,15 +363,15 @@ function SearchResults({ showFocusArea }) {
 
   const viewOptions = [
     {
-      label: t('trademarks.detailed'),
+      label: t('detailed'),
       value: 'detailed',
     },
     {
-      label: t('trademarks.summary'),
+      label: t('summary'),
       value: 'summary',
     },
     {
-      label: t('trademarks.compact'),
+      label: t('compact'),
       value: 'compact',
     },
   ];
@@ -410,6 +406,12 @@ function SearchResults({ showFocusArea }) {
       document.body.classList.remove('search-result-wrapper');
     };
   }, []);
+
+  useEffect(() => {
+    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
+    setSelectedView(viewOptions.find((temp) => temp.value === selectedView.value));
+  }, [currentLang]);
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -553,28 +555,24 @@ function SearchResults({ showFocusArea }) {
           </div>
           <Formik>
             {() => (
-              <Form className="mt-5">
+              <Form className="mt-12">
                 {
                   totalResults !== 0 && (
                     <div className="d-md-flex">
-                      {
-                        searchResultParams.workstreamId === '2' && (
-                          <div className="position-relative mb-6 viewSelect me-md-6">
-                            <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
-                            <Select
-                              options={viewOptions}
-                              setSelectedOption={onChangeView}
-                              selectedOption={selectedView}
-                              defaultValue={selectedView}
-                              id="viewSection"
-                              fieldName="viewSection"
-                              className="mb-md-0 mb-3 select-2"
-                            />
-                          </div>
-                        )
-                      }
+                      <div className="position-relative mb-6 viewSelect me-md-6">
+                        <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
+                        <Select
+                          options={viewOptions}
+                          setSelectedOption={onChangeView}
+                          selectedOption={selectedView}
+                          defaultValue={selectedView}
+                          id="viewSection"
+                          fieldName="viewSection"
+                          className="mb-md-0 mb-3 select-2"
+                        />
+                      </div>
                       <div className="position-relative mb-8 sortBy">
-                        <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                        <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
                         <Select
                           options={getSortOptions(searchResultParams.workstreamId)}
                           setSelectedOption={onChangeSortBy}
