@@ -20,7 +20,7 @@ import activeWorkstreamContext from '../context/activeWorkstreamContext';
 
 function SearchQueryMenu({
   showSearchQuery, hideSearchQueryMenu, className, children,
-  validHighlight, highlightTrigger,
+  validHighlight, highlightTrigger, hideFocus,
 }) {
   const { t } = useTranslation('dashboard');
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ function SearchQueryMenu({
   const [formikFields, setFormikFields] = useState([]);
   const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
   const onSubmit = (values) => {
+    hideFocus();
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
@@ -152,10 +153,12 @@ SearchQueryMenu.propTypes = {
   children: PropTypes.node.isRequired,
   validHighlight: PropTypes.bool.isRequired,
   highlightTrigger: PropTypes.number.isRequired,
+  hideFocus: PropTypes.func,
 };
 
 SearchQueryMenu.defaultProps = {
   className: '',
+  hideFocus: () => {},
 };
 
 export default SearchQueryMenu;
