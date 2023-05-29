@@ -52,6 +52,7 @@ function IprDetails({
   setNotesUpdated,
   examinerView,
   fromFocusArea,
+  hideFocus,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
@@ -384,6 +385,7 @@ function IprDetails({
               ToggleSearchQueryMenu={ToggleSearchQueryMenu}
               hideSearchQueryMenu={hideSearchQueryMenu}
               validHighlight={validHighlight}
+              hideFocus={hideFocus}
               highlightTrigger={highlightTrigger}
               className={`${searchResultParams.workstreamId === '2' || searchResultParams.workstreamId === '3' ? 'custom-position' : ''}`}
             >
@@ -464,6 +466,7 @@ IprDetails.propTypes = {
   setNotesUpdated: PropTypes.func,
   examinerView: PropTypes.bool,
   fromFocusArea: PropTypes.bool,
+  hideFocus: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -480,6 +483,7 @@ IprDetails.defaultProps = {
   activeTab: 2,
   setNotesUpdated: () => {},
   fromFocusArea: false,
+  hideFocus: () => {},
 };
 
 export default IprDetails;
