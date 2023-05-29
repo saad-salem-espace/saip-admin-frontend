@@ -28,11 +28,13 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
 import { LIMITS } from 'utils/manageLimits';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
+
 import './style.scss';
 import style from '../shared/form/search/style.module.scss';
-
 import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
@@ -40,7 +42,6 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
-import getInstanceByIndex from '../../hooks/useIndexedDbWrapper';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
@@ -66,6 +67,7 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
+  const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -157,7 +159,7 @@ function SearchResults({ showFocusArea }) {
   };
 
   useEffect(() => {
-    if (!(auth && auth?.user)) {
+    if (!auth.isAuthenticated) {
       getInstanceByIndex({
         indexName: 'queryString',
         indexValue: searchParams.get('q'),
