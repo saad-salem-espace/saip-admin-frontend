@@ -39,9 +39,7 @@ const useIndexedDbWrapper = (tableName) => {
     return { createdAt: currentDatetimeUTC, updatedAt: currentDatetimeUTC };
   }, []);
 
-  // eslint-disable-next-line function-paren-newline
-  const addInstanceToDb = useCallback(
-    /**
+  /**
    * Saving data to indexedDB
    *
    * @param instance {{
@@ -53,21 +51,19 @@ const useIndexedDbWrapper = (tableName) => {
    * }}
    * @return {boolean}
    */
-    (instance) => {
-      const data = { ...instance.data };
-      if (Object.keys(data).length > 0) {
-        if (instance.setTimeStamp ?? true) {
-          Object.assign(data, getTimeStamp());
-        }
-        add(data, instance.key).then(instance.onSuccess).catch(instance.onError);
-        return true;
+  const addInstanceToDb = (instance) => {
+    const data = { ...instance.data };
+    if (Object.keys(data).length > 0) {
+      if (instance.setTimeStamp ?? true) {
+        Object.assign(data, getTimeStamp());
       }
-      return false;
-    }, []);
+      add(data, instance.key).then(instance.onSuccess).catch(instance.onError);
+      return true;
+    }
+    return false;
+  };
 
-  // eslint-disable-next-line function-paren-newline
-  const getInstanceByIndex = useCallback(
-    /**
+  /**
    * Get instance by index
    *
    * @param instance {{
@@ -77,12 +73,12 @@ const useIndexedDbWrapper = (tableName) => {
    *   onError: function,
    * }}
    */
-    (instance) => {
-      getByIndex(instance.indexName, instance.indexValue)
-        .then(instance.onSuccess).catch(instance.onError);
-    }, []);
+  const getInstanceByIndex = (instance) => {
+    getByIndex(instance.indexName, instance.indexValue)
+      .then(instance.onSuccess).catch(instance.onError);
+  };
 
-  const indexByIndexName = useCallback(({
+  const indexByIndexName = ({
     onSuccess, onError, sorted = 'NONE', sortedIndexName, indexName, indexValue, limit = 10, page = 1,
   }) => {
     const offset = (page - 1) * limit;
@@ -99,8 +95,7 @@ const useIndexedDbWrapper = (tableName) => {
         onSuccess({ data, pagination: { per_page: limit, total } });
       })
       .catch((errors) => { onError(errors); });
-  }, []);
-
+  };
   return {
     addInstanceToDb, getInstanceByIndex, indexByIndexName, countAllByIndexName, deleteInstance,
   };
