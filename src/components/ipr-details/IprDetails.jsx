@@ -69,9 +69,7 @@ function IprDetails({
     value: 'BibliographicData',
   });
   const [reachedLimit, setReachedLimit] = useState(false);
-
   const { isAuthenticated } = useAuth();
-
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
@@ -145,7 +143,7 @@ function IprDetails({
     config,
   ), { manual: true });
 
-  const afterExecuteDownload = (data) => {
+  const fireDownloadLink = (data) => {
     const url = window.URL.createObjectURL(data?.data);
     const link = window.document.createElement('a');
     link.href = url;
@@ -160,7 +158,7 @@ function IprDetails({
         ...config,
         fileName: document?.OriginalDocuments[documentIndex]?.FileName,
       }).then((data) => {
-        afterExecuteDownload(data);
+        fireDownloadLink(data);
       });
     }
   };
@@ -171,7 +169,11 @@ function IprDetails({
         const count = Number(localStorage.getItem('downloadCount') || 0);
         executeAfterLimitValidation(
           {
-            data: { workstreamId: 1, code: LIMITS.DOWNLOAD_LIMIT, count },
+            data: {
+              workstreamId: fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId,
+              code: LIMITS.DOWNLOAD_LIMIT,
+              count,
+            },
             onSuccess: () => {
               executeDownloadDocuments();
               localStorage.setItem('downloadCount', (count + 1).toString());
