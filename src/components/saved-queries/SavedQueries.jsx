@@ -76,7 +76,7 @@ const SavedQueries = () => {
     <Container fluid>
       <Row>
         <Col md={12} className="px-md-19">
-          <div className="d-flex my-8 p-8 sq-bg rounded">
+          <div className="d-flex my-8 p-8 app-bg-primary-01 rounded">
             <h5 className="mb-0 mt-4">{t('myQueries')}</h5>
             <Select
               options={WorkStreamsOptions}
