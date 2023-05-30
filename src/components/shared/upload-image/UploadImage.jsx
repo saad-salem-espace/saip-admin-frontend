@@ -9,7 +9,7 @@ import Button from '../button/Button';
 import Spinner from '../spinner/Spinner';
 
 function UploadImage({
-  maxNumber, className,
+  className,
   maxMbFileSize, showUploadImgSection,
   uploadFile, changeIsImgUploaded,
   isSubmitting,
@@ -17,7 +17,8 @@ function UploadImage({
   const [images, setImages] = useState([]);
 
   const onChange = (imageList) => {
-    setImages(imageList);
+    const activeImage = imageList[imageList.length - 1];
+    setImages(activeImage ? [activeImage] : []);
     if (imageList.length !== 0) {
       uploadFile(imageList[0]?.file);
     } else {
@@ -29,10 +30,8 @@ function UploadImage({
 
   return (
     <ImageUploading
-      multiple
       value={images}
       onChange={onChange}
-      maxNumber={maxNumber}
       dataURLKey="data_url"
       acceptType={['png', 'gif', 'jpeg', 'tiff', 'jpg', 'tif']}
       maxFileSize={maxMbFileSize}
@@ -119,7 +118,6 @@ function UploadImage({
 
 UploadImage.propTypes = {
   className: PropTypes.string,
-  maxNumber: PropTypes.number,
   maxMbFileSize: PropTypes.number,
   showUploadImgSection: PropTypes.bool.isRequired,
   uploadFile: PropTypes.func.isRequired,
@@ -129,7 +127,6 @@ UploadImage.propTypes = {
 
 UploadImage.defaultProps = {
   className: '',
-  maxNumber: 1,
   maxMbFileSize: 10 * 1024 * 1024, // 10Mb
 };
 
