@@ -190,5 +190,6 @@
   "findSimilar": "Find Similar",
   "download": "Download",
   "addtoSavedQueries": "Add to my saved queries",
-  "addtoFocusArea": "Add to card in focus area"
+  "addtoFocusArea": "Add to card in focus area",
+  "noDocument": "Sorry! No document is available for download"
 }
