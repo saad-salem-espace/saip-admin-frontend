@@ -34,6 +34,7 @@ function IprSections({
   const [fireSubmit, setFireSubmit] = useState(false);
   const [selectedTab, setSelectedTab] = useState(activeTabId);
   const [totalElements, setTotalElements] = useState(0);
+  const [refreshQueriesList, setRefreshQueriesList] = useState(0);
 
   const disableChangeTab = (hasData) => {
     setHasUnsavedNotes(!!hasData);
@@ -67,6 +68,10 @@ function IprSections({
   const savedQueries = (
     SavedQueriesTable
   );
+
+  const dependencies = {
+    refreshQueriesList,
+  };
   const tabsItems = [
     {
       id: 1,
@@ -100,7 +105,7 @@ function IprSections({
             fireSubmit={fireSubmit}
             id={selectedCardId}
             setFireSubmit={setFireSubmit}
-            changeActiveTab={showInfo ? changeActiveTab : () => {}}
+            changeActiveTab={changeActiveTab}
             setNotesUpdated={setNotesUpdated}
             fromFocusArea={fromFocusArea}
           />
@@ -126,9 +131,11 @@ function IprSections({
             urlPagination={false}
             setTotalElements={(totalCount) => setTotalElements(totalCount)}
             renderedProps={{
-              selectedWorkStream: 1,
+              selectedWorkStream: activeWorkstream,
               updateIprModal,
+              setRefreshQueriesList,
             }}
+            updateDependencies={[...Object.values(dependencies)]}
           />
         </div>
       ),
@@ -144,6 +151,7 @@ function IprSections({
   }
   useEffect(() => {
     if (!showInfo) {
+      setSelectedTab(2);
       setActiveTabId(2);
     }
   }, [showInfo]);

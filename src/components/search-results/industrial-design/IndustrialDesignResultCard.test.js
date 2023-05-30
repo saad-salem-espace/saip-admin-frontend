@@ -8,6 +8,7 @@ import IndustrialDesignResultCard from './IndustrialDesignResultCard';
 describe('<IndustrialDesignResultCard />', () => {
   const t = (key, options) => I18n.t(key, { ...options, ns: 'search' });
   const query = 'Coffee';
+  const selectedView = { label: t('detailed'), value: 'detailed' };
 
   it('renders  component correctly', async () => {
     const { getByText } = render(
@@ -16,6 +17,7 @@ describe('<IndustrialDesignResultCard />', () => {
           searchResult={industrialDesignResponse}
           query={query}
           highlightWords={['Coffee']}
+          selectedView={selectedView}
         />
       </Formik>,
     );

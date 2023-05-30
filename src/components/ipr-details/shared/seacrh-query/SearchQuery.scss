@@ -6,7 +6,7 @@
   width: 464px;
   @extend .border;
   z-index: 9999999 !important;
-  top: 165px;
+  top: 70px;
   height: 448px;
   background-color: $white;
   overflow-y: auto;
@@ -29,6 +29,7 @@
   display: none;
   position: fixed;
 }
+
 .added .keyword-planner-btn  {
   display: block;
 }

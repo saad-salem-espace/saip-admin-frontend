@@ -10,7 +10,7 @@ describe('<TrademarksSearchResultCards />', () => {
   const ITEMS_LENGTH = 5;
   const data = { data: Array(ITEMS_LENGTH).fill(trademarkResponse) };
   const query = 'NO_MATCH';
-  const selectedView = { label: t('trademarks.detailed'), value: 'detailed' };
+  const selectedView = { label: t('detailed'), value: 'detailed' };
 
   it('should display all fetched data', async () => {
     const { queryAllByText } = render(

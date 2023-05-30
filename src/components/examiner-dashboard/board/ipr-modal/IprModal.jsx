@@ -36,6 +36,7 @@ const IprModal = () => {
             setNotesUpdated={() => {}}
             className="col-lg-12"
             focusMode
+            hideFocus={handleClose}
             updateIprModal={() => setShow(false)}
             fromFocusArea="true"
           />

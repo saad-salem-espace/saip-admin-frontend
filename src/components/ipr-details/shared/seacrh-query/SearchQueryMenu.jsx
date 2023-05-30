@@ -20,18 +20,18 @@ import activeWorkstreamContext from '../context/activeWorkstreamContext';
 
 function SearchQueryMenu({
   showSearchQuery, hideSearchQueryMenu, className, children,
-  validHighlight, highlightTrigger,
+  validHighlight, highlightTrigger, hideFocus,
 }) {
   const { t } = useTranslation('dashboard');
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
-  const activeWorkstream = useContext(activeWorkstreamContext)?.id.toString();
+  const activeWorkstream = useContext(activeWorkstreamContext)?.id.toString() || JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId.toString();
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${activeWorkstream}/identifiers` }, { dependencies: [activeWorkstream] });
   const [searchFields, setSearchFields] = useState([]);
   const [formikFields, setFormikFields] = useState([]);
   const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
-
   const onSubmit = (values) => {
+    hideFocus();
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
@@ -108,7 +108,7 @@ function SearchQueryMenu({
   }, [searchIdentifiers]);
 
   return (
-    <div className={`search-query-wrapper ${className}`}>
+    <div className={`${className}`}>
       {children}
       {
         showSearchQuery && (
@@ -153,10 +153,12 @@ SearchQueryMenu.propTypes = {
   children: PropTypes.node.isRequired,
   validHighlight: PropTypes.bool.isRequired,
   highlightTrigger: PropTypes.number.isRequired,
+  hideFocus: PropTypes.func,
 };
 
 SearchQueryMenu.defaultProps = {
   className: '',
+  hideFocus: () => {},
 };
 
 export default SearchQueryMenu;
