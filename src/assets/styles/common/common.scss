@@ -1,9 +1,5 @@
 @import "../../styles/utilities/custom-theme";
 
-:root {
-  --bs-heading-font-size: $font-size-base;
-}
-
 img {
   [data-bs-theme="dark"] & {
     filter: grayscale(100%) !important;

@@ -55,7 +55,7 @@ const Accessibility = () => {
       <Dropdown>
         <Dropdown.Toggle
           variant="primary"
-          className="appBtn has-icon no-arrow ms-lg-4 btn nav-link mx-auto my-3 my-lg-0 rounded"
+          className="appBtn has-icon no-arrow btn nav-link mx-auto my-3 my-lg-0 rounded"
           size="lg"
           id="accessibility"
         >

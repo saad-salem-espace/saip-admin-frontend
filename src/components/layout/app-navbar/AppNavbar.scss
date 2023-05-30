@@ -99,12 +99,14 @@
     @include media-breakpoint-up(xl) {
       @include border(1px,25px,6px,$border-color);
       @include border-start(0);
-    }
-    html[dir="ltr"] & {
-      margin-left: 12px;
-    }
-    html[dir="rtl"] & {
-      margin-right: 12px;
+      html[dir="ltr"] & {
+        margin-left: 15px;
+        padding-left: 15px;
+      }
+      html[dir="rtl"] & {
+        margin-right: 15px;
+        padding-right: 15px;
+      }
     }
     .size-control {
       width: 48px;
@@ -156,6 +158,18 @@
     }
   }
   &.logged {
+    .accessibility-container {
+      @include media-breakpoint-up(xl) {
+        html[dir="ltr"] & {
+          margin-left: 25px;
+          padding-left: 25px;
+        }
+        html[dir="rtl"] & {
+          margin-right: 25px;
+          padding-right: 25px;
+        }
+      }
+    }
     .switch-language {
       @include media-breakpoint-up(xl) {
         @include border(1px,25px,6px,$border-color);
