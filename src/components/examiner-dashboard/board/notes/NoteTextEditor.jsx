@@ -19,7 +19,7 @@ function NoteTextEditor({
   };
 
   return (
-    <div className="d-md-flex align-items-start dashboard-notes border-top px-5 pt-5 bg-white">
+    <div className="d-md-flex align-items-start dashboard-notes border-top px-5 pt-5">
       <UserAvatar name={auth.user?.profile.preferred_username} size="48" className="me-md-4 mb-md-0 mb-2" />
       <TextEditor
         className="flex-grow-1 notes-editor"

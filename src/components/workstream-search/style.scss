@@ -2,7 +2,12 @@
 @import "~bootstrap/scss/mixins";
 
 .workstream-header {
-  background-image: url(../../assets/images/search-header-bg.svg);
+  html[data-bs-theme="light"] & {
+    background-image: url(../../assets/images/search-header-bg.svg);
+  }
+  html[data-bs-theme="dark"] & {
+    background-image: url(../../assets/images/search-header-bg-high-contrast.svg);
+  }
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom left;

@@ -71,12 +71,6 @@ $fontSize: (
   }
 }
 
-[data-bs-theme="dark"] {
-  body {
-    background-color: var(--bs-primary);
-  }
-}
-
 * {
   transition: all 0.1s ease-in-out;
 }

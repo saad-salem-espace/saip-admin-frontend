@@ -35,18 +35,18 @@
   }
 
   .rmdp-header-values {
-    color: $primary;
+    color: var(--bs-primary);
     font-family: $font-medium;
   }
 
   .rmdp-arrow {
     width: 10px;
     height: 10px;
-    border-color: $primary;
+    border-color: var(--bs-primary);
   }
 
   .rmdp-week-day {
-    color: $primary-dark;
+    color: var(--bs-primary-dark);
     font-size: $font-size-xs;
     font-family: $font-medium;
     text-transform: uppercase;
@@ -56,19 +56,19 @@
     font-family: $font-medium;
     width: 37px;
     height: 40px;
-    background-color: $gray-200;
+    background-color: var(--bs-gray-200);
     border-radius: $border-radius;
     margin: 4px;
 
     &:hover {
-      background-color: $gray-200;
+      background-color: var(--bs-gray-200);
     }
 
     &.rmdp-today {
-      background-color: $gray-200;
+      background-color: var(--bs-gray-200);
 
       span {
-        background-color: $gray-200;
+        background-color: var(--bs-gray-200);
         color: $dark;
       }
 
@@ -84,32 +84,32 @@
 
       &:hover,
       &:hover span {
-        background-color: $primary-dark;
+        background-color: var(--bs-primary-dark);
         color: $white;
       }
 
       span:hover {
-        background-color: $primary-dark;
+        background-color: var(--bs-primary-dark);
       }
     }
 
     &.rmdp-selected {
-      background-color: $primary;
+      background-color: var(--bs-primary);
 
       &:hover {
-        background-color: $primary-dark;
+        background-color: var(--bs-primary-dark);
 
         span:not(.highlight) {
-          background-color: $primary-dark;
+          background-color: var(--bs-primary-dark);
         }
       }
 
       span:not(.highlight) {
-        background-color: $primary;
+        background-color: var(--bs-primary);
         box-shadow: none;
 
         &:hover {
-          background-color: $primary-dark;
+          background-color: var(--bs-primary-dark);
         }
       }
     }
@@ -129,19 +129,19 @@
       &.end {
         border-radius: $border-radius;
         color: $white;
-        background-color: $primary;
+        background-color: var(--bs-primary);
 
         &:hover,
         &:hover span {
-          background-color: $primary-dark;
+          background-color: var(--bs-primary-dark);
         }
 
         span {
-          background-color: $primary;
+          background-color: var(--bs-primary);
 
           &:hover {
 
-            background-color: $primary-dark;
+            background-color: var(--bs-primary-dark);
           }
         }
       }
@@ -157,7 +157,7 @@
   .rmdp-day-hidden {
     span {
       &:hover {
-        background-color: $gray-200;
+        background-color: var(--bs-gray-200);
       }
     }
   }
@@ -209,11 +209,11 @@
   padding-top: 5px;
 
   &:hover {
-    background-color: $gray-300;
+    background-color: var(--bs-gray-300);
     box-shadow: none;
 
     .rmdp-arrow {
-      border-color: $primary;
+      border-color: var(--bs-primary);
     }
   }
 }

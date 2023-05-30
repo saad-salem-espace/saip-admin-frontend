@@ -81,7 +81,7 @@ const PatentCard = ({
               isInProgress(assignment.status === 'IN_PROGRESS');
             }}
             text={
-              <p className="text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+              <p className="app-text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
             }
           />
           <div className="d-flex">

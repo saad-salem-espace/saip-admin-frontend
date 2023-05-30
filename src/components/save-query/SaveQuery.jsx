@@ -42,7 +42,7 @@ const SaveQuery = ({
         <p className="toastifyTitle">{t('querySaved')}</p>
         <p className="toastText">
           <Trans i18nKey="savedQueryMsg" ns="search">
-            <Link className="text-primary" to="/savedQueries" />
+            <Link className="app-text-primary" to="/savedQueries" />
           </Trans>
         </p>
       </div>,

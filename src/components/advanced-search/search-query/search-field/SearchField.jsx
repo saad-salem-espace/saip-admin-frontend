@@ -104,7 +104,7 @@ function SearchField({
     return currentLang === 'ar' ? option.optionNameAr : option.optionName;
   }
   return (
-    <div className="p-4 bg-primary-01 mb-2 search-query-wrapper search-query-inputs">
+    <div className="p-4 mb-2 search-query-wrapper search-query-inputs">
       <div className="d-flex mb-4 search-fields-condition">
         <div className="position-relative mb-md-0 mb-3 me-2 search-fields searchFields">
           <span className="position-absolute saip-label smLabel">{t('searchFields')}</span>
@@ -134,7 +134,7 @@ function SearchField({
                 variant="link"
                 onClick={handleRemove}
                 className="p-0"
-                text={<FontAwesomeIcon icon={faTrashAlt} className="text-danger-dark ms-2" />}
+                text={<FontAwesomeIcon icon={faTrashAlt} className="app-text-danger-dark ms-2" />}
             /> : null
         }
       </div>

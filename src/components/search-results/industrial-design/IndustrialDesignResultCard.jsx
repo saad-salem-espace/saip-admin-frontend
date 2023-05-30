@@ -30,7 +30,7 @@ function IndustrialDesignResultCard({
     <Button
       variant="transparent"
       onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
-      className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0 w-100"
+      className="text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
       text={(
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex mb-1">

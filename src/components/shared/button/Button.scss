@@ -6,24 +6,43 @@
 
 .appBtn {
 
+  &.btn-primary {
+    color: var(--bs-white) !important;
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+    &:hover {
+      color: var(--bs-primary) !important;
+      background-color: var(--bs-white) !important;
+    }
+  }
+  
+  &.btn-link {
+    color: var(--bs-primary) !important;
+  }
+  &.btn-danger {
+    background-color: var(--bs-danger) !important;
+    border-color: var(--bs-danger) !important;
+  }
+  &.btn-primary-dark {
+    background-color: var(--bs-primary-dark) !important;
+    color: var(--bs-white) !important;
+  }
+  
+  &.btn-outline-primary {
+    border-color: var(--bs-primary) !important;
+    color: var(--bs-primary) !important;
+    &:hover,
+    &:active{
+      color: var(--bs-white) !important;
+      background-color: var(--bs-primary) !important;
+    }
+  }
+
   &.btn:first-child:active {
     border-color: transparent;
   }
 
-  &.btn-outline-primary {
-    &:hover {
-      color: $white !important;
-    }
-  }
 
-  &.btn-primary {
-    color: $white !important;
-
-    &:hover {
-      color: $primary !important;
-      background-color: $white !important;
-    }
-  }
   &.has-icon {
     padding:8px 16px !important;
   }
@@ -59,10 +78,20 @@
         margin: 0 10px 0 5px;
       }
     }
+    &:hover {
+      &::after {
+        color: var(--bs-primary);
+      }
+    }
+    &[disabled] {
+      &::after {
+        color: var(--bs-gray-600);
+      }
+    }
   }
 
   &.disabled, :disabled {
-    background-color: $gray-500 !important;
+    background-color: var(--bs-gray-500) !important;
     border: none;
   }
 }

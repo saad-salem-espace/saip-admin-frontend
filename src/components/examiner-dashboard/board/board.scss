@@ -3,6 +3,7 @@
 
 .board-container {
   .cards-container {
+    background-color: var(--bs-gray-200);
     overflow-x: scroll;
     @include scrollbar;
     @include media-breakpoint-up(lg) {
@@ -17,22 +18,22 @@
     @include border-start(0);
     &.todo {
       &::before {
-        background-color: $primary;
+        background-color: var(--bs-primary);
       }
     }
     &.in-progress {
       &::before {
-        background-color: $secondary-rio-grande;
+        background-color: var(--bs-secondary-rio-grande);
       }
     }
     &.done {
       &::before {
-        background-color: $primary-dark;
+        background-color: var(--bs-primary-dark);
       }
     }
     &.review {
       &::before {
-        background-color: $danger-dark;
+        background-color: var(--bs-danger-dark);
       }
     }
   }
@@ -43,7 +44,7 @@
   @include scrollbar;
   height: calc(100vh - 162px);
   overflow-y: auto;
-
+  background-color: var(--bs-white);
   &.expanded {
     .top-info-bar {
       .filing-date {

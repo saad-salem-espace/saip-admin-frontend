@@ -108,25 +108,46 @@ $danger-dark: $danger-dark;
 
 [data-bs-theme="light"] {
   --bs-primary: #{$turquoise} !important;
+  --bs-primary-01: #{$turquoise-01} !important;
   --bs-primary-10: #{$turquoise-10} !important;
+  --bs-primary-dark: #{$turquoise-dark} !important;
+  --bs-secondary: #{$turquoise-secondary} !important;
+  --bs-secondary-rio-grande: #{$vivid-lime-green} !important;
+  --bs-secondary-tangerine: #{$secondary-tangerine-l} !important;
+  --bs-success: #{$green} !important;
+  --bs-info: #{$cyan} !important;
+  --bs-warning: #{$secondary-tangerine} !important;
+  --bs-light: #{$gray-100} !important;
+  --bs-dark: #{$black} !important;
+  --bs-danger: #{$danger} !important;
+  --bs-danger-dark: #{$danger-dark} !important;
+  --bs-gray-200: #{$gray-200} !important;
+  --bs-white: #{$white} !important;
+  --bs-patents: #{$patents} !important;
+  --bs-trademark: #{$trademark} !important;
+  --bs-industrial-designs: #{$industrial-designs} !important;
 }
 [data-bs-theme="dark"] {
-  --bs-primary: #{$gray-800} !important;
-  --bs-primary-10: #{$gray-600} !important;
+  --bs-primary: #{$gray-700} !important;
+  --bs-primary-01: #{$gray-200} !important;
+  --bs-primary-10: #{$gray-400} !important;
   --bs-primary-dark: #{$black} !important;
-  --bs-primary-01: #{$gray-700};
-  --bs-primary-10: #{$gray-600};
-  --bs-secondary: #{$gray-600};
-  --bs-secondary-rio-grande: #{$gray-600};
-  --bs-success: #{$gray-600};
-  --bs-info: #{$gray-600};
-  --bs-warning: #{$gray-600};
-  --bs-light: #{$gray-100};
-  --bs-dark: #{$gray-600};
-  --bs-danger: #{$gray-600};
-  --bs-danger-dark: #{$gray-600};
-  --bs-white: #{$gray-600};
-  --bs-gray: #{$gray-600};
+  --bs-secondary: #{$gray-600} !important;
+  --bs-secondary-rio-grande: #{$gray} !important;
+  --bs-secondary-tangerine: #{$gray-200} !important;
+  --bs-success: #{$gray-600} !important;
+  --bs-info: #{$gray-600} !important;
+  --bs-warning: #{$gray-600} !important;
+  --bs-light: #{$gray-100} !important;
+  --bs-dark: #{$gray-600} !important;
+  --bs-danger: #{$gray} !important;
+  --bs-danger-dark: #{$gray} !important;
+  --bs-white: #{$white} !important;
+  --bs-gray: #{$gray} !important;
+  --bs-gray-200: #{$gray-200} !important;
+  --bs-patents: #{$gray-700} !important;
+  --bs-trademark: #{$gray-700} !important;
+  --bs-industrial-designs: #{$gray-700} !important;
 }
 
 // scss-docs-end theme-color-variables
@@ -541,12 +562,12 @@ $line-height-base: 1.5 !default;
 $line-height-sm: 1.25 !default;
 $line-height-lg: 2 !default;
 
-$h1-font-size: 60px;
-$h2-font-size: 40px;
-$h3-font-size: 30px;
-$h4-font-size: 24px;
-$h5-font-size: 20px;
-$h6-font-size: 16px;
+$h1-font-size: $font-size-base * 3.75;
+$h2-font-size: $font-size-base * 2.5;
+$h3-font-size: $font-size-base * 1.875;
+$h4-font-size: $font-size-base * 1.5;
+$h5-font-size: $font-size-base * 1.25;
+$h6-font-size: $font-size-base;
 // scss-docs-end font-variables
 
 // scss-docs-start font-sizes
@@ -560,13 +581,13 @@ $font-sizes: (
   8: $font-size-xxs,
   xs: $font-size-xs,
   sm: $font-size-sm,
-  15: 15px,
+  15: $font-size-base * 0.9375,
   base: $font-size-base,
-  18: 18px,
-  20: 20px,
-  21: 21px,
-  22: 22px,
-  32: 32px
+  18: $font-size-base * 1.125,
+  20: $font-size-base * 1.25,
+  21: $font-size-base * 1.3125,
+  22: $font-size-base * 1.375,
+  32: $font-size-base * 1.4375,
   );
 // scss-docs-end font-sizes
 
