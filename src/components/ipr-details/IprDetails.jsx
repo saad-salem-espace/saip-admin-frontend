@@ -352,7 +352,7 @@ function IprDetails({
           </p>
         )}
         <div
-          className="border-top py-3 px-6 d-xxl-flex align-items-start"
+          className="border-top py-3 px-6 d-xxl-flex align-items-start position-relative"
           translate="no"
         >
           <Button
@@ -387,7 +387,6 @@ function IprDetails({
               validHighlight={validHighlight}
               hideFocus={hideFocus}
               highlightTrigger={highlightTrigger}
-              className={`${searchResultParams.workstreamId === '2' || searchResultParams.workstreamId === '3' ? 'custom-position' : ''}`}
             >
               <AppTooltip
                 className="w-auto"
