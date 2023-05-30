@@ -2,8 +2,8 @@
 @import "../../../assets/styles/utilities/mixin";
 
 .dashboard-sidebar {
-  z-index: 1;
   background-color: var(--bs-white);
+  z-index: 6;
   .nav {
     .nav-link {
       margin: 18px auto 0;
