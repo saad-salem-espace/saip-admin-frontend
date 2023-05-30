@@ -48,7 +48,7 @@ const useAxios = (config, options, customInstance) => {
           throw response[0].error;
       }
     }
-  }, [response]);
+  }, [response[0].loading]);
 
   return response;
 };
