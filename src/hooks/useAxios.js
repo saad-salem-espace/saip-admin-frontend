@@ -38,7 +38,7 @@ const useAxios = (config, options, customInstance) => {
           break;
         case 'warning':
           toastify(
-            'warn',
+            'error',
             <div>
               <p className="toastifyTitle">{t(errorCode)}</p>
             </div>,
