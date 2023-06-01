@@ -1,18 +1,15 @@
-import { Outlet } from 'react-router-dom';
-import Login from './login/Login';
+import { Navigate, Outlet } from 'react-router-dom';
+import useAuth from 'hooks/useAuth';
+import { roles } from '../utils/roleMapper';
 
 const AuthenticatedRoute = () => {
-  let auth = {};
-  const urlParams = new URLSearchParams(window.location.search);
-  const appType = urlParams?.get('app_type');
-  if (appType === 'user_app') {
-    auth = localStorage.getItem(`oidc.user:${process.env.REACT_APP_KEYCLOAK_AUTHORITY_EXTERNAL}:${process.env.REACT_APP_KEYCLOAK_CLIENT_ID_EXTERNAL}`);
-  } else {
-    auth = localStorage.getItem(`oidc.user:${process.env.REACT_APP_KEYCLOAK_AUTHORITY_INTERNAL}:${process.env.REACT_APP_KEYCLOAK_CLIENT_ID_INTERNAL}`);
-  }
-  return (
-    JSON.parse(auth)?.access_token ? <Outlet /> : <Login />
-  );
+  const AppName = process.env.REACT_APP_NAME;
+
+  const { role, isAuthenticated } = useAuth();
+
+  const canAccess = AppName === 'examiner_app' ? isAuthenticated && (role === roles.EXTERNAL_EXAMINER || roles.INTERNAL_EXAMINER) : isAuthenticated && (role === roles.REGISTERED_USER || roles.PUBLIC_USER);
+
+  return (canAccess ? <Outlet /> : <Navigate to="/" />);
 };
 
 export default AuthenticatedRoute;

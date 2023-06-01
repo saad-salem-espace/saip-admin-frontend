@@ -35,13 +35,13 @@ const AppPopover = ({
   const popover = (
     <Popover id={id} className={`app ${className} ${variant} p-4`}>
       <Popover.Header className={`${variant} border-0 p-0 m-0 d-flex justify-content-between align-items-center`}>
-        <p className="fs-14 font-medium app-text-primary-dark mt-2 mb-0 col-2 text-truncate w-75">{Title}</p>
+        <p className="fs-14 font-medium app-text-primary-dark mt-2 mb-0 title">{Title}</p>
         <Button onClick={handleDismiss} size="sm" variant="link" className="transparent btn-dismiss p-0">
           <GrFormClose className="text-gray fs-22" />
         </Button>
       </Popover.Header>
       <Popover.Body className="p-0 d-flex flex-column fs-14 text-gray-700">
-        <div className="my-4">
+        <div className="my-4 fixed-content">
           {children}
         </div>
         { btnText && (
