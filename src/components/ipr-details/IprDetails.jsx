@@ -361,8 +361,7 @@ function IprDetails({
           <div className="ms-6 mb-2">
             <Badge
               text={document.BibliographicData.TrademarkLastStatus}
-              varient="secondary"
-              className="text-capitalize me-2 mb-4"
+              className="text-capitalize me-2 mb-4 app-bg-secondary"
             />
 
             <div className="d-flex justify-content-between">

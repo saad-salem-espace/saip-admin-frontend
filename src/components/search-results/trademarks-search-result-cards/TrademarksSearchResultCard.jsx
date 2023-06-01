@@ -37,7 +37,7 @@ function TrademarksSearchResultCard({
             <div>
               <div className="d-flex">
                 <Checkbox className="me-4" />
-                <Badge text={BibliographicData.TrademarkLastStatus} varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
+                <Badge text={BibliographicData.TrademarkLastStatus} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
                 <Image src={preparedGetAttachmentURL(BibliographicData.Mark)} className="rounded" />

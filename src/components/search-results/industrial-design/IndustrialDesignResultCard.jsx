@@ -37,7 +37,7 @@ function IndustrialDesignResultCard({
             <div>
               <div className="d-flex">
                 <Checkbox className="me-4" />
-                <Badge text={BibliographicData.Status} varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
+                <Badge text={BibliographicData.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
                 <Image src={preparedGetAttachmentURL(BibliographicData.OverallProductDrawing)} className="rounded" />

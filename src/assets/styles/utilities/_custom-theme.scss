@@ -172,7 +172,7 @@ $theme-colors: (
   "gray-700": $gray-700,
   "dark": $dark,
   "danger": $danger,
-  "danger-dark": $danger-dark) !default;
+  "danger-dark": $danger-dark);
 // scss-docs-end theme-colors-map
 
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
@@ -1014,7 +1014,7 @@ $form-floating-transition: opacity .1s ease-in-out,
 $form-feedback-margin-top: $form-text-margin-top !default;
 $form-feedback-font-size: $form-text-font-size !default;
 $form-feedback-font-style: $form-text-font-style !default;
-$form-feedback-valid-color: var(--bs-success) !default;
+$form-feedback-valid-color: var(--bs-success);
 $form-feedback-invalid-color: $danger !default;
 
 $form-feedback-icon-valid-color: $form-feedback-valid-color !default;
