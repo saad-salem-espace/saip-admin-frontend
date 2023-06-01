@@ -28,11 +28,13 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
 import { LIMITS } from 'utils/manageLimits';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
+
 import './style.scss';
 import style from '../shared/form/search/style.module.scss';
-
 import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
@@ -66,6 +68,7 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
+  const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -162,6 +165,19 @@ function SearchResults({ showFocusArea }) {
         indexName: 'queryString',
         indexValue: searchParams.get('q'),
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
+        onError: () => { setIsQuerySaved(false); },
+      });
+    } else {
+      setIsQuerySaved(results?.isFavourite);
+    }
+  }, [results]);
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      getInstanceByIndex({
+        indexName: 'queryString',
+        indexValue: searchParams.get('q'),
+        onSuccess: (resp) => { console.log(resp); setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
       });
     } else {
