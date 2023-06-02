@@ -69,6 +69,7 @@ function IprDetails({
     value: 'BibliographicData',
   });
   const [reachedLimit, setReachedLimit] = useState(false);
+  const [isSubmittingDownloadPdf, setIsSubmittingDownloadPdf] = useState(false);
   const { isAuthenticated } = useAuth();
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
@@ -143,6 +144,7 @@ function IprDetails({
     config,
   ), { manual: true });
 
+  const count = Number(localStorage.getItem('downloadCount') || 0);
   const fireDownloadLink = (data) => {
     const url = window.URL.createObjectURL(data?.data);
     const link = window.document.createElement('a');
@@ -150,6 +152,8 @@ function IprDetails({
     link.setAttribute('download', document?.OriginalDocuments[documentIndex - 1]?.FileName);
     window.document.body.appendChild(link);
     link.click();
+    localStorage.setItem('downloadCount', (count + 1).toString());
+    setIsSubmittingDownloadPdf(false);
   };
 
   const executeDownloadDocuments = () => {
@@ -164,9 +168,9 @@ function IprDetails({
   };
 
   const downloadOriginalDocuments = () => {
+    setIsSubmittingDownloadPdf(true);
     if (document.OriginalDocuments) {
       if (!isAuthenticated) {
-        const count = Number(localStorage.getItem('downloadCount') || 0);
         executeAfterLimitValidation(
           {
             data: {
@@ -176,15 +180,17 @@ function IprDetails({
             },
             onSuccess: () => {
               executeDownloadDocuments();
-              localStorage.setItem('downloadCount', (count + 1).toString());
             },
-            onRichLimit: () => { setReachedLimit(true); },
+            onRichLimit: () => {
+              setReachedLimit(true); setIsSubmittingDownloadPdf(false);
+            },
           },
         );
       } else {
         executeDownloadDocuments();
       }
     } else {
+      setIsSubmittingDownloadPdf(false);
       toastify(
         'error',
         <div>
@@ -430,10 +436,11 @@ function IprDetails({
                 {t('search:download')}
               </>
             )}
-            className="me-4 fs-sm my-2 my-xxl-0"
+            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 my-xxl-0`}
             onClick={
               downloadOriginalDocuments
             }
+            disabled={isSubmittingDownloadPdf}
           />
           <ModalAlert
             title={t('common:limitReached.register_now')}
