@@ -14,6 +14,26 @@ const Bookmarks = () => {
   const axiosConfig = getBookmarksApi('1', 0, Number(searchParams.get('page') || '1'), true);
   const [activeDocument, setActiveDocument] = useState(null);
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
+  const [results, setResults] = useState(null);
+
+  const getNextDocument = () => {
+    if (!results || !activeDocument) return null;
+    const index = results.findLastIndex(
+      (element) => element.data.BibliographicData.FilingNumber === activeDocument,
+    );
+    return (index === results.length - 1
+      ? null : results[index + 1].data.BibliographicData.FilingNumber);
+  };
+
+  const getPreviousDocument = () => {
+    if (!results || !activeDocument) return null;
+
+    const index = results.findIndex(
+      (element) => element.data.BibliographicData.FilingNumber === activeDocument,
+    );
+    return (index === 0 ? null : results[index - 1].data.BibliographicData.FilingNumber);
+  };
+
   const prepareBookmarks = (response) => {
     if (!response) return null;
 
@@ -54,9 +74,11 @@ const Bookmarks = () => {
           emptyState={<NoData />}
           bookmarks
           bookmarkData={prepareBookmarks}
+          setResults={setResults}
           renderedProps={{
             selectedView,
             setActiveDocument,
+            activeDocument,
           }}
         />
         {activeDocument && (
@@ -69,6 +91,8 @@ const Bookmarks = () => {
             fromFocusArea={false}
             setActiveDocument={setActiveDocument}
             activeWorkstream={1}
+            getPreviousDocument={getPreviousDocument}
+            getNextDocument={getNextDocument}
           />
         </div>
         )}
