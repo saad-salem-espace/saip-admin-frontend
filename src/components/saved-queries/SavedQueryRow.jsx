@@ -101,13 +101,13 @@ const SavedQueryRow = ({
           Title={t('deleteQuery')}
           id="deleteQuery"
           btnText={t('delete')}
-          variant="bg-primary-10"
+          variant="app-bg-primary-10"
           placement="bottom"
           btnVariant="danger"
           handleCallback={isAuthenticated ? handleDelete : handleDeleteQueryForLoggedout}
           popoverTrigger={
             <Button variant="link">
-              <BsTrash className="text-danger fs-base" />
+              <BsTrash className="app-text-danger fs-base" />
             </Button>
           }
         >

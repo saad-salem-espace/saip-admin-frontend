@@ -60,7 +60,7 @@ const FormikErrorMessage = ({ name, className }) => {
   }
 
   return (
-    <div className={`has-error text-danger small mt-2 ${className} px-1`}>
+    <div className={`has-error app-text-danger small mt-2 ${className} px-1`}>
       {errorMessage}
     </div>
   );

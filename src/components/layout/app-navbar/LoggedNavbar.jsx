@@ -14,6 +14,7 @@ import UserAvatar from '../../shared/user-avatar/UserAvatar';
 import logo from '../../../assets/images/logo-shape.png';
 import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
+import Accessibility from './shared/Accessibility';
 import { roles } from '../../../utils/roleMapper';
 
 function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
@@ -68,6 +69,7 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
               {t('navbar.ipSearch')}
             </Nav.Link>
             <RecentSearch />
+            <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
               <div className="edges-border notifications new">

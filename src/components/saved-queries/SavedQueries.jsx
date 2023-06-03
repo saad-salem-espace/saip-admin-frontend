@@ -18,6 +18,7 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import Spinner from 'components/shared/spinner/Spinner';
 import SavedQueriesTable from './SavedQueriesTable';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
+import './style.scss';
 
 const SavedQueries = () => {
   const { t } = useTranslation('queries');
@@ -75,7 +76,7 @@ const SavedQueries = () => {
     <Container fluid>
       <Row>
         <Col md={12} className="px-md-19">
-          <div className="d-flex my-8 p-8 bg-primary-01 rounded">
+          <div className="d-flex my-8 p-8 app-bg-primary-01 rounded">
             <h5 className="mb-0 mt-4">{t('myQueries')}</h5>
             <Select
               options={WorkStreamsOptions}

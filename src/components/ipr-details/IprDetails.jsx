@@ -38,6 +38,7 @@ import trademarkIprOptions from './trademarks/TrademarkIprOptions';
 import addIcon from '../../assets/images/icons/coloredAdd.svg';
 import IndustrialDesignViews from './industrial-design/IndustrialDesignViews';
 import IndustrialDesignIprOptions from './industrial-design/IndustrialDesignIprOptions';
+import './ipr-details.scss';
 
 function IprDetails({
   collapseIPR,
@@ -307,12 +308,12 @@ function IprDetails({
   };
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
-      <div className="border-bottom bg-primary-01">
+      <div className="border-bottom ipr-details-wrapper">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
           <div className="d-flex align-items-center">
             <FontAwesomeIcon
               icon={faBookmark}
-              className="me-3 f-22 text-primary-dark"
+              className="me-3 f-22 app-text-primary-dark"
             />
             <h5 className="mb-0">
               {document.BibliographicData.PublicationNumber}
@@ -360,13 +361,12 @@ function IprDetails({
           <div className="ms-6 mb-2">
             <Badge
               text={document.BibliographicData.TrademarkLastStatus}
-              varient="secondary"
-              className="text-capitalize me-2 mb-4"
+              className="text-capitalize me-2 mb-4 app-bg-secondary"
             />
 
             <div className="d-flex justify-content-between">
               <div className="me-2 mb-md-0 mb-2">
-                <h5 className="text-capitalize text-primary-dark font-regular mb-2">
+                <h5 className="text-capitalize app-text-primary-dark font-regular mb-2">
                   {document.BibliographicData.BrandNameEn}
                   <span className="d-block mt-2">
                     {document.BibliographicData.BrandNameAr}
@@ -394,7 +394,7 @@ function IprDetails({
           <div className="ms-6 mb-2">
             <div className="d-flex justify-content-between">
               <div className="me-2 mb-md-0 mb-2">
-                <h5 className="text-capitalize text-primary-dark font-regular mb-2">
+                <h5 className="text-capitalize app-text-primary-dark font-regular mb-2">
                   {document.BibliographicData.DesignTitleEN}
                   <span className="d-block mt-2">
                     {document.BibliographicData.DesignTitleAR}
@@ -483,7 +483,7 @@ function IprDetails({
                   <div>
                     <Button
                       variant="link"
-                      className="text-primary-dark font-regular fs-sm text-decoration-none"
+                      className="app-text-primary-dark font-regular fs-sm text-decoration-none"
                       onClick={() => {
                         ToggleSearchQueryMenu();
                       }}

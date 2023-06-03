@@ -1,0 +1,7 @@
+@import "../../styles/utilities/custom-theme";
+
+img {
+  [data-bs-theme="dark"] & {
+    filter: grayscale(100%) !important;
+  }
+}

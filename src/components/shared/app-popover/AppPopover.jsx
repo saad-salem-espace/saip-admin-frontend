@@ -35,7 +35,7 @@ const AppPopover = ({
   const popover = (
     <Popover id={id} className={`app ${className} ${variant} p-4`}>
       <Popover.Header className={`${variant} border-0 p-0 m-0 d-flex justify-content-between align-items-center`}>
-        <p className="fs-14 font-medium text-primary-dark mt-2 mb-0 title">{Title}</p>
+        <p className="fs-14 font-medium app-text-primary-dark mt-2 mb-0 title">{Title}</p>
         <Button onClick={handleDismiss} size="sm" variant="link" className="transparent btn-dismiss p-0">
           <GrFormClose className="text-gray fs-22" />
         </Button>

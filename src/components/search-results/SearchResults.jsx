@@ -478,10 +478,10 @@ function SearchResults({ showFocusArea }) {
                           Title={t('tips:advancedSearchTipTitle')}
                           id="advancedSearchTip"
                           btnText={t('common:gotIt')}
-                          variant="bg-primary-10"
+                          variant="app-bg-primary-10"
                           popoverTrigger={
                             <Button variant="link" className="btn-view-tip">
-                              <BsQuestionCircle className="text-primary" />
+                              <BsQuestionCircle className="app-text-primary" />
                             </Button>
                           }
                         >
@@ -502,10 +502,10 @@ function SearchResults({ showFocusArea }) {
                           Title={t('tips:allowSynonymsTipTitle')}
                           id="allowSynonymsTip"
                           btnText={t('common:gotIt')}
-                          variant="bg-primary-10"
+                          variant="app-bg-primary-10"
                           popoverTrigger={
                             <Button variant="link" className="btn-view-tip">
-                              <BsQuestionCircle className="text-primary" />
+                              <BsQuestionCircle className="app-text-primary" />
                             </Button>
                           }
                         >

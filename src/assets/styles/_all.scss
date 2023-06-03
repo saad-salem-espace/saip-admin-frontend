@@ -272,7 +272,7 @@
 }
 
 .dashedBorder {
-  border: $border-width-md dashed $primary;
+  border: $border-width-md dashed var(--bs-primary);
 }
 
 .uploadImageWrapper {

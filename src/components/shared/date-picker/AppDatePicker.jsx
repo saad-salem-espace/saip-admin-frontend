@@ -38,7 +38,7 @@ function AppDatePicker({
                 }
               }}
             />
-            <FaRegCalendarAlt className="icon-ic-calendar fs-20 text-primary" />
+            <FaRegCalendarAlt className="icon-ic-calendar fs-20 app-text-primary" />
             {(!isMulti && !range && Array.isArray(field.value) && field.value.length > 1) && (
             <WarningMessage className="mt-2" msg={t('singleValueMessage')} />
             )}
