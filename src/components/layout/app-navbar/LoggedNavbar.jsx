@@ -7,9 +7,16 @@ import { FaRegBell } from 'react-icons/fa';
 import { BsGrid, BsListUl } from 'react-icons/bs';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
+import React, {
+  useContext,
+  useEffect, useState,
+} from 'react';
+import getHistoryApi from 'apis/history/getHistoryApi';
+import useAxios from 'hooks/useAxios';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import useAuth from '../../../hooks/useAuth';
 import LanguageSwitch from './shared/LanguageSwitch';
-import RecentSearch from './shared/RecentSearch';
+import RecentSearch from './shared/recent-search/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
 import logo from '../../../assets/images/logo-shape.png';
 import MyBookmarksLink from './shared/MyBookmarksLink';
@@ -24,6 +31,36 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
     requestSignOut();
   };
   const { t } = useTranslation('layout');
+  const [history, setHistory] = useState([]);
+  const selectedWorkStream = useContext(SelectedWorkStreamIdContext);
+  const isSearchSumbitted = Number(localStorage.getItem('isSearchSubmitted'));
+  const [historyData, executeGetHistory] = useAxios(
+    getHistoryApi({
+      workstreamId: selectedWorkStream,
+      page: 1,
+      type: 'search',
+      sort: 'mostRecent',
+    }),
+    { manual: true },
+  );
+
+  useEffect(() => {
+    executeGetHistory();
+  }, [selectedWorkStream]);
+
+  useEffect(() => {
+    if (historyData.data) {
+      if (!(historyData.loading) && historyData.data.code === 200) {
+        setHistory(historyData.data.data?.data);
+      }
+    }
+  }, [historyData]);
+
+  const getNewHistory = () => {
+    if (isSearchSumbitted !== Number(localStorage.getItem('isSearchSubmitted'))) {
+      executeGetHistory();
+    }
+  };
   return (
     <Navbar
       collapseOnSelect
@@ -68,7 +105,11 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
             >
               {t('navbar.ipSearch')}
             </Nav.Link>
-            <RecentSearch />
+            <RecentSearch
+              history={history}
+              selectedWorkStream={selectedWorkStream}
+              getNewHistory={getNewHistory}
+            />
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}

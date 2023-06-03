@@ -43,7 +43,7 @@ import TrademarksSearchResultCards from './trademarks-search-result-cards/Tradem
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
 
-function SearchResults({ showFocusArea }) {
+function SearchResults({ showFocusArea, updateWorkStreamId }) {
   const { t, i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -68,6 +68,7 @@ function SearchResults({ showFocusArea }) {
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
   const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
+  const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -159,6 +160,7 @@ function SearchResults({ showFocusArea }) {
   };
 
   useEffect(() => {
+    localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
     if (!auth.isAuthenticated) {
       getInstanceByIndex({
         indexName: 'queryString',
@@ -203,6 +205,9 @@ function SearchResults({ showFocusArea }) {
     setSelectedOption(searchIdentifiers?.[0]);
   }, [searchIdentifiers]);
 
+  useEffect(() => {
+    updateWorkStreamId(searchParams.get('workstreamId'));
+  }, []);
   // const options = [
   //   {
   //     key: '1',
@@ -229,7 +234,6 @@ function SearchResults({ showFocusArea }) {
         condition: { optionParserName: defaultCondition },
         data: simpleQuery,
       }, 0, true);
-
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
@@ -445,6 +449,7 @@ function SearchResults({ showFocusArea }) {
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);
+                        updateWorkStreamId(data?.value);
                       }}
                     />
                   </div>
@@ -642,5 +647,6 @@ function SearchResults({ showFocusArea }) {
 
 SearchResults.propTypes = {
   showFocusArea: PropTypes.bool.isRequired,
+  updateWorkStreamId: PropTypes.func.isRequired,
 };
 export default SearchResults;

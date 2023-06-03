@@ -1,0 +1,44 @@
+@import "../../../../../assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
+.recent-search .dropdown-menu[data-bs-popper] {
+  top: 57px;
+  width: 300px;
+  border: none;
+  @extend .shadow;
+
+  html[dir="rtl"] & {
+    left: 0;
+    right: auto;
+  }
+
+  html[dir="ltr"] & {
+    right: 0;
+    left: auto;
+  }
+
+  @include media-breakpoint-up(md) {
+    width: 386px;
+  }
+
+  .dropdown-item {
+    border-bottom: $border-width solid $gray-300;
+  }
+}
+
+.recent-search-icon,
+.recent-search-date {
+  color: var(--bs-gray-600);
+}
+
+.recent-search-query {
+  color: var(--bs-gray-700);
+}
+
+.dropdown-item:active {
+  .recent-search-icon,
+  .recent-search-date,
+  .recent-search-query {
+    color: var(--bs-white);
+  }
+}

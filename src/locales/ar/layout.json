@@ -15,7 +15,9 @@
     "ipSearch": "منصة البحث",
     "english": "انجليزية",
     "arabic": "عربي",
-    "hightContrast": "تباين عالي"
+    "hightContrast": "تباين عالي",
+    "viewAllHistory": "عرض كل السجلات",
+    "noSearchHistory": "لم تقم بالبحث حتى الآن"
   },
   "footer": {
     "copyright": "جميع الحقوق محفوظة للهيئة السعودية للملكية الفكرية © "

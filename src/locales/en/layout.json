@@ -15,7 +15,9 @@
     "ipSearch": "IP Search",
     "english": "EN",
     "arabic": "AR",
-    "hightContrast": "High Contrast"
+    "hightContrast": "High Contrast",
+    "viewAllHistory": "View all history",
+    "noSearchHistory": "You didn't search for any keywords yet."
   },
   "footer": {
     "copyright": "All rights reserved for Saudi Authority for Intellectual Property © "

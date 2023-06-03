@@ -11,11 +11,22 @@ const Admin = lazy(() => import('components/admin-dashboard/AdminDashboard'));
 const SavedQueries = lazy(() => import('components/saved-queries/SavedQueries'));
 const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
 
-const Routes = ({ updateFocusArea, showFocusArea }) => (
+const Routes = ({ updateFocusArea, showFocusArea, updateWorkStreamId }) => (
   <ReactRoutes>
     <Route path="*" element={<NotFound />} />
-    <Route path={appRoutes.home} element={<WorkstreamSearch />} />
-    <Route path={appRoutes.search} element={<SearchResults showFocusArea={showFocusArea} />} />
+    <Route
+      path={appRoutes.home}
+      element={<WorkstreamSearch
+        updateWorkStreamId={updateWorkStreamId}
+      />}
+    />
+    <Route
+      path={appRoutes.search}
+      element={<SearchResults
+        showFocusArea={showFocusArea}
+        updateWorkStreamId={updateWorkStreamId}
+      />}
+    />
     <Route element={<AuthenticatedRoute />}>
       <Route
         path={appRoutes.dashboard}
@@ -23,19 +34,22 @@ const Routes = ({ updateFocusArea, showFocusArea }) => (
           <Dashboard
             updateFocusArea={updateFocusArea}
             showFocusArea={showFocusArea}
+            updateWorkStreamId={updateWorkStreamId}
           />
         }
       />
       <Route path={appRoutes.admin} element={<Admin />} />
     </Route>
-    <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
-    <Route path={appRoutes.home} element={<WorkstreamSearch />} />
-    <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
+    <Route
+      path={appRoutes.savedQueries}
+      element={<SavedQueries updateWorkStreamId={updateWorkStreamId} />}
+    />
   </ReactRoutes>
 );
 
 Routes.propTypes = {
   updateFocusArea: PropTypes.func.isRequired,
   showFocusArea: PropTypes.bool.isRequired,
+  updateWorkStreamId: PropTypes.func.isRequired,
 };
 export default Routes;

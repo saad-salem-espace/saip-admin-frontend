@@ -10,7 +10,7 @@ import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
 import logo from '../../../assets/images/Logo.png';
 import LanguageSwitch from './shared/LanguageSwitch';
-import RecentSearch from './shared/RecentSearch';
+// import RecentSearch from './shared/recent-search/RecentSearch';
 import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
@@ -34,7 +34,7 @@ function GuestNavbar({ lang, changeLang }) {
           {/* Right navbar */}
           <Nav>
             {/* {Recent search} */}
-            <RecentSearch />
+            {/* <RecentSearch /> */}
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}

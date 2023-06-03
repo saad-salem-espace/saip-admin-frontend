@@ -11,7 +11,7 @@ import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
 import notAssigned from '../../assets/images/not-assigned.svg';
 
-const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
+const ExaminerDashboard = ({ updateFocusArea, showFocusArea, updateWorkStreamId }) => {
   const { t } = useTranslation('dashboard');
   const linksList = [
     {
@@ -83,6 +83,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
           (element) => element.id === workstreamsData.data.data[0],
         ));
         setWorkstreamChange(true);
+        updateWorkStreamId(activeWorkstream?.id);
       }
     }
   }, [workstreamsData]);
@@ -116,6 +117,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   const changeWorkstream = (i) => {
     setActiveWorkstream(i);
     setActiveDocument(null);
+    updateWorkStreamId(i.id);
   };
 
   const DashboardView = (
@@ -160,6 +162,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
 ExaminerDashboard.propTypes = {
   updateFocusArea: PropTypes.func.isRequired,
   showFocusArea: PropTypes.bool.isRequired,
+  updateWorkStreamId: PropTypes.func.isRequired,
 };
 
 export default ExaminerDashboard;
