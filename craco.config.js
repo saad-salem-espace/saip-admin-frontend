@@ -13,7 +13,6 @@ module.exports ={
         const smp = new SpeedMeasurePlugin({outputFormat: "human", outputTarget: './measur.txt'});
 
         if (isProd) {
-            console.log("IN1");
           // Use terser-webpack-plugin for minification
           webpackConfig.optimization.minimizer = [
             new TerserPlugin({
@@ -25,17 +24,16 @@ module.exports ={
             }),
           ];
         } else {
-            console.log("IN2");
-            webpackConfig.optimization =  {
-                minimize: false,
-                minimizer: [],
-                runtimeChunk: false,
-                splitChunks: {
-                chunks(chunk) {
-                    return false
-                },
-                },
-            }
+          webpackConfig.optimization =  {
+            minimize: false,
+            minimizer: [],
+            runtimeChunk: false,
+            splitChunks: {
+              chunks(chunk) {
+                return false
+              },
+            },
+          }
         }
 
         // Remove the ReactRefreshPlugin from the plugins array
@@ -47,31 +45,13 @@ module.exports ={
             /mini-css-extract-plugin[^]*Conflicting order. Following module has been added:/,
           })
         );
-        // webpackConfig.plugins.push(
-        //   new HardSourceWebpackPlugin()
-        // );
 
         // Add the cache-loader to the rules array
         webpackConfig.module.rules.push(
-          // {
-          //   test: /\.svg$/,
-          //   use: [
-          //     {
-          //       loader: 'svg-url-loader',
-          //       options: {
-          //         limit: 10000, // Any SVG files smaller than 10kb will be converted to a data URL
-          //       },
-          //     },
-          //   ],
-          // },
-          // {
-          //   test: /\.(css|scss)$/,
-          //   use: ['style-loader', 'css-loader']
-          // },
           {
             test: /\.(js|mjs|jsx|ts|tsx)$/,
             include: paths.appSrc,
-          use: [
+            use: [
               {
                 loader: 'cache-loader',
                 options: {
