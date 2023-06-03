@@ -14,7 +14,7 @@ function BoardTitle({ setSort, activeWorkstream }) {
         <Container fluid className="ps-18 mt-1">
           <Row>
             <Col md={4} lg={6}>
-              <h4 className="text-primary-dark mt-2">
+              <h4 className="app-text-primary-dark mt-2">
                 <Trans i18nKey={activeWorkstream.BoardName}>
                   <b />
                 </Trans>

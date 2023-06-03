@@ -1,7 +1,7 @@
 @import "../../../assets/styles/utilities/custom-theme";
 
 .queries-count {
-  background-color: $gray;
+  background-color: var(--bs-gray);
   border-radius: 50%;
   color: $white;
   line-height: 1;
@@ -14,7 +14,7 @@
 }
 
 .active .queries-count{
-  background-color: $primary;
+  background-color: var(--bs-primary);
 }
 
 .notes-modal{

@@ -6,12 +6,14 @@ import { calculateDifference } from 'utils/dates';
 import { useTranslation } from 'react-i18next';
 import EditAndDeleteMenu from './edit-and-delete/EditAndDeleteMenu';
 
+import './notes.scss';
+
 function NoteView({
   note, setNotesUpdated, resetNotes, setActiveNote, disableEditor,
 }) {
   const { t } = useTranslation('notes');
   return (
-    <div className="bg-white rounded p-6 shadow-sm mb-4">
+    <div className="note-view rounded p-6 shadow-sm mb-4">
       <div className="d-flex justify-content-between">
         <div className="d-flex align-items-center mb-4 me-2">
           <UserAvatar name={note.user?.preferredUsername} size="32" className="xs-text me-4" />

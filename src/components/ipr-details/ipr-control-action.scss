@@ -4,7 +4,7 @@
 
 #google_translate_element {
   .goog-te-combo {
-    background-color: $primary-dark;
+    background-color: var(--bs-primary-dark);
     color: $white;
     border-radius: $border-radius;
     font-family: $font-regular;
@@ -29,15 +29,15 @@
       margin-top: 1rem
       }
       &::-webkit-scrollbar-track{
-      background: $primary-dark;
-      border-left: 5px solid $primary-dark;
-      border-right: 5px solid $primary-dark;
+      background: var(--bs-primary-dark);
+      border-left: 5px solid var(--bs-primary-dark);
+      border-right: 5px solid var(--bs-primary-dark);
       }
       &::-webkit-scrollbar-thumb {
       background: $gray-200;
       border-radius: 8px;
-      border-left: 5px solid $primary-dark;
-      border-right: 5px solid $primary-dark;
+      border-left: 5px solid var(--bs-primary-dark);
+      border-right: 5px solid var(--bs-primary-dark);
       }
     &:focus-visible,
     &:focus {

@@ -18,7 +18,7 @@
 
     &:first-of-type , &:last-of-type {
       .page-link {
-        color: $primary-dark;
+        color: var(--bs-primary-dark);
 
         &::after {
           font-size: $font-size-base;
@@ -57,7 +57,7 @@
 
     &.disabled {
       .page-link {
-        color: $gray-600;
+        color: var(--bs-gray-600);
       }
     }
   }

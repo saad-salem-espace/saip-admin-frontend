@@ -12,7 +12,7 @@ import i18n from 'i18next';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 
-const Bookmarks = () => {
+const BookmarkList = () => {
   const currentLang = i18n.language;
   const [searchParams] = useSearchParams();
   const axiosConfig = getBookmarksApi('1', 0, Number(searchParams.get('page') || '1'), true);
@@ -115,4 +115,4 @@ const Bookmarks = () => {
   );
 };
 
-export default Bookmarks;
+export default BookmarkList;

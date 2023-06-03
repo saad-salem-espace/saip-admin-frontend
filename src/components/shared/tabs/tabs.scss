@@ -7,53 +7,53 @@
     background-color: transparent;
   }
   &.v1 {
-    border-color: $primary;
+    border-color: var(--bs-primary);
     .btn {
       border-radius: $border-radius-lg $border-radius-lg 0 0 !important;
       border:0;
-      color: $gray !important;
+      color: var(--bs-gray) !important;
       @extend .p-4;
       &.active {
-        background-color: $primary;
+        background-color: var(--bs-primary);
         color: $white !important;
       }
     
       &:hover, &:focus, &:active {
         background-color: transparent;
-        color: $gray !important;
+        color: var(--bs-gray) !important;
     
         &.active {
-          background-color: $primary;
-          color: $white !important;
+          background-color: var(--bs-primary);
+          color: var(--bs-white) !important;
         }
       }
     }
   }
   &.v2 {
-    border-color: $gray-300;
+    border-color: var(--bs-gray-300);
     .btn {
       border-width: 0 0 3px 0;
       border-color: transparent;
       border-radius: 0;
       margin-bottom: -3px;
-      color: $gray;
+      color: var(--bs-gray);
       font-family: $font-regular;
       font-size: $font-size-base;
       @extend .py-2;
       @extend .px-4;
       &.active {
         background: transparent;
-        color: $primary !important;
-        border-color: $primary;
+        color: var(--bs-primary) !important;
+        border-color: var(--bs-primary) !important;
       }
       &:hover, &:focus, &:active {
         background-color: transparent;
-        color: $gray !important;
+        color: var(--bs-gray) !important;
     
         &.active {
           background: transparent;
-          color: $primary !important;
-          border-color: $primary;
+          color: var(--bs-primary) !important;
+          border-color: var(--bs-primary);
         }
       }
     }

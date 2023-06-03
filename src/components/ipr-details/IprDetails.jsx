@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronLeft,
   faChevronRight,
@@ -24,6 +23,11 @@ import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import SearchQueryMenu from 'components/ipr-details/shared/seacrh-query/SearchQueryMenu';
 import { useAuth } from 'react-oidc-context';
 import saveBookmarkApi from 'apis/bookmarks/saveBookmarkApi';
+import attachmentApi from 'apis/common/attachmentApi';
+import ModalAlert from 'components/shared/modal-alert/ModalAlert';
+import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
+import toastify from 'utils/toastify';
+import Bookmarks from 'components/bookmarks/Bookmarks';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -35,6 +39,7 @@ import trademarkIprOptions from './trademarks/TrademarkIprOptions';
 import addIcon from '../../assets/images/icons/coloredAdd.svg';
 import IndustrialDesignViews from './industrial-design/IndustrialDesignViews';
 import IndustrialDesignIprOptions from './industrial-design/IndustrialDesignIprOptions';
+import './ipr-details.scss';
 
 function IprDetails({
   collapseIPR,
@@ -67,6 +72,8 @@ function IprDetails({
     label: t('ipr.bibliographic'),
     value: 'BibliographicData',
   });
+  const [reachedLimit, setReachedLimit] = useState(false);
+  const { isAuthenticated } = useAuth();
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
@@ -148,6 +155,73 @@ function IprDetails({
     }
     return () => {};
   }, [document]);
+
+  let documentIndex = 0;
+
+  const config = {
+    workstreamId: searchResultParams.workstreamId,
+    fileType: 'pdf',
+    id: documentId,
+    responseType: 'blob',
+    fileName: document?.OriginalDocuments ? document?.OriginalDocuments[documentIndex]?.FileName : '',
+  };
+
+  const [, executeDownload] = useAxios(attachmentApi(
+    config,
+  ), { manual: true });
+
+  const fireDownloadLink = (data) => {
+    const url = window.URL.createObjectURL(data?.data);
+    const link = window.document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', document?.OriginalDocuments[documentIndex - 1]?.FileName);
+    window.document.body.appendChild(link);
+    link.click();
+  };
+
+  const executeDownloadDocuments = () => {
+    for (; documentIndex < document?.OriginalDocuments.length; documentIndex += 1) {
+      executeDownload({
+        ...config,
+        fileName: document?.OriginalDocuments[documentIndex]?.FileName,
+      }).then((data) => {
+        fireDownloadLink(data);
+      });
+    }
+  };
+
+  const downloadOriginalDocuments = () => {
+    if (document.OriginalDocuments) {
+      if (!isAuthenticated) {
+        const count = Number(localStorage.getItem('downloadCount') || 0);
+        executeAfterLimitValidation(
+          {
+            data: {
+              workstreamId: fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId,
+              code: LIMITS.DOWNLOAD_LIMIT,
+              count,
+            },
+            onSuccess: () => {
+              executeDownloadDocuments();
+              localStorage.setItem('downloadCount', (count + 1).toString());
+            },
+            onRichLimit: () => { setReachedLimit(true); },
+          },
+        );
+      } else {
+        executeDownloadDocuments();
+      }
+    } else {
+      toastify(
+        'error',
+        <div>
+          <p className="toastifyTitle">
+            {t('noDocument')}
+          </p>
+        </div>,
+      );
+    }
+  };
 
   if (!document) {
     return null;
@@ -258,13 +332,10 @@ function IprDetails({
   };
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
-      <div className="border-bottom bg-primary-01">
+      <div className="border-bottom ipr-details-wrapper">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
-          <div className="d-flex align-items-center">
-            <FontAwesomeIcon
-              icon={faBookmark}
-              className="me-3 f-22 text-primary-dark"
-            />
+          <div className="d-flex align-items-center position-relative">
+            <Bookmarks />
             <h5 className="mb-0">
               {document.BibliographicData.PublicationNumber}
             </h5>
@@ -311,12 +382,12 @@ function IprDetails({
           <div className="ms-6 mb-2">
             <Badge
               text={document.BibliographicData.TrademarkLastStatus}
-              varient="secondary"
-              className="text-capitalize me-2 mb-4"
+              className="text-capitalize me-2 mb-4 app-bg-secondary"
             />
+
             <div className="d-flex justify-content-between">
               <div className="me-2 mb-md-0 mb-2">
-                <h5 className="text-capitalize text-primary-dark font-regular mb-2">
+                <h5 className="text-capitalize app-text-primary-dark font-regular mb-2">
                   {document.BibliographicData.BrandNameEn}
                   <span className="d-block mt-2">
                     {document.BibliographicData.BrandNameAr}
@@ -344,7 +415,7 @@ function IprDetails({
           <div className="ms-6 mb-2">
             <div className="d-flex justify-content-between">
               <div className="me-2 mb-md-0 mb-2">
-                <h5 className="text-capitalize text-primary-dark font-regular mb-2">
+                <h5 className="text-capitalize app-text-primary-dark font-regular mb-2">
                   {document.BibliographicData.DesignTitleEN}
                   <span className="d-block mt-2">
                     {document.BibliographicData.DesignTitleAR}
@@ -376,7 +447,7 @@ function IprDetails({
           </p>
         )}
         <div
-          className="border-top py-3 px-6 d-xxl-flex align-items-start"
+          className="border-top py-3 px-6 d-xxl-flex align-items-start position-relative"
           translate="no"
         >
           <Button
@@ -391,7 +462,6 @@ function IprDetails({
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <Button
-            disabled
             variant="primary"
             text={
               <>
@@ -400,6 +470,20 @@ function IprDetails({
               </>
             }
             className="me-4 fs-sm my-2 my-xxl-0"
+            onClick={
+              downloadOriginalDocuments
+            }
+          />
+          <ModalAlert
+            title={t('common:limitReached.register_now')}
+            msg={t('common:limitReached.register_now_msg')}
+            confirmBtnText={t('common:register')}
+            className="warning"
+            handleConfirm={() => {
+              // TODO to be written once receive URL
+            }}
+            hideAlert={() => { setReachedLimit(false); }}
+            showModal={reachedLimit}
           />
           <div id="google_translate_element" className="d-inline-block" />
           {examinerView && (
@@ -411,7 +495,6 @@ function IprDetails({
               validHighlight={validHighlight}
               hideFocus={hideFocus}
               highlightTrigger={highlightTrigger}
-              className={`${searchResultParams.workstreamId === '2' || searchResultParams.workstreamId === '3' ? 'custom-position' : ''}`}
             >
               <AppTooltip
                 className="w-auto"
@@ -421,7 +504,7 @@ function IprDetails({
                   <div>
                     <Button
                       variant="link"
-                      className="text-primary-dark font-regular fs-sm text-decoration-none"
+                      className="app-text-primary-dark font-regular fs-sm text-decoration-none"
                       onClick={() => {
                         ToggleSearchQueryMenu();
                       }}

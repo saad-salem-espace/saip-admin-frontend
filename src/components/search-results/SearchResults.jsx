@@ -159,24 +159,11 @@ function SearchResults({ showFocusArea }) {
   };
 
   useEffect(() => {
-    if (!(auth && auth?.user)) {
-      getInstanceByIndex({
-        indexName: 'queryString',
-        indexValue: searchParams.get('q'),
-        onSuccess: (resp) => { setIsQuerySaved(!!resp); },
-        onError: () => { setIsQuerySaved(false); },
-      });
-    } else {
-      setIsQuerySaved(results?.isFavourite);
-    }
-  }, [results]);
-
-  useEffect(() => {
     if (!auth.isAuthenticated) {
       getInstanceByIndex({
         indexName: 'queryString',
         indexValue: searchParams.get('q'),
-        onSuccess: (resp) => { console.log(resp); setIsQuerySaved(!!resp); },
+        onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
       });
     } else {
@@ -491,10 +478,10 @@ function SearchResults({ showFocusArea }) {
                           Title={t('tips:advancedSearchTipTitle')}
                           id="advancedSearchTip"
                           btnText={t('common:gotIt')}
-                          variant="bg-primary-10"
+                          variant="app-bg-primary-10"
                           popoverTrigger={
                             <Button variant="link" className="btn-view-tip">
-                              <BsQuestionCircle className="text-primary" />
+                              <BsQuestionCircle className="app-text-primary" />
                             </Button>
                           }
                         >
@@ -515,10 +502,10 @@ function SearchResults({ showFocusArea }) {
                           Title={t('tips:allowSynonymsTipTitle')}
                           id="allowSynonymsTip"
                           btnText={t('common:gotIt')}
-                          variant="bg-primary-10"
+                          variant="app-bg-primary-10"
                           popoverTrigger={
                             <Button variant="link" className="btn-view-tip">
-                              <BsQuestionCircle className="text-primary" />
+                              <BsQuestionCircle className="app-text-primary" />
                             </Button>
                           }
                         >

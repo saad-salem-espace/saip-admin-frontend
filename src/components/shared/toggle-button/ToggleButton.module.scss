@@ -3,14 +3,14 @@
 button.toggle-btn-container {
   width: 50px;
   height: 24px;
-  background-color: $secondary;
+  background-color: var(--bs-secondary) !important;
   border-radius: 20px;
   position: relative;
-  border: $border-width-md solid $primary;
+  border: $border-width-md solid var(--bs-primary) !important;
 
   &:hover,
   &:focus {
-    background-color: $secondary;
+    background-color: var(--bs-secondary) !important;
   }
 
   .toggle-btn {
@@ -18,7 +18,7 @@ button.toggle-btn-container {
     height: 20px;
     border: none;
     border-radius: 50%;
-    background-color: $white;
+    background-color: var(--bs-white) !important;
     position: absolute;
     right: 1px;
     left: auto;
@@ -31,19 +31,20 @@ button.toggle-btn-container {
 
     &:hover,
     &:focus {
-      background-color: $white;
+      background-color: var(--bs-white) !important;
+      border-color: var(--bs-primary) !important;
       outline: none;
       box-shadow: none;
     }
   }
 
   &.off {
-    background-color: $gray-500;
-    border-color: $gray-500;
+    background-color: var(--bs-gray-500);
+    border-color: var(--bs-gray-500);
 
     &:hover,
     &:focus {
-      background-color: $gray-500;
+      background-color: var(--bs-gray-500);
     }
 
     .toggle-btn {

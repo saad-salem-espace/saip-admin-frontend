@@ -1,7 +1,7 @@
 @import "../../assets/styles/utilities/custom-theme";
 
 .play-icon {
-  color: $primary-dark;
+  color:  var(--bs-primary-dark);
 
   html[dir="rtl"] & {
     transform: rotateY(180deg);
@@ -9,9 +9,10 @@
 }
 
 .active-query, .run-query:hover {
-  background-color: $primary;
+  background-color:  var(--bs-primary);
 
   .play-icon {
-    color: $white;
+    color: var(--bs-white);
   }
 }
+

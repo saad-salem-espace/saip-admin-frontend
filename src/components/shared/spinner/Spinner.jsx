@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Spinner({ className }) {
   return (
-    <BootstrapSpinner animation="border" role="status" className={` ${className} text-primary-dark`} />
+    <BootstrapSpinner animation="border" role="status" className={` ${className} app-text-primary-dark`} />
   );
 }
 

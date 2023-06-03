@@ -7,7 +7,7 @@ function LanguageSwitch({ className, lang, changeLang }) {
   return (
     <div className={`${className} switch-language ms-2 ms-lg-0`}>
       <Dropdown>
-        <Dropdown.Toggle align="start" variant="primary-10" className="rounded appBtn has-icon btn nav-link mx-auto" size="lg" id="dropdown-basic">
+        <Dropdown.Toggle align="start" variant="link" className="rounded appBtn app-bg-primary-01 has-icon btn nav-link mx-auto" size="lg" id="dropdown-basic">
           {lang === 'ar' ? t('navbar.arabic') : t('navbar.english')}
         </Dropdown.Toggle>
         <Dropdown.Menu>

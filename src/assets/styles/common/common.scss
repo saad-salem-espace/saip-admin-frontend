@@ -1,0 +1,97 @@
+@import "../../styles/utilities/custom-theme";
+
+img {
+  [data-bs-theme="dark"] & {
+    filter: grayscale(100%) !important;
+  }
+}
+
+
+.nude-menu-options {
+  z-index: 99999;
+  top: 44px;
+  html[dir="ltr"] & {
+    left: 0;
+  }
+
+  html[dir="rtl"] & {
+    right: 0;
+  }
+}
+
+.nude-btn-has-menu {
+  color: var(--bs-primary-dark);
+  .btn {
+    &:first-child {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+    }
+    &:last-child {
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+  .adjust-align {
+    html[dir="ltr"] & {
+      margin-left: -14px;
+    }
+    html[dir="rtl"] & {
+      margin-right: -14px;
+    }
+  }
+  &:hover {
+    background-color: var(--bs-primary);
+
+    .icon-star::before {
+      color: var(--bs-white) !important;
+    }
+  }
+
+  button {
+    color: var(--bs-white);
+    width: 233px;
+    display: inline-block;
+    @extend .fs-sm;
+    font-family: $font-regular;
+    white-space: nowrap;
+    border-radius: 0;
+    border: none;
+    @extend .py-4;
+    @extend .px-4;
+
+    span:before {
+      color: var(--bs-white);
+    }
+
+    &:hover {
+      background-color: var(--bs-primary-01);
+      color: var(--bs-primary);
+
+      .icon-star, .icon-focus {
+        &::before {
+          color: var(--bs-primary) !important;
+        }
+      }
+    }
+
+    &.save-btn {
+      border-radius: $border-radius $border-radius 0 0;
+    }
+
+    &.btn-focus {
+      border-radius: 0 0 $border-radius $border-radius;
+    }
+
+    &.disabled {
+      background-color: var(--bs-gray-500);
+      color: $white;
+      opacity: 1;
+      cursor: not-allowed;
+    }
+
+    html[dir="rtl"] & {
+      width: 290px;
+      text-align: right;
+    }
+  }
+}

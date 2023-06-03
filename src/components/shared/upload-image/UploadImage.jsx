@@ -56,7 +56,7 @@ function UploadImage({
                   ) : (
                     <Button
                       variant="transparent"
-                      className="text-primary-dark f-16 w-100 py-0 border-0"
+                      className="app-text-primary-dark f-16 w-100 py-0 border-0"
                       onClick={onImageUpload}
                       {...dragProps}
                       text={
@@ -70,7 +70,7 @@ function UploadImage({
                               components={<span className="my-2 d-block" />}
                             />
                           </span>
-                          <span className="font-regular text-primary f-14 text-underline">{t('browseFiles')}</span>
+                          <span className="font-regular app-text-primary f-14 text-underline">{t('browseFiles')}</span>
                         </>
                       }
                     />
@@ -96,19 +96,19 @@ function UploadImage({
           </div>
           {errors && (
             <div>
-              {errors.acceptType && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.imgFormats')}</span>}
+              {errors.acceptType && <span className="app-text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.imgFormats')}</span>}
             </div>
           )}
           {errors
           && (
             <div>
-              {errors.maxFileSize && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxSize')}</span>}
+              {errors.maxFileSize && <span className="app-text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxSize')}</span>}
             </div>
           )}
           {errors
           && (
             <div>
-              {errors.maxNumber && <span className="text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxNumber')}</span>}
+              {errors.maxNumber && <span className="app-text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxNumber')}</span>}
             </div>
           )}
         </>
