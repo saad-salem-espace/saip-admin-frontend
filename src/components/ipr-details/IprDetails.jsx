@@ -22,6 +22,8 @@ import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import SearchQueryMenu from 'components/ipr-details/shared/seacrh-query/SearchQueryMenu';
+import { useAuth } from 'react-oidc-context';
+import saveBookmarkApi from 'apis/bookmarks/saveBookmarkApi';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -82,8 +84,23 @@ function IprDetails({
     { manual: true },
   );
 
+  const saveBookmarkParams = {
+    workstreamId: fromFocusArea
+      ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+      : searchResultParams.workstreamId,
+    filingNumber: documentId,
+  };
+  const saveBookmarkConfig = saveBookmarkApi(saveBookmarkParams, true);
+  const [saveBookmarkData, executeBookmark] = useAxios(
+    saveBookmarkConfig,
+    { manual: true },
+  );
+  console.log(saveBookmarkData);
   const [showSearchQuery, setShowSearchQuery] = useState(false);
+  const [isBookmark, setIsBookmark] = useState(false);
+  const auth = useAuth();
 
+  console.log(isBookmark);
   const ShowSearchQueryMenu = () => {
     setShowSearchQuery(true);
   };
@@ -98,7 +115,8 @@ function IprDetails({
     setDocument(null);
     if (documentId) {
       execute().then(({ data }) => {
-        setDocument(data?.data?.[0]);
+        setDocument(data?.data?.data[0]);
+        if (auth.isAuthenticated) setIsBookmark(data?.data.isBookmark);
       });
     }
   }, [documentId]);
@@ -146,6 +164,12 @@ function IprDetails({
     setSelectedView(i);
   };
 
+  const saveBookmark = () => {
+    if (auth.isAuthenticated) {
+      executeBookmark();
+    }
+  };
+  console.log(saveBookmark);
   const handleClick = () => {
     const selection = window.getSelection();
     const selectedText = selection.toString();

@@ -42,7 +42,6 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
-import getInstanceByIndex from '../../hooks/useIndexedDbWrapper';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');

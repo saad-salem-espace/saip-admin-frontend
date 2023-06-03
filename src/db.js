@@ -7,6 +7,7 @@ const db = new Dexie('SAIPDB');
 
 db.version(0.1).stores({
   [tableNames.savedQuery]: ['++id', 'queryString', 'resultCount', 'synonymous', 'workstreamId', ...timestamp].join(', '),
+  [tableNames.bookmarks]: ['++id', 'filingNumber', 'workstreamId', ...timestamp].join(', '),
 });
 
 export default db;

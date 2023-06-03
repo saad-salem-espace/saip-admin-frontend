@@ -10,6 +10,7 @@ const Dashboard = lazy(() => import('components/examiner-dashboard/ExaminerDashb
 const Admin = lazy(() => import('components/admin-dashboard/AdminDashboard'));
 const SavedQueries = lazy(() => import('components/saved-queries/SavedQueries'));
 const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
+const Bookmarks = lazy(() => import('components/bookmarks/Bookmarks'));
 
 const Routes = ({ updateFocusArea, showFocusArea }) => (
   <ReactRoutes>
@@ -31,6 +32,8 @@ const Routes = ({ updateFocusArea, showFocusArea }) => (
     <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
     <Route path={appRoutes.home} element={<WorkstreamSearch />} />
     <Route path={appRoutes.savedQueries} element={<SavedQueries />} />
+    <Route path={appRoutes.bookmarks} element={<Bookmarks />} />
+
   </ReactRoutes>
 );
 
