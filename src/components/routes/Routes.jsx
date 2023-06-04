@@ -10,6 +10,7 @@ const Dashboard = lazy(() => import('components/examiner-dashboard/ExaminerDashb
 const Admin = lazy(() => import('components/admin-dashboard/AdminDashboard'));
 const SavedQueries = lazy(() => import('components/saved-queries/SavedQueries'));
 const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
+const ViewHistory = lazy(() => import('components/view-history/ViewHistory'));
 
 const Routes = ({ updateFocusArea, showFocusArea, updateWorkStreamId }) => (
   <ReactRoutes>
@@ -43,6 +44,10 @@ const Routes = ({ updateFocusArea, showFocusArea, updateWorkStreamId }) => (
     <Route
       path={appRoutes.savedQueries}
       element={<SavedQueries updateWorkStreamId={updateWorkStreamId} />}
+    />
+    <Route
+      path={appRoutes.viewHistory}
+      element={<ViewHistory updateWorkStreamId={updateWorkStreamId} />}
     />
   </ReactRoutes>
 );

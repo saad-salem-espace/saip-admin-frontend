@@ -46,7 +46,7 @@ function RecentSearch({ history, selectedWorkStream, getNewHistory }) {
                   </Dropdown.Item>
                 ))
               }
-              <Dropdown.Item to="#/action-1" as={Link} className="text-primary text-center fs-sm py-4">{t('navbar.viewAllHistory')}</Dropdown.Item>
+              <Dropdown.Item to={routes.viewHistory} as={Link} className="text-primary text-center fs-sm py-4">{t('navbar.viewAllHistory')}</Dropdown.Item>
             </>) : (
               <p className="mb-0 px-4 py-6 text-gray text-center fs-sm">{t('navbar.noSearchHistory')}</p>
           )
