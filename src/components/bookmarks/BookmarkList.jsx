@@ -11,6 +11,9 @@ import { Formik } from 'formik';
 import i18n from 'i18next';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
+import IndexedDbAppPagination from 'components/shared/app-pagination/IndexedDbAppPagination';
+import useAuth from 'hooks/useAuth';
+import { tableNames } from 'dbConfig';
 
 const BookmarkList = () => {
   const currentLang = i18n.language;
@@ -20,6 +23,7 @@ const BookmarkList = () => {
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [results, setResults] = useState(null);
   const { cachedRequests } = useContext(CacheContext);
+  const auth = useAuth();
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
   function workstreamName(workstream) {
@@ -76,11 +80,13 @@ const BookmarkList = () => {
     setIsIPRExpanded(false);
   };
 
+  const isAuth = auth && auth.user;
+
   return (
     <Formik>
       <>
         <h3>Bookmarks</h3>
-        <AppPagination
+        {isAuth ? <AppPagination
           className="mt-8"
           axiosConfig={axiosConfig}
           defaultPage={Number(searchParams.get('page') || '1')}
@@ -95,6 +101,27 @@ const BookmarkList = () => {
             activeDocument,
           }}
         />
+          : <IndexedDbAppPagination
+              className="mt-8"
+              tableName={tableNames.bookmarks}
+              RenderedComponent={searchResult[1]}
+              indexMethod="indexByIndexName"
+              defaultPage={Number(searchParams.get('page') || '1')}
+              workstreamId="1"
+              emptyState={<NoData />}
+              indexMethodProps={{
+                sorted: 'desc',
+                sortedIndexName: 'updatedAt',
+                indexName: 'workstreamId',
+                indexValue: '1',
+              }}
+              renderedProps={{
+                selectedView,
+                setActiveDocument,
+                activeDocument,
+              }}
+              bookmarks
+          />}
         {activeDocument && (
         <div className="position-relative">
           <IprDetails

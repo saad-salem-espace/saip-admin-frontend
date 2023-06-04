@@ -22,12 +22,13 @@ import NoData from 'components/shared/empty-states/NoData';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import SearchQueryMenu from 'components/ipr-details/shared/seacrh-query/SearchQueryMenu';
 import { useAuth } from 'react-oidc-context';
-import saveBookmarkApi from 'apis/bookmarks/saveBookmarkApi';
 import attachmentApi from 'apis/common/attachmentApi';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import toastify from 'utils/toastify';
 import Bookmarks from 'components/bookmarks/Bookmarks';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -91,23 +92,11 @@ function IprDetails({
     { manual: true },
   );
 
-  const saveBookmarkParams = {
-    workstreamId: fromFocusArea
-      ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
-      : searchResultParams.workstreamId,
-    filingNumber: documentId,
-  };
-  const saveBookmarkConfig = saveBookmarkApi(saveBookmarkParams, true);
-  const [saveBookmarkData, executeBookmark] = useAxios(
-    saveBookmarkConfig,
-    { manual: true },
-  );
-  console.log(saveBookmarkData);
   const [showSearchQuery, setShowSearchQuery] = useState(false);
   const [isBookmark, setIsBookmark] = useState(false);
   const auth = useAuth();
+  const { queryInstance } = useIndexedDbWrapper(tableNames.bookmarks);
 
-  console.log(isBookmark);
   const ShowSearchQueryMenu = () => {
     setShowSearchQuery(true);
   };
@@ -124,6 +113,17 @@ function IprDetails({
       execute().then(({ data }) => {
         setDocument(data?.data?.data[0]);
         if (auth.isAuthenticated) setIsBookmark(data?.data.isBookmark);
+        else {
+          queryInstance({
+            index1: 'filingNumber',
+            value1: documentId,
+            index2: 'workstreamId',
+            value2: searchResultParams.workstreamId,
+            onFound: () => { setIsBookmark(true); },
+            onError: () => { setIsBookmark(false); },
+            notFound: () => { setIsBookmark(false); },
+          });
+        }
       });
     }
   }, [documentId]);
@@ -238,12 +238,6 @@ function IprDetails({
     setSelectedView(i);
   };
 
-  const saveBookmark = () => {
-    if (auth.isAuthenticated) {
-      executeBookmark();
-    }
-  };
-  console.log(saveBookmark);
   const handleClick = () => {
     const selection = window.getSelection();
     const selectedText = selection.toString();
@@ -335,7 +329,14 @@ function IprDetails({
       <div className="border-bottom ipr-details-wrapper">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
           <div className="d-flex align-items-center position-relative">
-            <Bookmarks />
+            <Bookmarks
+              workstreamId={fromFocusArea
+                ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+                : searchResultParams.workstreamId}
+              documentId={documentId}
+              isBookmark={isBookmark}
+              setIsBookmark={setIsBookmark}
+            />
             <h5 className="mb-0">
               {document.BibliographicData.PublicationNumber}
             </h5>
