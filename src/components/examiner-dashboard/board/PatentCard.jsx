@@ -13,6 +13,7 @@ import togglePinned from 'apis/dashboard/togglePinned';
 import { useEffect } from 'react';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import Image from 'react-bootstrap/Image';
+import { useDrag } from 'react-dnd';
 import focusIcon from '../../../assets/images/icons/focus.svg';
 import unfocusIcon from '../../../assets/images/icons/unfocused.svg';
 
@@ -22,6 +23,13 @@ const PatentCard = ({
   active, selectedFocusArea, SetSelectedFocusArea, updateFocusArea, showFocusArea,
   activeWorkstream,
 }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: 'card',
+    item: assignment,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }), []);
   const removeFromFocusArea = () => {
     updateFocusArea(false);
     localStorage.removeItem('FocusDoc');
@@ -68,8 +76,10 @@ const PatentCard = ({
   const isPinned = assignment.pinned;
   const currentLang = i18n.language;
 
+  const cardStyle = [isDragging && 'is-dragging-card', active && 'active'].filter(Boolean).join(' ');
+
   return (
-    <Card className={`${active ? 'active' : ''} patent-card mb-2`}>
+    <Card ref={drag} className={`${cardStyle} patent-card mb-2`}>
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
           <Button
