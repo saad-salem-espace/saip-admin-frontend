@@ -22,7 +22,7 @@ function TrademarksSearchResultCard({
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId'), id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '2', id: BibliographicData.FilingNumber, fileName, fileType,
     },
   );
 
