@@ -143,7 +143,7 @@ const BookmarkList = () => {
               />}
           </Formik>
         </Col>
-        <Col lg={isIPRExpanded ? 12 : 5} className={`${isIPRExpanded ? '' : 'border-start'}`}>
+        <Col lg={isIPRExpanded ? 12 : 5} className={`${!activeDocument ? '' : 'border-start'}`}>
           {activeDocument && (
             <div className="position-relative">
               <IprDetails
