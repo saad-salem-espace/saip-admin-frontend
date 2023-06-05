@@ -181,6 +181,7 @@ function IprSections({
               renderedProps={{
                 selectedView,
                 setActiveDocument,
+                bookmarks: true,
               }}
             />
           </div>

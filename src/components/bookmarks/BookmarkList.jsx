@@ -89,6 +89,7 @@ const BookmarkList = () => {
             selectedView,
             setActiveDocument,
             activeDocument,
+            bookmarks: true,
           }}
         />
           : <IndexedDbAppPagination

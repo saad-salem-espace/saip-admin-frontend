@@ -11,7 +11,7 @@ const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
   sort, onPageChange, className, resetPage, isFetching, PaginationWrapper,
-  urlPagination, setTotalElements, bookmarks,
+  urlPagination, setTotalElements,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
@@ -31,21 +31,11 @@ const AppPagination = ({
 
   const [{ data }, execute] = useAxios(axiosPaginatedConfig, { manual: true }, axiosInstance);
 
-  const prepareBookmarks = (response) => {
-    console.log(response);
-    if (!response) return null;
-
-    const bookmarkList = [];
-    response.map((bookmark) => bookmarkList.push(bookmark.data));
-
-    return { data: bookmarkList };
-  };
-
   const paginationInfo = data?.pagination || {
     totalElements: 0,
     totalPages: 0,
   };
-  const displayData = bookmarks ? prepareBookmarks(data?.data) : data?.data;
+  const displayData = data?.data;
 
   useEffect(() => {
     if (isReady.current) {
@@ -141,7 +131,6 @@ AppPagination.propTypes = {
   isFetching: PropTypes.func,
   urlPagination: PropTypes.bool,
   setTotalElements: PropTypes.func,
-  bookmarks: PropTypes.bool,
 };
 
 AppPagination.defaultProps = {
@@ -160,7 +149,6 @@ AppPagination.defaultProps = {
   isFetching: null,
   urlPagination: true,
   setTotalElements: () => {},
-  bookmarks: false,
 };
 
 export default AppPagination;
