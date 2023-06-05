@@ -12,7 +12,7 @@ const timeStamp = [
 
 const dbConfig = {
   name: 'SAIPDB',
-  version: 1,
+  version: 2,
   objectStoresMeta: [
     {
       store: tableNames.savedQuery,
