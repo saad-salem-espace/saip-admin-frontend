@@ -20,18 +20,23 @@ import Spinner from 'components/shared/spinner/Spinner';
 import QueriesTable from './QueriesTable';
 import QueryRow from './QueryRow';
 import { LONG_DATE_12H_FORMAT } from '../../constants';
+import SortHistory from './SortHistory';
 
 function ViewHistory({ updateWorkStreamId }) {
   const { t } = useTranslation('history');
 
   const [history, setHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortByMostRecent, setSortByMostRecent] = useState(true);
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
   const currentLang = i18n.language;
   const [selectedWorkStream, setSelectedWorkStream] = useState(1);
   const isMounted = useRef(false);
 
+  const changeSortBy = () => {
+    setSortByMostRecent(!sortByMostRecent);
+  };
   function workstreamName(workstream) {
     return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
   }
@@ -53,7 +58,7 @@ function ViewHistory({ updateWorkStreamId }) {
       workstreamId: selectedWorkStream.value,
       page: currentPage,
       type: 'search',
-      sort: 'mostRecent',
+      sort: sortByMostRecent ? 'mostRecent' : 'leastRecent',
     }),
     { manual: true },
   );
@@ -104,14 +109,17 @@ function ViewHistory({ updateWorkStreamId }) {
       <Row>
         <Col md={12} className="px-md-19">
           <div className="d-flex my-8 p-8 app-bg-primary-01 rounded">
-            <h5 className="mb-0 mt-4">{t('mySearchHistory')}</h5>
-            <Select
-              options={WorkStreamsOptions}
-              moduleClassName="menu"
-              selectedOption={selectedWorkStream}
-              setSelectedOption={onChangeWorkStream}
-              className="workStreams ms-3 mt-1 customSelect"
-            />
+            <div>
+              <h5 className="mb-0 mt-4">{t('mySearchHistory')}</h5>
+              <Select
+                options={WorkStreamsOptions}
+                moduleClassName="menu"
+                selectedOption={selectedWorkStream}
+                setSelectedOption={onChangeWorkStream}
+                className="workStreams ms-3 mt-1 customSelect"
+              />
+            </div>
+            <SortHistory changeSortBy={changeSortBy} />
           </div>
           <div className="mb-8">
             {
