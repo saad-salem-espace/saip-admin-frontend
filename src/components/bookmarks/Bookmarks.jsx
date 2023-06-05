@@ -14,6 +14,8 @@ import { executeAfterLimitValidation, LIMITS } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 
+import '../../assets/styles/common/partially-common.scss';
+
 function Bookmarks({
   workstreamId, documentId, isBookmark, setIsBookmark,
 }) {
@@ -167,8 +169,8 @@ function Bookmarks({
       <div className="bookmark-container position-relative">
         <AppTooltip
           placement="top"
-          tooltipId={t('search:ipr.addBookmarks')}
-          tooltipContent={t('search:ipr.addBookmarks')}
+          tooltipId={t('addBookmarks')}
+          tooltipContent={t('addBookmarks')}
           tooltipTrigger={<Button
             variant="naked"
             className="appBtn me-2 nude-btn-has-menu"
@@ -182,7 +184,7 @@ function Bookmarks({
                 disabled={isBookmark}
               >
                 <FaRegBookmark className="me-2 fs-base adjust-align" />
-                {t('search:ipr.addBookmarks')}
+                {t('addBookmarks')}
               </Button>
               <Button
                 onClick={saveBookmarkToFocus}

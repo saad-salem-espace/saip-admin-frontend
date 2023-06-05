@@ -13,6 +13,8 @@ import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import { executeAfterLimitValidation } from 'utils/manageLimits';
 import ModalAlert from '../shared/modal-alert/ModalAlert';
 
+import '../../assets/styles/common/partially-common.scss';
+
 const SaveQuery = ({
   saveQueryParams, isSaved, setIsSaved, isReady, nonAuthSaveLocally,
   customTableName, limitCode, showFocusArea, saveQueryParamsForDoc,
@@ -137,7 +139,7 @@ const SaveQuery = ({
           tooltipTrigger={
             <Button
               variant="naked"
-              className="appBtn p-0 me-4 border-0"
+              className="appBtn me-4 border-0"
               onClick={() => {
                 saveQuery('myList');
               }}
@@ -155,8 +157,8 @@ const SaveQuery = ({
         />
       ) : (
         <Button
-          className={`position-relative appBtn nude-btn-has-menu px-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
-          variant="naked text-decoration-none"
+          className={`position-relative appBtn nude-btn-has-menu px-2 me-2 text-decoration-none ${showSaveQueryMenu ? 'active' : ''}`}
+          variant="naked"
           onClick={() => setShowSaveQueryMenu(!showSaveQueryMenu)}
         >
           {

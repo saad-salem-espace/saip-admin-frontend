@@ -127,7 +127,7 @@ IndustrialDesignResultCard.propTypes = {
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
   selectedView: PropTypes.shape({
     label: PropTypes.string,
@@ -137,5 +137,6 @@ IndustrialDesignResultCard.propTypes = {
 
 IndustrialDesignResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default IndustrialDesignResultCard;

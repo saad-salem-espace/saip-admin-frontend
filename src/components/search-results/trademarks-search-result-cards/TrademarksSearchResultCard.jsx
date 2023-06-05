@@ -130,11 +130,12 @@ TrademarksSearchResultCard.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
 };
 
 TrademarksSearchResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default TrademarksSearchResultCard;
