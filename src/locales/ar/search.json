@@ -135,8 +135,7 @@
       "representativeDetails": "بيانات الوكيل"
     },
     "drawings": "الرسومات",
-    "originalDocument": "الوثائق",
-    "addBookmarks": "أضف إلى المفضلة"
+    "originalDocument": "الوثائق"
   },
   "patent": {
     "claims": "مطالب الحماية",
@@ -196,5 +195,6 @@
   "bookmarked": "تم الاضافة الى التفضيلات",
   "bookmarks": "يمكنك الوصول تفضيلاتك المحفوظة <0>تفضيلاتي</0>",
   "alreadyBookmarked": "الملف من ضمن تفضيلاتك",
-  "couldnotSaveBookmark": "لم تتم الاضافة للتفضيلات"
+  "couldnotSaveBookmark": "لم تتم الاضافة للتفضيلات",
+  "addBookmarks": "أضف إلى المفضلة"
 }

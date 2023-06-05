@@ -135,8 +135,7 @@
       "representativeDetails": "Representative details"
     },
     "drawings": "Drawings",
-    "originalDocument": "Original Document",
-    "addBookmarks": "Add to my bookmarks"
+    "originalDocument": "Original Document"
   },
   "patent": {
     "claims": "Claims",
@@ -196,5 +195,6 @@
   "bookmarked": "Bookmark saved successfully.",
   "bookmarks": "You can find all your saved bookmarks in <0>My bookmarks</0>",
   "alreadyBookmarked": "This document is already in your bookmarks.",
-  "couldnotSaveBookmark": "Could not save to your bookmarks."
+  "couldnotSaveBookmark": "Could not save to your bookmarks.",
+  "addBookmarks": "Add to my bookmarks"
 }
