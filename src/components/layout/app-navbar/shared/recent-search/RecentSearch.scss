@@ -27,8 +27,17 @@
 }
 
 .recent-search-icon,
-.recent-search-date {
+.recent-search-date
+{
   color: var(--bs-gray-600);
+}
+
+.dropdown-item.no-history  {
+  color: var(--bs-primary);
+  &:hover{
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+  }
 }
 
 .recent-search-query {
@@ -36,9 +45,11 @@
 }
 
 .dropdown-item:active {
+
   .recent-search-icon,
   .recent-search-date,
-  .recent-search-query {
+  .recent-search-query,
+  .no-history {
     color: var(--bs-white);
   }
 }
