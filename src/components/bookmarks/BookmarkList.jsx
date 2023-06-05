@@ -18,7 +18,7 @@ import { tableNames } from 'dbConfig';
 const BookmarkList = () => {
   const currentLang = i18n.language;
   const [searchParams] = useSearchParams();
-  const axiosConfig = getBookmarksApi('1', 0, Number(searchParams.get('page') || '1'), true);
+  const axiosConfig = getBookmarksApi('1', 0, true);
   const [activeDocument, setActiveDocument] = useState(null);
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [results, setResults] = useState(null);
@@ -50,15 +50,6 @@ const BookmarkList = () => {
       (element) => element.data.BibliographicData.FilingNumber === activeDocument,
     );
     return (index === 0 ? null : results[index - 1].data.BibliographicData.FilingNumber);
-  };
-
-  const prepareBookmarks = (response) => {
-    if (!response) return null;
-
-    const bookmarks = [];
-    response.map((bookmark) => bookmarks.push(bookmark.data));
-
-    return { data: bookmarks };
   };
 
   const searchResult = {
@@ -93,7 +84,6 @@ const BookmarkList = () => {
           RenderedComponent={searchResult[1]}
           emptyState={<NoData />}
           bookmarks
-          bookmarkData={prepareBookmarks}
           setResults={setResults}
           renderedProps={{
             selectedView,
