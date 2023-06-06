@@ -4,5 +4,5 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = postcss([
   postcssCached(),
-  autoprefixer()
+  autoprefixer(),
 ]);
