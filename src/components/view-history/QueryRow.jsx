@@ -9,7 +9,7 @@ const QueryRow = ({
   query, selectedWorkStream,
 }) => (
   <tr className="text-capitalize">
-    <td className="text-nowrap">{query}</td>
+    <td className="text-nowrap query">{query}</td>
     <td>
       <Link
         className="p-2 rounded run-query"

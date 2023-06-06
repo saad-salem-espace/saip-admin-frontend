@@ -8,28 +8,26 @@ function SortHistory({ changeSortBy }) {
   const { t } = useTranslation('search', 'history');
 
   return (
-    <div className="d-lg-flex align-items-center justify-content-end">
-      <span className="d-inline-block ms-4 ms-lg-0">{t('search:sortBy')}</span>
+    <div className="d-md-flex align-items-center">
+      <span className="d-inline-block text-gray fs-sm">{t('search:sortBy')}</span>
       <Formik initialValues={{
         sort: 'mostRecent',
       }}
       >
-        {({
-          values,
-        }) => (
-          <Form onChange={changeSortBy(values.sort)}>
-            <RadioButtonGroup className="mb-2" moduleClassName="customRadio">
+        {() => (
+          <Form onChange={changeSortBy}>
+            <RadioButtonGroup moduleClassName="customRadio" className="ms-md-4 ms-0">
               <RadioButton
                 name="sort"
                 value="mostRecent"
               >
-                {t('mostRecent')}
+                {t('history:mostRecent')}
               </RadioButton>
               <RadioButton
                 name="sort"
                 value="leastRecent"
               >
-                {t('leastRecent')}
+                {t('history:leastRecent')}
               </RadioButton>
             </RadioButtonGroup>
           </Form>

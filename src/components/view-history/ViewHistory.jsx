@@ -21,6 +21,7 @@ import QueriesTable from './QueriesTable';
 import QueryRow from './QueryRow';
 import { LONG_DATE_12H_FORMAT } from '../../constants';
 import SortHistory from './SortHistory';
+import './viewHistory.scss';
 
 function ViewHistory({ updateWorkStreamId }) {
   const { t } = useTranslation('history');
@@ -65,7 +66,7 @@ function ViewHistory({ updateWorkStreamId }) {
 
   useEffect(() => {
     executeGetHistory();
-  }, [currentPage, selectedWorkStream]);
+  }, [currentPage, selectedWorkStream, sortByMostRecent]);
 
   useEffect(() => {
     if (historyData.data) {
@@ -92,6 +93,7 @@ function ViewHistory({ updateWorkStreamId }) {
     getHistoryPerPage();
   }, [currentPage,
     selectedWorkStream,
+    sortByMostRecent,
   ]);
 
   useEffect(() => {
@@ -107,16 +109,16 @@ function ViewHistory({ updateWorkStreamId }) {
   return (
     <Container fluid>
       <Row>
-        <Col md={12} className="px-md-19">
-          <div className="d-flex my-8 p-8 app-bg-primary-01 rounded">
-            <div>
+        <Col md={12} className="px-md-19 view-history">
+          <div className="d-lg-flex justify-content-between my-8 p-8 app-bg-primary-01 rounded">
+            <div className="d-md-flex mb-lg-0 mb-8">
               <h5 className="mb-0 mt-4">{t('mySearchHistory')}</h5>
               <Select
                 options={WorkStreamsOptions}
                 moduleClassName="menu"
                 selectedOption={selectedWorkStream}
                 setSelectedOption={onChangeWorkStream}
-                className="workStreams ms-3 mt-1 customSelect"
+                className="workStreams ms-md-3 mt-1 customSelect"
               />
             </div>
             <SortHistory changeSortBy={changeSortBy} />
