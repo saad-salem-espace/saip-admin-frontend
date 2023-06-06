@@ -100,6 +100,13 @@ const BookmarkList = () => {
     }
   }, [workstreams]);
 
+  useEffect(() => {
+    if (!WorkStreamsOptions) return;
+    setSelectedWorkStream(WorkStreamsOptions.find(
+      (temp) => temp.value === selectedWorkStream.value,
+    ));
+  }, [currentLang]);
+
   if (!isMounted.current) return <Spinner />;
   const isAuth = auth && auth.user;
 
