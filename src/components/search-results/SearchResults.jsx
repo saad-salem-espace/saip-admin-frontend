@@ -67,7 +67,7 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
-  const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -160,9 +160,11 @@ function SearchResults({ showFocusArea }) {
 
   useEffect(() => {
     if (!auth.isAuthenticated) {
-      getInstanceByIndex({
-        indexName: 'queryString',
-        indexValue: searchParams.get('q'),
+      getInstanceByMultiIndex({
+        indecies: {
+          queryString: searchResultParams.query,
+          workstreamId: searchResultParams.workstreamId,
+        },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
       });

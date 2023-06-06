@@ -29,19 +29,6 @@ const useIndexedDbWrapper = (tableName) => {
     );
   };
 
-  const queryInstance = (instance) => {
-    db[tableName].toArray().then((records) => {
-      const results = records.filter((record) => (record[instance.index1] === instance.value1
-          && record[instance.index2] === instance.value2));
-
-      if (results.length) {
-        instance.onFound();
-      } else {
-        instance.notFound();
-      }
-    }).catch(instance.onError);
-  };
-
   const countAllByIndexName = ({ indexName, indexValue }) => (
     db[tableName].where(indexName).equals(indexValue.toString()).count()
   );
@@ -90,6 +77,12 @@ const useIndexedDbWrapper = (tableName) => {
       .then(instance.onSuccess).catch(instance.onError);
   };
 
+  const getInstanceByMultiIndex = (instance) => {
+    db[tableName].where(instance.indecies).first()
+      .then(instance.onSuccess)
+      .catch(instance.onError);
+  };
+
   const indexByIndexName = ({
     onSuccess, onError, sorted = 'NONE', sortedIndexName, indexName, indexValue, limit = 10, page = 1,
   }) => {
@@ -114,7 +107,7 @@ const useIndexedDbWrapper = (tableName) => {
     indexByIndexName,
     countAllByIndexName,
     deleteInstance,
-    queryInstance,
+    getInstanceByMultiIndex,
   };
 };
 

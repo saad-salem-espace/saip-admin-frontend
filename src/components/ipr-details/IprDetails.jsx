@@ -104,7 +104,7 @@ function IprDetails({
   const [showSearchQuery, setShowSearchQuery] = useState(false);
   const [isBookmark, setIsBookmark] = useState(false);
   const auth = useAuth();
-  const { queryInstance } = useIndexedDbWrapper(tableNames.bookmarks);
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.bookmarks);
 
   const ShowSearchQueryMenu = () => {
     setShowSearchQuery(true);
@@ -123,14 +123,13 @@ function IprDetails({
         setDocument(data?.data?.data[0]);
         if (auth.isAuthenticated) setIsBookmark(data?.data.isBookmark);
         else {
-          queryInstance({
-            index1: 'filingNumber',
-            value1: documentId,
-            index2: 'workstreamId',
-            value2: searchResultParams.workstreamId,
-            onFound: () => { setIsBookmark(true); },
+          getInstanceByMultiIndex({
+            indecies: {
+              filingNumber: documentId,
+              workstreamId: searchResultParams.workstreamId,
+            },
+            onSuccess: (resp) => { setIsBookmark(!!resp); },
             onError: () => { setIsBookmark(false); },
-            notFound: () => { setIsBookmark(false); },
           });
         }
       });
