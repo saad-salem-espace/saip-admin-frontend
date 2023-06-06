@@ -23,6 +23,7 @@ import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
 import { roles } from '../../../utils/roleMapper';
+import DropdownItem from './shared/recent-search/DropdownItem';
 
 function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
   const { user, role, requestSignOut } = useAuth();
@@ -32,11 +33,11 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
   };
   const { t } = useTranslation('layout');
   const [history, setHistory] = useState([]);
-  const selectedWorkStream = useContext(SelectedWorkStreamIdContext);
+  const { workStreamId } = useContext(SelectedWorkStreamIdContext);
   const isSearchSumbitted = Number(localStorage.getItem('isSearchSubmitted'));
   const [historyData, executeGetHistory] = useAxios(
     getHistoryApi({
-      workstreamId: selectedWorkStream,
+      workstreamId: workStreamId,
       page: 1,
       type: 'search',
       sort: 'mostRecent',
@@ -46,7 +47,7 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
 
   useEffect(() => {
     executeGetHistory();
-  }, [selectedWorkStream]);
+  }, [workStreamId]);
 
   useEffect(() => {
     if (historyData.data) {
@@ -106,10 +107,14 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
               {t('navbar.ipSearch')}
             </Nav.Link>
             <RecentSearch
-              history={history}
-              selectedWorkStream={selectedWorkStream}
               getNewHistory={getNewHistory}
-            />
+            >
+              {
+                history.map((h) => (
+                  <DropdownItem query={h?.payload?.query} timestamp={h.timestamp} />
+                ))
+              }
+            </RecentSearch>
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}

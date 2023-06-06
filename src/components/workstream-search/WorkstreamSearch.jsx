@@ -24,12 +24,11 @@ import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import surveyIcon from 'assets/images/icons/ic-survey.svg';
-import PropTypes from 'prop-types';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
 import './style.scss';
 
-function WorkstreamSearch({ updateWorkStreamId }) {
+function WorkstreamSearch() {
   const { t } = useTranslation('search');
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
@@ -114,7 +113,6 @@ function WorkstreamSearch({ updateWorkStreamId }) {
                 />
               </p>
               <WorkStreams
-                updateWorkStreamId={updateWorkStreamId}
                 selectedWorkStream={selectedWorkStream}
                 onChange={onChangeWorkstream}
               />
@@ -211,9 +209,5 @@ function WorkstreamSearch({ updateWorkStreamId }) {
     </div>
   );
 }
-
-WorkstreamSearch.propTypes = {
-  updateWorkStreamId: PropTypes.func.isRequired,
-};
 
 export default WorkstreamSearch;
