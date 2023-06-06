@@ -15,7 +15,16 @@
     "ipSearch": "منصة البحث",
     "english": "انجليزية",
     "arabic": "عربي",
-    "hightContrast": "تباين عالي"
+    "hightContrast": "تباين عالي",
+    "notifications": {
+      "headline": "إشعارات",
+      "markAllAsRead": "وضع علامة علي الكل كمفروء",
+      "aNewDocumentWith": "مستند جديد برقم إيداع ",
+      "isAssignedToYou": " تم تعيينة إليك ",
+      "isNoLongerAssignedToYou": " لم يعد مسند لك."
+    },
+    "viewAllHistory": "عرض كل السجلات",
+    "noSearchHistory": "لم تقم بالبحث حتى الآن"
   },
   "footer": {
     "copyright": "جميع الحقوق محفوظة للهيئة السعودية للملكية الفكرية © "

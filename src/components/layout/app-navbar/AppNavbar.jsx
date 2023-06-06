@@ -5,11 +5,18 @@ import GuestNavbar from './GuestNavbar';
 
 import './AppNavbar.scss';
 
-function AppNavbar({ lang, changeLang, hideFocusArea }) {
+function AppNavbar({
+  lang, changeLang, hideFocusArea, updateWorkStreamId,
+}) {
   const auth = useAuth();
   if (auth.isAuthenticated) {
     return (
-      <LoggedNavbar lang={lang} changeLang={changeLang} hideFocusArea={hideFocusArea} />
+      <LoggedNavbar
+        lang={lang}
+        changeLang={changeLang}
+        hideFocusArea={hideFocusArea}
+        updateWorkStreamId={updateWorkStreamId}
+      />
     );
   }
   return (
@@ -21,5 +28,6 @@ AppNavbar.propTypes = {
   changeLang: PropTypes.func.isRequired,
   lang: PropTypes.string.isRequired,
   hideFocusArea: PropTypes.func.isRequired,
+  updateWorkStreamId: PropTypes.func.isRequired,
 };
 export default AppNavbar;

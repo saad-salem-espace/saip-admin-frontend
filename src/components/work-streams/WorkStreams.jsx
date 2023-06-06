@@ -6,12 +6,13 @@ import PropTypes from 'prop-types';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import './workstream.scss';
 
-function WorkStreams({ selectedWorkStream, onChange }) {
+function WorkStreams({ selectedWorkStream, onChange, updateWorkStreamId }) {
   const { cachedRequests } = useContext(CacheContext);
   const [workstream] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
   const workstreams = workstream?.data;
   const handleChange = (workstreamId) => {
     onChange(workstreamId);
+    updateWorkStreamId(workstreamId);
   };
   const { i18n } = useTranslation();
   const currentLang = i18n.language;
@@ -41,6 +42,7 @@ function WorkStreams({ selectedWorkStream, onChange }) {
 WorkStreams.propTypes = {
   selectedWorkStream: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
+  updateWorkStreamId: PropTypes.func.isRequired,
 };
 
 WorkStreams.defaultProps = {

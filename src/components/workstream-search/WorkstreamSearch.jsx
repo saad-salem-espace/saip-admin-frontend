@@ -24,12 +24,12 @@ import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import surveyIcon from 'assets/images/icons/ic-survey.svg';
+import PropTypes from 'prop-types';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
-
 import './style.scss';
 
-function WorkstreamSearch() {
+function WorkstreamSearch({ updateWorkStreamId }) {
   const { t } = useTranslation('search');
   const navigate = useNavigate();
   const { cachedRequests } = useContext(CacheContext);
@@ -42,6 +42,7 @@ function WorkstreamSearch() {
   const submitRef = useRef();
   const [imageName, setImageName] = useState(null);
   const [advancedQuery, setAdvancedQuery] = useState('');
+  const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
@@ -65,6 +66,7 @@ function WorkstreamSearch() {
 
   const onSubmit = (values) => {
     let { searchQuery } = values;
+    localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
 
     if (!isAdvanced) {
       if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
@@ -112,6 +114,7 @@ function WorkstreamSearch() {
                 />
               </p>
               <WorkStreams
+                updateWorkStreamId={updateWorkStreamId}
                 selectedWorkStream={selectedWorkStream}
                 onChange={onChangeWorkstream}
               />
@@ -208,5 +211,9 @@ function WorkstreamSearch() {
     </div>
   );
 }
+
+WorkstreamSearch.propTypes = {
+  updateWorkStreamId: PropTypes.func.isRequired,
+};
 
 export default WorkstreamSearch;
