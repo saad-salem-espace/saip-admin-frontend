@@ -5,7 +5,7 @@ const headers = {
 };
 const hostURL = process.env.REACT_APP_BACKEND_URL;
 const apiInstance = axios.create({
-  baseURL: `${hostURL.endsWith('/') ?  hostURL.slice(0, -1) : hostURL}/api/v1`,
+  baseURL: `${hostURL.endsWith('/') ? hostURL.slice(0, -1) : hostURL}/api/v1`,
   headers,
 });
 
