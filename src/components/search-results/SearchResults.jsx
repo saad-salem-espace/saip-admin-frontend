@@ -27,10 +27,9 @@ import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
-import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
+import { LIMITS } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
-import toastify from 'utils/toastify';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
@@ -70,7 +69,6 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
-  const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
   const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
 
@@ -223,60 +221,7 @@ function SearchResults({ showFocusArea }) {
   //   },
   // ];
 
-  const onSavedQuerySuccess = () => {
-    toastify(
-      'success',
-      <div>
-        <p className="toastifyTitle">{t('querySaved')}</p>
-        <p className="toastText">
-          sssave
-        </p>
-      </div>,
-    );
-  };
-  const onSavedQueryError = () => {
-    toastify(
-      'error',
-      <div>
-        <p className="toastifyTitle">{t('querySaved')}</p>
-        <p className="toastText">
-          errrrrrrrrrrrrror
-        </p>
-      </div>,
-    );
-  };
-
-  const saveHistoryParams = {
-    workstreamId: searchParams.get('workstreamId'),
-    queryString: searchParams.get('q'),
-    synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
-    workstreamKey: 'workstreamId',
-    documentId: null,
-    fav: true,
-  };
-
-  console.log('LIMITS', LIMITS);
   const onSubmit = (values) => {
-    if (!auth.isAuthenticated) {
-      const workstreamId = saveHistoryParams[saveHistoryParams.workstreamKey];
-      saveSearchHistoryIDB.countAllByIndexName(
-        { indexName: saveHistoryParams.workstreamKey, indexValue: workstreamId },
-      ).then((count) => (
-        executeAfterLimitValidation(
-          {
-            data: { workstreamId: activeWorkstream, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
-            onSuccess: () => {
-              saveSearchHistoryIDB.addInstanceToDb({
-                data: saveHistoryParams,
-                onSuccess: onSavedQuerySuccess,
-                onError: onSavedQueryError,
-              });
-            },
-            onRichLimit: (limit) => { console.log('limit'); },
-            onFailure: () => { console.log('server error'); },
-          },
-        )));
-    }
     setActiveDocument(null);
     setIsIPRExpanded(false);
     if (!isAdvancedSearch) {
