@@ -15,7 +15,6 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import i18n from 'i18n';
 import Select from 'components/shared/form/select/Select';
-import PropTypes from 'prop-types';
 import Spinner from 'components/shared/spinner/Spinner';
 import QueriesTable from './QueriesTable';
 import QueryRow from './QueryRow';
@@ -23,7 +22,7 @@ import { LONG_DATE_12H_FORMAT } from '../../constants';
 import SortHistory from './SortHistory';
 import './viewHistory.scss';
 
-function ViewHistory({ updateWorkStreamId }) {
+function ViewHistory() {
   const { t } = useTranslation('history');
 
   const [history, setHistory] = useState([]);
@@ -51,7 +50,6 @@ function ViewHistory({ updateWorkStreamId }) {
     setSelectedWorkStream(WorkStreamsOptions?.find(
       (element) => element.value === i.value,
     ));
-    updateWorkStreamId(i.value);
   };
 
   const [historyData, executeGetHistory] = useAxios(
@@ -162,7 +160,5 @@ function ViewHistory({ updateWorkStreamId }) {
     </Container>
   );
 }
-ViewHistory.propTypes = {
-  updateWorkStreamId: PropTypes.func.isRequired,
-};
+
 export default ViewHistory;

@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 import Moment from 'moment';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
-import PropTypes from 'prop-types';
 import Notice from './Notice';
 import apiInstance from '../../../../apis/apiInstance';
 import getCountApi from '../../../../apis/notifications/getCountApi';
@@ -15,7 +14,7 @@ import markAllAsReadApi from '../../../../apis/notifications/markAllAsReadApi';
 import useAxios from '../../../../hooks/useAxios';
 import { LONG_DATETIME_12H_FORMAT } from '../../../../constants';
 
-function Notifications({ updateWorkStreamId }) {
+function Notifications() {
   const { t } = useTranslation();
   const [notificationsCount, setNotificationsCount] = useState(0);
   const getCountApiConfig = getCountApi(true);
@@ -127,7 +126,7 @@ function Notifications({ updateWorkStreamId }) {
                   <Notice
                     notificationId={notification.id}
                     fillingNo={stringToObject(notification.data)?.assignmentId}
-                    workstreamId={stringToObject(notification.data)?.workstreamId}
+                    workstreamId={parseInt(stringToObject(notification.data)?.workstreamId, 10)}
                     assignedDate={Moment(notification.createdAt).format(
                       LONG_DATETIME_12H_FORMAT,
                     )}
@@ -142,7 +141,6 @@ function Notifications({ updateWorkStreamId }) {
                     }
                     seen={notification.read}
                     onHide={() => setShowDropdown(false)}
-                    updateWorkStreamId={updateWorkStreamId}
                   />
                 </div>
               ))}
@@ -163,7 +161,5 @@ function Notifications({ updateWorkStreamId }) {
     </div>
   );
 }
-Notifications.propTypes = {
-  updateWorkStreamId: PropTypes.func.isRequired,
-};
+
 export default Notifications;

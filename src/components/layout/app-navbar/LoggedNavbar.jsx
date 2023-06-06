@@ -6,26 +6,26 @@ import { Link } from 'react-router-dom';
 import { BsGrid, BsListUl } from 'react-icons/bs';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
-import getHistoryApi from 'apis/history/getHistoryApi';
-import useAxios from 'hooks/useAxios';
-import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
+import React from 'react';
+// import getHistoryApi from 'apis/history/getHistoryApi';
+// import useAxios from 'hooks/useAxios';
+// import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import Notifications from './notifications/Notifications';
 import useAuth from '../../../hooks/useAuth';
 import LanguageSwitch from './shared/LanguageSwitch';
-import RecentSearch from './shared/recent-search/RecentSearch';
+// import RecentSearch from './shared/recent-search/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
 import logo from '../../../assets/images/logo-shape.png';
 import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
 import { roles } from '../../../utils/roleMapper';
+// import DropdownItem from './shared/recent-search/DropdownItem';
 
 function LoggedNavbar({
   lang,
   changeLang,
   hideFocusArea,
-  updateWorkStreamId,
 }) {
   const { user, role, requestSignOut } = useAuth();
   const logout = () => {
@@ -33,38 +33,36 @@ function LoggedNavbar({
     requestSignOut();
   };
   const { t } = useTranslation('layout');
-  const [history, setHistory] = useState([]);
-  const selectedWorkStream = useContext(SelectedWorkStreamIdContext);
-  const isSearchSumbitted = Number(localStorage.getItem('isSearchSubmitted'));
-  const [historyData, executeGetHistory] = useAxios(
-    getHistoryApi({
-      workstreamId: selectedWorkStream,
-      page: 1,
-      type: 'search',
-      sort: 'mostRecent',
-    }),
-    { manual: true },
-  );
+  // const [history, setHistory] = useState([]);
+  // const { workStreamId } = useContext(SelectedWorkStreamIdContext);
+  // const isSearchSumbitted = Number(localStorage.getItem('isSearchSubmitted'));
+  // const [historyData, executeGetHistory] = useAxios(
+  //   getHistoryApi({
+  //     workstreamId: workStreamId,
+  //     page: 1,
+  //     type: 'search',
+  //     sort: 'mostRecent',
+  //   }),
+  //   { manual: true },
+  // );
 
-  useEffect(() => {
-    executeGetHistory();
-  }, [selectedWorkStream]);
+  // useEffect(() => {
+  //   executeGetHistory();
+  // }, [workStreamId]);
 
-  useEffect(() => {
-    if (historyData.data) {
-      if (!historyData.loading && historyData.data.code === 200) {
-        setHistory(historyData.data.data?.data);
-      }
-    }
-  }, [historyData]);
+  // useEffect(() => {
+  //   if (historyData.data) {
+  //     if (!(historyData.loading) && historyData.data.code === 200) {
+  //       setHistory(historyData.data.data?.data);
+  //     }
+  //   }
+  // }, [historyData]);
 
-  const getNewHistory = () => {
-    if (
-      isSearchSumbitted !== Number(localStorage.getItem('isSearchSubmitted'))
-    ) {
-      executeGetHistory();
-    }
-  };
+  // const getNewHistory = () => {
+  //   if (isSearchSumbitted !== Number(localStorage.getItem('isSearchSubmitted'))) {
+  //     executeGetHistory();
+  //   }
+  // };
   return (
     <Navbar
       collapseOnSelect
@@ -109,15 +107,19 @@ function LoggedNavbar({
             >
               {t('navbar.ipSearch')}
             </Nav.Link>
-            <RecentSearch
-              history={history}
-              selectedWorkStream={selectedWorkStream}
+            {/* <RecentSearch
               getNewHistory={getNewHistory}
-            />
+            >
+              {
+                history.map((h) => (
+                  <DropdownItem query={h?.payload?.query} timestamp={h.timestamp} />
+                ))
+              }
+            </RecentSearch> */}
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
-              <Notifications updateWorkStreamId={updateWorkStreamId} />
+              <Notifications />
               {/* Switch language */}
               <LanguageSwitch
                 className="pe-lg-5 me-lg-5"
@@ -154,6 +156,5 @@ LoggedNavbar.propTypes = {
   changeLang: PropTypes.func.isRequired,
   lang: PropTypes.string.isRequired,
   hideFocusArea: PropTypes.func.isRequired,
-  updateWorkStreamId: PropTypes.func.isRequired,
 };
 export default LoggedNavbar;

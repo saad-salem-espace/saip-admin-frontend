@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import markAsReadApi from '../../../../apis/notifications/markAsReadApi';
 import useAxios from '../../../../hooks/useAxios';
 
@@ -16,19 +17,19 @@ function Notice({
   seen,
   notificationId,
   onHide,
-  updateWorkStreamId,
 }) {
   const { t } = useTranslation('layout');
   const [isSeen, setIsSeen] = useState(seen);
   const markAsReadApiConfig = markAsReadApi(notificationId, true);
   const navigate = useNavigate();
+  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const [, executeMarkAsSeen] = useAxios(markAsReadApiConfig, {
     manual: true,
   });
   const handleClick = () => {
     executeMarkAsSeen().then(() => {
       setIsSeen(true);
-      updateWorkStreamId(workstreamId);
+      setWorkStreamId(workstreamId);
       navigate('/dashboard');
       onHide();
     });
@@ -73,7 +74,6 @@ Notice.propTypes = {
   assigned: PropTypes.bool,
   unAssigned: PropTypes.bool,
   onHide: PropTypes.func,
-  updateWorkStreamId: PropTypes.func.isRequired,
 };
 
 Notice.defaultProps = {

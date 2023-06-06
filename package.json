@@ -69,7 +69,7 @@
   "scripts": {
     "prepare": "husky install",
     "start": "craco start --max-old-space-size=8192",
-    "build" : "craco build",
+    "build" : "[ \"$NODE_ENV\" = \"production\" ] && craco build || CI=true craco test --silent && craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext js,jsx,ts,tsx --fix"

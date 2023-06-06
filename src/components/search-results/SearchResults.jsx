@@ -30,6 +30,7 @@ import SaveQuery from 'components/save-query/SaveQuery';
 import { LIMITS } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 
@@ -43,8 +44,9 @@ import TrademarksSearchResultCards from './trademarks-search-result-cards/Tradem
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
 
-function SearchResults({ showFocusArea, updateWorkStreamId }) {
+function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
+  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -67,8 +69,7 @@ function SearchResults({ showFocusArea, updateWorkStreamId }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
-  const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
-  const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -162,9 +163,11 @@ function SearchResults({ showFocusArea, updateWorkStreamId }) {
   useEffect(() => {
     localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
     if (!auth.isAuthenticated) {
-      getInstanceByIndex({
-        indexName: 'queryString',
-        indexValue: searchParams.get('q'),
+      getInstanceByMultiIndex({
+        indecies: {
+          queryString: searchResultParams.query,
+          workstreamId: searchResultParams.workstreamId,
+        },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
       });
@@ -206,7 +209,7 @@ function SearchResults({ showFocusArea, updateWorkStreamId }) {
   }, [searchIdentifiers]);
 
   useEffect(() => {
-    updateWorkStreamId(searchParams.get('workstreamId'));
+    setWorkStreamId(searchParams.get('workstreamId'));
   }, []);
   // const options = [
   //   {
@@ -449,7 +452,7 @@ function SearchResults({ showFocusArea, updateWorkStreamId }) {
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);
-                        updateWorkStreamId(data?.value);
+                        setWorkStreamId(data?.value);
                       }}
                     />
                   </div>
@@ -647,6 +650,5 @@ function SearchResults({ showFocusArea, updateWorkStreamId }) {
 
 SearchResults.propTypes = {
   showFocusArea: PropTypes.bool.isRequired,
-  updateWorkStreamId: PropTypes.func.isRequired,
 };
 export default SearchResults;

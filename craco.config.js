@@ -1,16 +1,17 @@
+/* eslint no-param-reassign: "error" */
 const TerserPlugin = require('terser-webpack-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-const path = require('path');
-
 const isProd = process.env.NODE_ENV === 'production';
+const path = require('path');
 
 module.exports = {
   webpack: {
-    configure: (webpackConfig, { env, paths }) => {
+    configure: (webpackConfig) => {
       if (isProd) {
         // Use terser-webpack-plugin for minification
+        /* eslint no-param-reassign: "error" */
         webpackConfig.optimization.minimizer = [
           new TerserPlugin({
             terserOptions: {
@@ -26,7 +27,7 @@ module.exports = {
           minimizer: [],
           runtimeChunk: false,
           splitChunks: {
-            chunks(chunk) {
+            chunks() {
               return false;
             },
           },

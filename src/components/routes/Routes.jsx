@@ -12,21 +12,18 @@ const SavedQueries = lazy(() => import('components/saved-queries/SavedQueries'))
 const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
 const ViewHistory = lazy(() => import('components/view-history/ViewHistory'));
 
-const Routes = ({ updateFocusArea, showFocusArea, updateWorkStreamId }) => (
+const Routes = ({ updateFocusArea, showFocusArea }) => (
   <ReactRoutes>
     <Route path="*" element={<NotFound />} />
     <Route
       path={appRoutes.home}
-      element={<WorkstreamSearch updateWorkStreamId={updateWorkStreamId} />}
+      element={<WorkstreamSearch />}
     />
     <Route
       path={appRoutes.search}
-      element={
-        <SearchResults
-          showFocusArea={showFocusArea}
-          updateWorkStreamId={updateWorkStreamId}
-        />
-      }
+      element={<SearchResults
+        showFocusArea={showFocusArea}
+      />}
     />
     <Route element={<AuthenticatedRoute />}>
       <Route
@@ -35,7 +32,6 @@ const Routes = ({ updateFocusArea, showFocusArea, updateWorkStreamId }) => (
           <Dashboard
             updateFocusArea={updateFocusArea}
             showFocusArea={showFocusArea}
-            updateWorkStreamId={updateWorkStreamId}
           />
         }
       />
@@ -43,11 +39,11 @@ const Routes = ({ updateFocusArea, showFocusArea, updateWorkStreamId }) => (
     </Route>
     <Route
       path={appRoutes.savedQueries}
-      element={<SavedQueries updateWorkStreamId={updateWorkStreamId} />}
+      element={<SavedQueries />}
     />
     <Route
       path={appRoutes.viewHistory}
-      element={<ViewHistory updateWorkStreamId={updateWorkStreamId} />}
+      element={<ViewHistory />}
     />
   </ReactRoutes>
 );
@@ -55,6 +51,5 @@ const Routes = ({ updateFocusArea, showFocusArea, updateWorkStreamId }) => (
 Routes.propTypes = {
   updateFocusArea: PropTypes.func.isRequired,
   showFocusArea: PropTypes.bool.isRequired,
-  updateWorkStreamId: PropTypes.func.isRequired,
 };
 export default Routes;

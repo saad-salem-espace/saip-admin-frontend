@@ -6,7 +6,7 @@ import GuestNavbar from './GuestNavbar';
 import './AppNavbar.scss';
 
 function AppNavbar({
-  lang, changeLang, hideFocusArea, updateWorkStreamId,
+  lang, changeLang, hideFocusArea,
 }) {
   const auth = useAuth();
   if (auth.isAuthenticated) {
@@ -15,7 +15,6 @@ function AppNavbar({
         lang={lang}
         changeLang={changeLang}
         hideFocusArea={hideFocusArea}
-        updateWorkStreamId={updateWorkStreamId}
       />
     );
   }
@@ -28,6 +27,5 @@ AppNavbar.propTypes = {
   changeLang: PropTypes.func.isRequired,
   lang: PropTypes.string.isRequired,
   hideFocusArea: PropTypes.func.isRequired,
-  updateWorkStreamId: PropTypes.func.isRequired,
 };
 export default AppNavbar;
