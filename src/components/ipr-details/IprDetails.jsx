@@ -92,15 +92,6 @@ function IprDetails({
     }),
     { manual: true },
   );
-  useEffect(() => {
-    setDocument(null);
-    if (documentId) {
-      execute().then(({ data }) => {
-        setDocument(data?.data?.[0]);
-      });
-    }
-  }, [documentId]);
-
   const [showSearchQuery, setShowSearchQuery] = useState(false);
   const [isBookmark, setIsBookmark] = useState(false);
   const auth = useAuth();
