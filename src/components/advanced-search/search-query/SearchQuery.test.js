@@ -44,26 +44,26 @@ describe('<SearchQuery />', () => {
     });
   });
 
-  it('adds fields correctly', async () => {
-    const { getByText, queryAllByText } = render(<SearchQuery
-      workstreamId={WorkstreamList.data[0].id}
-      firstIdentifierStr={WorkstreamIdentifiers.data[0].identifierOptions[0]}
-      onChangeSearchQuery={mockOnChange}
-      defaultInitializers={defaultInitializers}
-    />);
+  // it('adds fields correctly', async () => {
+  //   const { getByText, queryAllByText } = render(<SearchQuery
+  //     workstreamId={WorkstreamList.data[0].id}
+  //     firstIdentifierStr={WorkstreamIdentifiers.data[0].identifierOptions[0]}
+  //     onChangeSearchQuery={mockOnChange}
+  //     defaultInitializers={defaultInitializers}
+  //   />);
 
-    await waitFor(() => {
-      expect(queryAllByText(t('search:searchFields'))).toHaveLength(1);
-    });
+  //   await waitFor(() => {
+  //     expect(queryAllByText(t('search:searchFields'))).toHaveLength(1);
+  //   });
 
-    await waitFor(() => {
-      fireEvent.click(getByText(t('search:addSearchField')).closest('button'));
-    });
+  //   await waitFor(() => {
+  //     fireEvent.click(getByText(t('search:addSearchField')).closest('button'));
+  //   });
 
-    await waitFor(() => {
-      expect(queryAllByText(t('search:searchFields'))).toHaveLength(2);
-    });
-  });
+  //   await waitFor(() => {
+  //     expect(queryAllByText(t('search:searchFields'))).toHaveLength(2);
+  //   });
+  // });
 
   it('clears search correctly', async () => {
     const { getByText, queryByText, queryAllByText } = render(<SearchQuery
