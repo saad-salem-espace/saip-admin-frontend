@@ -72,6 +72,7 @@ function SearchResults({ showFocusArea }) {
   const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
   const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
+  const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -229,6 +230,8 @@ function SearchResults({ showFocusArea }) {
     documentId: null,
     fav: true,
   };
+  const deleteIndexValue = Number(localStorage.getItem('deleteQueryHistory') || 1);
+
   const saveHistory = () => {
     if (!auth.isAuthenticated) {
       const workstreamId = saveHistoryParams[saveHistoryParams.workstreamKey];
@@ -243,16 +246,56 @@ function SearchResults({ showFocusArea }) {
                 data: saveHistoryParams,
               });
             },
-            // onRichLimit: (limit) => { console.log('limit'); },
+            onRichLimit: () => {
+              deleteInstance({
+                indexName: 'id',
+                indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
+                onSuccess: () => {
+                  saveSearchHistoryIDB.addInstanceToDb({
+                    data: saveHistoryParams,
+                    onSuccess: () => {
+                      localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
+                    }
+                    ,
+                  });
+                },
+              });
+            },
           },
         )));
     }
   };
+
+  saveSearchHistoryIDB.countAllByIndexName(
+    { indexName: saveHistoryParams.workstreamKey, indexValue: searchParams.get('workstreamId') },
+  ).then((count) => {
+    executeAfterLimitValidation(
+      {
+        data: { workstreamId: activeWorkstream, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
+        onRichLimit: (limit) => {
+          if (count > limit) {
+            const differenceCount = count - limit;
+            for (let i = 1; i <= differenceCount; i += 1) {
+              deleteInstance({
+                indexName: 'id',
+                indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
+                // eslint-disable-next-line no-loop-func
+                onSuccess: () => {
+                  localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
+                },
+              });
+            }
+          }
+        },
+      },
+    );
+  });
+
   useEffect(() => {
     saveHistory();
   }, []);
+
   const onSubmit = (values) => {
-    saveHistory();
     setActiveDocument(null);
     setIsIPRExpanded(false);
     if (!isAdvancedSearch) {
@@ -267,6 +310,8 @@ function SearchResults({ showFocusArea }) {
         condition: { optionParserName: defaultCondition },
         data: simpleQuery,
       }, 0, true);
+      saveHistoryParams.queryString = query;
+      saveHistory();
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
@@ -274,6 +319,8 @@ function SearchResults({ showFocusArea }) {
         })}`,
       });
     } else {
+      saveHistoryParams.queryString = values.searchQuery;
+      saveHistory();
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
@@ -450,7 +497,6 @@ function SearchResults({ showFocusArea }) {
     setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
     setSelectedView(viewOptions.find((temp) => temp.value === selectedView.value));
   }, [currentLang]);
-
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">

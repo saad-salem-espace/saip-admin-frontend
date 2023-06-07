@@ -11,6 +11,8 @@ import Row from 'react-bootstrap/Row';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
 import i18n from 'i18n';
+import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import Select from 'components/shared/form/select/Select';
 import { tableNames } from 'dbConfig';
@@ -80,6 +82,40 @@ function ViewHistory() {
   const searchHistoryTables = (
     SearchHistoryTables
   );
+  const deleteIndexValue = Number(localStorage.getItem('deleteQueryHistory') || 1);
+  const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
+  const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
+  if (!isAuth) {
+    saveSearchHistoryIDB.countAllByIndexName(
+      { indexName: 'workstreamId', indexValue: workStreamId },
+    ).then((count) => {
+      executeAfterLimitValidation(
+        {
+          data: { workstreamId: workStreamId, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
+          onRichLimit: (limit) => {
+            if (count > limit) {
+              console.log('in');
+              console.log(count);
+              const differenceCount = count - limit;
+              for (let i = 1; i <= differenceCount; i += 1) {
+                deleteInstance({
+                  indexName: 'id',
+                  indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
+                  // eslint-disable-next-line no-loop-func
+                  onSuccess: () => {
+                    localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
+                  },
+                  onError: () => {
+                    console.log('err');
+                  },
+                });
+              }
+            }
+          },
+        },
+      );
+    });
+  }
   return (
     <Container fluid>
       <Row>

@@ -15,7 +15,7 @@ import notAssigned from '../../assets/images/not-assigned.svg';
 const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   const { t } = useTranslation('dashboard');
 
-  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
+  const { setWorkStreamId, workStreamId } = useContext(SelectedWorkStreamIdContext);
   const linksList = [
     {
       id: 1,
@@ -86,7 +86,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
           (element) => element.id === workstreamsData.data.data[0],
         ));
         setWorkstreamChange(true);
-        setWorkStreamId(activeWorkstream?.id);
+        setWorkStreamId(activeWorkstream?.id || workStreamId);
       }
     }
   }, [workstreamsData]);
