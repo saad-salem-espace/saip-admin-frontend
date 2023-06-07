@@ -50,7 +50,7 @@
     "react-refresh": "0.11.0",
     "react-pdf": "5.0.0",
     "react-responsive-pagination": "^1.10.1",
-    "react-router-dom": "^6.8.1",
+    "react-router-dom": "6.11.2",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.0",
     "react-show-more-text": "^1.6.2",
@@ -64,8 +64,8 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "start": "craco start --max-old-space-size=4096",
-    "build" : "[ \"$NODE_ENV\" = \"production\" ] && craco build || CI=true craco test --silent && craco build",
+    "start": "craco start --max-old-space-size=8192",
+    "build": "[ \"$NODE_ENV\" = \"production\" ] && craco build || CI=true craco test --silent && craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext js,jsx,ts,tsx --fix"
