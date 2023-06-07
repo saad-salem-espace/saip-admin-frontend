@@ -35,7 +35,6 @@ function GuestNavbar({ lang, changeLang }) {
         indexValue: workStreamId,
       },
       onSuccess: (data) => { setHistory(data.data); },
-      onError: () => { console.log('err'); },
     });
   };
   useEffect(() => {
@@ -64,7 +63,11 @@ function GuestNavbar({ lang, changeLang }) {
                   <>
                     {
                     history.map((h) => (
-                      <DropdownItem query={h?.queryString} timestamp={h?.createdAt} />
+                      <DropdownItem
+                        query={h?.queryString}
+                        timestamp={h?.createdAt}
+                        workStreamId={workStreamId}
+                      />
                     ))
                   }
                   </>

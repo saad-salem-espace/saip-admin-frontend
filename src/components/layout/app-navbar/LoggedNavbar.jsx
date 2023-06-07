@@ -44,7 +44,6 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
     }),
     { manual: true },
   );
-
   useEffect(() => {
     executeGetHistory();
   }, [workStreamId]);
@@ -111,7 +110,11 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
             >
               {
                 history.map((h) => (
-                  <DropdownItem query={h?.payload?.query} timestamp={h.timestamp} />
+                  <DropdownItem
+                    query={h?.payload?.query}
+                    timestamp={h.timestamp}
+                    workStreamId={workStreamId}
+                  />
                 ))
               }
             </RecentSearch>

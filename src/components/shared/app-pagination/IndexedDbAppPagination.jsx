@@ -10,6 +10,7 @@ const IndexedDbAppPagination = ({
   defaultPage, RenderedComponent, renderedProps,
   fetchedTotalResults, emptyState, updateDependencies, setResults,
   onPageChange, tableName, limit, indexMethod, indexMethodProps, resetPage, className,
+  paginationWrapper,
 }) => {
   const [data, setData] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,7 +23,6 @@ const IndexedDbAppPagination = ({
     if (onPageChange) onPageChange(page);
     setCurrentPage(page);
   };
-
   const paginationInfo = data?.pagination || {
     per_page: 10,
     total: 0,
@@ -82,12 +82,14 @@ const IndexedDbAppPagination = ({
   return (
     <>
       {renderedComponent}
-      <Pagination
-        className={`pagination ${className}`}
-        current={currentPage}
-        total={totalNumberOfPages}
-        onPageChange={changePage}
-      />
+      <div className={paginationWrapper}>
+        <Pagination
+          className={`pagination ${className}`}
+          current={currentPage}
+          total={totalNumberOfPages}
+          onPageChange={changePage}
+        />
+      </div>
     </>
   );
 };
@@ -108,6 +110,7 @@ IndexedDbAppPagination.propTypes = {
   indexMethodProps: PropTypes.instanceOf(Object),
   resetPage: PropTypes.number,
   className: PropTypes.string,
+  paginationWrapper: PropTypes.string,
 };
 
 IndexedDbAppPagination.defaultProps = {
@@ -123,6 +126,7 @@ IndexedDbAppPagination.defaultProps = {
   indexMethodProps: {},
   resetPage: 0,
   className: '',
+  paginationWrapper: '',
 };
 
 export default IndexedDbAppPagination;

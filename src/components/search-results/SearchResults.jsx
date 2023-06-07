@@ -27,7 +27,7 @@ import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
-import { LIMITS } from 'utils/manageLimits';
+import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
@@ -69,6 +69,7 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
+  const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
   const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
 
@@ -165,7 +166,7 @@ function SearchResults({ showFocusArea }) {
     localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
     if (!auth.isAuthenticated) {
       getInstanceByIndex({
-        indexName: 'queryString',
+        indexName: 'query',
         indexValue: searchParams.get('q'),
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
@@ -220,8 +221,38 @@ function SearchResults({ showFocusArea }) {
   //     value: 'Int. Classification(IPC)',
   //   },
   // ];
-
+  const saveHistoryParams = {
+    workstreamId: searchParams.get('workstreamId'),
+    queryString: searchParams.get('q'),
+    synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
+    workstreamKey: 'workstreamId',
+    documentId: null,
+    fav: true,
+  };
+  const saveHistory = () => {
+    if (!auth.isAuthenticated) {
+      const workstreamId = saveHistoryParams[saveHistoryParams.workstreamKey];
+      saveSearchHistoryIDB.countAllByIndexName(
+        { indexName: saveHistoryParams.workstreamKey, indexValue: workstreamId },
+      ).then((count) => (
+        executeAfterLimitValidation(
+          {
+            data: { workstreamId: activeWorkstream, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
+            onSuccess: () => {
+              saveSearchHistoryIDB.addInstanceToDb({
+                data: saveHistoryParams,
+              });
+            },
+            // onRichLimit: (limit) => { console.log('limit'); },
+          },
+        )));
+    }
+  };
+  useEffect(() => {
+    saveHistory();
+  }, []);
   const onSubmit = (values) => {
+    saveHistory();
     setActiveDocument(null);
     setIsIPRExpanded(false);
     if (!isAdvancedSearch) {
