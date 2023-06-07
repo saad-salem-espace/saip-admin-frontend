@@ -20,7 +20,7 @@ function SearchResultCard({
   const [searchParams] = useSearchParams();
 
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL({
-    workstreamId: searchParams.get('workstreamId'),
+    workstreamId: searchParams.get('workstreamId') || '1',
     id: BibliographicData?.FilingNumber,
     fileName,
     fileType,
@@ -111,7 +111,7 @@ SearchResultCard.propTypes = {
       FileName: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
@@ -123,6 +123,7 @@ SearchResultCard.propTypes = {
 
 SearchResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 
 export default SearchResultCard;

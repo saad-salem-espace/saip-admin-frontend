@@ -22,7 +22,7 @@ function TrademarksSearchResultCard({
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId'), id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '2', id: BibliographicData.FilingNumber, fileName, fileType,
     },
   );
 
@@ -130,11 +130,12 @@ TrademarksSearchResultCard.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
 };
 
 TrademarksSearchResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default TrademarksSearchResultCard;
