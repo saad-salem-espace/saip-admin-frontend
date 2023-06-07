@@ -3,7 +3,9 @@
     "server_error": "Something went wrong.",
     "invalid_state": "Went into an invalid state please reload.",
     "unauthorized": "You have not authorized to perform this action.",
-    "not_found": "Requested data is not found."
+    "not_found": "Requested data is not found.",
+    "unprocessable_entity": "Failed! Invalid data format.",
+    "has_virus": "Upload Failed! Check the uploaded file for visuses."
   },
   "serverError": "Internal server error",
   "serverErrorMsg": "The server has been deserted for a while. Please be patient to try again.",
