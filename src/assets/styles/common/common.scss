@@ -1,0 +1,12 @@
+@import "../../styles/utilities/custom-theme";
+@import "../../styles/utilities/mixin";
+
+html {
+  @include scrollbar;
+}
+
+img {
+  [data-bs-theme="dark"] & {
+    filter: grayscale(100%) !important;
+  }
+}

@@ -48,11 +48,11 @@ const StatusColumn = ({
     <Col md={6} lg={4} xl={3} className="mb-5">
       <p className={`${className} h-px-24 assignment-status text-uppercase ps-3`}>
         {status}
-        <Badge varient="primary-10" className="ms-2 text-primary p-2" text={data.length} />
+        <Badge className="ms-2 app-text-primary p-2 app-bg-primary-01" text={data.length} />
       </p>
       <div className={`cards-container bg-gray-200 px-3 py-5 ${dndClasses}`} ref={drop}>
         { pinned && (
-          <p className="text-primary-dark fs-sm fw-bold">{t('dashboard:pinned')}</p>
+          <p className="app-text-primary-dark fs-sm fw-bold">{t('dashboard:pinned')}</p>
         )}
         {data.map((assignment) => (
           assignment.pinned
@@ -74,7 +74,7 @@ const StatusColumn = ({
           />
         ))}
         { others && (
-          <p className="text-primary-dark fs-sm fw-bold">{t('dashboard:others')}</p>
+          <p className="app-text-primary-dark fs-sm fw-bold">{t('dashboard:others')}</p>
         )}
         {data.map((assignment) => (
           !(assignment.pinned)

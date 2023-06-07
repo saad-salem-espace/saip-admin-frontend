@@ -98,13 +98,59 @@ $primary-10: $turquoise-10;
 $primary-dark: $turquoise-dark;
 $secondary: $turquoise-secondary;
 $secondary-rio-grande: $vivid-lime-green;
-$success: $green !default;
-$info: $cyan !default;
+$success: $green;
+$info: $cyan;
 $warning: $secondary-tangerine;
-$light: $gray-100 !default;
+$light: $gray-100;
 $dark: $black;
 $danger: $danger;
 $danger-dark: $danger-dark;
+
+[data-bs-theme="light"] {
+  --bs-primary: #{$turquoise} !important;
+  --bs-primary-01: #{$turquoise-01} !important;
+  --bs-primary-10: #{$turquoise-10} !important;
+  --bs-primary-dark: #{$turquoise-dark} !important;
+  --bs-secondary: #{$turquoise-secondary} !important;
+  --bs-secondary-rio-grande: #{$vivid-lime-green} !important;
+  --bs-secondary-tangerine: #{$secondary-tangerine-l} !important;
+  --bs-success: #{$green} !important;
+  --bs-info: #{$cyan} !important;
+  --bs-warning: #{$secondary-tangerine} !important;
+  --bs-light: #{$gray-100} !important;
+  --bs-dark: #{$black} !important;
+  --bs-danger: #{$danger} !important;
+  --bs-danger-dark: #{$danger-dark} !important;
+  --bs-gray-200: #{$gray-200} !important;
+  --bs-gray-500: #{$gray-500} !important;
+  --bs-white: #{$white} !important;
+  --bs-patents: #{$patents} !important;
+  --bs-trademark: #{$trademark} !important;
+  --bs-industrial-designs: #{$industrial-designs} !important;
+}
+[data-bs-theme="dark"] {
+  --bs-primary: #{$gray-700} !important;
+  --bs-primary-01: #{$gray-200} !important;
+  --bs-primary-10: #{$gray-400} !important;
+  --bs-primary-dark: #{$black} !important;
+  --bs-secondary: #{$gray-600} !important;
+  --bs-secondary-rio-grande: #{$gray} !important;
+  --bs-secondary-tangerine: #{$gray-200} !important;
+  --bs-success: #{$gray-600} !important;
+  --bs-info: #{$gray-600} !important;
+  --bs-warning: #{$gray-600} !important;
+  --bs-light: #{$gray-100} !important;
+  --bs-dark: #{$gray-600} !important;
+  --bs-danger: #{$gray} !important;
+  --bs-danger-dark: #{$gray} !important;
+  --bs-white: #{$white} !important;
+  --bs-gray: #{$gray} !important;
+  --bs-gray-200: #{$gray-200} !important;
+  --bs-gray-500: #{$gray-500} !important;
+  --bs-patents: #{$gray-700} !important;
+  --bs-trademark: #{$gray-700} !important;
+  --bs-industrial-designs: #{$gray-700} !important;
+}
 
 // scss-docs-end theme-color-variables
 
@@ -128,7 +174,7 @@ $theme-colors: (
   "gray-700": $gray-700,
   "dark": $dark,
   "danger": $danger,
-  "danger-dark": $danger-dark) !default;
+  "danger-dark": $danger-dark);
 // scss-docs-end theme-colors-map
 
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
@@ -518,12 +564,12 @@ $line-height-base: 1.5 !default;
 $line-height-sm: 1.25 !default;
 $line-height-lg: 2 !default;
 
-$h1-font-size: 60px;
-$h2-font-size: 40px;
-$h3-font-size: 30px;
-$h4-font-size: 24px;
-$h5-font-size: 20px;
-$h6-font-size: 16px;
+$h1-font-size: $font-size-base * 3.75;
+$h2-font-size: $font-size-base * 2.5;
+$h3-font-size: $font-size-base * 1.875;
+$h4-font-size: $font-size-base * 1.5;
+$h5-font-size: $font-size-base * 1.25;
+$h6-font-size: $font-size-base;
 // scss-docs-end font-variables
 
 // scss-docs-start font-sizes
@@ -537,13 +583,13 @@ $font-sizes: (
   8: $font-size-xxs,
   xs: $font-size-xs,
   sm: $font-size-sm,
-  15: 15px,
+  15: $font-size-base * 0.9375,
   base: $font-size-base,
-  18: 18px,
-  20: 20px,
-  21: 21px,
-  22: 22px,
-  32: 32px
+  18: $font-size-base * 1.125,
+  20: $font-size-base * 1.25,
+  21: $font-size-base * 1.3125,
+  22: $font-size-base * 1.375,
+  32: $font-size-base * 1.4375,
   );
 // scss-docs-end font-sizes
 
@@ -970,7 +1016,7 @@ $form-floating-transition: opacity .1s ease-in-out,
 $form-feedback-margin-top: $form-text-margin-top !default;
 $form-feedback-font-size: $form-text-font-size !default;
 $form-feedback-font-style: $form-text-font-style !default;
-$form-feedback-valid-color: $success !default;
+$form-feedback-valid-color: var(--bs-success);
 $form-feedback-invalid-color: $danger !default;
 
 $form-feedback-icon-valid-color: $form-feedback-valid-color !default;
@@ -1157,7 +1203,7 @@ $pagination-hover-bg: $gray-200 !default;
 $pagination-hover-border-color: $gray-300 !default;
 
 $pagination-active-color: $white;
-$pagination-active-bg: $primary-dark;
+$pagination-active-bg: var(--bs-primary-dark);
 $pagination-active-border-color: $pagination-active-bg !default;
 
 $pagination-disabled-color: $gray-600;
@@ -1568,6 +1614,7 @@ $pre-color: null !default;
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/variables-dark";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/maps";

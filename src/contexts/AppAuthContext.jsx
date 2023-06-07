@@ -8,7 +8,8 @@ import { AuthProvider, useAuth } from 'react-oidc-context';
 import { roleMapper, roles } from 'utils/roleMapper';
 import { useTranslation } from 'react-i18next';
 import toastify from 'utils/toastify';
-import Spinner from '../components/shared/spinner/Spinner';
+import { findFirstCommonElement } from 'utils/arrays';
+import Spinner from 'components/shared/spinner/Spinner';
 
 const AppName = process.env.REACT_APP_NAME;
 
@@ -148,7 +149,9 @@ const AppAuthProviderCustom = ({ children, hasSignedIn, setHasSignedIn }) => {
     }
   }, [hasSignedIn, role]);
   useEffect(() => {
-    const userRole = roleMapper(user?.profile?.clientRoles?.[0]);
+    const fetchedRoles = user?.profile?.clientRoles;
+    const mappedRoles = fetchedRoles?.map((fetchedRole) => roleMapper(fetchedRole)) || [];
+    const userRole = findFirstCommonElement(mappedRoles, AllowedRoles);
     setRole(userRole);
     if (user) {
       if (!isAuthenticated || !AllowedRoles.includes(userRole)) {

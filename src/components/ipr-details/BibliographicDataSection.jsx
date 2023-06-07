@@ -60,7 +60,7 @@ const BibliographicDataSection = ({
           className="mb-4"
         />
         <div>
-          <p className="text-primary f-14 disable-highlight">{t('classifications')}</p>
+          <p className="app-text-primary f-14 disable-highlight">{t('classifications')}</p>
           <LabelValue
             label={t('ipc')}
             value={document?.IPCClassification?.IPC?.join('; ')}
@@ -75,7 +75,7 @@ const BibliographicDataSection = ({
           customLabel
         />
         {/* <div className="d-flex">
-          <p className={`text-primary f-14 ${style.label}`}>{t('priorities')}</p>
+          <p className={`app-text-primary f-14 ${style.label}`}>{t('priorities')}</p>
           <p className="f-12">
             <HandleEmptyAttribute checkOn={document?.Priorities} />
           </p>
@@ -98,7 +98,7 @@ const BibliographicDataSection = ({
           label={t('publishedAs')}
           value={document?.Priorities?.PublishedAs}
         />
-        <p className="text-primary f-14 disable-highlight">{t('abstract')}</p>
+        <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
         <div className="fs-sm">
           <ShowMore>
             <HandleEmptyAttribute checkOn={BibliographicData?.ApplicationAbstract.join(' ')} />

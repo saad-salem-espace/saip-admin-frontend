@@ -2,7 +2,7 @@
 
 .result-card {
   &:hover, &.active {
-    background-color: $primary-01;
+    background-color: var(--bs-primary-01);
   }
 }
 

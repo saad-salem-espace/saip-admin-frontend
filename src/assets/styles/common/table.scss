@@ -10,9 +10,9 @@
 
   th {
     font-family: $font-medium;
-    color: $primary-dark;
+    color: var(--bs-primary-dark);
     font-size: $font-size-base;
-    background-color: $white;
+    background-color: var(--bs-white);
     @extend .pe-8;
     @extend .py-8;
     white-space: nowrap;
@@ -36,10 +36,10 @@
   }
 
   tr {
-    background-color: #FAFCFB;
+    background-color: var(--bs-primary-01);
 
     &:nth-child(2n) {
-      background-color: $white;
+      background-color: var(--bs-white);
     }
   }
 
