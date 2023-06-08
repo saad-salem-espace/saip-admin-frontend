@@ -16,7 +16,7 @@
     height: 100%;
     width: 100%;
     box-shadow: none;
-    border: $border-width solid $gray-400;
+    border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
     @extend .p-4;
 
@@ -31,13 +31,13 @@
     }
 
     +div {
-      border: $border-width solid $gray-400 !important;
+      border: $border-width solid var(--bs-gray-400) !important;
       @extend .p-4;
       width: 100%;
 
       [class$="control"] {
         height: 56px;
-        border-color: $gray-400;
+        border-color: var(--bs-gray-400);
         margin-bottom: 0;
         cursor: text;
         box-shadow: none;
@@ -61,7 +61,7 @@
       }
 
       [class$="-option"] {
-        color: $gray-700;
+        color: var(--bs-gray-700);
         font-family: $font-regular;
       }
 
@@ -79,7 +79,7 @@
           font-family: FontAwesomeRegular;
           font-size: 22px;
           margin-right: 10px;
-          color: $gray-400;
+          color: var(--bs-gray-400);
 
           html[dir="rtl"] & {
             margin-right: 0;
@@ -92,7 +92,7 @@
         background-color: transparent;
 
         &:hover {
-          background-color: $gray-200;
+          background-color: var(--bs-gray-200);
         }
 
         &::before {
@@ -144,7 +144,7 @@
 
   &.error {
     button {
-      border: $border-width solid $danger;
+      border: $border-width solid var(--bs-danger);
 
       &::after {
         content: "\f06a";

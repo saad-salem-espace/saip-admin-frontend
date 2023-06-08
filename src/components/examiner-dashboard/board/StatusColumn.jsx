@@ -39,9 +39,9 @@ const StatusColumn = ({
   };
 
   const dndClasses = [
-    canDrop && isOver && 'bg-dark',
+    canDrop && isOver && 'app-bg-primary-15',
     !isOver && canDrop && '',
-    isOver && !canDrop && 'bg-danger',
+    isOver && !canDrop && 'app-bg-danger-15',
   ].filter(Boolean).join(' ');
 
   return (

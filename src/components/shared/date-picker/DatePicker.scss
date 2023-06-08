@@ -168,7 +168,7 @@
 
   &.error {
     .rmdp-input {
-      border-color: $danger;
+      border-color: var(--bs-danger);
       html[dir="ltr"] & {
         padding-right: 65px !important;
       }
@@ -180,7 +180,7 @@
     &::after {
       content: "\f06a";
       font-family: FontAwesomeSolid;
-      color: $danger;
+      color: var(--bs-danger);
       position: absolute;
       right: 44px;
       top: 17px;
@@ -189,13 +189,13 @@
 
   &.warning {
     .rmdp-input {
-      border-color: $secondary-tangerine;
+      border-color: var(--bs-secondary-tangerine);
     }
 
     &::after {
       content: "\f071";
       font-family: FontAwesomeSolid;
-      color: $secondary-tangerine;;
+      color: var(--bs-secondary-tangerine);
       position: absolute;
       right: 44px;
       top: 17px;

@@ -76,7 +76,7 @@ const PatentCard = ({
   const isPinned = assignment.pinned;
   const currentLang = i18n.language;
 
-  const cardStyle = [isDragging && 'is-dragging-card', active && 'active'].filter(Boolean).join(' ');
+  const cardStyle = [isDragging && 'is-dragging-card invisible', active && 'active'].filter(Boolean).join(' ');
 
   return (
     <Card ref={drag} className={`${cardStyle} patent-card mb-2`}>
