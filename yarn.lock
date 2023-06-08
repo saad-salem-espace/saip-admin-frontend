@@ -7190,6 +7190,11 @@ is-plain-obj@^3.0.0:
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-3.0.0.tgz#af6f2ea14ac5a646183a5bbdb5baabbc156ad9d7"
   integrity sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==
 
+is-plain-obj@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-4.1.0.tgz#d65025edec3657ce032fd7db63c97883eaed71f0"
+  integrity sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==
+
 is-plain-object@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-2.0.4.tgz#2c163b3fafb1b606d9d17928f05c2a1c38e07677"
@@ -13155,6 +13160,19 @@ which@^2.0.1, which@^2.0.2:
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
+
+wild-wild-parser@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/wild-wild-parser/-/wild-wild-parser-4.0.0.tgz#31763aba182ff0b31704cb8031cbe9b49b4423b4"
+  integrity sha512-budu64hUDKRzh5yDe8T9Rxgwvz1JCWbea/3u7/D6uNPqE00J+hm0kNZhpFfCGgKkUhDKL47Jci9oPBHRKbO+oA==
+
+wild-wild-path@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/wild-wild-path/-/wild-wild-path-4.0.0.tgz#7c59da08e65248c02539fedd519381c6737e2b78"
+  integrity sha512-uXJ5cRet416kOLSAoUzHQx4B3kFL39o1pkw3/KjKf2c1UWi094JIEfC2Gh6NWYb3RWlEZuD3p6S0j0VUYZsAbw==
+  dependencies:
+    is-plain-obj "^4.1.0"
+    wild-wild-parser "^4.0.0"
 
 wildcard@^2.0.0:
   version "2.0.1"
