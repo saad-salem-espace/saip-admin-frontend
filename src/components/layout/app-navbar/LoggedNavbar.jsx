@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { BsGrid, BsListUl } from 'react-icons/bs';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
-import Notifications from './notifications/Notifications';
 import React, {
   useContext,
   useEffect, useState,
@@ -14,6 +13,7 @@ import React, {
 import getHistoryApi from 'apis/history/getHistoryApi';
 import useAxios from 'hooks/useAxios';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
+import Notifications from './notifications/Notifications';
 import useAuth from '../../../hooks/useAuth';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
