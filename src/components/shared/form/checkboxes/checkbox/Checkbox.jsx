@@ -14,6 +14,7 @@ function Checkbox({
   className,
   showError,
   errorClassName,
+  onChange,
 }) {
   return (
     <div className={className}>
@@ -25,8 +26,9 @@ function Checkbox({
           name={name}
           id={fieldFor}
           disabled={disabled}
-          checked={checked}
           className={style.checkbox}
+          {...(checked && { checked })}
+          {...(onChange && { onChange })}
         />
         {text}
         <span className={`${style.checkmark}`}>
@@ -48,6 +50,7 @@ Checkbox.propTypes = {
   className: PropTypes.string,
   showError: PropTypes.bool,
   errorClassName: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 Checkbox.defaultProps = {
@@ -57,6 +60,7 @@ Checkbox.defaultProps = {
   className: '',
   showError: true,
   errorClassName: '',
+  onChange: null,
 };
 
 export default Checkbox;
