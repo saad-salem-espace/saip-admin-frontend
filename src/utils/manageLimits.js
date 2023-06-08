@@ -8,6 +8,13 @@ const LIMITS = {
   CSV_EXPORT_LIMIT: 'csv_export_limit',
 };
 
+/**
+ *
+ * @param data {{workstreamId: string, code: string, count: number}}
+ * @param onSuccess {function}
+ * @param onRichLimit {function}
+ * @param onFailure {function}
+ */
 const executeAfterLimitValidation = ({
   data, onSuccess, onRichLimit, onFailure,
 }) => {
