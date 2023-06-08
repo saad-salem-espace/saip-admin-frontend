@@ -3,10 +3,10 @@ import {
 } from 'react-bootstrap/';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { FaRegBell } from 'react-icons/fa';
 import { BsGrid, BsListUl } from 'react-icons/bs';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
+import Notifications from './notifications/Notifications';
 import React, {
   useContext,
   useEffect, useState,
@@ -25,7 +25,11 @@ import Accessibility from './shared/Accessibility';
 import { roles } from '../../../utils/roleMapper';
 import DropdownItem from './shared/recent-search/DropdownItem';
 
-function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
+function LoggedNavbar({
+  lang,
+  changeLang,
+  hideFocusArea,
+}) {
   const { user, role, requestSignOut } = useAuth();
   const logout = () => {
     hideFocusArea();
@@ -121,12 +125,7 @@ function LoggedNavbar({ lang, changeLang, hideFocusArea }) {
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
-              <div className="edges-border notifications new">
-                <Nav.Link to="/" disabled as={Link} variant="transparent">
-                  <FaRegBell className="icon m-0" />
-                  <div className="number-notifications">99+</div>
-                </Nav.Link>
-              </div>
+              <Notifications />
               {/* Switch language */}
               <LanguageSwitch
                 className="pe-lg-5 me-lg-5"
