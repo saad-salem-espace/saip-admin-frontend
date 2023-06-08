@@ -94,8 +94,6 @@ function ViewHistory() {
           data: { workstreamId: workStreamId, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
           onRichLimit: (limit) => {
             if (count > limit) {
-              console.log('in');
-              console.log(count);
               const differenceCount = count - limit;
               for (let i = 1; i <= differenceCount; i += 1) {
                 deleteInstance({
@@ -104,9 +102,6 @@ function ViewHistory() {
                   // eslint-disable-next-line no-loop-func
                   onSuccess: () => {
                     localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
-                  },
-                  onError: () => {
-                    console.log('err');
                   },
                 });
               }
