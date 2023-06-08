@@ -15,7 +15,13 @@
       background-color: var(--bs-white) !important;
     }
   }
-  
+  &.btn-naked {
+    color: var(--bs-primary) !important;
+    &:hover {
+      background: var(--bs-primary) !important;
+      color: var(--bs-white) !important;
+    }
+  }
   &.btn-link {
     color: var(--bs-primary) !important;
   }

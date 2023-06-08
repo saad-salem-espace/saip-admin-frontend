@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronLeft,
   faChevronRight,
@@ -22,11 +21,14 @@ import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import SearchQueryMenu from 'components/ipr-details/shared/seacrh-query/SearchQueryMenu';
+import { useAuth } from 'react-oidc-context';
 import attachmentApi from 'apis/common/attachmentApi';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
-import { useAuth } from 'react-oidc-context';
 import toastify from 'utils/toastify';
+import Bookmarks from 'components/bookmarks/Bookmarks';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -72,6 +74,7 @@ function IprDetails({
     value: 'BibliographicData',
   });
   const [reachedLimit, setReachedLimit] = useState(false);
+  const [isSubmittingDownloadPdf, setIsSubmittingDownloadPdf] = useState(false);
   const { isAuthenticated } = useAuth();
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
@@ -89,16 +92,10 @@ function IprDetails({
     }),
     { manual: true },
   );
-  useEffect(() => {
-    setDocument(null);
-    if (documentId) {
-      execute().then(({ data }) => {
-        setDocument(data?.data?.[0]);
-      });
-    }
-  }, [documentId]);
-
   const [showSearchQuery, setShowSearchQuery] = useState(false);
+  const [isBookmark, setIsBookmark] = useState(false);
+  const auth = useAuth();
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.bookmarks);
 
   const ShowSearchQueryMenu = () => {
     setShowSearchQuery(true);
@@ -109,6 +106,26 @@ function IprDetails({
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
   };
+
+  useEffect(() => {
+    setDocument(null);
+    if (documentId) {
+      execute().then(({ data }) => {
+        setDocument(data?.data?.data[0]);
+        if (auth.isAuthenticated) setIsBookmark(data?.data.isBookmark);
+        else {
+          getInstanceByMultiIndex({
+            indecies: {
+              filingNumber: documentId,
+              workstreamId: searchResultParams.workstreamId,
+            },
+            onSuccess: (resp) => { setIsBookmark(!!resp); },
+            onError: () => { setIsBookmark(false); },
+          });
+        }
+      });
+    }
+  }, [documentId]);
 
   useEffect(() => {
     if (document) {
@@ -152,6 +169,7 @@ function IprDetails({
     config,
   ), { manual: true });
 
+  const count = Number(localStorage.getItem('downloadCount') || 0);
   const fireDownloadLink = (data) => {
     const url = window.URL.createObjectURL(data?.data);
     const link = window.document.createElement('a');
@@ -159,6 +177,8 @@ function IprDetails({
     link.setAttribute('download', document?.OriginalDocuments[documentIndex - 1]?.FileName);
     window.document.body.appendChild(link);
     link.click();
+    localStorage.setItem('downloadCount', (count + 1).toString());
+    setIsSubmittingDownloadPdf(false);
   };
 
   const executeDownloadDocuments = () => {
@@ -173,9 +193,9 @@ function IprDetails({
   };
 
   const downloadOriginalDocuments = () => {
+    setIsSubmittingDownloadPdf(true);
     if (document.OriginalDocuments) {
       if (!isAuthenticated) {
-        const count = Number(localStorage.getItem('downloadCount') || 0);
         executeAfterLimitValidation(
           {
             data: {
@@ -185,15 +205,17 @@ function IprDetails({
             },
             onSuccess: () => {
               executeDownloadDocuments();
-              localStorage.setItem('downloadCount', (count + 1).toString());
             },
-            onRichLimit: () => { setReachedLimit(true); },
+            onRichLimit: () => {
+              setReachedLimit(true); setIsSubmittingDownloadPdf(false);
+            },
           },
         );
       } else {
         executeDownloadDocuments();
       }
     } else {
+      setIsSubmittingDownloadPdf(false);
       toastify(
         'error',
         <div>
@@ -310,10 +332,14 @@ function IprDetails({
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
       <div className="border-bottom ipr-details-wrapper">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
-          <div className="d-flex align-items-center">
-            <FontAwesomeIcon
-              icon={faBookmark}
-              className="me-3 f-22 app-text-primary-dark"
+          <div className="d-flex align-items-center position-relative">
+            <Bookmarks
+              workstreamId={fromFocusArea
+                ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+                : searchResultParams.workstreamId}
+              documentId={documentId}
+              isBookmark={isBookmark}
+              setIsBookmark={setIsBookmark}
             />
             <h5 className="mb-0">
               {document.BibliographicData.PublicationNumber}
@@ -448,10 +474,11 @@ function IprDetails({
                 {t('search:download')}
               </>
             }
-            className="me-4 fs-sm my-2 my-xxl-0"
+            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 my-xxl-0`}
             onClick={
               downloadOriginalDocuments
             }
+            disabled={isSubmittingDownloadPdf}
           />
           <ModalAlert
             title={t('common:limitReached.register_now')}

@@ -22,7 +22,7 @@ function IndustrialDesignResultCard({
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId'), id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '3', id: BibliographicData.FilingNumber, fileName, fileType,
     },
   );
 
@@ -127,7 +127,7 @@ IndustrialDesignResultCard.propTypes = {
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
   selectedView: PropTypes.shape({
     label: PropTypes.string,
@@ -137,5 +137,6 @@ IndustrialDesignResultCard.propTypes = {
 
 IndustrialDesignResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default IndustrialDesignResultCard;

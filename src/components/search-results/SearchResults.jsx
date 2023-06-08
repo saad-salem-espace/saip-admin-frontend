@@ -70,9 +70,9 @@ function SearchResults({ showFocusArea }) {
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
   const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
-  const { getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
   const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -166,9 +166,11 @@ function SearchResults({ showFocusArea }) {
   useEffect(() => {
     localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
     if (!auth.isAuthenticated) {
-      getInstanceByIndex({
-        indexName: 'query',
-        indexValue: searchParams.get('q'),
+      getInstanceByMultiIndex({
+        indecies: {
+          queryString: searchResultParams.query,
+          workstreamId: searchResultParams.workstreamId,
+        },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
       });

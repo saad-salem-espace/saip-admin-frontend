@@ -1,24 +1,35 @@
 import PropTypes from 'prop-types';
 import TrademarksSearchResultCard from './TrademarksSearchResultCard';
-import trademarkSample from '../../../testing-resources/trademarks/sampleTrademark.json';
 
 const TrademarksSearchResultCards = ({
   data,
   query, setActiveDocument, activeDocument, selectedView,
+  bookmarks,
 }) => (
-  <>
-    {data.data.map((searchResult) => (
+  <div>
+    {!bookmarks ? data.data.map((searchResult) => (
       <TrademarksSearchResultCard
-        key={trademarkSample.BibliographicData.filingNumber}
+        key={searchResult.BibliographicData.filingNumber}
         searchResult={searchResult}
         query={query}
         setActiveDocument={setActiveDocument}
         activeDocument={activeDocument}
-        selectedView={selectedView}
         highlightWords={data.highlighting || []}
+        selectedView={selectedView}
       />
-    ))}
-  </>
+    ))
+      : data.map((bookmark) => (
+        <TrademarksSearchResultCard
+          key={bookmark.id}
+          searchResult={bookmark.data}
+          query={query}
+          setActiveDocument={setActiveDocument}
+          activeDocument={activeDocument}
+          highlightWords={[]}
+          selectedView={selectedView}
+        />
+      ))}
+  </div>
 );
 
 TrademarksSearchResultCards.propTypes = {
@@ -27,6 +38,11 @@ TrademarksSearchResultCards.propTypes = {
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
   selectedView: PropTypes.string.isRequired,
+  bookmarks: PropTypes.bool,
+};
+
+TrademarksSearchResultCards.defaultProps = {
+  bookmarks: false,
 };
 
 export default TrademarksSearchResultCards;

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 function MyBookmarksLink() {
   const { t } = useTranslation('layout');
   return (
-    <Nav.Link to="/" disabled as={Link} className="has-icon">
+    <Nav.Link to="/bookmarks" as={Link} className="has-icon">
       <MdOutlineBookmarkBorder className="icon" />
       {t('navbar.myBookmarks')}
     </Nav.Link>

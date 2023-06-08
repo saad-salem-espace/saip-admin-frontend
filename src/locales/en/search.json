@@ -191,5 +191,10 @@
   "download": "Download",
   "addtoSavedQueries": "Add to my saved queries",
   "addtoFocusArea": "Add to card in focus area",
-  "noDocument": "Sorry! No document is available for download"
+  "noDocument": "Sorry! No document is available for download",
+  "bookmarked": "Bookmark saved successfully.",
+  "bookmarks": "You can find all your saved bookmarks in <0>My bookmarks</0>",
+  "alreadyBookmarked": "This document is already in your bookmarks.",
+  "couldnotSaveBookmark": "Could not save to your bookmarks.",
+  "addBookmarks": "Add to my bookmarks"
 }
