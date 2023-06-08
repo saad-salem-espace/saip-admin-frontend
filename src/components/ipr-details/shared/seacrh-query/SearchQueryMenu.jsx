@@ -30,8 +30,11 @@ function SearchQueryMenu({
   const [searchFields, setSearchFields] = useState([]);
   const [formikFields, setFormikFields] = useState([]);
   const maximumSearchFields = process.env.REACT_APP_MAXIMUM_FIELDS || 25;
+  const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
+
   const onSubmit = (values) => {
     hideFocus();
+    localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({

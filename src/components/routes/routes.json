@@ -4,6 +4,7 @@
   "dashboard": "/dashboard",
   "admin": "/admin",
   "savedQueries": "/savedQueries",
+  "viewHistory": "/viewHistory",
   "bookmarks": "/bookmarks",
   "document": "/document"
 }
