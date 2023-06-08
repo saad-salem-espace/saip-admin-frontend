@@ -125,7 +125,7 @@ function LoggedNavbar({
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
-              <Notifications />
+              {/* <Notifications /> */}
               {/* Switch language */}
               <LanguageSwitch
                 className="pe-lg-5 me-lg-5"
