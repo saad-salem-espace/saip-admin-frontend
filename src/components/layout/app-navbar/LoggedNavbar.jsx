@@ -13,7 +13,7 @@ import React, {
 import getHistoryApi from 'apis/history/getHistoryApi';
 import useAxios from 'hooks/useAxios';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
-import Notifications from './notifications/Notifications';
+//import Notifications from './notifications/Notifications';
 import useAuth from '../../../hooks/useAuth';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
