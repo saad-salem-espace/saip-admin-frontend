@@ -8,39 +8,38 @@ import { useAuth } from 'react-oidc-context';
 import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
-// import { useEffect, useContext } from 'react';
-// import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
-// import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
+import { useEffect, useState, useContext } from 'react';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import logo from '../../../assets/images/Logo.png';
 import LanguageSwitch from './shared/LanguageSwitch';
-// import RecentSearch from './shared/recent-search/RecentSearch';
+import RecentSearch from './shared/recent-search/RecentSearch';
 import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
-// import DropdownItem from './shared/recent-search/DropdownItem';
+import DropdownItem from './shared/recent-search/DropdownItem';
 
 function GuestNavbar({ lang, changeLang }) {
   const { t } = useTranslation('layout');
-  // const [history, setHistory] = useState(null);
+  const [history, setHistory] = useState(null);
   const auth = useAuth();
-  // const idbMethods = useIndexedDbWrapper('saveHistory');
-  // const { workStreamId } = useContext(SelectedWorkStreamIdContext);
+  const idbMethods = useIndexedDbWrapper('saveHistory');
+  const { workStreamId } = useContext(SelectedWorkStreamIdContext);
 
-  // const getHistory = () => {
-  //   idbMethods.indexByIndexName({
-  //     ...{
-  //       sorted: 'desc',
-  //       sortedIndexName: 'updatedAt',
-  //       indexName: 'workstreamId',
-  //       indexValue: workStreamId,
-  //     },
-  //     // onSuccess: (data) => { setHistory(data.data); },
-  //     onError: () => { console.log('err'); },
-  //   });
-  // };
-  // useEffect(() => {
-  //   getHistory();
-  // }, [workStreamId]);
+  const getHistory = () => {
+    idbMethods.indexByIndexName({
+      ...{
+        sorted: 'desc',
+        sortedIndexName: 'updatedAt',
+        indexName: 'workstreamId',
+        indexValue: workStreamId,
+      },
+      onSuccess: (data) => { setHistory(data.data); },
+    });
+  };
+  useEffect(() => {
+    getHistory();
+  }, [workStreamId]);
   return (
     <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
       <Container fluid className="ps-lg-18">
@@ -56,8 +55,25 @@ function GuestNavbar({ lang, changeLang }) {
           </Nav>
           {/* Right navbar */}
           <Nav>
-            {/* {Recent search} */}
-            {/* <RecentSearch /> */}
+            <RecentSearch
+              getNewHistory={getHistory}
+            >
+              {
+                history?.length && (
+                  <>
+                    {
+                    history.map((h) => (
+                      <DropdownItem
+                        query={h?.queryString}
+                        timestamp={h?.createdAt}
+                        workStreamId={workStreamId}
+                      />
+                    ))
+                  }
+                  </>
+                )
+              }
+            </RecentSearch>
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}

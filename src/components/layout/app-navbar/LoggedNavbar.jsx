@@ -6,21 +6,24 @@ import { Link } from 'react-router-dom';
 import { BsGrid, BsListUl } from 'react-icons/bs';
 import Image from 'react-bootstrap/Image';
 import PropTypes from 'prop-types';
-import React from 'react';
-// import getHistoryApi from 'apis/history/getHistoryApi';
-// import useAxios from 'hooks/useAxios';
-// import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import Notifications from './notifications/Notifications';
+import React, {
+  useContext,
+  useEffect, useState,
+} from 'react';
+import getHistoryApi from 'apis/history/getHistoryApi';
+import useAxios from 'hooks/useAxios';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import useAuth from '../../../hooks/useAuth';
 import LanguageSwitch from './shared/LanguageSwitch';
-// import RecentSearch from './shared/recent-search/RecentSearch';
+import RecentSearch from './shared/recent-search/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
 import logo from '../../../assets/images/logo-shape.png';
 import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
 import { roles } from '../../../utils/roleMapper';
-// import DropdownItem from './shared/recent-search/DropdownItem';
+import DropdownItem from './shared/recent-search/DropdownItem';
 
 function LoggedNavbar({
   lang,
@@ -33,36 +36,35 @@ function LoggedNavbar({
     requestSignOut();
   };
   const { t } = useTranslation('layout');
-  // const [history, setHistory] = useState([]);
-  // const { workStreamId } = useContext(SelectedWorkStreamIdContext);
-  // const isSearchSumbitted = Number(localStorage.getItem('isSearchSubmitted'));
-  // const [historyData, executeGetHistory] = useAxios(
-  //   getHistoryApi({
-  //     workstreamId: workStreamId,
-  //     page: 1,
-  //     type: 'search',
-  //     sort: 'mostRecent',
-  //   }),
-  //   { manual: true },
-  // );
+  const [history, setHistory] = useState([]);
+  const { workStreamId } = useContext(SelectedWorkStreamIdContext);
+  const isSearchSumbitted = Number(localStorage.getItem('isSearchSubmitted'));
+  const [historyData, executeGetHistory] = useAxios(
+    getHistoryApi({
+      workstreamId: workStreamId,
+      page: 1,
+      type: 'search',
+      sort: 'mostRecent',
+    }),
+    { manual: true },
+  );
+  useEffect(() => {
+    executeGetHistory();
+  }, [workStreamId]);
 
-  // useEffect(() => {
-  //   executeGetHistory();
-  // }, [workStreamId]);
+  useEffect(() => {
+    if (historyData.data) {
+      if (!(historyData.loading) && historyData.data.code === 200) {
+        setHistory(historyData.data.data?.data);
+      }
+    }
+  }, [historyData]);
 
-  // useEffect(() => {
-  //   if (historyData.data) {
-  //     if (!(historyData.loading) && historyData.data.code === 200) {
-  //       setHistory(historyData.data.data?.data);
-  //     }
-  //   }
-  // }, [historyData]);
-
-  // const getNewHistory = () => {
-  //   if (isSearchSumbitted !== Number(localStorage.getItem('isSearchSubmitted'))) {
-  //     executeGetHistory();
-  //   }
-  // };
+  const getNewHistory = () => {
+    if (isSearchSumbitted !== Number(localStorage.getItem('isSearchSubmitted'))) {
+      executeGetHistory();
+    }
+  };
   return (
     <Navbar
       collapseOnSelect
@@ -107,15 +109,19 @@ function LoggedNavbar({
             >
               {t('navbar.ipSearch')}
             </Nav.Link>
-            {/* <RecentSearch
+            <RecentSearch
               getNewHistory={getNewHistory}
             >
               {
                 history.map((h) => (
-                  <DropdownItem query={h?.payload?.query} timestamp={h.timestamp} />
+                  <DropdownItem
+                    query={h?.payload?.query}
+                    timestamp={h.timestamp}
+                    workStreamId={workStreamId}
+                  />
                 ))
               }
-            </RecentSearch> */}
+            </RecentSearch>
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}

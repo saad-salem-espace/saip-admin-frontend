@@ -1,5 +1,22 @@
+@import "../../../src/assets/styles/utilities/custom-theme";
+@import "~bootstrap/scss/mixins";
+
 .view-history {
   .query {
-    width: 70%;
+    width: 60%;
+  }
+
+  .no-history {
+    @include media-breakpoint-up(md) {
+      height: calc(100vh - 400px);
+    }
+  }
+
+  .run-query {
+    width: 200px;
+  }
+
+  .date {
+    width: calc(100% - (60% + 200px));
   }
 }

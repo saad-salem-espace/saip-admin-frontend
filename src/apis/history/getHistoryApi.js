@@ -1,12 +1,10 @@
 const getHistoryApi = ({
-  workstreamId, type, page, sort,
+  workstreamId, type,
 }) => ({
   url: `activities/${type}`,
   method: 'GET',
   params: {
     workstreamId,
-    page: page || 1,
-    sort,
   },
 });
 

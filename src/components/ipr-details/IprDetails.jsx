@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronLeft,
   faChevronRight,
@@ -22,11 +21,14 @@ import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
 import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import SearchQueryMenu from 'components/ipr-details/shared/seacrh-query/SearchQueryMenu';
+import { useAuth } from 'react-oidc-context';
 import attachmentApi from 'apis/common/attachmentApi';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
-import { useAuth } from 'react-oidc-context';
 import toastify from 'utils/toastify';
+import Bookmarks from 'components/bookmarks/Bookmarks';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -90,16 +92,10 @@ function IprDetails({
     }),
     { manual: true },
   );
-  useEffect(() => {
-    setDocument(null);
-    if (documentId) {
-      execute().then(({ data }) => {
-        setDocument(data?.data?.[0]);
-      });
-    }
-  }, [documentId]);
-
   const [showSearchQuery, setShowSearchQuery] = useState(false);
+  const [isBookmark, setIsBookmark] = useState(false);
+  const auth = useAuth();
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.bookmarks);
 
   const ShowSearchQueryMenu = () => {
     setShowSearchQuery(true);
@@ -110,6 +106,26 @@ function IprDetails({
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
   };
+
+  useEffect(() => {
+    setDocument(null);
+    if (documentId) {
+      execute().then(({ data }) => {
+        setDocument(data?.data?.data[0]);
+        if (auth.isAuthenticated) setIsBookmark(data?.data.isBookmark);
+        else {
+          getInstanceByMultiIndex({
+            indecies: {
+              filingNumber: documentId,
+              workstreamId: searchResultParams.workstreamId,
+            },
+            onSuccess: (resp) => { setIsBookmark(!!resp); },
+            onError: () => { setIsBookmark(false); },
+          });
+        }
+      });
+    }
+  }, [documentId]);
 
   useEffect(() => {
     if (document) {
@@ -316,10 +332,14 @@ function IprDetails({
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
       <div className="border-bottom ipr-details-wrapper">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
-          <div className="d-flex align-items-center">
-            <FontAwesomeIcon
-              icon={faBookmark}
-              className="me-3 f-22 app-text-primary-dark"
+          <div className="d-flex align-items-center position-relative">
+            <Bookmarks
+              workstreamId={fromFocusArea
+                ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+                : searchResultParams.workstreamId}
+              documentId={documentId}
+              isBookmark={isBookmark}
+              setIsBookmark={setIsBookmark}
             />
             <h5 className="mb-0">
               {document.BibliographicData.PublicationNumber}
