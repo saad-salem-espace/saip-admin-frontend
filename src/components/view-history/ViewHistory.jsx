@@ -37,6 +37,11 @@ function ViewHistory() {
   const auth = useAuth();
   const { workStreamId } = useContext(SelectedWorkStreamIdContext);
   const [searchParams] = useSearchParams();
+  const [hasData, setHasData] = useState(false);
+
+  const checkHasData = (i) => {
+    setHasData(i);
+  };
 
   const resetPageNumber = () => {
     setPageReset((prev) => prev + 1);
@@ -128,7 +133,11 @@ function ViewHistory() {
                 className="workStreams ms-md-3 mt-1 customSelect"
               />
             </div>
-            <SortHistory changeSortBy={changeSortBy} />
+            {
+              hasData !== 0 && (
+                <SortHistory changeSortBy={changeSortBy} />
+              )
+            }
           </div>
           {isAuth ? (
             <AppPagination
@@ -148,6 +157,7 @@ function ViewHistory() {
                 selectedWorkStream: workStreamId,
               }}
               updateDependencies={[...Object.values({ workStreamId, sortByMostRecent })]}
+              checkHasData={checkHasData}
             />
           ) : (
             <IndexedDbAppPagination
@@ -172,6 +182,7 @@ function ViewHistory() {
                 selectedWorkStream: workStreamId,
               }}
               updateDependencies={[...Object.values({ workStreamId, sortByMostRecent })]}
+              checkHasData={checkHasData}
             />
           )}
         </Col>

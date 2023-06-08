@@ -13,7 +13,7 @@ const IndexedDbAppPagination = ({
   fetchedTotalResults, emptyState, updateDependencies, setResults,
   onPageChange, tableName, limit, indexMethod, indexMethodProps, resetPage, className,
   paginationWrapper,
-  bookmarks, workstreamId,
+  bookmarks, workstreamId, checkHasData,
 }) => {
   const [data, setData] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -110,8 +110,14 @@ const IndexedDbAppPagination = ({
   }
 
   if (!paginationInfo.total) {
+    checkHasData(paginationInfo.total);
     return emptyState;
   }
+
+  if (paginationInfo.total) {
+    checkHasData(paginationInfo.total);
+  }
+
   const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
   const renderedComponent = (
     <RenderedComponent data={displayData} {...renderedProps} />
@@ -153,6 +159,7 @@ IndexedDbAppPagination.propTypes = {
   paginationWrapper: PropTypes.string,
   bookmarks: PropTypes.bool,
   workstreamId: PropTypes.string,
+  checkHasData: PropTypes.func,
 };
 
 IndexedDbAppPagination.defaultProps = {
@@ -171,6 +178,7 @@ IndexedDbAppPagination.defaultProps = {
   paginationWrapper: '',
   bookmarks: false,
   workstreamId: null,
+  checkHasData: () => {},
 };
 
 export default IndexedDbAppPagination;
