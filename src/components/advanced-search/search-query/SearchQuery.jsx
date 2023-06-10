@@ -17,7 +17,7 @@ import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
-  isAdvancedMenuOpen,
+  isAdvancedMenuOpen, examinerView, submitCallback,
 }) {
   const currentLang = i18n.language;
   const { cachedRequests } = useContext(CacheContext);
@@ -46,8 +46,17 @@ function SearchQuery({
 
   const getTranslatedOperators = useMemo(() => operators, [currentLang]);
 
-  const onSubmit = () => {
-    submitRef.current.handleSubmit();
+  const handleOnChange = (values) => {
+    if (examinerView) {
+      onChangeSearchQuery(values.searchFields);
+    } else {
+      onChangeSearchQuery('');
+    }
+  };
+
+  const onSubmit = (values) => {
+    if (submitRef) submitRef.current.handleSubmit(values);
+    else submitCallback(values);
   };
 
   return (
@@ -65,7 +74,7 @@ function SearchQuery({
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form onChange={onChangeSearchQuery(!isAdvancedMenuOpen ? '' : parseQuery(values.searchFields, '', true))} onSubmit={handleSubmit}>
+          <Form onChange={isAdvancedMenuOpen ? onChangeSearchQuery(parseQuery(values.searchFields, '', true)) : handleOnChange(values)} onSubmit={handleSubmit}>
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -79,9 +88,11 @@ function SearchQuery({
                      searchIdentifiers={searchIdentifiers?.data}
                      identifierValue={value.identifier}
                      onChangeIdentifier={(identifier) => {
-                       setFieldValue(`searchFields.${index}.identifier`, identifier);
                        setFieldValue(`searchFields.${index}.condition`, identifier?.identifierOptions?.[0]);
-                       setFieldValue(`searchFields.${index}.data`, '');
+
+                       if (identifier.identifierType === 'Date' || value.identifier.identifierType === 'Date') setFieldValue(`searchFields.${index}.data`, '');
+
+                       setFieldValue(`searchFields.${index}.identifier`, identifier);
                      }}
                      operators={getTranslatedOperators}
                      conditionValue={value.condition}
@@ -164,15 +175,20 @@ SearchQuery.propTypes = {
   submitRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Object) }),
-  ]).isRequired,
+  ]),
   className: PropTypes.string,
   isAdvancedMenuOpen: PropTypes.bool,
+  examinerView: PropTypes.bool,
+  submitCallback: PropTypes.func,
 };
 
 SearchQuery.defaultProps = {
   onChangeSearchQuery: () => {},
+  submitCallback: () => {},
   className: '',
+  submitRef: null,
   isAdvancedMenuOpen: true,
+  examinerView: false,
 };
 
 export default SearchQuery;

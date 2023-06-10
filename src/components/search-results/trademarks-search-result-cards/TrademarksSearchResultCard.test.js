@@ -10,7 +10,7 @@ describe('<SearchResultCard />', () => {
   const query = 'Manufcature';
 
   it('renders detailed component correctly', async () => {
-    const selectedView = { label: t('trademarks.detailed'), value: 'detailed' };
+    const selectedView = { label: t('detailed'), value: 'detailed' };
 
     const { getByText } = render(
       <Formik>

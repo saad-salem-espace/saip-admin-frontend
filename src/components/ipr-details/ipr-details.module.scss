@@ -11,6 +11,9 @@
 
 .label {
   width: 145px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .iprWrapper {
@@ -18,25 +21,31 @@
   overflow-y: auto;
   @include scrollbar;
   padding-bottom: 150px;
+
+  ::selection {
+    background: var(--bs-primary-10);
+    @extend .p-2;
+  }
 }
 
 .img {
   width: 193px;
   height: 100px;
-  border: $border-width solid $gray-400;
+  border: $border-width solid var(--bs-gray-400);
 
   img {
     width: 100%;
   }
 }
 
-.imgWithZoom{
+.imgWithZoom {
   width: 486px;
   height: 100%;
 }
 
 .headerImg {
   width: 150px;
+
   img {
     width: 150px;
   }

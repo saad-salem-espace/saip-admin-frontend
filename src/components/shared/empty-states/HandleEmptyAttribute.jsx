@@ -8,7 +8,7 @@ const HandleEmptyAttribute = ({
   if (RenderedComponent && checkOn) {
     return <RenderedComponent {...renderedProps} />;
   }
-  return checkOn || <i className="text-gray">{ t('emptyText')}</i>;
+  return checkOn || <i className="text-gray disable-highlight">{ t('emptyText')}</i>;
 };
 
 HandleEmptyAttribute.propTypes = {

@@ -26,7 +26,6 @@ import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
 import surveyIcon from 'assets/images/icons/ic-survey.svg';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
-
 import './style.scss';
 
 function WorkstreamSearch() {
@@ -42,6 +41,7 @@ function WorkstreamSearch() {
   const submitRef = useRef();
   const [imageName, setImageName] = useState(null);
   const [advancedQuery, setAdvancedQuery] = useState('');
+  const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
@@ -65,6 +65,7 @@ function WorkstreamSearch() {
 
   const onSubmit = (values) => {
     let { searchQuery } = values;
+    localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
 
     if (!isAdvanced) {
       if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
@@ -104,7 +105,7 @@ function WorkstreamSearch() {
         <Container className="px-0 m-auto">
           <Row className="mx-0">
             <Col className="pt-24 pb-8">
-              <p className="text-primary-dark f-30 text-center mb-8">
+              <p className="app-text-primary-dark f-30 text-center mb-8">
                 <Trans
                   i18nKey="searchSpecificProperty"
                   ns="search"
@@ -140,7 +141,7 @@ function WorkstreamSearch() {
                       handleToggleButton={() => toggleState(isAdvanced)}
                       isToggleButtonOn={isAdvanced}
                       text={t('advancedSearch')}
-                      className="d-block text-primary text-end"
+                      className="d-block app-text-primary text-end"
                     />
                     <AppPopover
                       id="advancedSearchTip"
@@ -148,10 +149,10 @@ function WorkstreamSearch() {
                       btnText={t('common:gotIt')}
                       popoverTrigger={
                         <Button variant="link" className="btn-view-tip">
-                          <BsQuestionCircle className="text-primary" />
+                          <BsQuestionCircle className="app-text-primary" />
                         </Button>
                       }
-                      variant="bg-primary-10"
+                      variant="app-bg-primary-10"
                     >
                       <Trans
                         i18nKey="advancedSearchTipContent"
@@ -200,7 +201,7 @@ function WorkstreamSearch() {
         widgetAction={t('common:floatWidget.userSurvey.widgetAction')}
         widgetActionText={t('common:floatWidget.userSurvey.widgetActionText')}
         WidgetIcon={<Image src={surveyIcon} className="d-block mx-auto my-3" />}
-        variant="bg-primary-10"
+        variant="app-bg-primary-10"
         show
       >
         {t('common:floatWidget.userSurvey.widgetContent')}

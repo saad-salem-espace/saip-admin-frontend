@@ -20,6 +20,7 @@ const PatentCard = ({
   assignment, setToggle, setActiveDocument,
   setActiveTab, isInProgress, SetSelectedCard,
   active, selectedFocusArea, SetSelectedFocusArea, updateFocusArea, showFocusArea,
+  activeWorkstream,
 }) => {
   const removeFromFocusArea = () => {
     updateFocusArea(false);
@@ -34,18 +35,16 @@ const PatentCard = ({
   );
 
   useEffect(() => {
-    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.saipId);
+    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber);
   }, []);
-
   const addToFocusArea = () => {
     updateFocusArea(true);
     const assignmentObj = {
-      id: assignment?.id,
-      saipId: assignment?.filingNumber,
-      title: assignment?.applicationTitle,
+      workstreamId: activeWorkstream,
+      doc: assignment,
     };
     localStorage.setItem('FocusDoc', JSON.stringify(assignmentObj));
-    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.saipId);
+    SetSelectedFocusArea(JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber);
   };
 
   const handleFocusClick = () => {
@@ -82,7 +81,7 @@ const PatentCard = ({
               isInProgress(assignment.status === 'IN_PROGRESS');
             }}
             text={
-              <p className="text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+              <p className="app-text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
             }
           />
           <div className="d-flex">
@@ -216,6 +215,7 @@ PatentCard.propTypes = {
   SetSelectedFocusArea: PropTypes.func.isRequired,
   updateFocusArea: PropTypes.func.isRequired,
   showFocusArea: PropTypes.bool.isRequired,
+  activeWorkstream: PropTypes.number.isRequired,
 };
 
 PatentCard.defaultProps = {

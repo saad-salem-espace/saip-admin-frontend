@@ -9,7 +9,7 @@ import PatentCard from './PatentCard';
 const StatusColumn = ({
   status, className, data, setActiveDocument, setToggle,
   activeDocument, setActiveTab, isInProgress,
-  SetSelectedCard, updateFocusArea, showFocusArea,
+  SetSelectedCard, updateFocusArea, showFocusArea, activeWorkstream,
 }) => {
   const { t } = useTranslation('dashboard');
   const pinned = !!data.length;
@@ -23,11 +23,11 @@ const StatusColumn = ({
     <Col md={6} lg={4} xl={3} className="mb-5">
       <p className={`${className} h-px-24 assignment-status text-uppercase ps-3`}>
         {status}
-        <Badge varient="primary-10" className="ms-2 text-primary p-2" text={data.length} />
+        <Badge className="ms-2 app-text-primary p-2 app-bg-primary-01" text={data.length} />
       </p>
-      <div className="cards-container bg-gray-200 px-3 py-5">
+      <div className="cards-container px-3 py-5">
         { pinned && (
-          <p className="text-primary-dark fs-sm fw-bold">{t('dashboard:pinned')}</p>
+          <p className="app-text-primary-dark fs-sm fw-bold">{t('dashboard:pinned')}</p>
         )}
         {data.map((assignment) => (
           assignment.pinned
@@ -44,10 +44,11 @@ const StatusColumn = ({
             selectedFocusArea={selectedFocusArea}
             updateFocusArea={updateFocusArea}
             showFocusArea={showFocusArea}
+            activeWorkstream={activeWorkstream}
           />
         ))}
         { others && (
-          <p className="text-primary-dark fs-sm fw-bold">{t('dashboard:others')}</p>
+          <p className="app-text-primary-dark fs-sm fw-bold">{t('dashboard:others')}</p>
         )}
         {data.map((assignment) => (
           !(assignment.pinned)
@@ -63,6 +64,7 @@ const StatusColumn = ({
             selectedFocusArea={selectedFocusArea}
             updateFocusArea={updateFocusArea}
             showFocusArea={showFocusArea}
+            activeWorkstream={activeWorkstream}
           />
         ))}
       </div>
@@ -82,6 +84,7 @@ StatusColumn.propTypes = {
   setActiveTab: PropTypes.func,
   updateFocusArea: PropTypes.func.isRequired,
   showFocusArea: PropTypes.bool.isRequired,
+  activeWorkstream: PropTypes.number.isRequired,
 
 };
 

@@ -22,7 +22,7 @@ function TrademarksSearchResultCard({
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId'), id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '2', id: BibliographicData.FilingNumber, fileName, fileType,
     },
   );
 
@@ -30,14 +30,14 @@ function TrademarksSearchResultCard({
     <Button
       variant="transparent"
       onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
-      className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0 w-100"
+      className="text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
       text={(
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
                 <Checkbox className="me-4" />
-                <Badge text={BibliographicData.TrademarkLastStatus} varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
+                <Badge text={BibliographicData.TrademarkLastStatus} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
                 <Image src={preparedGetAttachmentURL(BibliographicData.Mark)} className="rounded" />
@@ -130,11 +130,12 @@ TrademarksSearchResultCard.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
 };
 
 TrademarksSearchResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default TrademarksSearchResultCard;

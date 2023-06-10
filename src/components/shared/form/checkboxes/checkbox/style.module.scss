@@ -3,7 +3,7 @@
 .checkmark {
   height: 24px;
   width: 24px;
-  border: $border-width solid $gray-400;
+  border: $border-width solid var(--bs-gray-400);
   margin-top: 3px;
   border-radius: $border-radius;
   display: flex;
@@ -15,11 +15,11 @@
   display: none;
 
   ~.checkmark {
-    background-color: $white;
+    background-color: var(--bs-white);
   }
 
   &:checked~.checkmark {
-    background-color: $secondary;
-    border-color: $primary;
+    background-color: var(--bs-secondary);
+    border-color: var(--bs-primary);
   }
 }

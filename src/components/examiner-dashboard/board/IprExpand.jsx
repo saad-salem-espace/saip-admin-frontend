@@ -22,10 +22,13 @@ function IprExpand({
   setNotesUpdated,
   focusMode,
   updateIprModal,
+  fromFocusArea,
+  hideFocus,
 }) {
   const { t } = useTranslation('dashboard');
+
   return (
-    <div className={`${className} ${focusMode ? '' : 'position-absolute'} dashboard-ipr-container expanded  end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
+    <div className={`${className} ${focusMode ? '' : 'position-absolute'} dashboard-ipr-container expanded  end-0 top-0 bottom-0 me-0 h-100 w-100`}>
       <div className="top-info-bar row d-lg-flex border-bottom p-0 m-1">
         <Col lg={6} className="filing-date d-lg-flex justify-content-between p-4 order-2 order-lg-1">
           <div className="d-lg-flex align-items-center text-gray-700">
@@ -67,7 +70,7 @@ function IprExpand({
         }
       </div>
       <div className="d-lg-flex">
-        <Col lg={6} className="border-end">
+        <Col lg={6} className="border-end position-relative">
           <IprDetails
             dashboard
             collapseIPR={collapseIPR}
@@ -79,6 +82,9 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             className="mx-0"
+            examinerView
+            hideFocus={hideFocus}
+            fromFocusArea={fromFocusArea}
           />
         </Col>
         <Col lg={6}>
@@ -90,6 +96,8 @@ function IprExpand({
             setNotesUpdated={setNotesUpdated}
             activeWorkstream={activeWorkstream}
             updateIprModal={updateIprModal}
+            documentId={documentId}
+            fromFocusArea={fromFocusArea}
           />
         </Col>
       </div>
@@ -110,6 +118,8 @@ IprExpand.propTypes = {
   setNotesUpdated: PropTypes.func,
   focusMode: PropTypes.bool,
   updateIprModal: PropTypes.func,
+  fromFocusArea: PropTypes.bool,
+  hideFocus: PropTypes.func,
 };
 
 IprExpand.defaultProps = {
@@ -118,6 +128,8 @@ IprExpand.defaultProps = {
   setNotesUpdated: () => { },
   focusMode: false,
   updateIprModal: () => { },
+  hideFocus: () => { },
+  fromFocusArea: false,
 };
 
 export default IprExpand;

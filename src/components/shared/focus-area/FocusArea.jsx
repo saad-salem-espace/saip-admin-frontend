@@ -16,9 +16,7 @@ function FocusArea({
           onClick={hideFocusArea}
           className="fs-base close-icon ps-0 py-0 pe-2 text-white"
         />
-        <IprModal
-          documentId={filingNumber}
-        />
+        <IprModal />
       </div>
       <p className="mb-0 px-2 text">
         <span className="font-bold filing-number">{filingNumber}</span>

@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronLeft,
   faChevronRight,
+  faChevronDown,
+  faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FaSearch } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
@@ -18,6 +19,16 @@ import Button from 'components/shared/button/Button';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import useAxios from 'hooks/useAxios';
 import NoData from 'components/shared/empty-states/NoData';
+import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
+import SearchQueryMenu from 'components/ipr-details/shared/seacrh-query/SearchQueryMenu';
+import { useAuth } from 'react-oidc-context';
+import attachmentApi from 'apis/common/attachmentApi';
+import ModalAlert from 'components/shared/modal-alert/ModalAlert';
+import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
+import toastify from 'utils/toastify';
+import Bookmarks from 'components/bookmarks/Bookmarks';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
 import style from './ipr-details.module.scss';
 import IprSections from './ipr-sections/IprSections';
 import IprData from './IprData';
@@ -26,8 +37,10 @@ import PatentViews from './patent/PatentViews';
 import TrademarkViews from './trademarks/TrademarkViews';
 import patentIprOptions from './patent/PatentIprOptions';
 import trademarkIprOptions from './trademarks/TrademarkIprOptions';
+import addIcon from '../../assets/images/icons/coloredAdd.svg';
 import IndustrialDesignViews from './industrial-design/IndustrialDesignViews';
 import IndustrialDesignIprOptions from './industrial-design/IndustrialDesignIprOptions';
+import './ipr-details.scss';
 
 function IprDetails({
   collapseIPR,
@@ -45,32 +58,71 @@ function IprDetails({
   isCardInprogress,
   selectedCardId,
   setNotesUpdated,
+  examinerView,
+  fromFocusArea,
+  hideFocus,
 }) {
   const { t } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
+  const [validHighlight, setValidHighlight] = useState(false);
+  const [highlightTrigger, setHighlightTrigger] = useState(0);
   const [document, setDocument] = useState(null);
   const [searchParams] = useSearchParams();
   const [selectedView, setSelectedView] = useState({
     label: t('ipr.bibliographic'),
     value: 'BibliographicData',
   });
+  const [reachedLimit, setReachedLimit] = useState(false);
+  const [isSubmittingDownloadPdf, setIsSubmittingDownloadPdf] = useState(false);
+  const { isAuthenticated } = useAuth();
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
   const searchResultParams = {
-    workstreamId: (searchParams.get('workstreamId') || activeWorkstream.toString()),
+    workstreamId:
+      searchParams.get('workstreamId') || activeWorkstream.toString(),
   };
   const [, execute] = useAxios(
-    documentApi({ workstreamId: searchResultParams.workstreamId, documentId }),
+    documentApi({
+      workstreamId: fromFocusArea
+        ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+        : searchResultParams.workstreamId,
+      documentId,
+    }),
     { manual: true },
   );
+  const [showSearchQuery, setShowSearchQuery] = useState(false);
+  const [isBookmark, setIsBookmark] = useState(false);
+  const auth = useAuth();
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.bookmarks);
+
+  const ShowSearchQueryMenu = () => {
+    setShowSearchQuery(true);
+  };
+  const hideSearchQueryMenu = () => {
+    setShowSearchQuery(false);
+  };
+  const ToggleSearchQueryMenu = () => {
+    setShowSearchQuery(!showSearchQuery);
+  };
 
   useEffect(() => {
     setDocument(null);
     if (documentId) {
       execute().then(({ data }) => {
-        setDocument(data?.data?.[0]);
+        setDocument(data?.data?.data[0]);
+        if (auth.isAuthenticated) setIsBookmark(data?.data.isBookmark);
+        else {
+          getInstanceByMultiIndex({
+            indecies: {
+              filingNumber: documentId,
+              workstreamId: searchResultParams.workstreamId,
+            },
+            onSuccess: (resp) => { setIsBookmark(!!resp); },
+            onError: () => { setIsBookmark(false); },
+          });
+        }
       });
     }
   }, [documentId]);
@@ -103,6 +155,78 @@ function IprDetails({
     return () => {};
   }, [document]);
 
+  let documentIndex = 0;
+
+  const config = {
+    workstreamId: searchResultParams.workstreamId,
+    fileType: 'pdf',
+    id: documentId,
+    responseType: 'blob',
+    fileName: document?.OriginalDocuments ? document?.OriginalDocuments[documentIndex]?.FileName : '',
+  };
+
+  const [, executeDownload] = useAxios(attachmentApi(
+    config,
+  ), { manual: true });
+
+  const count = Number(localStorage.getItem('downloadCount') || 0);
+  const fireDownloadLink = (data) => {
+    const url = window.URL.createObjectURL(data?.data);
+    const link = window.document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', document?.OriginalDocuments[documentIndex - 1]?.FileName);
+    window.document.body.appendChild(link);
+    link.click();
+    localStorage.setItem('downloadCount', (count + 1).toString());
+    setIsSubmittingDownloadPdf(false);
+  };
+
+  const executeDownloadDocuments = () => {
+    for (; documentIndex < document?.OriginalDocuments.length; documentIndex += 1) {
+      executeDownload({
+        ...config,
+        fileName: document?.OriginalDocuments[documentIndex]?.FileName,
+      }).then((data) => {
+        fireDownloadLink(data);
+      });
+    }
+  };
+
+  const downloadOriginalDocuments = () => {
+    setIsSubmittingDownloadPdf(true);
+    if (document.OriginalDocuments) {
+      if (!isAuthenticated) {
+        executeAfterLimitValidation(
+          {
+            data: {
+              workstreamId: fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId : searchResultParams.workstreamId,
+              code: LIMITS.DOWNLOAD_LIMIT,
+              count,
+            },
+            onSuccess: () => {
+              executeDownloadDocuments();
+            },
+            onRichLimit: () => {
+              setReachedLimit(true); setIsSubmittingDownloadPdf(false);
+            },
+          },
+        );
+      } else {
+        executeDownloadDocuments();
+      }
+    } else {
+      setIsSubmittingDownloadPdf(false);
+      toastify(
+        'error',
+        <div>
+          <p className="toastifyTitle">
+            {t('noDocument')}
+          </p>
+        </div>,
+      );
+    }
+  };
+
   if (!document) {
     return null;
   }
@@ -118,32 +242,56 @@ function IprDetails({
     setSelectedView(i);
   };
 
+  const handleClick = () => {
+    const selection = window.getSelection();
+    const selectedText = selection.toString();
+
+    if (selectedText && selection.anchorNode === selection.focusNode) {
+      setValidHighlight(true);
+    } else {
+      setValidHighlight(false);
+    }
+
+    setHighlightTrigger((prev) => prev + 1);
+  };
+
   const views = {
-    1:
-  <PatentViews
-    selectedView={selectedView.value}
-    isIPRExpanded={isIPRExpanded}
-    document={document}
-    preparedGetAttachmentURL={preparedGetAttachmentURL}
-    documentId={documentId}
-    searchResultParams={searchResultParams}
-  />,
-    2: <TrademarkViews
-      selectedView={selectedView.value}
-      isIPRExpanded={isIPRExpanded}
-      document={document}
-      preparedGetAttachmentURL={preparedGetAttachmentURL}
-      documentId={documentId}
-      searchResultParams={searchResultParams}
-    />,
-    3: <IndustrialDesignViews
-      selectedView={selectedView.value}
-      isIPRExpanded={isIPRExpanded}
-      document={document}
-      preparedGetAttachmentURL={preparedGetAttachmentURL}
-      documentId={documentId}
-      searchResultParams={searchResultParams}
-    />,
+    1: (
+      <PatentViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    2: (
+      <TrademarkViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    3: (
+      <IndustrialDesignViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
   };
 
   const options = {
@@ -154,42 +302,51 @@ function IprDetails({
 
   const renderSelectedView = () => {
     let content = <NoData />;
-    if (searchResultParams.workstreamId === '2') {
+    const workstreamId = fromFocusArea
+      ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+      : searchResultParams.workstreamId;
+    if (workstreamId.toString() === '2') {
       if (
         document[selectedView.value]
         || ((selectedView.value === 'Description'
-        || selectedView.value === 'Mark')
-        && document.BibliographicData[selectedView.value])
+          || selectedView.value === 'Mark')
+          && document.BibliographicData[selectedView.value])
       ) {
-        content = views[searchResultParams.workstreamId];
+        content = views[workstreamId];
       }
-    } else if
-    (searchResultParams.workstreamId === '1') {
+    } else if (workstreamId.toString() === '1') {
       if (document[selectedView.value]) {
-        content = views[searchResultParams.workstreamId];
+        content = views[workstreamId];
       }
-    } else if
-    (searchResultParams.workstreamId === '3') {
-      if ((document[selectedView.value]) || (selectedView.value === 'Description')) {
-        content = views[searchResultParams.workstreamId];
+    } else if (workstreamId.toString() === '3') {
+      if (
+        document[selectedView.value]
+        || selectedView.value === 'Description'
+      ) {
+        content = views[workstreamId];
       }
     }
     return content;
   };
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
-      <div className="border-bottom bg-primary-01">
+      <div className="border-bottom ipr-details-wrapper">
         <div className="d-flex justify-content-between mb-2 px-6 pt-5">
-          <div className="d-flex align-items-center">
-            <FontAwesomeIcon
-              icon={faBookmark}
-              className="me-3 f-22 text-primary-dark"
+          <div className="d-flex align-items-center position-relative">
+            <Bookmarks
+              workstreamId={fromFocusArea
+                ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
+                : searchResultParams.workstreamId}
+              documentId={documentId}
+              isBookmark={isBookmark}
+              setIsBookmark={setIsBookmark}
             />
-            <h5 className="mb-0">{document.BibliographicData.PublicationNumber}</h5>
+            <h5 className="mb-0">
+              {document.BibliographicData.PublicationNumber}
+            </h5>
           </div>
           <div className="d-flex">
-            {
-            !dashboard && (
+            {!dashboard && (
               <div dir="ltr" className="border-end me-4">
                 <Button
                   variant="link"
@@ -199,7 +356,7 @@ function IprDetails({
                       icon={faChevronLeft}
                       className="md-text text-gray"
                     />
-              }
+                  }
                   disabled={!previousDocument}
                   onClick={() => setActiveDocument(previousDocument)}
                 />
@@ -211,34 +368,31 @@ function IprDetails({
                       icon={faChevronRight}
                       className="md-text text-gray"
                     />
-              }
+                  }
                   disabled={!nextDocument}
                   onClick={() => setActiveDocument(nextDocument)}
                 />
-              </div>)
-              }
-            {
-                showActions
-            && <IprControlAction
-              collapseIPR={collapseIPR}
-              isIPRExpanded={
-                    isIPRExpanded
-                      }
-              onClose={onClose}
-            />
-}
+              </div>
+            )}
+            {showActions && (
+              <IprControlAction
+                collapseIPR={collapseIPR}
+                isIPRExpanded={isIPRExpanded}
+                onClose={onClose}
+              />
+            )}
           </div>
         </div>
         {searchResultParams.workstreamId === '2' && (
           <div className="ms-6 mb-2">
             <Badge
               text={document.BibliographicData.TrademarkLastStatus}
-              varient="secondary"
-              className="text-capitalize me-2 mb-4"
+              className="text-capitalize me-2 mb-4 app-bg-secondary"
             />
+
             <div className="d-flex justify-content-between">
               <div className="me-2 mb-md-0 mb-2">
-                <h5 className="text-capitalize text-primary-dark font-regular mb-2">
+                <h5 className="text-capitalize app-text-primary-dark font-regular mb-2">
                   {document.BibliographicData.BrandNameEn}
                   <span className="d-block mt-2">
                     {document.BibliographicData.BrandNameAr}
@@ -246,7 +400,7 @@ function IprDetails({
                 </h5>
                 <p className="text-gray">
                   <HandleEmptyAttribute
-                    checkOn={document.BibliographicData.Owners.join('; ')}
+                    checkOn={document?.BibliographicData?.Owners?.join('; ')}
                   />
                 </p>
               </div>
@@ -263,66 +417,124 @@ function IprDetails({
           </div>
         )}
         {searchResultParams.workstreamId === '3' && (
-        <div className="ms-6 mb-2">
-          <div className="d-flex justify-content-between">
-            <div className="me-2 mb-md-0 mb-2">
-              <h5 className="text-capitalize text-primary-dark font-regular mb-2">
-                {document.BibliographicData.DesignTitleEN}
-                <span className="d-block mt-2">
-                  {document.BibliographicData.DesignTitleAR}
-                </span>
-              </h5>
-              <p className="text-gray">
-                <HandleEmptyAttribute
-                  checkOn={document.BibliographicData.Designers.join('; ')}
-                />
-              </p>
+          <div className="ms-6 mb-2">
+            <div className="d-flex justify-content-between">
+              <div className="me-2 mb-md-0 mb-2">
+                <h5 className="text-capitalize app-text-primary-dark font-regular mb-2">
+                  {document.BibliographicData.DesignTitleEN}
+                  <span className="d-block mt-2">
+                    {document.BibliographicData.DesignTitleAR}
+                  </span>
+                </h5>
+                <p className="text-gray">
+                  <HandleEmptyAttribute
+                    checkOn={document?.BibliographicData?.Designers?.join('; ')}
+                  />
+                </p>
+              </div>
+              {!isIPRExpanded && (
+                <div className={`me-6 mb-2 ${style.headerImg}`}>
+                  <Image
+                    src={preparedGetAttachmentURL(
+                      document?.BibliographicData?.OverallProductDrawing,
+                    )}
+                  />
+                </div>
+              )}
             </div>
-            {!isIPRExpanded && (
-            <div className={`me-6 mb-2 ${style.headerImg}`}>
-              <Image
-                src={preparedGetAttachmentURL(
-                  document.BibliographicData.OverallProductDrawing,
-                )}
-              />
-            </div>
-            )}
           </div>
-        </div>
         )}
         {searchResultParams.workstreamId === '1' && (
           <p className="text-gray px-6">
-            <HandleEmptyAttribute checkOn={document.BibliographicData.ApplicationTitle} />
+            <HandleEmptyAttribute
+              checkOn={document.BibliographicData.ApplicationTitle}
+            />
           </p>
         )}
-        <div className="border-top py-3 px-6 d-xxl-flex align-items-start" translate="no">
+        <div
+          className="border-top py-3 px-6 d-xxl-flex align-items-start position-relative"
+          translate="no"
+        >
           <Button
             disabled
             variant="primary"
-            text={(
+            text={
               <>
                 <FaSearch className="fs-base me-2" />
                 {t('search:findSimilar')}
               </>
-            )}
+            }
             className="me-4 fs-sm my-2 my-xxl-0"
           />
           <Button
-            disabled
             variant="primary"
-            text={(
+            text={
               <>
                 <FiDownload className="fs-base me-2" />
                 {t('search:download')}
               </>
-            )}
-            className="me-4 fs-sm my-2 my-xxl-0"
+            }
+            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 my-xxl-0`}
+            onClick={
+              downloadOriginalDocuments
+            }
+            disabled={isSubmittingDownloadPdf}
+          />
+          <ModalAlert
+            title={t('common:limitReached.register_now')}
+            msg={t('common:limitReached.register_now_msg')}
+            confirmBtnText={t('common:register')}
+            className="warning"
+            handleConfirm={() => {
+              // TODO to be written once receive URL
+            }}
+            hideAlert={() => { setReachedLimit(false); }}
+            showModal={reachedLimit}
           />
           <div id="google_translate_element" className="d-inline-block" />
+          {examinerView && (
+            <SearchQueryMenu
+              showSearchQuery={showSearchQuery}
+              ShowSearchQueryMenu={ShowSearchQueryMenu}
+              ToggleSearchQueryMenu={ToggleSearchQueryMenu}
+              hideSearchQueryMenu={hideSearchQueryMenu}
+              validHighlight={validHighlight}
+              hideFocus={hideFocus}
+              highlightTrigger={highlightTrigger}
+            >
+              <AppTooltip
+                className="w-auto"
+                placement="top"
+                tooltipContent={t('dashboard:board.addtoKeywordPlanner')}
+                tooltipTrigger={
+                  <div>
+                    <Button
+                      variant="link"
+                      className="app-text-primary-dark font-regular fs-sm text-decoration-none"
+                      onClick={() => {
+                        ToggleSearchQueryMenu();
+                      }}
+                      text={
+                        <>
+                          <Image src={addIcon} />
+                          <span className="px-2">
+                            {t('dashboard:board.keywordplanner')}
+                          </span>
+                          <FontAwesomeIcon
+                            icon={showSearchQuery ? faChevronUp : faChevronDown}
+                          />
+                        </>
+                      }
+                    />
+                  </div>
+                }
+              />
+              {/* eslint-disable-next-line react/jsx-closing-tag-location */}
+            </SearchQueryMenu>
+          )}
         </div>
       </div>
-      {
-      dashboard && showActions ? (
+      {dashboard && showActions ? (
         <IprSections
           options={options[searchResultParams.workstreamId]}
           onChangeSelect={onChangeSelect}
@@ -335,6 +547,7 @@ function IprDetails({
           setNotesUpdated={setNotesUpdated}
           className="notes-editor-container"
           activeWorkstream={activeWorkstream}
+          fromFocusArea={fromFocusArea}
         />
       ) : (
         <IprData
@@ -342,8 +555,8 @@ function IprDetails({
           onChangeSelect={onChangeSelect}
           selectedView={selectedView}
           renderSelectedView={renderSelectedView}
-        />)
-      }
+        />
+      )}
     </div>
   );
 }
@@ -364,6 +577,9 @@ IprDetails.propTypes = {
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
+  examinerView: PropTypes.bool,
+  fromFocusArea: PropTypes.bool,
+  hideFocus: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -376,8 +592,11 @@ IprDetails.defaultProps = {
   setActiveDocument: () => {},
   dashboard: false,
   showActions: true,
+  examinerView: false,
   activeTab: 2,
-  setNotesUpdated: () => { },
+  setNotesUpdated: () => {},
+  fromFocusArea: false,
+  hideFocus: () => {},
 };
 
 export default IprDetails;

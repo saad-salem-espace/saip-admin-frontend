@@ -92,7 +92,7 @@ const Board = ({
               isCardInprogress={isCardInprogress}
               selectedCardId={selectedCardId}
               setNotesUpdated={setNotesUpdated}
-              className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute top-0 end-0 bottom-0 h-100 bg-white me-0`}
+              className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute top-0 end-0 bottom-0 h-100 me-0`}
             />
           )
         }
@@ -118,6 +118,7 @@ const Board = ({
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
                   showFocusArea={showFocusArea}
+                  activeWorkstream={activeWorkstream.id}
                 />
                 <StatusColumn
                   status={t('dashboard:status.inProgress')}
@@ -131,6 +132,7 @@ const Board = ({
                   SetSelectedCard={SetSelectedCard}
                   updateFocusArea={updateFocusArea}
                   showFocusArea={showFocusArea}
+                  activeWorkstream={activeWorkstream.id}
                 />
                 <StatusColumn
                   status={t('dashboard:status.done')}
@@ -143,6 +145,7 @@ const Board = ({
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
                   showFocusArea={showFocusArea}
+                  activeWorkstream={activeWorkstream.id}
                 />
                 <StatusColumn
                   status={t('dashboard:status.review')}
@@ -155,6 +158,7 @@ const Board = ({
                   updateFocusArea={updateFocusArea}
                   SetSelectedCard={SetSelectedCard}
                   showFocusArea={showFocusArea}
+                  activeWorkstream={activeWorkstream.id}
                 />
               </Row>
             )}

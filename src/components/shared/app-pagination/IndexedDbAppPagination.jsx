@@ -4,12 +4,16 @@ import Pagination from 'react-responsive-pagination';
 import { useSearchParams } from 'react-router-dom';
 import './PaginationStyle.scss';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import getBookmarksLocalUser from 'apis/bookmarks/getBookmarksLocalUser';
+import useAxios from 'hooks/useAxios';
 import Spinner from '../spinner/Spinner';
 
 const IndexedDbAppPagination = ({
   defaultPage, RenderedComponent, renderedProps,
   fetchedTotalResults, emptyState, updateDependencies, setResults,
   onPageChange, tableName, limit, indexMethod, indexMethodProps, resetPage, className,
+  paginationWrapper,
+  bookmarks, workstreamId, checkHasData,
 }) => {
   const [data, setData] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,17 +21,36 @@ const IndexedDbAppPagination = ({
   const [refresh, setRefresh] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const idbMethods = useIndexedDbWrapper(tableName);
+  const [bookmarkList, setBookmarkList] = useState(null);
+
+  const getFilingNumbers = (response) => {
+    if (!response) return null;
+
+    const filingNumbers = [];
+    response.map((bookmark) => filingNumbers.push(bookmark.filingNumber));
+
+    return filingNumbers;
+  };
 
   const changePage = (page) => {
     if (onPageChange) onPageChange(page);
     setCurrentPage(page);
   };
-
   const paginationInfo = data?.pagination || {
     per_page: 10,
     total: 0,
   };
-  const displayData = data?.data;
+  const displayData = bookmarks ? bookmarkList : data?.data;
+
+  const getBookmarkParams = {
+    workstreamId,
+    filingNumbers: getFilingNumbers(data?.data),
+  };
+  const getBookmarksConfig = getBookmarksLocalUser(getBookmarkParams, true);
+  const [bookmarkData, executeBookmarks] = useAxios(
+    getBookmarksConfig,
+    { manual: true },
+  );
 
   useEffect(() => {
     if (resetPage) {
@@ -67,13 +90,34 @@ const IndexedDbAppPagination = ({
       setIsLoading(false);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (data && bookmarks) {
+      executeBookmarks();
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (bookmarkData.data) {
+      if (bookmarkData.data.status === 200) {
+        setBookmarkList(bookmarkData.data);
+      }
+    }
+  }, [bookmarkData]);
+
   if (!data || isLoading) {
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
   }
 
   if (!paginationInfo.total) {
+    checkHasData(paginationInfo.total);
     return emptyState;
   }
+
+  if (paginationInfo.total) {
+    checkHasData(paginationInfo.total);
+  }
+
   const totalNumberOfPages = Math.ceil(paginationInfo.total / paginationInfo.per_page);
   const renderedComponent = (
     <RenderedComponent data={displayData} {...renderedProps} />
@@ -81,13 +125,17 @@ const IndexedDbAppPagination = ({
 
   return (
     <>
-      {renderedComponent}
-      <Pagination
-        className={`pagination ${className}`}
-        current={currentPage}
-        total={totalNumberOfPages}
-        onPageChange={changePage}
-      />
+      {
+        (!bookmarks || bookmarkList) && renderedComponent
+      }
+      <div className={paginationWrapper}>
+        <Pagination
+          className={`pagination ${className}`}
+          current={currentPage}
+          total={totalNumberOfPages}
+          onPageChange={changePage}
+        />
+      </div>
     </>
   );
 };
@@ -108,6 +156,10 @@ IndexedDbAppPagination.propTypes = {
   indexMethodProps: PropTypes.instanceOf(Object),
   resetPage: PropTypes.number,
   className: PropTypes.string,
+  paginationWrapper: PropTypes.string,
+  bookmarks: PropTypes.bool,
+  workstreamId: PropTypes.string,
+  checkHasData: PropTypes.func,
 };
 
 IndexedDbAppPagination.defaultProps = {
@@ -117,12 +169,16 @@ IndexedDbAppPagination.defaultProps = {
   fetchedTotalResults: null,
   emptyState: null,
   updateDependencies: [],
-  setResults: () => {},
+  setResults: () => { },
   onPageChange: null,
   limit: 10,
   indexMethodProps: {},
   resetPage: 0,
   className: '',
+  paginationWrapper: '',
+  bookmarks: false,
+  workstreamId: null,
+  checkHasData: () => {},
 };
 
 export default IndexedDbAppPagination;

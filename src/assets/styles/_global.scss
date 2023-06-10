@@ -1,6 +1,7 @@
 @import "../../assets/styles/utilities/custom-theme";
 @import "../../assets/styles/utilities/mixin";
 
+
 $fontSize: (
   8,
   12,
@@ -45,6 +46,12 @@ $fontSize: (
   font-style: italic;
 }
 
+.disable-highlight {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .container-fluid {
   padding-left: 15px !important;
   padding-right: 15px !important;
@@ -52,6 +59,7 @@ $fontSize: (
 
 .workStreamResults {
   .fixed-panel-scrolled.search-result {
+    z-index: 1;
     html[dir="rtl"] & {
       @extend .pe-4;
     }
@@ -60,6 +68,10 @@ $fontSize: (
     @include scrollbar;
     height: 80vh;
     overflow-y: auto;
-    padding-bottom: 180px;;
+    padding-bottom: 220px;
   }
+}
+
+* {
+  transition: all 0.1s ease-in-out;
 }

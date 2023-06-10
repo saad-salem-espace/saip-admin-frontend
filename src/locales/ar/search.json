@@ -29,6 +29,10 @@
   "apply": "بحث",
   "condition": "محدد",
   "criteria": "معايير",
+  "detailed": "مفصل",
+  "summary": "ملخص",
+  "compact": "محدد",
+  "view": "عرض ",
   "operators": {
     "and": "و",
     "or": "أو",
@@ -52,10 +56,6 @@
   "searchFieldValidationMsg": "لا يمكن إضافة مجالات بحث أخرى",
   "SwitchToAdvancedSearch": "بحث متقدم",
   "trademarks": {
-    "detailed": "مفصل",
-    "summary": "ملخص",
-    "compact": "محدد",
-    "view": "عرض ",
     "markNameEN": "اسم العلامة (EN)",
     "markNameAR": "اسم العلامة (AR)",
     "mark": "العلامة",
@@ -190,5 +190,11 @@
   "findSimilar": "البحث عن مشابه",
   "download": "تحميل",
   "addtoSavedQueries": "أضافه الى الاستعلامات المحفوظة",
-  "addtoFocusArea": "أضافه الى مساحة التركيز"
+  "addtoFocusArea": "أضافه الى مساحة التركيز",
+  "noDocument": "عذرًا! لا يوجد مستند متاح للتنزيل",
+  "bookmarked": "تم الاضافة الى التفضيلات",
+  "bookmarks": "يمكنك الوصول تفضيلاتك المحفوظة <0>تفضيلاتي</0>",
+  "alreadyBookmarked": "الملف من ضمن تفضيلاتك",
+  "couldnotSaveBookmark": "لم تتم الاضافة للتفضيلات",
+  "addBookmarks": "أضف إلى المفضلة"
 }
