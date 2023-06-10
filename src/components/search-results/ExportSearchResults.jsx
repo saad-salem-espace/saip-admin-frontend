@@ -27,7 +27,7 @@ const ExportSearchResults = ({ workstreams, workstreamId, data }) => {
   useEffect(clearSelection, [data]);
 
   useEffect(() => {
-    if (selectedLength === data.length && !values.allSelected) {
+    if (selectedLength === data.length && !values.allSelected && selectedLength > 0) {
       setFieldValue('allSelected', true);
     } else if (selectedLength !== data.length && values.allSelected) {
       setFieldValue('allSelected', false);
