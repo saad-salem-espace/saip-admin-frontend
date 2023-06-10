@@ -54,9 +54,8 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
       BoardName: 'dashboard:board.integratedCircuits',
     },
   ];
-
-  const [activeWorkstream, setActiveWorkstream] = useState(null);
-
+  const selectedWorkStream = useContext(SelectedWorkStreamIdContext);
+  const [activeWorkstream, setActiveWorkstream] = useState(selectedWorkStream);
   const [sort, setSort] = useState('Queue');
   const [{ data }, executeAssignmentData] = useAxios(getAssigned({
     workstreamId: activeWorkstream?.id,
@@ -82,9 +81,13 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
     if (workstreamsData?.data) {
       setAssignedWorkstreams(workstreamsData.data.data);
       if (workstreamsData.data.data.length) {
-        setActiveWorkstream(linksList.find(
+        const firstWorkstream = linksList.find(
           (element) => element.id === workstreamsData.data.data[0],
-        ));
+        );
+        const selectedWorkStreamObj = linksList.find(
+          (element) => element.id === selectedWorkStream?.workStreamId,
+        );
+        setActiveWorkstream(selectedWorkStreamObj || firstWorkstream);
         setWorkstreamChange(true);
         setWorkStreamId(activeWorkstream?.id || workStreamId);
       }
