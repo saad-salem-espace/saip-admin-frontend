@@ -1,7 +1,7 @@
 {
-  "mySearchHistory":"سجلات البحث",
-  "mostRecent":"الأحدث",
-  "leastRecent":"الأقدم",
-  "noHistory":"لا يوجد سجلات.",
-  "emptyStateMsg":"لم تقم باليحث حتى الأن"
+  "mySearchHistory": "سجلات البحث",
+  "mostRecent": "الأحدث",
+  "leastRecent": "الأقدم",
+  "noHistory": "لا يوجد سجلات.",
+  "emptyStateMsg": "لم تقم باليحث حتى الأن"
 }
