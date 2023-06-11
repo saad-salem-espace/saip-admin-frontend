@@ -6,5 +6,8 @@
   "saveNote": "تم أضافة ملاحظة إلى <0> {{filingNumber}}.",
   "deleteNote": "تم مسح ملاحظة من <0> {{filingNumber}}.",
   "saveToBookmarks": "<0>{{filingNumber}}</0> تم أضافتة إلى تفضيلاتى.",
-  "deleteToBookmarks": "<0>{{filingNumber}}</0>تم مسحه من تفضيلاتى."
+  "deleteToBookmarks": "<0>{{filingNumber}}</0>تم مسحه من تفضيلاتى.",
+  "emptyStateTitle":"لا توجد أنشطة.",
+  "emptyStateMsg":"ليس لديك أي أنشطة حتى الآن.",
+  "myActivities":"أنشطتي"
 }

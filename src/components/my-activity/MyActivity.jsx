@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import React, {
   useState, useEffect,
   useContext,
@@ -15,12 +15,12 @@ import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import Select from 'components/shared/form/select/Select';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
-import notAssigned from '../../assets/images/not-assigned.svg';
+import notActivities from '../../assets/images/no-activities.svg';
 import SortOrder from '../shared/sort-order/SortOrder';
 import MyActivityList from './MyActivityList';
 
 function MyActivity() {
-  const { t } = useTranslation('history');
+  const { t } = useTranslation('activity');
   const [pageReset, setPageReset] = useState(0);
   const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const [sortByMostRecent, setSortByMostRecent] = useState('desc');
@@ -86,7 +86,12 @@ function MyActivity() {
           <div className="d-lg-flex justify-content-between my-8 p-8 app-bg-primary-01 rounded">
             <div className="d-md-flex mb-lg-0 mb-8">
               <h5 className="mb-0 mt-4">
-                {t('mySearchHistory')}
+                <Trans
+                  i18nKey="myActivities"
+                  ns="activity"
+                >
+                  <span className="font-regular" />
+                </Trans>
               </h5>
               <Select
                 options={WorkStreamsOptions}
@@ -109,9 +114,9 @@ function MyActivity() {
             RenderedComponent={myActivityList}
             sort={sortByMostRecent === 'desc' ? 'mostRecent' : 'leastRecent'}
             emptyState={<EmptyState
-              title={t('noHistory')}
+              title={t('emptyStateTitle')}
               msg={t('emptyStateMsg')}
-              img={notAssigned}
+              img={notActivities}
               className="no-history"
             />}
             resetPage={pageReset}

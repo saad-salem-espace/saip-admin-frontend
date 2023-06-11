@@ -6,5 +6,8 @@
   "saveNote": "A note for <0>{{filingNumber}}</0> was added.",
   "deleteNote": "A note for <0>{{filingNumber}}</0> was deleted.",
   "saveToBookmarks": "The <0>{{filingNumber}}</0> was added to bookmarks.",
-  "deleteToBookmarks": "The <0>{{filingNumber}}</0> was deleted from bookmarks."
+  "deleteToBookmarks": "The <0>{{filingNumber}}</0> was deleted from bookmarks.",
+  "emptyStateTitle":"No recent activities.",
+  "emptyStateMsg":"You don’t have any recent activities yet.",
+  "myActivities":"<0>My</0> Activities"
 }
