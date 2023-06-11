@@ -13,6 +13,7 @@ import getListApi from '../../../../apis/notifications/getListApi';
 import markAllAsReadApi from '../../../../apis/notifications/markAllAsReadApi';
 import useAxios from '../../../../hooks/useAxios';
 import { LONG_DATETIME_12H_FORMAT } from '../../../../constants';
+import './notifications.scss';
 
 function Notifications() {
   const { t } = useTranslation();
