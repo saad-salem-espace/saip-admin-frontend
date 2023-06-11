@@ -55,10 +55,10 @@
     @include media-breakpoint-up(xl) {
       margin: 0 24px;
       html[dir="ltr"] & {
-        padding: 0 58px 0 19px;
+        padding: 0 70px 0 10px;
       }
       html[dir="rtl"] & {
-        padding: 0 19px 0 58px;
+        padding: 0 10px 0 70px;
       }
     }
     &.new {
@@ -75,15 +75,71 @@
         line-height: 27px;
         text-align: center;
         html[dir="ltr"] & {
-          right: 12px;
+          right: 6px;
         }
         html[dir="rtl"] & {
-          left: 12px;
+          left: 6px;
         }
       }
     }
     .icon {
       font-size: 22px;
+    }
+    .notifications-container {
+      @include media-breakpoint-up(lg) {
+        min-width: 450px;
+      }
+      @include media-breakpoint-down(lg) {
+        min-width: 250px;
+      }
+    }
+    .dropdown-menu.show {
+      @extend .pb-0;
+      @include media-breakpoint-up(lg) {
+        margin-top: 21px;
+        html[dir="ltr"] & {
+          margin-left: calc(100% - 23.7rem);
+        }
+        html[dir="rtl"] & {
+          margin-left: calc(100% - 4.7rem);
+        }
+      }
+    }
+    .messages-container {
+      @include scrollbar;
+      height: 415px;
+      overflow-y: auto;
+    }
+    .notice-container {
+      background-color: var(--bs-primary-10);
+      color: var(--bs-gray-700);
+      position: relative;
+      html[dir="ltr"] & {
+        padding-right: 40px !important;
+      }
+      html[dir="rtl"] & {
+        padding-left: 40px !important;
+      }
+      &:not(.seen) {
+        &::before {
+          content: "";
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          background-color: var(--bs-primary);
+          top: 30px;
+          border-radius: 50%;
+          html[dir="ltr"] & {
+            right: 15px;
+          }
+          html[dir="rtl"] & {
+            left: 15px;
+          }
+        }
+      }
+      &.seen {
+        background-color: var(--bs-white);
+      }
     }
   }
   .sb-avatar , .notifications{

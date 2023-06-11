@@ -1,5 +1,6 @@
 const tableNames = {
   savedQuery: 'savedQuery',
+  saveHistory: 'saveHistory',
   bookmarks: 'bookmarks',
 };
 
@@ -12,7 +13,7 @@ const timeStamp = [
 
 const dbConfig = {
   name: 'SAIPDB',
-  version: 2,
+  version: 3,
   objectStoresMeta: [
     {
       store: tableNames.savedQuery,
@@ -22,6 +23,16 @@ const dbConfig = {
         { name: 'resultCount', keypath: 'resultCount', options: { unique: false } },
         { name: 'synonymous', keypath: 'synonymous', options: { unique: false } },
         { name: 'workstreamId', keypath: 'workstreamId', options: { unique: false } },
+        ...timeStamp,
+      ],
+    },
+    {
+      store: tableNames.saveHistory,
+      storeConfig: { keyPath: 'id', autoIncrement: true },
+      storeSchema: [
+        { name: 'queryString', keypath: 'queryString', options: { unique: false } },
+        { name: 'workstreamId', keypath: 'workstreamId', options: { unique: false } },
+        { name: 'synonymous', keypath: 'synonymous', options: { unique: false } },
         ...timeStamp,
       ],
     },

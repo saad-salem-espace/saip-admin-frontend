@@ -26,8 +26,7 @@
   td {
     color: $gray-700;
     font-size: $font-size-sm;
-    @extend .pt-4;
-    @extend .pb-8;
+    @extend .py-4;
 
     html[dir="rtl"] & {
       direction: rtl;
@@ -36,7 +35,7 @@
   }
 
   tr {
-    background-color: var(--bs-primary-01);
+    background-color: var(--bs-primary-05);
 
     &:nth-child(2n) {
       background-color: var(--bs-white);

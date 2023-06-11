@@ -14,7 +14,7 @@ const executeAfterLimitValidation = ({
   getLimitApi(data).then((response) => {
     const limitValue = response.data?.data?.[0]?.limitValue || 0;
     if (data.count < limitValue) onSuccess();
-    else onRichLimit();
+    else onRichLimit(limitValue);
   }).catch(onFailure);
 };
 
