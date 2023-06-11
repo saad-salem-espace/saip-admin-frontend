@@ -14,6 +14,7 @@ import getHistoryApi from 'apis/history/getHistoryApi';
 import useAxios from 'hooks/useAxios';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 // import Notifications from './notifications/Notifications';
+import routes from 'components/routes/routes.json';
 import useAuth from '../../../hooks/useAuth';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
@@ -95,7 +96,7 @@ function LoggedNavbar({
             )}
             <MyQueriesLink />
             <MyBookmarksLink />
-            <Nav.Link to="/" disabled as={Link} className="has-icon">
+            <Nav.Link to={routes.myActivity} as={Link} className="has-icon">
               <BsListUl className="icon list" />
               {t('navbar.myActivity')}
             </Nav.Link>

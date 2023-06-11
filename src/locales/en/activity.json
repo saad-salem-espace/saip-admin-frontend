@@ -1,0 +1,10 @@
+{
+  "saveQuery": "A search query <0>{{query}}</0> was saved.",
+  "deleteQuery": "A search query <0>{{query}}</0> was deleted.",
+  "runQuery": "A search query <0>{{query}}</0> was conducted.",
+  "searchWithImg": "A search with image <0>{{query}}</0> was conducted.",
+  "saveNote": "A note for <0>{{filingNumber}}</0> was added.",
+  "deleteNote": "A note for <0>{{filingNumber}}</0> was deleted.",
+  "saveToBookmarks": "The <0>{{filingNumber}}</0> was added to bookmarks.",
+  "deleteToBookmarks": "The <0>{{filingNumber}}</0> was deleted from bookmarks."
+}

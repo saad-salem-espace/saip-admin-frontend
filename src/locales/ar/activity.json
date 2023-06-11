@@ -1,0 +1,10 @@
+{
+  "saveQuery": "تم حفظ استعلام <0> {{query}} </0>.",
+  "deleteQuery": "تم مسح استعلام <0> {{query}} </0>.",
+  "runQuery": "تم الاستعلام عن <0> {{query}}.",
+  "searchWithImg": "تم الاستعلام عن صورة <0> {{query}}.",
+  "saveNote": "تم أضافة ملاحظة إلى <0> {{filingNumber}}.",
+  "deleteNote": "تم مسح ملاحظة من <0> {{filingNumber}}.",
+  "saveToBookmarks": "<0>{{filingNumber}}</0> تم أضافتة إلى تفضيلاتى.",
+  "deleteToBookmarks": "<0>{{filingNumber}}</0>تم مسحه من تفضيلاتى."
+}
