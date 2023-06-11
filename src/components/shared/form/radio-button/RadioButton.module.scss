@@ -1,7 +1,7 @@
 @import "../../../../assets/styles/utilities/custom-theme";
 
 .customRadio {
-  border: $border-width solid $gray-400;
+  border: $border-width solid var(--bs-gray-400);
   display: inline-block;
   padding: 7px 8px;
   border-radius: $border-radius;
@@ -20,13 +20,13 @@
 
   label {
     font-size: $font-size-sm;
-    color: $gray-700;
+    color: var(--bs-gray-700);
     padding: 4px 10px;
   }
 
   .checked {
-    background-color: $primary;
+    background-color: var(--bs-primary);
     border-radius: $border-radius;
-    color: $white;
+    color: var(--bs-white);
   }
 }

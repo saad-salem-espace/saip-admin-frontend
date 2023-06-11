@@ -14,6 +14,7 @@
 }
 
 .dashboard-notes {
+  background-color: var(--bs-white);
   position: absolute;
   bottom: 0;
 }
@@ -33,4 +34,8 @@
   .notes-wrapper {
     height: calc(100% - 229px);
   }
+}
+
+.note-view {
+  background-color: var(--bs-white);
 }

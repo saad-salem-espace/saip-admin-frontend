@@ -76,7 +76,7 @@ const PatentCard = ({
   const isPinned = assignment.pinned;
   const currentLang = i18n.language;
 
-  const cardStyle = [isDragging && 'is-dragging-card', active && 'active'].filter(Boolean).join(' ');
+  const cardStyle = [isDragging && 'is-dragging-card invisible', active && 'active'].filter(Boolean).join(' ');
 
   return (
     <Card ref={drag} className={`${cardStyle} patent-card mb-2`}>
@@ -91,7 +91,7 @@ const PatentCard = ({
               isInProgress(assignment.status === 'IN_PROGRESS');
             }}
             text={
-              <p className="text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+              <p className="app-text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
             }
           />
           <div className="d-flex">

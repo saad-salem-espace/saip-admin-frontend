@@ -6,4 +6,6 @@ const exclude = (inputArray, excludedArray) => (
   inputArray.filter((arrayElement) => !excludedArray.includes(arrayElement))
 );
 
-export { search, exclude };
+const findFirstCommonElement = (array1, array2) => array1.find((item) => array2.includes(item));
+
+export { search, exclude, findFirstCommonElement };

@@ -1,6 +1,7 @@
 @import "../../assets/styles/utilities/custom-theme";
 @import "../../assets/styles/utilities/mixin";
 
+
 $fontSize: (
   8,
   12,
@@ -67,6 +68,10 @@ $fontSize: (
     @include scrollbar;
     height: 80vh;
     overflow-y: auto;
-    padding-bottom: 180px;;
+    padding-bottom: 220px;
   }
+}
+
+* {
+  transition: all 0.1s ease-in-out;
 }

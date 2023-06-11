@@ -4,11 +4,10 @@ import './badge.scss';
 
 function Badge({
   text,
-  varient,
   className,
 }) {
   return (
-    <BootstrapBadge bg={varient} className={`${className}`}>
+    <BootstrapBadge className={`${className}`}>
       { text }
     </BootstrapBadge>
   );
@@ -19,7 +18,6 @@ Badge.propTypes = {
     PropTypes.string,
     PropTypes.node,
   ]).isRequired,
-  varient: PropTypes.string.isRequired,
   className: PropTypes.string,
 };
 

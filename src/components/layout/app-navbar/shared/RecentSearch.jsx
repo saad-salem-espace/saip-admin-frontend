@@ -8,8 +8,8 @@ function RecentSearch() {
   return (
     <Dropdown>
       <Dropdown.Toggle
-        variant="primary-10"
-        className="appBtn has-icon btn nav-link mx-auto my-3 my-lg-0 rounded"
+        variant="link"
+        className="appBtn app-bg-primary-01 has-icon btn nav-link mx-auto my-3 my-lg-0 rounded"
         size="lg"
         id="recent-search"
         disabled

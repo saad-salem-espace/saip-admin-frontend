@@ -13,7 +13,7 @@ const OriginalDocumentsNavButtons = ({ backward, forward }) => (
       disabled={backward.isDisabled}
       text={<FontAwesomeIcon
         icon={faChevronLeft}
-        className="text-primary fs-18"
+        className="app-text-primary fs-18"
       />}
       size="sm"
     />
@@ -24,7 +24,7 @@ const OriginalDocumentsNavButtons = ({ backward, forward }) => (
       disabled={forward.isDisabled}
       text={<FontAwesomeIcon
         icon={faChevronRight}
-        className="text-primary fs-18"
+        className="app-text-primary fs-18"
       />}
       size="sm"
     />

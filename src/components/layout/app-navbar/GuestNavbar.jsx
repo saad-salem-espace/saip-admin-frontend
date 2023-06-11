@@ -13,6 +13,7 @@ import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/RecentSearch';
 import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
+import Accessibility from './shared/Accessibility';
 
 function GuestNavbar({ lang, changeLang }) {
   const { t } = useTranslation('layout');
@@ -34,13 +35,14 @@ function GuestNavbar({ lang, changeLang }) {
           <Nav>
             {/* {Recent search} */}
             <RecentSearch />
+            <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
               <div className="edges-border d-flex mx-lg-3 px-lg-3">
-                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary me-lg-3 me-2 px-3">
+                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary fs-sm me-lg-3 me-2 px-3">
                   {t('navbar.login')}
                 </Nav.Link>
-                <Nav.Link as={Link} to="/" className="appBtn btn btn-primary px-3">
+                <Nav.Link as={Link} to="/" className="appBtn btn btn-primary fs-sm px-3">
                   {t('navbar.signup')}
                 </Nav.Link>
               </div>

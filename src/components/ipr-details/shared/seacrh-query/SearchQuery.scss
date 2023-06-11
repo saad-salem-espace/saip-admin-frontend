@@ -6,7 +6,7 @@
   width: 464px;
   @extend .border;
   z-index: 9999999 !important;
-  top: 165px;
+  top: 70px;
   height: 448px;
   background-color: $white;
   overflow-y: auto;
@@ -25,20 +25,11 @@
   }
 }
 
-.custom-position .search-query-menu {
-
-  @include media-breakpoint-up(1838px) {
-    top: 240px;
-  }
-  @include media-breakpoint-up(1848px) {
-    top: 288px;
-  }
-}
-
 .keyword-planner-btn {
   display: none;
   position: fixed;
 }
+
 .added .keyword-planner-btn  {
   display: block;
 }

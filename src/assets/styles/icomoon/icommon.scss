@@ -26,11 +26,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   &:before {
-    color: #888;
+    color: var(--bs-gray);
   }
   &.colored {
     &:before {
-      color: #00a49b;
+      color: var(--bs-primary);
     }
   }
 }
@@ -78,7 +78,7 @@
 }
 .icon-filled-star:before {
   content: "\e907";
-  color: #00564c;
+  color: var(--bs-primary-dark);
 }
 .icon-star:before {
   content: "\e90a";

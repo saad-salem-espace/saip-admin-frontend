@@ -6,7 +6,7 @@
     @include truncate(2);
   }
   &.active , &:hover{
-    background: $primary-01;
+    background: var(--bs-primary-01);
   }
   .icon-wrapper{
     display: none;

@@ -12,7 +12,7 @@
     .search-query-inputs {
       display: flex;
       position: relative;
-
+      background-color: var(--bs-primary-01);
       .fa-trash-can {
         position: absolute;
         top: 34px;

@@ -8,11 +8,11 @@
     @extend .py-2;
 
     &:hover {
-      color: $gray;
+      color: var(--bs-gray);
     }
 
     &:active {
-      color: $white;
+      color: var(--bs-white);
     }
   }
 
@@ -38,8 +38,8 @@
     &:hover,
     &:active,
     &:focus {
-      background-color: $primary-10 !important;
-      color: $primary !important;
+      background-color: var(--bs-primary-10) !important;
+      color: var(--bs-primary) !important;
     }
 
     &::after {
