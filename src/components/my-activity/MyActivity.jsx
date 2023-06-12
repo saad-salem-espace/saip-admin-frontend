@@ -83,9 +83,9 @@ function MyActivity() {
     <Container fluid>
       <Row>
         <Col md={12} className="px-md-19 view-history">
-          <div className="d-lg-flex justify-content-between my-8 p-8 app-bg-primary-01 rounded">
+          <div className={`d-lg-flex justify-content-between my-8 p-8 ${hasData ? 'app-bg-primary-01' : ''} rounded`}>
             <div className="d-md-flex mb-lg-0 mb-8">
-              <h5 className="mb-0 mt-4">
+              <h5 className="mb-0 mt-4 app-text-primary">
                 <Trans
                   i18nKey="myActivities"
                   ns="activity"

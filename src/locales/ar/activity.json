@@ -1,13 +1,20 @@
 {
-  "saveQuery": "تم حفظ استعلام <0> {{query}} </0>.",
-  "deleteQuery": "تم مسح استعلام <0> {{query}} </0>.",
-  "runQuery": "تم الاستعلام عن <0> {{query}}.",
-  "searchWithImg": "تم الاستعلام عن صورة <0> {{query}}.",
-  "saveNote": "تم أضافة ملاحظة إلى <0> {{filingNumber}}.",
-  "deleteNote": "تم مسح ملاحظة من <0> {{filingNumber}}.",
-  "saveToBookmarks": "<0>{{filingNumber}}</0> تم أضافتة إلى تفضيلاتى.",
-  "deleteToBookmarks": "<0>{{filingNumber}}</0>تم مسحه من تفضيلاتى.",
+  "searchWithImg": "تم الاستعلام عن صورة <0> {{value}}.",
   "emptyStateTitle":"لا توجد أنشطة.",
   "emptyStateMsg":"ليس لديك أي أنشطة حتى الآن.",
-  "myActivities":"أنشطتي"
+  "myActivities":"أنشطتي",
+  "Bookmarks": {
+    "save": "<0>{{value}}</0> تم أضافتة إلى تفضيلاتى.",
+    "delete": "<0>{{value}}</0>تم مسحه من تفضيلاتى."
+  },
+  "Query": {
+    "save": "تم حفظ استعلام <0> {{value}} </0>.",
+    "delete": "تم مسح استعلام <0> {{value}} </0>.",
+    "run": "تم الاستعلام عن <0> {{value}}."
+  },
+
+  "Notes":{
+    "save": "تم أضافة ملاحظة إلى <0> {{value}}.",
+    "delete": "تم مسح ملاحظة من <0> {{value}}."
+  }
 }

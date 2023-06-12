@@ -3,102 +3,40 @@ import PropTypes from 'prop-types';
 
 const ActivityRow = (data) => {
   const { activity } = data;
-
   let activityDescription = '';
-  if (activity.model === 'Bookmarks') {
-    if (activity.action === 'save') {
-      activityDescription = (
-        <Trans
-          i18nKey="saveToBookmarks"
-          ns="activity"
-          values={{
-            filingNumber: activity.payload.filingNumber,
-          }}
-        >
-          <span className="font-medium" />
-        </Trans>);
-    }
-    if (activity.action === 'delete') {
-      activityDescription = (
-        <Trans
-          i18nKey="deleteToBookmarks"
-          ns="activity"
-          values={{
-            filingNumber: activity.payload.filingNumber,
-          }}
-        >
-          <span className="font-medium" />
-        </Trans>);
-    }
-  }
-  if (activity.model === 'Query') {
-    if (activity.action === 'save') {
-      activityDescription = (
-        <Trans
-          i18nKey="saveQuery"
-          ns="activity"
-          values={{
-            query: activity.payload.queryString,
-          }}
-        >
-          <span className="font-medium" />
-        </Trans>);
-    }
-    if (activity.action === 'delete') {
-      activityDescription = (
-        <Trans
-          i18nKey="deleteQuery"
-          ns="activity"
-          values={{
-            query: activity.payload.queryString,
-          }}
-        >
-          <span className="font-medium" />
-        </Trans>);
-    }
-    if (activity.action === 'run') {
-      activityDescription = (
-        <Trans
-          i18nKey={activity.payload.imageName ? 'searchWithImg' : 'runQuery'}
-          ns="activity"
-          values={{
-            query: activity.payload.imageName ? activity.payload.imageName : activity.payload.query,
-          }}
-        >
-          <span className="font-medium" />
-        </Trans>);
-    }
+
+  if (activity.model === 'Query' && activity.action === 'run' && activity.payload?.imageName) {
+    activityDescription = (
+      <Trans
+        i18nKey="searchWithImg"
+        ns="activity"
+        values={{
+          value: activity.payload?.imageName,
+        }}
+      >
+        <span className="font-medium" />
+      </Trans>);
   }
 
-  if (activity.model === 'Notes') {
-    if (activity.action === 'save') {
-      activityDescription = (
-        <Trans
-          i18nKey="saveNote"
-          ns="activity"
-          values={{
-            filingNumber: activity.payload?.filingNumber,
-          }}
-        >
-          <span className="font-medium" />
-        </Trans>);
-    }
-    if (activity.action === 'delete') {
-      activityDescription = (
-        <Trans
-          i18nKey="deleteNote"
-          ns="activity"
-          values={{
-            filingNumber: activity.payload?.filingNumber,
-          }}
-        >
-          <span className="font-medium" />
-        </Trans>);
-    }
-  }
   return (
     <div className="p-4 border-bottom">
-      <p className="text-gray-700 font-regular mb-2">{activityDescription}</p>
+      <p className="text-gray-700 font-regular mb-2">
+        {
+          activity.payload?.imageName ? (
+            activityDescription
+          ) : (
+            <Trans
+              i18nKey={`${activity.model}.${activity.action}`}
+              ns="activity"
+              values={{
+                value: activity.model === 'Query' ? activity.payload?.query : activity.payload?.filingNumber,
+              }}
+            >
+              <span className="font-medium" />
+            </Trans>
+          )
+        }
+      </p>
       <p className="text-gray fs-xs mb-0">
         {activity.date}
       </p>
