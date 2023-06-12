@@ -64,6 +64,7 @@
     "web-vitals": "^3.1.1",
     "webpack-filter-warnings-plugin": "^1.2.1",
     "webpack-shower": "^1.7.2",
+    "wild-wild-path": "^4.0.0",
     "yup": "^1.0.2"
   },
   "scripts": {

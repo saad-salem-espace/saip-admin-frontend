@@ -2,35 +2,28 @@ import PropTypes from 'prop-types';
 import IndustrialDesignResultCard from './IndustrialDesignResultCard';
 
 const IndustrialDesignResultCards = ({
-  data,
-  query, setActiveDocument, activeDocument, selectedView,
-  bookmarks,
-}) => (
-  <div>
-    {!bookmarks ? data.data.map((searchResult) => (
-      <IndustrialDesignResultCard
-        key={searchResult.BibliographicData.filingNumber}
-        searchResult={searchResult}
-        query={query}
-        setActiveDocument={setActiveDocument}
-        activeDocument={activeDocument}
-        highlightWords={data.highlighting || []}
-        selectedView={selectedView}
-      />
-    ))
-      : data.map((bookmark) => (
+  data, query, setActiveDocument, activeDocument, selectedView, hasCustomData, customData,
+}) => {
+  const searchResultData = hasCustomData ? (customData || []) : data.data;
+
+  if (!searchResultData.length) return null;
+
+  return (
+    <div>
+      {searchResultData.map((searchResult) => (
         <IndustrialDesignResultCard
-          key={bookmark.id}
-          searchResult={bookmark.data}
+          key={searchResult.BibliographicData.filingNumber}
+          searchResult={searchResult}
           query={query}
           setActiveDocument={setActiveDocument}
           activeDocument={activeDocument}
-          highlightWords={[]}
+          highlightWords={data.highlighting || []}
           selectedView={selectedView}
         />
       ))}
-  </div>
-);
+    </div>
+  );
+};
 
 IndustrialDesignResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
@@ -41,11 +34,13 @@ IndustrialDesignResultCards.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
-  bookmarks: PropTypes.bool,
+  hasCustomData: PropTypes.bool,
+  customData: PropTypes.arrayOf(Object),
 };
 
 IndustrialDesignResultCards.defaultProps = {
-  bookmarks: false,
+  hasCustomData: false,
+  customData: [],
 };
 
 export default IndustrialDesignResultCards;

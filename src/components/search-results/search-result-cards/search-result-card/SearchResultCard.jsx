@@ -33,7 +33,11 @@ function SearchResultCard({
       text={(
         <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
-            <Checkbox className="me-4" />
+            <Checkbox
+              className="me-4"
+              name={`selectedCards.${BibliographicData?.FilingNumber}`}
+              fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
+            />
             {
               BibliographicData?.ApplicationTitle
               && <Highlighter

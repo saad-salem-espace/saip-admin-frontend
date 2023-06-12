@@ -1,15 +1,12 @@
 import {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import {
-  Container,
-  Row,
-  Col,
-  Button,
+  Button, Col, Container, Row,
 } from 'react-bootstrap';
-import { useTranslation, Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import AppPopover from 'components/shared/app-popover/AppPopover';
 import * as Yup from 'yup';
@@ -33,7 +30,6 @@ import { tableNames } from 'dbConfig';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
-
 import './style.scss';
 import style from '../shared/form/search/style.module.scss';
 import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
@@ -43,6 +39,8 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
+import ExportSearchResults from './ExportSearchResults';
+import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
@@ -499,6 +497,9 @@ function SearchResults({ showFocusArea }) {
     setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
     setSelectedView(viewOptions.find((temp) => temp.value === selectedView.value));
   }, [currentLang]);
+
+  if (!workstreams?.data) return null;
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -641,7 +642,10 @@ function SearchResults({ showFocusArea }) {
               />
             </div>
           </div>
-          <Formik>
+          <Formik
+            initialValues={{ selectedCards: { }, allSelected: false }}
+            validationSchema={exportSearchResultsValidationSchema}
+          >
             {() => (
               <Form className="mt-12">
                 {
@@ -671,9 +675,15 @@ function SearchResults({ showFocusArea }) {
                           className="select-2"
                         />
                       </div>
+                      <ExportSearchResults
+                        workstreams={workstreams}
+                        workstreamId={searchResultParams.workstreamId}
+                        data={results?.data || []}
+                      />
                     </div>
                   )
                 }
+
                 <AppPagination
                   PaginationWrapper="col-10"
                   className="p-0 paginate-ipr"

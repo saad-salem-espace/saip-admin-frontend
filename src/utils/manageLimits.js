@@ -8,12 +8,19 @@ const LIMITS = {
   CSV_EXPORT_LIMIT: 'csv_export_limit',
 };
 
+/**
+ *
+ * @param data {{workstreamId: string, code: string, count: number}}
+ * @param onSuccess {function}
+ * @param onRichLimit {function}
+ * @param onFailure {function}
+ */
 const executeAfterLimitValidation = ({
   data, onSuccess, onRichLimit, onFailure,
 }) => {
   getLimitApi(data).then((response) => {
     const limitValue = response.data?.data?.[0]?.limitValue || 0;
-    if (data.count < limitValue) onSuccess();
+    if (data.count < limitValue) onSuccess?.();
     else onRichLimit(limitValue);
   }).catch(onFailure);
 };
