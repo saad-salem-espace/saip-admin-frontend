@@ -51,12 +51,14 @@ $cyan: #0dcaf0 !default;
 
 // saip color-variables
 $turquoise: #00A49B;
+$turquoise-15: #00A49B26;
 $turquoise-dark: #00564C;
 $turquoise-secondary: #7EC7C3;
 $turquoise-01: #F2F7F6;
 $turquoise-10: #E0F1F1;
 $turquoise-05: #FAFCFB;
 $danger: #D91148;
+$danger-15: #B5064426;
 $danger-dark: #B50644;
 $patents: #5287BE;
 $trademark: #E08C05;
@@ -94,6 +96,7 @@ $colors: (
 
 // scss-docs-start theme-color-variables
 $primary: $turquoise;
+$primary-15: $turquoise-15;
 $primary-01: $turquoise-01;
 $primary-10: $turquoise-10;
 $primary-05: $turquoise-05;
@@ -105,14 +108,16 @@ $info: $cyan;
 $warning: $secondary-tangerine;
 $light: $gray-100;
 $dark: $black;
-$danger: $danger;
+$danger-: $danger;
+$danger-15: $danger-15;
 $danger-dark: $danger-dark;
 
 [data-bs-theme="light"] {
   --bs-primary: #{$turquoise} !important;
   --bs-primary-01: #{$turquoise-01} !important;
-  --bs-primary-10: #{$turquoise-10} !important;
   --bs-primary-05: #{$turquoise-05} !important;
+  --bs-primary-10: #{$turquoise-10} !important;
+  --bs-primary-15: #{$primary-15} !important;
   --bs-primary-dark: #{$turquoise-dark} !important;
   --bs-secondary: #{$turquoise-secondary} !important;
   --bs-secondary-rio-grande: #{$vivid-lime-green} !important;
@@ -123,19 +128,23 @@ $danger-dark: $danger-dark;
   --bs-light: #{$gray-100} !important;
   --bs-dark: #{$black} !important;
   --bs-danger: #{$danger} !important;
+  --bs-danger-15: #{$danger-15} !important;
   --bs-danger-dark: #{$danger-dark} !important;
+  --bs-gray: #{$gray} !important;
   --bs-gray-200: #{$gray-200} !important;
   --bs-gray-500: #{$gray-500} !important;
   --bs-white: #{$white} !important;
   --bs-patents: #{$patents} !important;
   --bs-trademark: #{$trademark} !important;
   --bs-industrial-designs: #{$industrial-designs} !important;
+  --bs-body-bg: #{$white} !important;
 }
 [data-bs-theme="dark"] {
   --bs-primary: #{$gray-700} !important;
   --bs-primary-01: #{$gray-200} !important;
-  --bs-primary-10: #{$gray-400} !important;
   --bs-primary-05: #{$gray-200} !important;
+  --bs-primary-10: #{$gray-400} !important;
+  --bs-primary-15: #{gray-400} !important;
   --bs-primary-dark: #{$black} !important;
   --bs-secondary: #{$gray-600} !important;
   --bs-secondary-rio-grande: #{$gray} !important;
@@ -146,6 +155,7 @@ $danger-dark: $danger-dark;
   --bs-light: #{$gray-100} !important;
   --bs-dark: #{$gray-600} !important;
   --bs-danger: #{$gray} !important;
+  --bs-danger-15: #{$gray-500} !important;
   --bs-danger-dark: #{$gray} !important;
   --bs-white: #{$white} !important;
   --bs-gray: #{$gray} !important;
@@ -154,6 +164,26 @@ $danger-dark: $danger-dark;
   --bs-patents: #{$gray-700} !important;
   --bs-trademark: #{$gray-700} !important;
   --bs-industrial-designs: #{$gray-700} !important;
+  --bs-body-bg: #{$white} !important;
+  --bs-body-color: #{$black} !important;
+  --bs-border-color: #{$gray-500} !important;
+  --bs-link-color: #{$gray-500} !important;
+  --bs-heading-color: #{$gray-700} !important;
+  --bs-primary-border-subtle: #{$gray} !important;
+  --bs-secondary-border-subtle: #{$gray} !important;
+  --bs-success-border-subtle: #{$gray} !important;
+  --bs-info-border-subtle: #{$gray} !important;
+  --bs-warning-border-subtle: #{$gray} !important;
+  --bs-form-valid-color: #{$gray} !important;
+  --bs-form-valid-border-color: #{$gray} !important;
+  --bs-form-invalid-color: #{$gray} !important;
+  --bs-form-invalid-border-color: #{$gray} !important;
+  --bs-primary-text-emphasis: #{$gray} !important;
+  --bs-secondary-text-emphasis: #{$gray} !important;
+  --bs-success-text-emphasis: #{$gray} !important;
+  --bs-info-text-emphasis: #{$gray} !important;
+  --bs-warning-text-emphasis: #{$gray} !important;
+  --bs-danger-text-emphasis: #{$gray} !important;
 }
 
 // scss-docs-end theme-color-variables
@@ -383,7 +413,7 @@ $position-values: (
 //
 // Settings for the `<body>` element.
 
-$body-bg: $white !default;
+$body-bg: $white;
 $body-color: $black;
 $body-text-align: null !default;
 

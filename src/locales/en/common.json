@@ -17,5 +17,6 @@
   "limitReached": {
     "register_now": "Register now!",
     "register_now_msg": "You have reached the limit allowed for the guest user. Register now for an ultimate limit."
-  }
+  },
+  "loadMore": "Load more"
 }

@@ -2,33 +2,28 @@ import PropTypes from 'prop-types';
 import SearchResultCard from './search-result-card/SearchResultCard';
 
 const SearchResultCards = ({
-  data, query, setActiveDocument, activeDocument, selectedView, bookmarks,
-}) => (
-  <div>
-    {!bookmarks ? data.data.map((searchResult) => (
-      <SearchResultCard
-        key={searchResult.BibliographicData.filingNumber}
-        searchResult={searchResult}
-        query={query}
-        setActiveDocument={setActiveDocument}
-        activeDocument={activeDocument}
-        highlightWords={data.highlighting || []}
-        selectedView={selectedView}
-      />
-    ))
-      : data.map((bookmark) => (
+  data, query, setActiveDocument, activeDocument, selectedView, hasCustomData, customData,
+}) => {
+  const searchResultData = hasCustomData ? (customData || []) : data.data;
+
+  if (!searchResultData.length) return null;
+
+  return (
+    <div>
+      {searchResultData.map((searchResult) => (
         <SearchResultCard
-          key={bookmark.id}
-          searchResult={bookmark.data}
+          key={searchResult.BibliographicData.FilingNumber}
+          searchResult={searchResult}
           query={query}
           setActiveDocument={setActiveDocument}
           activeDocument={activeDocument}
-          highlightWords={[]}
+          highlightWords={data.highlighting || []}
           selectedView={selectedView}
         />
       ))}
-  </div>
-);
+    </div>
+  );
+};
 
 SearchResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
@@ -39,11 +34,13 @@ SearchResultCards.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
-  bookmarks: PropTypes.bool,
+  hasCustomData: PropTypes.bool,
+  customData: PropTypes.arrayOf(Object),
 };
 
 SearchResultCards.defaultProps = {
-  bookmarks: false,
+  hasCustomData: false,
+  customData: [],
 };
 
 export default SearchResultCards;

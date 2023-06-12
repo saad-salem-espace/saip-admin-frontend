@@ -1,8 +1,15 @@
+
 @import "../../styles/utilities/custom-theme";
 @import "../../styles/utilities/mixin";
 
 html {
   @include scrollbar;
+  body {
+    background-color: var(--bs-white) !important;
+  }
+  input {
+    color:var(--bs-gray) !important ;
+  }
 }
 
 img {

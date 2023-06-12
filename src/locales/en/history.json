@@ -3,5 +3,5 @@
   "mostRecent": "Most recent",
   "leastRecent": "Least recent",
   "noHistory": "No search history.",
-  "emptyStateMsg":"You didn’t search for any keyword yet."
+  "emptyStateMsg": "You didn’t search for any keyword yet."
 }

@@ -4,7 +4,7 @@
 @include media-breakpoint-up(md) {
 
   .workstream-view {
-    border: $border-width solid $gray-400;
+    border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
     position: relative;
     padding: 32px 32px 0;
@@ -97,7 +97,7 @@
     height: 100%;
     width: 100%;
     box-shadow: none;
-    border: $border-width solid $gray-400;
+    border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
     @extend .p-4;
 
@@ -112,13 +112,13 @@
     }
 
     +div {
-      border: $border-width solid $gray-400 !important;
+      border: $border-width solid var(--bs-gray-400) !important;
       @extend .p-4;
       width: 100%;
 
       [class$="control"] {
         height: 56px;
-        border-color: $gray-400;
+        border-color: var(--bs-gray-400);
         margin-bottom: 0;
         cursor: text;
         box-shadow: none;
@@ -128,12 +128,12 @@
         }
 
         svg {
-          color: $gray;
+          color: var(--bs-gray);
         }
       }
 
       [class$="placeholder"] {
-        color: $gray;
+        color: var(--bs-gray);
         font-size: $font-size-sm;
       }
 
@@ -152,7 +152,7 @@
         background-color: transparent;
 
         &:hover {
-          background-color: $gray-200;
+          background-color: var(--bs-gray-200);
         }
 
         &::before {
@@ -173,13 +173,13 @@
         background-color: transparent;
 
         &:hover {
-          background-color: $gray-200;
+          background-color: var(--bs-gray-200);
         }
 
         &::before {
           content: "\f14a";
           font-family: FontAwesomeSolid;
-          color: $turquoise-secondary;
+          color: var(--bs-secondary);
           font-size: 22px;
           margin-right: 10px;
 
@@ -225,12 +225,12 @@
 
   &.error {
     button {
-      border: $border-width solid $danger;
+      border: $border-width solid var(--bs-danger);
 
       &::after {
         content: "\f06a";
         font-family: FontAwesomeSolid;
-        color: $danger;
+        color: var(--bs-danger);
         position: absolute;
         right: 41px;
         top: 19px;
@@ -284,11 +284,11 @@
 
 .uploadImageWrapper {
   .error.dashedBorder{
-    border-color: $danger-dark;
+    border-color: var(--bs-danger-dark);
   }
 
   .image-item {
-    border: $border-width solid $gray-400;
+    border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
     position: absolute;
   }
