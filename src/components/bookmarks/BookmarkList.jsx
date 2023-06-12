@@ -94,7 +94,7 @@ const BookmarkList = () => {
   };
 
   const onChangeWorkStream = (i) => {
-    setActiveDocument(null);
+    handleCloseIprDetail();
     setSelectedWorkStream(WorkStreamsOptions?.find(
       (element) => element.value === i.value,
     ));
@@ -131,7 +131,7 @@ const BookmarkList = () => {
     }
   }, [results]);
 
-  if (!isMounted.current) return <Spinner />;
+  if (!isMounted.current) return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
 
   return (
     <Container fluid>
@@ -179,6 +179,10 @@ const BookmarkList = () => {
                       hasCustomData: true,
                       customData: bookmarkResult,
                     }}
+                    onPageChange={() => {
+                      setActiveDocument(null);
+                      setIsIPRExpanded(false);
+                    }}
                   />
                 ) : (
                   <IndexedDbAppPagination
@@ -205,6 +209,10 @@ const BookmarkList = () => {
                       customData: bookmarkResult,
                     }}
                     bookmarks
+                    onPageChange={() => {
+                      setActiveDocument(null);
+                      setIsIPRExpanded(false);
+                    }}
                   />
                 )}
               </>
