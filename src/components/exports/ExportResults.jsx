@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import Dropdown from 'react-bootstrap/Dropdown';
 import React, { useState } from 'react';
+import { FiDownload } from 'react-icons/fi';
 import { exportCSV } from 'utils/exports/exportSearchResults';
 import PropTypes from 'prop-types';
 import { executeAfterLimitValidation, LIMITS } from 'utils/manageLimits';
@@ -53,23 +54,22 @@ const ExportResults = ({ workstream, getSelectedItems, isValid }) => {
   ];
 
   return (
-    <>
-      <div>
-        <Dropdown>
-          <Dropdown.Toggle align="start" className="" id="dropdown-basic" disabled={!isValid}>
-            {t('title')}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            {allowedTypes.map(({ action, type }) => (
-              <Dropdown.Item onClick={action} disabled={!isValid}>
-                {t('exportFileType', { fileType: type })}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
-      </div>
+    <div className="export-results-wrapper">
+      <Dropdown>
+        <Dropdown.Toggle align="start" className="appBtn bg-primary-dark text-white" size="sm" disabled={!isValid}>
+          <FiDownload className="fs-base me-2" />
+          {t('title')}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {allowedTypes.map(({ action, type }) => (
+            <Dropdown.Item onClick={action} disabled={!isValid}>
+              {t('exportFileType', { fileType: type })}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
       <LimitReached setReachedLimit={setReachedLimit} reachedLimit={reachedLimit} />
-    </>
+    </div>
   );
 };
 

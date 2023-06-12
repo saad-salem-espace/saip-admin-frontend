@@ -189,11 +189,13 @@ function Bookmarks({
               <Button
                 onClick={saveBookmark}
                 disabled={isBookmark}
+                className="appBtn"
               >
                 <FaRegBookmark className="me-2 fs-base adjust-align" />
                 {t('addBookmarks')}
               </Button>
               <Button
+                className="appBtn"
                 onClick={saveBookmarkToFocus}
               >
                 <span className="icon-focus fs-base me-2" />
