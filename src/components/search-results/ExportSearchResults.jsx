@@ -53,7 +53,7 @@ const ExportSearchResults = ({ workstreams, workstreamId, data }) => {
 
   return (
     <div>
-      <div className="position-relative mb-8">
+      <div className="position-relative mb-8 d-flex align-items-end h-px-63 ms-5">
         <ExportResults
           workstream={search(workstreams.data, 'id', Number(workstreamId))}
           getSelectedItems={getSelectedItems}
