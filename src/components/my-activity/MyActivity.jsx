@@ -23,7 +23,7 @@ function MyActivity() {
   const { t } = useTranslation('activity');
   const [pageReset, setPageReset] = useState(0);
   const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
-  const [sortByMostRecent, setSortByMostRecent] = useState('desc');
+  const [sortByMostRecent, setSortByMostRecent] = useState('mostRecent');
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
   const currentLang = i18n.language;
@@ -41,7 +41,7 @@ function MyActivity() {
   };
 
   const changeSortBy = () => {
-    setSortByMostRecent(sortByMostRecent === 'asec' ? 'desc' : 'asec');
+    setSortByMostRecent(sortByMostRecent === 'leastRecent' ? 'mostRecent' : 'leastRecent');
   };
   function workstreamName(workstream) {
     return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
@@ -82,7 +82,7 @@ function MyActivity() {
   return (
     <Container fluid>
       <Row>
-        <Col md={12} className="px-md-19 view-history">
+        <Col md={12} className="px-md-19 view-activities">
           <div className="d-lg-flex justify-content-between mb-10 py-4 border-bottom">
             <div className="d-md-flex mb-lg-0 mb-8">
               <h5 className="mb-0 mt-4 app-text-primary">
@@ -112,12 +112,12 @@ function MyActivity() {
             axiosConfig={axiosConfig}
             defaultPage={Number(searchParams.get('page') || '1')}
             RenderedComponent={myActivityList}
-            sort={sortByMostRecent === 'desc' ? 'mostRecent' : 'leastRecent'}
+            sort={sortByMostRecent}
             emptyState={<EmptyState
               title={t('emptyStateTitle')}
               msg={t('emptyStateMsg')}
               img={notActivities}
-              className="no-history"
+              className="no-activity"
             />}
             resetPage={pageReset}
             renderedProps={{
