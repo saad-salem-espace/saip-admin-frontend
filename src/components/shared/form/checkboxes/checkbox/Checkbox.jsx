@@ -14,9 +14,15 @@ function Checkbox({
   className,
   showError,
   errorClassName,
+  onChange,
+  disablePropagation,
 }) {
   return (
-    <div className={className}>
+    <div
+      className={className}
+      role="presentation"
+      {...(disablePropagation && { onClick: (e) => { e.stopPropagation(); } })}
+    >
       <label
         htmlFor={fieldFor}
       >
@@ -25,8 +31,9 @@ function Checkbox({
           name={name}
           id={fieldFor}
           disabled={disabled}
-          checked={checked}
           className={style.checkbox}
+          {...(checked && { checked })}
+          {...(onChange && { onChange })}
         />
         {text}
         <span className={`${style.checkmark}`}>
@@ -48,6 +55,8 @@ Checkbox.propTypes = {
   className: PropTypes.string,
   showError: PropTypes.bool,
   errorClassName: PropTypes.string,
+  onChange: PropTypes.func,
+  disablePropagation: PropTypes.bool,
 };
 
 Checkbox.defaultProps = {
@@ -57,6 +66,8 @@ Checkbox.defaultProps = {
   className: '',
   showError: true,
   errorClassName: '',
+  onChange: null,
+  disablePropagation: true,
 };
 
 export default Checkbox;

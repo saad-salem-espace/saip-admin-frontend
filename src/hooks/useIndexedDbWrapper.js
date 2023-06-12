@@ -77,6 +77,12 @@ const useIndexedDbWrapper = (tableName) => {
       .then(instance.onSuccess).catch(instance.onError);
   };
 
+  const getInstanceByMultiIndex = (instance) => {
+    db[tableName].where(instance.indecies).first()
+      .then(instance.onSuccess)
+      .catch(instance.onError);
+  };
+
   const indexByIndexName = ({
     onSuccess, onError, sorted = 'NONE', sortedIndexName, indexName, indexValue, limit = 10, page = 1,
   }) => {
@@ -96,7 +102,12 @@ const useIndexedDbWrapper = (tableName) => {
       .catch((errors) => { onError(errors); });
   };
   return {
-    addInstanceToDb, getInstanceByIndex, indexByIndexName, countAllByIndexName, deleteInstance,
+    addInstanceToDb,
+    getInstanceByIndex,
+    indexByIndexName,
+    countAllByIndexName,
+    deleteInstance,
+    getInstanceByMultiIndex,
   };
 };
 

@@ -34,14 +34,14 @@ function SharedSearch({
   const [imgData, execute] = useAxios({}, { manual: true });
 
   useEffect(() => {
-    if (imgData.data) {
-      setImageName(imgData.data.data?.[0]);
-    } else if (imgData.error) {
-      setErrorMessage(imgData.error);
-    }
-    if (imgData.response) {
-      setIsImgUploaded(true);
-      setShowUploadImgSection(false);
+    if (imgData) {
+      if (imgData.data) {
+        setImageName(imgData.data.data?.[0]);
+        setShowUploadImgSection(false);
+        setIsImgUploaded(true);
+      } else {
+        setIsImgUploaded(false);
+      }
       setIsSubmitting(false);
     }
   }, [imgData]);

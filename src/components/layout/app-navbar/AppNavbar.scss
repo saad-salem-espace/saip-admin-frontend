@@ -50,42 +50,7 @@
       transform: rotate(180deg);
     }
   }
-  .notifications {
-    width: 50px;
-    @include media-breakpoint-up(xl) {
-      margin: 0 24px;
-      html[dir="ltr"] & {
-        padding: 0 58px 0 19px;
-      }
-      html[dir="rtl"] & {
-        padding: 0 19px 0 58px;
-      }
-    }
-    &.new {
-      position: relative;
-      .number-notifications {
-        background-color: var(--bs-danger-dark);
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        color: $white;
-        position: absolute;
-        top: -9px;
-        font-size: 10px;
-        line-height: 27px;
-        text-align: center;
-        html[dir="ltr"] & {
-          right: 12px;
-        }
-        html[dir="rtl"] & {
-          left: 12px;
-        }
-      }
-    }
-    .icon {
-      font-size: 22px;
-    }
-  }
+  
   .sb-avatar , .notifications{
     @include media-breakpoint-down(lg) {
       margin: 0 5px;

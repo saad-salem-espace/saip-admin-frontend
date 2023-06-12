@@ -7,11 +7,20 @@ html {
     .app-bg-primary-10 {
       background-color: var(--bs-primary-10) !important;
     }
+    .app-bg-primary-15 {
+      background-color: var(--bs-primary-15) !important;
+    }
     .app-bg-primary-01 {
       background-color: var(--bs-primary-01) !important;
     }
     .app-bg-secondary {
       background-color: var(--bs-secondary) !important;
+    }
+    .app-bg-danger-15 {
+      background-color:  var(--bs-danger-15)!important;
+    }
+    .app-bg-primary-dark {
+      background-color:  var(--bs-primary-dark)!important;
     }
     // text color
     .app-text-primary {

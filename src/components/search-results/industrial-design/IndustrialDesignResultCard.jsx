@@ -22,7 +22,7 @@ function IndustrialDesignResultCard({
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId'), id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '3', id: BibliographicData.FilingNumber, fileName, fileType,
     },
   );
 
@@ -36,7 +36,11 @@ function IndustrialDesignResultCard({
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
-                <Checkbox className="me-4" />
+                <Checkbox
+                  className="me-4"
+                  name={`selectedCards.${BibliographicData?.FilingNumber}`}
+                  fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
+                />
                 <Badge text={BibliographicData.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
@@ -127,7 +131,7 @@ IndustrialDesignResultCard.propTypes = {
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
   selectedView: PropTypes.shape({
     label: PropTypes.string,
@@ -137,5 +141,6 @@ IndustrialDesignResultCard.propTypes = {
 
 IndustrialDesignResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default IndustrialDesignResultCard;

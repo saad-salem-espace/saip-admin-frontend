@@ -7,7 +7,12 @@ import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import Notes from 'components/examiner-dashboard/board/notes/Notes';
 import SavedQueriesTable from 'components/saved-queries/SavedQueriesTable';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
+import SearchResultCards from 'components/search-results/search-result-cards/SearchResultCards';
+import TrademarksSearchResultCards from 'components/search-results/trademarks-search-result-cards/TrademarksSearchResultCards';
+import IndustrialDesignResultCards from 'components/search-results/industrial-design/IndustrialDesignResultCards';
 import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
+import getBookmarksApi from 'apis/bookmarks/getBookmarksApi';
+import { Formik } from 'formik';
 import IprData from '../IprData';
 import './style.scss';
 
@@ -69,9 +74,22 @@ function IprSections({
     SavedQueriesTable
   );
 
+  const searchResult = {
+    1: SearchResultCards,
+    2: TrademarksSearchResultCards,
+    3: IndustrialDesignResultCards,
+  };
+
+  const axiosConfigBookmark = getBookmarksApi(activeWorkstream, selectedCardId, true);
+
   const dependencies = {
     refreshQueriesList,
   };
+
+  const setActiveDocument = (activeDocument) => {
+    window.open(`/document?workstreamId=${activeWorkstream}&documentId=${activeDocument}`, '_blank');
+  };
+
   const tabsItems = [
     {
       id: 1,
@@ -138,6 +156,36 @@ function IprSections({
             updateDependencies={[...Object.values(dependencies)]}
           />
         </div>
+      ),
+    },
+    {
+      id: 4,
+      title: (
+        <div className="d-flex align-items-center" translate="no">
+          {t('dashboard:bookmarks')}
+          { activeTabId === 4 && (<span className="ms-1 p-1 queries-count">{totalElements}</span>)}
+        </div>
+      ),
+      content: (
+        <Formik>
+          <div className="m-4">
+            <AppPagination
+              className="mt-8"
+              axiosConfig={axiosConfigBookmark}
+              defaultPage="1"
+              RenderedComponent={searchResult[activeWorkstream]}
+              setTotalElements={(totalCount) => setTotalElements(totalCount)}
+              emptyState={<NoData />}
+              urlPagination={false}
+              bookmarks
+              renderedProps={{
+                selectedView,
+                setActiveDocument,
+                bookmarks: true,
+              }}
+            />
+          </div>
+        </Formik>
       ),
     },
   ];
@@ -209,7 +257,9 @@ IprSections.propTypes = {
 IprSections.defaultProps = {
   options: [],
   showInfo: true,
-  selectedView: null,
+  selectedView: {
+    value: 'detailed',
+  },
   onChangeSelect: () => { },
   renderSelectedView: () => {},
   activeTab: 1,

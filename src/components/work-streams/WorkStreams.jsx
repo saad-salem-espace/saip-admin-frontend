@@ -3,15 +3,20 @@ import Button from 'react-bootstrap/Button';
 import React, { useContext, useEffect } from 'react';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import './workstream.scss';
 
 function WorkStreams({ selectedWorkStream, onChange }) {
+  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const { cachedRequests } = useContext(CacheContext);
   const [workstream] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
   const workstreams = workstream?.data;
   const handleChange = (workstreamId) => {
     onChange(workstreamId);
+    if (workstreamId) {
+      setWorkStreamId(workstreamId);
+    }
   };
   const { i18n } = useTranslation();
   const currentLang = i18n.language;

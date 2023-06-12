@@ -16,12 +16,14 @@ import { tableNames } from 'dbConfig';
 import CacheContext from 'contexts/CacheContext';
 import useCacheRequest from 'hooks/useCacheRequest';
 import Spinner from 'components/shared/spinner/Spinner';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SavedQueriesTable from './SavedQueriesTable';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
 import './style.scss';
 
 const SavedQueries = () => {
   const { t } = useTranslation('queries');
+  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [searchParams] = useSearchParams();
   const auth = useAuth();
@@ -59,6 +61,7 @@ const SavedQueries = () => {
       (element) => element.value === i.value,
     ));
     resetPageNumber();
+    setWorkStreamId(i.value);
   };
 
   const axiosConfig = getSavedQueryApi(selectedWorkStream.value, null, Number(searchParams.get('page') || '1'), true);

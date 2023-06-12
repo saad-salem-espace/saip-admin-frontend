@@ -20,7 +20,7 @@ function SearchResultCard({
   const [searchParams] = useSearchParams();
 
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL({
-    workstreamId: searchParams.get('workstreamId'),
+    workstreamId: searchParams.get('workstreamId') || '1',
     id: BibliographicData?.FilingNumber,
     fileName,
     fileType,
@@ -33,7 +33,11 @@ function SearchResultCard({
       text={(
         <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
-            <Checkbox className="me-4" />
+            <Checkbox
+              className="me-4"
+              name={`selectedCards.${BibliographicData?.FilingNumber}`}
+              fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
+            />
             {
               BibliographicData?.ApplicationTitle
               && <Highlighter
@@ -111,7 +115,7 @@ SearchResultCard.propTypes = {
       FileName: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
@@ -123,6 +127,7 @@ SearchResultCard.propTypes = {
 
 SearchResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 
 export default SearchResultCard;
