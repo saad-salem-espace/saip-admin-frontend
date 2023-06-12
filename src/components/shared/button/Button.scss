@@ -35,8 +35,8 @@
   }
   
   &.btn-outline-primary {
-    border-color: var(--bs-primary) !important;
     color: var(--bs-primary) !important;
+    border: $border-width solid var(--bs-primary) !important;
     &:hover,
     &:active{
       color: var(--bs-white) !important;

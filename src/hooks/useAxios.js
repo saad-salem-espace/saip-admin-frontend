@@ -13,6 +13,7 @@ import toastify from '../utils/toastify';
  *   ssr: boolean=,
  *   useCache: boolean=,
  *   autoCancel: boolean=,
+ *   onError: string=,
  * }=}
  * @param customInstance {CreateAxiosDefaults=}
  * @return {UseAxiosResult<any, any, any>}
@@ -22,16 +23,17 @@ const useAxios = (config, options, customInstance) => {
   if (user?.access_token) {
     apiInstance.defaults.headers.common.Authorization = user ? `Bearer ${user.access_token}` : undefined;
   }
+  const { onError, ...axiosOptions } = options || {};
 
   const axios = makeUseAxios({ axios: customInstance ?? apiInstance });
-  const response = axios(config, options);
+  const response = axios(config, axiosOptions);
   const { t } = useTranslation('error', { keyPrefix: 'serverErrors' });
 
   useEffect(() => {
     const axiosError = response[0].error;
 
     if (axiosError) {
-      const errorType = axiosError.response.data?.error?.type;
+      const errorType = onError || axiosError.response.data?.error?.type;
       const errorCode = axiosError.response.data?.error?.code;
       switch (errorType) {
         case 'custom':
