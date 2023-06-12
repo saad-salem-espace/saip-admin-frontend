@@ -36,7 +36,11 @@ function IndustrialDesignResultCard({
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
-                <Checkbox className="me-4" />
+                <Checkbox
+                  className="me-4"
+                  name={`selectedCards.${BibliographicData?.FilingNumber}`}
+                  fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
+                />
                 <Badge text={BibliographicData.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">

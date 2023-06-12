@@ -196,5 +196,18 @@
   "bookmarks": "يمكنك الوصول تفضيلاتك المحفوظة <0>تفضيلاتي</0>",
   "alreadyBookmarked": "الملف من ضمن تفضيلاتك",
   "couldnotSaveBookmark": "لم تتم الاضافة للتفضيلات",
-  "addBookmarks": "أضف إلى المفضلة"
+  "addBookmarks": "أضف إلى المفضلة",
+  "selectedItems": "تم اختيار {{count}}",
+  "export": {
+    "title": "صدر",
+    "exportFileType": "ملف {{fileType}}",
+    "workstreams": {
+      "patent": "تصدير براءات الإختراع",
+      "trademark": "تصدير العلامات التجارية",
+      "copyrights": "تصدير حق المؤلف",
+      "Industrial Design": "تصدير النماذج الصناعية",
+      "plantVarieties": "تصدير الأصناف النباتية",
+      "integratedCircuits": "تصدير الدوائر المتكاملة"
+    }
+  }
 }
