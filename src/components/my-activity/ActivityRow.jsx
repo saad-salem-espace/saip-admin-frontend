@@ -18,6 +18,16 @@ const ActivityRow = (data) => {
       </Trans>);
   }
 
+  const getActivityValue = () => {
+    let activityValue = activity.payload?.filingNumber;
+    if (activity.model === 'Query') {
+      activityValue = activity.payload?.query;
+    }
+    if (activity.model === 'ExportDocuments') {
+      activityValue = activity.payload?.documentsIds.length;
+    }
+    return activityValue;
+  };
   return (
     <div className="p-4 border-bottom">
       <p className="text-gray-700 font-regular mb-2">
@@ -29,7 +39,7 @@ const ActivityRow = (data) => {
               i18nKey={`${activity.model}.${activity.action}`}
               ns="activity"
               values={{
-                value: activity.model === 'Query' ? activity.payload?.query : activity.payload?.filingNumber,
+                value: getActivityValue(),
               }}
             >
               <span className="font-medium" />

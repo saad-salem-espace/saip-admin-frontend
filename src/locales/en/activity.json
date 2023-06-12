@@ -16,5 +16,8 @@
   "Notes":{
     "save": "A note for <0>{{value}}</0> was added.",
     "delete": "A note for <0>{{value}}</0> was deleted."
+  },
+  "ExportDocuments": {
+    "csv":"A CSV was exported with <0>{{value}}</0> records."
   }
 }
