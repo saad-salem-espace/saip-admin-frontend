@@ -191,5 +191,9 @@
   "download": "Download",
   "addtoSavedQueries": "Add to my saved queries",
   "addtoFocusArea": "Add to card in focus area",
-  "noDocument": "Sorry! No document is available for download"
+  "noDocument": "Sorry! No document is available for download",
+  "decisions": {
+    "decision": "Decision {{value}}",
+    "date": "Date {{value}}"
+  }
 }

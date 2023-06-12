@@ -191,5 +191,9 @@
   "download": "تحميل",
   "addtoSavedQueries": "أضافه الى الاستعلامات المحفوظة",
   "addtoFocusArea": "أضافه الى مساحة التركيز",
-  "noDocument": "عذرًا! لا يوجد مستند متاح للتنزيل"
+  "noDocument": "عذرًا! لا يوجد مستند متاح للتنزيل",
+  "decisions": {
+    "decision": "القرار {{value}}",
+    "date": "التاريخ {{value}}"
+  }
 }
