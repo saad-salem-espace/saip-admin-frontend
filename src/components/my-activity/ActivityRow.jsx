@@ -21,10 +21,13 @@ const ActivityRow = (data) => {
   const getActivityValue = () => {
     let activityValue = activity.payload?.filingNumber;
     if (activity.model === 'Query') {
-      activityValue = activity.payload?.query;
+      activityValue = activity.action === 'run' ? activity.payload?.query : activity.payload?.queryString;
     }
     if (activity.model === 'ExportDocuments') {
       activityValue = activity.payload?.documentsIds.length;
+    }
+    if (activity.model === 'AssignmentDocument') {
+      activityValue = activity.payload?.document.filingNumber;
     }
     return activityValue;
   };
