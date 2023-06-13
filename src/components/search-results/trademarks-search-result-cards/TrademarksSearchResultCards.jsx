@@ -4,6 +4,7 @@ import TrademarksSearchResultCard from './TrademarksSearchResultCard';
 const TrademarksSearchResultCards = ({
   data,
   query, setActiveDocument, activeDocument, selectedView, hasCustomData, customData,
+  disableCheckbox,
 }) => {
   const searchResultData = hasCustomData ? (customData || []) : data.data;
 
@@ -20,6 +21,7 @@ const TrademarksSearchResultCards = ({
           activeDocument={activeDocument}
           highlightWords={data.highlighting || []}
           selectedView={selectedView}
+          disableCheckbox={disableCheckbox}
         />
       ))}
     </div>
@@ -34,11 +36,13 @@ TrademarksSearchResultCards.propTypes = {
   selectedView: PropTypes.string.isRequired,
   hasCustomData: PropTypes.bool,
   customData: PropTypes.arrayOf(Object),
+  disableCheckbox: PropTypes.bool,
 };
 
 TrademarksSearchResultCards.defaultProps = {
   hasCustomData: false,
   customData: [],
+  disableCheckbox: false,
 };
 
 export default TrademarksSearchResultCards;
