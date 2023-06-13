@@ -193,6 +193,7 @@ function IprSections({
                 setActiveDocument,
                 hasCustomData: true,
                 customData: prepareAuthBookamrks(results),
+                disableCheckbox: true,
               }}
             />
           </div>

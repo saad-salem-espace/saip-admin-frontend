@@ -3,6 +3,7 @@ import IndustrialDesignResultCard from './IndustrialDesignResultCard';
 
 const IndustrialDesignResultCards = ({
   data, query, setActiveDocument, activeDocument, selectedView, hasCustomData, customData,
+  disableCheckbox,
 }) => {
   const searchResultData = hasCustomData ? (customData || []) : data.data;
 
@@ -19,6 +20,7 @@ const IndustrialDesignResultCards = ({
           activeDocument={activeDocument}
           highlightWords={data.highlighting || []}
           selectedView={selectedView}
+          disableCheckbox={disableCheckbox}
         />
       ))}
     </div>
@@ -35,12 +37,14 @@ IndustrialDesignResultCards.propTypes = {
     value: PropTypes.string,
   }).isRequired,
   hasCustomData: PropTypes.bool,
+  disableCheckbox: PropTypes.bool,
   customData: PropTypes.arrayOf(Object),
 };
 
 IndustrialDesignResultCards.defaultProps = {
   hasCustomData: false,
   customData: [],
+  disableCheckbox: false,
 };
 
 export default IndustrialDesignResultCards;

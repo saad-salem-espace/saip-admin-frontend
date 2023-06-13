@@ -3,6 +3,7 @@ import SearchResultCard from './search-result-card/SearchResultCard';
 
 const SearchResultCards = ({
   data, query, setActiveDocument, activeDocument, selectedView, hasCustomData, customData,
+  disableCheckbox,
 }) => {
   const searchResultData = hasCustomData ? (customData || []) : data.data;
 
@@ -19,6 +20,7 @@ const SearchResultCards = ({
           activeDocument={activeDocument}
           highlightWords={data.highlighting || []}
           selectedView={selectedView}
+          disableCheckbox={disableCheckbox}
         />
       ))}
     </div>
@@ -35,12 +37,14 @@ SearchResultCards.propTypes = {
     value: PropTypes.string,
   }).isRequired,
   hasCustomData: PropTypes.bool,
+  disableCheckbox: PropTypes.bool,
   customData: PropTypes.arrayOf(Object),
 };
 
 SearchResultCards.defaultProps = {
   hasCustomData: false,
   customData: [],
+  disableCheckbox: false,
 };
 
 export default SearchResultCards;
