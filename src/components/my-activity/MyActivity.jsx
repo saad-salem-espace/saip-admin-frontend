@@ -68,12 +68,20 @@ function MyActivity() {
     },
     { manual: true },
   );
+
+  useEffect(() => {
+    if (!WorkStreamsOptions) return;
+    setSelectedWorkStream(WorkStreamsOptions.find(
+      (temp) => temp.value === selectedWorkStream.value,
+    ));
+  }, [currentLang]);
+
   useEffect(() => {
     if (WorkStreamsOptions?.length) {
       setWorkStreamId(WorkStreamsOptions[0].value);
       setSelectedWorkStream(WorkStreamsOptions[0]);
     }
-  }, [workstreams, currentLang]);
+  }, [workstreams]);
 
   const myActivityList = (
     MyActivityList
