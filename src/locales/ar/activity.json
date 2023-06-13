@@ -1,0 +1,25 @@
+{
+  "searchWithImg": "تم الاستعلام عن صورة <0> {{value}}.",
+  "emptyStateTitle": "لا توجد أنشطة.",
+  "emptyStateMsg": "ليس لديك أي أنشطة حتى الآن.",
+  "myActivities": "أنشطتي",
+  "Bookmarks": {
+    "save": "<0>{{value}}</0> تم أضافتة إلى تفضيلاتى.",
+    "delete": "<0>{{value}}</0>تم مسحه من تفضيلاتى."
+  },
+  "Query": {
+    "save": "تم حفظ استعلام <0> {{value}} </0>.",
+    "delete": "تم مسح استعلام <0> {{value}} </0>.",
+    "run": "تم الاستعلام عن <0> {{value}}."
+  },
+  "Notes": {
+    "save": "تم أضافة ملاحظة إلى <0> {{value}}.",
+    "delete": "تم مسح ملاحظة من <0> {{value}}."
+  },
+  "ExportDocuments": {
+    "csv": "تم تصدير ملف CSV من <0>{{value}}</0> سجلات."
+  },
+  "AssignmentDocument": {
+    "UPDATE_STATUS": "تم تغيير حالة <0>{{value}}</0>."
+  }
+}
