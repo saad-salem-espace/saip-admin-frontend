@@ -12,7 +12,7 @@ import './style.scss';
 
 function DecisionsResultCard({
   searchResult,
-  setActiveDocument, activeDocument, highlightWords, query,
+  setActiveDocument, activeDocument, highlightWords, query, disableCheckbox,
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
@@ -24,41 +24,38 @@ function DecisionsResultCard({
       text={(
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-8 position-relative `}>
           <div className="mb-1">
-            <div>
-              <Checkbox className="me-4" />
+            <div className="d-flex">
+              {!disableCheckbox && <Checkbox
+                className="me-4"
+                name={`selectedCards.${BibliographicData?.FilingNumber}`}
+                fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
+              />}
               <div className="d-flex align-items-center mb-2">
-                <Badge text="test" className="text-capitalize me-2 mt-1 bg-secondary" />
+                <Badge text={BibliographicData.DecisionCategory} className="text-capitalize me-2 mt-1 bg-secondary" />
                 <span className="d-block fs-20 text-truncate">
-                  {/* {BibliographicData.BrandNameEn && */}
-                  <Highlighter
+                  {BibliographicData.DecisionTitle
+                  && <Highlighter
                     highlightTag="span"
                     highlightClassName="font-medium"
                     textToHighlight={trimStringRelativeToSubtext(
-                      'The decision of the committee to consider violations of copyright protection.',
+                      BibliographicData.DecisionTitle,
                       query,
                     )}
                     searchWords={highlightWords}
                     autoEscape
-                  />
-                  {/* // } */}
+                  />}
                 </span>
               </div>
             </div>
             <p className="mb-2 text-black fs-base">
-              {t('decision', { value: BibliographicData.FilingNumber })}
+              {t('decisions.decisionValue', { value: BibliographicData.FilingNumber })}
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              {t('date', { value: BibliographicData.FilingNumber })}
+              {t('decisions.date', { value: BibliographicData.DecisionDate })}
             </p>
             <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark fs-sm">
-              test
-              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              totalResults
-              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              totalResults
-              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              test
+              {BibliographicData.Keywords}
             </p>
-            <p className="fs-sm text-gray">description</p>
+            <p className="fs-sm text-gray">{BibliographicData.DecisionBrief}</p>
           </div>
         </div>
       )}
@@ -69,24 +66,19 @@ function DecisionsResultCard({
 DecisionsResultCard.propTypes = {
   searchResult: PropTypes.shape({
     BibliographicData: PropTypes.shape({
-      Applicants: PropTypes.arrayOf(PropTypes.string),
-      BrandNameEn: PropTypes.string.isRequired,
-      BrandNameAr: PropTypes.string.isRequired,
-      ApplicationTitle: PropTypes.string.isRequired,
+      DecisionCategory: PropTypes.string.isRequired,
+      DecisionTitle: PropTypes.string.isRequired,
       FilingNumber: PropTypes.string.isRequired,
-      FilingDate: PropTypes.string.isRequired,
-      RegistrationNumber: PropTypes.string.isRequired,
-      RegistrationDate: PropTypes.string.isRequired,
-      PublicationNumber: PropTypes.string.isRequired,
-      PublicationDate: PropTypes.string.isRequired,
-      Mark: PropTypes.string.isRequired,
-      TrademarkLastStatus: PropTypes.string.isRequired,
+      DecisionDate: PropTypes.string.isRequired,
+      Keywords: PropTypes.string.isRequired,
+      DecisionBrief: PropTypes.string.isRequired,
     }),
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
   query: PropTypes.string.isRequired,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
+  disableCheckbox: PropTypes.bool.isRequired,
 };
 
 DecisionsResultCard.defaultProps = {

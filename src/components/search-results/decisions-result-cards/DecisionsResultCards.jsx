@@ -4,22 +4,29 @@ import DecisionsResultCard from './DecisionsResultCard';
 
 const DecisionsResultCards = ({
   data,
-  query, setActiveDocument, activeDocument, selectedView,
-}) => (
-  <>
-    {data.data.map((searchResult) => (
-      <DecisionsResultCard
-        key={trademarkSample.BibliographicData.filingNumber}
-        searchResult={searchResult}
-        query={query}
-        setActiveDocument={setActiveDocument}
-        activeDocument={activeDocument}
-        selectedView={selectedView}
-        highlightWords={data.highlighting || []}
-      />
-    ))}
-  </>
-);
+  query, setActiveDocument, activeDocument,
+  selectedView, hasCustomData, customData, disableCheckbox,
+}) => {
+  const searchResultData = hasCustomData ? (customData || []) : data.data;
+  if (!searchResultData.length) return null;
+
+  return (
+    <>
+      {searchResultData.map((searchResult) => (
+        <DecisionsResultCard
+          key={trademarkSample.BibliographicData.filingNumber}
+          searchResult={searchResult}
+          query={query}
+          setActiveDocument={setActiveDocument}
+          activeDocument={activeDocument}
+          selectedView={selectedView}
+          highlightWords={data.highlighting || []}
+          disableCheckbox={disableCheckbox}
+        />
+      ))}
+    </>
+  );
+};
 
 DecisionsResultCards.propTypes = {
   data: PropTypes.arrayOf(Object).isRequired,
@@ -27,6 +34,15 @@ DecisionsResultCards.propTypes = {
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
   selectedView: PropTypes.string.isRequired,
+  hasCustomData: PropTypes.bool,
+  disableCheckbox: PropTypes.bool,
+  customData: PropTypes.arrayOf(Object),
+};
+
+DecisionsResultCards.defaultProps = {
+  hasCustomData: false,
+  customData: [],
+  disableCheckbox: false,
 };
 
 export default DecisionsResultCards;

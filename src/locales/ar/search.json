@@ -211,7 +211,22 @@
     }
   },
   "decisions": {
-    "decision": "القرار {{value}}",
-    "date": "التاريخ {{value}}"
+    "decisionValue": "قرار {{value}}",
+    "date": "التاريخ {{value}}",
+    "decisionNumber": "رقم القرار",
+    "decisionCategory": "فئة القرار",
+    "type": "النوع",
+    "decisionDate":"تاريخ القرار",
+    "decision":"القرار",
+    "domain":"المجال",
+    "keywords": "الكلمات الدالة",
+    "decisionBrief":"ملخص القرار",
+    "judgementDecision":"القرار",
+    "references":"المراجع",
+    "failerMsg":"حقائق",
+    "reasons":"أسباب",
+    "decisionDateDesc": "تاريخ القرار تنازليًا",
+    "decisionDateAsc":  "تاريخ القرار تصاعديًا",
+    "facts": "الحقائق"
   }
 }

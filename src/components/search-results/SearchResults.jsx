@@ -145,10 +145,25 @@ function SearchResults({ showFocusArea }) {
     },
   ];
 
+  const sortByOptionsDecisions = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('decisionDateAsc'),
+      value: 'decisionDateAsc',
+    },
+    {
+      label: t('decisionDateDesc'),
+      value: 'decisionDateDesc',
+    },
+  ];
   const map = new Map();
   map.set(1, sortByOptionsPatent);
   map.set(2, sortByPublicationAndFilingDate);
   map.set(3, sortByPublicationAndFilingDate);
+  map.set(4, sortByOptionsDecisions);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
