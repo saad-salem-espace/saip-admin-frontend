@@ -1,15 +1,12 @@
 import {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import {
-  Container,
-  Row,
-  Col,
-  Button,
+  Button, Col, Container, Row,
 } from 'react-bootstrap';
-import { useTranslation, Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import AppPopover from 'components/shared/app-popover/AppPopover';
 import * as Yup from 'yup';
@@ -27,12 +24,14 @@ import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
-import { LIMITS } from 'utils/manageLimits';
+import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import './style.scss';
 import style from '../shared/form/search/style.module.scss';
-
 import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
@@ -40,10 +39,12 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
-import getInstanceByIndex from '../../hooks/useIndexedDbWrapper';
+import ExportSearchResults from './ExportSearchResults';
+import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
+  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -66,6 +67,10 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const auth = useAuth();
+  const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
+  const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
+  const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -157,10 +162,13 @@ function SearchResults({ showFocusArea }) {
   };
 
   useEffect(() => {
-    if (!(auth && auth?.user)) {
-      getInstanceByIndex({
-        indexName: 'queryString',
-        indexValue: searchParams.get('q'),
+    localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
+    if (!auth.isAuthenticated) {
+      getInstanceByMultiIndex({
+        indecies: {
+          queryString: searchResultParams.query,
+          workstreamId: searchResultParams.workstreamId,
+        },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
       });
@@ -201,6 +209,9 @@ function SearchResults({ showFocusArea }) {
     setSelectedOption(searchIdentifiers?.[0]);
   }, [searchIdentifiers]);
 
+  useEffect(() => {
+    setWorkStreamId(searchParams.get('workstreamId'));
+  }, []);
   // const options = [
   //   {
   //     key: '1',
@@ -211,6 +222,78 @@ function SearchResults({ showFocusArea }) {
   //     value: 'Int. Classification(IPC)',
   //   },
   // ];
+  const saveHistoryParams = {
+    workstreamId: searchParams.get('workstreamId'),
+    queryString: searchParams.get('q'),
+    synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
+    workstreamKey: 'workstreamId',
+    documentId: null,
+    fav: true,
+  };
+  const deleteIndexValue = Number(localStorage.getItem('deleteQueryHistory') || 1);
+
+  const saveHistory = () => {
+    if (!auth.isAuthenticated) {
+      const workstreamId = saveHistoryParams[saveHistoryParams.workstreamKey];
+      saveSearchHistoryIDB.countAllByIndexName(
+        { indexName: saveHistoryParams.workstreamKey, indexValue: workstreamId },
+      ).then((count) => (
+        executeAfterLimitValidation(
+          {
+            data: { workstreamId: activeWorkstream, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
+            onSuccess: () => {
+              saveSearchHistoryIDB.addInstanceToDb({
+                data: saveHistoryParams,
+              });
+            },
+            onRichLimit: () => {
+              deleteInstance({
+                indexName: 'id',
+                indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
+                onSuccess: () => {
+                  saveSearchHistoryIDB.addInstanceToDb({
+                    data: saveHistoryParams,
+                    onSuccess: () => {
+                      localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
+                    }
+                    ,
+                  });
+                },
+              });
+            },
+          },
+        )));
+    }
+  };
+
+  saveSearchHistoryIDB.countAllByIndexName(
+    { indexName: saveHistoryParams.workstreamKey, indexValue: searchParams.get('workstreamId') },
+  ).then((count) => {
+    executeAfterLimitValidation(
+      {
+        data: { workstreamId: activeWorkstream, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
+        onRichLimit: (limit) => {
+          if (count > limit) {
+            const differenceCount = count - limit;
+            for (let i = 1; i <= differenceCount; i += 1) {
+              deleteInstance({
+                indexName: 'id',
+                indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
+                // eslint-disable-next-line no-loop-func
+                onSuccess: () => {
+                  localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
+                },
+              });
+            }
+          }
+        },
+      },
+    );
+  });
+
+  useEffect(() => {
+    saveHistory();
+  }, []);
 
   const onSubmit = (values) => {
     setActiveDocument(null);
@@ -227,7 +310,8 @@ function SearchResults({ showFocusArea }) {
         condition: { optionParserName: defaultCondition },
         data: simpleQuery,
       }, 0, true);
-
+      saveHistoryParams.queryString = query;
+      saveHistory();
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
@@ -235,6 +319,8 @@ function SearchResults({ showFocusArea }) {
         })}`,
       });
     } else {
+      saveHistoryParams.queryString = values.searchQuery;
+      saveHistory();
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
@@ -412,6 +498,8 @@ function SearchResults({ showFocusArea }) {
     setSelectedView(viewOptions.find((temp) => temp.value === selectedView.value));
   }, [currentLang]);
 
+  if (!workstreams?.data) return null;
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -443,6 +531,7 @@ function SearchResults({ showFocusArea }) {
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);
+                        setWorkStreamId(data?.value);
                       }}
                     />
                   </div>
@@ -476,10 +565,10 @@ function SearchResults({ showFocusArea }) {
                           Title={t('tips:advancedSearchTipTitle')}
                           id="advancedSearchTip"
                           btnText={t('common:gotIt')}
-                          variant="bg-primary-10"
+                          variant="app-bg-primary-10"
                           popoverTrigger={
                             <Button variant="link" className="btn-view-tip">
-                              <BsQuestionCircle className="text-primary" />
+                              <BsQuestionCircle className="app-text-primary" />
                             </Button>
                           }
                         >
@@ -500,10 +589,10 @@ function SearchResults({ showFocusArea }) {
                           Title={t('tips:allowSynonymsTipTitle')}
                           id="allowSynonymsTip"
                           btnText={t('common:gotIt')}
-                          variant="bg-primary-10"
+                          variant="app-bg-primary-10"
                           popoverTrigger={
                             <Button variant="link" className="btn-view-tip">
-                              <BsQuestionCircle className="text-primary" />
+                              <BsQuestionCircle className="app-text-primary" />
                             </Button>
                           }
                         >
@@ -553,7 +642,10 @@ function SearchResults({ showFocusArea }) {
               />
             </div>
           </div>
-          <Formik>
+          <Formik
+            initialValues={{ selectedCards: { }, allSelected: false }}
+            validationSchema={exportSearchResultsValidationSchema}
+          >
             {() => (
               <Form className="mt-12">
                 {
@@ -583,9 +675,15 @@ function SearchResults({ showFocusArea }) {
                           className="select-2"
                         />
                       </div>
+                      <ExportSearchResults
+                        workstreams={workstreams}
+                        workstreamId={searchResultParams.workstreamId}
+                        data={results?.data || []}
+                      />
                     </div>
                   )
                 }
+
                 <AppPagination
                   PaginationWrapper="col-10"
                   className="p-0 paginate-ipr"

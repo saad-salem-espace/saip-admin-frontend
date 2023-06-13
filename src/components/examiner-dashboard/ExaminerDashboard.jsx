@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import useAxios from 'hooks/useAxios';
@@ -7,12 +7,15 @@ import getAssignedWorkstreams from 'apis/dashboard/getAssignedWorkstreams';
 import Spinner from 'components/shared/spinner/Spinner';
 import activeWorkstreamContext from 'components/ipr-details/shared/context/activeWorkstreamContext';
 import EmptyState from 'components/shared/empty-state/EmptyState';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import Sidebar from './sidebar/Sidebar';
 import Board from './board/Board';
 import notAssigned from '../../assets/images/not-assigned.svg';
 
 const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   const { t } = useTranslation('dashboard');
+
+  const { setWorkStreamId, workStreamId } = useContext(SelectedWorkStreamIdContext);
   const linksList = [
     {
       id: 1,
@@ -51,9 +54,8 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
       BoardName: 'dashboard:board.integratedCircuits',
     },
   ];
-
-  const [activeWorkstream, setActiveWorkstream] = useState(null);
-
+  const selectedWorkStream = useContext(SelectedWorkStreamIdContext);
+  const [activeWorkstream, setActiveWorkstream] = useState(selectedWorkStream);
   const [sort, setSort] = useState('Queue');
   const [{ data }, executeAssignmentData] = useAxios(getAssigned({
     workstreamId: activeWorkstream?.id,
@@ -79,10 +81,15 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
     if (workstreamsData?.data) {
       setAssignedWorkstreams(workstreamsData.data.data);
       if (workstreamsData.data.data.length) {
-        setActiveWorkstream(linksList.find(
+        const firstWorkstream = linksList.find(
           (element) => element.id === workstreamsData.data.data[0],
-        ));
+        );
+        const selectedWorkStreamObj = linksList.find(
+          (element) => element.id === selectedWorkStream?.workStreamId,
+        );
+        setActiveWorkstream(selectedWorkStreamObj || firstWorkstream);
         setWorkstreamChange(true);
+        setWorkStreamId(activeWorkstream?.id || workStreamId);
       }
     }
   }, [workstreamsData]);
@@ -116,6 +123,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
   const changeWorkstream = (i) => {
     setActiveWorkstream(i);
     setActiveDocument(null);
+    setWorkStreamId(i.id);
   };
 
   const DashboardView = (

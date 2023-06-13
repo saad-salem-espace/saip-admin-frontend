@@ -2,8 +2,8 @@
 
 .sb-avatar {
   .sb-avatar__text {
-    background-color: $primary-10 !important;
-    color: $primary !important;
+    background-color: var(--bs-primary-10) !important;
+    color: var(--bs-primary) !important;
     span {
       font-size: $font-size-sm;
       padding-top: 4px;

@@ -11,7 +11,7 @@ const AppPagination = ({
   axiosConfig, defaultPage, RenderedComponent, renderedProps,
   axiosInstance, fetchedTotalResults, emptyState, updateDependencies, setResults,
   sort, onPageChange, className, resetPage, isFetching, PaginationWrapper,
-  urlPagination, setTotalElements,
+  urlPagination, setTotalElements, checkHasData,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(defaultPage || 1);
@@ -91,7 +91,12 @@ const AppPagination = ({
     return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
   }
   if (!paginationInfo.totalElements) {
+    checkHasData(paginationInfo.totalElements);
     return emptyState;
+  }
+
+  if (paginationInfo.totalElements) {
+    checkHasData(paginationInfo.totalElements);
   }
 
   const renderedComponent = (
@@ -131,6 +136,7 @@ AppPagination.propTypes = {
   isFetching: PropTypes.func,
   urlPagination: PropTypes.bool,
   setTotalElements: PropTypes.func,
+  checkHasData: PropTypes.func,
 };
 
 AppPagination.defaultProps = {
@@ -149,6 +155,7 @@ AppPagination.defaultProps = {
   isFetching: null,
   urlPagination: true,
   setTotalElements: () => {},
+  checkHasData: () => {},
 };
 
 export default AppPagination;

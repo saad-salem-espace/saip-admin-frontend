@@ -22,7 +22,7 @@ function IndustrialDesignResultCard({
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId'), id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '3', id: BibliographicData.FilingNumber, fileName, fileType,
     },
   );
 
@@ -30,14 +30,18 @@ function IndustrialDesignResultCard({
     <Button
       variant="transparent"
       onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
-      className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0 w-100"
+      className="text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
       text={(
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
-                <Checkbox className="me-4" />
-                <Badge text={BibliographicData.Status} varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
+                <Checkbox
+                  className="me-4"
+                  name={`selectedCards.${BibliographicData?.FilingNumber}`}
+                  fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
+                />
+                <Badge text={BibliographicData.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
                 <Image src={preparedGetAttachmentURL(BibliographicData.OverallProductDrawing)} className="rounded" />
@@ -127,7 +131,7 @@ IndustrialDesignResultCard.propTypes = {
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
   selectedView: PropTypes.shape({
     label: PropTypes.string,
@@ -137,5 +141,6 @@ IndustrialDesignResultCard.propTypes = {
 
 IndustrialDesignResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default IndustrialDesignResultCard;

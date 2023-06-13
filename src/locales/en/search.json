@@ -190,5 +190,24 @@
   "findSimilar": "Find Similar",
   "download": "Download",
   "addtoSavedQueries": "Add to my saved queries",
-  "addtoFocusArea": "Add to card in focus area"
+  "addtoFocusArea": "Add to card in focus area",
+  "noDocument": "Sorry! No document is available for download",
+  "bookmarked": "Bookmark saved successfully.",
+  "bookmarks": "You can find all your saved bookmarks in <0>My bookmarks</0>",
+  "alreadyBookmarked": "This document is already in your bookmarks.",
+  "couldnotSaveBookmark": "Could not save to your bookmarks.",
+  "addBookmarks": "Add to my bookmarks",
+  "selectedItems": "{{count}} selected.",
+  "export": {
+    "title": "Export",
+    "exportFileType": "{{fileType}} File",
+    "workstreams": {
+      "patent": "Export Patents",
+      "trademark": "Export Trademarks",
+      "copyrights": "Export Copyrights",
+      "Industrial Design": "Export Industrial Designs",
+      "plantVarieties": "Export Plant Varieties",
+      "integratedCircuits": "Export Integrated Circuits"
+    }
+  }
 }

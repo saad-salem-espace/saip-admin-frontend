@@ -6,24 +6,49 @@
 
 .appBtn {
 
+  &.btn-primary {
+    color: var(--bs-white) !important;
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+    &:hover {
+      color: var(--bs-primary) !important;
+      background-color: var(--bs-white) !important;
+    }
+  }
+  &.btn-naked {
+    color: var(--bs-primary) !important;
+    &:hover {
+      background: var(--bs-primary) !important;
+      color: var(--bs-white) !important;
+    }
+  }
+  &.btn-link {
+    color: var(--bs-primary) !important;
+  }
+  &.btn-danger {
+    background-color: var(--bs-danger) !important;
+    border-color: var(--bs-danger) !important;
+  }
+  &.btn-primary-dark {
+    background-color: var(--bs-primary-dark) !important;
+    color: var(--bs-white) !important;
+  }
+  
+  &.btn-outline-primary {
+    color: var(--bs-primary) !important;
+    border: $border-width solid var(--bs-primary) !important;
+    &:hover,
+    &:active{
+      color: var(--bs-white) !important;
+      background-color: var(--bs-primary) !important;
+    }
+  }
+
   &.btn:first-child:active {
     border-color: transparent;
   }
 
-  &.btn-outline-primary {
-    &:hover {
-      color: $white !important;
-    }
-  }
 
-  &.btn-primary {
-    color: $white !important;
-
-    &:hover {
-      color: $primary !important;
-      background-color: $white !important;
-    }
-  }
   &.has-icon {
     padding:8px 16px !important;
   }
@@ -31,19 +56,26 @@
   &.dropdown-toggle {
     font-family: $font-regular;
     position: relative;
-    color: $primary-dark;
-    html[dir="ltr"] & {
-      padding-right: 31px !important;
+    color: var(--bs-primary-dark);
+    &.no-arrow {
+      &::after {
+        display: none;
+      }
     }
-    html[dir="rtl"] & {
-      padding-left: 31px !important;
+    &:not(.no-arrow) {
+      html[dir="ltr"] & {
+        padding-right: 31px !important;
+      }
+      html[dir="rtl"] & {
+        padding-left: 31px !important;
+      }
     }
     &::after {
       font-family: 'FontAwesome' !important;
       content: "\f107" !important;
       border: none !important;
       position: absolute;
-      color: $primary;
+      color: var(--bs-primary);
       top: 8px;
       html[dir="ltr"] & {
         margin: 0 5px 0 10px;
@@ -52,10 +84,50 @@
         margin: 0 10px 0 5px;
       }
     }
+    &:hover {
+      &::after {
+        color: var(--bs-primary);
+      }
+    }
+    &[disabled] {
+      &::after {
+        color: var(--bs-gray-600);
+      }
+    }
+    &.bg-primary-dark {
+      background-color: var(--bs-primary-dark) !important;
+      *, &:hover {
+        color: var(--bs-white) !important;
+      }
+      &[disabled] {
+        background-color: var(--bs-gray-500) !important;
+        border-color: var(--bs-gray-500) !important;
+        &, * {
+          color: var(--bs-gray) !important;
+        }
+      }
+    }
+    &.bg-primary-dark + .dropdown-menu {
+        color: var(--bs-white) !important;
+        @extend .p-0;
+      &, * {
+        color: var(--bs-white) !important;
+      }
+      &, &:hover {
+        background-color: var(--bs-primary-dark) !important;
+        color: var(--bs-white) !important;
+      }
+      .dropdown-item {
+        &:hover {
+          background-color: var(--bs-primary) !important;
+          color: var(--bs-white) !important;
+        }
+      }
+    }
   }
 
   &.disabled, :disabled {
-    background-color: $gray-500 !important;
+    background-color: var(--bs-gray-500) !important;
     border: none;
   }
 }

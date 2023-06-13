@@ -13,6 +13,8 @@ import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
 import { executeAfterLimitValidation } from 'utils/manageLimits';
 import ModalAlert from '../shared/modal-alert/ModalAlert';
 
+import '../../assets/styles/common/partially-common.scss';
+
 const SaveQuery = ({
   saveQueryParams, isSaved, setIsSaved, isReady, nonAuthSaveLocally,
   customTableName, limitCode, showFocusArea, saveQueryParamsForDoc,
@@ -42,7 +44,7 @@ const SaveQuery = ({
         <p className="toastifyTitle">{t('querySaved')}</p>
         <p className="toastText">
           <Trans i18nKey="savedQueryMsg" ns="search">
-            <Link className="text-primary" to="/savedQueries" />
+            <Link className="app-text-primary" to="/savedQueries" />
           </Trans>
         </p>
       </div>,
@@ -136,8 +138,8 @@ const SaveQuery = ({
         <AppTooltip
           tooltipTrigger={
             <Button
-              variant="transparent"
-              className="p-0 me-4 border-0"
+              variant="naked"
+              className="appBtn me-4 border-0"
               onClick={() => {
                 saveQuery('myList');
               }}
@@ -155,8 +157,8 @@ const SaveQuery = ({
         />
       ) : (
         <Button
-          className={`position-relative save-query-menu px-2 me-2 ${showSaveQueryMenu ? 'active' : ''}`}
-          variant="link text-decoration-none"
+          className={`position-relative appBtn nude-btn-has-menu px-2 me-2 text-decoration-none ${showSaveQueryMenu ? 'active' : ''}`}
+          variant="naked"
           onClick={() => setShowSaveQueryMenu(!showSaveQueryMenu)}
         >
           {
@@ -166,9 +168,9 @@ const SaveQuery = ({
           }
           {
             showSaveQueryMenu && (
-              <div className="position-absolute save-query-options">
+              <div className="position-absolute nude-menu-options">
                 <Button
-                  className={`save-btn ${isSaved && isReady ? 'disabled' : ''}`}
+                  className={`save-btn ${isSaved && isReady ? 'disabled' : ''} appBtn`}
                   disabled={(isSaved && isReady)}
                   onClick={() => {
                     saveQuery('myList');
@@ -180,7 +182,7 @@ const SaveQuery = ({
                   </>
                 </Button>
                 <Button
-                  className="btn-focus"
+                  className="btn-focus appBtn"
                   onClick={() => {
                     saveQuery('focusArea');
                   }}

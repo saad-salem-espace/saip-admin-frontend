@@ -16,11 +16,14 @@ import { tableNames } from 'dbConfig';
 import CacheContext from 'contexts/CacheContext';
 import useCacheRequest from 'hooks/useCacheRequest';
 import Spinner from 'components/shared/spinner/Spinner';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SavedQueriesTable from './SavedQueriesTable';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
+import './style.scss';
 
 const SavedQueries = () => {
   const { t } = useTranslation('queries');
+  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [searchParams] = useSearchParams();
   const auth = useAuth();
@@ -58,6 +61,7 @@ const SavedQueries = () => {
       (element) => element.value === i.value,
     ));
     resetPageNumber();
+    setWorkStreamId(i.value);
   };
 
   const axiosConfig = getSavedQueryApi(selectedWorkStream.value, null, Number(searchParams.get('page') || '1'), true);
@@ -75,7 +79,7 @@ const SavedQueries = () => {
     <Container fluid>
       <Row>
         <Col md={12} className="px-md-19">
-          <div className="d-flex my-8 p-8 bg-primary-01 rounded">
+          <div className="d-flex my-8 p-8 app-bg-primary-01 rounded">
             <h5 className="mb-0 mt-4">{t('myQueries')}</h5>
             <Select
               options={WorkStreamsOptions}
