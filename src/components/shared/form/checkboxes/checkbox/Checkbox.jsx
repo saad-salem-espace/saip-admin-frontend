@@ -16,6 +16,7 @@ function Checkbox({
   errorClassName,
   onChange,
   disablePropagation,
+  labelClassName,
 }) {
   return (
     <div
@@ -25,6 +26,7 @@ function Checkbox({
     >
       <label
         htmlFor={fieldFor}
+        className={labelClassName}
       >
         <Field
           type="checkbox"
@@ -53,6 +55,7 @@ Checkbox.propTypes = {
   name: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   className: PropTypes.string,
+  labelClassName: PropTypes.string,
   showError: PropTypes.bool,
   errorClassName: PropTypes.string,
   onChange: PropTypes.func,
@@ -64,6 +67,7 @@ Checkbox.defaultProps = {
   disabled: false,
   checked: undefined,
   className: '',
+  labelClassName: '',
   showError: true,
   errorClassName: '',
   onChange: null,
