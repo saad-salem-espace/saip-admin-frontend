@@ -127,6 +127,7 @@
   }
 
   &.disabled, :disabled {
+    opacity: 1 !important;
     background-color: var(--bs-gray-500) !important;
     border: none;
   }
