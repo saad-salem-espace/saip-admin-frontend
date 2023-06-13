@@ -80,6 +80,15 @@ const BookmarkList = () => {
     value: 'detailed',
   };
 
+  const prepareAuthBookamrks = (response) => {
+    const bookmarks = [];
+    if (!response) return bookmarks;
+
+    response.map((res) => bookmarks.push(res.data));
+
+    return bookmarks;
+  };
+
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
   };
@@ -126,7 +135,7 @@ const BookmarkList = () => {
           setBookmarkResult(response.data?.data);
         });
       } else {
-        setBookmarkResult(results.data?.data);
+        setBookmarkResult(prepareAuthBookamrks(results));
       }
     }
   }, [results]);
@@ -169,7 +178,6 @@ const BookmarkList = () => {
                     defaultPage={Number(searchParams.get('page') || '1')}
                     RenderedComponent={searchResult[selectedWorkStream.value]}
                     emptyState={<NoData />}
-                    bookmarks
                     resetPage={pageReset}
                     setResults={setResults}
                     renderedProps={{
