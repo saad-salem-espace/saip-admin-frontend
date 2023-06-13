@@ -3,52 +3,43 @@ import { search } from './arrays';
 import { isMultipleValue } from './search-query/encoder';
 import { insert } from './strings';
 
-const operators = ['and', 'or', 'not'].map((operator) => ({
-  operator: operator.toUpperCase(),
-  displayName: t(`search:operators.${operator}`),
-}));
+const parseQuery = (fields, imageName, isQuery) => {
+  const queryObjsArr = [];
 
-const parseQuery = (fields, imageName, isQuery, currentLang = 'en') => {
-  let finalQuery = '';
-  let queryObjsArr = [];
-    
-  fields.forEach((value, index) => {
+  fields.forEach((value) => {
     queryObjsArr.push({
-      "identifier": value.identifier.identiferStrId,
-      "condition": value.condition.optionParserName,
-      "data": value.data,
-      "operator": value.operator,
-   });
-    // if (!finalQuery) {
-    //   finalQuery += parseSingleQuery({ ...value, operator: '' }, index, isQuery, currentLang);
-    // } else {
-    //   finalQuery += parseSingleQuery(value, index, isQuery, currentLang);
-    // }
+      identifier: value.identifier.identiferStrId,
+      condition: value.condition.optionParserName,
+      data: value.data,
+      operator: value.operator,
+    });
   });
 
   if (!isQuery && imageName) {
     queryObjsArr.push({
-      "identifier": "image",
-      "condition": ": ",
-      "data": imageName,
-      "operator": "OR",
+      identifier: 'image',
+      condition: ': ',
+      data: imageName,
+      operator: 'OR',
     });
   }
   return queryObjsArr;
 };
 
 const reformatArrDecoder = (queryObjsArr, searchIdentifiersData) => {
-  let values = [];
+  const values = [];
   queryObjsArr.forEach((qObj) => {
-    if(qObj.identifier === "image"){
-       //TODO
-    } else {
-      const selectedIdentifier =  searchIdentifiersData.find((i) => i.identiferStrId === qObj.identifier);
+    if (qObj.identifier !== 'image') {
+      const selectedIdentifier = searchIdentifiersData.find(
+        (i) => i.identiferStrId === qObj.identifier,
+      );
       values.push({
-          "identifier": selectedIdentifier,
-          "condition": selectedIdentifier.identifierOptions.find((i) => i.optionParserName === qObj.condition),
-          "data": qObj.data,
-          "operator": qObj.operator,
+        identifier: selectedIdentifier,
+        condition: selectedIdentifier.identifierOptions.find(
+          (i) => i.optionParserName === qObj.condition,
+        ),
+        data: qObj.data,
+        operator: qObj.operator,
       });
     }
   });
@@ -65,9 +56,10 @@ const convertQueryStrToArr = (qStr, selectedIdentifiers) => {
   const qObjs = [];
   if (qStr) {
     const qStrArr = qStr.match(/("[^."]* ")|(\S*)/g).filter((str) => str !== '').filter((str) => str !== '' && str !== '"');
-    var strIds = [];
+    const strIds = [];
     selectedIdentifiers?.data?.map((idenifier) => {
       strIds.push(idenifier.identiferStrId);
+      return strIds;
     });
     while (i < qStrArr.length) {
       if (strIds?.includes(qStrArr[i]) || i === 0) {
@@ -112,7 +104,7 @@ const convertQueryArrToStr = (qObjsArr) => {
     newIdentifiers.push(obj.identifier);
     qStr = `${qStr} ${obj.operator} ${obj.identifier} ${obj.condition} "${obj.data}"`;
   });
-  //setIdentifiers(newIdentifiers);
+  // setIdentifiers(newIdentifiers);
   return qStr.trim();
 };
 
@@ -173,7 +165,6 @@ const teldaRegex = /^[^*?!~]+?~?\d*$/;
 const noTeldaRegex = /^[^~]+$/;
 
 export {
-  operators,
   parseQuery,
   reformatDecoder,
   flattenCriteria,

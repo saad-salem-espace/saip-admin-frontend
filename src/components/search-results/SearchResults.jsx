@@ -79,17 +79,16 @@ function SearchResults({ showFocusArea }) {
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
   const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
   const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q'));
 
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
 
-  const [searchResultParams] = useState(
-    {
-      workstreamId: searchParams.get('workstreamId'),
-      qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
-      ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
-      ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
-    },
-  );
+  const searchResultParams = {
+    workstreamId: searchParams.get('workstreamId'),
+    qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
+  };
 
   const saveQueryParamsForDoc = {
     workStreamId: searchParams.get('workstreamId'),
@@ -211,6 +210,10 @@ function SearchResults({ showFocusArea }) {
 
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
+  };
+
+  const parseAndSetSearchQuery = (qObjsArr) => {
+    setSearchQuery(convertQueryArrToStr(qObjsArr));
   };
 
   useEffect(() => {
@@ -346,10 +349,16 @@ function SearchResults({ showFocusArea }) {
   useEffect(() => {
     if (searchIdentifiers) {
       const searchIdentifiersData = searchIdentifiers.data;
-      const reformattedDecoder = reformatArrDecoder(searchResultParams.qArr, searchIdentifiers.data);
+      const reformattedDecoder = reformatArrDecoder(
+        searchResultParams.qArr,
+        searchIdentifiers.data,
+      );
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
-        id: 1, data: '', identifier: searchIdentifiersData[0],
-        condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
+        id: 1,
+        data: '',
+        identifier: searchIdentifiersData[0],
+        condition: searchIdentifiersData[0].identifierOptions[0],
+        operator: '',
       }]);
     }
   }, [searchIdentifiers]);
