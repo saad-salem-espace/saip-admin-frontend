@@ -12,7 +12,7 @@ import './style.scss';
 
 function DecisionsResultCard({
   searchResult,
-  setActiveDocument, activeDocument, highlightWords, query, disableCheckbox,
+  setActiveDocument, activeDocument, highlightWords, query, disableCheckbox, selectedView,
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
@@ -34,16 +34,16 @@ function DecisionsResultCard({
                 <Badge text={BibliographicData.DecisionCategory} className="text-capitalize me-2 mt-1 bg-secondary" />
                 <span className="d-block fs-20 text-truncate">
                   {BibliographicData.DecisionTitle
-                  && <Highlighter
-                    highlightTag="span"
-                    highlightClassName="font-medium"
-                    textToHighlight={trimStringRelativeToSubtext(
-                      BibliographicData.DecisionTitle,
-                      query,
-                    )}
-                    searchWords={highlightWords}
-                    autoEscape
-                  />}
+                    && <Highlighter
+                      highlightTag="span"
+                      highlightClassName="font-medium"
+                      textToHighlight={trimStringRelativeToSubtext(
+                        BibliographicData.DecisionTitle,
+                        query,
+                      )}
+                      searchWords={highlightWords}
+                      autoEscape
+                    />}
                 </span>
               </div>
             </div>
@@ -52,10 +52,18 @@ function DecisionsResultCard({
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
               {t('decisions.date', { value: BibliographicData.DecisionDate })}
             </p>
-            <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark fs-sm">
-              {BibliographicData.Keywords}
-            </p>
-            <p className="fs-sm text-gray">{BibliographicData.DecisionBrief}</p>
+            {
+              selectedView.value !== 'compact' && (
+                <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark fs-sm">
+                  {BibliographicData.Keywords}
+                </p>
+              )
+            }
+            {
+              selectedView.value === 'detailed' && (
+                <p className="fs-sm text-gray">{BibliographicData.DecisionBrief}</p>
+              )
+            }
           </div>
         </div>
       )}
@@ -76,12 +84,14 @@ DecisionsResultCard.propTypes = {
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
   disableCheckbox: PropTypes.bool.isRequired,
+  selectedView: PropTypes.instanceOf(Object).isRequired,
 };
 
 DecisionsResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default DecisionsResultCard;

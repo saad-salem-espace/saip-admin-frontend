@@ -207,7 +207,8 @@
       "copyrights": "Export Copyrights",
       "Industrial Design": "Export Industrial Designs",
       "plantVarieties": "Export Plant Varieties",
-      "integratedCircuits": "Export Integrated Circuits"
+      "integratedCircuits": "Export Integrated Circuits",
+      "Decision": "Export Decisions"
     }
   },
   "decisions": {
@@ -216,15 +217,15 @@
     "decisionNumber": "Decision Number",
     "decisionCategory": "Decision Category",
     "type": "Type",
-    "decisionDate":"Decision Date",
-    "decision":"Decision",
-    "domain":"Domain",
+    "decisionDate": "Decision Date",
+    "decision": "Decision",
+    "domain": "Domain",
     "keywords": "Keywords",
-    "decisionBrief":"Decision Brief",
-    "judgementDecision":"Judgement Decision",
-    "references":"References",
-    "failerMsg":"Facts",
-    "reasons":"Reasons",
+    "decisionBrief": "Decision Brief",
+    "judgementDecision": "Judgement Decision",
+    "references": "References",
+    "failerMsg": "Facts",
+    "reasons": "Reasons",
     "decisionDateDesc": "Decision date desc",
     "decisionDateAsc": "Decision date asc",
     "facts": "Facts"

@@ -151,11 +151,11 @@ function SearchResults({ showFocusArea }) {
       value: 'mostRelevant',
     },
     {
-      label: t('decisionDateAsc'),
+      label: t('decisions.decisionDateAsc'),
       value: 'decisionDateAsc',
     },
     {
-      label: t('decisionDateDesc'),
+      label: t('decisions.decisionDateDesc'),
       value: 'decisionDateDesc',
     },
   ];

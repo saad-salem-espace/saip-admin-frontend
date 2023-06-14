@@ -25,5 +25,11 @@
     "Publication Number": "BibliographicData.PublicationNumber",
     "Publication Date": "BibliographicData.PublicationDate",
     "Locarno Classification": "BibliographicData.LocarnoClassification"
+  },
+  "Decision": {
+    "Decision Number": "BibliographicData.DecisionNumber",
+    "Decision Title": "BibliographicData.DecisionTitle",
+    "Decision Date": "BibliographicData.DecisionDate",
+    "Decision Brief": "BibliographicData.DecisionBrief"
   }
 }
