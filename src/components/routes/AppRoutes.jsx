@@ -13,6 +13,7 @@ const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
 const ViewHistory = lazy(() => import('components/view-history/ViewHistory'));
 const BookmarksList = lazy(() => import('components/bookmarks/BookmarkList'));
 const IprTab = lazy(() => import('components/ipr-details/IprTab'));
+const MyActivity = lazy(() => import('components/my-activity/MyActivity'));
 
 const AppRoutes = ({ updateFocusArea, showFocusArea }) => (
   <ReactRoutes>
@@ -38,6 +39,7 @@ const AppRoutes = ({ updateFocusArea, showFocusArea }) => (
         }
       />
       <Route path={appRoutes.admin} element={<Admin />} />
+      <Route path={appRoutes.myActivity} element={<MyActivity />} />
     </Route>
     <Route
       path={appRoutes.savedQueries}

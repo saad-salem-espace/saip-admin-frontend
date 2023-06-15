@@ -20,6 +20,10 @@ import useAuth from 'hooks/useAuth';
 import { tableNames } from 'dbConfig';
 import { Container, Row, Col } from 'react-bootstrap';
 import Spinner from 'components/shared/spinner/Spinner';
+import useAxios from 'hooks/useAxios';
+import getBookmarksLocalUser from 'apis/bookmarks/getBookmarksLocalUser';
+import exportSearchResultsValidationSchema from '../search-results/exportSearchResultsValidationSchema';
+import ExportSearchResults from '../search-results/ExportSearchResults';
 
 const BookmarkList = () => {
   const currentLang = i18n.language;
@@ -28,12 +32,15 @@ const BookmarkList = () => {
   const [activeDocument, setActiveDocument] = useState(null);
   const [isIPRExpanded, setIsIPRExpanded] = useState(false);
   const [results, setResults] = useState(null);
+  const [bookmarkResult, setBookmarkResult] = useState([]);
   const { cachedRequests } = useContext(CacheContext);
-  const auth = useAuth();
+  const { isAuthenticated } = useAuth();
   const [pageReset, setPageReset] = useState(0);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const isMounted = useRef(false);
+
+  const [, executeLocalBookmarks] = useAxios(getBookmarksLocalUser({}, true), { manual: true });
 
   const axiosConfig = getBookmarksApi(selectedWorkStream?.value, 0, true);
 
@@ -46,21 +53,21 @@ const BookmarkList = () => {
   }));
 
   const getNextDocument = () => {
-    if (!results || !activeDocument) return null;
-    const index = results.findLastIndex(
-      (element) => element.data.BibliographicData.FilingNumber === activeDocument,
+    if (!bookmarkResult.length || !activeDocument) return null;
+    const index = bookmarkResult.findLastIndex(
+      (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === results.length - 1
-      ? null : results[index + 1].data.BibliographicData.FilingNumber);
+    return (index === bookmarkResult.length - 1
+      ? null : bookmarkResult[index + 1].BibliographicData.FilingNumber);
   };
 
   const getPreviousDocument = () => {
-    if (!results || !activeDocument) return null;
+    if (!bookmarkResult.length || !activeDocument) return null;
 
-    const index = results.findIndex(
-      (element) => element.data.BibliographicData.FilingNumber === activeDocument,
+    const index = bookmarkResult.findIndex(
+      (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === 0 ? null : results[index - 1].data.BibliographicData.FilingNumber);
+    return (index === 0 ? null : bookmarkResult[index - 1].BibliographicData.FilingNumber);
   };
 
   const searchResult = {
@@ -71,6 +78,15 @@ const BookmarkList = () => {
 
   const selectedView = {
     value: 'detailed',
+  };
+
+  const prepareAuthBookamrks = (response) => {
+    const bookmarks = [];
+    if (!response) return bookmarks;
+
+    response.map((res) => bookmarks.push(res.data));
+
+    return bookmarks;
   };
 
   const collapseIPR = () => {
@@ -87,6 +103,7 @@ const BookmarkList = () => {
   };
 
   const onChangeWorkStream = (i) => {
+    handleCloseIprDetail();
     setSelectedWorkStream(WorkStreamsOptions?.find(
       (element) => element.value === i.value,
     ));
@@ -107,8 +124,23 @@ const BookmarkList = () => {
     ));
   }, [currentLang]);
 
-  if (!isMounted.current) return <Spinner />;
-  const isAuth = auth && auth.user;
+  useEffect(() => {
+    setBookmarkResult([]);
+    if (results) {
+      if (!isAuthenticated) {
+        executeLocalBookmarks(getBookmarksLocalUser({
+          workstreamId: selectedWorkStream?.value,
+          filingNumbers: results.map((bookmark) => bookmark.filingNumber),
+        }, true)).then((response) => {
+          setBookmarkResult(response.data?.data);
+        });
+      } else {
+        setBookmarkResult(prepareAuthBookamrks(results));
+      }
+    }
+  }, [results]);
+
+  if (!isMounted.current) return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
 
   return (
     <Container fluid>
@@ -128,45 +160,71 @@ const BookmarkList = () => {
       </Row>
       <Row className="px-md-19">
         <Col lg={7} className={`${isIPRExpanded ? 'd-none' : 'd-block'}`}>
-          <Formik>
-            {isAuth ? <AppPagination
-              className="mt-8"
-              axiosConfig={axiosConfig}
-              defaultPage={Number(searchParams.get('page') || '1')}
-              RenderedComponent={searchResult[selectedWorkStream.value]}
-              emptyState={<NoData />}
-              bookmarks
-              resetPage={pageReset}
-              setResults={setResults}
-              renderedProps={{
-                selectedView,
-                setActiveDocument,
-                activeDocument,
-                bookmarks: true,
-              }}
-            />
-              : <IndexedDbAppPagination
-                  className="mt-8"
-                  tableName={tableNames.bookmarks}
-                  RenderedComponent={searchResult[selectedWorkStream.value]}
-                  indexMethod="indexByIndexName"
-                  defaultPage={Number(searchParams.get('page') || '1')}
+          <Formik
+            initialValues={{ selectedCards: { }, allSelected: false }}
+            validationSchema={exportSearchResultsValidationSchema}
+          >
+            {() => (
+              <>
+                <ExportSearchResults
+                  workstreams={workstreams}
                   workstreamId={selectedWorkStream.value}
-                  emptyState={<NoData />}
-                  indexMethodProps={{
-                    sorted: 'desc',
-                    sortedIndexName: 'updatedAt',
-                    indexName: 'workstreamId',
-                    indexValue: selectedWorkStream.value,
-                  }}
-                  resetPage={pageReset}
-                  renderedProps={{
-                    selectedView,
-                    setActiveDocument,
-                    activeDocument,
-                  }}
-                  bookmarks
-              />}
+                  data={bookmarkResult}
+                />
+                {isAuthenticated ? (
+                  <AppPagination
+                    className="mt-8"
+                    axiosConfig={axiosConfig}
+                    defaultPage={Number(searchParams.get('page') || '1')}
+                    RenderedComponent={searchResult[selectedWorkStream.value]}
+                    emptyState={<NoData />}
+                    resetPage={pageReset}
+                    setResults={setResults}
+                    renderedProps={{
+                      selectedView,
+                      setActiveDocument,
+                      activeDocument,
+                      hasCustomData: true,
+                      customData: bookmarkResult,
+                    }}
+                    onPageChange={() => {
+                      setActiveDocument(null);
+                      setIsIPRExpanded(false);
+                    }}
+                  />
+                ) : (
+                  <IndexedDbAppPagination
+                    className="mt-8"
+                    tableName={tableNames.bookmarks}
+                    RenderedComponent={searchResult[selectedWorkStream.value]}
+                    indexMethod="indexByIndexName"
+                    defaultPage={Number(searchParams.get('page') || '1')}
+                    workstreamId={selectedWorkStream.value}
+                    setResults={setResults}
+                    emptyState={<NoData />}
+                    indexMethodProps={{
+                      sorted: 'desc',
+                      sortedIndexName: 'updatedAt',
+                      indexName: 'workstreamId',
+                      indexValue: selectedWorkStream.value,
+                    }}
+                    resetPage={pageReset}
+                    renderedProps={{
+                      selectedView,
+                      setActiveDocument,
+                      activeDocument,
+                      hasCustomData: true,
+                      customData: bookmarkResult,
+                    }}
+                    bookmarks
+                    onPageChange={() => {
+                      setActiveDocument(null);
+                      setIsIPRExpanded(false);
+                    }}
+                  />
+                )}
+              </>
+            )}
           </Formik>
         </Col>
         <Col lg={isIPRExpanded ? 12 : 5} className={`${!activeDocument ? '' : 'border-start'}`}>

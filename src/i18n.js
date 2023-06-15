@@ -23,6 +23,8 @@ import tipsEn from './locales/en/tips.json';
 import tipsAr from './locales/ar/tips.json';
 import historyEn from './locales/en/history.json';
 import historyAr from './locales/ar/history.json';
+import activityEn from './locales/en/activity.json';
+import activityAr from './locales/ar/activity.json';
 
 const resources = {
   en: {
@@ -37,6 +39,7 @@ const resources = {
     validations: validationsEn,
     tips: tipsEn,
     history: historyEn,
+    activity: activityEn,
   },
   ar: {
     translation: translationAr,
@@ -50,6 +53,7 @@ const resources = {
     validations: validationsAr,
     tips: tipsAr,
     history: historyAr,
+    activity: activityAr,
   },
 };
 

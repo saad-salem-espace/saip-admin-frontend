@@ -170,7 +170,7 @@ const SaveQuery = ({
             showSaveQueryMenu && (
               <div className="position-absolute nude-menu-options">
                 <Button
-                  className={`save-btn ${isSaved && isReady ? 'disabled' : ''}`}
+                  className={`save-btn ${isSaved && isReady ? 'disabled' : ''} appBtn`}
                   disabled={(isSaved && isReady)}
                   onClick={() => {
                     saveQuery('myList');
@@ -182,7 +182,7 @@ const SaveQuery = ({
                   </>
                 </Button>
                 <Button
-                  className="btn-focus"
+                  className="btn-focus appBtn"
                   onClick={() => {
                     saveQuery('focusArea');
                   }}

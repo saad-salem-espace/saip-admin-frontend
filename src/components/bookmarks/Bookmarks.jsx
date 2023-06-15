@@ -24,19 +24,26 @@ function Bookmarks({
   const [reachedLimit, setReachedLimit] = useState(false);
   const auth = useAuth();
 
-  const saveBookmarkParams = {
+  const saveBookmarkFocusParams = {
     workstreamId,
     filingNumber: documentId,
     assignmentId: JSON.parse(localStorage.getItem('FocusDoc'))?.doc.id,
   };
 
-  const saveBookmarkConfig = saveBookmarkApi(saveBookmarkParams, true);
+  const saveBookmarkMyBookmarksParams = {
+    workstreamId,
+    filingNumber: documentId,
+    assignmentId: 0,
+  };
+
+  const saveBookmarkFocusConfig = saveBookmarkApi(saveBookmarkFocusParams, true);
+  const saveBookmarkConfig = saveBookmarkApi(saveBookmarkMyBookmarksParams, true);
   const [saveBookmarkData, executeBookmark] = useAxios(
     saveBookmarkConfig,
     { manual: true },
   );
   const [saveBookmarkFocusData, executeBookmarkFocus] = useAxios(
-    saveBookmarkConfig,
+    saveBookmarkFocusConfig,
     { manual: true },
   );
 
@@ -126,7 +133,7 @@ function Bookmarks({
         data: { workstreamId, code: LIMITS.BOOKMARKS_LIMIT, count },
         onSuccess: () => {
           addInstanceToDb({
-            data: saveBookmarkParams,
+            data: saveBookmarkMyBookmarksParams,
             onSuccess: onSaveBookmarkSuccess,
             onError: onSavedBookmarkError,
           });
@@ -182,11 +189,13 @@ function Bookmarks({
               <Button
                 onClick={saveBookmark}
                 disabled={isBookmark}
+                className="appBtn"
               >
                 <FaRegBookmark className="me-2 fs-base adjust-align" />
                 {t('addBookmarks')}
               </Button>
               <Button
+                className="appBtn"
                 onClick={saveBookmarkToFocus}
               >
                 <span className="icon-focus fs-base me-2" />

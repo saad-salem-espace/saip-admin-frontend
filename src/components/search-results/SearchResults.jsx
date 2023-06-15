@@ -1,15 +1,12 @@
 import {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import {
-  Container,
-  Row,
-  Col,
-  Button,
+  Button, Col, Container, Row,
 } from 'react-bootstrap';
-import { useTranslation, Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import AppPopover from 'components/shared/app-popover/AppPopover';
 import * as Yup from 'yup';
@@ -33,7 +30,7 @@ import { tableNames } from 'dbConfig';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
-
+import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
 import './style.scss';
 import style from '../shared/form/search/style.module.scss';
 import {
@@ -48,6 +45,8 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
+import ExportSearchResults from './ExportSearchResults';
+import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
@@ -73,6 +72,8 @@ function SearchResults({ showFocusArea }) {
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
   const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
@@ -520,6 +521,9 @@ function SearchResults({ showFocusArea }) {
     setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
     setSelectedView(viewOptions.find((temp) => temp.value === selectedView.value));
   }, [currentLang]);
+
+  if (!workstreams?.data) return null;
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -662,39 +666,55 @@ function SearchResults({ showFocusArea }) {
               />
             </div>
           </div>
-          <Formik>
+          <Formik
+            initialValues={{ selectedCards: { }, allSelected: false }}
+            validationSchema={exportSearchResultsValidationSchema}
+          >
             {() => (
               <Form className="mt-12">
                 {
                   totalResults !== 0 && (
-                    <div className="d-md-flex">
-                      <div className="position-relative mb-6 viewSelect me-md-6">
-                        <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
-                        <Select
-                          options={viewOptions}
-                          setSelectedOption={onChangeView}
-                          selectedOption={selectedView}
-                          defaultValue={selectedView}
-                          id="viewSection"
-                          fieldName="viewSection"
-                          className="mb-md-0 mb-3 select-2"
+                    <div>
+                      <div className="d-md-flex">
+                        <div className="position-relative mb-6 viewSelect me-md-6">
+                          <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
+                          <Select
+                            options={viewOptions}
+                            setSelectedOption={onChangeView}
+                            selectedOption={selectedView}
+                            defaultValue={selectedView}
+                            id="viewSection"
+                            fieldName="viewSection"
+                            className="mb-md-0 mb-3 select-2"
+                          />
+                        </div>
+                        <div className="position-relative mb-8 sortBy">
+                          <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                          <Select
+                            options={getSortOptions(searchResultParams.workstreamId)}
+                            setSelectedOption={onChangeSortBy}
+                            selectedOption={sortBy}
+                            defaultValue={sortBy}
+                            id="sortBy"
+                            fieldName="sortBy"
+                            className="select-2"
+                          />
+                        </div>
+                        <ExportSearchResults
+                          workstreams={workstreams}
+                          workstreamId={searchResultParams.workstreamId}
+                          data={results?.data || []}
+                          withCheckbox={false}
+                          setSelectedItemsCount={setSelectedItemsCount}
                         />
                       </div>
-                      <div className="position-relative mb-8 sortBy">
-                        <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
-                        <Select
-                          options={getSortOptions(searchResultParams.workstreamId)}
-                          setSelectedOption={onChangeSortBy}
-                          selectedOption={sortBy}
-                          defaultValue={sortBy}
-                          id="sortBy"
-                          fieldName="sortBy"
-                          className="select-2"
-                        />
+                      <div className="d-flex">
+                        <Checkbox labelClassName="d-flex justify-content-start flex-row-reverse ms-1 mb-5 gap-3 font-medium text-gray-700" name="allSelected" fieldFor="allSelected" text={t('selectedItems', { count: selectedItemsCount })} />
                       </div>
                     </div>
                   )
                 }
+
                 <AppPagination
                   PaginationWrapper="col-10"
                   className="p-0 paginate-ipr"

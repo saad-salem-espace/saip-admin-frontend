@@ -20,7 +20,7 @@ import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
 import { useAuth } from 'react-oidc-context';
 import notAssigned from '../../assets/images/not-assigned.svg';
-import SortHistory from './SortHistory';
+import SortOrder from '../shared/sort-order/SortOrder';
 import './viewHistory.scss';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
 import SearchHistoryTables from './SearchHistoryTables';
@@ -135,7 +135,7 @@ function ViewHistory() {
             </div>
             {
               hasData !== 0 && (
-                <SortHistory changeSortBy={changeSortBy} />
+                <SortOrder changeSortBy={changeSortBy} />
               )
             }
           </div>
