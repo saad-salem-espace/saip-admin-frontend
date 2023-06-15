@@ -7,52 +7,49 @@ const DecisionsViews = ({
   isIPRExpanded, document, documentId, searchResultParams,
   selectedView, handleClick, examinerView,
 }) => {
-  const content = (s) => {
-    switch (s) {
-      case 'JudgementDecision': return (
-        <JudgementDecision
-          document={document}
-          isIPRExpanded={isIPRExpanded}
-          handleClick={handleClick}
-          examinerView={examinerView}
-        />
-      );
-      case 'References': return (
-        <Description
-          description={document.References}
-          isIPRExpanded={isIPRExpanded}
-          handleClick={handleClick}
-          examinerView={examinerView}
-        />
-      );
-      case 'Facts': return (
-        <Description
-          description={document.Facts}
-          isIPRExpanded={isIPRExpanded}
-          handleClick={handleClick}
-          examinerView={examinerView}
-        />
-      );
-      case 'Reasons': return (
-        <Description
-          description={document.Reasons}
-          isIPRExpanded={isIPRExpanded}
-          handleClick={handleClick}
-          examinerView={examinerView}
-        />
-      );
-      case 'OriginalDocuments': return (
-        <OriginalDocument
-          originalDocuments={document.OriginalDocuments}
-          workstreamId={searchResultParams.workstreamId}
-          documentId={documentId}
-        />
-      );
-      default: return '';
-    }
+  const content = {
+    JudgementDecision: (
+      <JudgementDecision
+        document={document}
+        isIPRExpanded={isIPRExpanded}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    References: (
+      <Description
+        description={document.References}
+        isIPRExpanded={isIPRExpanded}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    Facts: (
+      <Description
+        description={document.Facts}
+        isIPRExpanded={isIPRExpanded}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    Reasons: (
+      <Description
+        description={document.Reasons}
+        isIPRExpanded={isIPRExpanded}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    OriginalDocuments: (
+      <OriginalDocument
+        originalDocuments={document.OriginalDocuments}
+        workstreamId={searchResultParams.workstreamId}
+        documentId={documentId}
+      />
+    ),
   };
 
-  return content(selectedView);
+  return content[selectedView];
 };
 
 DecisionsViews.propTypes = {
