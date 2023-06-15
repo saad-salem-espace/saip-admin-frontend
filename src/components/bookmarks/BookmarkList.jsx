@@ -24,6 +24,7 @@ import useAxios from 'hooks/useAxios';
 import getBookmarksLocalUser from 'apis/bookmarks/getBookmarksLocalUser';
 import exportSearchResultsValidationSchema from '../search-results/exportSearchResultsValidationSchema';
 import ExportSearchResults from '../search-results/ExportSearchResults';
+import DecisionsResultCards from '../search-results/decisions-result-cards/DecisionsResultCards';
 
 const BookmarkList = () => {
   const currentLang = i18n.language;
@@ -74,10 +75,20 @@ const BookmarkList = () => {
     1: SearchResultCards,
     2: TrademarksSearchResultCards,
     3: IndustrialDesignResultCards,
+    4: DecisionsResultCards,
   };
 
   const selectedView = {
     value: 'detailed',
+  };
+
+  const prepareAuthBookamrks = (response) => {
+    const bookmarks = [];
+    if (!response) return bookmarks;
+
+    response.map((res) => bookmarks.push(res.data));
+
+    return bookmarks;
   };
 
   const collapseIPR = () => {
@@ -94,7 +105,7 @@ const BookmarkList = () => {
   };
 
   const onChangeWorkStream = (i) => {
-    setActiveDocument(null);
+    handleCloseIprDetail();
     setSelectedWorkStream(WorkStreamsOptions?.find(
       (element) => element.value === i.value,
     ));
@@ -126,12 +137,12 @@ const BookmarkList = () => {
           setBookmarkResult(response.data?.data);
         });
       } else {
-        setBookmarkResult(results.data?.data);
+        setBookmarkResult(prepareAuthBookamrks(results));
       }
     }
   }, [results]);
 
-  if (!isMounted.current) return <Spinner />;
+  if (!isMounted.current) return <div className="d-flex justify-content-center mt-18"><Spinner /></div>;
 
   return (
     <Container fluid>
@@ -169,7 +180,6 @@ const BookmarkList = () => {
                     defaultPage={Number(searchParams.get('page') || '1')}
                     RenderedComponent={searchResult[selectedWorkStream.value]}
                     emptyState={<NoData />}
-                    bookmarks
                     resetPage={pageReset}
                     setResults={setResults}
                     renderedProps={{
@@ -178,6 +188,10 @@ const BookmarkList = () => {
                       activeDocument,
                       hasCustomData: true,
                       customData: bookmarkResult,
+                    }}
+                    onPageChange={() => {
+                      setActiveDocument(null);
+                      setIsIPRExpanded(false);
                     }}
                   />
                 ) : (
@@ -205,6 +219,10 @@ const BookmarkList = () => {
                       customData: bookmarkResult,
                     }}
                     bookmarks
+                    onPageChange={() => {
+                      setActiveDocument(null);
+                      setIsIPRExpanded(false);
+                    }}
                   />
                 )}
               </>

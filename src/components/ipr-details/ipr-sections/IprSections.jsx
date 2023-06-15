@@ -13,6 +13,7 @@ import IndustrialDesignResultCards from 'components/search-results/industrial-de
 import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
 import getBookmarksApi from 'apis/bookmarks/getBookmarksApi';
 import { Formik } from 'formik';
+import DecisionsResultCards from 'components/search-results/decisions-result-cards/DecisionsResultCards';
 import IprData from '../IprData';
 import './style.scss';
 
@@ -40,6 +41,7 @@ function IprSections({
   const [selectedTab, setSelectedTab] = useState(activeTabId);
   const [totalElements, setTotalElements] = useState(0);
   const [refreshQueriesList, setRefreshQueriesList] = useState(0);
+  const [results, setResults] = useState(null);
 
   const disableChangeTab = (hasData) => {
     setHasUnsavedNotes(!!hasData);
@@ -78,6 +80,7 @@ function IprSections({
     1: SearchResultCards,
     2: TrademarksSearchResultCards,
     3: IndustrialDesignResultCards,
+    4: DecisionsResultCards,
   };
 
   const axiosConfigBookmark = getBookmarksApi(activeWorkstream, selectedCardId, true);
@@ -88,6 +91,15 @@ function IprSections({
 
   const setActiveDocument = (activeDocument) => {
     window.open(`/document?workstreamId=${activeWorkstream}&documentId=${activeDocument}`, '_blank');
+  };
+
+  const prepareAuthBookamrks = (response) => {
+    const bookmarks = [];
+    if (!response) return bookmarks;
+
+    response.map((res) => bookmarks.push(res.data));
+
+    return bookmarks;
   };
 
   const tabsItems = [
@@ -177,11 +189,13 @@ function IprSections({
               setTotalElements={(totalCount) => setTotalElements(totalCount)}
               emptyState={<NoData />}
               urlPagination={false}
-              bookmarks
+              setResults={setResults}
               renderedProps={{
                 selectedView,
                 setActiveDocument,
-                bookmarks: true,
+                hasCustomData: true,
+                customData: prepareAuthBookamrks(results),
+                disableCheckbox: true,
               }}
             />
           </div>

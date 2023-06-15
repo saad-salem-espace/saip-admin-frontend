@@ -7,9 +7,9 @@ const LabelValue = ({
   labelClassName,
   className, customLabel, valueClassName,
 }) => (
-  <div className={`d-flex align-items-center ${className}`}>
+  <div className={`d-flex align-items-start ${className}`}>
     {label && (
-    <p className={`${customLabel ? '' : 'app-text-primary f-14'} ${labelClassName} ${style.label} disable-highlight`}>{label}</p>
+    <p className={`${customLabel ? '' : 'app-text-primary f-14'}  ${style.label} ${labelClassName} disable-highlight`}>{label}</p>
     )}
     <p className={`f-12 ${valueClassName}`}>
       <HandleEmptyAttribute checkOn={value} />

@@ -41,6 +41,8 @@ import addIcon from '../../assets/images/icons/coloredAdd.svg';
 import IndustrialDesignViews from './industrial-design/IndustrialDesignViews';
 import IndustrialDesignIprOptions from './industrial-design/IndustrialDesignIprOptions';
 import './ipr-details.scss';
+import DecisionsViews from './decisions/DecisionsViews';
+import decisionsIprOptions from './decisions/DecisionsIprOptions';
 
 function IprDetails({
   collapseIPR,
@@ -69,20 +71,21 @@ function IprDetails({
   const [highlightTrigger, setHighlightTrigger] = useState(0);
   const [document, setDocument] = useState(null);
   const [searchParams] = useSearchParams();
+  const searchResultParams = {
+    workstreamId:
+      searchParams.get('workstreamId') || activeWorkstream.toString(),
+  };
   const [selectedView, setSelectedView] = useState({
-    label: t('ipr.bibliographic'),
-    value: 'BibliographicData',
+    label: searchResultParams.workstreamId !== '4' ? t('ipr.bibliographic') : t('decisions.judgementDecision'),
+    value: searchResultParams.workstreamId !== '4' ? 'BibliographicData' : 'JudgementDecision',
   });
   const [reachedLimit, setReachedLimit] = useState(false);
   const [isSubmittingDownloadPdf, setIsSubmittingDownloadPdf] = useState(false);
   const { isAuthenticated } = useAuth();
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
+  const decisionsOptions = decisionsIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
-  const searchResultParams = {
-    workstreamId:
-      searchParams.get('workstreamId') || activeWorkstream.toString(),
-  };
   const [, execute] = useAxios(
     documentApi({
       workstreamId: fromFocusArea
@@ -152,7 +155,7 @@ function IprDetails({
         });
       };
     }
-    return () => {};
+    return () => { };
   }, [document]);
 
   let documentIndex = 0;
@@ -292,12 +295,25 @@ function IprDetails({
         examinerView={examinerView}
       />
     ),
+    4: (
+      <DecisionsViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
   };
 
   const options = {
     1: patentOptions,
     2: trademarkOptions,
     3: industrialDesignOptions,
+    4: decisionsOptions,
   };
 
   const renderSelectedView = () => {
@@ -325,6 +341,13 @@ function IprDetails({
       ) {
         content = views[workstreamId];
       }
+    } else if (workstreamId.toString() === '4') {
+      if (
+        document[selectedView.value]
+        || selectedView.value === 'JudgementDecision'
+      ) {
+        content = views[workstreamId];
+      }
     }
     return content;
   };
@@ -342,7 +365,7 @@ function IprDetails({
               setIsBookmark={setIsBookmark}
             />
             <h5 className="mb-0">
-              {document.BibliographicData.PublicationNumber}
+              {searchResultParams.workstreamId === '4' ? document.BibliographicData.FilingNumber : document.BibliographicData.PublicationNumber}
             </h5>
           </div>
           <div className="d-flex">
@@ -383,13 +406,31 @@ function IprDetails({
             )}
           </div>
         </div>
+        {searchResultParams.workstreamId === '4' && (
+          <div className="mx-6">
+            <div className="mb-2 d-flex">
+              <Badge
+                text={document.BibliographicData.DecisionCategory}
+                className="text-capitalize me-2 bg-secondary"
+              />
+              <h5 className="text-capitalize app-text-primary-dark font-regular text-truncate">
+                {document.BibliographicData.DecisionTitle}
+              </h5>
+            </div>
+            <p className="text-gray">
+              <HandleEmptyAttribute
+                checkOn={document?.BibliographicData?.Keywords}
+              />
+            </p>
+          </div>
+
+        )}
         {searchResultParams.workstreamId === '2' && (
           <div className="ms-6 mb-2">
             <Badge
               text={document.BibliographicData.TrademarkLastStatus}
-              className="text-capitalize me-2 mb-4 app-bg-secondary"
+              className="text-capitalize me-2 mb-4 bg-secondary"
             />
-
             <div className="d-flex justify-content-between">
               <div className="me-2 mb-md-0 mb-2">
                 <h5 className="text-capitalize app-text-primary-dark font-regular mb-2">
@@ -586,17 +627,17 @@ IprDetails.defaultProps = {
   documentId: null,
   className: null,
   activeWorkstream: null,
-  onClose: () => {},
-  getNextDocument: () => {},
-  getPreviousDocument: () => {},
-  setActiveDocument: () => {},
+  onClose: () => { },
+  getNextDocument: () => { },
+  getPreviousDocument: () => { },
+  setActiveDocument: () => { },
   dashboard: false,
   showActions: true,
   examinerView: false,
   activeTab: 2,
-  setNotesUpdated: () => {},
+  setNotesUpdated: () => { },
   fromFocusArea: false,
-  hideFocus: () => {},
+  hideFocus: () => { },
 };
 
 export default IprDetails;
