@@ -12,7 +12,7 @@
     @extend .align-self-center;
 
     &:hover {
-      color: var(--bs-primary);
+      color: var(--bs-primary) !important;
     }
   }
   .navbar-brand {
@@ -62,14 +62,10 @@
   }
   .accessibility-container {
     @include media-breakpoint-up(xl) {
-      @include border(1px,25px,6px,$border-color);
-      @include border-start(0);
       html[dir="ltr"] & {
-        margin-left: 15px;
         padding-left: 15px;
       }
       html[dir="rtl"] & {
-        margin-right: 15px;
         padding-right: 15px;
       }
     }
@@ -122,19 +118,19 @@
       }
     }
   }
-  &.logged {
-    .accessibility-container {
-      @include media-breakpoint-up(xl) {
-        html[dir="ltr"] & {
-          margin-left: 25px;
-          padding-left: 25px;
-        }
-        html[dir="rtl"] & {
-          margin-right: 25px;
-          padding-right: 25px;
-        }
+  .help-link-wrapper {
+    @include media-breakpoint-up(xl) {
+      @include border(1px,25px,6px,$border-color);
+      @include border-start(0);
+      html[dir="ltr"] & {
+        margin-left: 14px;
+      }
+      html[dir="rtl"] & {
+        margin-right: 14px;
       }
     }
+  }
+  &.logged {
     .switch-language {
       @include media-breakpoint-up(xl) {
         @include border(1px,25px,6px,$border-color);
