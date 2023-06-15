@@ -23,6 +23,7 @@ import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
 import { roles } from '../../../utils/roleMapper';
+import { convertQueryArrToStr } from '../../../utils/searchQuery';
 import DropdownItem from './shared/recent-search/DropdownItem';
 
 function LoggedNavbar({
@@ -115,7 +116,7 @@ function LoggedNavbar({
               {
                 history.map((h) => (
                   <DropdownItem
-                    query={h?.payload?.query}
+                    query={convertQueryArrToStr(h?.payload?.qJson)}
                     timestamp={h.timestamp}
                     workStreamId={workStreamId}
                   />
