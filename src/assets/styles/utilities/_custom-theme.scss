@@ -68,6 +68,7 @@ $secondary-tangerine:#ED8A00;
 $secondary-tangerine-l: #FDF0DE;
 $secondary-rio-grande:#B9D000;
 $vivid-lime-green: #B9D000;
+$secondary-sisal : #D3CBBE;
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
@@ -137,6 +138,7 @@ $danger-dark: $danger-dark;
   --bs-patents: #{$patents} !important;
   --bs-trademark: #{$trademark} !important;
   --bs-industrial-designs: #{$industrial-designs} !important;
+  --bs-secondary-sisal: #{$secondary-sisal} !important;
   --bs-body-bg: #{$white} !important;
 }
 [data-bs-theme="dark"] {
@@ -164,6 +166,7 @@ $danger-dark: $danger-dark;
   --bs-patents: #{$gray-700} !important;
   --bs-trademark: #{$gray-700} !important;
   --bs-industrial-designs: #{$gray-700} !important;
+  --bs-secondary-sisal: #{$secondary-sisal} !important;
   --bs-body-bg: #{$white} !important;
   --bs-body-color: #{$black} !important;
   --bs-border-color: #{$gray-500} !important;

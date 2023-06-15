@@ -40,6 +40,7 @@ import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
 import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
+import DecisionsResultCards from './decisions-result-cards/DecisionsResultCards';
 import ExportSearchResults from './ExportSearchResults';
 import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
 
@@ -147,10 +148,25 @@ function SearchResults({ showFocusArea }) {
     },
   ];
 
+  const sortByOptionsDecisions = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('decisions.decisionDateAsc'),
+      value: 'decisionDateAsc',
+    },
+    {
+      label: t('decisions.decisionDateDesc'),
+      value: 'decisionDateDesc',
+    },
+  ];
   const map = new Map();
   map.set(1, sortByOptionsPatent);
   map.set(2, sortByPublicationAndFilingDate);
   map.set(3, sortByPublicationAndFilingDate);
+  map.set(4, sortByOptionsDecisions);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
@@ -481,6 +497,7 @@ function SearchResults({ showFocusArea }) {
     1: SearchResultCards,
     2: TrademarksSearchResultCards,
     3: IndustrialDesignResultCards,
+    4: DecisionsResultCards,
   };
 
   const formSchema = Yup.object({
