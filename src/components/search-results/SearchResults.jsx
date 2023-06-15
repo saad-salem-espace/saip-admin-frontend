@@ -178,7 +178,7 @@ function SearchResults({ showFocusArea }) {
     if (!auth.isAuthenticated) {
       getInstanceByMultiIndex({
         indecies: {
-          queryString: searchResultParams.query,
+          queryString: convertQueryArrToStr(searchResultParams.qArr),
           workstreamId: searchResultParams.workstreamId,
         },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },

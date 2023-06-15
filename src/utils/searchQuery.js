@@ -54,6 +54,7 @@ const convertQueryStrToArr = (qStr, selectedIdentifiers) => {
   let qStartIdx = 2;
   let qLastIdx = -1;
   const qObjs = [];
+
   if (qStr) {
     const qStrArr = qStr.match(/("[^."]* ")|(\S*)/g).filter((str) => str !== '').filter((str) => str !== '' && str !== '"');
     const strIds = [];
@@ -100,7 +101,7 @@ const convertQueryStrToArr = (qStr, selectedIdentifiers) => {
 const convertQueryArrToStr = (qObjsArr) => {
   let qStr = '';
   const newIdentifiers = [];
-  qObjsArr.forEach((obj) => {
+  qObjsArr?.forEach((obj) => {
     newIdentifiers.push(obj.identifier);
     qStr = `${qStr} ${obj.operator} ${obj.identifier} ${obj.condition} "${obj.data}"`;
   });
