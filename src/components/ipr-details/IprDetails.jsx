@@ -43,6 +43,8 @@ import IndustrialDesignIprOptions from './industrial-design/IndustrialDesignIprO
 import './ipr-details.scss';
 import DecisionsViews from './decisions/DecisionsViews';
 import decisionsIprOptions from './decisions/DecisionsIprOptions';
+import CopyrightsViews from './copyrights/CopyrightsViews';
+import copyrightsIprOptions from './copyrights/CopyrightsIprOptions';
 
 function IprDetails({
   collapseIPR,
@@ -75,9 +77,30 @@ function IprDetails({
     workstreamId:
       searchParams.get('workstreamId') || activeWorkstream.toString(),
   };
+
+  const getDefaultSelectedViewValue = () => {
+    let defaultSelectedViewValue = 'BibliographicData';
+    if (searchResultParams.workstreamId === '4') {
+      defaultSelectedViewValue = 'JudgementDecision';
+    }
+    if (searchResultParams.workstreamId === '5') {
+      defaultSelectedViewValue = 'CopyrightsData';
+    }
+    return defaultSelectedViewValue;
+  };
+  const getDefaultSelectedViewLabel = () => {
+    let defaultSelectedViewLabel = t('ipr.bibliographic');
+    if (searchResultParams.workstreamId === '4') {
+      defaultSelectedViewLabel = t('decisions.judgementDecision');
+    }
+    if (searchResultParams.workstreamId === '5') {
+      defaultSelectedViewLabel = t('copyrights.copyrightsData');
+    }
+    return defaultSelectedViewLabel;
+  };
   const [selectedView, setSelectedView] = useState({
-    label: searchResultParams.workstreamId !== '4' ? t('ipr.bibliographic') : t('decisions.judgementDecision'),
-    value: searchResultParams.workstreamId !== '4' ? 'BibliographicData' : 'JudgementDecision',
+    label: getDefaultSelectedViewLabel(),
+    value: getDefaultSelectedViewValue(),
   });
   const [reachedLimit, setReachedLimit] = useState(false);
   const [isSubmittingDownloadPdf, setIsSubmittingDownloadPdf] = useState(false);
@@ -85,6 +108,7 @@ function IprDetails({
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
   const decisionsOptions = decisionsIprOptions().options;
+  const copyrightsOptions = copyrightsIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
   const [, execute] = useAxios(
     documentApi({
@@ -300,7 +324,17 @@ function IprDetails({
         selectedView={selectedView.value}
         isIPRExpanded={isIPRExpanded}
         document={document}
-        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    5: (
+      <CopyrightsViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
         documentId={documentId}
         searchResultParams={searchResultParams}
         handleClick={handleClick}
@@ -314,6 +348,7 @@ function IprDetails({
     2: trademarkOptions,
     3: industrialDesignOptions,
     4: decisionsOptions,
+    5: copyrightsOptions,
   };
 
   const renderSelectedView = () => {
@@ -348,6 +383,13 @@ function IprDetails({
       ) {
         content = views[workstreamId];
       }
+    } else if (workstreamId.toString() === '5') {
+      if (
+        document[selectedView.value]
+        || selectedView.value === 'CopyrightsData' || selectedView.value === 'Description'
+      ) {
+        content = views[workstreamId];
+      }
     }
     return content;
   };
@@ -365,7 +407,7 @@ function IprDetails({
               setIsBookmark={setIsBookmark}
             />
             <h5 className="mb-0">
-              {searchResultParams.workstreamId === '4' ? document.BibliographicData.FilingNumber : document.BibliographicData.PublicationNumber}
+              {(searchResultParams.workstreamId === '4' || searchResultParams.workstreamId === '5') ? document.BibliographicData.FilingNumber : document.BibliographicData.PublicationNumber}
             </h5>
           </div>
           <div className="d-flex">
@@ -456,6 +498,25 @@ function IprDetails({
               )}
             </div>
           </div>
+        )}
+        {searchResultParams.workstreamId === '5' && (
+          <div className="mx-6">
+            <div className="mb-2 d-flex">
+              <Badge
+                text={document.BibliographicData.Status}
+                className="text-capitalize me-2 bg-secondary"
+              />
+              <h5 className="text-capitalize app-text-primary-dark font-regular text-truncate">
+                {document.BibliographicData.Title}
+              </h5>
+            </div>
+            <p className="text-gray">
+              <HandleEmptyAttribute
+                checkOn={document?.BibliographicData?.Authors.join(' , ')}
+              />
+            </p>
+          </div>
+
         )}
         {searchResultParams.workstreamId === '3' && (
           <div className="ms-6 mb-2">

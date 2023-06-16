@@ -25,6 +25,7 @@ import getBookmarksLocalUser from 'apis/bookmarks/getBookmarksLocalUser';
 import exportSearchResultsValidationSchema from '../search-results/exportSearchResultsValidationSchema';
 import ExportSearchResults from '../search-results/ExportSearchResults';
 import DecisionsResultCards from '../search-results/decisions-result-cards/DecisionsResultCards';
+import CopyrightsResultCards from '../search-results/copyrights-result-cards/CopyrightsResultCards';
 
 const BookmarkList = () => {
   const currentLang = i18n.language;
@@ -76,6 +77,7 @@ const BookmarkList = () => {
     2: TrademarksSearchResultCards,
     3: IndustrialDesignResultCards,
     4: DecisionsResultCards,
+    5: CopyrightsResultCards,
   };
 
   const selectedView = {
