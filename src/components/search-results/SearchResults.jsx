@@ -168,11 +168,11 @@ function SearchResults({ showFocusArea }) {
     },
     {
       label: t('copyrights.grantDateAsc'),
-      value: 'decisionDateAsc',
+      value: 'grantDateAsc',
     },
     {
       label: t('copyrights.grantDateDesc'),
-      value: 'decisionDateDesc',
+      value: 'grantDateDesc',
     },
     {
       label: t('filingDateAsc'),
