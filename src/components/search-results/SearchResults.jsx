@@ -43,6 +43,7 @@ import DecisionsResultCards from './decisions-result-cards/DecisionsResultCards'
 import ExportSearchResults from './ExportSearchResults';
 import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
 import CopyrightsResultCards from './copyrights-result-cards/CopyrightsResultCards';
+import PlantVarietyResultCards from './plant-variety-result-cards/PlantVarietyResultCards';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
@@ -183,12 +184,27 @@ function SearchResults({ showFocusArea }) {
       value: 'filingDateDesc',
     },
   ];
+  const sortByFilingDate = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('filingDateAsc'),
+      value: 'filingDateAsc',
+    },
+    {
+      label: t('filingDateDesc'),
+      value: 'filingDateDesc',
+    },
+  ];
   const map = new Map();
   map.set(1, sortByOptionsPatent);
   map.set(2, sortByPublicationAndFilingDate);
   map.set(3, sortByPublicationAndFilingDate);
   map.set(4, sortByOptionsDecisions);
   map.set(5, sortByOptionsCopyrights);
+  map.set(6, sortByFilingDate);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
@@ -521,6 +537,7 @@ function SearchResults({ showFocusArea }) {
     3: IndustrialDesignResultCards,
     4: DecisionsResultCards,
     5: CopyrightsResultCards,
+    6: PlantVarietyResultCards,
   };
 
   const formSchema = Yup.object({

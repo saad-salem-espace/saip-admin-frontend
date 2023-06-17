@@ -45,6 +45,8 @@ import DecisionsViews from './decisions/DecisionsViews';
 import decisionsIprOptions from './decisions/DecisionsIprOptions';
 import CopyrightsViews from './copyrights/CopyrightsViews';
 import copyrightsIprOptions from './copyrights/CopyrightsIprOptions';
+import PlantVarietyViews from './plant-variety/PlantVarietyViews';
+import plantVarietyIprOptions from './plant-variety/PlantVarietyOptions';
 
 function IprDetails({
   collapseIPR,
@@ -110,6 +112,8 @@ function IprDetails({
   const decisionsOptions = decisionsIprOptions().options;
   const copyrightsOptions = copyrightsIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
+  const plantVarietyOptions = plantVarietyIprOptions().options;
+
   const [, execute] = useAxios(
     documentApi({
       workstreamId: fromFocusArea
@@ -341,6 +345,18 @@ function IprDetails({
         examinerView={examinerView}
       />
     ),
+    6: (
+      <PlantVarietyViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
   };
 
   const options = {
@@ -349,13 +365,14 @@ function IprDetails({
     3: industrialDesignOptions,
     4: decisionsOptions,
     5: copyrightsOptions,
+    6: plantVarietyOptions,
   };
-
   const renderSelectedView = () => {
     let content = <NoData />;
     const workstreamId = fromFocusArea
       ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
       : searchResultParams.workstreamId;
+
     if (workstreamId.toString() === '2') {
       if (
         document[selectedView.value]
@@ -387,6 +404,12 @@ function IprDetails({
       if (
         document[selectedView.value]
         || selectedView.value === 'CopyrightsData' || selectedView.value === 'Description'
+      ) {
+        content = views[workstreamId];
+      }
+    } else if (workstreamId.toString() === '6') {
+      if (
+        document[selectedView.value]
       ) {
         content = views[workstreamId];
       }
@@ -546,7 +569,7 @@ function IprDetails({
             </div>
           </div>
         )}
-        {searchResultParams.workstreamId === '1' && (
+        {(searchResultParams.workstreamId === '1' || searchResultParams.workstreamId === '6') && (
           <p className="text-gray px-6">
             <HandleEmptyAttribute
               checkOn={document.BibliographicData.ApplicationTitle}

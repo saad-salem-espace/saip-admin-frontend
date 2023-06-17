@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const Priorities = ({ children }) => {
   const { t } = useTranslation('search');
-
+  console.log('kk');
   return (
     <div className="table-responsive shadow">
       <Table className="appTable">
