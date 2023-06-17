@@ -24,6 +24,7 @@ import useAxios from 'hooks/useAxios';
 import getBookmarksLocalUser from 'apis/bookmarks/getBookmarksLocalUser';
 import exportSearchResultsValidationSchema from '../search-results/exportSearchResultsValidationSchema';
 import ExportSearchResults from '../search-results/ExportSearchResults';
+import DecisionsResultCards from '../search-results/decisions-result-cards/DecisionsResultCards';
 
 const BookmarkList = () => {
   const currentLang = i18n.language;
@@ -74,6 +75,7 @@ const BookmarkList = () => {
     1: SearchResultCards,
     2: TrademarksSearchResultCards,
     3: IndustrialDesignResultCards,
+    4: DecisionsResultCards,
   };
 
   const selectedView = {
