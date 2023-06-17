@@ -14,6 +14,7 @@ import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
 import getBookmarksApi from 'apis/bookmarks/getBookmarksApi';
 import { Formik } from 'formik';
 import DecisionsResultCards from 'components/search-results/decisions-result-cards/DecisionsResultCards';
+import CopyrightsResultCards from 'components/search-results/copyrights-result-cards/CopyrightsResultCards';
 import IprData from '../IprData';
 import './style.scss';
 
@@ -81,6 +82,7 @@ function IprSections({
     2: TrademarksSearchResultCards,
     3: IndustrialDesignResultCards,
     4: DecisionsResultCards,
+    5: CopyrightsResultCards,
   };
 
   const axiosConfigBookmark = getBookmarksApi(activeWorkstream, selectedCardId, true);

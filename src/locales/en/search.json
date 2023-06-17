@@ -115,6 +115,7 @@
     "filingDate": "Filing Date",
     "registered": "Registered {{value}}",
     "published": "Published {{value}}",
+    "authors": "Authors",
     "legal": {
       "statusCode": "Status Code",
       "status": "Status",
@@ -229,5 +230,13 @@
     "decisionDateDesc": "Decision date desc",
     "decisionDateAsc": "Decision date asc",
     "facts": "Facts"
+  },
+  "copyrights": {
+    "grantDateAsc": "Grant date asc",
+    "grantDateDesc": "Grant date desc",
+    "granted": "Granted {{value}}",
+    "copyrightsData": "Copyrights Data",
+    "grantDate": "Grant Date",
+    "claimants": "Claimants"
   }
 }

@@ -229,5 +229,13 @@
     "decisionDateDesc": "تاريخ القرار تنازليًا",
     "decisionDateAsc": "تاريخ القرار تصاعديًا",
     "facts": "الحقائق"
+  },
+  "copyrights": {
+    "grantDateAsc": "تاريخ المنح تصاعديًا",
+    "grantDateDesc": "تاريخ المنح تنازليًا",
+    "granted": "منحت {{value}}",
+    "copyrightsData": "بيانات حقوق النشر",
+    "grantDate": "تاريخ المنح",
+    "claimants": "المدعون"
   }
 }

@@ -139,6 +139,7 @@ $danger-dark: $danger-dark;
   --bs-trademark: #{$trademark} !important;
   --bs-industrial-designs: #{$industrial-designs} !important;
   --bs-secondary-sisal: #{$secondary-sisal} !important;
+  --bs-copyright: #{$copyright} !important;
   --bs-body-bg: #{$white} !important;
 }
 [data-bs-theme="dark"] {
@@ -167,6 +168,7 @@ $danger-dark: $danger-dark;
   --bs-trademark: #{$gray-700} !important;
   --bs-industrial-designs: #{$gray-700} !important;
   --bs-secondary-sisal: #{$secondary-sisal} !important;
+  --bs-copyright: #{$copyright} !important;
   --bs-body-bg: #{$white} !important;
   --bs-body-color: #{$black} !important;
   --bs-border-color: #{$gray-500} !important;
