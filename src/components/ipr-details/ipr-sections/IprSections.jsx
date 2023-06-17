@@ -2,9 +2,21 @@ import { useTranslation, Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
 import Tabs from 'components/shared/tabs/Tabs';
 import React, { useState, useEffect } from 'react';
+import NoData from 'components/shared/empty-states/NoData';
 import ModalAlert from 'components/shared/modal-alert/ModalAlert';
 import Notes from 'components/examiner-dashboard/board/notes/Notes';
+import SavedQueriesTable from 'components/saved-queries/SavedQueriesTable';
+import AppPagination from 'components/shared/app-pagination/AppPagination';
+import SearchResultCards from 'components/search-results/search-result-cards/SearchResultCards';
+import TrademarksSearchResultCards from 'components/search-results/trademarks-search-result-cards/TrademarksSearchResultCards';
+import IndustrialDesignResultCards from 'components/search-results/industrial-design/IndustrialDesignResultCards';
+import getSavedQueryApi from 'apis/save-query/getSavedQueryApi';
+import getBookmarksApi from 'apis/bookmarks/getBookmarksApi';
+import { Formik } from 'formik';
+import DecisionsResultCards from 'components/search-results/decisions-result-cards/DecisionsResultCards';
+import CopyrightsResultCards from 'components/search-results/copyrights-result-cards/CopyrightsResultCards';
 import IprData from '../IprData';
+import './style.scss';
 
 function IprSections({
   options,
@@ -18,13 +30,19 @@ function IprSections({
   className,
   showInfo,
   setNotesUpdated,
+  activeWorkstream,
+  updateIprModal,
+  fromFocusArea,
 }) {
-  const { t } = useTranslation(['dashboard', 'notes']);
+  const { t } = useTranslation(['dashboard', 'notes', 'translation']);
   const [activeTabId, setActiveTabId] = useState(activeTab);
   const [showAlert, setShowAlert] = useState(false);
   const [hasUnsavedNotes, setHasUnsavedNotes] = useState(false);
   const [fireSubmit, setFireSubmit] = useState(false);
   const [selectedTab, setSelectedTab] = useState(activeTabId);
+  const [totalElements, setTotalElements] = useState(0);
+  const [refreshQueriesList, setRefreshQueriesList] = useState(0);
+  const [results, setResults] = useState(null);
 
   const disableChangeTab = (hasData) => {
     setHasUnsavedNotes(!!hasData);
@@ -51,6 +69,39 @@ function IprSections({
   const changeActiveTab = () => {
     setActiveTabId(selectedTab);
     setHasUnsavedNotes(false);
+  };
+
+  const axiosConfig = getSavedQueryApi(activeWorkstream, fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber : documentId, '1', true);
+
+  const savedQueries = (
+    SavedQueriesTable
+  );
+
+  const searchResult = {
+    1: SearchResultCards,
+    2: TrademarksSearchResultCards,
+    3: IndustrialDesignResultCards,
+    4: DecisionsResultCards,
+    5: CopyrightsResultCards,
+  };
+
+  const axiosConfigBookmark = getBookmarksApi(activeWorkstream, selectedCardId, true);
+
+  const dependencies = {
+    refreshQueriesList,
+  };
+
+  const setActiveDocument = (activeDocument) => {
+    window.open(`/document?workstreamId=${activeWorkstream}&documentId=${activeDocument}`, '_blank');
+  };
+
+  const prepareAuthBookamrks = (response) => {
+    const bookmarks = [];
+    if (!response) return bookmarks;
+
+    response.map((res) => bookmarks.push(res.data));
+
+    return bookmarks;
   };
 
   const tabsItems = [
@@ -80,7 +131,7 @@ function IprSections({
       content: (
         <div className="notes-tab" translate="no">
           <Notes
-            documentId={documentId}
+            documentId={fromFocusArea ? JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber : documentId}
             disableEditor={!isCardInprogress}
             disableChangeTab={disableChangeTab}
             fireSubmit={fireSubmit}
@@ -88,8 +139,69 @@ function IprSections({
             setFireSubmit={setFireSubmit}
             changeActiveTab={changeActiveTab}
             setNotesUpdated={setNotesUpdated}
+            fromFocusArea={fromFocusArea}
           />
         </div>
+      ),
+    },
+    {
+      id: 3,
+      title: (
+        <div className="d-flex align-items-center" translate="no">
+          {t('dashboard:savedQueries')}
+          { activeTabId === 3 && (<span className="ms-1 p-1 queries-count">{totalElements}</span>)}
+        </div>
+      ),
+      content: (
+        <div className="m-4">
+          <AppPagination
+            className="mt-8"
+            axiosConfig={axiosConfig}
+            defaultPage="1"
+            RenderedComponent={savedQueries}
+            emptyState={<NoData />}
+            urlPagination={false}
+            setTotalElements={(totalCount) => setTotalElements(totalCount)}
+            renderedProps={{
+              selectedWorkStream: activeWorkstream,
+              updateIprModal,
+              setRefreshQueriesList,
+            }}
+            updateDependencies={[...Object.values(dependencies)]}
+          />
+        </div>
+      ),
+    },
+    {
+      id: 4,
+      title: (
+        <div className="d-flex align-items-center" translate="no">
+          {t('dashboard:bookmarks')}
+          { activeTabId === 4 && (<span className="ms-1 p-1 queries-count">{totalElements}</span>)}
+        </div>
+      ),
+      content: (
+        <Formik>
+          <div className="m-4">
+            <AppPagination
+              className="mt-8"
+              axiosConfig={axiosConfigBookmark}
+              defaultPage="1"
+              RenderedComponent={searchResult[activeWorkstream]}
+              setTotalElements={(totalCount) => setTotalElements(totalCount)}
+              emptyState={<NoData />}
+              urlPagination={false}
+              setResults={setResults}
+              renderedProps={{
+                selectedView,
+                setActiveDocument,
+                hasCustomData: true,
+                customData: prepareAuthBookamrks(results),
+                disableCheckbox: true,
+              }}
+            />
+          </div>
+        </Formik>
       ),
     },
   ];
@@ -103,6 +215,7 @@ function IprSections({
   }
   useEffect(() => {
     if (!showInfo) {
+      setSelectedTab(2);
       setActiveTabId(2);
     }
   }, [showInfo]);
@@ -121,8 +234,9 @@ function IprSections({
                 components={<span className="d-block" />}
               />
           }
+            confirmBtnText={t('translation:save')}
             btnText={t('add')}
-            className="warning"
+            className="warning notes-modal"
             handleConfirm={handleConfirm}
             hideAlert={hideAlert}
           />
@@ -151,17 +265,25 @@ IprSections.propTypes = {
   selectedCardId: PropTypes.number.isRequired,
   className: PropTypes.string,
   setNotesUpdated: PropTypes.func,
+  activeWorkstream: PropTypes.number,
+  updateIprModal: PropTypes.func,
+  fromFocusArea: PropTypes.bool,
 };
 
 IprSections.defaultProps = {
   options: [],
   showInfo: true,
-  selectedView: null,
+  selectedView: {
+    value: 'detailed',
+  },
   onChangeSelect: () => { },
   renderSelectedView: () => {},
   activeTab: 1,
   className: '',
   setNotesUpdated: () => { },
+  activeWorkstream: null,
+  updateIprModal: () => { },
+  fromFocusArea: false,
 };
 
 export default IprSections;

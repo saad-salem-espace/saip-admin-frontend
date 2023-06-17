@@ -2,7 +2,7 @@
 @import "~bootstrap/scss/mixins";
 
 .collapseIcon {
-  background-color: $primary-dark;
+  background-color: var(--bs-primary-dark);
   padding: 4px 8px;
   border-radius: $border-radius !important;
   position: absolute;

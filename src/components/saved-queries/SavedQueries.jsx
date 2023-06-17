@@ -15,13 +15,15 @@ import { useAuth } from 'react-oidc-context';
 import { tableNames } from 'dbConfig';
 import CacheContext from 'contexts/CacheContext';
 import useCacheRequest from 'hooks/useCacheRequest';
-import { pascalCase } from 'change-case';
 import Spinner from 'components/shared/spinner/Spinner';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SavedQueriesTable from './SavedQueriesTable';
 import IndexedDbAppPagination from '../shared/app-pagination/IndexedDbAppPagination';
+import './style.scss';
 
 const SavedQueries = () => {
   const { t } = useTranslation('queries');
+  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const [selectedWorkStream, setSelectedWorkStream] = useState(null);
   const [searchParams] = useSearchParams();
   const auth = useAuth();
@@ -30,9 +32,10 @@ const SavedQueries = () => {
   const [pageReset, setPageReset] = useState(0);
   const isMounted = useRef(false);
   const currentLang = i18n.language;
+  const [refreshQueriesList, setRefreshQueriesList] = useState(0);
 
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
   }
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
@@ -58,20 +61,25 @@ const SavedQueries = () => {
       (element) => element.value === i.value,
     ));
     resetPageNumber();
+    setWorkStreamId(i.value);
   };
 
-  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, Number(searchParams.get('page') || '1'), true);
+  const axiosConfig = getSavedQueryApi(selectedWorkStream.value, null, Number(searchParams.get('page') || '1'), true);
 
   const isAuth = auth && auth.user;
 
   const savedQueries = (
     SavedQueriesTable
   );
+
+  const dependencies = {
+    refreshQueriesList,
+  };
   return (
     <Container fluid>
       <Row>
         <Col md={12} className="px-md-19">
-          <div className="d-flex my-8 p-8 bg-primary-01 rounded">
+          <div className="d-flex my-8 p-8 app-bg-primary-01 rounded">
             <h5 className="mb-0 mt-4">{t('myQueries')}</h5>
             <Select
               options={WorkStreamsOptions}
@@ -91,7 +99,9 @@ const SavedQueries = () => {
               resetPage={pageReset}
               renderedProps={{
                 selectedWorkStream: selectedWorkStream.value,
+                setRefreshQueriesList,
               }}
+              updateDependencies={[...Object.values(dependencies)]}
             />
           ) : (
             <IndexedDbAppPagination
@@ -109,7 +119,9 @@ const SavedQueries = () => {
               }}
               renderedProps={{
                 selectedWorkStream: selectedWorkStream.value,
+                setRefreshQueriesList,
               }}
+              updateDependencies={[...Object.values(dependencies)]}
             />
           )}
         </Col>

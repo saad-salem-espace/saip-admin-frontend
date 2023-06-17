@@ -16,13 +16,14 @@ import './style.scss';
 function TrademarksSearchResultCard({
   searchResult,
   setActiveDocument, activeDocument, selectedView, highlightWords, query,
+  disableCheckbox,
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId'), id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '2', id: BibliographicData.FilingNumber, fileName, fileType,
     },
   );
 
@@ -30,14 +31,18 @@ function TrademarksSearchResultCard({
     <Button
       variant="transparent"
       onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
-      className="text-start f-20 px-1 py-0 font-regular text-primary-dark border-0 w-100"
+      className="text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
       text={(
         <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
-                <Checkbox className="me-4" />
-                <Badge text={BibliographicData.TrademarkLastStatus} varient="secondary" className="text-capitalize mb-2 me-2 mt-1" />
+                {!disableCheckbox && <Checkbox
+                  className="me-4"
+                  name={`selectedCards.${BibliographicData?.FilingNumber}`}
+                  fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
+                />}
+                <Badge text={BibliographicData.TrademarkLastStatus} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
                 <Image src={preparedGetAttachmentURL(BibliographicData.Mark)} className="rounded" />
@@ -85,13 +90,13 @@ function TrademarksSearchResultCard({
                     <>
                       <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        {t('trademarks.registered', { value: BibliographicData.RegistrationNumber })}
+                        {t('ipr.registered', { value: BibliographicData.RegistrationNumber })}
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                         <span>{BibliographicData.RegistrationDate}</span>
                       </p>
                       <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        {t('trademarks.published', { value: BibliographicData.PublicationNumber })}
+                        {t('ipr.published', { value: BibliographicData.PublicationNumber })}
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                         <span>{BibliographicData.PublicationDate}</span>
                       </p>
@@ -130,11 +135,13 @@ TrademarksSearchResultCard.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
+  disableCheckbox: PropTypes.bool.isRequired,
 };
 
 TrademarksSearchResultCard.defaultProps = {
   highlightWords: [],
+  query: '',
 };
 export default TrademarksSearchResultCard;

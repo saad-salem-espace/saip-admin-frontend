@@ -13,6 +13,10 @@
   "notes": "ملاحظات",
   "translateInfo": "ترجمة",
   "markAsDone": "تم إنجازه",
+  "savedQueries": "الاستعلامات المحفوظه",
+  "bookmarks": "تفضيلاتي",
+  "notAssigned": "لا تجد الوثائق الخاضعة للفحص؟",
+  "emptyStateTitle": "لم يتم إسناد أي من الوثائق لك. ",
   "status": {
     "toDo": "قائمة الأعمال",
     "done": "منجز",
@@ -23,6 +27,7 @@
     "patent": "براءات الإختراع",
     "trademark": "العلامات التجارية",
     "copyrights": "حق المؤلف",
+    "decision": "القرارات",
     "industrialDesign": "النماذج الصناعية",
     "plantVarieties": "الأصناف النباتية",
     "integratedCircuits": "الدوائر المتكاملة"
@@ -31,8 +36,19 @@
     "patent": "لوحة <0> براءات الإختراع </0>",
     "trademark": "لوحة <0> العلامات التجارية </0>",
     "copyrights": "لوحة <0> حق المؤلف </0>",
+    "decision": "لوحة <0> القرارات </0>",
     "industrialDesign": "لوحة <0> النماذج الصناعية </0>",
     "plantVarieties": "لوحة <0> الأصناف النباتية </0>",
-    "integratedCircuits": "لوحة <0> الدوائر المتكاملة </0>"
+    "integratedCircuits": "لوحة <0> الدوائر المتكاملة </0>",
+    "keywordplanner": "مخطط الكلمات الرئيسية",
+    "addtoKeywordPlanner": "أضافه الى مخطط الكلمات الرئيسيه",
+    "addtoFocus": "أضافه الى مساحة التركيز",
+    "cannotFocus": "يمكنك أختيار واحد فقط",
+    "addedToKeywordPlanner": "تمت الاضافة بنجاح",
+    "invalidHighlight": "لم يتم الاضافة. يرجو الاختيار من قسم واحد فقط",
+    "maximumFields": "وصلت الى عدد خانات البحث المسموح بها",
+    "errors": {
+      "updateStatus": "لم نتمكن من تغيير حالة الوئيقة"
+    }
   }
 }

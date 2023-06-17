@@ -4,7 +4,7 @@
 @include media-breakpoint-up(md) {
 
   .workstream-view {
-    border: $border-width solid $gray-400;
+    border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
     position: relative;
     padding: 32px 32px 0;
@@ -97,7 +97,7 @@
     height: 100%;
     width: 100%;
     box-shadow: none;
-    border: $border-width solid $gray-400;
+    border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
     @extend .p-4;
 
@@ -112,13 +112,13 @@
     }
 
     +div {
-      border: $border-width solid $gray-400 !important;
+      border: $border-width solid var(--bs-gray-400) !important;
       @extend .p-4;
       width: 100%;
 
       [class$="control"] {
         height: 56px;
-        border-color: $gray-400;
+        border-color: var(--bs-gray-400);
         margin-bottom: 0;
         cursor: text;
         box-shadow: none;
@@ -128,12 +128,12 @@
         }
 
         svg {
-          color: $gray;
+          color: var(--bs-gray);
         }
       }
 
       [class$="placeholder"] {
-        color: $gray;
+        color: var(--bs-gray);
         font-size: $font-size-sm;
       }
 
@@ -152,7 +152,7 @@
         background-color: transparent;
 
         &:hover {
-          background-color: $gray-200;
+          background-color: var(--bs-gray-200);
         }
 
         &::before {
@@ -173,13 +173,13 @@
         background-color: transparent;
 
         &:hover {
-          background-color: $gray-200;
+          background-color: var(--bs-gray-200);
         }
 
         &::before {
           content: "\f14a";
           font-family: FontAwesomeSolid;
-          color: $turquoise-secondary;
+          color: var(--bs-secondary);
           font-size: 22px;
           margin-right: 10px;
 
@@ -225,12 +225,12 @@
 
   &.error {
     button {
-      border: $border-width solid $danger;
+      border: $border-width solid var(--bs-danger);
 
       &::after {
         content: "\f06a";
         font-family: FontAwesomeSolid;
-        color: $danger;
+        color: var(--bs-danger);
         position: absolute;
         right: 41px;
         top: 19px;
@@ -267,60 +267,111 @@
 
 .search-container{
   .search-disabled{
-    @extend .pt-2
+    html[dir="ltr"] & {
+      padding-right: 180px;
+      padding-left: 10px;
+    }
+    html[dir="rtl"] & {
+      padding-left: 180px;
+      padding-right: 10px;
+    }
   }
 }
 
 .dashedBorder {
-  border: $border-width-md dashed $primary;
+  border: $border-width-md dashed var(--bs-primary);
 }
 
 .uploadImageWrapper {
   .error.dashedBorder{
-    border-color: $danger-dark;
+    border-color: var(--bs-danger-dark);
   }
 
   .image-item {
-    border: $border-width solid $gray-400;
+    border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
     position: absolute;
   }
 
   .imageView {
-    width: 70px;
-    height: 46px;
-    @extend .m-2;
+    width: 30px;
+    height: 25px;
+    margin: 10px;
+  }
+}
+.search-box-index {
+  .workStreamView {
+    .imageView {
+      width: 50px;
+      height: 45px;
+      
+    }
+    .image-item {
+      top: 140px;
+      @include media-breakpoint-up(md) {
+        top: 140px;
+        html[dir="ltr"] & {
+          left: 10px;
+        }
+        html[dir="rtl"] & {
+          right: 10px;
+        }
+      }
+      @include media-breakpoint-up(lg) {
+        top: 145px;
+        
+      }
+      @include media-breakpoint-up(xl) {
+        top: 45px;
+        html[dir="ltr"] & {
+          left: 210px;
+        }
+        html[dir="rtl"] & {
+          right:  210px;
+        }
+      }
+    }
   }
 }
 
 .workStreamView {
-  .image-item {
-    top: 40px;
-    left: 217px;
-
-    html[dir="rtl"] & {
-      left: auto;
-      right: 217px;
+  &.imgUploaded {
+    .image-item {
+      @extend .d-block;
     }
-
-    @include media-breakpoint-down(xl) {
-      left: 16px;
-      top: 138px;
-
+  }
+  .image-item {
+    @extend .d-none;
+    top: 91px;
+    html[dir="ltr"] & {
+      left: 17px;
+    }
+    html[dir="rtl"] & {
+      right: 17px;
+    }
+    @include media-breakpoint-up(sm) {
+      top: 92px;
+      html[dir="ltr"] & {
+        left: 16px;
+      }
       html[dir="rtl"] & {
-        left: auto;
         right: 16px;
       }
     }
-
-    @include media-breakpoint-down(sm) {
-      left: 2px;
-      top: 241px;
-
-      html[dir="rtl"] & {
-        left: auto;
-        right: 2px;
+    @include media-breakpoint-up(md) {
+      top: 93px;
+    }
+    @include media-breakpoint-up(lg) {
+      top: 49px;
+      html[dir="ltr"] & {
+        left: 420px;
       }
+      html[dir="rtl"] & {
+        right:  372px;
+      }
+    }
+    @include media-breakpoint-up(xl) {
+      top: 37px;
     }
   }
 

@@ -3,5 +3,9 @@
   "search": "/search",
   "dashboard": "/dashboard",
   "admin": "/admin",
-  "savedQueries": "/savedQueries"
+  "savedQueries": "/savedQueries",
+  "viewHistory": "/viewHistory",
+  "bookmarks": "/bookmarks",
+  "document": "/document",
+  "myActivity": "/myActivity"
 }

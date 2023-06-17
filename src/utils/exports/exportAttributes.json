@@ -1,0 +1,42 @@
+{
+  "patent": {
+    "Title": "BibliographicData.ApplicationTitle",
+    "Filling Number": "BibliographicData.FilingNumber",
+    "Filling Date": "BibliographicData.FilingDate",
+    "Publication Number": "BibliographicData.PublicationNumber",
+    "Publication Date": "BibliographicData.PublicationDate",
+    "IPC Classifications": "IPCClassification.IPC",
+    "Abstract": "BibliographicData.ApplicationAbstract"
+  },
+  "trademark": {
+    "Brand Name En": "BibliographicData.BrandNameEn",
+    "Brand Name Ar": "BibliographicData.BrandNameAr",
+    "Filling Number": "BibliographicData.FilingNumber",
+    "Filling Date": "BibliographicData.FilingDate",
+    "Publication Number": "BibliographicData.PublicationNumber",
+    "Publication Date": "BibliographicData.PublicationDate",
+    "NICE Classification": "GoodsAndServices.*.NICEClassification"
+  },
+  "Industrial Design": {
+    "Design Title EN": "BibliographicData.DesignTitleEN",
+    "Brand Name Ar": "BibliographicData.DesignTitleAR",
+    "Filling Number": "BibliographicData.FilingNumber",
+    "Filling Date": "BibliographicData.FilingDate",
+    "Publication Number": "BibliographicData.PublicationNumber",
+    "Publication Date": "BibliographicData.PublicationDate",
+    "Locarno Classification": "BibliographicData.LocarnoClassification"
+  },
+  "Decision": {
+    "Decision Number": "BibliographicData.DecisionNumber",
+    "Decision Title": "BibliographicData.DecisionTitle",
+    "Decision Date": "BibliographicData.DecisionDate",
+    "Decision Brief": "BibliographicData.DecisionBrief"
+  },
+  "copyright": {
+    "Copyrights Title": "BibliographicData.Title",
+    "Filing Number": "BibliographicData.FilingNumber",
+    "Filing Date": "BibliographicData.FilingDate",
+    "Grant Date": "BibliographicData.GrantDate",
+    "Description": "BibliographicData.Description"
+  }
+}

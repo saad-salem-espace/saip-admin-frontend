@@ -10,7 +10,7 @@ describe('<SearchResultCard />', () => {
   const query = 'Manufcature';
 
   it('renders detailed component correctly', async () => {
-    const selectedView = { label: t('trademarks.detailed'), value: 'detailed' };
+    const selectedView = { label: t('detailed'), value: 'detailed' };
 
     const { getByText } = render(
       <Formik>
@@ -32,9 +32,9 @@ describe('<SearchResultCard />', () => {
       expect(getByText(
         trademarkResponse.BibliographicData.FilingDate,
       )).toBeInTheDocument();
-      expect(getByText(t('trademarks.published', { value: trademarkResponse.BibliographicData.PublicationNumber }), { exact: false })).toBeInTheDocument();
+      expect(getByText(t('ipr.published', { value: trademarkResponse.BibliographicData.PublicationNumber }), { exact: false })).toBeInTheDocument();
       expect(getByText(trademarkResponse.BibliographicData.PublicationDate)).toBeInTheDocument();
-      expect(getByText(t('trademarks.registered', { value: trademarkResponse.BibliographicData.RegistrationNumber }), { exact: false })).toBeInTheDocument();
+      expect(getByText(t('ipr.registered', { value: trademarkResponse.BibliographicData.RegistrationNumber }), { exact: false })).toBeInTheDocument();
       expect(getByText(
         trademarkResponse.BibliographicData.RegistrationDate,
       )).toBeInTheDocument();

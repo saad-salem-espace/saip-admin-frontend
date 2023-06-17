@@ -4,8 +4,8 @@
 
 :root {
   --toastify-toast-width: 500px;
-  --toastify-color-success: #B9D000;
-  --toastify-color-error: #B50644;
+  --toastify-color-success: var(--bs-secondary-rio-grande);
+  --toastify-color-error: var(--bs-danger-dark);
 }
 
 .Toastify__toast-icon {
@@ -14,7 +14,7 @@
 }
 
 .Toastify__toast-body {
-  @extend.p-4
+  @extend.p-4;
 }
 
 .Toastify__close-button {
@@ -23,7 +23,7 @@
   svg {
     width: 16px;
     height: 16px;
-    color: $gray;
+    color: var(--bs-gray);
     margin: 0 6px;
   }
 }
@@ -32,7 +32,7 @@
   font-size: $font-size-sm;
   font-family: $font-medium ;
   margin-bottom: 0;
-  color: $dark
+  color: var(--bs-dark);
 }
 
 .toastText {
@@ -42,7 +42,7 @@
 }
 
 .Toastify__toast--error {
-  border-left: 3px solid $danger-dark;
+  border-left: 3px solid var(--bs-danger-dark);
 
   .Toastify__toast-icon {
     svg {
@@ -52,18 +52,18 @@
     &::after {
       content: "\f057";
       font-family: FontAwesomeSolid;
-      color: $danger-dark;
+      color: var(--bs-danger-dark);
       font-size: 30px;
     }
   }
 }
 
 .Toastify__toast--success {
-  border-left: 3px solid $secondary-rio-grande;
+  border-left: 3px solid var(--bs-secondary-rio-grande);
 }
 
 .Toastify__toast--warning {
-  border-left: 3px solid $secondary-tangerine;
+  border-left: 3px solid var(--bs-secondary-tangerine);
 
   .Toastify__toast-icon {
     svg {
@@ -73,8 +73,12 @@
     &::after {
       content: "\f06a";
       font-family: FontAwesomeSolid;
-      color: $secondary-tangerine;
+      color: var(--bs-secondary-tangerine);
       font-size: 30px;
     }
   }
+}
+
+.Toastify__toast-container {
+  z-index: 10000 !important;
 }

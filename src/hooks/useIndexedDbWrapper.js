@@ -1,5 +1,4 @@
 import { useIndexedDB } from 'react-indexed-db';
-import { useCallback } from 'react';
 import db from 'db';
 
 /**
@@ -22,14 +21,24 @@ const useIndexedDbWrapper = (tableName) => {
     }
   };
 
-  const getTimeStamp = useCallback(() => {
+  const deleteInstance = ({
+    indexValue, onSuccess,
+  }) => {
+    db[tableName].delete(indexValue).then(
+      onSuccess,
+    );
+  };
+
+  const countAllByIndexName = ({ indexName, indexValue }) => (
+    db[tableName].where(indexName).equals(indexValue.toString()).count()
+  );
+
+  const getTimeStamp = () => {
     const currentDatetimeUTC = new Date().toISOString();
     return { createdAt: currentDatetimeUTC, updatedAt: currentDatetimeUTC };
-  }, []);
+  };
 
-  // eslint-disable-next-line function-paren-newline
-  const addInstanceToDb = useCallback(
-    /**
+  /**
    * Saving data to indexedDB
    *
    * @param instance {{
@@ -41,21 +50,19 @@ const useIndexedDbWrapper = (tableName) => {
    * }}
    * @return {boolean}
    */
-    (instance) => {
-      const data = { ...instance.data };
-      if (Object.keys(data).length > 0) {
-        if (instance.setTimeStamp ?? true) {
-          Object.assign(data, getTimeStamp());
-        }
-        add(data, instance.key).then(instance.onSuccess).catch(instance.onError);
-        return true;
+  const addInstanceToDb = (instance) => {
+    const data = { ...instance.data };
+    if (Object.keys(data).length > 0) {
+      if (instance.setTimeStamp ?? true) {
+        Object.assign(data, getTimeStamp());
       }
-      return false;
-    }, []);
+      add(data, instance.key).then(instance.onSuccess).catch(instance.onError);
+      return true;
+    }
+    return false;
+  };
 
-  // eslint-disable-next-line function-paren-newline
-  const getInstanceByIndex = useCallback(
-    /**
+  /**
    * Get instance by index
    *
    * @param instance {{
@@ -65,17 +72,23 @@ const useIndexedDbWrapper = (tableName) => {
    *   onError: function,
    * }}
    */
-    (instance) => {
-      getByIndex(instance.indexName, instance.indexValue)
-        .then(instance.onSuccess).catch(instance.onError);
-    }, []);
+  const getInstanceByIndex = (instance) => {
+    getByIndex(instance.indexName, instance.indexValue)
+      .then(instance.onSuccess).catch(instance.onError);
+  };
 
-  const indexByIndexName = useCallback(({
+  const getInstanceByMultiIndex = (instance) => {
+    db[tableName].where(instance.indecies).first()
+      .then(instance.onSuccess)
+      .catch(instance.onError);
+  };
+
+  const indexByIndexName = ({
     onSuccess, onError, sorted = 'NONE', sortedIndexName, indexName, indexValue, limit = 10, page = 1,
   }) => {
     const offset = (page - 1) * limit;
     const stringIndex = indexValue.toString();
-    const pTotal = db[tableName].where(indexName).equals(stringIndex).count();
+    const pTotal = countAllByIndexName({ indexName, indexValue });
     const pData = orderedBy(db[tableName], sortedIndexName, sorted)
       .filter((data) => data[indexName] === stringIndex)
       .offset(offset)
@@ -87,9 +100,15 @@ const useIndexedDbWrapper = (tableName) => {
         onSuccess({ data, pagination: { per_page: limit, total } });
       })
       .catch((errors) => { onError(errors); });
-  }, []);
-
-  return { addInstanceToDb, getInstanceByIndex, indexByIndexName };
+  };
+  return {
+    addInstanceToDb,
+    getInstanceByIndex,
+    indexByIndexName,
+    countAllByIndexName,
+    deleteInstance,
+    getInstanceByMultiIndex,
+  };
 };
 
 export default useIndexedDbWrapper;

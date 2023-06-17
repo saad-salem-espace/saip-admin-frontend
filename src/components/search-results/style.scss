@@ -1,4 +1,5 @@
 @import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/mixin";
 @import "~bootstrap/scss/mixins";
 
 .select {
@@ -14,16 +15,15 @@
     height: 60px;
   }
 }
-
-.search-result {
-  html[dir="rtl"] & {
-    @extend .pe-4;
+.search-result-wrapper {
+  @include media-breakpoint-up(xl) {
+    overflow-y: hidden;
   }
 }
 
 .searchResultsView {
   position: absolute;
-  background-color: $white;
+  background-color: var(--bs-white);
   z-index: 10;
   top: 91px;
   right: 13px;
@@ -109,7 +109,7 @@
   .workStreamResults {
     display: flex;
     flex-flow: column;
-    min-height: 100vh;
+    min-height: calc(100vh - 90px);
 
     .header {
       flex: 0 1 auto;
@@ -146,9 +146,30 @@
         }
 
         >div:nth-child(2) {
-          background-color: $gray-200;
+          background-color: var(--bs-gray-200);
         }
       }
     }
   }
+  .imgUploaded {
+    &.searchInputWrapper{
+      @include media-breakpoint-up(md) {
+        input {
+  
+          html[dir="ltr"] & {
+            padding-left: 100px !important;
+            padding-right: 180px !important;
+          }
+          html[dir="rtl"] & {
+            padding-right: 90px !important;
+            padding-left: 180px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.star-button::before {
+  color: var(--bs-primary-dark) !important;
 }

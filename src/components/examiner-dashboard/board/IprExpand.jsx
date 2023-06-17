@@ -20,19 +20,24 @@ function IprExpand({
   isCardInprogress,
   selectedCardId,
   setNotesUpdated,
+  focusMode,
+  updateIprModal,
+  fromFocusArea,
+  hideFocus,
 }) {
   const { t } = useTranslation('dashboard');
+
   return (
-    <div className={`${className} dashboard-ipr-container expanded position-absolute end-0 top-0 bottom-0 bg-white me-0 h-100 w-100`}>
-      <div className="top-info-bar row d-lg-flex border-bottom p-2 pt-0">
+    <div className={`${className} ${focusMode ? '' : 'position-absolute'} dashboard-ipr-container expanded  end-0 top-0 bottom-0 me-0 h-100 w-100`}>
+      <div className="top-info-bar row d-lg-flex border-bottom p-0 m-1">
         <Col lg={6} className="filing-date d-lg-flex justify-content-between p-4 order-2 order-lg-1">
           <div className="d-lg-flex align-items-center text-gray-700">
-            <p className="fs-12 mb-2 mb-lg-0 me-3">
+            <p className="fs-xs mb-2 mb-lg-0 me-3">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:queue')}
               {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
             </p>
-            <p className="fs-12 mb-2  mb-lg-0">
+            <p className="fs-xs mb-2  mb-lg-0">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:priority')}
               {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}
@@ -52,16 +57,20 @@ function IprExpand({
             />
           </div>
         </Col>
-        <Col lg={6} className="px-5 d-flex justify-content-end order-1 order-lg-2">
-          <IprControlAction
-            collapseIPR={collapseIPR}
-            isIPRExpanded={isIPRExpanded}
-            onClose={onClose}
-          />
-        </Col>
+        {
+          !focusMode && (
+            <Col lg={6} className="px-5 d-flex justify-content-end order-1 order-lg-2">
+              <IprControlAction
+                collapseIPR={collapseIPR}
+                isIPRExpanded={isIPRExpanded}
+                onClose={onClose}
+              />
+            </Col>
+          )
+        }
       </div>
       <div className="d-lg-flex">
-        <Col lg={6} className="border-end">
+        <Col lg={6} className="border-end position-relative">
           <IprDetails
             dashboard
             collapseIPR={collapseIPR}
@@ -73,6 +82,9 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             className="mx-0"
+            examinerView
+            hideFocus={hideFocus}
+            fromFocusArea={fromFocusArea}
           />
         </Col>
         <Col lg={6}>
@@ -82,6 +94,10 @@ function IprExpand({
             isCardInprogress={isCardInprogress}
             selectedCardId={selectedCardId}
             setNotesUpdated={setNotesUpdated}
+            activeWorkstream={activeWorkstream}
+            updateIprModal={updateIprModal}
+            documentId={documentId}
+            fromFocusArea={fromFocusArea}
           />
         </Col>
       </div>
@@ -100,12 +116,20 @@ IprExpand.propTypes = {
   isCardInprogress: PropTypes.bool.isRequired,
   selectedCardId: PropTypes.number.isRequired,
   setNotesUpdated: PropTypes.func,
+  focusMode: PropTypes.bool,
+  updateIprModal: PropTypes.func,
+  fromFocusArea: PropTypes.bool,
+  hideFocus: PropTypes.func,
 };
 
 IprExpand.defaultProps = {
   className: null,
   onClose: () => { },
   setNotesUpdated: () => { },
+  focusMode: false,
+  updateIprModal: () => { },
+  hideFocus: () => { },
+  fromFocusArea: false,
 };
 
 export default IprExpand;

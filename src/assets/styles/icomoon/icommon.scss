@@ -26,19 +26,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   &:before {
-    color: #888;
+    color: var(--bs-gray);
   }
   &.colored {
     &:before {
-      color: #00a49b;
+      color: var(--bs-primary);
     }
   }
 }
-.icon-ic-calendar {
-  &:before {
-    content: "\e909";
-  }
+
+.icon-Industrial:before {
+  content: "\e909";
 }
+
 .icon-layout {
   &:before {
     content: "\e900";
@@ -50,11 +50,7 @@
     content: "\e901";
   }
 }
-.icon-industrial-design{
-  &:before {
-    content: "\e902";
-  }
-}
+
 .icon-copyrights {
   &:before {
     content: "\e903";
@@ -82,9 +78,24 @@
 }
 .icon-filled-star:before {
   content: "\e907";
-  color: #00564c;
+  color: var(--bs-primary-dark);
 }
 .icon-star:before {
   content: "\e90a";
-  color: #00564c;
+}
+
+.icon-focus:before {
+  content: "\e90c";
+}
+
+.icon-Decision:before {
+  content: "\e90d";
+}
+
+.icon-copyright2:before {
+  content: "\e90e";
+}
+
+.icon-copyright:before {
+  content: "\e90f";
 }

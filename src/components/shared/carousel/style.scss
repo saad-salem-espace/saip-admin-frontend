@@ -69,19 +69,19 @@
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   align-items: start;
-  color: $primary-dark;
+  color: var(--bs-primary-dark);
   padding: 8px 12px;
   border-radius: 50%;
   box-shadow: $box-shadow-lg;
   background-image: none;
   padding-top: 5px;
-  background-color: $white;
+  background-color: var(--bs-white);
 }
 
 .carousel-control-next-icon:after {
   content: "\f054";
   font-family: FontAwesome;
-  color: $primary;
+  color: var(--bs-primary);
 }
 
 
@@ -89,7 +89,7 @@
   content: "\f053";
   font-family: FontAwesome;
   margin-left: -3px;
-  color: $primary;
+  color: var(--bs-primary);
 }
 
 .carousel-thumbnails {

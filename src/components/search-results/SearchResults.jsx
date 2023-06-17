@@ -1,47 +1,53 @@
 import {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { Formik, Form } from 'formik';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import { Trans, useTranslation } from 'react-i18next';
+import { Form, Formik } from 'formik';
+import PropTypes from 'prop-types';
 import {
-  createSearchParams, useNavigate, useSearchParams, Link,
-} from 'react-router-dom';
+  Button, Col, Container, Row,
+} from 'react-bootstrap';
+import { Trans, useTranslation } from 'react-i18next';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import AppPopover from 'components/shared/app-popover/AppPopover';
 import * as Yup from 'yup';
 import Select from 'components/shared/form/select/Select';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
-import saveQueryApi from 'apis/save-query/saveQueryApi';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
-import { pascalCase } from 'change-case';
 import 'components/shared/form/form.scss';
-import AppTooltip from 'components/shared/app-tooltip/AppTooltip';
-import Button from 'react-bootstrap/Button';
-import useAxios from 'hooks/useAxios';
 import { useAuth } from 'react-oidc-context';
-import { tableNames } from 'dbConfig';
-import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import SharedSearch from 'components/workstream-search/shared/SharedSearch';
 import emptyState from 'assets/images/search-empty-state.svg';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
+import { BsQuestionCircle } from 'react-icons/bs';
+import SaveQuery from 'components/save-query/SaveQuery';
+import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
+import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
+import { tableNames } from 'dbConfig';
+import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
+import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
 import './style.scss';
+import style from '../shared/form/search/style.module.scss';
 import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import { decodeQuery } from '../../utils/search-query/decoder';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
-import toastify from '../../utils/toastify';
 import validationMessages from '../../utils/validationMessages';
+import IndustrialDesignResultCards from './industrial-design/IndustrialDesignResultCards';
+import DecisionsResultCards from './decisions-result-cards/DecisionsResultCards';
+import ExportSearchResults from './ExportSearchResults';
+import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
+import CopyrightsResultCards from './copyrights-result-cards/CopyrightsResultCards';
 
-function SearchResults() {
+function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
+  const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const currentLang = i18n.language;
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -55,7 +61,7 @@ function SearchResults() {
   const [totalResults, setTotalResults] = useState(0);
   const [results, setResults] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedView, setSelectedView] = useState({ label: t('trademarks.detailed'), value: 'detailed' });
+  const [selectedView, setSelectedView] = useState({ label: t('detailed'), value: 'detailed' });
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
@@ -63,8 +69,13 @@ function SearchResults() {
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
-  const { addInstanceToDb, getInstanceByIndex } = useIndexedDbWrapper(tableNames.savedQuery);
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+
   const auth = useAuth();
+  const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
+  const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
+  const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
+  const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -73,47 +84,31 @@ function SearchResults() {
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
 
-  const saveQueryParams = {
+  const saveQueryParamsForDoc = {
     workStreamId: searchParams.get('workstreamId'),
     query: searchParams.get('q'),
     resultCount: totalResults.toString(),
     enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+    documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber,
+    fav: isQuerySaved,
   };
 
-  const saveQueryConfig = saveQueryApi(saveQueryParams, true);
-
-  const [saveQueryData, executeSaveQuery] = useAxios(
-    saveQueryConfig,
-    { manual: true },
-  );
-
-  const onSavedQuerySuccess = () => {
-    setIsQuerySaved(true);
-    toastify(
-      'success',
-      <div>
-        <p className="toastifyTitle">{t('querySaved')}</p>
-        <p className="toastText">
-          <Trans
-            i18nKey="savedQueryMsg"
-            ns="search"
-          >
-            <Link className="text-primary" to="/savedQueries" />
-          </Trans>
-        </p>
-      </div>,
-    );
-  };
-  const onSavedQueryError = () => {
-    toastify(
-      'error',
-      <div>
-        <p className="toastifyTitle">{t('couldnotSave')}</p>
-        <p className="toastText">
-          {t('failerMsg')}
-        </p>
-      </div>,
-    );
+  const saveQueryParams = auth.isAuthenticated ? {
+    workStreamId: searchParams.get('workstreamId'),
+    query: searchParams.get('q'),
+    resultCount: totalResults.toString(),
+    enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
+    workstreamKey: 'workStreamId',
+    documentId: null,
+    fav: true,
+  } : {
+    workstreamId: searchParams.get('workstreamId'),
+    queryString: searchParams.get('q'),
+    resultCount: totalResults.toString(),
+    synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
+    workstreamKey: 'workstreamId',
+    documentId: null,
+    fav: true,
   };
 
   const sortByOptionsPatent = [
@@ -131,7 +126,7 @@ function SearchResults() {
     },
   ];
 
-  const sortByOptionsTrademark = [
+  const sortByPublicationAndFilingDate = [
     {
       label: t('mostRelevant'),
       value: 'mostRelevant',
@@ -154,9 +149,49 @@ function SearchResults() {
     },
   ];
 
+  const sortByOptionsDecisions = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('decisions.decisionDateAsc'),
+      value: 'decisionDateAsc',
+    },
+    {
+      label: t('decisions.decisionDateDesc'),
+      value: 'decisionDateDesc',
+    },
+  ];
+
+  const sortByOptionsCopyrights = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('copyrights.grantDateAsc'),
+      value: 'grantDateAsc',
+    },
+    {
+      label: t('copyrights.grantDateDesc'),
+      value: 'grantDateDesc',
+    },
+    {
+      label: t('filingDateAsc'),
+      value: 'filingDateAsc',
+    },
+    {
+      label: t('filingDateDesc'),
+      value: 'filingDateDesc',
+    },
+  ];
   const map = new Map();
   map.set(1, sortByOptionsPatent);
-  map.set(2, sortByOptionsTrademark);
+  map.set(2, sortByPublicationAndFilingDate);
+  map.set(3, sortByPublicationAndFilingDate);
+  map.set(4, sortByOptionsDecisions);
+  map.set(5, sortByOptionsCopyrights);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
@@ -171,24 +206,13 @@ function SearchResults() {
   };
 
   useEffect(() => {
-    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
-  }, [currentLang]);
-
-  useEffect(() => {
-    if (saveQueryData.data) {
-      if (saveQueryData.data.status === 200) {
-        onSavedQuerySuccess();
-      } else {
-        onSavedQueryError();
-      }
-    }
-  }, [saveQueryData]);
-
-  useEffect(() => {
-    if (!(auth && auth?.user)) {
-      getInstanceByIndex({
-        indexName: 'queryString',
-        indexValue: searchParams.get('q'),
+    localStorage.setItem('isSearchSubmitted', (isSearchSubmitted + 1).toString());
+    if (!auth.isAuthenticated) {
+      getInstanceByMultiIndex({
+        indecies: {
+          queryString: searchResultParams.query,
+          workstreamId: searchResultParams.workstreamId,
+        },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
       });
@@ -229,6 +253,9 @@ function SearchResults() {
     setSelectedOption(searchIdentifiers?.[0]);
   }, [searchIdentifiers]);
 
+  useEffect(() => {
+    setWorkStreamId(searchParams.get('workstreamId'));
+  }, []);
   // const options = [
   //   {
   //     key: '1',
@@ -239,6 +266,78 @@ function SearchResults() {
   //     value: 'Int. Classification(IPC)',
   //   },
   // ];
+  const saveHistoryParams = {
+    workstreamId: searchParams.get('workstreamId'),
+    queryString: searchParams.get('q'),
+    synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
+    workstreamKey: 'workstreamId',
+    documentId: null,
+    fav: true,
+  };
+  const deleteIndexValue = Number(localStorage.getItem('deleteQueryHistory') || 1);
+
+  const saveHistory = () => {
+    if (!auth.isAuthenticated) {
+      const workstreamId = saveHistoryParams[saveHistoryParams.workstreamKey];
+      saveSearchHistoryIDB.countAllByIndexName(
+        { indexName: saveHistoryParams.workstreamKey, indexValue: workstreamId },
+      ).then((count) => (
+        executeAfterLimitValidation(
+          {
+            data: { workstreamId: activeWorkstream, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
+            onSuccess: () => {
+              saveSearchHistoryIDB.addInstanceToDb({
+                data: saveHistoryParams,
+              });
+            },
+            onRichLimit: () => {
+              deleteInstance({
+                indexName: 'id',
+                indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
+                onSuccess: () => {
+                  saveSearchHistoryIDB.addInstanceToDb({
+                    data: saveHistoryParams,
+                    onSuccess: () => {
+                      localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
+                    }
+                    ,
+                  });
+                },
+              });
+            },
+          },
+        )));
+    }
+  };
+
+  saveSearchHistoryIDB.countAllByIndexName(
+    { indexName: saveHistoryParams.workstreamKey, indexValue: searchParams.get('workstreamId') },
+  ).then((count) => {
+    executeAfterLimitValidation(
+      {
+        data: { workstreamId: activeWorkstream, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
+        onRichLimit: (limit) => {
+          if (count > limit) {
+            const differenceCount = count - limit;
+            for (let i = 1; i <= differenceCount; i += 1) {
+              deleteInstance({
+                indexName: 'id',
+                indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
+                // eslint-disable-next-line no-loop-func
+                onSuccess: () => {
+                  localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
+                },
+              });
+            }
+          }
+        },
+      },
+    );
+  });
+
+  useEffect(() => {
+    saveHistory();
+  }, []);
 
   const onSubmit = (values) => {
     setActiveDocument(null);
@@ -255,7 +354,8 @@ function SearchResults() {
         condition: { optionParserName: defaultCondition },
         data: simpleQuery,
       }, 0, true);
-
+      saveHistoryParams.queryString = query;
+      saveHistory();
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
@@ -263,6 +363,8 @@ function SearchResults() {
         })}`,
       });
     } else {
+      saveHistoryParams.queryString = values.searchQuery;
+      saveHistory();
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
@@ -307,7 +409,7 @@ function SearchResults() {
     }]);
   };
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : pascalCase(workstream.workstreamName);
+    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
   }
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
     label: workstreamName(workstream),
@@ -391,15 +493,15 @@ function SearchResults() {
 
   const viewOptions = [
     {
-      label: t('trademarks.detailed'),
+      label: t('detailed'),
       value: 'detailed',
     },
     {
-      label: t('trademarks.summary'),
+      label: t('summary'),
       value: 'summary',
     },
     {
-      label: t('trademarks.compact'),
+      label: t('compact'),
       value: 'compact',
     },
   ];
@@ -414,29 +516,14 @@ function SearchResults() {
     setSortBy(sortCriteria);
   };
 
-  const saveQuery = () => {
-    if (isQuerySaved) return;
-    if (!(auth && auth?.user)) {
-      addInstanceToDb({
-        data: {
-          workstreamId: searchParams.get('workstreamId'),
-          queryString: searchParams.get('q'),
-          resultCount: totalResults.toString(),
-          synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
-        },
-        onSuccess: onSavedQuerySuccess,
-        onError: onSavedQueryError,
-      });
-    } else {
-      executeSaveQuery();
-    }
-  };
-
   const axiosConfig = advancedSearchApi(searchResultParams);
 
   const searchResult = {
     1: SearchResultCards,
     2: TrademarksSearchResultCards,
+    3: IndustrialDesignResultCards,
+    4: DecisionsResultCards,
+    5: CopyrightsResultCards,
   };
 
   const formSchema = Yup.object({
@@ -445,6 +532,20 @@ function SearchResults() {
         (imageName || data)
       )),
   });
+  useEffect(() => {
+    document.body.classList.add('search-result-wrapper');
+    return () => {
+      document.body.classList.remove('search-result-wrapper');
+    };
+  }, []);
+
+  useEffect(() => {
+    setSortBy(getSortFromUrl(searchParams.get('workstreamId'), searchParams.get('sort')));
+    setSelectedView(viewOptions.find((temp) => temp.value === selectedView.value));
+  }, [currentLang]);
+
+  if (!workstreams?.data) return null;
+
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -472,10 +573,11 @@ function SearchResults() {
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
                       selectedOption={values.selectedWorkstream}
-                      className="workStreams ms-3 mt-1 customSelect"
+                      className="workStreams ms-3 mt-1 customSelect w-px-300"
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);
+                        setWorkStreamId(data?.value);
                       }}
                     />
                   </div>
@@ -487,7 +589,7 @@ function SearchResults() {
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
                     isAdvanced={isAdvancedSearch}
-                    className="search-results-view"
+                    className={`${style.searchResultsView} search-results-view`}
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
@@ -495,20 +597,58 @@ function SearchResults() {
                     resultsView
                   >
                     <div className="d-md-flex mt-4">
-                      <ToggleButton
-                        handleToggleButton={() => {
-                          setIsAdvancedSearch((isAdvanced) => !isAdvanced);
-                          setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
-                        }}
-                        isToggleButtonOn={isAdvancedSearch}
-                        text={t('advancedSearch')}
-                        className="border-md-end pe-4 me-4 mb-md-0 mb-2"
-                      />
-                      <ToggleButton
-                        handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
-                        isToggleButtonOn={isEnabledSynonyms}
-                        text={t('allowSynonyms')}
-                      />
+                      <div className="d-flex align-items-center me-4">
+                        <ToggleButton
+                          handleToggleButton={() => {
+                            setIsAdvancedSearch((isAdvanced) => !isAdvanced);
+                            setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
+                          }}
+                          isToggleButtonOn={isAdvancedSearch}
+                          text={t('advancedSearch')}
+                          className="border-md-end mb-md-0 mb-2"
+                        />
+                        <AppPopover
+                          Title={t('tips:advancedSearchTipTitle')}
+                          id="advancedSearchTip"
+                          btnText={t('common:gotIt')}
+                          variant="app-bg-primary-10"
+                          popoverTrigger={
+                            <Button variant="link" className="btn-view-tip">
+                              <BsQuestionCircle className="app-text-primary" />
+                            </Button>
+                          }
+                        >
+                          <Trans
+                            i18nKey="advancedSearchTipContent"
+                            ns="tips"
+                            components={{ bold: <b />, break: <br /> }}
+                          />
+                        </AppPopover>
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <ToggleButton
+                          handleToggleButton={() => setIsEnabledSynonyms(!isEnabledSynonyms)}
+                          isToggleButtonOn={isEnabledSynonyms}
+                          text={t('allowSynonyms')}
+                        />
+                        <AppPopover
+                          Title={t('tips:allowSynonymsTipTitle')}
+                          id="allowSynonymsTip"
+                          btnText={t('common:gotIt')}
+                          variant="app-bg-primary-10"
+                          popoverTrigger={
+                            <Button variant="link" className="btn-view-tip">
+                              <BsQuestionCircle className="app-text-primary" />
+                            </Button>
+                          }
+                        >
+                          <Trans
+                            i18nKey="allowSynonymsTipContent"
+                            ns="tips"
+                            components={{ bold: <b />, break: <br /> }}
+                          />
+                        </AppPopover>
+                      </div>
                     </div>
                   </SharedSearch>
                 </div>
@@ -530,19 +670,16 @@ function SearchResults() {
             onChangeSearchQuery={setSearchQuery}
           />
         </Col>
-        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
           <div className="d-lg-flex align-items-center">
-            <AppTooltip
-              tooltipTrigger={
-                <Button variant="transparent" className="p-0 me-4 border-0" onClick={saveQuery} data-testid="fav-button" disabled={isLoading}>
-                  {
-                        isQuerySaved && !isLoading
-                          ? <span className="icon-filled-star f-24" data-testid="filled-star" />
-                          : <span className="icon-star f-24" data-testid="empty-star" />
-                      }
-                </Button>
-                  }
-              tooltipContent={t('saveSearchQuery')}
+            <SaveQuery
+              setIsSaved={setIsQuerySaved}
+              isSaved={isQuerySaved}
+              saveQueryParams={saveQueryParams}
+              isReady={!isLoading}
+              limitCode={LIMITS.SAVED_QUERY_LIMIT}
+              showFocusArea={showFocusArea}
+              saveQueryParamsForDoc={saveQueryParamsForDoc}
             />
             <div>
               <SearchNote
@@ -551,14 +688,18 @@ function SearchResults() {
               />
             </div>
           </div>
-          <Formik>
+          <Formik
+            initialValues={{ selectedCards: { }, allSelected: false }}
+            validationSchema={exportSearchResultsValidationSchema}
+          >
             {() => (
-              <Form className="mt-5">
-                <div className="d-md-flex">
-                  {
-                      searchResultParams.workstreamId === '2' && (
+              <Form className="mt-12">
+                {
+                  totalResults !== 0 && (
+                    <div>
+                      <div className="d-md-flex">
                         <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className="ps-2 position-absolute f-12 saip-label select2">{t('trademarks.view')}</span>
+                          <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
                           <Select
                             options={viewOptions}
                             setSelectedOption={onChangeView}
@@ -569,22 +710,36 @@ function SearchResults() {
                             className="mb-md-0 mb-3 select-2"
                           />
                         </div>
-                      )
-                    }
-                  <div className="position-relative mb-8 sortBy">
-                    <span className="ps-2 position-absolute f-12 saip-label select2">{t('sortBy')}</span>
-                    <Select
-                      options={getSortOptions(searchResultParams.workstreamId)}
-                      setSelectedOption={onChangeSortBy}
-                      selectedOption={sortBy}
-                      defaultValue={sortBy}
-                      id="sortBy"
-                      fieldName="sortBy"
-                      className="select-2"
-                    />
-                  </div>
-                </div>
+                        <div className="position-relative mb-8 sortBy">
+                          <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                          <Select
+                            options={getSortOptions(searchResultParams.workstreamId)}
+                            setSelectedOption={onChangeSortBy}
+                            selectedOption={sortBy}
+                            defaultValue={sortBy}
+                            id="sortBy"
+                            fieldName="sortBy"
+                            className="select-2"
+                          />
+                        </div>
+                        <ExportSearchResults
+                          workstreams={workstreams}
+                          workstreamId={searchResultParams.workstreamId}
+                          data={results?.data || []}
+                          withCheckbox={false}
+                          setSelectedItemsCount={setSelectedItemsCount}
+                        />
+                      </div>
+                      <div className="d-flex">
+                        <Checkbox labelClassName="d-flex justify-content-start flex-row-reverse ms-1 mb-5 gap-3 font-medium text-gray-700" name="allSelected" fieldFor="allSelected" text={t('selectedItems', { count: selectedItemsCount })} />
+                      </div>
+                    </div>
+                  )
+                }
+
                 <AppPagination
+                  PaginationWrapper="col-10"
+                  className="p-0 paginate-ipr"
                   axiosConfig={axiosConfig}
                   defaultPage={Number(searchParams.get('page') || '1')}
                   setResults={setResults}
@@ -625,6 +780,7 @@ function SearchResults() {
               getNextDocument={getNextDocument}
               getPreviousDocument={getPreviousDocument}
               setActiveDocument={setActiveDocument}
+              fromFocusArea={false}
             />
           </Col>
         )}
@@ -633,4 +789,7 @@ function SearchResults() {
   );
 }
 
+SearchResults.propTypes = {
+  showFocusArea: PropTypes.bool.isRequired,
+};
 export default SearchResults;

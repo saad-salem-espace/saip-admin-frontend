@@ -17,8 +17,8 @@ function IprData({
       <Formik>
         {() => (
           <Form>
-            <div className="position-relative">
-              <span className="ps-2 position-absolute f-12 saip-label select2">{t('viewSection')}</span>
+            <div className="position-relative mt-6">
+              <span className="position-absolute f-12 saip-label select2">{t('viewSection')}</span>
               <Select
                 options={options}
                 setSelectedOption={onChangeSelect}
