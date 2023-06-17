@@ -19,7 +19,7 @@ const ModalAlert = ({
     <div>
       <Modal centered show={showModal} onHide={handleClose} className={`${className} border-radius modal-alert`}>
         <Modal.Header className="border-0 px-4 pt-4 pb-0 btn-close-wrappper align-items-start" closeButton>
-          <BsExclamationTriangle className={`${classIcon} mb-4 fs-32 ms-3`} />
+          <BsExclamationTriangle className={`${classIcon} mb-4 fs-23 ms-3`} />
         </Modal.Header>
         <Modal.Body className="p-0 text-center">
           <h6 className="mb-4">
