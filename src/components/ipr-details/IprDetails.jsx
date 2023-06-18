@@ -64,21 +64,19 @@ function IprDetails({
   fromFocusArea,
   hideFocus,
 }) {
-  const { t } = useTranslation('search', 'dashboard');
+  const { t, i18n } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [validHighlight, setValidHighlight] = useState(false);
   const [highlightTrigger, setHighlightTrigger] = useState(0);
   const [document, setDocument] = useState(null);
   const [searchParams] = useSearchParams();
+  const currentLang = i18n.language;
   const searchResultParams = {
     workstreamId:
       searchParams.get('workstreamId') || activeWorkstream.toString(),
   };
-  const [selectedView, setSelectedView] = useState({
-    label: searchResultParams.workstreamId !== '4' ? t('ipr.bibliographic') : t('decisions.judgementDecision'),
-    value: searchResultParams.workstreamId !== '4' ? 'BibliographicData' : 'JudgementDecision',
-  });
+  const [selectedView, setSelectedView] = useState({ });
   const [reachedLimit, setReachedLimit] = useState(false);
   const [isSubmittingDownloadPdf, setIsSubmittingDownloadPdf] = useState(false);
   const { isAuthenticated } = useAuth();
@@ -109,6 +107,13 @@ function IprDetails({
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
   };
+
+  useEffect(() => {
+    setSelectedView({
+      label: searchResultParams.workstreamId !== '4' ? t('ipr.bibliographic') : t('decisions.judgementDecision'),
+      value: searchResultParams.workstreamId !== '4' ? 'BibliographicData' : 'JudgementDecision',
+    });
+  }, [currentLang]);
 
   useEffect(() => {
     setDocument(null);
