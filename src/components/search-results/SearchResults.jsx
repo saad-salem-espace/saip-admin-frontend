@@ -44,6 +44,7 @@ import ExportSearchResults from './ExportSearchResults';
 import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
 import CopyrightsResultCards from './copyrights-result-cards/CopyrightsResultCards';
 import PlantVarietyResultCards from './plant-variety-result-cards/PlantVarietyResultCards';
+import IcLayoutsResultCards from './ic-layouts-result-cards/IcLayoutsResultCards';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
@@ -205,6 +206,7 @@ function SearchResults({ showFocusArea }) {
   map.set(4, sortByOptionsDecisions);
   map.set(5, sortByOptionsCopyrights);
   map.set(6, sortByFilingDate);
+  map.set(7, sortByPublicationAndFilingDate);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
@@ -538,6 +540,7 @@ function SearchResults({ showFocusArea }) {
     4: DecisionsResultCards,
     5: CopyrightsResultCards,
     6: PlantVarietyResultCards,
+    7: IcLayoutsResultCards,
   };
 
   const formSchema = Yup.object({
