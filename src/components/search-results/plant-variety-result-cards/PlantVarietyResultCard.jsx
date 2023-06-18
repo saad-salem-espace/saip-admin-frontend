@@ -54,7 +54,16 @@ function PlantVarietyResultCard({
             }
           </div>
           <p className="mb-2 text-black md-text">
-            {BibliographicData?.FilingNumber}
+            <Highlighter
+              highlightTag="span"
+              highlightClassName="font-medium"
+              textToHighlight={trimStringRelativeToSubtext(
+                BibliographicData?.FilingNumber,
+                query,
+              )}
+              searchWords={highlightWords}
+              autoEscape
+            />
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
             {t('priority', { value: BibliographicData?.PriorityDate })}
@@ -78,9 +87,16 @@ function PlantVarietyResultCard({
               )
             }
             <p className="text-gray sm-text">
-              {
-                BibliographicData?.Applicants.join(' , ')
-              }
+              <Highlighter
+                highlightTag="span"
+                highlightClassName="font-medium"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData?.Applicants.join(' , '),
+                  query,
+                )}
+                searchWords={highlightWords}
+                autoEscape
+              />
             </p>
           </div>
         </div>
