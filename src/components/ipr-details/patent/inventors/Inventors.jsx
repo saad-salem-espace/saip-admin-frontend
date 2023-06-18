@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 const Inventors = ({ children }) => {
   const { t } = useTranslation('search');
-  console.log('s');
   return (
     <div className="table-responsive shadow">
       <Table className="appTable">
