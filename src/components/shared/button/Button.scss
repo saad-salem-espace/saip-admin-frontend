@@ -125,10 +125,22 @@
       }
     }
   }
-
+  
   &.disabled, :disabled {
+    opacity: 1 !important;
     background-color: var(--bs-gray-500) !important;
     border: none;
+  }
+  &.btn-light {
+    background-color: var(--bs-white) !important;
+    color: var(--bs-gray) !important;
+    border-color: transparent;
+    &:hover, &.active, &:focus{
+      background-color: var(--bs-primary) !important;
+      *, & {
+        color: var(--bs-white) !important;
+      }
+    }
   }
 }
 .dropdown-menu.show {

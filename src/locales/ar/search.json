@@ -115,6 +115,9 @@
     "filingDate": "تاريخ الإيداع",
     "registered": "مسجل {{value}}",
     "published": "منشور {{value}}",
+    "authors": "المؤلفون",
+    "earliestPriorityDate": "تاريخ الأولوية",
+    "earliestPriorityNumber": "رقم الأولوية",
     "legal": {
       "statusCode": "كود الحالة",
       "status": "الحالة",
@@ -206,7 +209,7 @@
       "trademark": "تصدير العلامات التجارية",
       "copyrights": "تصدير حق المؤلف",
       "Industrial Design": "تصدير النماذج الصناعية",
-      "plantVarieties": "تصدير الأصناف النباتية",
+      "Plant Varieties": "تصدير الأصناف النباتية",
       "integratedCircuits": "تصدير الدوائر المتكاملة",
       "Decision": "تصدير القرارات"
     }
@@ -229,5 +232,19 @@
     "decisionDateDesc": "تاريخ القرار تنازليًا",
     "decisionDateAsc": "تاريخ القرار تصاعديًا",
     "facts": "الحقائق"
+  },
+  "copyrights": {
+    "grantDateAsc": "تاريخ المنح تصاعديًا",
+    "grantDateDesc": "تاريخ المنح تنازليًا",
+    "granted": "منحت {{value}}",
+    "copyrightsData": "بيانات حقوق النشر",
+    "grantDate": "تاريخ المنح",
+    "claimants": "المدعون"
+  },
+  "plantVariety": {
+    "title": "العنوان",
+    "classification": "الوصف",
+    "status": "الحال'",
+    "ipOffice": "مكتب IP"
   }
 }

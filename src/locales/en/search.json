@@ -115,6 +115,9 @@
     "filingDate": "Filing Date",
     "registered": "Registered {{value}}",
     "published": "Published {{value}}",
+    "authors": "Authors",
+    "earliestPriorityDate": "Earliest Priority Date",
+    "earliestPriorityNumber": "Earliest Priority Number",
     "legal": {
       "statusCode": "Status Code",
       "status": "Status",
@@ -206,7 +209,7 @@
       "trademark": "Export Trademarks",
       "copyrights": "Export Copyrights",
       "Industrial Design": "Export Industrial Designs",
-      "plantVarieties": "Export Plant Varieties",
+      "Plant Varieties": "Export Plant Varieties",
       "integratedCircuits": "Export Integrated Circuits",
       "Decision": "Export Decisions"
     }
@@ -229,5 +232,19 @@
     "decisionDateDesc": "Decision date desc",
     "decisionDateAsc": "Decision date asc",
     "facts": "Facts"
+  },
+  "copyrights": {
+    "grantDateAsc": "Grant date asc",
+    "grantDateDesc": "Grant date desc",
+    "granted": "Granted {{value}}",
+    "copyrightsData": "Copyrights Data",
+    "grantDate": "Grant Date",
+    "claimants": "Claimants"
+  },
+  "plantVariety": {
+    "title": "Title",
+    "classification": "Classification",
+    "status": "Status",
+    "ipOffice": "IP Office"
   }
 }
