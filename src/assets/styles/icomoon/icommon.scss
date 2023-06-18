@@ -35,17 +35,13 @@
   }
 }
 
-.icon-Industrial:before {
-  content: "\e909";
-}
-
 .icon-layout {
   &:before {
     content: "\e900";
   }
 }
 
-.icon-plant-varieties {
+.icon-Plant {
   &:before {
     content: "\e901";
   }
@@ -96,6 +92,14 @@
   content: "\e90e";
 }
 
+.icon-Industrial:before {
+  content: "\e902";
+}
+
+.icon-Group:before {
+  content: "\e900";
+}
+
 .icon-copyright:before {
-  content: "\e90f";
+  content: "\e903";
 }
