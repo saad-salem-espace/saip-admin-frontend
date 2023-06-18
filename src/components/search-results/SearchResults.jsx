@@ -30,6 +30,7 @@ import { tableNames } from 'dbConfig';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
+import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
 import './style.scss';
 import style from '../shared/form/search/style.module.scss';
 import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
@@ -70,6 +71,8 @@ function SearchResults({ showFocusArea }) {
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+
   const auth = useAuth();
   const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
@@ -713,36 +716,43 @@ function SearchResults({ showFocusArea }) {
               <Form className="mt-12">
                 {
                   totalResults !== 0 && (
-                    <div className="d-md-flex">
-                      <div className="position-relative mb-6 viewSelect me-md-6">
-                        <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
-                        <Select
-                          options={viewOptions}
-                          setSelectedOption={onChangeView}
-                          selectedOption={selectedView}
-                          defaultValue={selectedView}
-                          id="viewSection"
-                          fieldName="viewSection"
-                          className="mb-md-0 mb-3 select-2"
+                    <div>
+                      <div className="d-md-flex">
+                        <div className="position-relative mb-6 viewSelect me-md-6">
+                          <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
+                          <Select
+                            options={viewOptions}
+                            setSelectedOption={onChangeView}
+                            selectedOption={selectedView}
+                            defaultValue={selectedView}
+                            id="viewSection"
+                            fieldName="viewSection"
+                            className="mb-md-0 mb-3 select-2"
+                          />
+                        </div>
+                        <div className="position-relative mb-8 sortBy">
+                          <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                          <Select
+                            options={getSortOptions(searchResultParams.workstreamId)}
+                            setSelectedOption={onChangeSortBy}
+                            selectedOption={sortBy}
+                            defaultValue={sortBy}
+                            id="sortBy"
+                            fieldName="sortBy"
+                            className="select-2"
+                          />
+                        </div>
+                        <ExportSearchResults
+                          workstreams={workstreams}
+                          workstreamId={searchResultParams.workstreamId}
+                          data={results?.data || []}
+                          withCheckbox={false}
+                          setSelectedItemsCount={setSelectedItemsCount}
                         />
                       </div>
-                      <div className="position-relative mb-8 sortBy">
-                        <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
-                        <Select
-                          options={getSortOptions(searchResultParams.workstreamId)}
-                          setSelectedOption={onChangeSortBy}
-                          selectedOption={sortBy}
-                          defaultValue={sortBy}
-                          id="sortBy"
-                          fieldName="sortBy"
-                          className="select-2"
-                        />
+                      <div className="d-flex">
+                        <Checkbox labelClassName="d-flex justify-content-start flex-row-reverse ms-1 mb-5 gap-3 font-medium text-gray-700" name="allSelected" fieldFor="allSelected" text={t('selectedItems', { count: selectedItemsCount })} />
                       </div>
-                      <ExportSearchResults
-                        workstreams={workstreams}
-                        workstreamId={searchResultParams.workstreamId}
-                        data={results?.data || []}
-                      />
                     </div>
                   )
                 }

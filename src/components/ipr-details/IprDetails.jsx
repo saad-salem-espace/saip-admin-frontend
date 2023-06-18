@@ -68,13 +68,14 @@ function IprDetails({
   fromFocusArea,
   hideFocus,
 }) {
-  const { t } = useTranslation('search', 'dashboard');
+  const { t, i18n } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [validHighlight, setValidHighlight] = useState(false);
   const [highlightTrigger, setHighlightTrigger] = useState(0);
   const [document, setDocument] = useState(null);
   const [searchParams] = useSearchParams();
+  const currentLang = i18n.language;
   const searchResultParams = {
     workstreamId:
       searchParams.get('workstreamId') || activeWorkstream.toString(),
@@ -137,6 +138,10 @@ function IprDetails({
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
   };
+
+  useEffect(() => {
+    getDefaultSelectedViewLabel();
+  }, [currentLang]);
 
   useEffect(() => {
     setDocument(null);
