@@ -55,13 +55,33 @@ function DecisionsResultCard({
             {
               selectedView.value !== 'compact' && (
                 <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark fs-sm">
-                  {BibliographicData.Keywords}
+                  <Highlighter
+                    highlightTag="span"
+                    highlightClassName="font-medium"
+                    textToHighlight={trimStringRelativeToSubtext(
+                      BibliographicData.Keywords,
+                      query,
+                    )}
+                    searchWords={highlightWords}
+                    autoEscape
+                  />
                 </p>
               )
             }
             {
               selectedView.value === 'detailed' && (
-                <p className="fs-sm text-gray">{BibliographicData.DecisionBrief}</p>
+                <p className="fs-sm text-gray">
+                  <Highlighter
+                    highlightTag="span"
+                    highlightClassName="font-medium"
+                    textToHighlight={trimStringRelativeToSubtext(
+                      BibliographicData.DecisionBrief,
+                      query,
+                    )}
+                    searchWords={highlightWords}
+                    autoEscape
+                  />
+                </p>
               )
             }
           </div>
