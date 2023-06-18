@@ -398,7 +398,7 @@ function SearchResults({ showFocusArea }) {
 
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
-    setIsAdvancedSearch(!isAdvancedSearch);
+    // setIsAdvancedSearch(!isAdvancedSearch);
   };
 
   const getIprClassName = (media) => {
@@ -575,7 +575,7 @@ function SearchResults({ showFocusArea }) {
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
-                            setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
+                            // setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
                           }}
                           isToggleButtonOn={isAdvancedSearch}
                           text={t('advancedSearch')}
@@ -642,6 +642,7 @@ function SearchResults({ showFocusArea }) {
             workstreamId={activeWorkstream}
             firstIdentifierStr={searchResultParams.identifierStrId}
             onChangeSearchQuery={setSearchQuery}
+            isAdvancedSearch={isAdvancedSearch}
           />
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>

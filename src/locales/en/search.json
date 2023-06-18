@@ -23,7 +23,10 @@
   "images": "Images",
   "advancedSearch": "Advanced Search",
   "searchQuery": "Search query",
-  "filters": "Filters",
+  "filters": {
+    "title" :  "Filters",
+    "countries" :  "Countries"
+  },
   "addSearchField": "Add Search Field",
   "clear": "Clear",
   "apply": "Apply",
