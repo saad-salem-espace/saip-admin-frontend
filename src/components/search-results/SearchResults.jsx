@@ -589,7 +589,7 @@ function SearchResults({ showFocusArea }) {
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
-                    // setIsImgUploaded={setIsImgUploaded}
+                    setIsImgUploaded={() => {}}
                     resultsView
                   >
                     <div className="d-md-flex mt-4">
