@@ -24,10 +24,13 @@ import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
+import useAxios from 'hooks/useAxios';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
+import getFiltersApi from 'apis/filters/getFiltersApi';
+import getAggrFiltersApi from 'apis/filters/getAggrFiltersApi';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
@@ -69,6 +72,8 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+  const [filters, setFilters] = useState(null);
+  const [analytics, setAnalytics] = useState(null);
 
   const auth = useAuth();
   const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
@@ -82,6 +87,26 @@ function SearchResults({ showFocusArea }) {
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
+
+  const getFilterParams = {
+    workstreamId: searchParams.get('workstreamId'),
+  };
+  const getFilterConfig = getFiltersApi(getFilterParams, true);
+  const [filtersData, executeFilters] = useAxios(
+    getFilterConfig,
+    { manual: true },
+  );
+
+  const getAggregationParams = {
+    workstreamId: searchParams.get('workstreamId'),
+    q: searchParams.get('q'),
+    strId: 'ipc',
+  };
+  const getAggregationConfig = getAggrFiltersApi(getAggregationParams, true);
+  const [aggregationData, executeAggregation] = useAxios(
+    getAggregationConfig,
+    { manual: true },
+  );
 
   const saveQueryParamsForDoc = {
     workStreamId: searchParams.get('workstreamId'),
@@ -194,7 +219,29 @@ function SearchResults({ showFocusArea }) {
     } else {
       setIsQuerySaved(results?.isFavourite);
     }
+
+    executeAggregation();
   }, [results]);
+
+  useEffect(() => {
+    executeFilters();
+  }, [searchParams.get('workstreamId')]);
+
+  useEffect(() => {
+    if (filtersData.data) {
+      if (filtersData.data.code === 200 && !(filtersData.loading)) {
+        setFilters(filtersData.data.data);
+      }
+    }
+  }, [filtersData]);
+
+  useEffect(() => {
+    if (aggregationData.data) {
+      if (aggregationData.data.code === 200 && !(aggregationData.loading)) {
+        setAnalytics(aggregationData.data.data);
+      }
+    }
+  }, [aggregationData]);
 
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
@@ -642,6 +689,9 @@ function SearchResults({ showFocusArea }) {
             workstreamId={activeWorkstream}
             firstIdentifierStr={searchResultParams.identifierStrId}
             onChangeSearchQuery={setSearchQuery}
+            analytics={analytics}
+            totalResults={totalResults}
+            filters={filters}
           />
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
