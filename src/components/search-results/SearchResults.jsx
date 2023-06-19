@@ -69,7 +69,8 @@ function SearchResults({ showFocusArea }) {
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
-  const [isImgUploaded, setIsImgUploaded] = useState(false);
+  // const [isImgUploaded, setIsImgUploaded] = useState(false);
+  const isImgUploaded = false;
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
@@ -588,7 +589,7 @@ function SearchResults({ showFocusArea }) {
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
-                    setIsImgUploaded={setIsImgUploaded}
+                    // setIsImgUploaded={setIsImgUploaded}
                     resultsView
                   >
                     <div className="d-md-flex mt-4">
