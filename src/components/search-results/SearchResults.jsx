@@ -1,5 +1,5 @@
 import {
-  useContext, useEffect, useRef, useState,
+  useContext, useEffect, useRef, useState, useMemo,
 } from 'react';
 import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
@@ -87,12 +87,12 @@ function SearchResults({ showFocusArea }) {
 
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
 
-  const searchResultParams = {
+  const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
-  };
+  }), [searchParams, searchIdentifiers]);
 
   const saveQueryParamsForDoc = {
     workStreamId: searchParams.get('workstreamId'),
