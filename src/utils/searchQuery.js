@@ -1,25 +1,112 @@
 import { DateObject } from 'react-multi-date-picker';
 import { search } from './arrays';
-import { isMultipleValue, parseSingleQuery } from './search-query/encoder';
+import { isMultipleValue } from './search-query/encoder';
 import { insert } from './strings';
 
-const parseQuery = (fields, imageName, isQuery, currentLang = 'en') => {
-  let finalQuery = '';
+const parseQuery = (fields, imageName, isQuery) => {
+  const queryObjsArr = [];
 
-  fields.forEach((value, index) => {
-    if (!finalQuery) {
-      finalQuery += parseSingleQuery({ ...value, operator: '' }, index, isQuery, currentLang);
-    } else {
-      finalQuery += parseSingleQuery(value, index, isQuery, currentLang);
-    }
+  fields.forEach((value) => {
+    queryObjsArr.push({
+      identifier: value.identifier.identiferStrId,
+      condition: value.condition.optionParserName,
+      data: value.data,
+      operator: value.operator,
+    });
   });
 
   if (!isQuery && imageName) {
-    if (finalQuery) finalQuery += ` OR image: ${imageName}`;
-    else finalQuery += `image: ${imageName}`;
+    queryObjsArr.push({
+      identifier: 'image',
+      condition: ': ',
+      data: imageName,
+      operator: 'OR',
+    });
   }
+  return queryObjsArr;
+};
 
-  return finalQuery.trim();
+const reformatArrDecoder = (queryObjsArr, searchIdentifiersData) => {
+  const values = [];
+  queryObjsArr.forEach((qObj) => {
+    if (qObj.identifier !== 'image') {
+      const selectedIdentifier = searchIdentifiersData.find(
+        (i) => i.identiferStrId === qObj.identifier,
+      );
+      values.push({
+        identifier: selectedIdentifier,
+        condition: selectedIdentifier.identifierOptions.find(
+          (i) => i.optionParserName === qObj.condition,
+        ),
+        data: qObj.data,
+        operator: qObj.operator,
+      });
+    }
+  });
+  return values;
+};
+
+const convertQueryStrToArr = (qStr, selectedIdentifiers) => {
+  let i = 0;
+  let qObjsIdx = 0;
+  let qObjsPrevIdx = 0;
+  let increment = 1;
+  let qStartIdx = 2;
+  let qLastIdx = -1;
+  const qObjs = [];
+
+  if (qStr) {
+    const qStrArr = qStr.match(/("[^."]* ")|(\S*)/g).filter((str) => str !== '').filter((str) => str !== '' && str !== '"');
+    const strIds = [];
+    selectedIdentifiers?.data?.map((idenifier) => {
+      strIds.push(idenifier.identiferStrId);
+      return strIds;
+    });
+    while (i < qStrArr.length) {
+      if (strIds?.includes(qStrArr[i]) || i === 0) {
+        qObjs[qObjsIdx] = {
+          identifier: qStrArr[i],
+          condition: qStrArr[i + 1],
+        };
+        if (i === 0) {
+          qObjs[qObjsIdx].operator = '';
+        } else {
+          qLastIdx = i - 2;
+          qObjs[qObjsIdx].operator = qStrArr[i - 1];
+        }
+        qObjsIdx += 1;
+
+        increment = 2;
+      }
+
+      if (i === qStrArr.length - 1) {
+        qLastIdx = qStrArr.length - 1;
+      }
+      if (qLastIdx >= qStartIdx) {
+        qObjs[qObjsPrevIdx].data = qStrArr.slice(qStartIdx, qLastIdx + 1).join(' ');
+        const qObjsLength = qObjs[qObjsPrevIdx].data.length;
+        if (qObjs[qObjsPrevIdx].data.charAt(0) === '"'
+           && qObjs[qObjsPrevIdx].data.charAt(qObjsLength - 1) === '"') {
+          qObjs[qObjsPrevIdx].data = qObjs[qObjsPrevIdx].data.substr(1, qObjsLength - 2);
+        }
+        qObjsPrevIdx += 1;
+        qStartIdx = i + 2;
+      }
+      i += increment;
+      increment = 1;
+    }
+  }
+  return qObjs;
+};
+const convertQueryArrToStr = (qObjsArr) => {
+  let qStr = '';
+  const newIdentifiers = [];
+  qObjsArr?.forEach((obj) => {
+    newIdentifiers.push(obj.identifier);
+    qStr = `${qStr} ${obj.operator} ${obj.identifier} ${obj.condition} "${obj.data}"`;
+  });
+  // setIdentifiers(newIdentifiers);
+  return qStr.trim();
 };
 
 const reformatDecoder = (identifiers, queryResult) => {
@@ -79,6 +166,13 @@ const teldaRegex = /^[^*?!~]+?~?\d*$/;
 const noTeldaRegex = /^[^~]+$/;
 
 export {
-  parseQuery, reformatDecoder, flattenCriteria, teldaRegex, noTeldaRegex,
+  parseQuery,
+  reformatDecoder,
+  flattenCriteria,
+  teldaRegex,
+  noTeldaRegex,
+  reformatArrDecoder,
   defaultConditions,
+  convertQueryStrToArr,
+  convertQueryArrToStr,
 };

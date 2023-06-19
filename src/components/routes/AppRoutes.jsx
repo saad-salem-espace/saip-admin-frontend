@@ -15,7 +15,7 @@ const BookmarksList = lazy(() => import('components/bookmarks/BookmarkList'));
 const IprTab = lazy(() => import('components/ipr-details/IprTab'));
 const MyActivity = lazy(() => import('components/my-activity/MyActivity'));
 
-const Routes = ({ updateFocusArea, showFocusArea }) => (
+const AppRoutes = ({ updateFocusArea, showFocusArea }) => (
   <ReactRoutes>
     <Route path="*" element={<NotFound />} />
     <Route
@@ -55,8 +55,8 @@ const Routes = ({ updateFocusArea, showFocusArea }) => (
   </ReactRoutes>
 );
 
-Routes.propTypes = {
+AppRoutes.propTypes = {
   updateFocusArea: PropTypes.func.isRequired,
   showFocusArea: PropTypes.bool.isRequired,
 };
-export default Routes;
+export default AppRoutes;

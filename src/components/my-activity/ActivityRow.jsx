@@ -1,5 +1,6 @@
 import { Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { convertQueryArrToStr } from '../../utils/searchQuery';
 
 const ActivityRow = (data) => {
   const { activity } = data;
@@ -21,7 +22,7 @@ const ActivityRow = (data) => {
   const getActivityValue = () => {
     let activityValue = activity.payload?.filingNumber;
     if (activity.model === 'Query') {
-      activityValue = activity.action === 'run' ? activity.payload?.query : activity.payload?.queryString;
+      activityValue = activity.action === 'run' ? convertQueryArrToStr(activity.payload?.qJson) : activity.payload?.queryString;
     }
     if (activity.model === 'ExportDocuments') {
       activityValue = activity.payload?.documentsIds.length;

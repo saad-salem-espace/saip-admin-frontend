@@ -1,16 +1,25 @@
 const advancedSearchApi = ({
-  workstreamId, query, imageName, enableSynonyms, page, sort,
-}) => ({
-  url: 'advanced-search',
-  method: 'GET',
-  params: {
-    workstreamId,
-    q: query,
-    sort: sort || 'mostRelevant',
-    ...(imageName && { imageName }),
-    ...(enableSynonyms && { enableSynonyms }),
-    page: page || 1,
-  },
-});
+  workstreamId, qArr, imageName, enableSynonyms, page, sort,
+}) => {
+  const dataArr = [];
+  qArr.forEach((qObj) => {
+    if (qObj.identifier !== 'image') {
+      dataArr.push(qObj);
+    }
+  });
+  return {
+    url: 'advanced-search',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    params: {
+      workstreamId,
+      sort: sort || 'mostRelevant',
+      ...(imageName && { imageName }),
+      ...(enableSynonyms && { enableSynonyms }),
+      page: page || 1,
+    },
+    data: dataArr,
+  };
+};
 
 export default advancedSearchApi;

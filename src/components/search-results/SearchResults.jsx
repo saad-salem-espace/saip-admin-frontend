@@ -33,9 +33,14 @@ import IprDetails from '../ipr-details/IprDetails';
 import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
 import './style.scss';
 import style from '../shared/form/search/style.module.scss';
-import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import {
+  defaultConditions,
+  parseQuery,
+  reformatArrDecoder,
+  convertQueryStrToArr,
+  convertQueryArrToStr,
+} from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
-import { decodeQuery } from '../../utils/search-query/decoder';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
@@ -66,21 +71,26 @@ function SearchResults({ showFocusArea }) {
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
-  const [isImgUploaded, setIsImgUploaded] = useState(false);
+  // const [isImgUploaded, setIsImgUploaded] = useState(false);
+  const isImgUploaded = false;
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
 
   const auth = useAuth();
+  const { cachedRequests } = useContext(CacheContext);
   const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
   const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
   const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q'));
+
+  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
 
   const searchResultParams = {
     workstreamId: searchParams.get('workstreamId'),
-    query: searchParams.get('q'),
+    qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
@@ -226,7 +236,7 @@ function SearchResults({ showFocusArea }) {
     if (!auth.isAuthenticated) {
       getInstanceByMultiIndex({
         indecies: {
-          queryString: searchResultParams.query,
+          queryString: convertQueryArrToStr(searchResultParams.qArr),
           workstreamId: searchResultParams.workstreamId,
         },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
@@ -237,10 +247,7 @@ function SearchResults({ showFocusArea }) {
     }
   }, [results]);
 
-  const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
-
-  const [searchQuery, setSearchQuery] = useState('');
 
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
@@ -260,9 +267,12 @@ function SearchResults({ showFocusArea }) {
     return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
   };
 
-  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
+  };
+
+  const parseAndSetSearchQuery = (qObjsArr) => {
+    setSearchQuery(convertQueryArrToStr(qObjsArr));
   };
 
   useEffect(() => {
@@ -397,25 +407,37 @@ function SearchResults({ showFocusArea }) {
 
   useEffect(() => {
     if (searchIdentifiers) {
-      const decodedQuery = decodeQuery(searchResultParams.query);
       const searchIdentifiersData = searchIdentifiers.data;
-      const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
+      const reformattedDecoder = reformatArrDecoder(
+        searchResultParams.qArr,
+        searchIdentifiers.data,
+      );
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
-        id: 1, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
+        id: 1,
+        data: '',
+        identifier: searchIdentifiersData[0],
+        condition: searchIdentifiersData[0].identifierOptions[0],
+        operator: '',
       }]);
     }
-  }, [searchResultParams.query, searchIdentifiers]);
+  }, [searchIdentifiers]);
 
   useEffect(() => {
     // eslint-disable-next-line
     const regexPattern = new RegExp('true');
     setIsEnabledSynonyms(regexPattern.test(searchParams.get('enableSynonyms')));
-    setSearchQuery(searchResultParams.query);
+  }, [searchParams.get('enableSynonyms')]);
+
+  useEffect(() => {
+    setSearchQuery(convertQueryArrToStr(searchResultParams.qArr));
+  }, [searchResultParams.qArr]);
+
+  useEffect(() => {
     const keywords = parseQuery(searchFields, searchParams.get('imageName'), false, currentLang);
     if (keywords) {
-      setSearchKeywords(keywords);
+      setSearchKeywords(convertQueryArrToStr(keywords));
     }
-  }, [searchFields, searchParams, currentLang, searchResultParams.query]);
+  }, [searchFields, searchParams.get('imageName'), currentLang]);
 
   const resetSearch = (workstreamId) => {
     setActiveWorkstream(workstreamId.toString());
@@ -610,7 +632,7 @@ function SearchResults({ showFocusArea }) {
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
-                    setIsImgUploaded={setIsImgUploaded}
+                    // setIsImgUploaded={setIsImgUploaded}
                     resultsView
                   >
                     <div className="d-md-flex mt-4">
@@ -683,8 +705,8 @@ function SearchResults({ showFocusArea }) {
             isAdvancedMenuOpen={isAdvancedMenuOpen}
             submitRef={submitRef}
             workstreamId={activeWorkstream}
-            firstIdentifierStr={searchResultParams.identifierStrId}
-            onChangeSearchQuery={setSearchQuery}
+            firstIdentifierStr={searchIdentifiers?.data[0].identifierStrId}
+            onChangeSearchQuery={parseAndSetSearchQuery}
           />
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
@@ -764,7 +786,7 @@ function SearchResults({ showFocusArea }) {
                   isFetching={setIsLoading}
                   RenderedComponent={searchResult[searchResultParams.workstreamId]}
                   renderedProps={{
-                    query: searchResultParams.query,
+                    query: convertQueryArrToStr(searchResultParams.qArr),
                     setActiveDocument,
                     activeDocument,
                     selectedView,
