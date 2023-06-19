@@ -27,7 +27,9 @@ function AdvancedSearch({
       workstreamId={workstreamId}
       firstIdentifierStr={firstIdentifierStr}
       defaultInitializers={defaultInitializers}
-      onChangeSearchQuery={onChangeSearchQuery}
+      onChangeSearchQuery={() => {
+        onChangeSearchQuery();
+      }}
       submitRef={submitRef}
       isAdvancedMenuOpen={isAdvancedMenuOpen}
     />

@@ -9,9 +9,6 @@ const errorHandlers = {
 };
 
 const AxiosErrorHandler = ({ error }) => {
-  console.log(error);
-  // eslint-disable-next-line
-  debugger;
   const RenderedComponent = errorHandlers[error.error?.code] || errorHandlers.invalid_state;
 
   return (

@@ -18,6 +18,7 @@ const AppPagination = ({
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
   const isReady = useRef(false);
+  const [isRequested, setIsRequested] = useState(false);
 
   const changePage = (page) => {
     if (onPageChange) onPageChange(page);
@@ -67,14 +68,20 @@ const AppPagination = ({
   }, [isLoading]);
 
   useEffect(() => {
-    if (urlPagination) {
-      searchParams.set('page', currentPage.toString());
-      setSearchParams(searchParams);
+    if (!isRequested) {
+      if (urlPagination) {
+        searchParams.set('page', currentPage.toString());
+        setSearchParams(searchParams);
+      }
+      setIsLoading(true);
+      setTimeout(() => {
+        execute();
+      }, 0);
+      return () => {
+        setIsRequested(true);
+      };
     }
-    setIsLoading(true);
-    setTimeout(() => {
-      execute();
-    }, 0);
+    return null;
   }, [currentPage, refresh, ...updateDependencies]);
 
   useEffect(() => {

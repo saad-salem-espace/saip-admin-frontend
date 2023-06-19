@@ -71,8 +71,7 @@ function SearchResults({ showFocusArea }) {
   const [searchFields, setSearchFields] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [imageName, setImageName] = useState(null);
-  // const [isImgUploaded, setIsImgUploaded] = useState(false);
-  const isImgUploaded = false;
+  const [isImgUploaded, setIsImgUploaded] = useState(false);
   const submitRef = useRef();
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
@@ -632,7 +631,9 @@ function SearchResults({ showFocusArea }) {
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
-                    setIsImgUploaded={() => {}}
+                    setIsImgUploaded={() => {
+                      setIsImgUploaded();
+                    }}
                     resultsView
                   >
                     <div className="d-md-flex mt-4">
@@ -706,7 +707,9 @@ function SearchResults({ showFocusArea }) {
             submitRef={submitRef}
             workstreamId={activeWorkstream}
             firstIdentifierStr={searchIdentifiers?.data[0].identifierStrId}
-            onChangeSearchQuery={parseAndSetSearchQuery}
+            onChangeSearchQuery={() => {
+              parseAndSetSearchQuery();
+            }}
           />
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
