@@ -707,8 +707,8 @@ function SearchResults({ showFocusArea }) {
             submitRef={submitRef}
             workstreamId={activeWorkstream}
             firstIdentifierStr={searchIdentifiers?.data[0].identifierStrId}
-            onChangeSearchQuery={() => {
-              parseAndSetSearchQuery();
+            onChangeSearchQuery={(values) => {
+              parseAndSetSearchQuery(values);
             }}
           />
         </Col>
