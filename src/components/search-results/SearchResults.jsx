@@ -30,7 +30,6 @@ import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import getFiltersApi from 'apis/filters/getFiltersApi';
-import getAggrFiltersApi from 'apis/filters/getAggrFiltersApi';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
@@ -73,7 +72,6 @@ function SearchResults({ showFocusArea }) {
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
   const [filters, setFilters] = useState(null);
-  const [analytics, setAnalytics] = useState(null);
 
   const auth = useAuth();
   const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
@@ -94,17 +92,6 @@ function SearchResults({ showFocusArea }) {
   const getFilterConfig = getFiltersApi(getFilterParams, true);
   const [filtersData, executeFilters] = useAxios(
     getFilterConfig,
-    { manual: true },
-  );
-
-  const getAggregationParams = {
-    workstreamId: searchParams.get('workstreamId'),
-    q: searchParams.get('q'),
-    strId: 'ipc',
-  };
-  const getAggregationConfig = getAggrFiltersApi(getAggregationParams, true);
-  const [aggregationData, executeAggregation] = useAxios(
-    getAggregationConfig,
     { manual: true },
   );
 
@@ -219,8 +206,6 @@ function SearchResults({ showFocusArea }) {
     } else {
       setIsQuerySaved(results?.isFavourite);
     }
-
-    executeAggregation();
   }, [results]);
 
   useEffect(() => {
@@ -234,14 +219,6 @@ function SearchResults({ showFocusArea }) {
       }
     }
   }, [filtersData]);
-
-  useEffect(() => {
-    if (aggregationData.data) {
-      if (aggregationData.data.code === 200 && !(aggregationData.loading)) {
-        setAnalytics(aggregationData.data.data);
-      }
-    }
-  }, [aggregationData]);
 
   const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
@@ -445,7 +422,7 @@ function SearchResults({ showFocusArea }) {
 
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
-    setIsAdvancedSearch(!isAdvancedSearch);
+    // setIsAdvancedSearch(!isAdvancedSearch);
   };
 
   const getIprClassName = (media) => {
@@ -622,7 +599,7 @@ function SearchResults({ showFocusArea }) {
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
-                            setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
+                            // setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
                           }}
                           isToggleButtonOn={isAdvancedSearch}
                           text={t('advancedSearch')}
@@ -689,9 +666,9 @@ function SearchResults({ showFocusArea }) {
             workstreamId={activeWorkstream}
             firstIdentifierStr={searchResultParams.identifierStrId}
             onChangeSearchQuery={setSearchQuery}
-            analytics={analytics}
             totalResults={totalResults}
             filters={filters}
+            isAdvancedSearch={isAdvancedSearch}
           />
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>

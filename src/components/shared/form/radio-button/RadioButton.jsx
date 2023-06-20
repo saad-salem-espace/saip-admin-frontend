@@ -12,7 +12,7 @@ function RadioButton({
     <>
       <Field name={name}>
         {({ field }) => (
-          <label htmlFor={`${field.name}-${value}`} className={field.value === value ? RadioButtonStyle.checked : ''}>
+          <label htmlFor={`${field.name}-${value}`} className={field.value === value ? `${RadioButtonStyle.checked} checked` : ''}>
             <input {...field} type="radio" id={`${field.name}-${value}`} value={value} checked={field.value === value} />
             {children}
           </label>
