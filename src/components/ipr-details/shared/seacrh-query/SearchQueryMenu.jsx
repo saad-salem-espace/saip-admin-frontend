@@ -38,7 +38,7 @@ function SearchQueryMenu({
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
-        workstreamId: activeWorkstream, sort: 'mostRelevant', q: convertQueryArrToStr(parseQuery(values.searchFields, '', true)),
+        workstreamId: activeWorkstream, sort: 'mostRelevant', q: convertQueryArrToStr(parseQuery(values.searchFields, '')),
       })}`,
     });
   };

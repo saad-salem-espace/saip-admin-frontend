@@ -38,6 +38,9 @@
     "or": "أو",
     "not": "باستثناء"
   },
+  "identifiers": {
+    "image": "صورة"
+  },
   "abstract": "الملخص",
   "publicationCountry": "بلد النشر",
   "clearAll": "مسح الكل",

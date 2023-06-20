@@ -35,10 +35,10 @@ import './style.scss';
 import style from '../shared/form/search/style.module.scss';
 import {
   defaultConditions,
-  parseQuery,
-  reformatArrDecoder,
+  convertQueryArrToObjsArr,
   convertQueryStrToArr,
   convertQueryArrToStr,
+  convertQueryObjsArrToTransMemo,
 } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import SearchResultCards from './search-result-cards/SearchResultCards';
@@ -409,7 +409,7 @@ function SearchResults({ showFocusArea }) {
   useEffect(() => {
     if (searchIdentifiers) {
       const searchIdentifiersData = searchIdentifiers.data;
-      const reformattedDecoder = reformatArrDecoder(
+      const reformattedDecoder = convertQueryArrToObjsArr(
         searchResultParams.qArr,
         searchIdentifiers.data,
       );
@@ -434,11 +434,18 @@ function SearchResults({ showFocusArea }) {
   }, [searchResultParams.qArr]);
 
   useEffect(() => {
-    const keywords = parseQuery(searchFields, searchParams.get('imageName'), false, currentLang);
-    if (keywords) {
-      setSearchKeywords(convertQueryArrToStr(keywords));
+    if (searchIdentifiers && searchResultParams.qArr) {
+      const qObjsArr = convertQueryArrToObjsArr(
+        searchResultParams.qArr,
+        searchIdentifiers.data,
+      );
+      if (qObjsArr) {
+        setSearchKeywords(
+          convertQueryObjsArrToTransMemo(qObjsArr, searchIdentifiers, t, currentLang),
+        );
+      }
     }
-  }, [searchFields, searchParams.get('imageName'), currentLang]);
+  }, [searchResultParams.qArr, searchIdentifiers, currentLang]);
 
   const resetSearch = (workstreamId) => {
     setActiveWorkstream(workstreamId.toString());

@@ -86,7 +86,7 @@ function SearchQuery({
               });
               const newValues = { ...values, [fName]: updatedArray };
               if (isAdvancedMenuOpen) {
-                onChangeSearchQuery(parseQuery(newValues.searchFields, '', true));
+                onChangeSearchQuery(parseQuery(newValues.searchFields, ''));
               } else {
                 handleOnChange(newValues);
               }

@@ -38,6 +38,9 @@
     "or": "OR",
     "not": "NOT"
   },
+  "identifiers": {
+    "image": "Image"
+  },
   "abstract": "Abstract",
   "publicationCountry": "Publication Country",
   "clearAll": "Clear all",
