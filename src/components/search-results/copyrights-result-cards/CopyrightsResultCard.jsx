@@ -35,23 +35,25 @@ function CopyrightsResultCard({
               <div className="d-flex align-items-center mb-2">
                 <Badge text={BibliographicData.Status} className="text-capitalize me-2 mt-1 bg-secondary" />
                 <span className="d-block fs-20 text-truncate">
-                  <Highlighter
-                    highlightTag="span"
-                    highlightClassName="font-medium"
-                    textToHighlight={trimStringRelativeToSubtext(
-                      BibliographicData.Title,
-                      query,
-                    )}
-                    searchWords={highlightWords}
-                    autoEscape
-                  />
+                  {BibliographicData.Title
+                    && (
+                      <Highlighter
+                        highlightTag="span"
+                        highlightClassName="font-medium"
+                        textToHighlight={trimStringRelativeToSubtext(
+                          BibliographicData.Title,
+                          query,
+                        )}
+                        searchWords={highlightWords}
+                        autoEscape
+                      />)}
                 </span>
               </div>
             </div>
             <p className="mb-2 d-xxl-flex align-items-center text-dark fs-base">
               {BibliographicData.FilingNumber}
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              { BibliographicData?.Applicants.join(' , ')}
+              {BibliographicData?.Applicants.join(' , ')}
             </p>
             <p className="mb-2 text-black fs-sm font-medium">
               {t('filed', { value: Moment(BibliographicData.FilingDate).format(LONG_DATE) })}
@@ -62,7 +64,20 @@ function CopyrightsResultCard({
             </p>
             {
               selectedView.value === 'detailed' && (
-                <p className="fs-sm text-gray">{BibliographicData.Description}</p>
+                <p className="fs-sm text-gray">
+                  {BibliographicData.Description
+                    && (
+                      <Highlighter
+                        highlightTag="span"
+                        highlightClassName="font-medium"
+                        textToHighlight={trimStringRelativeToSubtext(
+                          BibliographicData.Description,
+                          query,
+                        )}
+                        searchWords={highlightWords}
+                        autoEscape
+                      />)}
+                </p>
               )
             }
           </div>

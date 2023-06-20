@@ -64,11 +64,12 @@ $patents: #5287BE;
 $trademark: #E08C05;
 $copyright: #C5CF01;
 $industrial-designs: #DFAF53;
-$secondary-tangerine:#ED8A00;
+$secondary-tangerine: #ED8A00;
 $secondary-tangerine-l: #FDF0DE;
-$secondary-rio-grande:#B9D000;
+$secondary-rio-grande: #B9D000;
 $vivid-lime-green: #B9D000;
 $secondary-sisal : #D3CBBE;
+$ic-layout : #B50644;
 // scss-docs-end color-variables
 
 // scss-docs-start colors-map
@@ -138,10 +139,13 @@ $danger-dark: $danger-dark;
   --bs-patents: #{$patents} !important;
   --bs-trademark: #{$trademark} !important;
   --bs-industrial-designs: #{$industrial-designs} !important;
+  --bs-plant: #{$primary} !important;
   --bs-secondary-sisal: #{$secondary-sisal} !important;
   --bs-copyright: #{$copyright} !important;
   --bs-body-bg: #{$white} !important;
+  --bs-ic-layout:#{$ic-layout} !important;
 }
+
 [data-bs-theme="dark"] {
   --bs-primary: #{$gray-700} !important;
   --bs-primary-01: #{$gray-200} !important;
@@ -167,8 +171,9 @@ $danger-dark: $danger-dark;
   --bs-patents: #{$gray-700} !important;
   --bs-trademark: #{$gray-700} !important;
   --bs-industrial-designs: #{$gray-700} !important;
-  --bs-secondary-sisal: #{$secondary-sisal} !important;
-  --bs-copyright: #{$copyright} !important;
+  --bs-secondary-sisal: #{$gray-700} !important;
+  --bs-copyright: #{$gray-700} !important;
+  --bs-plant: #{$gray-700} !important;
   --bs-body-bg: #{$white} !important;
   --bs-body-color: #{$black} !important;
   --bs-border-color: #{$gray-500} !important;
@@ -189,6 +194,7 @@ $danger-dark: $danger-dark;
   --bs-info-text-emphasis: #{$gray} !important;
   --bs-warning-text-emphasis: #{$gray} !important;
   --bs-danger-text-emphasis: #{$gray} !important;
+  --bs-ic-layout:#{$gray-700} !important;
 }
 
 // scss-docs-end theme-color-variables
@@ -213,7 +219,8 @@ $theme-colors: (
   "gray-700": $gray-700,
   "dark": $dark,
   "danger": $danger,
-  "danger-dark": $danger-dark);
+  "danger-dark": $danger-dark
+);
 // scss-docs-end theme-colors-map
 
 // The contrast ratio to reach against white, to determine if color changes from "light" to "dark". Acceptable values for WCAG 2.0 are 3, 4.5 and 7.
@@ -455,7 +462,8 @@ $grid-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1200px,
-  xxl: 1441px);
+  xxl: 1441px
+);
 // scss-docs-end grid-breakpoints
 
 @include _assert-ascending($grid-breakpoints, "$grid-breakpoints"
@@ -520,8 +528,9 @@ $border-radius-pill: 50rem !default;
 // scss-docs-end border-radius-variables
 
 // scss-docs-start box-shadow-variables
-$box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08);
-$box-shadow-sm:  0 1px 3px 0 #10182829;
+$box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08
+);
+$box-shadow-sm: 0 1px 3px 0 #10182829;
 $box-shadow-lg: 4px 4px 15px 0px rgba(0, 0, 0, 0.14);
 $box-shadow-inset: inset 0 1px 2px rgba($black, .075) !default;
 // scss-docs-end box-shadow-variables
@@ -1057,7 +1066,8 @@ $form-floating-transition: opacity .1s ease-in-out,
 $form-feedback-margin-top: $form-text-margin-top !default;
 $form-feedback-font-size: $form-text-font-size !default;
 $form-feedback-font-style: $form-text-font-style !default;
-$form-feedback-valid-color: var(--bs-success);
+$form-feedback-valid-color: var(--bs-success
+);
 $form-feedback-invalid-color: $danger !default;
 
 $form-feedback-icon-valid-color: $form-feedback-valid-color !default;
@@ -1244,7 +1254,8 @@ $pagination-hover-bg: $gray-200 !default;
 $pagination-hover-border-color: $gray-300 !default;
 
 $pagination-active-color: $white;
-$pagination-active-bg: var(--bs-primary-dark);
+$pagination-active-bg: var(--bs-primary-dark
+);
 $pagination-active-border-color: $pagination-active-bg !default;
 
 $pagination-disabled-color: $gray-600;

@@ -44,5 +44,12 @@
     "Filing Date": "BibliographicData.FilingDate",
     "Plant Variety Title": "BibliographicData.ApplicationTitle",
     "Publication Date": "BibliographicData.PublicationDate"
+  },
+  "IC Layout": {
+    "IC Layout Title": "BibliographicData.ApplicationTitle",
+    "Filing Number": "BibliographicData.FilingNumber",
+    "Filing Date": "BibliographicData.FilingDate",
+    "Publication Number": "BibliographicData.PublicationNumber",
+    "Publication Date": "BibliographicData.PublicationDate"
   }
 }

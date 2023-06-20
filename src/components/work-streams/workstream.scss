@@ -43,5 +43,9 @@
     &.Plant {
       background-color: var(--bs-primary);
     }
+
+    &.IC {
+      background-color: var(--bs-ic-layout);
+    }
   }
 }
