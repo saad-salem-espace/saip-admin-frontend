@@ -211,7 +211,8 @@
       "Industrial Design": "تصدير النماذج الصناعية",
       "Plant Varieties": "تصدير الأصناف النباتية",
       "integratedCircuits": "تصدير الدوائر المتكاملة",
-      "Decision": "تصدير القرارات"
+      "Decision": "تصدير القرارات",
+      "IC Layout": "تصدير الدارات المتكاملة"
     }
   },
   "decisions": {

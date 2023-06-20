@@ -27,6 +27,7 @@ import ExportSearchResults from '../search-results/ExportSearchResults';
 import DecisionsResultCards from '../search-results/decisions-result-cards/DecisionsResultCards';
 import CopyrightsResultCards from '../search-results/copyrights-result-cards/CopyrightsResultCards';
 import PlantVarietyResultCards from '../search-results/plant-variety-result-cards/PlantVarietyResultCards';
+import IcLayoutsResultCards from '../search-results/ic-layouts-result-cards/IcLayoutsResultCards';
 
 const BookmarkList = () => {
   const currentLang = i18n.language;
@@ -80,6 +81,7 @@ const BookmarkList = () => {
     4: DecisionsResultCards,
     5: CopyrightsResultCards,
     6: PlantVarietyResultCards,
+    7: IcLayoutsResultCards,
   };
 
   const selectedView = {

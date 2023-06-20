@@ -47,6 +47,8 @@ import CopyrightsViews from './copyrights/CopyrightsViews';
 import copyrightsIprOptions from './copyrights/CopyrightsIprOptions';
 import PlantVarietyViews from './plant-variety/PlantVarietyViews';
 import plantVarietyIprOptions from './plant-variety/PlantVarietyOptions';
+import IcLayoutsIprViews from './ic-layouts/IcLayoutsIprViews';
+import icLayoutsIprOptions from './ic-layouts/IcLayoutsIprOptions';
 
 function IprDetails({
   collapseIPR,
@@ -101,10 +103,7 @@ function IprDetails({
     }
     return defaultSelectedViewLabel;
   };
-  const [selectedView, setSelectedView] = useState({
-    label: getDefaultSelectedViewLabel(),
-    value: getDefaultSelectedViewValue(),
-  });
+  const [selectedView, setSelectedView] = useState({});
   const [reachedLimit, setReachedLimit] = useState(false);
   const [isSubmittingDownloadPdf, setIsSubmittingDownloadPdf] = useState(false);
   const { isAuthenticated } = useAuth();
@@ -114,7 +113,7 @@ function IprDetails({
   const copyrightsOptions = copyrightsIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
   const plantVarietyOptions = plantVarietyIprOptions().options;
-
+  const icLayoutsOptions = icLayoutsIprOptions().options;
   const [, execute] = useAxios(
     documentApi({
       workstreamId: fromFocusArea
@@ -140,7 +139,10 @@ function IprDetails({
   };
 
   useEffect(() => {
-    getDefaultSelectedViewLabel();
+    setSelectedView({
+      label: getDefaultSelectedViewLabel(),
+      value: getDefaultSelectedViewValue(),
+    });
   }, [currentLang]);
 
   useEffect(() => {
@@ -362,6 +364,18 @@ function IprDetails({
         examinerView={examinerView}
       />
     ),
+    7: (
+      <IcLayoutsIprViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
   };
 
   const options = {
@@ -371,6 +385,7 @@ function IprDetails({
     4: decisionsOptions,
     5: copyrightsOptions,
     6: plantVarietyOptions,
+    7: icLayoutsOptions,
   };
   const renderSelectedView = () => {
     let content = <NoData />;
@@ -412,7 +427,7 @@ function IprDetails({
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '6') {
+    } else if (workstreamId.toString() === '6' || workstreamId.toString() === '7') {
       if (
         document[selectedView.value]
       ) {
@@ -574,7 +589,7 @@ function IprDetails({
             </div>
           </div>
         )}
-        {(searchResultParams.workstreamId === '1' || searchResultParams.workstreamId === '6') && (
+        {(searchResultParams.workstreamId === '1' || searchResultParams.workstreamId === '6' || searchResultParams.workstreamId === '7') && (
           <p className="text-gray px-6">
             <HandleEmptyAttribute
               checkOn={document.BibliographicData.ApplicationTitle}

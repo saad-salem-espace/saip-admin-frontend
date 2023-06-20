@@ -211,7 +211,8 @@
       "Industrial Design": "Export Industrial Designs",
       "Plant Varieties": "Export Plant Varieties",
       "integratedCircuits": "Export Integrated Circuits",
-      "Decision": "Export Decisions"
+      "Decision": "Export Decisions",
+      "IC Layout": "IC Layout"
     }
   },
   "decisions": {
