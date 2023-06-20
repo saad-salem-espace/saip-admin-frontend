@@ -2,11 +2,9 @@
 @import "~bootstrap/scss/mixins";
 
 .workstream-header {
-  html[data-bs-theme="light"] & {
-    background-image: url(../../assets/images/search-header-bg.svg);
-  }
+  background-image: url(../../assets/images/search-header-bg.svg);
   html[data-bs-theme="dark"] & {
-    background-image: url(../../assets/images/search-header-bg-high-contrast.svg);
+    filter: grayscale(100%);
   }
   background-repeat: no-repeat;
   background-size: cover;

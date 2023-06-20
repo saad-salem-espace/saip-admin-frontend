@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState, useContext } from 'react';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
-import logo from '../../../assets/images/Logo.png';
+import logo from '../../../assets/images/Logo.svg';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
 import MyBookmarksLink from './shared/MyBookmarksLink';
