@@ -156,6 +156,7 @@ const AppAuthProviderCustom = ({ children, hasSignedIn, setHasSignedIn }) => {
     if (user) {
       if (!isAuthenticated || !AllowedRoles.includes(userRole)) {
         signoutSilent().catch(() => {});
+        localStorage.removeItem('FocusDoc');
       }
       if (!AllowedRoles.includes(userRole)) {
         toastify(
