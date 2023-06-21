@@ -80,6 +80,8 @@ function FilterComponent({
       pathname: '/search',
       search: `?${createSearchParams({
         workstreamId: searchParams.get('workstreamId'),
+        filterEnabled: true,
+        page: 1,
         sort: 'mostRelevant',
         q: (searchParams.get('q')),
         ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
@@ -90,10 +92,10 @@ function FilterComponent({
       },
     });
   };
-  
+
   const clearFilter = (strId) => {
-    setFieldValue(`selectedFilters.${strId}`,{});
-  }
+    setFieldValue(`selectedFilters.${strId}`, {});
+  };
 
   return (
     <FilterOption

@@ -94,10 +94,18 @@ function SearchResults({ showFocusArea }) {
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q'));
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
 
+  const checkFilters = () => {
+    if (!searchParams.get('filterEnabled') || searchParams.get('filterEnabled') === 'false') {
+      return [];
+    }
+    if (searchParams.get('filterEnabled') === 'true') return searchFilters;
+    return [];
+  };
+
   const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
-    filters: searchFilters,
+    filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [searchParams, searchIdentifiers, searchFilters]);
@@ -420,7 +428,11 @@ function SearchResults({ showFocusArea }) {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: values.selectedWorkstream.value, sort: 'mostRelevant', q: (simpleQuery ? query : ''), ...(imageName && { imageName }),
+          workstreamId: values.selectedWorkstream.value,
+          sort: 'mostRelevant',
+          filterEnabled: false,
+          q: (simpleQuery ? query : ''),
+          ...(imageName && { imageName }),
         })}`,
       });
     } else {
@@ -431,6 +443,7 @@ function SearchResults({ showFocusArea }) {
         search: `?${createSearchParams({
           workstreamId: values.selectedWorkstream.value,
           q: values.searchQuery,
+          filterEnabled: false,
           ...(imageName && { imageName }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
