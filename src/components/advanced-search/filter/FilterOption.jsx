@@ -8,6 +8,8 @@ import FilterActionBtn from './FilterActionBtn';
 function FilterOption({
   name, count, children,
   showButtons, onSubmit,
+  clearFilter,
+  filterId,
 }) {
   const [isShown, setIsShown] = useState(false);
   const toggleShowHide = () => {
@@ -35,7 +37,7 @@ function FilterOption({
           {children}
           {showButtons && <FilterActionBtn
             applyAction={onSubmit}
-            clearAction={() => {}}
+            clearAction={() => clearFilter(filterId)}
           />}
         </div>
       )}
@@ -50,6 +52,8 @@ FilterOption.propTypes = {
   children: PropTypes.node.isRequired,
   showButtons: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  clearFilter: PropTypes.func.isRequired,
+  filterId: PropTypes.string.isRequired,
 };
 
 FilterOption.defaultProps = {

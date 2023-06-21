@@ -3,6 +3,7 @@ import getAggrFiltersApi from 'apis/filters/getAggrFiltersApi';
 import useAxios from 'hooks/useAxios';
 import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useFormikContext } from 'formik';
 import PropTypes from 'prop-types';
 import { convertQueryStrToArr } from 'utils/searchQuery';
 import FilterOption from './FilterOption';
@@ -14,6 +15,7 @@ function FilterComponent({
   totalResults, searchIdentifiers,
 }) {
   const navigate = useNavigate();
+  const { setFieldValue } = useFormikContext();
   const { i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const [searchParams] = useSearchParams();
@@ -88,6 +90,11 @@ function FilterComponent({
       },
     });
   };
+  
+  const clearFilter = (strId) => {
+    console.log(`selectedFilters.${strId}`)
+    setFieldValue(`selectedFilters.${strId}`,{});
+  }
 
   return (
     <FilterOption
@@ -96,6 +103,8 @@ function FilterComponent({
       count={countPerFilter(filter)}
       showButtons={changeViewFilter === 'search'}
       onSubmit={onSubmit}
+      clearFilter={clearFilter}
+      filterId={filter.strId}
     >
       { changeViewFilter === 'search' ? (
         <SearchWithCheckBox

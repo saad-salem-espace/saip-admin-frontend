@@ -62,7 +62,7 @@ function ChartAnalytics({
     },
   };
 
-  let total = 0;
+  let maximum = 0;
   const labels = [];
   const valuesData = [];
   const colors = [];
@@ -75,7 +75,7 @@ function ChartAnalytics({
       if (key) {
         labels.push(filter.type === 'date' ? key.substring(0, 4) : key);
         valuesData.push(aggregations[0][key]);
-        total += aggregations[0][key];
+        maximum = Math.max(aggregations[0][key], maximum);
       }
     });
   };
@@ -87,7 +87,7 @@ function ChartAnalytics({
 
     Object.keys(aggregations[0]).forEach((key) => {
       if (key) {
-        colors.push((Math.round((aggregations[0][key] / total) * 100) > 50) ? '#00A49B' : '#B9D000');
+        colors.push((Math.round((aggregations[0][key] / maximum) * 100) > 50) ? '#00A49B' : '#B9D000');
       }
     });
   };
