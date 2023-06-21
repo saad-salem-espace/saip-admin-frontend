@@ -111,7 +111,13 @@ function ChartAnalytics({
 
   if (!valuesData.length) return (<NoData />);
 
-  return ((<Bar options={options} data={data} style={{ height: '400px' }} />));
+  const getHeight = (len) => {
+    if (len === 1) return '150px';
+    if (len === 2) return '250px';
+    return '400px';
+  };
+
+  return ((<Bar options={options} data={data} style={{ height: getHeight(valuesData.length) }} />));
   // to-do: adjust height according to data length
 }
 

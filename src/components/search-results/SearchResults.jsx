@@ -516,7 +516,7 @@ function SearchResults({ showFocusArea }) {
 
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
-    // setIsAdvancedSearch(!isAdvancedSearch);
+    setIsAdvancedSearch(!isAdvancedSearch);
   };
 
   const getIprClassName = (media) => {
@@ -698,7 +698,7 @@ function SearchResults({ showFocusArea }) {
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
-                            // setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
+                            setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
                           }}
                           isToggleButtonOn={isAdvancedSearch}
                           text={t('advancedSearch')}
