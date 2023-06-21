@@ -84,6 +84,7 @@ function SearchResults({ showFocusArea }) {
   const [filters, setFilters] = useState(null);
   const location = useLocation();
   const [searchFilters, setSearchFilters] = useState([]);
+  const [otherSearchParams, setOtherSearchParams] = useState(Object.fromEntries(searchParams));
 
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
@@ -101,6 +102,9 @@ function SearchResults({ showFocusArea }) {
     if (searchParams.get('filterEnabled') === 'true') return searchFilters;
     return [];
   };
+  useEffect(() => {
+    setOtherSearchParams(Object.fromEntries(searchParams.entries()));
+  }, [searchParams]);
 
   const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
@@ -108,7 +112,7 @@ function SearchResults({ showFocusArea }) {
     filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
-  }), [searchParams, searchIdentifiers, searchFilters]);
+  }), [otherSearchParams, searchIdentifiers, searchFilters]);
 
   const getFilterParams = {
     workstreamId: searchParams.get('workstreamId'),
