@@ -17,11 +17,13 @@
   }
 
   &.select2 {
+    top: 0;
+
     html[dir="ltr"] & {
-      left: 0;
+      left: 16px;
     }
     html[dir="rtl"] & {
-      right: 0;
+      right: 16px;
     }
   }
 }

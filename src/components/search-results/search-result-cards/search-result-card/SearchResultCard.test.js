@@ -8,18 +8,22 @@ import SearchResultCard from './SearchResultCard';
 
 describe('<SearchResultCard />', () => {
   const t = (key, options) => I18n.t(key, { ...options, ns: 'search' });
+  const selectedView = { label: t('detailed'), value: 'detailed' };
 
   it('renders component correctly', async () => {
     const query = 'Manufcature';
     const { getByText } = render(
       <Formik>
-        <SearchResultCard searchResult={patentResponse} query={query} highlightWords={['Manufcature']} />
+        <SearchResultCard searchResult={patentResponse} query={query} highlightWords={['Manufcature']} selectedView={selectedView} />
       </Formik>,
     );
     await waitFor(() => {
       expect(getByText(patentResponse.BibliographicData.ApplicationTitle)).toBeInTheDocument();
       expect(getByText(patentResponse.BibliographicData.PublicationNumber)).toBeInTheDocument();
-      expect(getByText(t('priority', { value: patentResponse.BibliographicData.Priority }), { exact: false })).toBeInTheDocument();
+      expect(getByText(
+        t('priority', { value: patentResponse.BibliographicData.Priority }),
+        { exact: false },
+      )).toBeInTheDocument();
       expect(getByText(t('filed', { value: patentResponse.BibliographicData.FilingNumber }), { exact: false })).toBeInTheDocument();
       expect(getByText(t('published', { value: patentResponse.BibliographicData.PublicationDate }), { exact: false })).toBeInTheDocument();
       expect(getByText(trimStringRelativeToSubtext(patentResponse.BibliographicData.ApplicationAbstract.join(' '), query, 100, 100))).toBeInTheDocument();
@@ -43,6 +47,7 @@ describe('<SearchResultCard />', () => {
               searchResult={patentResponse}
               query={query}
               highlightWords={[query]}
+              selectedView={selectedView}
             />
           </Formik>,
         );

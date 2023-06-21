@@ -4,7 +4,7 @@ import './footer.scss';
 
 function Footer() {
   return (
-    <footer className="footer bg-primary-dark py-3 position-fixed bottom-0 w-100">
+    <footer className="footer py-3 position-fixed bottom-0 w-100">
       <Container>
         <Row>
           <Col xl={12}>

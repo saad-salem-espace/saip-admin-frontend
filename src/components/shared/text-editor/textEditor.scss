@@ -19,11 +19,11 @@
 
 .rdw-editor-toolbar {
   border-width: 0 0 $border-width;
-  border-color: $gray-400;
+  border-color: var(--bs-gray-400);
 }
 
 a.rdw-dropdown-selectedtext {
-  color: $gray
+  color: var(--bs-gray);
 }
 
 .public-DraftStyleDefault-block  {
@@ -31,16 +31,16 @@ a.rdw-dropdown-selectedtext {
 }
 
 .disabled-editor {
-  background-color: $gray-200;
+  background-color: var(--bs-gray-200);
 
   .rdw-editor-toolbar {
-    background-color: $gray-200;
+    background-color: var(--bs-gray-200);
   }
 }
 
 .error {
   .rdw-editor-wrapper {
-    border-color: $danger !important;
+    border-color: var(--bs-danger) !important;
   }
 }
 

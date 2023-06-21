@@ -9,6 +9,7 @@ import './assets/styles/common/toast.scss';
 import { useTranslation } from 'react-i18next';
 import FocusArea from 'components/shared/focus-area/FocusArea';
 import Footer from 'components/layout/footer/Footer';
+import { SelectedWorkStreamIdProvider } from 'contexts/SelectedWorkStreamIdContext';
 
 function App() {
   const { i18n } = useTranslation();
@@ -29,6 +30,7 @@ function App() {
   const focusId = JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber;
   const focusTitle = JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.applicationTitle;
   const [showFocusArea, setShowFocusArea] = useState(null);
+
   const hideFocusArea = () => {
     setShowFocusArea(false);
     localStorage.removeItem('FocusDoc');
@@ -43,23 +45,24 @@ function App() {
       lang={lang}
       // eslint-disable-next-line react/jsx-closing-bracket-location
     >
-      <div className="app" translate="no">
-        <Routes
-          updateFocusArea={(flag) => setShowFocusArea(flag)}
-          showFocusArea={showFocusArea}
-        />
-        <AppNavbar lang={lang} changeLang={changeLang} hideFocusArea={hideFocusArea} />
-        <ToastContainer
-          position="bottom-left"
-          autoClose={8000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          pauseOnFocusLoss
-          draggable={false}
-          pauseOnHover
-        />
-        {
+      <SelectedWorkStreamIdProvider>
+        <div className="app" translate="no">
+          <Routes
+            updateFocusArea={(flag) => setShowFocusArea(flag)}
+            showFocusArea={showFocusArea}
+          />
+          <AppNavbar lang={lang} changeLang={changeLang} hideFocusArea={hideFocusArea} />
+          <ToastContainer
+            position="bottom-left"
+            autoClose={8000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            pauseOnFocusLoss
+            draggable={false}
+            pauseOnHover
+          />
+          {
           showFocusArea && (
             <FocusArea
               hideFocusArea={hideFocusArea}
@@ -68,8 +71,9 @@ function App() {
             />
           )
         }
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </SelectedWorkStreamIdProvider>
     </ThemeProvider>
 
   );

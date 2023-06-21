@@ -14,7 +14,17 @@
     "myActivity": "My Activity",
     "ipSearch": "IP Search",
     "english": "EN",
-    "arabic": "AR"
+    "arabic": "AR",
+    "hightContrast": "High Contrast",
+    "notifications": {
+      "headline": "Notifications",
+      "markAllAsRead": "Mark all as read",
+      "aNewDocumentWith": "A new document with",
+      "isAssignedToYou": " is assigned to you.",
+      "isNoLongerAssignedToYou": " is no longer assigned to you."
+    },
+    "viewAllHistory": "View all history",
+    "noSearchHistory": "You didn't search for any keywords yet."
   },
   "footer": {
     "copyright": "All rights reserved for Saudi Authority for Intellectual Property © "

@@ -145,7 +145,7 @@ function Notes({
           }
               {currentPage < totalPages && (
               <div className="text-center">
-                <Button onClick={() => setCurrentPage(currentPage + 1)} variant="transparent" text={t('loadMoreNotes')} className="text-primary-dark f-14 font-regular border-0 mb-4" />
+                <Button onClick={() => setCurrentPage(currentPage + 1)} variant="transparent" text={t('loadMoreNotes')} className="app-text-primary-dark f-14 font-regular border-0 mb-4" />
               </div>
               )}
             </div>

@@ -2,11 +2,11 @@
 @import "~bootstrap/scss/mixins";
 
 div[class$="indicatorContainer"] {
-  background-color: $gray-200;
+  background-color: var(--bs-gray-200);
   border-radius: 0 $border-radius $border-radius 0;
 
   svg {
-    color: $gray;
+    color: var(--bs-gray);
   }
 }
 
@@ -35,20 +35,20 @@ div[class$="singleValue"] {
 
       html[dir="rtl"] & {
         border-left: 0;
-        border-right: $border-width solid $gray-400;
+        border-right: $border-width solid var(--bs-gray-400);
         border-radius: 0 5px 5px 0;
       }
     }
   }
 
   div[class$="IndicatorsContainer"] {
-    background-color: $gray-200;
+    background-color: var(--bs-gray-200);
   }
 }
 
 .css-2jkpo2-option {
-  color: $white !important;
-  background-color: $primary !important;
+  color:var(--bs-white) !important;
+  background-color: var(--bs-primary) !important;
   text-transform: capitalize;
 }
 
@@ -127,7 +127,7 @@ div[class$="singleValue"] {
     }
 
     input {
-      color: $primary !important;
+      color: var(--bs-primary) !important;
     }
   }
 
@@ -141,13 +141,13 @@ div[class$="singleValue"] {
 
   div[class$="singleValue"],
   input {
-    color: $primary;
+    color: var(--bs-primary);
     font-size: 24px;
     bottom: 0;
     position: relative;
     margin: 0;
     font-family: $font-medium;
-    border-bottom: $border-width dashed $gray;
+    border-bottom: $border-width dashed var(--bs-gray);
     top: 1px;
     height: 35px;
 
@@ -173,7 +173,7 @@ div[class$="singleValue"] {
 .select-2 {
   div[class$="Control"] {
     border: none;
-    border-bottom: $border-width solid $gray-400;
+    border-bottom: $border-width solid var(--bs-gray-400);
     border-radius: 0;
   }
 
@@ -182,14 +182,12 @@ div[class$="singleValue"] {
   }
 
   div[class$="singleValue"] {
-    margin: 0 7px 0 0;
-
     html[dir="ltr"] & {
-      left: 0;
+      left: 16px;
     }
 
     html[dir="rtl"] & {
-      right: 0;
+      right: 16px;
     }
   }
 
@@ -198,17 +196,17 @@ div[class$="singleValue"] {
   }
 
   div[class$="ValueContainer"] {
-    height: 72px;
+    height: 61px;
     padding: 2px 0;
   }
 
   div[class$="singleValue"] {
-    bottom: 15px;
+    bottom: 16px;
+    margin-left: 0;
   }
 
   div[class$="indicatorContainer"] {
     background-color: transparent;
-    margin-top: 25px;
   }
 
   div[class$="container"] {
@@ -217,7 +215,7 @@ div[class$="singleValue"] {
     >div:first-of-type {
       border-width: 0 0 $border-width;
       border-radius: 0;
-      height: 79px;
+      height: 63px;
     }
   }
 }
@@ -258,3 +256,4 @@ div[class$="singleValue"] {
     }
   }
 }
+

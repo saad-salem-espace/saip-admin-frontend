@@ -14,6 +14,7 @@
   "translateInfo": "ترجمة",
   "markAsDone": "تم إنجازه",
   "savedQueries": "الاستعلامات المحفوظه",
+  "bookmarks": "تفضيلاتي",
   "notAssigned": "لا تجد الوثائق الخاضعة للفحص؟",
   "emptyStateTitle": "لم يتم إسناد أي من الوثائق لك. ",
   "status": {
@@ -43,6 +44,9 @@
     "cannotFocus": "يمكنك أختيار واحد فقط",
     "addedToKeywordPlanner": "تمت الاضافة بنجاح",
     "invalidHighlight": "لم يتم الاضافة. يرجو الاختيار من قسم واحد فقط",
-    "maximumFields": "وصلت الى عدد خانات البحث المسموح بها"
+    "maximumFields": "وصلت الى عدد خانات البحث المسموح بها",
+    "errors": {
+      "updateStatus": "لم نتمكن من تغيير حالة الوئيقة"
+    }
   }
 }

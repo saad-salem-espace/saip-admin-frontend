@@ -5,11 +5,17 @@ import GuestNavbar from './GuestNavbar';
 
 import './AppNavbar.scss';
 
-function AppNavbar({ lang, changeLang, hideFocusArea }) {
+function AppNavbar({
+  lang, changeLang, hideFocusArea,
+}) {
   const auth = useAuth();
   if (auth.isAuthenticated) {
     return (
-      <LoggedNavbar lang={lang} changeLang={changeLang} hideFocusArea={hideFocusArea} />
+      <LoggedNavbar
+        lang={lang}
+        changeLang={changeLang}
+        hideFocusArea={hideFocusArea}
+      />
     );
   }
   return (

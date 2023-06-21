@@ -2,6 +2,6 @@
 @import "../../../assets/styles/utilities/custom-theme";
 
 .badge.bg-secondary {
-  color: $secondary-tangerine;
-  background-color: $secondary-tangerine-l !important;
+  color: var(--bs-warning) ;
+  background-color: var(--bs-secondary-tangerine) !important;
 }

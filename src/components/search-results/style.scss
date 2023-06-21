@@ -16,13 +16,6 @@
   }
 }
 .search-result-wrapper {
-  > .skiptranslate {
-    margin-top: -39px;
-    iframe.skiptranslate {
-      @extend .position-absolute;
-      top: 0;
-    }
-  }
   @include media-breakpoint-up(xl) {
     overflow-y: hidden;
   }
@@ -30,7 +23,7 @@
 
 .searchResultsView {
   position: absolute;
-  background-color: $white;
+  background-color: var(--bs-white);
   z-index: 10;
   top: 91px;
   right: 13px;
@@ -153,7 +146,7 @@
         }
 
         >div:nth-child(2) {
-          background-color: $gray-200;
+          background-color: var(--bs-gray-200);
         }
       }
     }
@@ -178,78 +171,5 @@
 }
 
 .star-button::before {
-  color: $primary-dark !important;
-}
-
-.save-query-options {
-  z-index: 99999;
-  top: 44px;
-
-  html[dir="ltr"] & {
-    left: 0;
-  }
-
-  html[dir="rtl"] & {
-    right: 0;
-  }
-}
-
-.save-query-menu {
-  border-radius: $border-radius;
-  color: $primary-dark;
-
-  &:hover {
-    background-color: $primary;
-
-    .icon-star::before {
-      color: $white !important;
-    }
-  }
-
-  button {
-    color: $white;
-    width: 233px;
-    display: inline-block;
-    @extend .fs-sm;
-    font-family: $font-regular;
-    white-space: nowrap;
-    border-radius: 0;
-    border: none;
-    @extend .p-4;
-
-    span:before {
-      color: $white;
-    }
-
-    &:hover {
-      background-color: $primary-01;
-      color: $primary;
-
-      .icon-star, .icon-focus {
-        &::before {
-          color: $primary !important;
-        }
-      }
-    }
-
-    &.save-btn {
-      border-radius: $border-radius $border-radius 0 0;
-    }
-
-    &.btn-focus {
-      border-radius: 0 0 $border-radius $border-radius;
-    }
-
-    &.disabled {
-      background-color: $gray-500;
-      color: $white;
-      opacity: 1;
-      cursor: not-allowed;
-    }
-
-    html[dir="rtl"] & {
-      width: 290px;
-      text-align: right;
-    }
-  }
+  color: var(--bs-primary-dark) !important;
 }
