@@ -16,7 +16,7 @@ function HelpLink() {
         }
         classNameModalHeader="border-0"
         variantTriggerBtn="link"
-        classNameTriggerBtn="nav-link app-text-primary-dark font-regular pt-1 ps-4 pe-2"
+        classNameTriggerBtn="nav-link app-text-primary-dark font-regular pt-1 ps-4 pe-2 mx-auto"
         triggerContent={
           <AiOutlineQuestionCircle className="fs-29" />
         }
