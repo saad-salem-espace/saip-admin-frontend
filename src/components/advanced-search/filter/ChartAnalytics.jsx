@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import NoData from 'components/shared/empty-states/NoData';
 import PropTypes from 'prop-types';
 
 function ChartAnalytics({
@@ -72,7 +73,7 @@ function ChartAnalytics({
       if (key) {
         labels.push(filter.type === 'date' ? key.substring(0, 4) : key);
         valuesData.push(aggregations[0][key]);
-        colors.push((Math.round((aggregations[0][key] / totalResults) * 100) > 50) ? 'green' : 'LimeGreen');
+        colors.push((Math.round((aggregations[0][key] / totalResults) * 100) > 50) ? '#00A49B' : '#B9D000');
       }
     });
   };
@@ -81,7 +82,7 @@ function ChartAnalytics({
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
+        label: title,
         data: valuesData,
         backgroundColor: colors,
         borderColor: colors,
@@ -92,6 +93,8 @@ function ChartAnalytics({
   };
 
   prepareData(analyticsData);
+
+  if (!valuesData.length) return (<NoData />);
 
   return ((<Bar options={options} data={data} style={{ height: '400px' }} />));
 }

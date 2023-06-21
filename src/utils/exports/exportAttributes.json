@@ -31,5 +31,18 @@
     "Decision Title": "BibliographicData.DecisionTitle",
     "Decision Date": "BibliographicData.DecisionDate",
     "Decision Brief": "BibliographicData.DecisionBrief"
+  },
+  "copyright": {
+    "Copyrights Title": "BibliographicData.Title",
+    "Filing Number": "BibliographicData.FilingNumber",
+    "Filing Date": "BibliographicData.FilingDate",
+    "Grant Date": "BibliographicData.GrantDate",
+    "Description": "BibliographicData.Description"
+  },
+  "Plant Varieties": {
+    "Filing Number": "BibliographicData.FilingNumber",
+    "Filing Date": "BibliographicData.FilingDate",
+    "Plant Variety Title": "BibliographicData.ApplicationTitle",
+    "Publication Date": "BibliographicData.PublicationDate"
   }
 }

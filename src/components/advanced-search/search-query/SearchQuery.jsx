@@ -74,7 +74,16 @@ function SearchQuery({
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form onChange={isAdvancedMenuOpen ? onChangeSearchQuery(parseQuery(values.searchFields, '', true)) : handleOnChange(values)} onSubmit={handleSubmit}>
+          <Form
+            onChange={() => {
+              if (isAdvancedMenuOpen) {
+                onChangeSearchQuery(parseQuery(values.searchFields, '', true));
+              } else {
+                handleOnChange(values);
+              }
+            }}
+            onSubmit={handleSubmit}
+          >
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>

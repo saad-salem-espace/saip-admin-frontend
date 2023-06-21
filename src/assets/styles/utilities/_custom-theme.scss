@@ -139,6 +139,7 @@ $danger-dark: $danger-dark;
   --bs-trademark: #{$trademark} !important;
   --bs-industrial-designs: #{$industrial-designs} !important;
   --bs-secondary-sisal: #{$secondary-sisal} !important;
+  --bs-copyright: #{$copyright} !important;
   --bs-body-bg: #{$white} !important;
 }
 [data-bs-theme="dark"] {
@@ -167,6 +168,7 @@ $danger-dark: $danger-dark;
   --bs-trademark: #{$gray-700} !important;
   --bs-industrial-designs: #{$gray-700} !important;
   --bs-secondary-sisal: #{$secondary-sisal} !important;
+  --bs-copyright: #{$copyright} !important;
   --bs-body-bg: #{$white} !important;
   --bs-body-color: #{$black} !important;
   --bs-border-color: #{$gray-500} !important;
@@ -626,7 +628,9 @@ $font-sizes: (
   20: $font-size-base * 1.25,
   21: $font-size-base * 1.3125,
   22: $font-size-base * 1.375,
-  32: $font-size-base * 1.4375,
+  23: $font-size-base * 1.4375,
+  29: $font-size-base * 1.8125,
+  44: $font-size-base * 2.75,
   );
 // scss-docs-end font-sizes
 

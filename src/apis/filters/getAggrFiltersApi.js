@@ -1,12 +1,17 @@
 const getAggrFiltersApi = ({
-  workstreamId, q, strId,
+  workstreamId, query, strId,
+  enableSynonyms,
 }) => ({
   url: 'filter',
-  method: 'GET',
+  method: 'POST',
   params: {
     workstreamId,
-    q,
     strId,
+    ...(enableSynonyms && { enableSynonyms }),
+  },
+  data: {
+    qJson: query,
+    filters: [],
   },
 });
 

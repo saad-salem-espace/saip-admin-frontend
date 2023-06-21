@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { IoIosSearch } from 'react-icons/io';
 import './SearchWithCheckBox.scss';
 import Checkbox from 'components/shared/form/checkboxes/checkbox/Checkbox';
+import NoData from 'components/shared/empty-states/NoData';
 
 const SearchWithCheckBox = ({ name, options, filter }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,6 +13,8 @@ const SearchWithCheckBox = ({ name, options, filter }) => {
   const filterOptions = (myoptions) => (
     myoptions.filter((option) => option.label.includes(searchTerm))
   );
+
+  if (!options || !options.length) return (<NoData />);
 
   return (
     <div>

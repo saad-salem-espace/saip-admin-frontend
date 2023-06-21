@@ -11,7 +11,7 @@ const LabelValue = ({
     {label && (
     <p className={`${customLabel ? '' : 'app-text-primary f-14'}  ${style.label} ${labelClassName} disable-highlight`}>{label}</p>
     )}
-    <p className={`f-12 ${valueClassName}`}>
+    <p className={`fs-sm ${valueClassName}`}>
       <HandleEmptyAttribute checkOn={value} />
     </p>
   </div>

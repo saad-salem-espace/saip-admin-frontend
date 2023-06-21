@@ -7,7 +7,7 @@ import FilterActionBtn from './FilterActionBtn';
 
 function FilterOption({
   name, count, children,
-  showButtons,
+  showButtons, onSubmit,
 }) {
   const [isShown, setIsShown] = useState(false);
   const toggleShowHide = () => {
@@ -34,7 +34,7 @@ function FilterOption({
         <div className="mb-7">
           {children}
           {showButtons && <FilterActionBtn
-            applyAction={() => {}}
+            applyAction={onSubmit}
             clearAction={() => {}}
           />}
         </div>
@@ -49,6 +49,7 @@ FilterOption.propTypes = {
   count: PropTypes.string,
   children: PropTypes.node.isRequired,
   showButtons: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 FilterOption.defaultProps = {

@@ -35,5 +35,13 @@
     &.Decision {
       background-color: var(--bs-secondary-sisal);
     }
+
+    &.copyright {
+      background-color: var(--bs-copyright);
+    }
+
+    &.Plant {
+      background-color: var(--bs-primary);
+    }
   }
 }

@@ -22,6 +22,7 @@ function AdvancedSearch({
   totalResults,
   filters,
   isAdvancedSearch,
+  searchIdentifiers,
 }) {
   const { t } = useTranslation('search');
   const [activeTabId, setActiveTabId] = useState(1);
@@ -32,7 +33,9 @@ function AdvancedSearch({
       workstreamId={workstreamId}
       firstIdentifierStr={firstIdentifierStr}
       defaultInitializers={defaultInitializers}
-      onChangeSearchQuery={onChangeSearchQuery}
+      onChangeSearchQuery={() => {
+        onChangeSearchQuery();
+      }}
       submitRef={submitRef}
       isAdvancedMenuOpen={isAdvancedMenuOpen}
     />
@@ -55,7 +58,11 @@ function AdvancedSearch({
           {t('search:filters')}
         </div>
       ),
-      content: <Filter filters={filters} totalResults={totalResults} />,
+      content: <Filter
+        filters={filters}
+        totalResults={totalResults}
+        searchIdentifiers={searchIdentifiers}
+      />,
     },
   ];
 
@@ -111,6 +118,7 @@ AdvancedSearch.propTypes = {
   totalResults: PropTypes.number.isRequired,
   filters: PropTypes.instanceOf(Array),
   isAdvancedSearch: PropTypes.bool.isRequired,
+  searchIdentifiers: PropTypes.instanceOf(Array).isRequired,
 };
 
 AdvancedSearch.defaultProps = {

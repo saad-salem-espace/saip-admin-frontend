@@ -1,29 +1,24 @@
-/* eslint-disable */
 import RadioButton from 'components/shared/form/radio-button/RadioButton';
 import RadioButtonGroup from 'components/shared/form/radio-button/RadioButtonGroup';
 import { Formik, Form } from 'formik';
-import { useTranslation } from 'react-i18next';
 import { FaListUl } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import FilterComponent from './FilterComponent';
 
-function Filter({ filters, totalResults }) {
-  const { t } = useTranslation();
-
-  const findPathByFilterId = (id) => (filters.find((f) => f.strId === id));
+function Filter({ filters, totalResults, searchIdentifiers }) {
+  const findByFilterId = (id) => (filters.find((f) => f.strId === id));
 
   const prepareSearchByFilters = (formikValues) => {
     const searchByFilters = [];
 
     Object.keys(formikValues.selectedFilters).forEach((filterId) => {
       const fieldValues = [];
-      const dateRegex = new RegExp(".*01-01T00:00:00$");
 
       if (filterId) {
         Object.keys(formikValues.selectedFilters[filterId]).forEach((singleFilter) => {
           if (singleFilter) {
             if (formikValues.selectedFilters[filterId][singleFilter]) {
-              dateRegex.test(singleFilter) ? fieldValues.push(singleFilter + '.000Z') : fieldValues.push(singleFilter);
+              fieldValues.push(findByFilterId(filterId).type === 'date' ? singleFilter.substring(0, 4) : singleFilter);
             }
           }
         });
@@ -31,7 +26,7 @@ function Filter({ filters, totalResults }) {
         if (fieldValues.length) {
           searchByFilters.push(
             {
-              [findPathByFilterId(filterId).path]: fieldValues,
+              [findByFilterId(filterId).path]: fieldValues,
             },
           );
         }
@@ -79,6 +74,7 @@ function Filter({ filters, totalResults }) {
                   filter={filter}
                   values={prepareSearchByFilters(values)}
                   totalResults={totalResults}
+                  searchIdentifiers={searchIdentifiers}
                 />
               ))
             }
@@ -92,6 +88,7 @@ function Filter({ filters, totalResults }) {
 Filter.propTypes = {
   filters: PropTypes.instanceOf(Array),
   totalResults: PropTypes.number.isRequired,
+  searchIdentifiers: PropTypes.instanceOf(Array).isRequired,
 };
 
 Filter.defaultProps = {

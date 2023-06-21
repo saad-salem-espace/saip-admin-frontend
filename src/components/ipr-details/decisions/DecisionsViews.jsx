@@ -58,7 +58,6 @@ DecisionsViews.propTypes = {
   document: PropTypes.shape.isRequired,
   documentId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   searchResultParams: PropTypes.shape.isRequired,
-  preparedGetAttachmentURL: PropTypes.func.isRequired,
   showSearchQuery: PropTypes.bool.isRequired,
   hideSearchQueryMenu: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,

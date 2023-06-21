@@ -14,6 +14,7 @@ import { BsPlay } from 'react-icons/bs';
 import routes from 'components/routes/routes.json';
 import { useAuth } from 'react-oidc-context';
 import { LONG_DATE_12H_FORMAT } from '../../constants';
+import { convertQueryArrToStr } from '../../utils/searchQuery';
 
 const SearchHistoryTables = ({
   data,
@@ -27,10 +28,11 @@ const SearchHistoryTables = ({
   if (isAuth) {
     groupedData = data.data.reduce((acc, item) => {
       const date = Moment(item.timestamp).format(LONG_DATE_12H_FORMAT);
+      const qry = convertQueryArrToStr(item.payload.qJson);
       if (!acc[date]) {
-        acc[date] = [item.payload.query];
+        acc[date] = [qry];
       } else {
-        acc[date].push(item.payload.query);
+        acc[date].push(qry);
       }
       return acc;
     }, {});

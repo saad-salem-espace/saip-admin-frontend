@@ -1,5 +1,5 @@
 import {
-  useContext, useEffect, useRef, useState,
+  useContext, useEffect, useRef, useState, useMemo,
 } from 'react';
 import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
@@ -7,7 +7,9 @@ import {
   Button, Col, Container, Row,
 } from 'react-bootstrap';
 import { Trans, useTranslation } from 'react-i18next';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  createSearchParams, useNavigate, useSearchParams, useLocation,
+} from 'react-router-dom';
 import AppPopover from 'components/shared/app-popover/AppPopover';
 import * as Yup from 'yup';
 import Select from 'components/shared/form/select/Select';
@@ -35,9 +37,14 @@ import IprDetails from '../ipr-details/IprDetails';
 import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
 import './style.scss';
 import style from '../shared/form/search/style.module.scss';
-import { defaultConditions, parseQuery, reformatDecoder } from '../../utils/searchQuery';
+import {
+  defaultConditions,
+  parseQuery,
+  reformatArrDecoder,
+  convertQueryStrToArr,
+  convertQueryArrToStr,
+} from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
-import { decodeQuery } from '../../utils/search-query/decoder';
 import SearchResultCards from './search-result-cards/SearchResultCards';
 import TrademarksSearchResultCards from './trademarks-search-result-cards/TrademarksSearchResultCards';
 import validationMessages from '../../utils/validationMessages';
@@ -45,6 +52,8 @@ import IndustrialDesignResultCards from './industrial-design/IndustrialDesignRes
 import DecisionsResultCards from './decisions-result-cards/DecisionsResultCards';
 import ExportSearchResults from './ExportSearchResults';
 import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
+import CopyrightsResultCards from './copyrights-result-cards/CopyrightsResultCards';
+import PlantVarietyResultCards from './plant-variety-result-cards/PlantVarietyResultCards';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
@@ -72,19 +81,26 @@ function SearchResults({ showFocusArea }) {
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
   const [filters, setFilters] = useState(null);
+  const location = useLocation();
+  const [searchFilters, setSearchFilters] = useState([]);
+  console.log('SEARCH FILTER', searchFilters);
 
   const auth = useAuth();
+  const { cachedRequests } = useContext(CacheContext);
   const saveSearchHistoryIDB = useIndexedDbWrapper(tableNames.saveHistory);
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
   const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
   const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q'));
+  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
 
-  const searchResultParams = {
+  const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
-    query: searchParams.get('q'),
+    qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+    filters: searchFilters,
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
-  };
+  }), [searchParams, searchIdentifiers, searchFilters]);
 
   const getFilterParams = {
     workstreamId: searchParams.get('workstreamId'),
@@ -174,11 +190,50 @@ function SearchResults({ showFocusArea }) {
       value: 'decisionDateDesc',
     },
   ];
+
+  const sortByOptionsCopyrights = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('copyrights.grantDateAsc'),
+      value: 'grantDateAsc',
+    },
+    {
+      label: t('copyrights.grantDateDesc'),
+      value: 'grantDateDesc',
+    },
+    {
+      label: t('filingDateAsc'),
+      value: 'filingDateAsc',
+    },
+    {
+      label: t('filingDateDesc'),
+      value: 'filingDateDesc',
+    },
+  ];
+  const sortByFilingDate = [
+    {
+      label: t('mostRelevant'),
+      value: 'mostRelevant',
+    },
+    {
+      label: t('filingDateAsc'),
+      value: 'filingDateAsc',
+    },
+    {
+      label: t('filingDateDesc'),
+      value: 'filingDateDesc',
+    },
+  ];
   const map = new Map();
   map.set(1, sortByOptionsPatent);
   map.set(2, sortByPublicationAndFilingDate);
   map.set(3, sortByPublicationAndFilingDate);
   map.set(4, sortByOptionsDecisions);
+  map.set(5, sortByOptionsCopyrights);
+  map.set(6, sortByFilingDate);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
@@ -197,7 +252,7 @@ function SearchResults({ showFocusArea }) {
     if (!auth.isAuthenticated) {
       getInstanceByMultiIndex({
         indecies: {
-          queryString: searchResultParams.query,
+          queryString: convertQueryArrToStr(searchResultParams.qArr),
           workstreamId: searchResultParams.workstreamId,
         },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
@@ -209,8 +264,14 @@ function SearchResults({ showFocusArea }) {
   }, [results]);
 
   useEffect(() => {
+    if (location.state?.filters) {
+      setSearchFilters(location.state.filters);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
     executeFilters();
-  }, [searchParams.get('workstreamId')]);
+  }, [searchParams.get('q')]);
 
   useEffect(() => {
     if (filtersData.data) {
@@ -220,10 +281,7 @@ function SearchResults({ showFocusArea }) {
     }
   }, [filtersData]);
 
-  const { cachedRequests } = useContext(CacheContext);
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
-
-  const [searchQuery, setSearchQuery] = useState('');
 
   const getNextDocument = () => {
     if (!results || !activeDocument) return null;
@@ -243,9 +301,12 @@ function SearchResults({ showFocusArea }) {
     return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
   };
 
-  const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchResultParams.workstreamId}/identifiers` });
   const collapseIPR = () => {
     setIsIPRExpanded(!isIPRExpanded);
+  };
+
+  const parseAndSetSearchQuery = (qObjsArr) => {
+    setSearchQuery(convertQueryArrToStr(qObjsArr));
   };
 
   useEffect(() => {
@@ -380,25 +441,37 @@ function SearchResults({ showFocusArea }) {
 
   useEffect(() => {
     if (searchIdentifiers) {
-      const decodedQuery = decodeQuery(searchResultParams.query);
       const searchIdentifiersData = searchIdentifiers.data;
-      const reformattedDecoder = reformatDecoder(searchIdentifiers.data, decodedQuery);
+      const reformattedDecoder = reformatArrDecoder(
+        searchResultParams.qArr,
+        searchIdentifiers.data,
+      );
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
-        id: 1, data: '', identifier: searchIdentifiersData[0], condition: searchIdentifiersData[0].identifierOptions[0], operator: '',
+        id: 1,
+        data: '',
+        identifier: searchIdentifiersData[0],
+        condition: searchIdentifiersData[0].identifierOptions[0],
+        operator: '',
       }]);
     }
-  }, [searchResultParams.query, searchIdentifiers]);
+  }, [searchIdentifiers]);
 
   useEffect(() => {
     // eslint-disable-next-line
     const regexPattern = new RegExp('true');
     setIsEnabledSynonyms(regexPattern.test(searchParams.get('enableSynonyms')));
-    setSearchQuery(searchResultParams.query);
+  }, [searchParams.get('enableSynonyms')]);
+
+  useEffect(() => {
+    setSearchQuery(convertQueryArrToStr(searchResultParams.qArr));
+  }, [searchResultParams.qArr]);
+
+  useEffect(() => {
     const keywords = parseQuery(searchFields, searchParams.get('imageName'), false, currentLang);
     if (keywords) {
-      setSearchKeywords(keywords);
+      setSearchKeywords(convertQueryArrToStr(keywords));
     }
-  }, [searchFields, searchParams, currentLang, searchResultParams.query]);
+  }, [searchFields, searchParams.get('imageName'), currentLang]);
 
   const resetSearch = (workstreamId) => {
     setActiveWorkstream(workstreamId.toString());
@@ -522,6 +595,8 @@ function SearchResults({ showFocusArea }) {
     2: TrademarksSearchResultCards,
     3: IndustrialDesignResultCards,
     4: DecisionsResultCards,
+    5: CopyrightsResultCards,
+    6: PlantVarietyResultCards,
   };
 
   const formSchema = Yup.object({
@@ -591,7 +666,9 @@ function SearchResults({ showFocusArea }) {
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
-                    setIsImgUploaded={setIsImgUploaded}
+                    setIsImgUploaded={() => {
+                      setIsImgUploaded();
+                    }}
                     resultsView
                   >
                     <div className="d-md-flex mt-4">
@@ -664,11 +741,14 @@ function SearchResults({ showFocusArea }) {
             isAdvancedMenuOpen={isAdvancedMenuOpen}
             submitRef={submitRef}
             workstreamId={activeWorkstream}
-            firstIdentifierStr={searchResultParams.identifierStrId}
-            onChangeSearchQuery={setSearchQuery}
             totalResults={totalResults}
             filters={filters}
             isAdvancedSearch={isAdvancedSearch}
+            searchIdentifiers={searchIdentifiers}
+            firstIdentifierStr={searchIdentifiers?.data[0].identifierStrId}
+            onChangeSearchQuery={() => {
+              parseAndSetSearchQuery();
+            }}
           />
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
@@ -748,7 +828,7 @@ function SearchResults({ showFocusArea }) {
                   isFetching={setIsLoading}
                   RenderedComponent={searchResult[searchResultParams.workstreamId]}
                   renderedProps={{
-                    query: searchResultParams.query,
+                    query: convertQueryArrToStr(searchResultParams.qArr),
                     setActiveDocument,
                     activeDocument,
                     selectedView,
