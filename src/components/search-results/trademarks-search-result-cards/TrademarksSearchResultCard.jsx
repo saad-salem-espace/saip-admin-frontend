@@ -50,7 +50,7 @@ function TrademarksSearchResultCard({
             </div>
             <div className="title">
               <span className="d-block text-truncate mb-1">
-                {BibliographicData.BrandNameEn && <Highlighter
+                {BibliographicData?.BrandNameEn && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
@@ -62,7 +62,7 @@ function TrademarksSearchResultCard({
                 />}
               </span>
               <span className="d-block text-truncate">
-                {BibliographicData.BrandNameAr && <Highlighter
+                {BibliographicData?.BrandNameAr && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
