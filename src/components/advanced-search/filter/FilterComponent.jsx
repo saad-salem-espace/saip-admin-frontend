@@ -92,7 +92,6 @@ function FilterComponent({
   };
   
   const clearFilter = (strId) => {
-    console.log(`selectedFilters.${strId}`)
     setFieldValue(`selectedFilters.${strId}`,{});
   }
 
