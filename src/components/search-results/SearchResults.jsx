@@ -39,10 +39,10 @@ import './style.scss';
 import style from '../shared/form/search/style.module.scss';
 import {
   defaultConditions,
-  parseQuery,
-  reformatArrDecoder,
+  convertQueryArrToObjsArr,
   convertQueryStrToArr,
   convertQueryArrToStr,
+  convertQueryObjsArrToTransMemo,
 } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import SearchResultCards from './search-result-cards/SearchResultCards';
@@ -54,6 +54,7 @@ import ExportSearchResults from './ExportSearchResults';
 import exportSearchResultsValidationSchema from './exportSearchResultsValidationSchema';
 import CopyrightsResultCards from './copyrights-result-cards/CopyrightsResultCards';
 import PlantVarietyResultCards from './plant-variety-result-cards/PlantVarietyResultCards';
+import IcLayoutsResultCards from './ic-layouts-result-cards/IcLayoutsResultCards';
 
 function SearchResults({ showFocusArea }) {
   const { t, i18n } = useTranslation('search');
@@ -234,6 +235,7 @@ function SearchResults({ showFocusArea }) {
   map.set(4, sortByOptionsDecisions);
   map.set(5, sortByOptionsCopyrights);
   map.set(6, sortByFilingDate);
+  map.set(7, sortByPublicationAndFilingDate);
 
   const getSortOptions = (workstreamId) => map.get(parseInt(workstreamId, 10));
 
@@ -442,7 +444,7 @@ function SearchResults({ showFocusArea }) {
   useEffect(() => {
     if (searchIdentifiers) {
       const searchIdentifiersData = searchIdentifiers.data;
-      const reformattedDecoder = reformatArrDecoder(
+      const reformattedDecoder = convertQueryArrToObjsArr(
         searchResultParams.qArr,
         searchIdentifiers.data,
       );
@@ -467,11 +469,18 @@ function SearchResults({ showFocusArea }) {
   }, [searchResultParams.qArr]);
 
   useEffect(() => {
-    const keywords = parseQuery(searchFields, searchParams.get('imageName'), false, currentLang);
-    if (keywords) {
-      setSearchKeywords(convertQueryArrToStr(keywords));
+    if (searchIdentifiers && searchResultParams.qArr) {
+      const qObjsArr = convertQueryArrToObjsArr(
+        searchResultParams.qArr,
+        searchIdentifiers.data,
+      );
+      if (qObjsArr) {
+        setSearchKeywords(
+          convertQueryObjsArrToTransMemo(qObjsArr, searchIdentifiers, t, currentLang),
+        );
+      }
     }
-  }, [searchFields, searchParams.get('imageName'), currentLang]);
+  }, [searchResultParams.qArr, searchIdentifiers, currentLang]);
 
   const resetSearch = (workstreamId) => {
     setActiveWorkstream(workstreamId.toString());
@@ -597,6 +606,7 @@ function SearchResults({ showFocusArea }) {
     4: DecisionsResultCards,
     5: CopyrightsResultCards,
     6: PlantVarietyResultCards,
+    7: IcLayoutsResultCards,
   };
 
   const formSchema = Yup.object({
@@ -746,8 +756,8 @@ function SearchResults({ showFocusArea }) {
             isAdvancedSearch={isAdvancedSearch}
             searchIdentifiers={searchIdentifiers}
             firstIdentifierStr={searchIdentifiers?.data[0].identifierStrId}
-            onChangeSearchQuery={() => {
-              parseAndSetSearchQuery();
+            onChangeSearchQuery={(values) => {
+              parseAndSetSearchQuery(values);
             }}
           />
         </Col>

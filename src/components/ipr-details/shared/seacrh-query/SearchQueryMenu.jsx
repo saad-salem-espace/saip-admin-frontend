@@ -14,7 +14,7 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import PropTypes from 'prop-types';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { parseQuery } from 'utils/searchQuery';
+import { parseQuery, convertQueryArrToStr } from 'utils/searchQuery';
 import toastify from 'utils/toastify';
 import activeWorkstreamContext from '../context/activeWorkstreamContext';
 
@@ -38,7 +38,7 @@ function SearchQueryMenu({
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
-        workstreamId: activeWorkstream, sort: 'mostRelevant', q: parseQuery(values.searchFields, '', true),
+        workstreamId: activeWorkstream, sort: 'mostRelevant', q: convertQueryArrToStr(parseQuery(values.searchFields, '')),
       })}`,
     });
   };

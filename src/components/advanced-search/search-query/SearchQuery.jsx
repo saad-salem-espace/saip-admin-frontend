@@ -75,11 +75,20 @@ function SearchQuery({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
           <Form
-            onChange={() => {
+            onChange={(event) => {
+              const { name, value } = event.target;
+              const [fName, fIndex, fAttr] = name.split('.');// searchFields.0.data
+              const updatedArray = values[fName].map((item, i) => {
+                if (i === Number(fIndex)) {
+                  return { ...item, [fAttr]: value };
+                }
+                return item;
+              });
+              const newValues = { ...values, [fName]: updatedArray };
               if (isAdvancedMenuOpen) {
-                onChangeSearchQuery(parseQuery(values.searchFields, '', true));
+                onChangeSearchQuery(parseQuery(newValues.searchFields, ''));
               } else {
-                handleOnChange(values);
+                handleOnChange(newValues);
               }
             }}
             onSubmit={handleSubmit}

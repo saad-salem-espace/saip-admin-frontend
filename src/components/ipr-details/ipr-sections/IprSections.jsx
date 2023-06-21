@@ -16,6 +16,7 @@ import { Formik } from 'formik';
 import DecisionsResultCards from 'components/search-results/decisions-result-cards/DecisionsResultCards';
 import CopyrightsResultCards from 'components/search-results/copyrights-result-cards/CopyrightsResultCards';
 import PlantVarietyResultCards from 'components/search-results/plant-variety-result-cards/PlantVarietyResultCards';
+import IcLayoutsResultCards from 'components/search-results/ic-layouts-result-cards/IcLayoutsResultCards';
 
 import IprData from '../IprData';
 import './style.scss';
@@ -86,6 +87,7 @@ function IprSections({
     4: DecisionsResultCards,
     5: CopyrightsResultCards,
     6: PlantVarietyResultCards,
+    7: IcLayoutsResultCards,
   };
 
   const axiosConfigBookmark = getBookmarksApi(activeWorkstream, selectedCardId, true);

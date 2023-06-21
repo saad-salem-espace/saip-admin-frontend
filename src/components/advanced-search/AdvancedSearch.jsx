@@ -33,8 +33,8 @@ function AdvancedSearch({
       workstreamId={workstreamId}
       firstIdentifierStr={firstIdentifierStr}
       defaultInitializers={defaultInitializers}
-      onChangeSearchQuery={() => {
-        onChangeSearchQuery();
+      onChangeSearchQuery={(values) => {
+        onChangeSearchQuery(values);
       }}
       submitRef={submitRef}
       isAdvancedMenuOpen={isAdvancedMenuOpen}

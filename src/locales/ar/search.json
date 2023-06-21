@@ -38,6 +38,9 @@
     "or": "أو",
     "not": "باستثناء"
   },
+  "identifiers": {
+    "image": "صورة"
+  },
   "abstract": "الملخص",
   "publicationCountry": "بلد النشر",
   "clearAll": "مسح الكل",
@@ -211,7 +214,8 @@
       "Industrial Design": "تصدير النماذج الصناعية",
       "Plant Varieties": "تصدير الأصناف النباتية",
       "integratedCircuits": "تصدير الدوائر المتكاملة",
-      "Decision": "تصدير القرارات"
+      "Decision": "تصدير القرارات",
+      "IC Layout": "تصدير الدارات المتكاملة"
     }
   },
   "decisions": {

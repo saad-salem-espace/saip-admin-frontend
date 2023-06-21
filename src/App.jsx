@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import FocusArea from 'components/shared/focus-area/FocusArea';
 import Footer from 'components/layout/footer/Footer';
 import { SelectedWorkStreamIdProvider } from 'contexts/SelectedWorkStreamIdContext';
+import useAuth from './hooks/useAuth';
 
 function App() {
   const { i18n } = useTranslation();
@@ -30,6 +31,7 @@ function App() {
   const focusId = JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber;
   const focusTitle = JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.applicationTitle;
   const [showFocusArea, setShowFocusArea] = useState(null);
+  const { isAuthenticated } = useAuth();
 
   const hideFocusArea = () => {
     setShowFocusArea(false);
@@ -39,6 +41,10 @@ function App() {
   useEffect(() => {
     setShowFocusArea(!!focusId);
   }, []);
+
+  useEffect(() => {
+    hideFocusArea();
+  }, [!isAuthenticated]);
 
   return (
     <ThemeProvider
