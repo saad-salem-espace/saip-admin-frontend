@@ -53,7 +53,7 @@ function CopyrightsResultCard({
             <p className="mb-2 d-xxl-flex align-items-center text-dark fs-base">
               {BibliographicData.FilingNumber}
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              {BibliographicData?.Applicants.join(' , ')}
+              {BibliographicData?.Applicants && (BibliographicData?.Applicants.join(' , '))}
             </p>
             <p className="mb-2 text-black fs-sm font-medium">
               {t('filed', { value: Moment(BibliographicData.FilingDate).format(LONG_DATE) })}
