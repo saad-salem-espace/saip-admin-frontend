@@ -31,9 +31,9 @@ function DecisionsResultCard({
                 fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
               />}
               <div className="d-flex align-items-center mb-2">
-                <Badge text={BibliographicData.DecisionCategory} className="text-capitalize me-2 mt-1 bg-secondary" />
+                <Badge text={BibliographicData?.DecisionCategory} className="text-capitalize me-2 mt-1 bg-secondary" />
                 <span className="d-block fs-20 text-truncate">
-                  {BibliographicData.DecisionTitle
+                  {BibliographicData?.DecisionTitle
                     && <Highlighter
                       highlightTag="span"
                       highlightClassName="font-medium"
