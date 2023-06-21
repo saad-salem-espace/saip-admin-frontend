@@ -8,6 +8,8 @@ import Tabs from '../shared/tabs/Tabs';
 import Button from '../shared/button/Button';
 import AdvancedSearchStyle from './AdvancedSearch.module.scss';
 import SearchQuery from './search-query/SearchQuery';
+import Filter from './filter/Filter';
+import './advanced-search.scss';
 
 function AdvancedSearch({
   toggleAdvancedSearchMenu,
@@ -17,6 +19,10 @@ function AdvancedSearch({
   defaultInitializers,
   submitRef,
   onChangeSearchQuery,
+  totalResults,
+  filters,
+  isAdvancedSearch,
+  searchIdentifiers,
 }) {
   const { t } = useTranslation('search');
   const [activeTabId, setActiveTabId] = useState(1);
@@ -38,13 +44,25 @@ function AdvancedSearch({
   const tabsItems = [
     {
       id: 1,
+      title:
+  <div className="d-flex align-items-center">
+    {t('searchQuery')}
+    <FontAwesomeIcon icon={faCircleQuestion} className="f-20 ms-2" />
+  </div>,
+      content: getSearchQuery(),
+    },
+    {
+      id: 2,
       title: (
         <div className="d-flex align-items-center">
-          {t('searchQuery')}
-          <FontAwesomeIcon icon={faCircleQuestion} className="f-20 ms-2" />
+          {t('search:filters')}
         </div>
       ),
-      content: getSearchQuery(),
+      content: <Filter
+        filters={filters}
+        totalResults={totalResults}
+        searchIdentifiers={searchIdentifiers}
+      />,
     },
   ];
 
@@ -52,13 +70,17 @@ function AdvancedSearch({
     setActiveTabId(id);
   };
 
+  if (!isAdvancedSearch) {
+    tabsItems.shift();
+  }
+
   return (
     <div className={`px-0 h-100 position-relative ${AdvancedSearchStyle.menu}`}>
       <div>
         <Button
           variant="primary-dark"
           onClick={toggleAdvancedSearchMenu}
-          className={`${isAdvancedMenuOpen ? ' ' : AdvancedSearchStyle.closed} ${AdvancedSearchStyle.collapseIcon} p-2 d-flex`}
+          className={` ${AdvancedSearchStyle.collapseIcon} p-2 d-flex`}
           text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="text-white f-16" />}
         />
         <div className={`${isAdvancedMenuOpen ? 'd-block' : 'd-none'}`}>
@@ -93,10 +115,15 @@ AdvancedSearch.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Object) }),
   ]).isRequired,
+  totalResults: PropTypes.number.isRequired,
+  filters: PropTypes.instanceOf(Array),
+  isAdvancedSearch: PropTypes.bool.isRequired,
+  searchIdentifiers: PropTypes.instanceOf(Array).isRequired,
 };
 
 AdvancedSearch.defaultProps = {
   onChangeSearchQuery: () => {},
+  filters: [],
 };
 
 export default AdvancedSearch;

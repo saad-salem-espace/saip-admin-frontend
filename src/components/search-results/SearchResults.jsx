@@ -7,7 +7,9 @@ import {
   Button, Col, Container, Row,
 } from 'react-bootstrap';
 import { Trans, useTranslation } from 'react-i18next';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  createSearchParams, useNavigate, useSearchParams, useLocation,
+} from 'react-router-dom';
 import AppPopover from 'components/shared/app-popover/AppPopover';
 import * as Yup from 'yup';
 import Select from 'components/shared/form/select/Select';
@@ -24,10 +26,12 @@ import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
+import useAxios from 'hooks/useAxios';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
+import getFiltersApi from 'apis/filters/getFiltersApi';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
@@ -77,6 +81,9 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+  const [filters, setFilters] = useState(null);
+  const location = useLocation();
+  const [searchFilters, setSearchFilters] = useState([]);
 
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
@@ -85,15 +92,32 @@ function SearchResults({ showFocusArea }) {
   const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
   const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q'));
-
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
+
+  const checkFilters = () => {
+    if (!searchParams.get('filterEnabled') || searchParams.get('filterEnabled') === 'false') {
+      return [];
+    }
+    if (searchParams.get('filterEnabled') === 'true') return searchFilters;
+    return [];
+  };
 
   const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+    filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
-  }), [searchParams, searchIdentifiers]);
+  }), [searchParams, searchIdentifiers, searchFilters]);
+
+  const getFilterParams = {
+    workstreamId: searchParams.get('workstreamId'),
+  };
+  const getFilterConfig = getFiltersApi(getFilterParams, true);
+  const [filtersData, executeFilters] = useAxios(
+    getFilterConfig,
+    { manual: true },
+  );
 
   const saveQueryParamsForDoc = {
     workStreamId: searchParams.get('workstreamId'),
@@ -248,6 +272,24 @@ function SearchResults({ showFocusArea }) {
     }
   }, [results]);
 
+  useEffect(() => {
+    if (location.state?.filters) {
+      setSearchFilters(location.state.filters);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    executeFilters();
+  }, [searchParams.get('q')]);
+
+  useEffect(() => {
+    if (filtersData.data) {
+      if (filtersData.data.code === 200 && !(filtersData.loading)) {
+        setFilters(filtersData.data.data);
+      }
+    }
+  }, [filtersData]);
+
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
   const getNextDocument = () => {
@@ -386,7 +428,11 @@ function SearchResults({ showFocusArea }) {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: values.selectedWorkstream.value, sort: 'mostRelevant', q: (simpleQuery ? query : ''), ...(imageName && { imageName }),
+          workstreamId: values.selectedWorkstream.value,
+          sort: 'mostRelevant',
+          filterEnabled: false,
+          q: (simpleQuery ? query : ''),
+          ...(imageName && { imageName }),
         })}`,
       });
     } else {
@@ -397,6 +443,7 @@ function SearchResults({ showFocusArea }) {
         search: `?${createSearchParams({
           workstreamId: values.selectedWorkstream.value,
           q: values.searchQuery,
+          filterEnabled: false,
           ...(imageName && { imageName }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
@@ -716,6 +763,10 @@ function SearchResults({ showFocusArea }) {
             isAdvancedMenuOpen={isAdvancedMenuOpen}
             submitRef={submitRef}
             workstreamId={activeWorkstream}
+            totalResults={totalResults}
+            filters={filters}
+            isAdvancedSearch={isAdvancedSearch}
+            searchIdentifiers={searchIdentifiers}
             firstIdentifierStr={searchIdentifiers?.data[0].identifierStrId}
             onChangeSearchQuery={(values) => {
               parseAndSetSearchQuery(values);

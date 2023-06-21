@@ -1,0 +1,28 @@
+@import "../../../../assets/styles/utilities/custom-theme";
+
+.filter-search {
+  .form-control {
+    height: 57px;
+    border: $border-width solid var(--bs-border-color);
+    padding: 20px;
+    border-radius: $border-radius;
+    &:focus-visible,
+    &:focus {
+      border-color: var(--bs-border-color);
+      outline: none;
+    }
+  }
+  .icon {
+    font-size: $font-size-base * 1.375;
+    top:18px;
+    html[dir="ltr"] & {
+      right:15px;
+    }
+    html[dir="rtl"] & {
+      left:15px;
+    }
+  }
+  .form-check {
+    cursor: pointer;
+  }
+}
