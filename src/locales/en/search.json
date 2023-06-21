@@ -38,6 +38,9 @@
     "or": "OR",
     "not": "NOT"
   },
+  "identifiers": {
+    "image": "Image"
+  },
   "abstract": "Abstract",
   "publicationCountry": "Publication Country",
   "clearAll": "Clear all",
@@ -115,6 +118,9 @@
     "filingDate": "Filing Date",
     "registered": "Registered {{value}}",
     "published": "Published {{value}}",
+    "authors": "Authors",
+    "earliestPriorityDate": "Earliest Priority Date",
+    "earliestPriorityNumber": "Earliest Priority Number",
     "legal": {
       "statusCode": "Status Code",
       "status": "Status",
@@ -206,8 +212,43 @@
       "trademark": "Export Trademarks",
       "copyrights": "Export Copyrights",
       "Industrial Design": "Export Industrial Designs",
-      "plantVarieties": "Export Plant Varieties",
-      "integratedCircuits": "Export Integrated Circuits"
+      "Plant Varieties": "Export Plant Varieties",
+      "integratedCircuits": "Export Integrated Circuits",
+      "Decision": "Export Decisions",
+      "IC Layout": "IC Layout"
     }
+  },
+  "decisions": {
+    "decisionValue": "Decision {{value}}",
+    "date": "Date {{value}}",
+    "decisionNumber": "Decision Number",
+    "decisionCategory": "Decision Category",
+    "type": "Type",
+    "decisionDate": "Decision Date",
+    "decision": "Decision",
+    "domain": "Domain",
+    "keywords": "Keywords",
+    "decisionBrief": "Decision Brief",
+    "judgementDecision": "Judgement Decision",
+    "references": "References",
+    "failerMsg": "Facts",
+    "reasons": "Reasons",
+    "decisionDateDesc": "Decision date desc",
+    "decisionDateAsc": "Decision date asc",
+    "facts": "Facts"
+  },
+  "copyrights": {
+    "grantDateAsc": "Grant date asc",
+    "grantDateDesc": "Grant date desc",
+    "granted": "Granted {{value}}",
+    "copyrightsData": "Copyrights Data",
+    "grantDate": "Grant Date",
+    "claimants": "Claimants"
+  },
+  "plantVariety": {
+    "title": "Title",
+    "classification": "Classification",
+    "status": "Status",
+    "ipOffice": "IP Office"
   }
 }

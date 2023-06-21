@@ -41,6 +41,14 @@ import addIcon from '../../assets/images/icons/coloredAdd.svg';
 import IndustrialDesignViews from './industrial-design/IndustrialDesignViews';
 import IndustrialDesignIprOptions from './industrial-design/IndustrialDesignIprOptions';
 import './ipr-details.scss';
+import DecisionsViews from './decisions/DecisionsViews';
+import decisionsIprOptions from './decisions/DecisionsIprOptions';
+import CopyrightsViews from './copyrights/CopyrightsViews';
+import copyrightsIprOptions from './copyrights/CopyrightsIprOptions';
+import PlantVarietyViews from './plant-variety/PlantVarietyViews';
+import plantVarietyIprOptions from './plant-variety/PlantVarietyOptions';
+import IcLayoutsIprViews from './ic-layouts/IcLayoutsIprViews';
+import icLayoutsIprOptions from './ic-layouts/IcLayoutsIprOptions';
 
 function IprDetails({
   collapseIPR,
@@ -62,27 +70,50 @@ function IprDetails({
   fromFocusArea,
   hideFocus,
 }) {
-  const { t } = useTranslation('search', 'dashboard');
+  const { t, i18n } = useTranslation('search', 'dashboard');
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [validHighlight, setValidHighlight] = useState(false);
   const [highlightTrigger, setHighlightTrigger] = useState(0);
   const [document, setDocument] = useState(null);
   const [searchParams] = useSearchParams();
-  const [selectedView, setSelectedView] = useState({
-    label: t('ipr.bibliographic'),
-    value: 'BibliographicData',
-  });
+  const currentLang = i18n.language;
+  const searchResultParams = {
+    workstreamId:
+      searchParams.get('workstreamId') || activeWorkstream.toString(),
+  };
+
+  const getDefaultSelectedViewValue = () => {
+    let defaultSelectedViewValue = 'BibliographicData';
+    if (searchResultParams.workstreamId === '4') {
+      defaultSelectedViewValue = 'JudgementDecision';
+    }
+    if (searchResultParams.workstreamId === '5') {
+      defaultSelectedViewValue = 'CopyrightsData';
+    }
+    return defaultSelectedViewValue;
+  };
+  const getDefaultSelectedViewLabel = () => {
+    let defaultSelectedViewLabel = t('ipr.bibliographic');
+    if (searchResultParams.workstreamId === '4') {
+      defaultSelectedViewLabel = t('decisions.judgementDecision');
+    }
+    if (searchResultParams.workstreamId === '5') {
+      defaultSelectedViewLabel = t('copyrights.copyrightsData');
+    }
+    return defaultSelectedViewLabel;
+  };
+  const [selectedView, setSelectedView] = useState({});
   const [reachedLimit, setReachedLimit] = useState(false);
   const [isSubmittingDownloadPdf, setIsSubmittingDownloadPdf] = useState(false);
   const { isAuthenticated } = useAuth();
   const patentOptions = patentIprOptions().options;
   const trademarkOptions = trademarkIprOptions().options;
+  const decisionsOptions = decisionsIprOptions().options;
+  const copyrightsOptions = copyrightsIprOptions().options;
   const industrialDesignOptions = IndustrialDesignIprOptions().options;
-  const searchResultParams = {
-    workstreamId:
-      searchParams.get('workstreamId') || activeWorkstream.toString(),
-  };
+  const plantVarietyOptions = plantVarietyIprOptions().options;
+  const icLayoutsOptions = icLayoutsIprOptions().options;
   const [, execute] = useAxios(
     documentApi({
       workstreamId: fromFocusArea
@@ -106,6 +137,13 @@ function IprDetails({
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
   };
+
+  useEffect(() => {
+    setSelectedView({
+      label: getDefaultSelectedViewLabel(),
+      value: getDefaultSelectedViewValue(),
+    });
+  }, [currentLang]);
 
   useEffect(() => {
     setDocument(null);
@@ -152,7 +190,7 @@ function IprDetails({
         });
       };
     }
-    return () => {};
+    return () => { };
   }, [document]);
 
   let documentIndex = 0;
@@ -292,19 +330,69 @@ function IprDetails({
         examinerView={examinerView}
       />
     ),
+    4: (
+      <DecisionsViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    5: (
+      <CopyrightsViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    6: (
+      <PlantVarietyViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
+    7: (
+      <IcLayoutsIprViews
+        selectedView={selectedView.value}
+        isIPRExpanded={isIPRExpanded}
+        document={document}
+        documentId={documentId}
+        searchResultParams={searchResultParams}
+        preparedGetAttachmentURL={preparedGetAttachmentURL}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      />
+    ),
   };
 
   const options = {
     1: patentOptions,
     2: trademarkOptions,
     3: industrialDesignOptions,
+    4: decisionsOptions,
+    5: copyrightsOptions,
+    6: plantVarietyOptions,
+    7: icLayoutsOptions,
   };
-
   const renderSelectedView = () => {
     let content = <NoData />;
     const workstreamId = fromFocusArea
       ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
       : searchResultParams.workstreamId;
+
     if (workstreamId.toString() === '2') {
       if (
         document[selectedView.value]
@@ -325,6 +413,26 @@ function IprDetails({
       ) {
         content = views[workstreamId];
       }
+    } else if (workstreamId.toString() === '4') {
+      if (
+        document[selectedView.value]
+        || selectedView.value === 'JudgementDecision'
+      ) {
+        content = views[workstreamId];
+      }
+    } else if (workstreamId.toString() === '5') {
+      if (
+        document[selectedView.value]
+        || selectedView.value === 'CopyrightsData' || selectedView.value === 'Description'
+      ) {
+        content = views[workstreamId];
+      }
+    } else if (workstreamId.toString() === '6' || workstreamId.toString() === '7') {
+      if (
+        document[selectedView.value]
+      ) {
+        content = views[workstreamId];
+      }
     }
     return content;
   };
@@ -342,7 +450,7 @@ function IprDetails({
               setIsBookmark={setIsBookmark}
             />
             <h5 className="mb-0">
-              {document.BibliographicData.PublicationNumber}
+              {(searchResultParams.workstreamId === '4' || searchResultParams.workstreamId === '5') ? document.BibliographicData.FilingNumber : document.BibliographicData.PublicationNumber}
             </h5>
           </div>
           <div className="d-flex">
@@ -383,13 +491,31 @@ function IprDetails({
             )}
           </div>
         </div>
+        {searchResultParams.workstreamId === '4' && (
+          <div className="mx-6">
+            <div className="mb-2 d-flex">
+              <Badge
+                text={document.BibliographicData.DecisionCategory}
+                className="text-capitalize me-2 bg-secondary"
+              />
+              <h5 className="text-capitalize app-text-primary-dark font-regular text-truncate">
+                {document.BibliographicData.DecisionTitle}
+              </h5>
+            </div>
+            <p className="text-gray">
+              <HandleEmptyAttribute
+                checkOn={document?.BibliographicData?.Keywords}
+              />
+            </p>
+          </div>
+
+        )}
         {searchResultParams.workstreamId === '2' && (
           <div className="ms-6 mb-2">
             <Badge
               text={document.BibliographicData.TrademarkLastStatus}
-              className="text-capitalize me-2 mb-4 app-bg-secondary"
+              className="text-capitalize me-2 mb-4 bg-secondary"
             />
-
             <div className="d-flex justify-content-between">
               <div className="me-2 mb-md-0 mb-2">
                 <h5 className="text-capitalize app-text-primary-dark font-regular mb-2">
@@ -415,6 +541,25 @@ function IprDetails({
               )}
             </div>
           </div>
+        )}
+        {searchResultParams.workstreamId === '5' && (
+          <div className="mx-6">
+            <div className="mb-2 d-flex">
+              <Badge
+                text={document.BibliographicData.Status}
+                className="text-capitalize me-2 bg-secondary"
+              />
+              <h5 className="text-capitalize app-text-primary-dark font-regular text-truncate">
+                {document.BibliographicData.Title}
+              </h5>
+            </div>
+            <p className="text-gray">
+              <HandleEmptyAttribute
+                checkOn={document?.BibliographicData?.Authors.join(' , ')}
+              />
+            </p>
+          </div>
+
         )}
         {searchResultParams.workstreamId === '3' && (
           <div className="ms-6 mb-2">
@@ -444,7 +589,7 @@ function IprDetails({
             </div>
           </div>
         )}
-        {searchResultParams.workstreamId === '1' && (
+        {(searchResultParams.workstreamId === '1' || searchResultParams.workstreamId === '6' || searchResultParams.workstreamId === '7') && (
           <p className="text-gray px-6">
             <HandleEmptyAttribute
               checkOn={document.BibliographicData.ApplicationTitle}
@@ -586,17 +731,17 @@ IprDetails.defaultProps = {
   documentId: null,
   className: null,
   activeWorkstream: null,
-  onClose: () => {},
-  getNextDocument: () => {},
-  getPreviousDocument: () => {},
-  setActiveDocument: () => {},
+  onClose: () => { },
+  getNextDocument: () => { },
+  getPreviousDocument: () => { },
+  setActiveDocument: () => { },
   dashboard: false,
   showActions: true,
   examinerView: false,
   activeTab: 2,
-  setNotesUpdated: () => {},
+  setNotesUpdated: () => { },
   fromFocusArea: false,
-  hideFocus: () => {},
+  hideFocus: () => { },
 };
 
 export default IprDetails;

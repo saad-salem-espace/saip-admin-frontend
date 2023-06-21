@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 
-function SortHistory({ changeSortBy }) {
+function SortOrder({ changeSortBy }) {
   const { t } = useTranslation('search', 'history');
 
   return (
@@ -37,8 +37,8 @@ function SortHistory({ changeSortBy }) {
   );
 }
 
-SortHistory.propTypes = {
+SortOrder.propTypes = {
   changeSortBy: PropTypes.func.isRequired,
 };
 
-export default SortHistory;
+export default SortOrder;

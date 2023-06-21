@@ -14,7 +14,7 @@ const option = Yup.object().shape({
 const SearchQueryValidationSchema = Yup.object().shape({
   searchFields: Yup.array().of(
     Yup.object().shape({
-      id: Yup.number().required(),
+      // id: Yup.number().required(),
       condition: option.required(validationMessages.required),
       identifier: Yup.object().shape({
         id: Yup.number().required(),
@@ -23,7 +23,7 @@ const SearchQueryValidationSchema = Yup.object().shape({
         identifierType: Yup.string().trim().required(),
         identifierOptions: Yup.array().of(option).required(),
       }).required(validationMessages.required),
-      operator: Yup.string().oneOf(['AND', 'OR', 'NOT']),
+      operator: Yup.string().oneOf(['AND', 'OR', 'NOT', '']),
       // Validates according to optionCategories from 'utils/searchQueryParser'
       data: Yup.mixed().required(validationMessages.search.required)
         .test('Is not empty', validationMessages.search.required, (data) => (

@@ -27,6 +27,7 @@
     "patent": "Patents",
     "trademark": "Trademarks",
     "copyrights": "Copyrights",
+    "decision": "Decision",
     "industrialDesign": "Industrial Designs",
     "plantVarieties": "Plant Varieties",
     "integratedCircuits": "Integrated Circuits"
@@ -35,6 +36,7 @@
     "patent": "<0>Patents</0> Board",
     "trademark": "<0>Trademarks</0> Board",
     "copyrights": "<0>Copyrights</0> Board",
+    "decision": "<0>Decision</0> Board",
     "industrialDesign": "<0>Industrial Designs</0> Board",
     "plantVarieties": "<0>Plant Varieties</0> Board",
     "integratedCircuits": "<0>Integrated Circuits</0> Board",

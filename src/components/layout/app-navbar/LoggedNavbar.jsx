@@ -13,6 +13,7 @@ import React, {
 import getHistoryApi from 'apis/history/getHistoryApi';
 import useAxios from 'hooks/useAxios';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
+import routes from 'components/routes/routes.json';
 import Notifications from './notifications/Notifications';
 import useAuth from '../../../hooks/useAuth';
 import LanguageSwitch from './shared/LanguageSwitch';
@@ -23,7 +24,9 @@ import MyBookmarksLink from './shared/MyBookmarksLink';
 import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
 import { roles } from '../../../utils/roleMapper';
+import { convertQueryArrToStr } from '../../../utils/searchQuery';
 import DropdownItem from './shared/recent-search/DropdownItem';
+import HelpLink from './shared/HelpLink';
 
 function LoggedNavbar({
   lang,
@@ -95,7 +98,7 @@ function LoggedNavbar({
             )}
             <MyQueriesLink />
             <MyBookmarksLink />
-            <Nav.Link to="/" disabled as={Link} className="has-icon">
+            <Nav.Link to={routes.myActivity} as={Link} className="has-icon">
               <BsListUl className="icon list" />
               {t('navbar.myActivity')}
             </Nav.Link>
@@ -115,13 +118,14 @@ function LoggedNavbar({
               {
                 history.map((h) => (
                   <DropdownItem
-                    query={h?.payload?.query}
+                    query={convertQueryArrToStr(h?.payload?.qJson)}
                     timestamp={h.timestamp}
                     workStreamId={workStreamId}
                   />
                 ))
               }
             </RecentSearch>
+            <HelpLink />
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
