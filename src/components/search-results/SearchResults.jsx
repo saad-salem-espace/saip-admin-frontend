@@ -84,7 +84,6 @@ function SearchResults({ showFocusArea }) {
   const [filters, setFilters] = useState(null);
   const location = useLocation();
   const [searchFilters, setSearchFilters] = useState([]);
-  console.log('SEARCH FILTER', searchFilters);
 
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);

@@ -45,8 +45,7 @@ function Filter({ filters, totalResults, searchIdentifiers }) {
         values,
       }) => (
         <Form>
-          <div className="d-flex justify-content-between align-items-center mt-5">
-            <h6 className="mb-0" />
+          <div className="d-flex justify-content-end align-items-center mt-5">
             <div className="">
               <RadioButtonGroup moduleClassName="customRadio" className="ms-md-4 ms-0 filter-toggle d-flex align-items-center">
                 <RadioButton
