@@ -74,9 +74,6 @@ function FilterComponent({
   };
 
   const onSubmit = () => {
-    console.log('SUBMITTING');
-    console.log(values);
-
     navigate({
       pathname: '/search',
       search: `?${createSearchParams({
