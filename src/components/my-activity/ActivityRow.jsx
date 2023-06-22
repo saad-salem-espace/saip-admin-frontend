@@ -22,7 +22,7 @@ const ActivityRow = (data) => {
   const getActivityValue = () => {
     let activityValue = activity.payload?.filingNumber;
     if (activity.model === 'Query') {
-      activityValue = activity.action === 'run' ? convertQueryArrToStr(activity.payload?.qJson) : activity.payload?.queryString;
+      activityValue = activity.action === 'run' ? convertQueryArrToStr(activity.payload?.qjson) : activity.payload?.queryString;
     }
     if (activity.model === 'ExportDocuments') {
       activityValue = activity.payload?.documentsIds.length;

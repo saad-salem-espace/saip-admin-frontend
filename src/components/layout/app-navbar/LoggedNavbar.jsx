@@ -113,12 +113,12 @@ function LoggedNavbar({
               {t('navbar.ipSearch')}
             </Nav.Link>
             <RecentSearch
-              getNewHistory={getNewHistory}
+              getNewHistory={() => { getNewHistory(); }}
             >
               {
                 history.map((h) => (
                   <DropdownItem
-                    query={convertQueryArrToStr(h?.payload?.qJson)}
+                    query={convertQueryArrToStr(h?.payload?.qjson)}
                     timestamp={h.timestamp}
                     workStreamId={workStreamId}
                   />
