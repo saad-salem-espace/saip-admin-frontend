@@ -100,6 +100,7 @@ function ChartAnalytics({
         data: valuesData,
         backgroundColor: colors,
         borderColor: colors,
+        barThickness: 'flex',
         barPercentage: 0.9,
         categoryPercentage: 0.6,
       },
@@ -111,14 +112,9 @@ function ChartAnalytics({
 
   if (!valuesData.length) return (<NoData />);
 
-  const getHeight = (len) => {
-    if (len === 1) return '150px';
-    if (len === 2) return '250px';
-    return '400px';
-  };
+  const getHeight = (len) => `${150 + (len * 30)}px`;
 
   return ((<Bar options={options} data={data} style={{ height: getHeight(valuesData.length) }} />));
-  // to-do: adjust height according to data length
 }
 
 ChartAnalytics.propTypes = {
