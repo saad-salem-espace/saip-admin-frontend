@@ -528,9 +528,8 @@ function SearchResults({ showFocusArea }) {
       }
     }
     if (media === 'xl' && isIPRExpanded) {
-      size = 12;
-      if (isAdvancedSearch) {
-        size = isAdvancedMenuOpen ? 8 : 11;
+      if (isAdvancedMenuOpen) {
+        size = 8;
       } else {
         size = 11;
       }
