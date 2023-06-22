@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import React, { useState, useContext, useCallback } from 'react';
+import React, {
+  useState, useContext, useCallback, useEffect,
+} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesLeft, faAnglesRight, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
@@ -73,6 +75,12 @@ function AdvancedSearch({
   if (!isAdvancedSearch) {
     tabsItems.shift();
   }
+
+  useEffect(() => {
+    if (!isAdvancedSearch) {
+      setActiveTabId(2);
+    }
+  }, [isAdvancedSearch]);
 
   return (
     <div className={`px-0 h-100 position-relative ${AdvancedSearchStyle.menu}`}>
