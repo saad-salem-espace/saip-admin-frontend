@@ -40,67 +40,75 @@ function IcLayoutsResultCard({
               fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
             />}
             {
-            BibliographicData?.ApplicationTitle
-            && <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData?.ApplicationTitle,
-                query,
-              )}
-              searchWords={highlightWords}
-              autoEscape
-            />
-          }
+              BibliographicData?.ApplicationTitle
+              && <Highlighter
+                highlightTag="span"
+                highlightClassName="font-medium"
+                textToHighlight={trimStringRelativeToSubtext(
+                  BibliographicData?.ApplicationTitle,
+                  query,
+                )}
+                searchWords={highlightWords}
+                autoEscape
+              />
+            }
           </div>
           <p className="mb-2 text-black md-text">
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData?.FilingNumber,
-                query,
-              )}
-              searchWords={highlightWords}
-              autoEscape
-            />
+            {
+              BibliographicData?.FilingNumber && (
+                <Highlighter
+                  highlightTag="span"
+                  highlightClassName="font-medium"
+                  textToHighlight={trimStringRelativeToSubtext(
+                    BibliographicData?.FilingNumber,
+                    query,
+                  )}
+                  searchWords={highlightWords}
+                  autoEscape
+                />
+              )
+            }
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
             {t('priority', { value: BibliographicData?.PriorityDate })}
             <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
             {t('filed', { value: BibliographicData?.FilingDate })}
             {
-            BibliographicData?.PublicationDate && (
-              <>
-                <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                {t('published', { value: BibliographicData?.PublicationDate })}
-              </>
-            )
-          }
+              BibliographicData?.PublicationDate && (
+                <>
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  {t('published', { value: BibliographicData?.PublicationDate })}
+                </>
+              )
+            }
           </p>
           <div className="d-flex">
             {
-            (firstDrawing && (selectedView.value !== 'compact')) && (
-              <div className={`${style['patent-img']} me-2`}>
-                <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
-              </div>
-            )
-          }
+              (firstDrawing && (selectedView.value !== 'compact')) && (
+                <div className={`${style['patent-img']} me-2`}>
+                  <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
+                </div>
+              )
+            }
             <p className="text-gray sm-text">
-              <Highlighter
-                highlightTag="span"
-                highlightClassName="font-medium"
-                textToHighlight={trimStringRelativeToSubtext(
-                  BibliographicData?.Applicants.join(' , '),
-                  query,
-                )}
-                searchWords={highlightWords}
-                autoEscape
-              />
+              {
+                BibliographicData?.Applicants && (
+                  <Highlighter
+                    highlightTag="span"
+                    highlightClassName="font-medium"
+                    textToHighlight={trimStringRelativeToSubtext(
+                      BibliographicData?.Applicants.join(' , '),
+                      query,
+                    )}
+                    searchWords={highlightWords}
+                    autoEscape
+                  />
+                )
+              }
             </p>
           </div>
         </div>
-    )}
+      )}
     />
   );
 }
