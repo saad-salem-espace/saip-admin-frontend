@@ -54,16 +54,20 @@ function IcLayoutsResultCard({
           }
           </div>
           <p className="mb-2 text-black md-text">
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData?.FilingNumber,
-                query,
-              )}
-              searchWords={highlightWords}
-              autoEscape
-            />
+            {
+              BibliographicData?.FilingNumber && (
+                <Highlighter
+                  highlightTag="span"
+                  highlightClassName="font-medium"
+                  textToHighlight={trimStringRelativeToSubtext(
+                    BibliographicData?.FilingNumber,
+                    query,
+                  )}
+                  searchWords={highlightWords}
+                  autoEscape
+                />
+              )
+            }
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
             {t('priority', { value: BibliographicData?.PriorityDate })}
@@ -87,16 +91,20 @@ function IcLayoutsResultCard({
             )
           }
             <p className="text-gray sm-text">
-              <Highlighter
-                highlightTag="span"
-                highlightClassName="font-medium"
-                textToHighlight={trimStringRelativeToSubtext(
-                  BibliographicData?.Applicants.join(' , '),
-                  query,
-                )}
-                searchWords={highlightWords}
-                autoEscape
-              />
+              {
+                BibliographicData?.Applicants && (
+                  <Highlighter
+                    highlightTag="span"
+                    highlightClassName="font-medium"
+                    textToHighlight={trimStringRelativeToSubtext(
+                      BibliographicData?.Applicants.join(' , '),
+                      query,
+                    )}
+                    searchWords={highlightWords}
+                    autoEscape
+                  />
+                )
+              }
             </p>
           </div>
         </div>
