@@ -516,7 +516,6 @@ function SearchResults({ showFocusArea }) {
 
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
-    setIsAdvancedSearch(!isAdvancedSearch);
   };
 
   const getIprClassName = (media) => {
@@ -542,43 +541,30 @@ function SearchResults({ showFocusArea }) {
   const getSearchResultsClassName = (media) => {
     let size = 5;
     if (media === 'xxl') {
-      if (isAdvancedSearch) {
-        if (!totalResults) {
-          size = 9;
-        }
-        if (!isAdvancedMenuOpen) {
-          if (totalResults) {
-            size = 7;
-          } else {
-            size = 11;
-          }
+      if (!isAdvancedMenuOpen) {
+        if (totalResults) {
+          size = 7;
+        } else {
+          size = 11;
         }
       } else if (totalResults) {
-        size = 7;
-        if (isIPRExpanded) {
-          size = 4;
-        }
+        size = 5;
       } else {
-        size = 11;
+        size = 9;
       }
     }
     if (media === 'xl') {
       size = 4;
-      if (isAdvancedSearch) {
-        if (!totalResults) {
-          size = 8;
-        }
-        if (!isAdvancedMenuOpen) {
-          if (totalResults) {
-            size = 7;
-          } else {
-            size = 10;
-          }
+      if (!isAdvancedMenuOpen) {
+        if (totalResults) {
+          size = 7;
+        } else {
+          size = 11;
         }
       } else if (totalResults) {
-        size = 7;
+        size = 4;
       } else {
-        size = 10;
+        size = 8;
       }
     }
     return size;
@@ -698,7 +684,6 @@ function SearchResults({ showFocusArea }) {
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
-                            setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
                           }}
                           isToggleButtonOn={isAdvancedSearch}
                           text={t('advancedSearch')}
