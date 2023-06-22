@@ -521,9 +521,8 @@ function SearchResults({ showFocusArea }) {
   const getIprClassName = (media) => {
     let size = 4;
     if (media === 'xxl' && isIPRExpanded) {
-      size = 12;
-      if (isAdvancedSearch) {
-        size = isAdvancedMenuOpen ? 9 : 11;
+      if (isAdvancedMenuOpen) {
+        size = 9;
       } else {
         size = 11;
       }
