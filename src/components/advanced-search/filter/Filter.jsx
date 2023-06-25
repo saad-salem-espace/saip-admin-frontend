@@ -1,11 +1,10 @@
-import RadioButton from 'components/shared/form/radio-button/RadioButton';
-import RadioButtonGroup from 'components/shared/form/radio-button/RadioButtonGroup';
 import { Formik, Form } from 'formik';
-import { FaListUl } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import FilterComponent from './FilterComponent';
 
-function Filter({ filters, totalResults, searchIdentifiers }) {
+function Filter({
+  filters, totalResults, searchIdentifiers, view,
+}) {
   const findByFilterId = (id) => (filters.find((f) => f.strId === id));
 
   const prepareSearchByFilters = (formikValues) => {
@@ -37,7 +36,6 @@ function Filter({ filters, totalResults, searchIdentifiers }) {
 
   return (
     <Formik initialValues={{
-      view: 'search',
       selectedFilters: {},
     }}
     >
@@ -45,35 +43,15 @@ function Filter({ filters, totalResults, searchIdentifiers }) {
         values,
       }) => (
         <Form>
-          <div className="d-flex justify-content-end align-items-center mt-5">
-            <div className="">
-              <RadioButtonGroup moduleClassName="customRadio" className="ms-md-4 ms-0 filter-toggle d-flex align-items-center">
-                <RadioButton
-                  name="view"
-                  value="search"
-                  checked={values.view === 'search'}
-                >
-                  <FaListUl />
-                </RadioButton>
-                <RadioButton
-                  name="view"
-                  value="chart"
-                  checked={values.view === 'chart'}
-                >
-                  <div className="chart-view-icon" />
-                </RadioButton>
-              </RadioButtonGroup>
-            </div>
-          </div>
           <div className="mt-4">
             {
               filters.map((filter) => (
                 <FilterComponent
-                  changeViewFilter={values.view}
                   filter={filter}
                   values={prepareSearchByFilters(values)}
                   totalResults={totalResults}
                   searchIdentifiers={searchIdentifiers}
+                  view={view}
                 />
               ))
             }
@@ -88,6 +66,7 @@ Filter.propTypes = {
   filters: PropTypes.instanceOf(Array),
   totalResults: PropTypes.number.isRequired,
   searchIdentifiers: PropTypes.instanceOf(Array).isRequired,
+  view: PropTypes.string.isRequired,
 };
 
 Filter.defaultProps = {
