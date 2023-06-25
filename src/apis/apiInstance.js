@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const headers = {
   'Content-Type': 'application/json',
+  'API-KEY': process.env.REACT_APP_API_KEY,
 };
 const hostURL = process.env.REACT_APP_BACKEND_URL;
 const apiInstance = axios.create({
