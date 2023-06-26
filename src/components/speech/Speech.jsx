@@ -34,29 +34,32 @@ const Speech = ({
   const recognition = new (window.SpeechRecognition
     || window.webkitSpeechRecognition)();
   const startRecored = () => {
-    if (!isRecording) {
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = selectedOption;
-      recognition.start();
-      recognition.onstart = () => {
-        setIsRecording(true);
-        setIsStartDisabled(true);
-        setIsStopDisabled(false);
-      };
+    const permissions = navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    permissions.then(() => {
+      if (!isRecording) {
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = selectedOption;
+        recognition.start();
+        recognition.onstart = () => {
+          setIsRecording(true);
+          setIsStartDisabled(true);
+          setIsStopDisabled(false);
+        };
 
-      recognition.onend = () => {
-        setIsRecording(false);
-        setIsStartDisabled(false);
-        setIsStopDisabled(true);
-      };
+        recognition.onend = () => {
+          setIsRecording(false);
+          setIsStartDisabled(false);
+          setIsStopDisabled(true);
+        };
 
-      recognition.onresult = (event) => {
-        const finalTranscript = event.results[event.results.length - 1][0].transcript;
-        setSpeechValue(finalTranscript);
-        getSpeechValue(speechValue);
-      };
-    }
+        recognition.onresult = (event) => {
+          const finalTranscript = event.results[event.results.length - 1][0].transcript;
+          setSpeechValue(finalTranscript);
+          getSpeechValue(speechValue);
+        };
+      }
+    });
   };
 
   const stopSpeech = () => {
