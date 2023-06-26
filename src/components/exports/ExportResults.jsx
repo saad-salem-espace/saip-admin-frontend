@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import Dropdown from 'react-bootstrap/Dropdown';
 import React, { useCallback, useState } from 'react';
 import { FiDownload } from 'react-icons/fi';
-import { exportCSV } from 'utils/exports/exportSearchResults';
+import { exportCsv, exportXlsx } from 'utils/exports';
 import PropTypes from 'prop-types';
 import { executeAfterLimitValidation, LIMITS } from 'utils/manageLimits';
 import LimitReached from 'components/shared/limit-reached/LimitReached';
@@ -36,42 +36,42 @@ const ExportResults = ({ workstream, getSelectedItems, isValid }) => {
     );
   };
 
+  const commonExport = useCallback((executor) => () => {
+    const selectedItems = getSelectedItems();
+    const currentCounter = getExportsCounter();
+    const count = (currentCounter[workstream.workstreamName] || 0) + selectedItems.length - 1;
+
+    const runExport = () => {
+      executor(workstream.workstreamName, selectedItems, t(`workstreams.${workstream.workstreamName}`));
+
+      if (isAuthenticated) {
+        excuteLogging(exportDocumentsLoggerApi({
+          workstreamId: workstream.id,
+          type: 'csv',
+          filingNumbers: selectedItems.map((item) => item.BibliographicData.FilingNumber),
+        })).catch(() => {});
+      } else {
+        currentCounter[workstream.workstreamName] = count + 1;
+        localStorage.setItem(LIMITS.CSV_EXPORT_LIMIT, JSON.stringify(currentCounter));
+      }
+    };
+
+    if (isAuthenticated) {
+      runExport();
+      return;
+    }
+
+    executeAfterLimitValidation({
+      data: { workstreamId: workstream.id, code: LIMITS.CSV_EXPORT_LIMIT, count },
+      onSuccess: runExport,
+      onRichLimit: () => { setReachedLimit(true); },
+      onFailure: onServerError,
+    });
+  }, [workstream, getSelectedItems]);
+
   const allowedTypes = [
-    {
-      type: '.csv',
-      action: () => {
-        const selectedItems = getSelectedItems();
-        const currentCounter = getExportsCounter();
-        const count = (currentCounter[workstream.workstreamName] || 0) + selectedItems.length - 1;
-
-        const runExport = () => {
-          exportCSV(workstream.workstreamName, selectedItems, t(`workstreams.${workstream.workstreamName}`));
-
-          if (isAuthenticated) {
-            excuteLogging(exportDocumentsLoggerApi({
-              workstreamId: workstream.id,
-              type: 'csv',
-              filingNumbers: selectedItems.map((item) => item.BibliographicData.FilingNumber),
-            })).catch(() => {});
-          } else {
-            currentCounter[workstream.workstreamName] = count + 1;
-            localStorage.setItem(LIMITS.CSV_EXPORT_LIMIT, JSON.stringify(currentCounter));
-          }
-        };
-
-        if (isAuthenticated) {
-          runExport();
-          return;
-        }
-
-        executeAfterLimitValidation({
-          data: { workstreamId: workstream.id, code: LIMITS.CSV_EXPORT_LIMIT, count },
-          onSuccess: runExport,
-          onRichLimit: () => { setReachedLimit(true); },
-          onFailure: onServerError,
-        });
-      },
-    },
+    { type: '.csv', action: commonExport(exportCsv) },
+    { type: '.xlsx', action: commonExport(exportXlsx) },
   ];
 
   return (
