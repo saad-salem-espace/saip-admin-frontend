@@ -1,0 +1,67 @@
+.speech-popover {
+  margin-top: -117px;
+  min-width: 317px;
+  margin-right: -100px;
+
+  html[dir="rtl"] & {
+    margin-left: -200px;
+  }
+
+  html[dir="ltr"] & {
+    margin-left: 200px;
+  }
+
+  .popover-header {
+    background-color: transparent;
+  }
+
+  .start-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stop-btn {
+    div {
+      width: 16px;
+      height: 16px;
+      background-color: var(--bs-primary);
+    }
+
+    &:hover {
+      div {
+        background-color: var(--bs-white);
+      }
+    }
+  }
+
+  .stop-btn.disabled div {
+    background-color: var(--bs-gray-500);
+  }
+}
+
+.lang-select {
+  width: 189px;
+
+  &.defaultSelect {
+    div[class$="container"] {
+      height: 100%;
+    }
+
+    div[class$=singleValue] {
+      bottom: 12px;
+    }
+  }
+}
+
+.inner-speech.speech-popover {
+  top: 320px !important;
+  transform: inherit !important;
+
+  html[dir="ltr"] & {
+    margin-left: calc(100vw - 500px);
+  }
+
+  html[dir="rtl"] & {
+    margin-left: 200px;
+  }
+}
