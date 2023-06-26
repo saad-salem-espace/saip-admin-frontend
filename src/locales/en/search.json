@@ -250,5 +250,9 @@
     "classification": "Classification",
     "status": "Status",
     "ipOffice": "IP Office"
+  },
+  "speech": {
+    "english": "English",
+    "arabic": "Arabic"
   }
 }

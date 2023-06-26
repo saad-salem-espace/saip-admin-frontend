@@ -645,6 +645,9 @@ function SearchResults({ showFocusArea }) {
 
   if (!workstreams?.data) return null;
 
+  const onRecordingCallback = (v) => {
+    setSearchQuery(v);
+  };
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -688,14 +691,16 @@ function SearchResults({ showFocusArea }) {
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
                     isAdvanced={isAdvancedSearch}
-                    className={`${style.searchResultsView} search-results-view`}
+                    className={`${style.searchResultsView} ${isAdvancedSearch ? style.advanced : ''} search-results-view`}
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
+                    onRecordingCallback={onRecordingCallback}
                     setIsImgUploaded={() => {
                       setIsImgUploaded();
                     }}
                     resultsView
+                    speechClassName="inner-speech"
                   >
                     <div className="d-md-flex mt-4">
                       <div className="d-flex align-items-center me-4">

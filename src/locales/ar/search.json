@@ -250,5 +250,9 @@
     "classification": "الوصف",
     "status": "الحالة",
     "ipOffice": "مكتب IP"
+  },
+  "speech": {
+    "english": "الإنجليزية",
+    "arabic": "العربية"
   }
 }
