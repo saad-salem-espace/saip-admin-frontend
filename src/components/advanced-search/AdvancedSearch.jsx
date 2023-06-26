@@ -64,6 +64,21 @@ function AdvancedSearch({
         filters={filters}
         totalResults={totalResults}
         searchIdentifiers={searchIdentifiers}
+        view="search"
+      />,
+    },
+    {
+      id: 3,
+      title: (
+        <div className="d-flex align-items-center">
+          {t('search:analytics')}
+        </div>
+      ),
+      content: <Filter
+        filters={filters}
+        totalResults={totalResults}
+        searchIdentifiers={searchIdentifiers}
+        view="chart"
       />,
     },
   ];
@@ -78,7 +93,7 @@ function AdvancedSearch({
 
   useEffect(() => {
     if (!isAdvancedSearch) {
-      setActiveTabId(2);
+      if (activeTabId === 1) setActiveTabId(2);
     }
   }, [isAdvancedSearch]);
 
