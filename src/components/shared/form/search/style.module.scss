@@ -218,6 +218,7 @@ button.searchIcon {
   position: absolute;
   top: 34px;
   right: 140px;
+  cursor: pointer;
 
   html[dir="rtl"] & {
     right: auto;
