@@ -1,9 +1,9 @@
 import { makeUseAxios } from 'axios-hooks';
 import apiInstance from 'apis/apiInstance';
 import { useAuth } from 'react-oidc-context';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import toastify from '../utils/toastify';
+import toastify from 'utils/toastify';
 
 /**
  * useAxiosWrapper to handle errors
