@@ -30,12 +30,12 @@ const Speech = ({
       value: currentLang === 'ar' ? 'ar-SA' : 'en-UK',
     });
   }, [currentLang]);
+  const [show, setShow] = useState();
 
-  const recognition = new (window.SpeechRecognition
-    || window.webkitSpeechRecognition)();
-  const startRecored = () => {
-    const permissions = navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    permissions.then(() => {
+  try {
+    const recognition = new (window.SpeechRecognition
+      || window.webkitSpeechRecognition)();
+    const startRecored = () => {
       if (!isRecording) {
         recognition.continuous = true;
         recognition.interimResults = true;
@@ -59,87 +59,88 @@ const Speech = ({
           getSpeechValue(speechValue);
         };
       }
-    });
-  };
+    };
 
-  const stopSpeech = () => {
-    if (isRecording) {
-      recognition.stop();
-      setIsStopDisabled(true);
-      setIsStartDisabled(false);
-      setIsRecording(false);
-    }
-  };
-  const [show, setShow] = useState();
-  const handleToggle = () => {
-    setShow((prev) => !prev);
-    stopSpeech();
-  };
-  const handleDismiss = () => {
-    setShow(false);
-  };
+    const stopSpeech = () => {
+      if (isRecording) {
+        recognition.stop();
+        setIsStopDisabled(true);
+        setIsStartDisabled(false);
+        setIsRecording(false);
+      }
+    };
+    const handleToggle = () => {
+      setShow((prev) => !prev);
+      stopSpeech();
+    };
+    const handleDismiss = () => {
+      setShow(false);
+    };
 
-  const langOptions = [
-    { value: 'en-UK', label: t('speech.english') },
-    { value: 'ar-SA', label: t('speech.arabic') },
-  ];
+    const langOptions = [
+      { value: 'en-UK', label: t('speech.english') },
+      { value: 'ar-SA', label: t('speech.arabic') },
+    ];
 
-  const onChangeLang = (i) => {
-    setSelectedOption(i);
-  };
-  const popover = (
-    <Popover className={`speech-popover p-4 shadow ${speechClassName}`}>
-      <Popover.Header className="border-0 p-0 m-0 d-flex justify-content-end align-items-end">
-        <Button
-          onClick={() => { stopSpeech(); handleDismiss(); }}
-          size="sm"
-          variant="link"
-          className="transparent btn-dismiss p-0 text-gray mb-2"
-          text={
-            <GrFormClose className="text-gray fs-22" />
-        }
-        />
-      </Popover.Header>
-      <Popover.Body className="p-0 d-flex flex-column fs-14 text-gray-700">
-        <div className="d-flex align-items-stretch">
-          <Select
-            options={langOptions}
-            className="lang-select defaultSelect"
-            selectedOption={selectedOption}
-            setSelectedOption={onChangeLang}
-          />
+    const onChangeLang = (i) => {
+      setSelectedOption(i);
+    };
+    const popover = (
+      <Popover className={`speech-popover p-4 shadow ${speechClassName}`}>
+        <Popover.Header className="border-0 p-0 m-0 d-flex justify-content-end align-items-end">
           <Button
+            onClick={() => { stopSpeech(); handleDismiss(); }}
+            size="sm"
+            variant="link"
+            className="transparent btn-dismiss p-0 text-gray mb-2"
             text={
-              <BsMic />
+              <GrFormClose className="text-gray fs-22" />
           }
-            variant="primary"
-            onClick={startRecored}
-            disabled={isStartDisabled}
-            className={`${isStartDisabled ? 'disabled' : ''} start-btn p-2 app-bg-primary text-white mx-2`}
           />
-          <Button
-            variant="outline-primary"
-            text={<div className="rounded" />}
-            onClick={stopSpeech}
-            disabled={isStopDisabled}
-            className={`${isStopDisabled ? 'disabled' : ''} stop-btn p-2 border-0`}
-          />
-        </div>
-      </Popover.Body>
-    </Popover>
-  );
-  return (
+        </Popover.Header>
+        <Popover.Body className="p-0 d-flex flex-column fs-14 text-gray-700">
+          <div className="d-flex align-items-stretch">
+            <Select
+              options={langOptions}
+              className="lang-select defaultSelect"
+              selectedOption={selectedOption}
+              setSelectedOption={onChangeLang}
+            />
+            <Button
+              text={
+                <BsMic />
+            }
+              variant="primary"
+              onClick={startRecored}
+              disabled={isStartDisabled}
+              className={`${isStartDisabled ? 'disabled' : ''} start-btn p-2 app-bg-primary text-white mx-2`}
+            />
+            <Button
+              variant="outline-primary"
+              text={<div className="rounded" />}
+              onClick={stopSpeech}
+              disabled={isStopDisabled}
+              className={`${isStopDisabled ? 'disabled' : ''} stop-btn p-2 border-0`}
+            />
+          </div>
+        </Popover.Body>
+      </Popover>
+    );
 
-    <OverlayTrigger
-      trigger="click"
-      placement="bottom"
-      overlay={popover}
-      onToggle={handleToggle}
-      show={show}
-    >
-      <BsMic className={className} />
-    </OverlayTrigger>
-  );
+    return (
+      <OverlayTrigger
+        trigger="click"
+        placement="bottom"
+        overlay={popover}
+        onToggle={handleToggle}
+        show={show}
+      >
+        <BsMic className={className} />
+      </OverlayTrigger>
+    );
+  } catch {
+    return null;
+  }
 };
 
 Speech.propTypes = {
