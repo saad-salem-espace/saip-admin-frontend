@@ -7,5 +7,7 @@
   "viewHistory": "/viewHistory",
   "bookmarks": "/bookmarks",
   "document": "/document",
-  "myActivity": "/myActivity"
+  "myActivity": "/myActivity",
+  "privacy": "privacy",
+  "terms": "terms"
 }
