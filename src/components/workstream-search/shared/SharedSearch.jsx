@@ -31,7 +31,7 @@ function SharedSearch({
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [imgData, execute] = useAxios({}, { manual: true });
+  const [imgData, execute] = useAxios({}, { manual: true, onError: 'warning' });
 
   useEffect(() => {
     if (imgData) {
@@ -70,7 +70,7 @@ function SharedSearch({
   const uploadCurrentFile = async (file, data) => {
     setIsSubmitting(true);
     execute(uploadFile(file));
-    if (!data.trim()) setErrors({});
+    if (!data.trim?.()) setErrors({});
   };
 
   return (
