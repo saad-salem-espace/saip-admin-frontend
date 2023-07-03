@@ -17,7 +17,6 @@ function IcLayoutsResultCard({
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
-
   const firstDrawing = searchResult?.Drawings?.[0];
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL({
@@ -70,7 +69,7 @@ function IcLayoutsResultCard({
             }
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
-            {t('priority', { value: BibliographicData?.PriorityDate })}
+            {t('priority', { value: searchResult?.Priorities[0]?.PriorityDate })}
             <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
             {t('filed', { value: BibliographicData?.FilingDate })}
             {
@@ -125,6 +124,9 @@ IcLayoutsResultCard.propTypes = {
     }),
     Drawings: PropTypes.arrayOf(PropTypes.shape({
       FileName: PropTypes.string.isRequired,
+    })).isRequired,
+    Priorities: PropTypes.arrayOf(PropTypes.shape({
+      PriorityDate: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
