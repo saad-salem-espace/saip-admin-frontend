@@ -57,7 +57,7 @@ function Notifications() {
 
   useEffect(() => {
     // eslint-disable-next-line prefer-template
-    const socket = new SockJS(process.env.REACT_APP_BACKEND_URL + '/ws');
+    const socket = new SockJS(process.env.REACT_APP_BACKEND_URL + 'ws');
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe(
