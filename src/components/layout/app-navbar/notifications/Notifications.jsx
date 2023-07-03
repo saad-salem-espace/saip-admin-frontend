@@ -56,7 +56,7 @@ function Notifications() {
   }, []);
 
   useEffect(() => {
-    const socket = new SockJS('/api/v1/ws-message');
+    const socket = new SockJS('/ws');
     const stompClient = Stomp.over(socket);
     stompClient.connect({}, () => {
       stompClient.subscribe(
