@@ -28,7 +28,7 @@ const SearchHistoryTables = ({
   if (isAuth) {
     groupedData = data.data.reduce((acc, item) => {
       const date = Moment(item.timestamp).format(LONG_DATE_12H_FORMAT);
-      const qry = convertQueryArrToStr(item.payload.qJson);
+      const qry = convertQueryArrToStr(item.payload.qjson);
       if (!acc[date]) {
         acc[date] = [qry];
       } else {

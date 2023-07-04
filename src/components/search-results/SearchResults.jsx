@@ -7,7 +7,9 @@ import {
   Button, Col, Container, Row,
 } from 'react-bootstrap';
 import { Trans, useTranslation } from 'react-i18next';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  createSearchParams, useNavigate, useSearchParams, useLocation,
+} from 'react-router-dom';
 import AppPopover from 'components/shared/app-popover/AppPopover';
 import * as Yup from 'yup';
 import Select from 'components/shared/form/select/Select';
@@ -24,10 +26,12 @@ import advancedSearchApi from 'apis/search/advancedSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
+import useAxios from 'hooks/useAxios';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
+import getFiltersApi from 'apis/filters/getFiltersApi';
 import SearchNote from './SearchNote';
 import IprDetails from '../ipr-details/IprDetails';
 import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
@@ -77,6 +81,10 @@ function SearchResults({ showFocusArea }) {
   const [sortBy, setSortBy] = useState({ label: t('mostRelevant'), value: 'mostRelevant' });
   const [isQuerySaved, setIsQuerySaved] = useState(false);
   const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+  const [filters, setFilters] = useState(null);
+  const location = useLocation();
+  const [searchFilters, setSearchFilters] = useState([]);
+  const [otherSearchParams, setOtherSearchParams] = useState(Object.fromEntries(searchParams));
 
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
@@ -85,15 +93,35 @@ function SearchResults({ showFocusArea }) {
   const { deleteInstance } = useIndexedDbWrapper(tableNames.saveHistory);
   const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q'));
-
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
+
+  const checkFilters = () => {
+    if (!searchParams.get('filterEnabled') || searchParams.get('filterEnabled') === 'false') {
+      return [];
+    }
+    if (searchParams.get('filterEnabled') === 'true') return searchFilters;
+    return [];
+  };
+  useEffect(() => {
+    setOtherSearchParams(Object.fromEntries(searchParams.entries()));
+  }, [searchParams]);
 
   const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+    filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
-  }), [searchParams, searchIdentifiers]);
+  }), [otherSearchParams, searchIdentifiers, searchFilters]);
+
+  const getFilterParams = {
+    workstreamId: searchParams.get('workstreamId'),
+  };
+  const getFilterConfig = getFiltersApi(getFilterParams, true);
+  const [filtersData, executeFilters] = useAxios(
+    getFilterConfig,
+    { manual: true },
+  );
 
   const saveQueryParamsForDoc = {
     workStreamId: searchParams.get('workstreamId'),
@@ -248,6 +276,24 @@ function SearchResults({ showFocusArea }) {
     }
   }, [results]);
 
+  useEffect(() => {
+    if (location.state?.filters) {
+      setSearchFilters(location.state.filters);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    executeFilters();
+  }, [searchParams.get('q')]);
+
+  useEffect(() => {
+    if (filtersData.data) {
+      if (filtersData.data.code === 200 && !(filtersData.loading)) {
+        setFilters(filtersData.data.data);
+      }
+    }
+  }, [filtersData]);
+
   const [workstreams] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
 
   const getNextDocument = () => {
@@ -386,7 +432,11 @@ function SearchResults({ showFocusArea }) {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: values.selectedWorkstream.value, sort: 'mostRelevant', q: (simpleQuery ? query : ''), ...(imageName && { imageName }),
+          workstreamId: values.selectedWorkstream.value,
+          sort: 'mostRelevant',
+          filterEnabled: false,
+          q: (simpleQuery ? query : ''),
+          ...(imageName && { imageName }),
         })}`,
       });
     } else {
@@ -397,6 +447,7 @@ function SearchResults({ showFocusArea }) {
         search: `?${createSearchParams({
           workstreamId: values.selectedWorkstream.value,
           q: values.searchQuery,
+          filterEnabled: false,
           ...(imageName && { imageName }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
@@ -469,23 +520,20 @@ function SearchResults({ showFocusArea }) {
 
   const toggleAdvancedSearchMenu = () => {
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
-    setIsAdvancedSearch(!isAdvancedSearch);
   };
 
   const getIprClassName = (media) => {
     let size = 4;
     if (media === 'xxl' && isIPRExpanded) {
-      size = 12;
-      if (isAdvancedSearch) {
-        size = isAdvancedMenuOpen ? 9 : 11;
+      if (isAdvancedMenuOpen) {
+        size = 9;
       } else {
         size = 11;
       }
     }
     if (media === 'xl' && isIPRExpanded) {
-      size = 12;
-      if (isAdvancedSearch) {
-        size = isAdvancedMenuOpen ? 8 : 11;
+      if (isAdvancedMenuOpen) {
+        size = 8;
       } else {
         size = 11;
       }
@@ -495,43 +543,30 @@ function SearchResults({ showFocusArea }) {
   const getSearchResultsClassName = (media) => {
     let size = 5;
     if (media === 'xxl') {
-      if (isAdvancedSearch) {
-        if (!totalResults) {
-          size = 9;
-        }
-        if (!isAdvancedMenuOpen) {
-          if (totalResults) {
-            size = 7;
-          } else {
-            size = 11;
-          }
+      if (!isAdvancedMenuOpen) {
+        if (totalResults) {
+          size = 7;
+        } else {
+          size = 11;
         }
       } else if (totalResults) {
-        size = 7;
-        if (isIPRExpanded) {
-          size = 4;
-        }
+        size = 5;
       } else {
-        size = 11;
+        size = 9;
       }
     }
     if (media === 'xl') {
       size = 4;
-      if (isAdvancedSearch) {
-        if (!totalResults) {
-          size = 8;
-        }
-        if (!isAdvancedMenuOpen) {
-          if (totalResults) {
-            size = 7;
-          } else {
-            size = 10;
-          }
+      if (!isAdvancedMenuOpen) {
+        if (totalResults) {
+          size = 7;
+        } else {
+          size = 11;
         }
       } else if (totalResults) {
-        size = 7;
+        size = 4;
       } else {
-        size = 10;
+        size = 8;
       }
     }
     return size;
@@ -594,6 +629,9 @@ function SearchResults({ showFocusArea }) {
 
   if (!workstreams?.data) return null;
 
+  const onRecordingCallback = (v) => {
+    setSearchQuery(v);
+  };
   return (
     <Container fluid className="px-0 workStreamResults">
       <Row className="mx-0 header">
@@ -637,21 +675,22 @@ function SearchResults({ showFocusArea }) {
                     selectedOption={selectedOption}
                     setSelectedOption={setSelectedOption}
                     isAdvanced={isAdvancedSearch}
-                    className={`${style.searchResultsView} search-results-view`}
+                    className={`${style.searchResultsView} ${isAdvancedSearch ? style.advanced : ''} search-results-view`}
                     selectedWorkStream={values.selectedWorkstream?.value}
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
+                    onRecordingCallback={onRecordingCallback}
                     setIsImgUploaded={() => {
                       setIsImgUploaded();
                     }}
                     resultsView
+                    speechClassName="inner-speech"
                   >
                     <div className="d-md-flex mt-4">
                       <div className="d-flex align-items-center me-4">
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
-                            setIsAdvancedMenuOpen((isAdvancedMenu) => !isAdvancedMenu);
                           }}
                           isToggleButtonOn={isAdvancedSearch}
                           text={t('advancedSearch')}
@@ -716,6 +755,10 @@ function SearchResults({ showFocusArea }) {
             isAdvancedMenuOpen={isAdvancedMenuOpen}
             submitRef={submitRef}
             workstreamId={activeWorkstream}
+            totalResults={totalResults}
+            filters={filters}
+            isAdvancedSearch={isAdvancedSearch}
+            searchIdentifiers={searchIdentifiers}
             firstIdentifierStr={searchIdentifiers?.data[0].identifierStrId}
             onChangeSearchQuery={(values) => {
               parseAndSetSearchQuery(values);

@@ -50,7 +50,7 @@ function SearchField({
         range={isRangeValue(conditionValue.optionParserName)}
         isMulti={isMultipleValue(conditionValue.optionParserName)}
         onChangeDate={onChangeDate}
-        className={`${error ? 'error' : ''}`}
+        className={`border-end ${error ? 'error' : ''}`}
       />
     </div>
   );

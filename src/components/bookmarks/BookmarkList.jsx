@@ -49,7 +49,7 @@ const BookmarkList = () => {
   const axiosConfig = getBookmarksApi(selectedWorkStream?.value, 0, true);
 
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
+    return currentLang === 'ar' ? workstream?.workstreamNameAr : workstream?.workstreamName;
   }
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
     label: workstreamName(workstream),
@@ -91,8 +91,7 @@ const BookmarkList = () => {
   const prepareAuthBookamrks = (response) => {
     const bookmarks = [];
     if (!response) return bookmarks;
-
-    response.map((res) => bookmarks.push(res.data));
+    response.map((res) => bookmarks.push(res?.data));
 
     return bookmarks;
   };
@@ -184,7 +183,7 @@ const BookmarkList = () => {
                     className="mt-8"
                     axiosConfig={axiosConfig}
                     defaultPage={Number(searchParams.get('page') || '1')}
-                    RenderedComponent={searchResult[selectedWorkStream.value]}
+                    RenderedComponent={searchResult[selectedWorkStream?.value]}
                     emptyState={<NoData />}
                     resetPage={pageReset}
                     setResults={setResults}

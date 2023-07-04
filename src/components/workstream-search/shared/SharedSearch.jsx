@@ -19,7 +19,7 @@ function SharedSearch({
   isAdvanced, selectedWorkStream, children,
   resultsView, setTouched, setFieldValue, values, setErrors, className,
   setImageName, setIsImgUploaded, isImgUploaded,
-  selectedOption, setSelectedOption,
+  selectedOption, setSelectedOption, speechClassName, onRecordingCallback,
 }) {
   const { t, i18n } = useTranslation('search');
   const currentLang = i18n.language;
@@ -31,7 +31,7 @@ function SharedSearch({
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [imgData, execute] = useAxios({}, { manual: true });
+  const [imgData, execute] = useAxios({}, { manual: true, onError: 'warning' });
 
   useEffect(() => {
     if (imgData) {
@@ -70,7 +70,7 @@ function SharedSearch({
   const uploadCurrentFile = async (file, data) => {
     setIsSubmitting(true);
     execute(uploadFile(file));
-    if (!data.trim()) setErrors({});
+    if (!data.trim?.()) setErrors({});
   };
 
   return (
@@ -102,6 +102,7 @@ function SharedSearch({
             id="search"
             name="searchQuery"
             className="flex-grow-1 searchBox"
+            onRecordingCallback={onRecordingCallback}
             moduleClassName={
               SearchModuleClassName
             }
@@ -114,6 +115,8 @@ function SharedSearch({
             onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
             imageSearch={isImgUploaded}
             disabled={isAdvanced}
+            speech={selectedOption?.identifierType !== 'Date' && !isAdvanced}
+            speechClassName={speechClassName}
           />
         </div>
         <div className="rounded">
@@ -153,10 +156,14 @@ SharedSearch.propTypes = {
   setImageName: PropTypes.func.isRequired,
   selectedOption: PropTypes.instanceOf(Object).isRequired,
   setSelectedOption: PropTypes.func.isRequired,
+  onRecordingCallback: PropTypes.func,
+  speechClassName: PropTypes.string,
 };
 
 SharedSearch.defaultProps = {
   resultsView: false,
   className: '',
+  speechClassName: '',
+  onRecordingCallback: () => {},
 };
 export default SharedSearch;

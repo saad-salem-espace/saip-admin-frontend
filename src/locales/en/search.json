@@ -24,6 +24,7 @@
   "advancedSearch": "Advanced Search",
   "searchQuery": "Search query",
   "filters": "Filters",
+  "analytics": "Analytics",
   "addSearchField": "Add Search Field",
   "clear": "Clear",
   "apply": "Apply",
@@ -250,5 +251,9 @@
     "classification": "Classification",
     "status": "Status",
     "ipOffice": "IP Office"
+  },
+  "speech": {
+    "english": "English",
+    "arabic": "Arabic"
   }
 }
