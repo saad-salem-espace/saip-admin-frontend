@@ -99,7 +99,6 @@ function SearchResults({ showFocusArea }) {
     if (!searchParams.get('filterEnabled') || searchParams.get('filterEnabled') === 'false') {
       return [];
     }
-    console.log(JSON.stringify(searchFilters));
     if (searchParams.get('filterEnabled') === 'true') return searchFilters;
     return [];
   };
