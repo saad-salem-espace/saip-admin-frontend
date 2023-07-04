@@ -99,6 +99,7 @@ function SearchResults({ showFocusArea }) {
     if (!searchParams.get('filterEnabled') || searchParams.get('filterEnabled') === 'false') {
       return [];
     }
+    console.log(JSON.stringify(searchFilters));
     if (searchParams.get('filterEnabled') === 'true') return searchFilters;
     return [];
   };
@@ -110,6 +111,14 @@ function SearchResults({ showFocusArea }) {
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
     filters: checkFilters(),
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
+  }), [otherSearchParams, searchIdentifiers, searchFilters]);
+
+  const stringDependencies = useMemo(() => ({
+    workstreamId: searchParams.get('workstreamId'),
+    qArr: (searchParams.get('q')),
+    filters: checkFilters().length ? JSON.stringify(checkFilters()) : '',
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [otherSearchParams, searchIdentifiers, searchFilters]);
@@ -363,50 +372,28 @@ function SearchResults({ showFocusArea }) {
                 data: saveHistoryParams,
               });
             },
-            onRichLimit: () => {
-              deleteInstance({
-                indexName: 'id',
-                indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
-                onSuccess: () => {
-                  saveSearchHistoryIDB.addInstanceToDb({
-                    data: saveHistoryParams,
+            onRichLimit: (limit) => {
+              if (count >= limit) {
+                const amountToDelete = count - limit + 1;
+                for (let i = 0; i < amountToDelete; i += 1) {
+                  deleteInstance({
+                    indexName: 'id',
+                    indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
+                    // eslint-disable-next-line no-loop-func
                     onSuccess: () => {
                       localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
-                    }
-                    ,
+                    },
                   });
-                },
+                }
+              }
+              saveSearchHistoryIDB.addInstanceToDb({
+                data: saveHistoryParams,
               });
             },
           },
         )));
     }
   };
-
-  saveSearchHistoryIDB.countAllByIndexName(
-    { indexName: saveHistoryParams.workstreamKey, indexValue: searchParams.get('workstreamId') },
-  ).then((count) => {
-    executeAfterLimitValidation(
-      {
-        data: { workstreamId: activeWorkstream, code: LIMITS.SEARCH_HISTORY_LIMIT, count },
-        onRichLimit: (limit) => {
-          if (count > limit) {
-            const differenceCount = count - limit;
-            for (let i = 1; i <= differenceCount; i += 1) {
-              deleteInstance({
-                indexName: 'id',
-                indexValue: Number(localStorage.getItem('deleteQueryHistory')) || 1,
-                // eslint-disable-next-line no-loop-func
-                onSuccess: () => {
-                  localStorage.setItem('deleteQueryHistory', (deleteIndexValue + 1).toString());
-                },
-              });
-            }
-          }
-        },
-      },
-    );
-  });
 
   useEffect(() => {
     saveHistory();
@@ -859,7 +846,7 @@ function SearchResults({ showFocusArea }) {
                     setActiveDocument(null);
                     setIsIPRExpanded(false);
                   }}
-                  updateDependencies={[...Object.values(searchResultParams)]}
+                  updateDependencies={[...Object.values(stringDependencies)]}
                 />
               </Form>
             )}
