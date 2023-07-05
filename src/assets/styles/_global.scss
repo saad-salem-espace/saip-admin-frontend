@@ -39,7 +39,7 @@ $fontSize: (
 
 .app {
   padding-top:80px;
-  padding-bottom: 50px;
+  // padding-bottom: 50px;
 }
 
 .italicText {
@@ -66,12 +66,15 @@ $fontSize: (
   }
   .fixed-panel-scrolled {
     @include scrollbar;
-    height: 80vh;
+    height: 60vh;
     overflow-y: auto;
-    padding-bottom: 220px;
   }
 }
 
 * {
   transition: all 0.1s ease-in-out;
+}
+
+.min-h-88 {
+  min-height: 88vh;
 }

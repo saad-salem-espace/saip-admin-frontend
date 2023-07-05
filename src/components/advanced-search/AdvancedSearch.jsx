@@ -3,7 +3,7 @@ import React, {
   useState, useContext, useCallback, useEffect,
 } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAnglesLeft, faAnglesRight, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { ThemeContext } from 'components/theme/ThemeProvider';
 import Tabs from '../shared/tabs/Tabs';
@@ -49,7 +49,6 @@ function AdvancedSearch({
       title:
   <div className="d-flex align-items-center">
     {t('searchQuery')}
-    <FontAwesomeIcon icon={faCircleQuestion} className="f-20 ms-2" />
   </div>,
       content: getSearchQuery(),
     },

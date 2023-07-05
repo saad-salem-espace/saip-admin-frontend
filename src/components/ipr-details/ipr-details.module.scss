@@ -17,11 +17,9 @@
 }
 
 .iprWrapper {
-  height: 80vh;
+  height: 67vh;
   overflow-y: auto;
   @include scrollbar;
-  padding-bottom: 150px;
-
   ::selection {
     background: var(--bs-primary-10);
     @extend .p-2;

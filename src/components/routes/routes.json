@@ -8,6 +8,6 @@
   "bookmarks": "/bookmarks",
   "document": "/document",
   "myActivity": "/myActivity",
-  "privacy": "privacy",
-  "terms": "terms"
+  "privacy": "/privacy",
+  "terms": "/terms"
 }
