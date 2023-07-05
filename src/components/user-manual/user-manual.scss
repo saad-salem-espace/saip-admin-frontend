@@ -1,4 +1,4 @@
-@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/utilities/mixin";
 
 .user-manual {
@@ -7,11 +7,11 @@
     width: 90%;
   }
   .modal-title {
-    @extend .w-100;
-    @extend .text-center;
+    width: 100%;
+    text-align: center;
     h4 {
-      @extend .mb-0;
-      @extend .mt-5;
+      margin-bottom: 0;
+      margin-top:  1.25rem;
     }
   }
   .btn-close {

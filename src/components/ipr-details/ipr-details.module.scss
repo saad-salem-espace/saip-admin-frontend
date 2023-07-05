@@ -1,4 +1,4 @@
-@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/utilities/mixin";
 
 .expand-icon {
@@ -24,7 +24,7 @@
 
   ::selection {
     background: var(--bs-primary-10);
-    @extend .p-2;
+    padding: 0.5rem;
   }
 }
 

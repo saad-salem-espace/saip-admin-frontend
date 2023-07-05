@@ -1,4 +1,4 @@
-@import "../../../src/assets/styles/utilities/custom-theme";
+@import "../styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
 @include media-breakpoint-up(md) {
@@ -99,7 +99,7 @@
     box-shadow: none;
     border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
-    @extend .p-4;
+    padding: 1rem;
 
     +div {
       z-index: 10 !important;
@@ -113,7 +113,7 @@
 
     +div {
       border: $border-width solid var(--bs-gray-400) !important;
-      @extend .p-4;
+      padding: 1rem;
       width: 100%;
 
       [class$="control"] {
@@ -205,7 +205,7 @@
   &.has-value {
     .css-1v99tuv {
       color: $gray-700;
-      @extend .mt-4;
+      margin-top: 1rem;
     }
   }
 
@@ -337,11 +337,11 @@
 .workStreamView {
   &.imgUploaded {
     .image-item {
-      @extend .d-block;
+      display: block;
     }
   }
   .image-item {
-    @extend .d-none;
+    display: none;;
     top: 91px;
     html[dir="ltr"] & {
       left: 17px;

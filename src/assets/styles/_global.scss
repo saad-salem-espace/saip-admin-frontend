@@ -1,4 +1,4 @@
-@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/utilities/mixin";
 
 
@@ -61,7 +61,7 @@ $fontSize: (
   .fixed-panel-scrolled.search-result {
     z-index: 1;
     html[dir="rtl"] & {
-      @extend .pe-4;
+      padding-left: 1rem;
     }
   }
   .fixed-panel-scrolled {

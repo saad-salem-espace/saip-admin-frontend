@@ -1,26 +1,9 @@
-@import "../base/fonts";
-// Variables
-//
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
 // Color system
 @import "~bootstrap/scss/functions";
-
-// scss-docs-start gray-color-variables
-$white: #fff !default;
-$gray: #888888;
-$gray-100: #f8f9fa !default;
-$gray-200: #F8F8F8;
-$gray-300: #EEEEEE;
-$gray-400: #DDDDDD;
-$gray-500: #CCCCCC;
-$gray-600: #AAAAAA;
-$gray-700: #444444;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
-$black: #000 !default;
-// scss-docs-end gray-color-variables
+@import "./variables";
 
 // fusv-disable
 // scss-docs-start gray-colors-map
@@ -36,41 +19,6 @@ $grays: (
   "900": $gray-900) !default;
 // scss-docs-end gray-colors-map
 // fusv-enable
-
-// scss-docs-start color-variables
-$blue: #0d6efd !default;
-$indigo: #6610f2 !default;
-$purple: #6f42c1 !default;
-$pink: #d63384 !default;
-$red: #dc3545 !default;
-$orange: #fd7e14 !default;
-$yellow: #ffc107 !default;
-$green: #198754 !default;
-$teal: #20c997 !default;
-$cyan: #0dcaf0 !default;
-
-// saip color-variables
-$turquoise: #00A49B;
-$turquoise-15: #00A49B26;
-$turquoise-dark: #00564C;
-$turquoise-secondary: #7EC7C3;
-$turquoise-01: #F2F7F6;
-$turquoise-10: #E0F1F1;
-$turquoise-05: #FAFCFB;
-$danger: #D91148;
-$danger-15: #B5064426;
-$danger-dark: #B50644;
-$patents: #5287BE;
-$trademark: #E08C05;
-$copyright: #C5CF01;
-$industrial-designs: #DFAF53;
-$secondary-tangerine: #ED8A00;
-$secondary-tangerine-l: #FDF0DE;
-$secondary-rio-grande: #B9D000;
-$vivid-lime-green: #B9D000;
-$secondary-sisal : #D3CBBE;
-$ic-layout : #B50644;
-// scss-docs-end color-variables
 
 // scss-docs-start colors-map
 $colors: (
@@ -95,24 +43,6 @@ $colors: (
   "danger-dark":$danger-dark
 );
 // scss-docs-end colors-map
-
-// scss-docs-start theme-color-variables
-$primary: $turquoise;
-$primary-15: $turquoise-15;
-$primary-01: $turquoise-01;
-$primary-10: $turquoise-10;
-$primary-05: $turquoise-05;
-$primary-dark: $turquoise-dark;
-$secondary: $turquoise-secondary;
-$secondary-rio-grande: $vivid-lime-green;
-$success: $green;
-$info: $cyan;
-$warning: $secondary-tangerine;
-$light: $gray-100;
-$dark: $black;
-$danger-: $danger;
-$danger-15: $danger-15;
-$danger-dark: $danger-dark;
 
 [data-bs-theme="light"] {
   --bs-primary: #{$turquoise} !important;
@@ -455,17 +385,6 @@ $paragraph-margin-bottom: 1rem !default;
 // Define the minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries.
 
-// scss-docs-start grid-breakpoints
-$grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px,
-  xxl: 1441px
-);
-// scss-docs-end grid-breakpoints
-
 @include _assert-ascending($grid-breakpoints, "$grid-breakpoints"
 );
 @include _assert-starts-at-zero($grid-breakpoints, "$grid-breakpoints");
@@ -508,33 +427,12 @@ $container-padding-x: $grid-gutter-width * .5 !default;
 // Define common padding and border radius sizes and more.
 
 // scss-docs-start border-variables
-$border-width: 1px;
-$border-width-md: 2px;
 $border-widths: (
   1: 1px,
   2: 2px,
   3: 3px,
   4: 4px,
   5: 5px) !default;
-
-$border-color: $gray-400;
-// scss-docs-end border-variables
-
-// scss-docs-start border-radius-variables
-$border-radius: 4px;
-$border-radius-sm: .2rem !default;
-$border-radius-lg: 8px;
-$border-radius-pill: 50rem !default;
-// scss-docs-end border-radius-variables
-
-// scss-docs-start box-shadow-variables
-$box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.08
-);
-$box-shadow-sm: 0 1px 3px 0 #10182829;
-$box-shadow-lg: 4px 4px 15px 0px rgba(0, 0, 0, 0.14);
-$box-shadow-inset: inset 0 1px 2px rgba($black, .075) !default;
-// scss-docs-end box-shadow-variables
-
 
 $component-active-color: $white !default;
 $component-active-bg: $primary !default;
@@ -594,10 +492,6 @@ $font-family-code: var(--#{$variable-prefix}font-monospace) !default;
 // $font-size-root affects the value of `rem`, which is used for as well font sizes, paddings, and margins
 // $font-size-base affects the font size of the body text
 $font-size-root: null !default;
-$font-size-base: 1rem; // Assumes the browser default, typically `16px`
-$font-size-sm: $font-size-base * .875; // 14px
-$font-size-xs: 12px;
-$font-size-xxs: 8px;
 $font-size-lg: $font-size-base * 1.25 !default;
 
 $font-weight-lighter: lighter !default;
