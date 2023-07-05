@@ -14,6 +14,7 @@ import ErrorMessage from 'components/shared/error-message/ErrorMessage';
 import { parseQuery } from 'utils/searchQuery';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
+import './SearchQuery.scss';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
