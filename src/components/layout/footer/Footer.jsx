@@ -1,6 +1,7 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import routes from 'components/routes/routes.json';
 import './footer.scss';
 
 function Footer() {
@@ -19,10 +20,10 @@ function Footer() {
             </p>
           </Col>
           <Col xl={8} className="d-flex justify-content-xl-end gap-5">
-            <Link to="/terms" as={Link} className="fs-xs text-white text-decoration-none">
+            <Link to={routes.terms} as={Link} className="fs-xs text-white text-decoration-none">
               {t('layout:footer.links.terms')}
             </Link>
-            <Link to="/privacy" as={Link} className="fs-xs text-white text-decoration-none">
+            <Link to={routes.privacy} as={Link} className="fs-xs text-white text-decoration-none">
               {t('layout:footer.links.policy')}
             </Link>
           </Col>
