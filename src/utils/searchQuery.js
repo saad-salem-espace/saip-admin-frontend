@@ -36,7 +36,7 @@ const parseQuery = (fields, imageName) => {
 };
 
 const getDateValue = (data) => {
-  if (data instanceof DateObject) return data;
+  if (!(data instanceof String || typeof data === 'string')) return data;
   const dateArray = data.split('-');
   const date = new DateObject();
   date.day = dateArray[2];
