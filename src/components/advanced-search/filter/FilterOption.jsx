@@ -93,7 +93,7 @@ function FilterOption({
           />
           <h6 className={`${isShown ? 'app-text-primary' : 'text-black'} mb-0 text-capitalize`}>{filterName(filter)}</h6>
         </div>
-        {(!!count) && <Badge className="app-bg-primary-10 app-text-primary" text={count} />}
+        {(!!count && view === 'search') && <Badge className="app-bg-primary-10 app-text-primary" text={count} />}
       </div>
       {isShown && (
         <div className="mb-7 mx-3">

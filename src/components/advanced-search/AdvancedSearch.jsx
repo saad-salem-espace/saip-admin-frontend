@@ -26,6 +26,7 @@ function AdvancedSearch({
   isAdvancedSearch,
   searchIdentifiers,
 }) {
+  const [formikInitials, setFormikInitials] = useState({ selectedFilters: {} });
   const { t } = useTranslation('search');
   const [activeTabId, setActiveTabId] = useState(1);
   const lang = useContext(ThemeContext).language;
@@ -63,6 +64,8 @@ function AdvancedSearch({
         filters={filters}
         totalResults={totalResults}
         searchIdentifiers={searchIdentifiers}
+        setFormikInitials={setFormikInitials}
+        formikInitials={formikInitials}
         view="search"
       />,
     },
@@ -77,6 +80,8 @@ function AdvancedSearch({
         filters={filters}
         totalResults={totalResults}
         searchIdentifiers={searchIdentifiers}
+        setFormikInitials={setFormikInitials}
+        formikInitials={formikInitials}
         view="chart"
       />,
     },
