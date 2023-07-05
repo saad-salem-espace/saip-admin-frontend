@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { DateObject } from 'react-multi-date-picker';
 import { search } from './arrays';
 import { isMultipleValue } from './search-query/encoder';
@@ -34,6 +35,16 @@ const parseQuery = (fields, imageName) => {
   return queryObjsArr;
 };
 
+const getDateValue = (data) => {
+  if (!(data instanceof String || typeof data === 'string')) return data;
+  const dateArray = data.split('-');
+  const date = new DateObject();
+  date.day = dateArray[2];
+  date.month = dateArray[1];
+  date.year = dateArray[0];
+  return date;
+};
+
 const convertQueryArrToObjsArr = (qArr, searchIdentifiersData) => {
   const qObjsArr = [];
   qArr.forEach((qObj) => {
@@ -46,7 +57,7 @@ const convertQueryArrToObjsArr = (qArr, searchIdentifiersData) => {
         condition: selectedIdentifier.identifierOptions.find(
           (i) => i.optionParserName === qObj.condition,
         ),
-        data: qObj.data,
+        data: selectedIdentifier.identifierType === 'Date' ? getDateValue(qObj.data) : qObj.data,
         operator: qObj.operator,
       });
     } else {
