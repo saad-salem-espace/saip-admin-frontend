@@ -21,7 +21,6 @@ const Speech = ({
   const [isRecording, setIsRecording] = useState(false);
   const [isStartDisabled, setIsStartDisabled] = useState(false);
   const [isStopDisabled, setIsStopDisabled] = useState(true);
-  const [speechValue, setSpeechValue] = useState('');
   const [selectedOption, setSelectedOption] = useState({ });
   const currentLang = i18n.language;
   useEffect(() => {
@@ -55,8 +54,7 @@ const Speech = ({
 
         recognition.onresult = (event) => {
           const finalTranscript = event.results[event.results.length - 1][0].transcript;
-          setSpeechValue(finalTranscript);
-          getSpeechValue(speechValue);
+          getSpeechValue(finalTranscript);
         };
       }
     });

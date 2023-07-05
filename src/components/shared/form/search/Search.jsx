@@ -73,7 +73,7 @@ function Search({
       }
       {
         speech && (
-          <Speech className={`${style.mic} text-gray fs-24`} speechClassName={speechClassName} getSpeechValue={getSpeechValue} />
+          <Speech className={`${style.mic} text-gray fs-24`} speechClassName={speechClassName} getSpeechValue={(v) => (getSpeechValue(v))} />
         )
       }
       {
