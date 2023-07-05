@@ -4,6 +4,7 @@ import FilterComponent from './FilterComponent';
 
 function Filter({
   filters, totalResults, searchIdentifiers, view,
+  formikInitials, setFormikInitials,
 }) {
   const findByFilterId = (id) => (filters.find((f) => f.strId === id));
 
@@ -35,14 +36,14 @@ function Filter({
   };
 
   return (
-    <Formik initialValues={{
-      selectedFilters: {},
-    }}
+    <Formik initialValues={
+      formikInitials
+    }
     >
       {({
         values,
       }) => (
-        <Form>
+        <Form onChange={setFormikInitials(values)}>
           <div className="mt-4 mx-3">
             {
               filters.map((filter) => (
@@ -67,6 +68,8 @@ Filter.propTypes = {
   totalResults: PropTypes.number.isRequired,
   searchIdentifiers: PropTypes.instanceOf(Array).isRequired,
   view: PropTypes.string.isRequired,
+  setFormikInitials: PropTypes.func.isRequired,
+  formikInitials: PropTypes.instanceOf(Object).isRequired,
 };
 
 Filter.defaultProps = {
