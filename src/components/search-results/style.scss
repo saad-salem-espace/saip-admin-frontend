@@ -19,6 +19,9 @@
   @include media-breakpoint-up(xl) {
     overflow-y: hidden;
   }
+  .footer {
+    margin-top: -10px;
+  }
 }
 
 .searchResultsView {
@@ -109,8 +112,6 @@
   .workStreamResults {
     display: flex;
     flex-flow: column;
-    min-height: calc(100vh - 90px);
-
     .header {
       flex: 0 1 auto;
     }

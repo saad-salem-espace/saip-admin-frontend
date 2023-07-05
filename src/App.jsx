@@ -53,11 +53,13 @@ function App() {
     >
       <SelectedWorkStreamIdProvider>
         <div className="app" translate="no">
-          <AppRoutes
-            updateFocusArea={(flag) => setShowFocusArea(flag)}
-            showFocusArea={showFocusArea}
-          />
           <AppNavbar lang={lang} changeLang={changeLang} hideFocusArea={hideFocusArea} />
+          <div className="min-h-88">
+            <AppRoutes
+              updateFocusArea={(flag) => setShowFocusArea(flag)}
+              showFocusArea={showFocusArea}
+            />
+          </div>
           <ToastContainer
             position="bottom-left"
             autoClose={8000}

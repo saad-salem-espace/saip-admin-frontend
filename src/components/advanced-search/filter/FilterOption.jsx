@@ -80,7 +80,7 @@ function FilterOption({
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+      <div className={`${isShown ? '' : 'border-bottom'} d-flex justify-content-between align-items-center pb-3 mb-3`}>
         <div className="d-flex align-items-center">
           <Button
             text={isShown ? (
@@ -96,7 +96,7 @@ function FilterOption({
         {(!!count) && <Badge className="app-bg-primary-10 app-text-primary" text={count} />}
       </div>
       {isShown && (
-        <div className="mb-7">
+        <div className="mb-7 mx-3">
           {analytics && (view === 'search' ? <SearchWithCheckBox
             name={filterName(filter)}
             options={prepareOptions(analytics)}

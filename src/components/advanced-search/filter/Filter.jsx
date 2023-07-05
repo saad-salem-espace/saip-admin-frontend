@@ -43,7 +43,7 @@ function Filter({
         values,
       }) => (
         <Form>
-          <div className="mt-4">
+          <div className="mt-4 mx-3">
             {
               filters.map((filter) => (
                 <FilterComponent
