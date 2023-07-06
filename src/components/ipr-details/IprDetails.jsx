@@ -629,7 +629,7 @@ function IprDetails({
             title={t('common:limitReached.login_now')}
             msg={t('common:limitReached.login_now_msg')}
             confirmBtnText={t('common:limitReached.login_now')}
-            className="warning"
+            classIcon="text-warning"
             handleConfirm={() => auth.signinRedirect()}
             hideAlert={() => { setReachedLimit(false); }}
             showModal={reachedLimit}
