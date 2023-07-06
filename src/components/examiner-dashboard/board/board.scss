@@ -1,5 +1,6 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 @import "../../../assets/styles/utilities/mixin";
+@import "~bootstrap/scss/mixins";
 
 .board-container {
   .cards-container {

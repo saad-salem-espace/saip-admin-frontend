@@ -1,5 +1,6 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 @import "../../../assets/styles/components/popover";
+@import "~bootstrap/scss/mixins";
 
 .float-widget {
   transform: none !important;

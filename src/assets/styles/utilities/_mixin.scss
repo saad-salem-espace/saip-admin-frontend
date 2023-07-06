@@ -1,8 +1,8 @@
-@import"../../../assets/styles/utilities/custom-theme";
+@import"../../../assets/styles/utilities/variables";
 
 @mixin border($width,$height,$top,$color) {
   position: relative;
-  &::before, 
+  &::before,
   &::after {
     width: $width;
     height: $height;

@@ -1,4 +1,4 @@
-@import "../../../../assets/styles/utilities/custom-theme";
+@import "../../../../assets/styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
 div[class$="indicatorContainer"] {
@@ -256,4 +256,3 @@ div[class$="singleValue"] {
     }
   }
 }
-

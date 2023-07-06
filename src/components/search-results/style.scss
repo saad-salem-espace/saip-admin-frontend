@@ -1,4 +1,4 @@
-@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/utilities/mixin";
 @import "~bootstrap/scss/mixins";
 
@@ -156,7 +156,7 @@
     &.searchInputWrapper{
       @include media-breakpoint-up(md) {
         input {
-  
+
           html[dir="ltr"] & {
             padding-left: 100px !important;
             padding-right: 180px !important;
