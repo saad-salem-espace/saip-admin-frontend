@@ -4,7 +4,7 @@
 @include media-breakpoint-up(md) {
 
   .workstream-view {
-    border: $border-width solid $gray-400;
+    border: $border-width solid var(--bs-gray-400);
     border-radius: $border-radius;
     position: relative;
     padding: 32px 32px 0;
@@ -12,7 +12,7 @@
     .search-query-inputs {
       display: flex;
       position: relative;
-      background-color: var(--bs-primary-01);
+
       .fa-trash-can {
         position: absolute;
         top: 34px;

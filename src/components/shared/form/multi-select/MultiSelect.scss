@@ -47,12 +47,12 @@
         }
 
         svg {
-          color: $gray;
+          color: var(--bs-gray);
         }
       }
 
       [class$="placeholder"] {
-        color: $gray;
+        color: var(--bs-gray);
         font-size: $font-size-sm;
       }
 
@@ -61,7 +61,7 @@
       }
 
       [class$="-option"] {
-        color: var(--bs-gray-700);
+        color: $gray-700;
         font-family: $font-regular;
       }
 
@@ -71,7 +71,7 @@
         background-color: transparent;
 
         &:hover {
-          background-color: $gray-200;
+          background-color: var(--bs-gray-200);
         }
 
         &::before {
@@ -79,7 +79,7 @@
           font-family: FontAwesomeRegular;
           font-size: 22px;
           margin-right: 10px;
-          color: var(--bs-gray-400);
+          color: $gray-400;
 
           html[dir="rtl"] & {
             margin-right: 0;
@@ -98,7 +98,7 @@
         &::before {
           content: "\f14a";
           font-family: FontAwesomeSolid;
-          color: $turquoise-secondary;
+          color: var(--bs-secondary);
           font-size: 22px;
           margin-right: 10px;
 
@@ -149,7 +149,7 @@
       &::after {
         content: "\f06a";
         font-family: FontAwesomeSolid;
-        color: $danger;
+        color: var(--bs-danger);
         position: absolute;
         right: 41px;
         top: 19px;

@@ -4,6 +4,7 @@ import { Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import Button from '../../button/Button';
 import FormikErrorMessage from '../formik-error-message/FormikErrorMessage';
+import './MultiSelect.scss';
 
 function MultiSelect({
   options, className, label, name, isClearable, showError, errorClassName,
