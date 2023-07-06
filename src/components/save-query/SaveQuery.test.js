@@ -32,7 +32,7 @@ describe('<SaveQuery />', () => {
           mockAxios.onGet(/\/limits\/\d+\/\w/).reply(testDetail.status, clonedLimit);
         });
         it('should be able to star query', async () => {
-          const { getByTestId, getByText } = render(
+          const { getByTestId, getByText, queryAllByText } = render(
             <SaveQuery
               setIsSaved={mockFn}
               isSaved={false}
@@ -55,8 +55,8 @@ describe('<SaveQuery />', () => {
               } else {
                 expect(mockFn).not.toBeCalled();
                 if (testDetail.limitReached) {
-                  expect(getByText(t('common:limitReached.register_now'))).toBeInTheDocument();
-                  expect(getByText(t('common:limitReached.register_now_msg'))).toBeInTheDocument();
+                  expect(queryAllByText(t('common:limitReached.login_now'))).toHaveLength(2);
+                  expect(getByText(t('common:limitReached.login_now_msg'))).toBeInTheDocument();
                 }
               }
             });
