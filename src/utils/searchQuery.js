@@ -47,6 +47,7 @@ const getDateValue = (data) => {
 
 const convertQueryArrToObjsArr = (qArr, searchIdentifiersData) => {
   const qObjsArr = [];
+  let counter = 1;
   qArr.forEach((qObj) => {
     if (qObj.identifier !== 'image') {
       const selectedIdentifier = searchIdentifiersData.find(
@@ -59,10 +60,12 @@ const convertQueryArrToObjsArr = (qArr, searchIdentifiersData) => {
         ),
         data: selectedIdentifier.identifierType === 'Date' ? getDateValue(qObj.data) : qObj.data,
         operator: qObj.operator,
+        id: counter,
       });
     } else {
       qObjsArr.push(qObj);
     }
+    counter += 1;
   });
   return qObjsArr;
 };
