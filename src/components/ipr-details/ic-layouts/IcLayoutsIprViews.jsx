@@ -14,6 +14,7 @@ import PriorityRow from '../shared/priorities/PriorityRow';
 import OriginalDocument from '../shared/original-document/OriginalDocument';
 import DesignerDetails from '../shared/designer-details/DesignerDetails';
 import DesignerDetailsRow from '../shared/designer-details/DesignerDetailsRow';
+import Description from '../patent/description/Description';
 
 const IcLayoutsIprViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
@@ -125,6 +126,25 @@ const IcLayoutsIprViews = ({
         workstreamId={searchResultParams.workstreamId}
         documentId={documentId}
       />
+    ),
+    Description: (
+      <Description
+        description={document.BibliographicData.Description}
+        isIPRExpanded={isIPRExpanded}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      >
+        <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
+        {document.Drawings?.length ? (
+          <Carousel
+            largeThumb={isIPRExpanded}
+            className="drawings"
+            images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+          />
+        ) : (
+          <NoData />
+        )}
+      </Description>
     ),
   };
   return content[selectedView];
