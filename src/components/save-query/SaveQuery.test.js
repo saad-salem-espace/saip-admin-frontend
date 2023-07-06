@@ -55,8 +55,8 @@ describe('<SaveQuery />', () => {
               } else {
                 expect(mockFn).not.toBeCalled();
                 if (testDetail.limitReached) {
-                  expect(getByText(t('common:limitReached.register_now'))).toBeInTheDocument();
-                  expect(getByText(t('common:limitReached.register_now_msg'))).toBeInTheDocument();
+                  expect(getByText(t('common:limitReached.login_now'))).toBeInTheDocument();
+                  expect(getByText(t('common:limitReached.login_now_msg'))).toBeInTheDocument();
                 }
               }
             });

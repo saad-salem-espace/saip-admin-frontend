@@ -626,13 +626,11 @@ function IprDetails({
             disabled={isSubmittingDownloadPdf}
           />
           <ModalAlert
-            title={t('common:limitReached.register_now')}
-            msg={t('common:limitReached.register_now_msg')}
-            confirmBtnText={t('common:register')}
+            title={t('common:limitReached.login_now')}
+            msg={t('common:limitReached.login_now_msg')}
+            confirmBtnText={t('common:limitReached.login_now')}
             className="warning"
-            handleConfirm={() => {
-              // TODO to be written once receive URL
-            }}
+            handleConfirm={() => auth.signinRedirect()}
             hideAlert={() => { setReachedLimit(false); }}
             showModal={reachedLimit}
           />
