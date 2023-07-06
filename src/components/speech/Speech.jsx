@@ -38,7 +38,7 @@ const Speech = ({
       if (!isRecording) {
         recognition.continuous = true;
         recognition.interimResults = true;
-        recognition.lang = selectedOption;
+        recognition.lang = selectedOption.value;
         recognition.start();
         recognition.onstart = () => {
           setIsRecording(true);
