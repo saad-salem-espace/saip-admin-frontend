@@ -133,7 +133,9 @@ const Speech = ({
         onToggle={handleToggle}
         show={show}
       >
-        <BsMic className={className} />
+        <div>
+          <BsMic className={className} />
+        </div>
       </OverlayTrigger>
     );
   } catch {
