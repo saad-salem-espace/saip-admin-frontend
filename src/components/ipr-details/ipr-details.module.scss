@@ -1,4 +1,4 @@
-@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/utilities/mixin";
 
 .expand-icon {
@@ -17,14 +17,12 @@
 }
 
 .iprWrapper {
-  height: 80vh;
+  height: 67vh;
   overflow-y: auto;
   @include scrollbar;
-  padding-bottom: 150px;
-
   ::selection {
     background: var(--bs-primary-10);
-    @extend .p-2;
+    padding: 0.5rem;
   }
 }
 

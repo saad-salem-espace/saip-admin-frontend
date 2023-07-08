@@ -17,7 +17,6 @@ function IcLayoutsResultCard({
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
-
   const firstDrawing = searchResult?.Drawings?.[0];
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL({
@@ -40,67 +39,75 @@ function IcLayoutsResultCard({
               fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
             />}
             {
-            BibliographicData?.ApplicationTitle
-            && <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData?.ApplicationTitle,
-                query,
-              )}
-              searchWords={highlightWords}
-              autoEscape
-            />
-          }
-          </div>
-          <p className="mb-2 text-black md-text">
-            <Highlighter
-              highlightTag="span"
-              highlightClassName="font-medium"
-              textToHighlight={trimStringRelativeToSubtext(
-                BibliographicData?.FilingNumber,
-                query,
-              )}
-              searchWords={highlightWords}
-              autoEscape
-            />
-          </p>
-          <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
-            {t('priority', { value: BibliographicData?.PriorityDate })}
-            <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-            {t('filed', { value: BibliographicData?.FilingDate })}
-            {
-            BibliographicData?.PublicationDate && (
-              <>
-                <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                {t('published', { value: BibliographicData?.PublicationDate })}
-              </>
-            )
-          }
-          </p>
-          <div className="d-flex">
-            {
-            (firstDrawing && (selectedView.value !== 'compact')) && (
-              <div className={`${style['patent-img']} me-2`}>
-                <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
-              </div>
-            )
-          }
-            <p className="text-gray sm-text">
-              <Highlighter
+              BibliographicData?.ApplicationTitle
+              && <Highlighter
                 highlightTag="span"
                 highlightClassName="font-medium"
                 textToHighlight={trimStringRelativeToSubtext(
-                  BibliographicData?.Applicants.join(' , '),
+                  BibliographicData?.ApplicationTitle,
                   query,
                 )}
                 searchWords={highlightWords}
                 autoEscape
               />
+            }
+          </div>
+          <p className="mb-2 text-black md-text">
+            {
+              BibliographicData?.FilingNumber && (
+                <Highlighter
+                  highlightTag="span"
+                  highlightClassName="font-medium"
+                  textToHighlight={trimStringRelativeToSubtext(
+                    BibliographicData?.FilingNumber,
+                    query,
+                  )}
+                  searchWords={highlightWords}
+                  autoEscape
+                />
+              )
+            }
+          </p>
+          <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
+            {t('priority', { value: searchResult?.Priorities[0]?.PriorityDate })}
+            <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+            {t('filed', { value: BibliographicData?.FilingDate })}
+            {
+              BibliographicData?.PublicationDate && (
+                <>
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  {t('published', { value: BibliographicData?.PublicationDate })}
+                </>
+              )
+            }
+          </p>
+          <div className="d-flex">
+            {
+              (firstDrawing && (selectedView.value !== 'compact')) && (
+                <div className={`${style['patent-img']} me-2`}>
+                  <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
+                </div>
+              )
+            }
+            <p className="text-gray sm-text">
+              {
+                BibliographicData?.Applicants && (
+                  <Highlighter
+                    highlightTag="span"
+                    highlightClassName="font-medium"
+                    textToHighlight={trimStringRelativeToSubtext(
+                      BibliographicData?.Applicants.join(' , '),
+                      query,
+                    )}
+                    searchWords={highlightWords}
+                    autoEscape
+                  />
+                )
+              }
             </p>
           </div>
         </div>
-    )}
+      )}
     />
   );
 }
@@ -117,6 +124,9 @@ IcLayoutsResultCard.propTypes = {
     }),
     Drawings: PropTypes.arrayOf(PropTypes.shape({
       FileName: PropTypes.string.isRequired,
+    })).isRequired,
+    Priorities: PropTypes.arrayOf(PropTypes.shape({
+      PriorityDate: PropTypes.string.isRequired,
     })).isRequired,
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,

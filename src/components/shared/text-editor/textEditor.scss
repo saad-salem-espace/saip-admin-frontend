@@ -1,11 +1,11 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
 .public-DraftEditor-content {
   height: 107px;
   max-width: 100%;
   margin: 0;
-  @extend .p-4;
+  padding: 1rem;
 }
 
 .toolbarClassName {
@@ -13,8 +13,8 @@
 }
 
 .rdw-editor-wrapper {
-  @extend .border;
   border-radius: $border-radius;
+  border: $border-width solid $border-color;
 }
 
 .rdw-editor-toolbar {

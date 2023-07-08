@@ -13,6 +13,7 @@ import { exclude } from 'utils/arrays';
 import { identifierName, optionName } from 'utils/searchQuery';
 import MultiSelect from 'components/shared/form/multi-select/MultiSelect';
 import options from 'testing-resources/patents/lkps/ipcClassifications.json';
+import './searchField.scss';
 
 function SearchField({
   handleRemove,
@@ -50,7 +51,7 @@ function SearchField({
         range={isRangeValue(conditionValue.optionParserName)}
         isMulti={isMultipleValue(conditionValue.optionParserName)}
         onChangeDate={onChangeDate}
-        className={`${error ? 'error' : ''}`}
+        className={`border-end ${error ? 'error' : ''}`}
       />
     </div>
   );

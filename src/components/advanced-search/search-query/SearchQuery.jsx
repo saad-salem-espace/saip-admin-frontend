@@ -11,9 +11,10 @@ import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import Button from 'components/shared/button/Button';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
-import { parseQuery } from 'utils/searchQuery';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
+import './SearchQuery.scss';
+import SearchQueryUpdater from './SearchQueryUpdater';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
@@ -74,25 +75,12 @@ function SearchQuery({
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form
-            onChange={(event) => {
-              const { name, value } = event.target;
-              const [fName, fIndex, fAttr] = name.split('.');// searchFields.0.data
-              const updatedArray = values[fName].map((item, i) => {
-                if (i === Number(fIndex)) {
-                  return { ...item, [fAttr]: value };
-                }
-                return item;
-              });
-              const newValues = { ...values, [fName]: updatedArray };
-              if (isAdvancedMenuOpen) {
-                onChangeSearchQuery(parseQuery(newValues.searchFields, ''));
-              } else {
-                handleOnChange(newValues);
-              }
-            }}
-            onSubmit={handleSubmit}
-          >
+          <Form onSubmit={handleSubmit}>
+            <SearchQueryUpdater
+              handleOnChange={handleOnChange}
+              onChangeSearchQuery={onChangeSearchQuery}
+              advancedOpened={isAdvancedMenuOpen}
+            />
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>

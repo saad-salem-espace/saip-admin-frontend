@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import DatePicker from 'components/shared/date-picker/AppDatePicker';
+import Speech from 'components/speech/Speech';
+import { useFormikContext } from 'formik';
 import Input from '../input/Input';
 import style from './style.module.scss';
 import Button from '../../button/Button';
@@ -24,11 +26,20 @@ function Search({
   type,
   onChangeDate,
   imageSearch,
+  speech,
+  speechClassName,
+  onRecordingCallback,
 }) {
+  const { setFieldValue } = useFormikContext();
   const styleClassNames = classNames.bind(style);
   const searchClassName = styleClassNames(moduleClassName);
   const dataTypes = new Map();
   const dateField = () => <DatePicker className="datePickerWrapper" name={name} onChangeDate={onChangeDate} />;
+
+  const getSpeechValue = (v) => {
+    setFieldValue('searchQuery', v);
+    onRecordingCallback(v);
+  };
 
   const textField = () => (
     <Input
@@ -51,7 +62,7 @@ function Search({
     disabled, placeholder]);
 
   return (
-    <div className={`position-relative ${className} ${searchClassName}`}>
+    <div className={`position-relative ${className} ${searchClassName} `}>
       {/* please render the below children if the input has value */}
       {children}
       {
@@ -61,8 +72,13 @@ function Search({
         isClearable && <Button className={`${style.clearIcon} resetSearch text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
       }
       {
+        speech && (
+          <Speech className={`${style.mic} text-gray fs-24`} speechClassName={speechClassName} getSpeechValue={(v) => (getSpeechValue(v))} />
+        )
+      }
+      {
         searchWithImg && (
-        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4 border-start colored" />} onClick={() => handleUploadImg()} />
+        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4 colored" />} onClick={() => handleUploadImg()} />
         )
       }
       <Button
@@ -92,6 +108,9 @@ Search.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.string,
   imageSearch: PropTypes.bool,
+  speech: PropTypes.bool,
+  speechClassName: PropTypes.string,
+  onRecordingCallback: PropTypes.func,
 };
 
 Search.defaultProps = {
@@ -109,6 +128,9 @@ Search.defaultProps = {
   type: 'Text',
   onChangeDate: null,
   imageSearch: false,
+  speech: false,
+  speechClassName: '',
+  onRecordingCallback: () => {},
 };
 
 export default Search;

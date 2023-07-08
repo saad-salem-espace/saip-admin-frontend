@@ -1,4 +1,4 @@
-@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/utilities/mixin";
 @import "~bootstrap/scss/mixins";
 
@@ -18,6 +18,9 @@
 .search-result-wrapper {
   @include media-breakpoint-up(xl) {
     overflow-y: hidden;
+  }
+  .footer {
+    margin-top: -10px;
   }
 }
 
@@ -109,8 +112,6 @@
   .workStreamResults {
     display: flex;
     flex-flow: column;
-    min-height: calc(100vh - 90px);
-
     .header {
       flex: 0 1 auto;
     }
@@ -155,7 +156,7 @@
     &.searchInputWrapper{
       @include media-breakpoint-up(md) {
         input {
-  
+
           html[dir="ltr"] & {
             padding-left: 100px !important;
             padding-right: 180px !important;

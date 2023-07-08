@@ -31,9 +31,9 @@ function DecisionsResultCard({
                 fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
               />}
               <div className="d-flex align-items-center mb-2">
-                <Badge text={BibliographicData.DecisionCategory} className="text-capitalize me-2 mt-1 bg-secondary" />
+                <Badge text={BibliographicData?.DecisionCategory} className="text-capitalize me-2 mt-1 bg-secondary" />
                 <span className="d-block fs-20 text-truncate">
-                  {BibliographicData.DecisionTitle
+                  {BibliographicData?.DecisionTitle
                     && <Highlighter
                       highlightTag="span"
                       highlightClassName="font-medium"
@@ -55,32 +55,40 @@ function DecisionsResultCard({
             {
               selectedView.value !== 'compact' && (
                 <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark fs-sm">
-                  <Highlighter
-                    highlightTag="span"
-                    highlightClassName="font-medium"
-                    textToHighlight={trimStringRelativeToSubtext(
-                      BibliographicData.Keywords,
-                      query,
-                    )}
-                    searchWords={highlightWords}
-                    autoEscape
-                  />
+                  {
+                    BibliographicData?.Keywords && (
+                      <Highlighter
+                        highlightTag="span"
+                        highlightClassName="font-medium"
+                        textToHighlight={trimStringRelativeToSubtext(
+                          BibliographicData.Keywords,
+                          query,
+                        )}
+                        searchWords={highlightWords}
+                        autoEscape
+                      />
+                    )
+                  }
                 </p>
               )
             }
             {
               selectedView.value === 'detailed' && (
                 <p className="fs-sm text-gray">
-                  <Highlighter
-                    highlightTag="span"
-                    highlightClassName="font-medium"
-                    textToHighlight={trimStringRelativeToSubtext(
-                      BibliographicData.DecisionBrief,
-                      query,
-                    )}
-                    searchWords={highlightWords}
-                    autoEscape
-                  />
+                  {
+                    BibliographicData?.DecisionBrief && (
+                    <Highlighter
+                      highlightTag="span"
+                      highlightClassName="font-medium"
+                      textToHighlight={trimStringRelativeToSubtext(
+                        BibliographicData?.DecisionBrief,
+                        query,
+                      )}
+                      searchWords={highlightWords}
+                      autoEscape
+                    />
+                    )
+                  }
                 </p>
               )
             }

@@ -151,7 +151,9 @@ const AppAuthProviderCustom = ({ children, hasSignedIn, setHasSignedIn }) => {
   useEffect(() => {
     const fetchedRoles = user?.profile?.clientRoles;
     const mappedRoles = fetchedRoles?.map((fetchedRole) => roleMapper(fetchedRole)) || [];
-    const userRole = findFirstCommonElement(mappedRoles, AllowedRoles);
+    const userFirstCommonRole = findFirstCommonElement(mappedRoles, AllowedRoles);
+    const userRole = isAuthenticated ? userFirstCommonRole || roles.PUBLIC_USER
+      : userFirstCommonRole;
     setRole(userRole);
     if (user) {
       if (!isAuthenticated || !AllowedRoles.includes(userRole)) {

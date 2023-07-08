@@ -24,6 +24,7 @@
   "advancedSearch": "بحث متقدم",
   "searchQuery": "استعلام",
   "filters": "منقيات",
+  "analytics": "تحليل البيانات",
   "addSearchField": "أضف مصطلح",
   "clear": "مسح",
   "apply": "بحث",
@@ -250,5 +251,9 @@
     "classification": "الوصف",
     "status": "الحالة",
     "ipOffice": "مكتب IP"
+  },
+  "speech": {
+    "english": "الإنجليزية",
+    "arabic": "العربية"
   }
 }

@@ -1,4 +1,4 @@
-@import '../../../../assets/styles/utilities/custom-theme';
+@import '../../../../assets/styles/utilities/variables';
 @import "~bootstrap/scss/mixins";
 
 button.searchIcon {
@@ -43,9 +43,11 @@ button.searchIcon {
 .smSearch {
   input {
     height: 59px !important;
+
     html[dir="ltr"] & {
       padding-right: 180px;
     }
+
     html[dir="rtl"] & {
       padding-left: 180px;
       padding-right: 20px !important;
@@ -68,16 +70,19 @@ button.searchIcon {
 }
 
 //// searchWithSibling
-.searchWithSibling  input{
+.searchWithSibling input {
   border-radius: $border-radius $border-radius;
+
   @include media-breakpoint-up(xl) {
     border-left: 0 !important;
     border-radius: 0 $border-radius $border-radius 0;
+
     html[dir="ltr"] & {
       padding-right: 180px;
-      padding-left:10px;
-      
+      padding-left: 10px;
+
     }
+
     html[dir="rtl"] & {
       border-right: 0 !important;
       border-radius: $border-radius 0 0 $border-radius;
@@ -85,41 +90,47 @@ button.searchIcon {
       padding-right: 10px;
     }
   }
+
   @include media-breakpoint-down(xl) {
     html[dir="ltr"] & {
       padding-right: 190px !important;
       padding-left: 20px;
     }
+
     html[dir="rtl"] & {
       padding-left: 190px;
       padding-right: 20px;
     }
   }
 }
+
 .searchResultsView {
-  
+
   .imgUploaded {
-    &.searchInputWrapper{
+    &.searchInputWrapper {
       @include media-breakpoint-up(md) {
         input {
-  
+
           html[dir="ltr"] & {
             padding-left: 100px !important;
             padding-right: 180px !important;
           }
+
           html[dir="rtl"] & {
             padding-right: 90px !important;
             padding-left: 180px !important;
           }
         }
       }
+
       @include media-breakpoint-down(md) {
         input {
-  
+
           html[dir="ltr"] & {
             padding-left: 90px;
             padding-right: 180px;
           }
+
           html[dir="rtl"] & {
             padding-right: 90px !important;
             padding-left: 180px;
@@ -129,8 +140,9 @@ button.searchIcon {
     }
   }
 }
+
 .imgUploaded {
-  &.searchInputWrapper{
+  &.searchInputWrapper {
     @include media-breakpoint-up(md) {
       input {
 
@@ -138,12 +150,14 @@ button.searchIcon {
           padding-left: 130px !important;
           padding-right: 180px !important;
         }
+
         html[dir="rtl"] & {
           padding-right: 110px !important;
           padding-left: 180px !important;
         }
       }
     }
+
     @include media-breakpoint-down(md) {
       input {
 
@@ -151,6 +165,7 @@ button.searchIcon {
           padding-left: 130px !important;
           padding-right: 180px !important;
         }
+
         html[dir="rtl"] & {
           padding-right: 110px !important;
           padding-left: 180px !important;
@@ -174,13 +189,15 @@ button.searchIcon {
     }
   }
 }
+
 .searchWithImage {
   .clearIcon {
     html[dir="ltr"] & {
-      right: 155px;
+      right: 175px;
     }
+
     html[dir="rtl"] & {
-      left: 155px;
+      left: 175px;
     }
   }
 }
@@ -197,26 +214,64 @@ button.searchIcon {
   }
 }
 
+.mic {
+  position: absolute;
+  top: 34px;
+  right: 140px;
+  cursor: pointer;
+
+  html[dir="rtl"] & {
+    right: auto;
+    left: 140px;
+  }
+}
+
 .smSearch {
   .uploadIcon {
     top: 17px;
+
     html[dir="ltr"] & {
       right: 90px;
     }
+
     html[dir="rtl"] & {
       left: 90px;
+    }
+  }
+
+  .mic {
+    position: absolute;
+    top: 18px;
+    right: 131px;
+
+    html[dir="rtl"] & {
+      right: auto;
+      left: 140px;
     }
   }
 
   &.searchWithImage {
     .clearIcon {
       top: 16px;
+
       html[dir="ltr"] & {
-        right: 150px;
+        right: 171px;
       }
+
       html[dir="rtl"] & {
-        left: 150px;
+        left: 180px;
       }
     }
+  }
+}
+
+.searchResultsView.advanced .clearIcon {
+
+  html[dir="ltr"] & {
+    right: 138px;
+  }
+
+  html[dir="rtl"] & {
+    left: 141px;
   }
 }

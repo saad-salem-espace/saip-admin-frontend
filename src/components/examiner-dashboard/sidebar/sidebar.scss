@@ -1,4 +1,4 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 @import "../../../assets/styles/utilities/mixin";
 
 .dashboard-sidebar {
@@ -13,8 +13,8 @@
       height: 55px;
       text-indent: -9999px;
       position: relative;
-      @extend .w-100;
-      @extend .p-0;
+      width: 100%;
+      padding: 0;
 
       [data-bs-theme="dark"] & {
         filter: grayscale(100%) !important;

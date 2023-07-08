@@ -1,4 +1,4 @@
-@import "..//../../assets/styles/utilities/custom-theme";
+@import "..//../../assets/styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
 .tooltip-content {
@@ -6,5 +6,5 @@
   color: $white;
   font-size: $font-size-xs;
   border-radius: $border-radius;
-  @extend .p-2
+  padding: 0.5rem;
 }

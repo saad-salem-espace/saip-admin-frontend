@@ -1,4 +1,4 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 
 .pagination {
   justify-content: flex-start !important;
@@ -11,7 +11,7 @@
     }
   }
   .sr-only {
-    @extend .d-none;
+    display: none;;
   }
   .page-item {
     margin: 0 8px;

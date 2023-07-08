@@ -1,5 +1,6 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 @import "../../../assets/styles/components/popover";
+@import "~bootstrap/scss/mixins";
 
 .float-widget {
   transform: none !important;
@@ -30,11 +31,13 @@
   }
   @media screen and (max-width: 1200px) {
     position: fixed !important;
-    transform: translate(-50%, 0%) !important;
     html[dir="ltr"] & {
+      transform: translate(-50%, 0%) !important;
       left: 50% !important;
     }
     html[dir="rtl"] & {
+      transform: translate(50%, 0%) !important;
+      inset: auto auto 60px 0px !important;
       right: 50% !important;
     }
 

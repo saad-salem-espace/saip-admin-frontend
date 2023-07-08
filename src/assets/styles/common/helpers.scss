@@ -1,5 +1,5 @@
 
-@import "../../styles/utilities/custom-theme";
+@import "../../styles/utilities/variables";
 
 html {
   body {
@@ -21,6 +21,9 @@ html {
     }
     .app-bg-primary-dark {
       background-color:  var(--bs-primary-dark)!important;
+    }
+    .app-bg-primary {
+      background-color:  var(--bs-primary)!important;
     }
     // text color
     .app-text-primary {

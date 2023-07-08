@@ -1,11 +1,11 @@
-@import "../../styles/utilities/custom-theme";
+@import "../../styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
 .table.appTable {
   margin-bottom: 0;
 
   tr:first-of-type {
-    @extend.border-top
+    border-top: $border-width solid $border-color;
   }
 
   th {
@@ -13,20 +13,22 @@
     color: var(--bs-primary-dark);
     font-size: $font-size-base;
     background-color: var(--bs-white);
-    @extend .pe-8;
-    @extend .py-8;
+    padding-right: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     white-space: nowrap;
 
     html[dir="rtl"] & {
-      @extend .ps-8;
-      @extend .pe-2;
+      padding-right: 2rem;
+      padding-left: 0.5rem;
     }
   }
 
   td {
     color: $gray-700;
     font-size: $font-size-sm;
-    @extend .py-4;
+    padding-top: 1rem;
+padding-bottom: 1rem;
 
     html[dir="rtl"] & {
       direction: rtl;
@@ -47,11 +49,11 @@
     &:first-of-type {
 
       html[dir="rtl"] & {
-        @extend .pe-8;
+        padding-right: 2rem;
       }
 
       html[dir="ltr"] & {
-        @extend .ps-8;
+        padding-left: 2rem;
       }
     }
   }

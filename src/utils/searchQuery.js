@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { DateObject } from 'react-multi-date-picker';
 import { search } from './arrays';
 import { isMultipleValue } from './search-query/encoder';
@@ -34,8 +35,17 @@ const parseQuery = (fields, imageName) => {
   return queryObjsArr;
 };
 
+const getIfIsDate = (data) => {
+  let dates;
+  if (new DateObject(data.replace('"', '').split(',')[0]).isValid) {
+    dates = data.replace('"', '').split(',').map((date) => new DateObject(date));
+  }
+  return dates?.length <= 1 ? dates[0] : dates;
+};
+
 const convertQueryArrToObjsArr = (qArr, searchIdentifiersData) => {
   const qObjsArr = [];
+  let counter = 1;
   qArr.forEach((qObj) => {
     if (qObj.identifier !== 'image') {
       const selectedIdentifier = searchIdentifiersData.find(
@@ -46,12 +56,14 @@ const convertQueryArrToObjsArr = (qArr, searchIdentifiersData) => {
         condition: selectedIdentifier.identifierOptions.find(
           (i) => i.optionParserName === qObj.condition,
         ),
-        data: qObj.data,
+        data: getIfIsDate(qObj.data) ?? qObj.data,
         operator: qObj.operator,
+        id: counter,
       });
     } else {
       qObjsArr.push(qObj);
     }
+    counter += 1;
   });
   return qObjsArr;
 };
@@ -99,6 +111,7 @@ const convertQueryStrToArr = (qStr, selectedIdentifiers) => {
            && qObjs[qObjsPrevIdx].data.charAt(qObjsLength - 1) === '"') {
           qObjs[qObjsPrevIdx].data = qObjs[qObjsPrevIdx].data.substr(1, qObjsLength - 2);
         }
+
         qObjsPrevIdx += 1;
         qStartIdx = i + 2;
       }
@@ -111,7 +124,15 @@ const convertQueryStrToArr = (qStr, selectedIdentifiers) => {
 const convertQueryArrToStr = (qObjsArr) => {
   let qStr = '';
   qObjsArr?.forEach((obj) => {
-    qStr = `${qStr} ${obj.operator} ${obj.identifier} ${obj.condition} "${obj.data}"`;
+    let data = obj.data;
+    if (data instanceof DateObject || data?.[0] instanceof DateObject) {
+      if (Array.isArray(data)) {
+        data = data.map((date) => date.format('YYYY-MM-DD'));
+      } else {
+        data = data.format('YYYY-MM-DD');
+      }
+    }
+    qStr = `${qStr} ${obj.operator} ${obj.identifier} ${obj.condition} "${data}"`;
   });
   return qStr.trim();
 };

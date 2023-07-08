@@ -1,10 +1,10 @@
-@import "../../../../assets/styles/utilities/custom-theme";
+@import "../../../../assets/styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
 .search-query-menu {
   position: absolute;
   width: 464px;
-  @extend .border;
+  border: $border-width solid $border-color;
   z-index: 9999999 !important;
   top: 70px;
   height: 448px;

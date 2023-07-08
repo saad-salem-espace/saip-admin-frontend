@@ -50,7 +50,7 @@ function IndustrialDesignResultCard({
             </div>
             <div className="title">
               <span className="d-block text-truncate mb-1">
-                {BibliographicData.DesignTitleEN && <Highlighter
+                {BibliographicData?.DesignTitleEN && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
@@ -62,7 +62,7 @@ function IndustrialDesignResultCard({
                 />}
               </span>
               <span className="d-block text-truncate">
-                {BibliographicData.DesignTitleAR && <Highlighter
+                {BibliographicData?.DesignTitleAR && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(

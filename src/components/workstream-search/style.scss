@@ -1,4 +1,4 @@
-@import "../../assets/styles/utilities/custom-theme";
+@import "../../assets/styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
 .workstream-header {
@@ -29,7 +29,7 @@ span.customLabel {
 .search-box-index {
   div {
     .rounded {
-      @extend .mt-10;
+      margin-top: 2.5rem;
     }
   }
 }

@@ -1,11 +1,10 @@
-@import "../utilities/custom-theme";
+@import "../utilities/variables";
 
 .default-menu {
   a {
     color: $gray;
     font-size: $font-size-sm;
-    @extend .px-4;
-    @extend .py-2;
+    padding: .5rem 1rem;
 
     &:hover {
       color: var(--bs-gray);
@@ -18,14 +17,16 @@
 
   .dropdown-menu {
     border: none;
-    @extend .shadow;
+    box-shadow: $box-shadow;
     padding: 0;
   }
 
   .dropdown-toggle {
     border: none;
-    @extend .py-1;
-    @extend .px-4;
+    padding-top: 0.25rem;
+padding-bottom: 0.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     color: $gray;
     background-color: transparent;
 

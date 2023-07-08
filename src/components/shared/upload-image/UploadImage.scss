@@ -1,4 +1,4 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 
 .dashedBorder {
   border: $border-width-md dashed var(--bs-primary);
@@ -18,7 +18,7 @@
   .imageView {
     width: 70px;
     height: 46px;
-    @extend .m-2;
+    margin: .5rem;
   }
 }
 

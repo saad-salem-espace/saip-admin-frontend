@@ -7,5 +7,18 @@ const getAttachmentURL = ({
   workstreamId, id, fileName, fileType: fileType || 'image',
 }));
 
-// eslint-disable-next-line import/prefer-default-export
-export { getAttachmentURL };
+const imageUrlToBase64 = (imageUrl) => (
+  fetch(imageUrl)
+    .then((response) => response.blob())
+    .then(
+      (blob) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      }),
+    )
+    .then((dataUrl) => dataUrl.split(',')[1])
+);
+
+export { getAttachmentURL, imageUrlToBase64 };
