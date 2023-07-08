@@ -1,9 +1,10 @@
 // Custom variables
-@import "./utilities/custom-theme";
 @import "./utilities/map-amends";
 
 // global
 @import "./global";
+
+@import "./utilities/custom-theme";
 
 // rtl
 @import "./vendors/rtl";

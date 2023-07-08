@@ -1,0 +1,52 @@
+.speech-popover {
+  min-width: 317px;
+
+  html[dir="rtl"] & {
+    margin-left: -100px;
+  }
+
+  html[dir="ltr"] & {
+    margin-left: 100px;
+  }
+
+  .popover-header {
+    background-color: transparent;
+  }
+
+  .start-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stop-btn {
+    div {
+      width: 16px;
+      height: 16px;
+      background-color: var(--bs-primary);
+    }
+
+    &:hover {
+      div {
+        background-color: var(--bs-white);
+      }
+    }
+  }
+
+  .stop-btn.disabled div {
+    background-color: var(--bs-gray-500);
+  }
+}
+
+.lang-select {
+  width: 189px;
+
+  &.defaultSelect {
+    div[class$="container"] {
+      height: 100%;
+    }
+
+    div[class$=singleValue] {
+      bottom: 12px;
+    }
+  }
+}

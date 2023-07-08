@@ -13,8 +13,11 @@ const NotFound = lazy(() => import('errors/error-pages/NotFoundError'));
 const ViewHistory = lazy(() => import('components/view-history/ViewHistory'));
 const BookmarksList = lazy(() => import('components/bookmarks/BookmarkList'));
 const IprTab = lazy(() => import('components/ipr-details/IprTab'));
+const MyActivity = lazy(() => import('components/my-activity/MyActivity'));
+const Privacy = lazy(() => import('components/pages/Privacy'));
+const Terms = lazy(() => import('components/pages/Terms'));
 
-const Routes = ({ updateFocusArea, showFocusArea }) => (
+const AppRoutes = ({ updateFocusArea, showFocusArea }) => (
   <ReactRoutes>
     <Route path="*" element={<NotFound />} />
     <Route
@@ -38,6 +41,7 @@ const Routes = ({ updateFocusArea, showFocusArea }) => (
         }
       />
       <Route path={appRoutes.admin} element={<Admin />} />
+      <Route path={appRoutes.myActivity} element={<MyActivity />} />
     </Route>
     <Route
       path={appRoutes.savedQueries}
@@ -49,12 +53,14 @@ const Routes = ({ updateFocusArea, showFocusArea }) => (
     />
     <Route path={appRoutes.bookmarks} element={<BookmarksList />} />
     <Route path={appRoutes.document} element={<IprTab />} />
+    <Route path={appRoutes.privacy} element={<Privacy />} />
+    <Route path={appRoutes.terms} element={<Terms />} />
 
   </ReactRoutes>
 );
 
-Routes.propTypes = {
+AppRoutes.propTypes = {
   updateFocusArea: PropTypes.func.isRequired,
   showFocusArea: PropTypes.bool.isRequired,
 };
-export default Routes;
+export default AppRoutes;

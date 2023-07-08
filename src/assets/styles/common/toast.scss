@@ -1,4 +1,4 @@
-@import '../../../assets/styles/utilities/custom-theme';
+@import '../../../assets/styles/utilities/variables';
 @import "~bootstrap/scss/mixins";
 
 
@@ -9,12 +9,12 @@
 }
 
 .Toastify__toast-icon {
-  @extend.me-4;
+  margin-right: 1rem;;
   width: 31px;
 }
 
 .Toastify__toast-body {
-  @extend.p-4;
+  padding: 1rem;;
 }
 
 .Toastify__close-button {

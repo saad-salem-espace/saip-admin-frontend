@@ -1,12 +1,12 @@
-@import "../../../src/assets/styles/utilities/custom-theme";
+@import "../../../src/assets/styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
-.view-history {
+.view-history, .view-activities {
   .query {
     width: 60%;
   }
 
-  .no-history {
+  .no-history,.no-activity {
     @include media-breakpoint-up(md) {
       height: calc(100vh - 400px);
     }

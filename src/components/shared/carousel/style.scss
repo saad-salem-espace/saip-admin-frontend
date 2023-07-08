@@ -1,4 +1,4 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 
 .imgWrapper,
 .item-thumb {
@@ -8,7 +8,6 @@
 
   .overlay {
     background-color: rgba(0, 0, 0, .5);
-    display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
@@ -22,10 +21,19 @@
     svg {
       opacity: 1;
     }
+
+    .icon {
+      padding: 0.5rem;
+      border-radius: $border-radius;
+
+      &:hover {
+        background-color: $primary;
+      }
+    }
   }
 
   &:hover .overlay {
-    display: block;
+    display: flex;
   }
 
   .img {
@@ -89,7 +97,7 @@
     position: relative;
     margin: 8px;
     padding: 0px;
-    width: 65px;
+    width: 95px;
     height: 70px;
 
     img {
@@ -103,5 +111,13 @@
   .imgWrapper {
     width: 300px;
     margin: auto;
+  }
+}
+
+.sm-thumb {
+  .icon {
+   img{
+    width: 16px;
+   }
   }
 }

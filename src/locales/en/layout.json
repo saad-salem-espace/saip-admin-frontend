@@ -27,6 +27,10 @@
     "noSearchHistory": "You didn't search for any keywords yet."
   },
   "footer": {
-    "copyright": "All rights reserved for Saudi Authority for Intellectual Property © "
+    "copyright": "All rights reserved for Saudi Authority for Intellectual Property © ",
+    "links": {
+      "terms": "Terms and Conditions",
+      "policy": "Acceptable Use Policy"
+    }
   }
 }

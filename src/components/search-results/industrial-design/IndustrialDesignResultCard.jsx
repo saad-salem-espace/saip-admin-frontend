@@ -16,6 +16,7 @@ import '../trademarks-search-result-cards/style.scss';
 function IndustrialDesignResultCard({
   searchResult,
   setActiveDocument, activeDocument, highlightWords, query, selectedView,
+  disableCheckbox,
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
@@ -36,11 +37,11 @@ function IndustrialDesignResultCard({
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
-                <Checkbox
+                {!disableCheckbox && <Checkbox
                   className="me-4"
                   name={`selectedCards.${BibliographicData?.FilingNumber}`}
                   fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
-                />
+                />}
                 <Badge text={BibliographicData.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
@@ -49,7 +50,7 @@ function IndustrialDesignResultCard({
             </div>
             <div className="title">
               <span className="d-block text-truncate mb-1">
-                {BibliographicData.DesignTitleEN && <Highlighter
+                {BibliographicData?.DesignTitleEN && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
@@ -61,7 +62,7 @@ function IndustrialDesignResultCard({
                 />}
               </span>
               <span className="d-block text-truncate">
-                {BibliographicData.DesignTitleAR && <Highlighter
+                {BibliographicData?.DesignTitleAR && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
@@ -137,6 +138,7 @@ IndustrialDesignResultCard.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
+  disableCheckbox: PropTypes.bool.isRequired,
 };
 
 IndustrialDesignResultCard.defaultProps = {

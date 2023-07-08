@@ -1,5 +1,6 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 @import "../../../assets/styles/utilities/mixin";
+@import "~bootstrap/scss/mixins";
 
 .board-container {
   .cards-container {
@@ -11,7 +12,7 @@
     }
   }
   .empty-board {
-    height: 65vh;
+    height: 60vh;
   }
   .assignment-status {
     @include border(3px,25px,0px,transparent);

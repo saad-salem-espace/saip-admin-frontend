@@ -1,5 +1,5 @@
 import './assets/styles/App.scss';
-import Routes from 'components/routes/Routes';
+import AppRoutes from 'components/routes/AppRoutes';
 import ThemeProvider from 'components/theme/ThemeProvider';
 import AppNavbar from 'components/layout/app-navbar/AppNavbar';
 import { ToastContainer } from 'react-toastify';
@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import FocusArea from 'components/shared/focus-area/FocusArea';
 import Footer from 'components/layout/footer/Footer';
 import { SelectedWorkStreamIdProvider } from 'contexts/SelectedWorkStreamIdContext';
+import useAuth from './hooks/useAuth';
 
 function App() {
   const { i18n } = useTranslation();
@@ -30,6 +31,7 @@ function App() {
   const focusId = JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber;
   const focusTitle = JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.applicationTitle;
   const [showFocusArea, setShowFocusArea] = useState(null);
+  const { isAuthenticated } = useAuth();
 
   const hideFocusArea = () => {
     setShowFocusArea(false);
@@ -40,6 +42,10 @@ function App() {
     setShowFocusArea(!!focusId);
   }, []);
 
+  useEffect(() => {
+    hideFocusArea();
+  }, [!isAuthenticated]);
+
   return (
     <ThemeProvider
       lang={lang}
@@ -47,11 +53,13 @@ function App() {
     >
       <SelectedWorkStreamIdProvider>
         <div className="app" translate="no">
-          <Routes
-            updateFocusArea={(flag) => setShowFocusArea(flag)}
-            showFocusArea={showFocusArea}
-          />
           <AppNavbar lang={lang} changeLang={changeLang} hideFocusArea={hideFocusArea} />
+          <div className="min-h-88">
+            <AppRoutes
+              updateFocusArea={(flag) => setShowFocusArea(flag)}
+              showFocusArea={showFocusArea}
+            />
+          </div>
           <ToastContainer
             position="bottom-left"
             autoClose={8000}

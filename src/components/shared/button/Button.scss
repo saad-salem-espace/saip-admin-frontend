@@ -1,4 +1,4 @@
-@import"../../../assets/styles/utilities/custom-theme";
+@import"../../../assets/styles/utilities/variables";
 
 .btn {
   text-decoration: none;
@@ -33,7 +33,7 @@
     background-color: var(--bs-primary-dark) !important;
     color: var(--bs-white) !important;
   }
-  
+
   &.btn-outline-primary {
     color: var(--bs-primary) !important;
     border: $border-width solid var(--bs-primary) !important;
@@ -41,6 +41,11 @@
     &:active{
       color: var(--bs-white) !important;
       background-color: var(--bs-primary) !important;
+    }
+    &[disabled] {
+      color: var(--bs-gray-500) !important;
+      border-color: var(--bs-gray-500) !important;
+      background-color: transparent !important;
     }
   }
 
@@ -109,7 +114,7 @@
     }
     &.bg-primary-dark + .dropdown-menu {
         color: var(--bs-white) !important;
-        @extend .p-0;
+        padding: 0;
       &, * {
         color: var(--bs-white) !important;
       }
@@ -127,8 +132,20 @@
   }
 
   &.disabled, :disabled {
+    opacity: 1 !important;
     background-color: var(--bs-gray-500) !important;
     border: none;
+  }
+  &.btn-light {
+    background-color: var(--bs-white) !important;
+    color: var(--bs-gray) !important;
+    border-color: transparent;
+    &:hover, &.active, &:focus{
+      background-color: var(--bs-primary) !important;
+      *, & {
+        color: var(--bs-white) !important;
+      }
+    }
   }
 }
 .dropdown-menu.show {

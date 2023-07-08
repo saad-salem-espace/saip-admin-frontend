@@ -1,5 +1,6 @@
-@import "../../../assets/styles/utilities/custom-theme";
+@import "../../../assets/styles/utilities/variables";
 @import "../../../assets/styles/utilities/mixin";
+@import "~bootstrap/scss/mixins";
 
 .app-navbar {
   z-index: 7 !important;
@@ -9,10 +10,10 @@
   .nav-link {
     font-size: $font-size-sm;
     color: var(--bs-primary-dark);
-    @extend .align-self-center;
+    align-self: center;
 
     &:hover {
-      color: var(--bs-primary);
+      color: var(--bs-primary) !important;
     }
   }
   .navbar-brand {
@@ -50,7 +51,7 @@
       transform: rotate(180deg);
     }
   }
-  
+
   .sb-avatar , .notifications{
     @include media-breakpoint-down(lg) {
       margin: 0 5px;
@@ -62,14 +63,10 @@
   }
   .accessibility-container {
     @include media-breakpoint-up(xl) {
-      @include border(1px,25px,6px,$border-color);
-      @include border-start(0);
       html[dir="ltr"] & {
-        margin-left: 15px;
         padding-left: 15px;
       }
       html[dir="rtl"] & {
-        margin-right: 15px;
         padding-right: 15px;
       }
     }
@@ -113,7 +110,7 @@
       }
     }
     .dropdown-menu.show {
-      @extend .pb-0;
+      padding-bottom: 0;
     }
     .hight-contrast-activated {
       background-color: var(--bs-primary);
@@ -122,19 +119,19 @@
       }
     }
   }
-  &.logged {
-    .accessibility-container {
-      @include media-breakpoint-up(xl) {
-        html[dir="ltr"] & {
-          margin-left: 25px;
-          padding-left: 25px;
-        }
-        html[dir="rtl"] & {
-          margin-right: 25px;
-          padding-right: 25px;
-        }
+  .help-link-wrapper {
+    @include media-breakpoint-up(xl) {
+      @include border(1px,25px,6px,$border-color);
+      @include border-start(0);
+      html[dir="ltr"] & {
+        margin-left: 14px;
+      }
+      html[dir="rtl"] & {
+        margin-right: 14px;
       }
     }
+  }
+  &.logged {
     .switch-language {
       @include media-breakpoint-up(xl) {
         @include border(1px,25px,6px,$border-color);

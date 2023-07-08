@@ -10,8 +10,10 @@ import Input from 'components/shared/form/input/Input';
 import { isMultipleValue, isRangeValue } from 'utils/search-query/encoder';
 import { useMemo } from 'react';
 import { exclude } from 'utils/arrays';
+import { identifierName, optionName } from 'utils/searchQuery';
 import MultiSelect from 'components/shared/form/multi-select/MultiSelect';
 import options from 'testing-resources/patents/lkps/ipcClassifications.json';
+import './searchField.scss';
 
 function SearchField({
   handleRemove,
@@ -49,7 +51,7 @@ function SearchField({
         range={isRangeValue(conditionValue.optionParserName)}
         isMulti={isMultipleValue(conditionValue.optionParserName)}
         onChangeDate={onChangeDate}
-        className={`${error ? 'error' : ''}`}
+        className={`border-end ${error ? 'error' : ''}`}
       />
     </div>
   );
@@ -97,12 +99,6 @@ function SearchField({
     return returnedField || inputFields.textFields.getField();
   }, [identifierValue?.identifierType, identifierValue?.isLkp, conditionValue, currentLang]);
 
-  function identifierName(option) {
-    return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
-  }
-  function optionName(option) {
-    return currentLang === 'ar' ? option.optionNameAr : option.optionName;
-  }
   return (
     <div className="p-4 mb-2 search-query-wrapper search-query-inputs">
       <div className="d-flex mb-4 search-fields-condition">
@@ -111,7 +107,7 @@ function SearchField({
           <Select
             options={identifiersList}
             className="smSelect defaultSelect smWithLabel"
-            getOptionName={(option) => identifierName(option)}
+            getOptionName={(option) => identifierName(option, currentLang)}
             getOptionValue={(option) => option.identiferName}
             selectedOption={identifierValue}
             setSelectedOption={onChangeIdentifier}
@@ -122,7 +118,7 @@ function SearchField({
           <Select
             options={identifierValue?.identifierOptions}
             className="smSelect defaultSelect smWithLabel"
-            getOptionName={(option) => optionName(option)}
+            getOptionName={(option) => optionName(option, currentLang)}
             selectedOption={conditionValue}
             setSelectedOption={onChangeCondition}
             getOptionValue={(option) => option.optionName}

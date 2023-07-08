@@ -16,6 +16,7 @@ import './style.scss';
 function TrademarksSearchResultCard({
   searchResult,
   setActiveDocument, activeDocument, selectedView, highlightWords, query,
+  disableCheckbox,
 }) {
   const { BibliographicData } = searchResult;
   const { t } = useTranslation('search');
@@ -36,11 +37,11 @@ function TrademarksSearchResultCard({
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
-                <Checkbox
+                {!disableCheckbox && <Checkbox
                   className="me-4"
                   name={`selectedCards.${BibliographicData?.FilingNumber}`}
                   fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
-                />
+                />}
                 <Badge text={BibliographicData.TrademarkLastStatus} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
@@ -49,7 +50,7 @@ function TrademarksSearchResultCard({
             </div>
             <div className="title">
               <span className="d-block text-truncate mb-1">
-                {BibliographicData.BrandNameEn && <Highlighter
+                {BibliographicData?.BrandNameEn && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
@@ -61,7 +62,7 @@ function TrademarksSearchResultCard({
                 />}
               </span>
               <span className="d-block text-truncate">
-                {BibliographicData.BrandNameAr && <Highlighter
+                {BibliographicData?.BrandNameAr && <Highlighter
                   highlightTag="span"
                   highlightClassName="font-medium"
                   textToHighlight={trimStringRelativeToSubtext(
@@ -136,6 +137,7 @@ TrademarksSearchResultCard.propTypes = {
   }).isRequired,
   query: PropTypes.string,
   highlightWords: PropTypes.arrayOf(PropTypes.string),
+  disableCheckbox: PropTypes.bool.isRequired,
 };
 
 TrademarksSearchResultCard.defaultProps = {

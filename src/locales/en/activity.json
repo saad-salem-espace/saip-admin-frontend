@@ -1,0 +1,27 @@
+{
+  "searchWithImg": "A search with image <0>{{value}}</0> was conducted.",
+  "emptyStateTitle": "No recent activities.",
+  "emptyStateMsg": "You don’t have any recent activities yet.",
+  "myActivities": "My <0>Activities</0>",
+  "Bookmarks": {
+    "save": "The <0>{{value}}</0> was added to bookmarks.",
+    "delete": "The <0>{{value}}</0> was deleted from bookmarks."
+  },
+  "Query": {
+    "save": "A search query <0>{{value}}</0> was saved.",
+    "delete": "A search query <0>{{value}}</0> was deleted.",
+    "run": "A search query <0>{{value}}</0> was conducted."
+  },
+
+  "Notes": {
+    "save": "A note for <0>{{value}}</0> was added.",
+    "edit": "A note for <0>{{value}}</0> was edited.",
+    "delete": "A note for <0>{{value}}</0> was deleted."
+  },
+  "ExportDocuments": {
+    "csv": "A CSV was exported with <0>{{value}}</0> records."
+  },
+  "AssignmentDocument": {
+    "UPDATE_STATUS": "The <0>{{value}}</0> status was changed."
+  }
+}

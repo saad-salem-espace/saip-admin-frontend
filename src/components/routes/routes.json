@@ -6,5 +6,8 @@
   "savedQueries": "/savedQueries",
   "viewHistory": "/viewHistory",
   "bookmarks": "/bookmarks",
-  "document": "/document"
+  "document": "/document",
+  "myActivity": "/myActivity",
+  "privacy": "/privacy",
+  "terms": "/terms"
 }

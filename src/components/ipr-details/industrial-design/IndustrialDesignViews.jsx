@@ -13,8 +13,8 @@ import PriorityRow from '../shared/priorities/PriorityRow';
 import BibliographicDataSection from './bibliographic-data/BibliographicDataSection';
 import Description from '../shared/description/Description';
 import OriginalDocument from '../shared/original-document/OriginalDocument';
-import DesignerDetails from './designer-details/DesignerDetails';
-import DesignerDetailsRow from './designer-details/DesignerDetailsRow';
+import DesignerDetails from '../shared/designer-details/DesignerDetails';
+import DesignerDetailsRow from '../shared/designer-details/DesignerDetailsRow';
 import LocarnoClassification from './locarno-classification/LocarnoClassification';
 import LocarnoClassificationRow from './locarno-classification/LocarnoClassificationRow';
 

@@ -6,7 +6,9 @@ import { useTranslation } from 'react-i18next';
 import ExportResults from '../exports/ExportResults';
 import Checkbox from '../shared/form/checkboxes/checkbox/Checkbox';
 
-const ExportSearchResults = ({ workstreams, workstreamId, data }) => {
+const ExportSearchResults = ({
+  workstreams, workstreamId, data, withCheckbox, setSelectedItemsCount,
+}) => {
   const { t } = useTranslation('search');
   const { isValid, values, setFieldValue } = useFormikContext();
   const selectedLength = useMemo(
@@ -27,6 +29,7 @@ const ExportSearchResults = ({ workstreams, workstreamId, data }) => {
   useEffect(clearSelection, [data]);
 
   useEffect(() => {
+    setSelectedItemsCount(selectedLength);
     if (selectedLength === data.length && !values.allSelected && selectedLength > 0) {
       setFieldValue('allSelected', true);
     } else if (selectedLength !== data.length && values.allSelected) {
@@ -52,7 +55,7 @@ const ExportSearchResults = ({ workstreams, workstreamId, data }) => {
   }, [selectedLength]);
 
   return (
-    <div>
+    <div className="d-flex justify-content-between flex-row-reverse align-items-center">
       <div className="position-relative mb-8 d-flex align-items-end h-px-63 ms-5">
         <ExportResults
           workstream={search(workstreams.data, 'id', Number(workstreamId))}
@@ -60,9 +63,9 @@ const ExportSearchResults = ({ workstreams, workstreamId, data }) => {
           isValid={isValid}
         />
       </div>
-      <div className="d-flex">
-        <Checkbox name="allSelected" fieldFor="allSelected" text={t('selectedItems', { count: selectedLength })} />
-      </div>
+      { withCheckbox && (
+        <Checkbox name="allSelected" labelClassName="d-flex justify-content-end flex-row-reverse ms-1 mb-5 gap-3 font-medium text-gray-700" fieldFor="allSelected" text={t('selectedItems', { count: selectedLength })} />
+      )}
     </div>
   );
 };
@@ -71,10 +74,14 @@ ExportSearchResults.propTypes = {
   workstreams: PropTypes.instanceOf(Object).isRequired,
   workstreamId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   data: PropTypes.arrayOf(Object),
+  withCheckbox: PropTypes.bool,
+  setSelectedItemsCount: PropTypes.func,
 };
 
 ExportSearchResults.defaultProps = {
   data: [],
+  withCheckbox: true,
+  setSelectedItemsCount: () => {},
 };
 
 export default ExportSearchResults;

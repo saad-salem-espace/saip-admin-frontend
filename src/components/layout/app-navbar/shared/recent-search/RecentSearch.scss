@@ -1,11 +1,11 @@
-@import "../../../../../assets/styles/utilities/custom-theme";
+@import "../../../../../assets/styles/utilities/variables";
 @import "~bootstrap/scss/mixins";
 
 .recent-search .dropdown-menu[data-bs-popper] {
   top: 57px;
   width: 300px;
   border: none;
-  @extend .shadow;
+  box-shadow: $box-shadow;
 
   html[dir="rtl"] & {
     left: 0;
