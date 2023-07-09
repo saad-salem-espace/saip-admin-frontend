@@ -15,7 +15,9 @@ import CacheContext from 'contexts/CacheContext';
 import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
-import { teldaRegex, noTeldaRegex, defaultConditions } from 'utils/searchQuery';
+import {
+  teldaRegex, noTeldaRegex, defaultConditions, convertQueryArrToStr,
+} from 'utils/searchQuery';
 import FloatWidget from 'components/shared/float-widget/FloatWidget';
 import { BsQuestionCircle } from 'react-icons/bs';
 import AppPopover from 'components/shared/app-popover/AppPopover';
@@ -42,6 +44,10 @@ function WorkstreamSearch() {
   const [imageName, setImageName] = useState(null);
   const [advancedQuery, setAdvancedQuery] = useState('');
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
+
+  const parseAndSetSearchQuery = (qObjsArr) => {
+    setAdvancedQuery(convertQueryArrToStr(qObjsArr));
+  };
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
@@ -88,7 +94,7 @@ function WorkstreamSearch() {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery || ''), ...(imageName && { imageName }),
+          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (advancedQuery || ''), ...(imageName && { imageName }),
         })}`,
       });
     }
@@ -175,23 +181,25 @@ function WorkstreamSearch() {
                     setSelectedOption={setSelectedOption}
                     className="search-box-index"
                   />
-                  {isAdvanced && <SearchQuery
-                    workstreamId={selectedWorkStream}
-                    firstIdentifierStr={searchOptions?.[0].identifierOptions[0]}
-                    defaultInitializers={[{
-                      id: selectedWorkStream,
-                      data: '',
-                      identifier: selectedOption,
-                      condition: selectedOption.identifierOptions[0],
-                      operator: '',
-                    }]}
-                    onChangeSearchQuery={(setAdvancedQuery)}
-                    submitRef={submitRef}
-                    className="mt-8 workstream-view"
-                  />}
                 </Form>
               )}
             </Formik>
+            {isAdvanced && <SearchQuery
+              workstreamId={selectedWorkStream}
+              firstIdentifierStr={searchOptions?.[0].identifierOptions[0]}
+              defaultInitializers={[{
+                id: selectedWorkStream,
+                data: '',
+                identifier: selectedOption,
+                condition: selectedOption.identifierOptions[0],
+                operator: '',
+              }]}
+              onChangeSearchQuery={(vals) => {
+                parseAndSetSearchQuery(vals);
+              }}
+              submitRef={submitRef}
+              className="mt-8 workstream-view"
+            />}
           </Col>
         </Row>
       </Container>
