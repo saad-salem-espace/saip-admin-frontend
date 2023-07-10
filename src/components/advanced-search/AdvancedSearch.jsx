@@ -98,7 +98,7 @@ function AdvancedSearch({
   useEffect(() => {
     if (!isAdvancedSearch) {
       if (activeTabId === 1) setActiveTabId(2);
-    }
+    } else setActiveTabId(1);
   }, [isAdvancedSearch]);
 
   return (

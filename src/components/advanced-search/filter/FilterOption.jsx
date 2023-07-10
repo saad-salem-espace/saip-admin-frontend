@@ -40,7 +40,7 @@ function FilterOption({
   );
 
   useEffect(() => {
-    if (!analytics && isShown) executeAggregation();
+    if (isShown) executeAggregation();
   }, [isShown]);
 
   useEffect(() => {
