@@ -458,7 +458,7 @@ function SearchResults({ showFocusArea }) {
         operator: '',
       }]);
     }
-  }, [searchIdentifiers]);
+  }, [searchIdentifiers, searchResultParams.qArr]);
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -467,8 +467,8 @@ function SearchResults({ showFocusArea }) {
   }, [searchParams.get('enableSynonyms')]);
 
   useEffect(() => {
-    setSearchQuery(convertQueryArrToStr(searchResultParams.qArr));
-  }, [searchResultParams.qArr]);
+    if (!isAdvancedSearch) setSearchQuery('');
+  }, [isAdvancedSearch]);
 
   useEffect(() => {
     if (searchIdentifiers && searchResultParams.qArr) {

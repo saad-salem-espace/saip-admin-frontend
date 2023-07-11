@@ -48,7 +48,7 @@ function SharedSearch({
 
   useEffect(() => {
     setSelectedOption(searchOptions?.[0]);
-  }, [searchOptions]);
+  }, [searchOptions, isAdvanced]);
 
   function identifierName(option) {
     return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
