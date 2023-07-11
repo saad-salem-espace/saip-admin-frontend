@@ -454,7 +454,6 @@ function SearchResults({ showFocusArea }) {
         searchResultParams.qArr,
         searchIdentifiers.data,
       );
-      console.log(reformattedDecoder);
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
         id: 1,
         data: '',
