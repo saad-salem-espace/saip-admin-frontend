@@ -27,6 +27,7 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
 import useAxios from 'hooks/useAxios';
+import { DateObject } from 'react-multi-date-picker';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
@@ -43,6 +44,9 @@ import {
   convertQueryStrToArr,
   convertQueryArrToStr,
   convertQueryObjsArrToTransMemo,
+  teldaRegex,
+  noTeldaRegex,
+  specialCharsValidation,
 } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import SearchResultCards from './search-result-cards/SearchResultCards';
@@ -450,6 +454,7 @@ function SearchResults({ showFocusArea }) {
         searchResultParams.qArr,
         searchIdentifiers.data,
       );
+      console.log(reformattedDecoder);
       setSearchFields(reformattedDecoder.length ? reformattedDecoder : [{
         id: 1,
         data: '',
@@ -598,9 +603,19 @@ function SearchResults({ showFocusArea }) {
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
       .test('Is not empty', validationMessages.search.required, (data) => (
-        (imageName || data)
+        (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
+      || data instanceof DateObject
+      ))
+      .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+      || data instanceof DateObject
+      ))
+      .test('Special characters', validationMessages.search.specialChars, (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
       )),
   });
+
   useEffect(() => {
     document.body.classList.add('search-result-wrapper');
     return () => {

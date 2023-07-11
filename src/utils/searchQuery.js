@@ -19,7 +19,7 @@ const parseQuery = (fields, imageName) => {
     queryObjsArr.push({
       identifier: value.identifier.identiferStrId,
       condition: value.condition.optionParserName,
-      data: value.data,
+      data: ((typeof value.data === 'string' || value.data instanceof String) ? value.data.trim() : value.data),
       operator: value.operator,
     });
   });
@@ -56,7 +56,7 @@ const convertQueryArrToObjsArr = (qArr, searchIdentifiersData) => {
         condition: selectedIdentifier.identifierOptions.find(
           (i) => i.optionParserName === qObj.condition,
         ),
-        data: getIfIsDate(qObj.data) ?? qObj.data,
+        data: selectedIdentifier.identifierType === 'Date' ? getIfIsDate(qObj.data) : qObj.data,
         operator: qObj.operator,
         id: counter,
       });
@@ -204,6 +204,16 @@ defaultConditions.set('LKP', 'hasAny');
 const teldaRegex = /^[^*?!~]+?~?\d*$/;
 const noTeldaRegex = /^[^~]+$/;
 
+const specialCharsValidation = (data) => {
+  const invalidChars = '()&[]{}^|<>+=\\';
+
+  for (let i = 0; i < data.length; i += 1) {
+    if (invalidChars.includes(data[i])) return 0;
+  }
+
+  return 1;
+};
+
 export {
   identifierName,
   optionName,
@@ -215,6 +225,7 @@ export {
   convertQueryArrToObjsArr,
   defaultConditions,
   convertQueryStrToArr,
+  specialCharsValidation,
   convertQueryArrToStr,
   convertQueryObjsArrToTransMemo,
 };
