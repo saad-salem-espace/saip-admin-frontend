@@ -46,6 +46,7 @@ import {
   convertQueryObjsArrToTransMemo,
   teldaRegex,
   noTeldaRegex,
+  wordCountValidation,
   specialCharsValidation,
 } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
@@ -612,6 +613,10 @@ function SearchResults({ showFocusArea }) {
       ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
         ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
+      ))
+      .test('Words count', validationMessages.search.tooLong, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (wordCountValidation(data))))
       || data instanceof DateObject
       )),
   });

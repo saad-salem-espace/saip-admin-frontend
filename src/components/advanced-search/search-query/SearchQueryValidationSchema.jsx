@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
-import { teldaRegex, noTeldaRegex, specialCharsValidation } from 'utils/searchQuery';
+import {
+  teldaRegex, noTeldaRegex, specialCharsValidation, wordCountValidation,
+} from 'utils/searchQuery';
 import validationMessages from 'utils/validationMessages';
 // import { DateObject } from 'react-multi-date-picker';
 // import { identifierNameCategories, selectOption } from 'utils/searchQueryParser';
@@ -38,6 +40,11 @@ const SearchQueryValidationSchema = Yup.object().shape({
         ))
         .test('Special characters', validationMessages.search.specialChars, (data) => (
           ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data)))
+          || (Array.isArray(data) && data.length > 0)
+          || data instanceof DateObject
+        ))
+        .test('Words count', validationMessages.search.tooLong, (data) => (
+          ((typeof data === 'string' || data instanceof String) && (wordCountValidation(data)))
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         )),

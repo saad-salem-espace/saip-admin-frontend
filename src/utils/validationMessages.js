@@ -22,6 +22,7 @@ const validationMessages = {
     required: () => ({ key: 'validations:search.required' }),
     invalidWildcards: () => ({ key: 'validations:search.wildcards' }),
     specialChars: () => ({ key: 'validations:search.specialChars' }),
+    tooLong: () => ({ key: 'validations:search.tooLong' }),
   },
 };
 

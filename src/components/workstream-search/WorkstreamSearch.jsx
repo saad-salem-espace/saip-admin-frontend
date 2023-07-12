@@ -18,6 +18,7 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import {
   teldaRegex, noTeldaRegex, defaultConditions, convertQueryArrToStr,
   specialCharsValidation,
+  wordCountValidation,
 } from 'utils/searchQuery';
 import FloatWidget from 'components/shared/float-widget/FloatWidget';
 import { BsQuestionCircle } from 'react-icons/bs';
@@ -62,6 +63,10 @@ function WorkstreamSearch() {
       ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
         ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
+      ))
+      .test('Words count', validationMessages.search.tooLong, (data) => (
+        ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && (wordCountValidation(data))))
       || data instanceof DateObject
       )),
   });
