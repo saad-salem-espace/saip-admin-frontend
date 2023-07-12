@@ -17,6 +17,7 @@ import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import {
   teldaRegex, noTeldaRegex, defaultConditions, convertQueryArrToStr,
+  specialCharsValidation,
 } from 'utils/searchQuery';
 import FloatWidget from 'components/shared/float-widget/FloatWidget';
 import { BsQuestionCircle } from 'react-icons/bs';
@@ -57,6 +58,10 @@ function WorkstreamSearch() {
       ))
       .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
         ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+      || data instanceof DateObject
+      ))
+      .test('Special characters', validationMessages.search.specialChars, (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
       || data instanceof DateObject
       )),
   });
