@@ -113,6 +113,7 @@ function SearchResults({ showFocusArea }) {
   const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+    qString: searchParams.get('q'),
     filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
