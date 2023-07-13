@@ -46,6 +46,7 @@ import {
   convertQueryObjsArrToTransMemo,
   teldaRegex,
   noTeldaRegex,
+  wordCountValidation,
   specialCharsValidation,
 } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
@@ -113,6 +114,7 @@ function SearchResults({ showFocusArea }) {
   const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+    qString: searchParams.get('q'),
     filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
@@ -611,6 +613,10 @@ function SearchResults({ showFocusArea }) {
       ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
         ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
+      ))
+      .test('Words count', validationMessages.search.tooLong, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (wordCountValidation(data))))
       || data instanceof DateObject
       )),
   });

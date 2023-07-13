@@ -214,6 +214,11 @@ const specialCharsValidation = (data) => {
   return 1;
 };
 
+const wordCountValidation = (data) => {
+  const words = data.trim().split(' ');
+  return (words.length <= 15);
+};
+
 export {
   identifierName,
   optionName,
@@ -221,6 +226,7 @@ export {
   reformatDecoder,
   flattenCriteria,
   teldaRegex,
+  wordCountValidation,
   noTeldaRegex,
   convertQueryArrToObjsArr,
   defaultConditions,
