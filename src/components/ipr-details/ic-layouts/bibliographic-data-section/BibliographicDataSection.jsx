@@ -46,67 +46,67 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('plantVariety.title')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.ApplicationTitle}
+            value={BibliographicData?.ApplicationTitle}
           />
           <LabelValue
             label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.FilingNumber}
+            value={BibliographicData?.FilingNumber}
           />
           <LabelValue
             label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.FilingDate}
+            value={BibliographicData?.FilingDate}
           />
           <LabelValue
             label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PublicationNumber}
+            value={BibliographicData?.PublicationNumber}
           />
           <LabelValue
             label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PublicationDate}
+            value={BibliographicData?.PublicationDate}
           />
           <LabelValue
             label={t('plantVariety.status')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Status}
+            value={BibliographicData?.Status}
           />
           <LabelValue
             label={t('ipr.registrationNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.RegistrationNumber}
+            value={BibliographicData?.RegistrationNumber}
           />
           <LabelValue
             label={t('ipr.registrationDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.RegistrationDate}
+            value={BibliographicData?.RegistrationDate}
           />
           <LabelValue
             label={t('ipr.earliestPriorityDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PriorityDate}
+            value={BibliographicData?.PriorityDate}
           />
           <LabelValue
             label={t('ipr.earliestPriorityNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PriorityNumber}
+            value={BibliographicData?.PriorityNumber}
           />
           <LabelValue
             label={t('applicants')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Applicants.join('; ')}
+            value={BibliographicData?.Applicants.join('; ')}
           />
           <LabelValue
             label={t('industrialDesign.designers')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Designers.join('; ')}
+            value={BibliographicData?.Designers.join('; ')}
           />
           <LabelValue
             label={t('ipr.representatives')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Representatives.join('; ')}
+            value={BibliographicData?.Representatives.join('; ')}
           />
         </Col>
       </Row>

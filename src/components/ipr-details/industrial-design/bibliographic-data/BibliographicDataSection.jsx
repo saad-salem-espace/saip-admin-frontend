@@ -64,55 +64,55 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('industrialDesign.designTitleEn')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.DesignTitleEN}
+            value={BibliographicData?.DesignTitleEN}
             className="mb-4"
           />
           <LabelValue
             label={t('industrialDesign.designTitleAr')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.DesignTitleAR}
+            value={BibliographicData?.DesignTitleAR}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.FilingNumber}
+            value={BibliographicData?.FilingNumber}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.FilingDate}
+            value={BibliographicData?.FilingDate}
             className="mb-4"
           />
           <LabelValue
             label={t('industrialDesign.designStatus')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Status}
+            value={BibliographicData?.Status}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.registrationNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.RegistrationNumber}
+            value={BibliographicData?.RegistrationNumber}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.registrationDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.RegistrationDate}
+            value={BibliographicData?.RegistrationDate}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PublicationNumber}
+            value={BibliographicData?.PublicationNumber}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PublicationDate}
+            value={BibliographicData?.PublicationDate}
             className="mb-4"
           />
           <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
@@ -120,7 +120,7 @@ const BibliographicDataSection = (
             labelClassName="bibliographicLabel"
             value={
               <ShowMore>
-                <HandleEmptyAttribute checkOn={BibliographicData.DesignAbstract} />
+                <HandleEmptyAttribute checkOn={BibliographicData?.DesignAbstract} />
               </ShowMore>
             }
             className="mb-4"
@@ -128,25 +128,25 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('industrialDesign.designers')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Designers.join('; ')}
+            value={BibliographicData?.Designers.join('; ')}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.applicants')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Applicants.join('; ')}
+            value={BibliographicData?.Applicants.join('; ')}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.representatives')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Representatives.join('; ')}
+            value={BibliographicData?.Representatives.join('; ')}
             className="mb-4"
           />
           <LabelValue
             label={t('classifications')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.LocarnoClassification.join('; ')}
+            value={BibliographicData?.LocarnoClassification.join('; ')}
             className="mb-4"
           />
         </Col>
