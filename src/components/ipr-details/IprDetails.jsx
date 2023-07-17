@@ -226,6 +226,16 @@ function IprDetails({
         fileName: document?.OriginalDocuments[documentIndex]?.FileName,
       }).then((data) => {
         fireDownloadLink(data);
+      }).catch(() => {
+        setIsSubmittingDownloadPdf(false);
+        toastify(
+          'error',
+          <div>
+            <p className="toastifyTitle">
+              {t('noDocument')}
+            </p>
+          </div>,
+        );
       });
     }
   };
