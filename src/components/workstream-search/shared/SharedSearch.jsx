@@ -107,7 +107,7 @@ function SharedSearch({
               SearchModuleClassName
             }
             placeholder={t('typeHere')}
-            isClearable={!!values.searchQuery}
+            isClearable={!!values.searchQuery && !isAdvanced}
             clearInput={() => { setFieldValue('searchQuery', ''); }}
             handleUploadImg={handleUploadImg}
             searchWithImg={selectedWorkStream === 2 || selectedWorkStream === 1}
