@@ -37,6 +37,8 @@ function AppDatePicker({
                   onChangeDate(val);
                 }
               }}
+              calendarPosition="bottom-center"
+              fixMainPosition
             />
             <FaRegCalendarAlt className="icon-ic-calendar fs-20 app-text-primary" />
             {(!isMulti && !range && Array.isArray(field.value) && field.value.length > 1) && (

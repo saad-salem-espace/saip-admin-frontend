@@ -9,6 +9,7 @@ import { AppAuthProvider } from 'contexts/AppAuthContext';
 import { initDB } from 'react-indexed-db';
 import { pdfjs } from 'react-pdf';
 import dbConfig from 'dbConfig';
+import Spinner from 'components/shared/spinner/Spinner';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
@@ -19,7 +20,13 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 ReactDOM.render(
   <React.StrictMode>
-    <Suspense fallback="Loading ...">
+    <Suspense
+      fallback={
+        <div className="d-flex justify-content-center align-items-center vh-100">
+          <Spinner />
+        </div>
+      }
+    >
       <CacheProvider>
         <BrowserRouter>
           <ErrorBoundary>

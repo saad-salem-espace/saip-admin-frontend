@@ -73,12 +73,12 @@ function Search({
       }
       {
         speech && (
-          <Speech className={`${style.mic} text-gray fs-24`} speechClassName={speechClassName} getSpeechValue={(v) => (getSpeechValue(v))} />
+          <Speech className={`${style.mic} fs-24`} speechClassName={speechClassName} getSpeechValue={(v) => (getSpeechValue(v))} />
         )
       }
       {
         searchWithImg && (
-        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4 colored" />} onClick={() => handleUploadImg()} />
+        <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4" />} onClick={() => handleUploadImg()} />
         )
       }
       <Button

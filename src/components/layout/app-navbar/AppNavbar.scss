@@ -27,6 +27,7 @@
     }
   }
   &.guest {
+    padding: 16px 40px;
     .navbar-brand {
       &::after {
         top: 19px;
@@ -64,10 +65,10 @@
   .accessibility-container {
     @include media-breakpoint-up(xl) {
       html[dir="ltr"] & {
-        padding-left: 15px;
+        padding-left: 16px;
       }
       html[dir="rtl"] & {
-        padding-right: 15px;
+        padding-right: 16px;
       }
     }
     .size-control {
@@ -124,10 +125,10 @@
       @include border(1px,25px,6px,$border-color);
       @include border-start(0);
       html[dir="ltr"] & {
-        margin-left: 14px;
+        margin-left: 16px;
       }
       html[dir="rtl"] & {
-        margin-right: 14px;
+        margin-right: 16px;
       }
     }
   }

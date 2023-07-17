@@ -78,7 +78,7 @@ button.searchIcon {
     border-radius: 0 $border-radius $border-radius 0;
 
     html[dir="ltr"] & {
-      padding-right: 180px;
+      padding-right: 190px;
       padding-left: 10px;
 
     }
@@ -86,7 +86,7 @@ button.searchIcon {
     html[dir="rtl"] & {
       border-right: 0 !important;
       border-radius: $border-radius 0 0 $border-radius;
-      padding-left: 180px;
+      padding-left: 190px;
       padding-right: 10px;
     }
   }
@@ -207,7 +207,11 @@ button.searchIcon {
   position: absolute;
   top: 34px;
   right: 94px;
-
+  &:hover, &:focus, &:active {
+    .icon-camera {
+      color:  var(--bs-primary);
+    }
+  }
   html[dir="rtl"] & {
     right: auto;
     left: 94px;
@@ -219,7 +223,10 @@ button.searchIcon {
   top: 34px;
   right: 140px;
   cursor: pointer;
-
+  color:  var(--bs-gray);
+  &:hover, &:active, &:focus, :focus-visible {
+    color:  var(--bs-primary);
+  }
   html[dir="rtl"] & {
     right: auto;
     left: 140px;
@@ -259,7 +266,7 @@ button.searchIcon {
       }
 
       html[dir="rtl"] & {
-        left: 180px;
+        left: 190px;
       }
     }
   }

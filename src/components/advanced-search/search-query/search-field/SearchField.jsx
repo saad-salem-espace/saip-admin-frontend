@@ -100,7 +100,7 @@ function SearchField({
   }, [identifierValue?.identifierType, identifierValue?.isLkp, conditionValue, currentLang]);
 
   return (
-    <div className="p-4 mb-2 search-query-wrapper search-query-inputs">
+    <div className="p-4 mb-2 search-query-wrapper search-query-inputs app-bg-primary-01">
       <div className="d-flex mb-4 search-fields-condition">
         <div className="position-relative mb-md-0 mb-3 me-2 search-fields searchFields">
           <span className="position-absolute saip-label smLabel">{t('searchFields')}</span>
