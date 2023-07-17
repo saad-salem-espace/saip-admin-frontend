@@ -42,8 +42,8 @@ function GuestNavbar({ lang, changeLang }) {
     getHistory();
   }, [workStreamId]);
   return (
-    <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
-      <Container fluid className="ps-lg-18">
+    <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest shadow">
+      <Container fluid className="px-0">
         <Navbar.Brand to="/" as={Link}>
           <Image src={logo} />
         </Navbar.Brand>
@@ -79,8 +79,8 @@ function GuestNavbar({ lang, changeLang }) {
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
-              <div className="edges-border d-flex mx-lg-3 px-lg-3">
-                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary fs-sm me-lg-3 me-2 px-3">
+              <div className="edges-border d-flex mx-lg-4 px-lg-4">
+                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary fs-sm px-3">
                   {t('navbar.login')}
                 </Nav.Link>
               </div>
