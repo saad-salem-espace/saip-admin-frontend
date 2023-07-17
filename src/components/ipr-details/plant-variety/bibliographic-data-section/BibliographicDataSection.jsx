@@ -96,17 +96,17 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('applicants')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData?.Applicants.join('; ')}
+            value={BibliographicData?.Applicants?.join('; ')}
           />
           <LabelValue
             label={t('inventors')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData?.Inventors.join('; ')}
+            value={BibliographicData?.Inventors?.join('; ')}
           />
           <LabelValue
             label={t('ipr.representatives')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData?.Representatives.join('; ')}
+            value={BibliographicData?.Representatives?.join('; ')}
           />
         </Col>
       </Row>
