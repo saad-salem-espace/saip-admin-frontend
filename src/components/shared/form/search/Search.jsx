@@ -69,7 +69,7 @@ function Search({
         getInputField
       }
       {
-        isClearable && <Button className={`${style.clearIcon} resetSearch text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
+        false && isClearable && <Button className={`${style.clearIcon} resetSearch text-gray p-0`} variant="link" text={<FontAwesomeIcon icon={faTimes} />} onClick={clearInput} />
       }
       {
         speech && (
