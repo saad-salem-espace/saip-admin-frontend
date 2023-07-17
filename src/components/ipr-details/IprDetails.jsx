@@ -232,7 +232,7 @@ function IprDetails({
 
   const downloadOriginalDocuments = () => {
     setIsSubmittingDownloadPdf(true);
-    if (document.OriginalDocuments) {
+    if (document?.OriginalDocuments) {
       if (!isAuthenticated) {
         executeAfterLimitValidation(
           {
