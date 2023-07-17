@@ -665,7 +665,7 @@ function SearchResults({ showFocusArea }) {
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
                       selectedOption={values.selectedWorkstream}
-                      className="workStreams ms-3 mt-1 customSelect w-px-300"
+                      className="workStreams ms-3 mt-1 customSelect"
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);

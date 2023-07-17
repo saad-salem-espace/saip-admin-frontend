@@ -7,7 +7,7 @@ import './footer.scss';
 function Footer() {
   const { t } = useTranslation();
   return (
-    <footer className="footer py-3 bottom-0 w-100">
+    <footer className="footer py-3 w-100">
       <Container fluid>
         <Row className="d-flex align-items-center">
           <Col xl={4}>

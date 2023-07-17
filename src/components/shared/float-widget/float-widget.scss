@@ -5,28 +5,16 @@
 .float-widget {
   transform: none !important;
   top: 70% !important;
-  @include media-breakpoint-up(lg) {
+  @media screen and (max-width: 1900px) {
+    position: fixed !important;
     html[dir="ltr"] & {
-      left: 70% !important;
+      transform: translate(-95%, 0%) !important;
+      left: 95% !important;
     }
     html[dir="rtl"] & {
-      right: 70% !important;
-    }
-  }
-  @include media-breakpoint-up(xl) {
-    html[dir="ltr"] & {
-      left: 74% !important;
-    }
-    html[dir="rtl"] & {
-      right: 74% !important;
-    }
-  }
-  @include media-breakpoint-up(xxl) {
-    html[dir="ltr"] & {
-      left: 80% !important;
-    }
-    html[dir="rtl"] & {
-      right: 80% !important;
+      transform: translate(95%, 0%) !important;
+      inset: auto auto 60px 0px !important;
+      right: 95% !important;
     }
   }
   @media screen and (max-width: 1200px) {
@@ -40,7 +28,6 @@
       inset: auto auto 60px 0px !important;
       right: 50% !important;
     }
-
   }
   .popover-arrow {
     &::before,
