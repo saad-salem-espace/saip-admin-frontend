@@ -27,6 +27,7 @@ import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
 import useAxios from 'hooks/useAxios';
+import { DateObject } from 'react-multi-date-picker';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
@@ -43,6 +44,10 @@ import {
   convertQueryStrToArr,
   convertQueryArrToStr,
   convertQueryObjsArrToTransMemo,
+  teldaRegex,
+  noTeldaRegex,
+  wordCountValidation,
+  specialCharsValidation,
 } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import SearchResultCards from './search-result-cards/SearchResultCards';
@@ -109,6 +114,7 @@ function SearchResults({ showFocusArea }) {
   const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+    qString: searchParams.get('q'),
     filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
@@ -458,7 +464,7 @@ function SearchResults({ showFocusArea }) {
         operator: '',
       }]);
     }
-  }, [searchIdentifiers]);
+  }, [searchIdentifiers, searchResultParams.qArr]);
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -467,8 +473,8 @@ function SearchResults({ showFocusArea }) {
   }, [searchParams.get('enableSynonyms')]);
 
   useEffect(() => {
-    setSearchQuery(convertQueryArrToStr(searchResultParams.qArr));
-  }, [searchResultParams.qArr]);
+    if (!isAdvancedSearch) setSearchQuery('');
+  }, [isAdvancedSearch]);
 
   useEffect(() => {
     if (searchIdentifiers && searchResultParams.qArr) {
@@ -598,9 +604,23 @@ function SearchResults({ showFocusArea }) {
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
       .test('Is not empty', validationMessages.search.required, (data) => (
-        (imageName || data)
+        (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
+      || data instanceof DateObject
+      ))
+      .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+      || data instanceof DateObject
+      ))
+      .test('Special characters', validationMessages.search.specialChars, (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
+      ))
+      .test('Words count', validationMessages.search.tooLong, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (wordCountValidation(data))))
+      || data instanceof DateObject
       )),
   });
+
   useEffect(() => {
     document.body.classList.add('search-result-wrapper');
     return () => {
@@ -645,7 +665,7 @@ function SearchResults({ showFocusArea }) {
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
                       selectedOption={values.selectedWorkstream}
-                      className="workStreams ms-3 mt-1 customSelect w-px-300"
+                      className="workStreams ms-3 mt-1 customSelect"
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);

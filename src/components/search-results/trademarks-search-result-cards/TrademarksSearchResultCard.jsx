@@ -23,17 +23,17 @@ function TrademarksSearchResultCard({
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId') || '2', id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '2', id: BibliographicData?.FilingNumber, fileName, fileType,
     },
   );
 
   return (
     <Button
       variant="transparent"
-      onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
+      onClick={() => { setActiveDocument(BibliographicData?.FilingNumber); }}
       className="text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
       text={(
-        <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
+        <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
@@ -42,10 +42,10 @@ function TrademarksSearchResultCard({
                   name={`selectedCards.${BibliographicData?.FilingNumber}`}
                   fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
                 />}
-                <Badge text={BibliographicData.TrademarkLastStatus} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
+                <Badge text={BibliographicData?.TrademarkLastStatus} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
-                <Image src={preparedGetAttachmentURL(BibliographicData.Mark)} className="rounded" />
+                <Image src={preparedGetAttachmentURL(BibliographicData?.Mark)} className="rounded" />
               </div>
             </div>
             <div className="title">
@@ -75,7 +75,7 @@ function TrademarksSearchResultCard({
               </span>
               <div>
                 <p className="mb-1 text-black md-text">
-                  {t('filed', { value: BibliographicData.FilingNumber })}
+                  {t('filed', { value: BibliographicData?.FilingNumber })}
                   <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
                   <span>{BibliographicData?.FilingDate}</span>
                 </p>
@@ -90,15 +90,15 @@ function TrademarksSearchResultCard({
                     <>
                       <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        {t('ipr.registered', { value: BibliographicData.RegistrationNumber })}
+                        {t('ipr.registered', { value: BibliographicData?.RegistrationNumber })}
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        <span>{BibliographicData.RegistrationDate}</span>
+                        <span>{BibliographicData?.RegistrationDate}</span>
                       </p>
                       <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        {t('ipr.published', { value: BibliographicData.PublicationNumber })}
+                        {t('ipr.published', { value: BibliographicData?.PublicationNumber })}
                         <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        <span>{BibliographicData.PublicationDate}</span>
+                        <span>{BibliographicData?.PublicationDate}</span>
                       </p>
                     </>
                   )

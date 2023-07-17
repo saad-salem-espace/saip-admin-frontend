@@ -31,10 +31,10 @@ const useAxios = (config, options, customInstance) => {
 
   useEffect(() => {
     const axiosError = response[0].error;
-
     if (axiosError) {
-      const errorType = onError || axiosError.response.data?.error?.type;
+      let errorType = onError || axiosError.response.data?.error?.type;
       const errorCode = axiosError.response.data?.error?.code;
+      if (axiosError.config?.url.includes('attachments')) errorType = 'custom';
       switch (errorType) {
         case 'custom':
           break;

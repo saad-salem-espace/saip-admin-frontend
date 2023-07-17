@@ -226,13 +226,23 @@ function IprDetails({
         fileName: document?.OriginalDocuments[documentIndex]?.FileName,
       }).then((data) => {
         fireDownloadLink(data);
+      }).catch(() => {
+        setIsSubmittingDownloadPdf(false);
+        toastify(
+          'error',
+          <div>
+            <p className="toastifyTitle">
+              {t('noDocument')}
+            </p>
+          </div>,
+        );
       });
     }
   };
 
   const downloadOriginalDocuments = () => {
     setIsSubmittingDownloadPdf(true);
-    if (document.OriginalDocuments) {
+    if (document?.OriginalDocuments) {
       if (!isAuthenticated) {
         executeAfterLimitValidation(
           {
@@ -450,7 +460,7 @@ function IprDetails({
               setIsBookmark={setIsBookmark}
             />
             <h5 className="mb-0">
-              {(searchResultParams.workstreamId === '4' || searchResultParams.workstreamId === '5') ? document.BibliographicData.FilingNumber : document.BibliographicData.PublicationNumber}
+              {(searchResultParams.workstreamId === '4' || searchResultParams.workstreamId === '5') ? document.BibliographicData?.FilingNumber : document.BibliographicData?.PublicationNumber}
             </h5>
           </div>
           <div className="d-flex">

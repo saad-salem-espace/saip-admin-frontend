@@ -1,6 +1,6 @@
 const advancedSearchApi = ({
   workstreamId, qArr, imageName, enableSynonyms, page, sort,
-  filters,
+  filters, qString,
 }) => {
   const dataArr = [];
   qArr.forEach((qObj) => {
@@ -22,6 +22,7 @@ const advancedSearchApi = ({
     data: {
       qJson: dataArr,
       filters,
+      qString,
     },
   };
 };

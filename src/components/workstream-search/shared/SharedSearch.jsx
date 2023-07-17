@@ -48,7 +48,7 @@ function SharedSearch({
 
   useEffect(() => {
     setSelectedOption(searchOptions?.[0]);
-  }, [searchOptions]);
+  }, [searchOptions, isAdvanced]);
 
   function identifierName(option) {
     return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
@@ -107,7 +107,7 @@ function SharedSearch({
               SearchModuleClassName
             }
             placeholder={t('typeHere')}
-            isClearable={!!values.searchQuery}
+            isClearable={!!values.searchQuery && !isAdvanced}
             clearInput={() => { setFieldValue('searchQuery', ''); }}
             handleUploadImg={handleUploadImg}
             searchWithImg={selectedWorkStream === 2 || selectedWorkStream === 1}
