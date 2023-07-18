@@ -90,6 +90,7 @@ function SearchResults({ showFocusArea }) {
   const location = useLocation();
   const [searchFilters, setSearchFilters] = useState([]);
   const [otherSearchParams, setOtherSearchParams] = useState(Object.fromEntries(searchParams));
+  const [advancedValidation, setAdvancedValidation] = useState(true);
 
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
@@ -607,8 +608,11 @@ function SearchResults({ showFocusArea }) {
         (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
       || data instanceof DateObject
       ))
+      .test('Is valid advanced query', validationMessages.search.invalidAdvanced, () => (
+        (!isAdvancedSearch || advancedValidation)
+      ))
       .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
-        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
       || data instanceof DateObject
       ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
@@ -769,6 +773,7 @@ function SearchResults({ showFocusArea }) {
             onChangeSearchQuery={(values) => {
               parseAndSetSearchQuery(values);
             }}
+            setAdvancedValidation={setAdvancedValidation}
           />
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>

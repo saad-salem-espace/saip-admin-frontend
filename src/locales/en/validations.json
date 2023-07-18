@@ -13,6 +13,7 @@
     "required": "The search criteria cannot be empty",
     "wildcards": "Fuzzy search cannot be at the beginning or middle of the string, or with a wildcard",
     "specialChars": "These characters ()&[]{}^|<>+=\\ are reserved and can't be accepted in the input keywords",
-    "tooLong": "The maximum length for a search criteria is 15 words."
+    "tooLong": "The maximum length for a search criteria is 15 words.",
+    "invalidAdvanced": "Some of the fields you entered are not valid."
   }
 }
