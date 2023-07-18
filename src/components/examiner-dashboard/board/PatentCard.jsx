@@ -91,7 +91,7 @@ const PatentCard = ({
               isInProgress(assignment.status === 'IN_PROGRESS');
             }}
             text={
-              <p className="app-text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+              <p className="app-text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate?.substring(0, dateFormatSubstring) || t('dashboard:notAvailable')}`}</p>
             }
           />
           <div className="d-flex">
@@ -164,13 +164,13 @@ const PatentCard = ({
             <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:queue')}
             •
-            {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
+            {` ${assignment.queuePriorityDate?.substring(0, dateFormatSubstring) || t('dashboard:notAvailable')}`}
           </p>
           <p className="fs-xs mb-2">
             <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:priority')}
             •
-            {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}
+            {` ${assignment.earliestPriorityDate?.substring(0, dateFormatSubstring) || t('dashboard:notAvailable')}`}
           </p>
         </div>
         <div className={`d-flex pt-3 ${assignment.status === 'IN_PROGRESS' ? 'justify-content-between' : 'justify-content-end'}`}>

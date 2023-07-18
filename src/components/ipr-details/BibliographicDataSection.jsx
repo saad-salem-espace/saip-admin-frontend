@@ -48,7 +48,7 @@ const BibliographicDataSection = ({
   return (
     <Row>
       <Col md={getGrid('bibliographic')} id="col">
-        <h6 className="mt-8 mb-4 disable-highlight">{t('register')}</h6>
+        <h6 className="mt-7 mb-4 disable-highlight">{t('register')}</h6>
         <KeywordPlannerButton btnPosition={btnPosition} handleClick={handleClick} />
         <LabelValue
           label={t('applicants')}
