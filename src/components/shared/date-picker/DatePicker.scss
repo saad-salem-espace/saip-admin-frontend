@@ -11,11 +11,13 @@
     font-size: $font-size-sm;
     font-family: $font-regular;
     width: 100%;
+    direction: ltr;
     html[dir="ltr"] & {
       padding-right: 45px !important;
     }
     html[dir="rtl"] & {
       padding-left: 45px !important;
+      text-align: right;
     }
   }
 
@@ -231,6 +233,16 @@
     .rmdp-input {
       margin: 0;
       border-radius: 0;
+    }
+  }
+  .datePickerWrapper + .resetSearch {
+    html[dir="ltr"] & {
+      right: 120px;
+      left: auto;
+    }
+    html[dir="rtl"] & {
+      left: 120px;
+      right: auto;
     }
   }
   .datePicker .icon-ic-calendar {
