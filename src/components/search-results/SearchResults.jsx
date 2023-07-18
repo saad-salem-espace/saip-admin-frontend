@@ -693,7 +693,7 @@ function SearchResults({ showFocusArea }) {
                     speechClassName="inner-speech"
                   >
                     <div className="d-md-flex mt-4">
-                      <div className="d-flex align-items-center me-4">
+                      <div className="d-flex align-items-center me-4 advanced-search-container">
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
