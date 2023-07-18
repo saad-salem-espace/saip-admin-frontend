@@ -16,11 +16,8 @@
   }
 }
 .search-result-wrapper {
-  @include media-breakpoint-up(xl) {
-    overflow-y: hidden;
-  }
   .footer {
-    margin-top: -10px;
+    margin-top: -25px;
   }
 }
 
@@ -173,4 +170,17 @@
 
 .star-button::before {
   color: var(--bs-primary-dark) !important;
+}
+
+.advanced-search-container {
+  @include media-breakpoint-up(xl) {
+    @include border(1px,20px,10px,$border-color);
+    @include border-end(0);
+    html[dir="ltr"] & {
+      padding-right: 16px;
+    }
+    html[dir="rtl"] & {
+      padding-left: 16px;
+    }
+  }
 }

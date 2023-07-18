@@ -2,6 +2,9 @@
 @import "../../../assets/styles/utilities/mixin";
 @import "~bootstrap/scss/mixins";
 
+.skiptranslate:not([style="display: none;"]) + noscript + #root .app-navbar {
+  top: 40px;
+} 
 .app-navbar {
   z-index: 7 !important;
   @include media-breakpoint-up(lg) {
