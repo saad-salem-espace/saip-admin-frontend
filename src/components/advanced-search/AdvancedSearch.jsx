@@ -25,6 +25,7 @@ function AdvancedSearch({
   filters,
   isAdvancedSearch,
   searchIdentifiers,
+  setAdvancedValidation,
 }) {
   const [formikInitials, setFormikInitials] = useState({ selectedFilters: {} });
   const { t } = useTranslation('search');
@@ -41,6 +42,7 @@ function AdvancedSearch({
       }}
       submitRef={submitRef}
       isAdvancedMenuOpen={isAdvancedMenuOpen}
+      setAdvancedValidation={setAdvancedValidation}
     />
   ), [defaultInitializers, isAdvancedMenuOpen]);
 
@@ -146,10 +148,12 @@ AdvancedSearch.propTypes = {
   filters: PropTypes.instanceOf(Array),
   isAdvancedSearch: PropTypes.bool.isRequired,
   searchIdentifiers: PropTypes.instanceOf(Array).isRequired,
+  setAdvancedValidation: PropTypes.func,
 };
 
 AdvancedSearch.defaultProps = {
   onChangeSearchQuery: () => {},
+  setAdvancedValidation: () => {},
   filters: [],
 };
 

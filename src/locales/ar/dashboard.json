@@ -17,6 +17,7 @@
   "bookmarks": "تفضيلاتي",
   "notAssigned": "لا تجد الوثائق الخاضعة للفحص؟",
   "emptyStateTitle": "لم يتم إسناد أي من الوثائق لك. ",
+  "notAvailable": "غير متوفر",
   "status": {
     "toDo": "قائمة الأعمال",
     "done": "منجز",

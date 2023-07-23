@@ -46,6 +46,7 @@ function WorkstreamSearch() {
   const [imageName, setImageName] = useState(null);
   const [advancedQuery, setAdvancedQuery] = useState('');
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
+  const [advancedValidation, setAdvancedValidation] = useState(true);
 
   const parseAndSetSearchQuery = (qObjsArr) => {
     setAdvancedQuery(convertQueryArrToStr(qObjsArr));
@@ -57,8 +58,11 @@ function WorkstreamSearch() {
         (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
       || data instanceof DateObject
       ))
+      .test('Is valid advanced query', validationMessages.search.invalidAdvanced, () => (
+        (!isAdvanced || advancedValidation)
+      ))
       .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
-        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+        ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
       || data instanceof DateObject
       ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
@@ -197,6 +201,7 @@ function WorkstreamSearch() {
             {isAdvanced && <SearchQuery
               workstreamId={selectedWorkStream}
               firstIdentifierStr={searchOptions?.[0].identifierOptions[0]}
+              setAdvancedValidation={setAdvancedValidation}
               defaultInitializers={[{
                 id: selectedWorkStream,
                 data: '',
