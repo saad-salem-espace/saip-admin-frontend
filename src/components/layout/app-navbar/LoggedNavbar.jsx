@@ -14,7 +14,7 @@ import getHistoryApi from 'apis/history/getHistoryApi';
 import useAxios from 'hooks/useAxios';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import routes from 'components/routes/routes.json';
-// import Notifications from './notifications/Notifications';
+import Notifications from './notifications/Notifications';
 import useAuth from '../../../hooks/useAuth';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
@@ -129,7 +129,7 @@ function LoggedNavbar({
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
-              {/* <Notifications /> */}
+              <Notifications />
               {/* Switch language */}
               <LanguageSwitch
                 className="pe-lg-5 me-lg-5"
