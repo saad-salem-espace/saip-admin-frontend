@@ -166,9 +166,11 @@
           @include border-start(0);
           html[dir="ltr"] & {
             margin-left: 10px !important;
+            padding-left: 20px !important
           }
           html[dir="rtl"] & {
             margin-right: 10px !important;
+            padding-right: 20px !important
           }
         }
       }
