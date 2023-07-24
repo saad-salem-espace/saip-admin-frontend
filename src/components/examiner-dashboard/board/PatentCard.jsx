@@ -83,20 +83,31 @@ const PatentCard = ({
     <Card ref={drag} className={`${cardStyle} patent-card mb-2`}>
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
-          <AppTooltip
-            placement="top"
-            tooltipContent={
-              <>
-                <span className="d-block">US • B1 • 2022.12.31</span>
-                <span className="d-block">KR • B2 • 2021.12.31</span>
-              </>
-            }
-            tooltipTrigger={
-              <BootstrapButton variant="transparent" className="app-bg-secondary-tangerine me-2 rounded-circle py-1 px-2">
-                <TbRefresh className="app-text-secondary-tangerine fs-18" />
-              </BootstrapButton>
-            }
-          />
+          {
+            JSON.parse(assignment?.epoData).length >= 1 && (
+              <AppTooltip
+                placement="top"
+                tooltipContent={
+                    JSON.parse(assignment?.epoData).map((item) => (
+                      <div>
+                        <span className="d-block">
+                          {item?.country}
+                          {' • '}
+                          {item?.kind}
+                          {' • '}
+                          {item?.date}
+                        </span>
+                      </div>
+                    ))
+                  }
+                tooltipTrigger={
+                  <BootstrapButton variant="transparent" className="app-bg-secondary-tangerine me-2 rounded-circle py-1 px-2">
+                    <TbRefresh className="app-text-secondary-tangerine fs-18" />
+                  </BootstrapButton>
+                  }
+              />
+            )
+          }
           <Button
             variant="link"
             className="text-decoration-none text-start p-0 font-regular w-75"
