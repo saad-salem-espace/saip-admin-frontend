@@ -29,6 +29,16 @@
       @include border-end(10px);
     }
   }
+  .guest-links {
+    html[dir="ltr"] & {
+      margin-left: 16px;
+      margin-right: auto;
+    }
+    html[dir="rtl"] & {
+      margin-right: 16px;
+      margin-left: auto;
+    }
+  }
   &.guest {
     padding: 16px 40px;
     .navbar-brand {
