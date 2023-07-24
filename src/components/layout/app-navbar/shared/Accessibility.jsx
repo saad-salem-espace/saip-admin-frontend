@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Dropdown, Button } from 'react-bootstrap';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { CgEditContrast } from 'react-icons/cg';
 import { useTranslation } from 'react-i18next';
 
-const Accessibility = () => {
+const Accessibility = ({ className }) => {
   const { t } = useTranslation('layout');
   // dark mode
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -51,7 +52,7 @@ const Accessibility = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
   return (
-    <div className="accessibility-container">
+    <div className={`${className} accessibility-container`}>
       <Dropdown>
         <Dropdown.Toggle
           variant="link"
@@ -84,4 +85,13 @@ const Accessibility = () => {
     </div>
   );
 };
+
+Accessibility.propTypes = {
+  className: PropTypes.string,
+};
+
+Accessibility.defaultProps = {
+  className: '',
+};
+
 export default Accessibility;

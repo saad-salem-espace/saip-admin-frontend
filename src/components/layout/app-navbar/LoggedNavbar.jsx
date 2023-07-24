@@ -126,15 +126,17 @@ function LoggedNavbar({
                 ))
               }
             </RecentSearch>
-            <HelpLink />
-            <Accessibility />
+            <div className="d-flex justify-content-center align-items-center mb-3 mb-lg-0">
+              <HelpLink />
+              <Accessibility />
+            </div>
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
               { AppName === 'examiner_app'
                 && <Notifications />}
               {/* Switch language */}
               <LanguageSwitch
-                className="pe-lg-5 me-lg-5"
+                className={`${AppName === 'customer_app' ? 'logged-customer px-lg-5 mx-lg-5' : ''} pe-lg-5 me-lg-5`}
                 lang={lang}
                 changeLang={changeLang}
               />

@@ -57,6 +57,12 @@
       html[dir="rtl"] & {
         padding-left: 10px;
       }
+      &.logged-customer {
+        @include media-breakpoint-up(lg) {
+          @include border(1px,25px,13px,$border-color);
+          @include border-start(0);
+        }
+      }
     }
   }
   .icon {
@@ -154,7 +160,17 @@
       @include media-breakpoint-up(xl) {
         @include border(1px,25px,6px,$border-color);
         @include border-end(0);
-        @include border-start(0);
+      }
+      &.logged-customer {
+        @include media-breakpoint-up(xl) {
+          @include border-start(0);
+          html[dir="ltr"] & {
+            margin-left: 10px !important;
+          }
+          html[dir="rtl"] & {
+            margin-right: 10px !important;
+          }
+        }
       }
     }
     .navbar-toggler {
