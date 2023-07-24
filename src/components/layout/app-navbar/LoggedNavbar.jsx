@@ -139,7 +139,7 @@ function LoggedNavbar({
                 && <Notifications />}
               {/* Switch language */}
               <LanguageSwitch
-                className={`${AppName === 'customer_app' ? 'logged-customer px-lg-5 mx-lg-5' : ''} pe-lg-5 me-lg-5`}
+                className={`${AppName === 'customer_app' ? 'logged-customer' : ''} pe-lg-5 me-lg-5`}
                 lang={lang}
                 changeLang={changeLang}
               />
