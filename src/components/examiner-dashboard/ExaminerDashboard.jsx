@@ -84,10 +84,7 @@ const ExaminerDashboard = ({ updateFocusArea, showFocusArea }) => {
         const firstWorkstream = linksList.find(
           (element) => element.id === workstreamsData.data.data[0],
         );
-        const selectedWorkStreamObj = linksList.find(
-          (element) => element.id === selectedWorkStream?.workStreamId,
-        );
-        setActiveWorkstream(selectedWorkStreamObj || firstWorkstream);
+        setActiveWorkstream(firstWorkstream);
         setWorkstreamChange(true);
         setWorkStreamId(activeWorkstream?.id || workStreamId);
       }

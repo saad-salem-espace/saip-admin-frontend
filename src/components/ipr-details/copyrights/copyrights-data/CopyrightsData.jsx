@@ -46,7 +46,8 @@ const CopyrightsData = ({
         />
         <LabelValue
           label={t('ipr.filingDate')}
-          value={Moment(BibliographicData.FilingDate).format(LONG_DATE)}
+          value={BibliographicData?.FilingDate
+            && Moment(BibliographicData.FilingDate).format(LONG_DATE)}
           labelClassName="copyrights-label"
         />
         <LabelValue
@@ -56,12 +57,14 @@ const CopyrightsData = ({
         />
         <LabelValue
           label={t('ipr.publicationDate')}
-          value={Moment(BibliographicData?.PublicationDate).format(LONG_DATE)}
+          value={BibliographicData?.PublicationDate
+            && Moment(BibliographicData?.PublicationDate).format(LONG_DATE)}
           labelClassName="copyrights-label"
         />
         <LabelValue
           label={t('copyrights.grantDate')}
-          value={Moment(BibliographicData?.GrantDate).format(LONG_DATE)}
+          value={BibliographicData?.GrantDate
+            && Moment(BibliographicData?.GrantDate).format(LONG_DATE)}
           labelClassName="copyrights-label"
         />
         <LabelValue

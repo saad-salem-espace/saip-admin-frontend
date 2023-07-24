@@ -56,11 +56,11 @@ function CopyrightsResultCard({
               {BibliographicData?.Applicants && (BibliographicData?.Applicants.join(' , '))}
             </p>
             <p className="mb-2 text-black fs-sm font-medium">
-              {t('filed', { value: Moment(BibliographicData?.FilingDate).format(LONG_DATE) })}
+              {t('filed', { value: BibliographicData?.FilingDate && Moment(BibliographicData?.FilingDate).format(LONG_DATE) })}
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              {t('published', { value: Moment(BibliographicData?.PublicationDate).format(LONG_DATE) })}
+              {t('published', { value: BibliographicData?.PublicationDate && Moment(BibliographicData?.PublicationDate).format(LONG_DATE) })}
               <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-              {t('copyrights.granted', { value: Moment(BibliographicData?.GrantDate).format(LONG_DATE) })}
+              {t('copyrights.granted', { value: (BibliographicData?.GrantDate && Moment(BibliographicData?.GrantDate).format(LONG_DATE)) })}
             </p>
             {
               selectedView.value === 'detailed' && (

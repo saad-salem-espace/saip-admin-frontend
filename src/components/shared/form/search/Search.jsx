@@ -77,7 +77,7 @@ function Search({
         )
       }
       {
-        searchWithImg && (
+        false && searchWithImg && (
         <Button variant="transparent" className={`border-0 rounded-0 p-0 ${style.uploadIcon}`} text={<span className="icon-camera f-26 ps-4" />} onClick={() => handleUploadImg()} />
         )
       }
