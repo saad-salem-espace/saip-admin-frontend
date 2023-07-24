@@ -97,12 +97,15 @@ function LoggedNavbar({
                 {t('navbar.dashboard')}
               </Nav.Link>
             )}
-            <MyQueriesLink />
-            <MyBookmarksLink />
-            <Nav.Link to={routes.myActivity} as={Link} className="has-icon">
-              <BsListUl className="icon list" />
-              {t('navbar.myActivity')}
-            </Nav.Link>
+            <div className="d-lg-flex gap-2 my-3 my-lg-0 text-center">
+
+              <MyQueriesLink />
+              <MyBookmarksLink />
+              <Nav.Link to={routes.myActivity} as={Link} className="has-icon">
+                <BsListUl className="icon list" />
+                {t('navbar.myActivity')}
+              </Nav.Link>
+            </div>
           </Nav>
           {/* Right navbar */}
           <Nav className="align-items-center">

@@ -50,7 +50,7 @@ function GuestNavbar({ lang, changeLang }) {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
-          <Nav className="me-auto">
+          <Nav className="me-auto d-lg-flex gap-2 my-3 my-lg-0 text-center ms-lg-6">
             <MyQueriesLink />
             <MyBookmarksLink />
           </Nav>
