@@ -50,14 +50,6 @@
         margin-right: 0 !important;
       }
     }
-    .help-link-wrapper {
-      html[dir="ltr"] & {
-        padding-left: 10px;
-      }
-      html[dir="rtl"] & {
-        padding-right: 10px;
-      }
-    }
     .accessibility-container {
       html[dir="ltr"] & {
         padding-right: 10px;
@@ -140,6 +132,12 @@
     }
   }
   .help-link-wrapper {
+    html[dir="ltr"] & {
+      padding-left: 10px;
+    }
+    html[dir="rtl"] & {
+      padding-right: 10px;
+    }
     @include media-breakpoint-up(xl) {
       @include border(1px,25px,6px,$border-color);
       @include border-start(0);
@@ -156,6 +154,7 @@
       @include media-breakpoint-up(xl) {
         @include border(1px,25px,6px,$border-color);
         @include border-end(0);
+        @include border-start(0);
       }
     }
     .navbar-toggler {

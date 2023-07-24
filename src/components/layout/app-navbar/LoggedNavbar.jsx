@@ -68,6 +68,7 @@ function LoggedNavbar({
       executeGetHistory();
     }
   };
+  const AppName = process.env.REACT_APP_NAME;
   return (
     <Navbar
       collapseOnSelect
@@ -129,7 +130,8 @@ function LoggedNavbar({
             <Accessibility />
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
-              <Notifications />
+              { AppName === 'examiner_app'
+                && <Notifications />}
               {/* Switch language */}
               <LanguageSwitch
                 className="pe-lg-5 me-lg-5"

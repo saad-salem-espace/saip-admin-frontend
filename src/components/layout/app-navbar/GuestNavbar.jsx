@@ -82,9 +82,9 @@ function GuestNavbar({ lang, changeLang }) {
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
               <div className="edges-border d-flex mx-lg-4 px-lg-4">
-                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary fs-sm px-3">
+                <Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary fs-sm py-2">
                   {t('navbar.login')}
-                </Nav.Link>
+                </Link>
               </div>
               {/* Switch language */}
               <LanguageSwitch lang={lang} changeLang={changeLang} />
