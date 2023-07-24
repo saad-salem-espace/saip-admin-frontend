@@ -27,6 +27,9 @@ function IndustrialDesignResultCard({
     },
   );
 
+  const imgFilename = BibliographicData?.OverallProductDrawing
+    || searchResult?.Drawings?.[0].FileName;
+
   return (
     <Button
       variant="transparent"
@@ -45,7 +48,7 @@ function IndustrialDesignResultCard({
                 <Badge text={BibliographicData?.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
-                <Image src={preparedGetAttachmentURL(BibliographicData?.OverallProductDrawing)} className="rounded" />
+                <Image src={preparedGetAttachmentURL(imgFilename)} className="rounded" />
               </div>
             </div>
             <div className="title">
@@ -129,6 +132,9 @@ IndustrialDesignResultCard.propTypes = {
       OverallProductDrawing: PropTypes.string.isRequired,
       Status: PropTypes.string.isRequired,
     }),
+    Drawings: PropTypes.arrayOf(PropTypes.shape({
+      FileName: PropTypes.string.isRequired,
+    })).isRequired,
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
