@@ -6,7 +6,7 @@
   top: 40px;
 } 
 .app-navbar {
-  z-index: 7 !important;
+  z-index: 12 !important;
   @include media-breakpoint-up(lg) {
     height: 80px;
   }
@@ -42,6 +42,30 @@
         }
       }
     }
+    .edges-border {
+      html[dir="ltr"] & {
+        margin-left: 0 !important;
+      }
+      html[dir="rtl"] & {
+        margin-right: 0 !important;
+      }
+    }
+    .help-link-wrapper {
+      html[dir="ltr"] & {
+        padding-left: 10px;
+      }
+      html[dir="rtl"] & {
+        padding-right: 10px;
+      }
+    }
+    .accessibility-container {
+      html[dir="ltr"] & {
+        padding-right: 10px;
+      }
+      html[dir="rtl"] & {
+        padding-left: 10px;
+      }
+    }
   }
   .icon {
     font-size: $font-size-base;
@@ -66,14 +90,6 @@
     padding-bottom: 0;
   }
   .accessibility-container {
-    @include media-breakpoint-up(xl) {
-      html[dir="ltr"] & {
-        padding-left: 16px;
-      }
-      html[dir="rtl"] & {
-        padding-right: 16px;
-      }
-    }
     .size-control {
       width: 48px;
       height: 48px;

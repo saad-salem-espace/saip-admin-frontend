@@ -75,8 +75,10 @@ function GuestNavbar({ lang, changeLang }) {
                 )
               }
             </RecentSearch>
-            <HelpLink />
-            <Accessibility />
+            <div className="d-flex justify-content-center align-items-center mb-3 mb-lg-0">
+              <HelpLink />
+              <Accessibility />
+            </div>
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
               <div className="edges-border d-flex mx-lg-4 px-lg-4">

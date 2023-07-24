@@ -54,12 +54,11 @@ const Accessibility = () => {
     <div className="accessibility-container">
       <Dropdown>
         <Dropdown.Toggle
-          variant="primary"
-          className="appBtn has-icon no-arrow btn nav-link mx-auto my-3 my-lg-0 rounded"
-          size="lg"
+          variant="link"
+          className="appBtn with-hover no-arrow mx-auto rounded"
           id="accessibility"
         >
-          <IoSettingsOutline className="fs-22" />
+          <IoSettingsOutline className="fs-22 app-text-primary-dark" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <div>
