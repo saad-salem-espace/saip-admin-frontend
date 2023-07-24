@@ -446,6 +446,10 @@ function IprDetails({
     }
     return content;
   };
+
+  const imgFilename = document?.BibliographicData?.OverallProductDrawing
+    || document?.Drawings?.[0].FileName;
+
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
       <div className="border-bottom ipr-details-wrapper">
@@ -590,9 +594,7 @@ function IprDetails({
               {!isIPRExpanded && (
                 <div className={`me-6 mb-2 ${style.headerImg}`}>
                   <Image
-                    src={preparedGetAttachmentURL(
-                      document?.BibliographicData?.OverallProductDrawing,
-                    )}
+                    src={preparedGetAttachmentURL(imgFilename)}
                   />
                 </div>
               )}
