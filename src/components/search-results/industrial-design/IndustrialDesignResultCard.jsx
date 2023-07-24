@@ -134,7 +134,7 @@ IndustrialDesignResultCard.propTypes = {
     }),
     Drawings: PropTypes.arrayOf(PropTypes.shape({
       FileName: PropTypes.string.isRequired,
-    })).isRequired,
+    })),
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,
