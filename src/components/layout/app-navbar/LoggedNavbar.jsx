@@ -129,7 +129,7 @@ function LoggedNavbar({
                 ))
               }
             </RecentSearch>
-            <div className="d-flex justify-content-center align-items-center mb-3 mb-lg-0">
+            <div className="d-flex justify-content-center align-items-center mb-3 mb-lg-0 gap-1">
               <HelpLink />
               <Accessibility />
             </div>
