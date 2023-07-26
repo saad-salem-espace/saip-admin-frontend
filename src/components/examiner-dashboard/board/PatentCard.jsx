@@ -84,7 +84,7 @@ const PatentCard = ({
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
           {
-            JSON.parse(assignment?.epoData).length >= 1 && (
+            JSON.parse(assignment?.epoData)?.length >= 1 && (
               <AppTooltip
                 placement="top"
                 tooltipContent={
