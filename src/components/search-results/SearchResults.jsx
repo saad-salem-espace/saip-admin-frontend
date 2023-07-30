@@ -485,7 +485,7 @@ function SearchResults({ showFocusArea }) {
       );
       if (qObjsArr) {
         setSearchKeywords(
-          convertQueryObjsArrToTransMemo(qObjsArr, searchIdentifiers, t, currentLang),
+          convertQueryObjsArrToTransMemo(qObjsArr, searchResultParams.imageName, t, currentLang),
         );
       }
     }
