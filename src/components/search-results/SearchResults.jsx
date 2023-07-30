@@ -690,8 +690,8 @@ function SearchResults({ showFocusArea }) {
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
                     onRecordingCallback={onRecordingCallback}
-                    setIsImgUploaded={() => {
-                      setIsImgUploaded();
+                    setIsImgUploaded={(v) => {
+                      setIsImgUploaded(v);
                     }}
                     resultsView
                     speechClassName="inner-speech"
