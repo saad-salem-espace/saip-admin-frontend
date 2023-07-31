@@ -8,6 +8,8 @@ import { highlightListener } from 'utils/eventListeners';
 import Row from 'react-bootstrap/Row';
 import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
+import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
+import ShowMore from 'components/shared/show-more/ShowMore';
 
 const BibliographicDataSection = (
   {
@@ -108,6 +110,12 @@ const BibliographicDataSection = (
             labelClassName="bibliographicLabel"
             value={BibliographicData?.Representatives?.join('; ')}
           />
+          <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
+          <div className="fs-sm">
+            <ShowMore>
+              <HandleEmptyAttribute checkOn={BibliographicData?.Abstract.join(' ')} />
+            </ShowMore>
+          </div>
         </Col>
       </Row>
     </Container>
@@ -129,6 +137,7 @@ BibliographicDataSection.propTypes = {
     Applicants: PropTypes.arrayOf(PropTypes.string),
     Representatives: PropTypes.arrayOf(PropTypes.string),
     Inventors: PropTypes.arrayOf(PropTypes.string),
+    Abstract: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   handleClick: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,

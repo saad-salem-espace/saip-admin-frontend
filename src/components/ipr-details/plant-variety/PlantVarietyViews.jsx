@@ -14,6 +14,7 @@ import RepresentativeRow from '../shared/representatives/RepresentativeRow';
 import Priorities from '../shared/priorities/Priorities';
 import PriorityRow from '../shared/priorities/PriorityRow';
 import OriginalDocument from '../shared/original-document/OriginalDocument';
+import Description from '../patent/description/Description';
 
 const PlantVarietyViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
@@ -125,6 +126,25 @@ const PlantVarietyViews = ({
         workstreamId={searchResultParams.workstreamId}
         documentId={documentId}
       />
+    ),
+    Description: (
+      <Description
+        description={document.BibliographicData.Description}
+        isIPRExpanded={isIPRExpanded}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      >
+        <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
+        {document.Drawings?.length ? (
+          <Carousel
+            largeThumb={isIPRExpanded}
+            className="drawings"
+            images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+          />
+        ) : (
+          <NoData />
+        )}
+      </Description>
     ),
   };
   return content[selectedView];
