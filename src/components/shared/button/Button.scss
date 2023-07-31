@@ -25,6 +25,16 @@
   &.btn-link {
     color: var(--bs-primary) !important;
   }
+  &.btn-link {
+    &.with-hover {
+      &:hover, &:active, &:focus {
+        background: var(--bs-primary) !important;
+        & , * {
+          color: var(--bs-white) !important;
+        }
+      }
+    }
+  }
   &.btn-danger {
     background-color: var(--bs-danger) !important;
     border-color: var(--bs-danger) !important;

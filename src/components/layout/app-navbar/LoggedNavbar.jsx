@@ -68,6 +68,7 @@ function LoggedNavbar({
       executeGetHistory();
     }
   };
+  const AppName = process.env.REACT_APP_NAME;
   return (
     <Navbar
       collapseOnSelect
@@ -96,12 +97,15 @@ function LoggedNavbar({
                 {t('navbar.dashboard')}
               </Nav.Link>
             )}
-            <MyQueriesLink />
-            <MyBookmarksLink />
-            <Nav.Link to={routes.myActivity} as={Link} className="has-icon">
-              <BsListUl className="icon list" />
-              {t('navbar.myActivity')}
-            </Nav.Link>
+            <div className="d-lg-flex gap-2 my-3 my-lg-0 text-center">
+
+              <MyQueriesLink />
+              <MyBookmarksLink />
+              <Nav.Link to={routes.myActivity} as={Link} className="has-icon">
+                <BsListUl className="icon list" />
+                {t('navbar.myActivity')}
+              </Nav.Link>
+            </div>
           </Nav>
           {/* Right navbar */}
           <Nav className="align-items-center">
@@ -125,14 +129,17 @@ function LoggedNavbar({
                 ))
               }
             </RecentSearch>
-            <HelpLink />
-            <Accessibility />
+            <div className="d-flex justify-content-center align-items-center mb-3 mb-lg-0 gap-1">
+              <HelpLink />
+              <Accessibility />
+            </div>
             <div className="d-flex justify-content-center h-px-39">
               {/* Notifications */}
-              <Notifications />
+              { AppName === 'examiner_app'
+                && <Notifications />}
               {/* Switch language */}
               <LanguageSwitch
-                className="pe-lg-5 me-lg-5"
+                className={`${AppName === 'customer_app' ? 'logged-customer' : ''} pe-lg-5 me-lg-5`}
                 lang={lang}
                 changeLang={changeLang}
               />

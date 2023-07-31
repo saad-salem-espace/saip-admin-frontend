@@ -59,7 +59,7 @@ function SharedSearch({
     searchWithSibling: !isAdvanced,
     searchInputWrapper: true,
     imgUploaded: isImgUploaded,
-    searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
+    searchWithImage: ![4, 5].includes(selectedWorkStream), // Disabled for Decisions & Copyright
     smSearch: resultsView,
   });
 
@@ -110,7 +110,7 @@ function SharedSearch({
             isClearable={!!values.searchQuery && !isAdvanced}
             clearInput={() => { setFieldValue('searchQuery', ''); }}
             handleUploadImg={handleUploadImg}
-            searchWithImg={selectedWorkStream === 2 || selectedWorkStream === 1}
+            searchWithImg={![4, 5].includes(selectedWorkStream)}// Disabled for Decisions, Copyright
             type={selectedOption?.identifierType}
             onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
             imageSearch={isImgUploaded}

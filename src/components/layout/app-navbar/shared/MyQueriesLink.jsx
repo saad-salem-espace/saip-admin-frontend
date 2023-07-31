@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 function MyQueriesLink() {
   const { t } = useTranslation('layout');
   return (
-    <Nav.Link to={routes.savedQueries} as={Link} className="has-icon ps-lg-5">
+    <Nav.Link to={routes.savedQueries} as={Link} className="has-icon">
       <BsStar className="icon" />
       {t('navbar.myQueries')}
     </Nav.Link>

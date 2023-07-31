@@ -16,6 +16,9 @@ html {
     .app-bg-secondary {
       background-color: var(--bs-secondary) !important;
     }
+    .app-bg-secondary-tangerine {
+      background-color: var(--bs-secondary-tangerine) !important;
+    }
     .app-bg-danger-15 {
       background-color:  var(--bs-danger-15)!important;
     }
@@ -37,6 +40,9 @@ html {
     }
     .app-text-danger-dark {
       color: var(--bs-danger-dark) !important;
+    }
+    .app-text-secondary-tangerine {
+      color: var(--bs-warning) !important;
     }
   }
 }

@@ -10,6 +10,10 @@ const PlantVarietyOptions = () => {
         value: 'BibliographicData',
       },
       {
+        label: t('ipr.description'),
+        value: 'Description',
+      },
+      {
         label: t('ipr.priorities'),
         value: 'Priorities',
       },

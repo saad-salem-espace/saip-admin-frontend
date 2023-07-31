@@ -485,7 +485,7 @@ function SearchResults({ showFocusArea }) {
       );
       if (qObjsArr) {
         setSearchKeywords(
-          convertQueryObjsArrToTransMemo(qObjsArr, searchIdentifiers, t, currentLang),
+          convertQueryObjsArrToTransMemo(qObjsArr, searchResultParams.imageName, t, currentLang),
         );
       }
     }
@@ -690,8 +690,8 @@ function SearchResults({ showFocusArea }) {
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
                     onRecordingCallback={onRecordingCallback}
-                    setIsImgUploaded={() => {
-                      setIsImgUploaded();
+                    setIsImgUploaded={(v) => {
+                      setIsImgUploaded(v);
                     }}
                     resultsView
                     speechClassName="inner-speech"

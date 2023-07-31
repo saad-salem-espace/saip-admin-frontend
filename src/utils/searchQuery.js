@@ -136,15 +136,16 @@ const convertQueryArrToStr = (qObjsArr) => {
   });
   return qStr.trim();
 };
-const convertQueryObjsArrToTransMemo = (qObjsArr, selectedIdentifiers, t, crrLang) => {
+const convertQueryObjsArrToTransMemo = (qObjsArr, imageName, t, crrLang) => {
   let qStr = '';
   qObjsArr?.forEach((qObj) => {
     if (qObj.identifier !== 'image') {
       qStr = `${qStr} ${qObj.operator && t(`operators.${qObj.operator.toLowerCase()}`)} ${identifierName(qObj.identifier, crrLang)}: ${optionName(qObj.condition, crrLang)}: "${qObj.data}"`;
-    } else {
-      qStr = `${qStr} ${qObj.operator && t(`operators.${qObj.operator.toLowerCase()}`)} ${t(`identifiers.${qObj.identifier}`)}: "${qObj.data}"`;
     }
   });
+  if (imageName) {
+    qStr = `${qStr} ${qStr && t('operators.or')} ${t('identifiers.image')}: '${imageName}'`;
+  }
   return qStr.trim();
 };
 
