@@ -30,6 +30,7 @@ function FilterOption({
     workstreamId: searchParams.get('workstreamId'),
     query: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
     strId: filter?.strId,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
 

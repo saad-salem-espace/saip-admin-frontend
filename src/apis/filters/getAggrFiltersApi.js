@@ -1,5 +1,5 @@
 const getAggrFiltersApi = ({
-  workstreamId, query, strId,
+  workstreamId, query, strId, imageName,
   enableSynonyms,
 }) => ({
   url: 'filter',
@@ -7,6 +7,7 @@ const getAggrFiltersApi = ({
   params: {
     workstreamId,
     strId,
+    ...(imageName && { imageName }),
     ...(enableSynonyms && { enableSynonyms }),
   },
   data: {
