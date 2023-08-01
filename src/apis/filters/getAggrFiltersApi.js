@@ -9,6 +9,7 @@ const getAggrFiltersApi = ({
     strId,
     ...(imageName && { imageName }),
     ...(enableSynonyms && { enableSynonyms }),
+    docImage: false,
   },
   data: {
     qJson: query,
