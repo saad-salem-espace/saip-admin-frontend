@@ -17,6 +17,7 @@ const advancedSearchApi = ({
       sort: sort || 'mostRelevant',
       ...(imageName && { imageName }),
       ...(enableSynonyms && { enableSynonyms }),
+      docImage: false,
       page: page || 1,
     },
     data: {
