@@ -30,7 +30,7 @@ function FilterOption({
     workstreamId: searchParams.get('workstreamId'),
     query: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
     strId: filter?.strId,
-    imageName: 'd8lqDdyr-CRBEFVxWwAAb5wp.jpeg',
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(searchParams.get('docImage') && { docImage: searchParams.get('docImage') }),
     ...(searchParams.get('similarDocId') && { similarDocId: searchParams.get('similarDocId') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),

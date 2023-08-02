@@ -20,7 +20,7 @@ const getAggrFiltersApi = ({
     params: {
       workstreamId,
       strId,
-      ...(imgName && { imageName: imgName }),
+      imageName: 'd8lqDdyr-CRBEFVxWwAAb5wp.jpeg',
       ...(enableSynonyms && { enableSynonyms }),
       docImage: docImg,
       similarDocId,
