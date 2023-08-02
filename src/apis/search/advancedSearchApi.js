@@ -28,7 +28,7 @@ const advancedSearchApi = ({
     params: {
       workstreamId,
       sort: sort || 'mostRelevant',
-      ...(imgName && { imgName }),
+      ...(imgName && { imageName: imgName }),
       ...(enableSynonyms && { enableSynonyms }),
       docImage: docImg,
       page: page || 1,
