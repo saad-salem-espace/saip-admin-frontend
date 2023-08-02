@@ -628,7 +628,6 @@ function IprDetails({
           translate="no"
         >
           <Button
-            disabled
             variant="primary"
             text={
               <>
