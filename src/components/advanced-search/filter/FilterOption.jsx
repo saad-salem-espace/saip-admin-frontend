@@ -25,6 +25,7 @@ function FilterOption({
   const { i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const [searchParams] = useSearchParams();
+  console.log(searchParams);
 
   const getAggregationParams = {
     workstreamId: searchParams.get('workstreamId'),
