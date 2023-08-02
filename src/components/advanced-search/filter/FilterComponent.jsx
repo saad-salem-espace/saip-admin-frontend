@@ -26,6 +26,7 @@ function FilterComponent({
       search: `?${createSearchParams({
         workstreamId: searchParams.get('workstreamId'),
         filterEnabled: true,
+        imageName: searchParams?.get('imageName'),
         page: 1,
         sort: 'mostRelevant',
         q: (searchParams.get('q')),
