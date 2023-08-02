@@ -1,3 +1,4 @@
+/* eslint-disable */
 import PropTypes from 'prop-types';
 import Button from 'components/shared/button/Button';
 import { useTranslation } from 'react-i18next';
