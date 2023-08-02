@@ -1,7 +1,7 @@
 const similarDocSearchApi = ({
   workstreamId, similarDocId, page, sort, filters,
 }) => ({
-  url: 'advanced-search',
+  url: 'similar-docs',
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   params: {

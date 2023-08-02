@@ -22,7 +22,7 @@ const advancedSearchApi = ({
     docImg = true;
   }
   return {
-    url: 'similar-docs',
+    url: 'advanced-search',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     params: {
