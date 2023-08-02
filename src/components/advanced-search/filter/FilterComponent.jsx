@@ -27,6 +27,8 @@ function FilterComponent({
         workstreamId: searchParams.get('workstreamId'),
         filterEnabled: true,
         imageName: searchParams?.get('imageName'),
+        ...(searchParams.get('docImage') && { docImage: searchParams.get('docImage') }),
+        ...(searchParams.get('similarDocId') && { similarDocId: searchParams.get('similarDocId') }),
         page: 1,
         sort: 'mostRelevant',
         q: (searchParams.get('q')),
