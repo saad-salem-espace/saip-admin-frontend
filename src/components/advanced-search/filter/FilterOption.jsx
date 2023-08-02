@@ -34,6 +34,7 @@ function FilterOption({
     ...(searchParams.get('docImage') && { docImage: searchParams.get('docImage') }),
     ...(searchParams.get('similarDocId') && { similarDocId: searchParams.get('similarDocId') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
+    currentLang,
   };
 
   const getAggregationConfig = getAggrFiltersApi(getAggregationParams, true);

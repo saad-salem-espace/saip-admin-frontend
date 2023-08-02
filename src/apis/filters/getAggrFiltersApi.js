@@ -6,6 +6,7 @@ const getAggrFiltersApi = ({
   docImage,
   similarDocId,
   enableSynonyms,
+  currentLang,
 }) => {
   let imgName = imageName;
   let docImg = docImage || false;
@@ -23,6 +24,7 @@ const getAggrFiltersApi = ({
       ...(enableSynonyms && { enableSynonyms }),
       docImage: docImg,
       similarDocId,
+      searchLanguage: currentLang,
     },
     data: {
       qJson: query,
