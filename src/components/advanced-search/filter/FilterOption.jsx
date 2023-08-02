@@ -1,4 +1,3 @@
-/* eslint-disable */
 import PropTypes from 'prop-types';
 import Button from 'components/shared/button/Button';
 import { useTranslation } from 'react-i18next';
@@ -26,13 +25,12 @@ function FilterOption({
   const { i18n } = useTranslation('search');
   const currentLang = i18n.language;
   const [searchParams] = useSearchParams();
-  console.log(searchParams);
 
   const getAggregationParams = {
     workstreamId: searchParams.get('workstreamId'),
     query: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
     strId: filter?.strId,
-    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    imageName: 'd8lqDdyr-CRBEFVxWwAAb5wp.jpeg',
     ...(searchParams.get('docImage') && { docImage: searchParams.get('docImage') }),
     ...(searchParams.get('similarDocId') && { similarDocId: searchParams.get('similarDocId') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
