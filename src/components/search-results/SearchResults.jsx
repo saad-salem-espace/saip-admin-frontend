@@ -123,6 +123,7 @@ function SearchResults({ showFocusArea }) {
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(docImage && { docImage }),
     ...(similarDocId && { similarDocId }),
+    currentLang,
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [otherSearchParams, searchIdentifiers, searchFilters]);
 
