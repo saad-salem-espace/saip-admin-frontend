@@ -1,5 +1,5 @@
 const similarDocSearchApi = ({
-  workstreamId, similarDocId, page, sort, filters, currentLang
+  workstreamId, similarDocId, page, sort, filters, currentLang,
 }) => ({
   url: 'similar-docs',
   method: 'POST',
