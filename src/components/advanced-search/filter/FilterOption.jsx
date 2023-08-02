@@ -31,6 +31,8 @@ function FilterOption({
     query: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
     strId: filter?.strId,
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(searchParams.get('docImage') && { docImage: searchParams.get('docImage') }),
+    ...(searchParams.get('similarDocId') && { similarDocId: searchParams.get('similarDocId') }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   };
 
