@@ -47,7 +47,7 @@ function UploadImage({
           <div className={`uploadImageWrapper ${className}`}>
             {
             showUploadImgSection && (
-              <div className={` dashedBorder ${errors ? 'error' : ''}`}>
+              <div className={` dashedBorder mt-2${errors ? 'error' : ''}`}>
                 <div className="uploadImage justify-content-center d-flex">
                   {
                   isSubmitting ? (
