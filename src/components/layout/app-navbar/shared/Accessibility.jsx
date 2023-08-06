@@ -56,10 +56,11 @@ const Accessibility = ({ className }) => {
       <Dropdown>
         <Dropdown.Toggle
           variant="link"
-          className="appBtn with-hover no-arrow mx-auto rounded"
+          className="appBtn with-hover no-arrow mx-auto rounded d-flex gap-2 app-text-primary-dark fs-sm"
           id="accessibility"
         >
-          <IoSettingsOutline className="fs-22 app-text-primary-dark" />
+          <IoSettingsOutline className="fs-22" />
+          {t('navbar.settings')}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <div>

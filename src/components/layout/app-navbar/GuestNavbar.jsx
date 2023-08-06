@@ -14,11 +14,10 @@ import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import logo from '../../../assets/images/Logo.svg';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
-import MyBookmarksLink from './shared/MyBookmarksLink';
-import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
 import DropdownItem from './shared/recent-search/DropdownItem';
 import HelpLink from './shared/HelpLink';
+import CommonLinks from './shared/CommonLinks';
 
 function GuestNavbar({ lang, changeLang }) {
   const { t } = useTranslation('layout');
@@ -51,8 +50,7 @@ function GuestNavbar({ lang, changeLang }) {
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
           <Nav className="d-lg-flex gap-2 my-3 my-lg-0 text-center guest-links">
-            <MyQueriesLink />
-            <MyBookmarksLink />
+            <CommonLinks />
           </Nav>
           {/* Right navbar */}
           <Nav>

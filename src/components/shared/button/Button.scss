@@ -72,6 +72,41 @@
     font-family: $font-regular;
     position: relative;
     color: var(--bs-primary-dark);
+    &.app-text-primary-dark {
+      color: var(--bs-primary-dark) !important;
+      &::after {
+        color: var(--bs-primary-dark) !important;
+      }
+    }
+    &.app-text-primary-dark + .dropdown-menu {
+      border-radius: 0;
+      top: 56px;
+      border: 0;
+      html[dir="rtl"] & {
+        right: 0 !important;
+        left: auto !important;
+      }
+      html[dir="ltr"] & {
+        left: 0 !important;
+        right: auto !important;
+      }
+      .dropdown-item {
+        color: var(--bs-gray-700) !important;
+        font-size: $font-size-sm !important;
+        border-bottom:$border-width solid $border-color;
+        padding: 8px 16px;
+        @include media-breakpoint-up(lg) {
+          width: 200px !important;
+        }
+        &:active, &:focus-visible,
+        &:active *, &:focus-visible * {
+          color: var(--bs-white) !important;
+        }
+        .icon {
+          color: var(--bs-gray) !important;
+        }
+      }
+    }
     &.no-arrow {
       &::after {
         display: none;
