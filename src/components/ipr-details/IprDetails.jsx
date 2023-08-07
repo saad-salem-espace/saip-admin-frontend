@@ -418,7 +418,7 @@ function IprDetails({
       ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
       : searchResultParams.workstreamId;
 
-    if (workstreamId.toString() === '2') {
+    if (workstreamId?.toString() === '2') {
       if (
         document[selectedView.value]
         || ((selectedView.value === 'Description'
@@ -427,32 +427,32 @@ function IprDetails({
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '1') {
+    } else if (workstreamId?.toString() === '1') {
       if (document[selectedView.value]) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '3') {
+    } else if (workstreamId?.toString() === '3') {
       if (
         document[selectedView.value]
         || selectedView.value === 'Description'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '4') {
+    } else if (workstreamId?.toString() === '4') {
       if (
         document[selectedView.value]
         || selectedView.value === 'JudgementDecision'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '5') {
+    } else if (workstreamId?.toString() === '5') {
       if (
         document[selectedView.value]
         || selectedView.value === 'CopyrightsData' || selectedView.value === 'Description'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '6' || workstreamId.toString() === '7') {
+    } else if (workstreamId?.toString() === '6' || workstreamId?.toString() === '7') {
       if (
         document[selectedView.value]
       ) {
