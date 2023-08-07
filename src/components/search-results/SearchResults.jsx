@@ -115,25 +115,31 @@ function SearchResults({ showFocusArea }) {
     setOtherSearchParams(Object.fromEntries(searchParams.entries()));
   }, [searchParams]);
 
-  const searchResultParams = useMemo(() => ({
+  const searchResultParams = useMemo(() => (similarDocId ? {
+    workstreamId: searchParams.get('workstreamId'),
+    filters: checkFilters(),
+    similarDocId,
+    currentLang,
+  } : {
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
     qString: searchParams.get('q'),
     filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(docImage && { docImage }),
-    ...(similarDocId && { similarDocId }),
-    currentLang,
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [otherSearchParams, searchIdentifiers, searchFilters]);
 
-  const stringDependencies = useMemo(() => ({
+  const stringDependencies = useMemo(() => (similarDocId ? {
+    workstreamId: searchParams.get('workstreamId'),
+    filters: checkFilters().length ? JSON.stringify(checkFilters()) : '',
+    similarDocId,
+  } : {
     workstreamId: searchParams.get('workstreamId'),
     qArr: (searchParams.get('q')),
     filters: checkFilters().length ? JSON.stringify(checkFilters()) : '',
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
     ...(docImage && { docImage }),
-    ...(similarDocId && { similarDocId }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [otherSearchParams, searchIdentifiers, searchFilters]);
 
