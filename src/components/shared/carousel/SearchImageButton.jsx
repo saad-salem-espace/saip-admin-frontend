@@ -7,7 +7,7 @@ import searchImg from '../../../assets/images/icons/search-image.svg';
 
 function SearchImageButton({ imgSrc }) {
   const navigate = useNavigate();
-  const variableRegex = /.*\/attachments\/([a-zA-Z0-9]+)\/([a-zA-Z]+)\/([a-zA-Z0-9 ]+)\/([a-zA-Z0-9]+)/;
+  const variableRegex = /.*\/attachments\/([a-zA-Z0-9]+)\/([a-zA-Z]+)\/([a-zA-Z0-9 ]+)\/(.*)/;
   const [, workstreamId, , docId, fileName] = imgSrc.match(variableRegex);
   const searchByImage = () => {
     navigate({
