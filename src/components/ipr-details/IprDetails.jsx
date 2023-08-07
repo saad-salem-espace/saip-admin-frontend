@@ -624,7 +624,7 @@ function IprDetails({
           </p>
         )}
         <div
-          className="border-top py-3 px-6 d-xxl-flex align-items-start position-relative"
+          className="border-top py-3 px-6 flex-wrap d-flex align-items-start position-relative"
           translate="no"
         >
           <Button
@@ -635,7 +635,7 @@ function IprDetails({
                 {t('search:findSimilar')}
               </>
             }
-            className="me-4 fs-sm my-2 my-xxl-0"
+            className="me-4 fs-sm my-2 mt-0"
             onClick={() => { findSimilarDoc(); }}
           />
           <Button
@@ -646,7 +646,7 @@ function IprDetails({
                 {t('search:download')}
               </>
             }
-            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 my-xxl-0`}
+            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 mt-0`}
             onClick={
               downloadOriginalDocuments
             }

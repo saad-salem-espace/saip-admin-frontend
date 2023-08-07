@@ -20,13 +20,12 @@ import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
 import UserAvatar from '../../shared/user-avatar/UserAvatar';
 import logo from '../../../assets/images/logo-shape.png';
-import MyBookmarksLink from './shared/MyBookmarksLink';
-import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
 import { roles } from '../../../utils/roleMapper';
 import { convertQueryArrToStr } from '../../../utils/searchQuery';
 import DropdownItem from './shared/recent-search/DropdownItem';
 import HelpLink from './shared/HelpLink';
+import CommonLinks from './shared/CommonLinks';
 
 function LoggedNavbar({
   lang,
@@ -98,9 +97,7 @@ function LoggedNavbar({
               </Nav.Link>
             )}
             <div className="d-lg-flex gap-2 my-3 my-lg-0 text-center">
-
-              <MyQueriesLink />
-              <MyBookmarksLink />
+              <CommonLinks />
               <Nav.Link to={routes.myActivity} as={Link} className="has-icon">
                 <BsListUl className="icon list" />
                 {t('navbar.myActivity')}
