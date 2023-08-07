@@ -7,6 +7,14 @@
 } 
 .app-navbar {
   z-index: 12 !important;
+  @include media-breakpoint-down(xxl) {
+    *:not(svg) {
+      font-size: 14px !important;
+    }
+    .appBtn {
+      font-size: 12px !important;
+    }
+  }
   @include media-breakpoint-up(lg) {
     height: 80px;
   }
