@@ -57,9 +57,9 @@ function SearchResultCard({
             {BibliographicData?.PublicationNumber}
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
-            {t('priority', { value: searchResult?.Priority })}
+            {t('priority', { value: BibliographicData?.EarliestPriorityDate })}
             <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-            {t('filed', { value: BibliographicData?.FilingNumber })}
+            {t('filed', { value: BibliographicData?.FilingDate })}
             {
               BibliographicData?.PublicationDate && (
                 <>
@@ -108,6 +108,8 @@ SearchResultCard.propTypes = {
       ApplicationAbstract: PropTypes.arrayOf(PropTypes.string).isRequired,
       ApplicationTitle: PropTypes.string.isRequired,
       FilingNumber: PropTypes.string.isRequired,
+      FilingDate: PropTypes.string.isRequired,
+      EarliestPriorityDate: PropTypes.string.isRequired,
       PublicationNumber: PropTypes.string.isRequired,
       PublicationDate: PropTypes.string.isRequired,
     }),

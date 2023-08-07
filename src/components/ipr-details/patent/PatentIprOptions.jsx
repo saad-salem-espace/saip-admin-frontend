@@ -18,10 +18,6 @@ const PatentIprOptions = () => {
         value: 'Claims',
       },
       {
-        label: t('patent.citations'),
-        value: 'Citations',
-      },
-      {
         label: t('patent.drawings'),
         value: 'Drawings',
       },
@@ -30,28 +26,8 @@ const PatentIprOptions = () => {
         value: 'LegalStatus',
       },
       {
-        label: t('ipr.applicantDetails'),
-        value: 'ApplicantsDetails',
-      },
-      {
         label: t('inventors'),
         value: 'Inventors',
-      },
-      {
-        label: t('ipr.ownerDetails'),
-        value: 'OwnersDetails',
-      },
-      {
-        label: t('ipr.representativeDetails'),
-        value: 'Representative',
-      },
-      {
-        label: t('ipr.officeActions'),
-        value: 'OfficeActions',
-      },
-      {
-        label: t('patent.patentFamility.patentFamility'),
-        value: 'PatentFamility',
       },
       {
         label: t('ipr.priorities'),

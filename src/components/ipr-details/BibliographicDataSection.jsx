@@ -82,7 +82,13 @@ const BibliographicDataSection = ({
         </div> */}
         <LabelValue
           label={t('application')}
-          value={BibliographicData?.Application}
+          value={
+            <>
+              {BibliographicData?.FilingNumber}
+              {' '}
+              {BibliographicData?.FilingDate}
+            </>
+          }
         />
         <LabelValue
           label={t('publication')}
@@ -95,7 +101,7 @@ const BibliographicDataSection = ({
           }
         />
         <LabelValue
-          label={t('publishedAs')}
+          label={t('internationalNumbers')}
           value={document?.Priorities?.PublishedAs}
         />
         <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
@@ -118,6 +124,8 @@ BibliographicDataSection.propTypes = {
       Application: PropTypes.string,
       PublicationNumber: PropTypes.string,
       PublicationDate: PropTypes.string,
+      FilingNumber: PropTypes.string,
+      FilingDate: PropTypes.string,
       ApplicationAbstract: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     Applicants: PropTypes.arrayOf(PropTypes.string),

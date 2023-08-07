@@ -13,12 +13,12 @@
   "applicants": "المودعون",
   "inventors": "المخترعون",
   "classifications": "تصنيفات",
-  "ipc": "IPC",
+  "ipc": "التصنيف الدولي للبراءات",
   "cpc": "CPC",
   "priorities": "أولوية",
   "application": "طلب",
   "publication": "نشر",
-  "publishedAs": "منشور",
+  "internationalNumbers": "منشور",
   "viewSection": "قسم",
   "images": "الرسومات",
   "advancedSearch": "بحث متقدم",
@@ -86,9 +86,9 @@
       "exhibitionDetails": "تفاصيل المعرض"
     },
     "priorities": {
-      "priorityDate": "تاريخ الأولوية",
-      "priorityNumber": "رقم الأولوية",
-      "priorityCountry": "بلد الأولوية"
+      "priorityDate": "تاريخ الأسبقية",
+      "priorityNumber": "رقم الأسبقية",
+      "priorityCountry": "دولة الأسبقية"
     }
   },
   "ipr": {
