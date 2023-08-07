@@ -9,7 +9,8 @@ import {
 import { FaSearch } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom';
+import routes from 'components/routes/routes.json';
 import { documentApi } from 'apis/search/documentsApi';
 import { getAttachmentURL } from 'utils/attachments';
 import PropTypes from 'prop-types';
@@ -71,6 +72,7 @@ function IprDetails({
   hideFocus,
 }) {
   const { t, i18n } = useTranslation('search', 'dashboard');
+  const navigate = useNavigate();
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [validHighlight, setValidHighlight] = useState(false);
@@ -136,6 +138,19 @@ function IprDetails({
   };
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
+  };
+
+  const findSimilarDoc = () => {
+    navigate({
+      pathname: routes.search,
+      search: `?${createSearchParams({
+        workstreamId: searchResultParams.workstreamId,
+        similarDocId: documentId,
+        sort: 'mostRelevant',
+        page: '1',
+        q: '',
+      })}`,
+    });
   };
 
   useEffect(() => {
@@ -613,7 +628,6 @@ function IprDetails({
           translate="no"
         >
           <Button
-            disabled
             variant="primary"
             text={
               <>
@@ -622,6 +636,7 @@ function IprDetails({
               </>
             }
             className="me-4 fs-sm my-2 mt-0"
+            onClick={() => { findSimilarDoc(); }}
           />
           <Button
             variant="primary"

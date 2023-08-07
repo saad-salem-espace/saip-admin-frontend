@@ -40,7 +40,8 @@
     "not": "NOT"
   },
   "identifiers": {
-    "image": "Image"
+    "image": "Image",
+    "similarDoc": "Similar"
   },
   "abstract": "Abstract",
   "publicationCountry": "Publication Country",

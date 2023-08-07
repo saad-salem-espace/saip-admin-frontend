@@ -136,7 +136,7 @@ const convertQueryArrToStr = (qObjsArr) => {
   });
   return qStr.trim();
 };
-const convertQueryObjsArrToTransMemo = (qObjsArr, imageName, t, crrLang) => {
+const convertQueryObjsArrToTransMemo = (qObjsArr, imageName, similarDocId, t, crrLang) => {
   let qStr = '';
   qObjsArr?.forEach((qObj) => {
     if (qObj.identifier !== 'image') {
@@ -145,6 +145,9 @@ const convertQueryObjsArrToTransMemo = (qObjsArr, imageName, t, crrLang) => {
   });
   if (imageName) {
     qStr = `${qStr} ${qStr && t('operators.or')} ${t('identifiers.image')}: '${imageName}'`;
+  }
+  if (similarDocId) {
+    qStr = `${qStr} ${qStr && t('operators.and')} ${t('identifiers.similarDoc')}: '${similarDocId}'`;
   }
   return qStr.trim();
 };
