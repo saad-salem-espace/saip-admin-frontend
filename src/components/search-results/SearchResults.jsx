@@ -334,7 +334,7 @@ function SearchResults({ showFocusArea }) {
     const index = results.data.findIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
+    return (index === 0 ? null : results.data[index - 1].BibliographicData?.FilingNumber);
   };
 
   const collapseIPR = () => {
