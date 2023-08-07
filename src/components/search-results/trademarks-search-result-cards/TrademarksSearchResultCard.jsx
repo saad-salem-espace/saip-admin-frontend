@@ -76,7 +76,7 @@ function TrademarksSearchResultCard({
               <div>
                 <p className="mb-1 text-black md-text">
                   {t('filed', { value: BibliographicData?.FilingNumber })}
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
                   <span>{BibliographicData?.FilingDate}</span>
                 </p>
                 {
@@ -89,15 +89,15 @@ function TrademarksSearchResultCard({
                   selectedView.value === 'detailed' && (
                     <>
                       <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
                         {t('ipr.registered', { value: BibliographicData?.RegistrationNumber })}
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
                         <span>{BibliographicData?.RegistrationDate}</span>
                       </p>
                       <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
                         {t('ipr.published', { value: BibliographicData?.PublicationNumber })}
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
                         <span>{BibliographicData?.PublicationDate}</span>
                       </p>
                     </>

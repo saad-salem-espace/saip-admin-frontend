@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { Button } from 'react-bootstrap';
+import { BiSearch } from 'react-icons/bi';
 import PropTypes from 'prop-types';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import './bibliographic.scss';
@@ -52,6 +54,13 @@ const BibliographicDataSection = (
             <div className="me-4">
               <Image src={getAttachmentURL(BibliographicData?.Mark)} className="mw-100" />
             </div>
+            <Button
+              className="appBtn my-2 fs-sm py-4 px-6"
+              size="lg"
+            >
+              <BiSearch className="fs-20 me-3" />
+              {t('trademarks.similarImage')}
+            </Button>
           </Col>
         )
       }

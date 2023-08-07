@@ -90,7 +90,8 @@
       "priorityDate": "Priority Date",
       "priorityNumber": "Priority Number",
       "priorityCountry": "Priority Country"
-    }
+    },
+    "similarImage": "Search for trademarks with similar images"
   },
   "ipr": {
     "bibliographic": "Bibliographic data",

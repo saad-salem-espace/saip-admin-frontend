@@ -52,14 +52,14 @@ function CopyrightsResultCard({
             </div>
             <p className="mb-2 d-xxl-flex align-items-center text-dark fs-base">
               {BibliographicData?.FilingNumber}
-              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+              <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
               {BibliographicData?.Applicants && (BibliographicData?.Applicants.join(' , '))}
             </p>
             <p className="mb-2 text-black fs-sm font-medium">
               {t('filed', { value: BibliographicData?.FilingDate && Moment(BibliographicData?.FilingDate).format(LONG_DATE) })}
-              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+              <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
               {t('published', { value: BibliographicData?.PublicationDate && Moment(BibliographicData?.PublicationDate).format(LONG_DATE) })}
-              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+              <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
               {t('copyrights.granted', { value: (BibliographicData?.GrantDate && Moment(BibliographicData?.GrantDate).format(LONG_DATE)) })}
             </p>
             {
