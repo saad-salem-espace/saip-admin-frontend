@@ -16,10 +16,12 @@ const advancedSearchApi = ({
     }
   });
   let imgName = imageName;
-  let docImg = docImage || false;
+  let docImg = docImage;
   if (imgName && docImg) {
     imgName = `${docImg}/attachments/images/${imgName}`;
     docImg = true;
+  } else {
+    docImg = false;
   }
   return {
     url: 'advanced-search',

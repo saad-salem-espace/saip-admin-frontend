@@ -188,23 +188,28 @@ function IprSections({
       content: (
         <Formik>
           <div className="m-4">
-            <AppPagination
-              className="mt-8"
-              axiosConfig={axiosConfigBookmark}
-              defaultPage="1"
-              RenderedComponent={searchResult[activeWorkstream]}
-              setTotalElements={(totalCount) => setTotalElements(totalCount)}
-              emptyState={<NoData />}
-              urlPagination={false}
-              setResults={setResults}
-              renderedProps={{
-                selectedView,
-                setActiveDocument,
-                hasCustomData: true,
-                customData: prepareAuthBookamrks(results),
-                disableCheckbox: true,
-              }}
-            />
+            {searchResult[activeWorkstream] ? (
+              <AppPagination
+                className="mt-8"
+                axiosConfig={axiosConfigBookmark}
+                defaultPage="1"
+                RenderedComponent={searchResult[activeWorkstream]}
+                setTotalElements={(totalCount) => setTotalElements(totalCount)}
+                emptyState={<NoData />}
+                urlPagination={false}
+                setResults={setResults}
+                renderedProps={{
+                  selectedView,
+                  setActiveDocument,
+                  hasCustomData: true,
+                  customData: prepareAuthBookamrks(results),
+                  disableCheckbox: true,
+                }}
+              />
+            ) : (
+              <>
+              </>
+            )}
           </div>
         </Formik>
       ),
