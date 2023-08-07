@@ -153,3 +153,11 @@
     }
   }
 }
+.handle-different-mobile {
+  @include media-breakpoint-down(md) {
+    margin-top: -560px;
+    position: relative;
+    z-index: 9999;
+    background-color: var(--bs-white);
+  }
+}
