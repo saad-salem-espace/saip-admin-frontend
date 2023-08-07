@@ -7,8 +7,8 @@
   "gotIt": "Got it!",
   "floatWidget": {
     "userSurvey": {
-      "widgetTitle": "Rate our website",
-      "widgetContent": "Share your experience with the IP Search",
+      "widgetTitle": "Share your search experience",
+      "widgetContent": "with the IP Search platform.",
       "widgetActionText": "Start",
       "widgetAction": "https://surveys.saip.gov.sa/index.php/982283?lang=en"
     }

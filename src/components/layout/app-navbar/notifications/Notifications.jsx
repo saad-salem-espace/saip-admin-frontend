@@ -95,7 +95,7 @@ function Notifications() {
       >
         <Dropdown.Toggle
           variant="transparent"
-          className="appBtn has-icon no-arrow btn nav-link mx-auto my-3 my-lg-0 rounded border-0"
+          className="appBtn has-icon no-arrow btn nav-link mx-auto my-lg-0 rounded border-0"
           size="lg"
           id="notifications"
           align="start"

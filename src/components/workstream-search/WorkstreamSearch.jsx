@@ -7,7 +7,6 @@ import {
   Container,
   Row,
   Col,
-  Image,
   Button,
 } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
@@ -27,7 +26,6 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
-import surveyIcon from 'assets/images/icons/ic-survey.svg';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
 import './style.scss';
@@ -223,12 +221,10 @@ function WorkstreamSearch() {
         widgetTitle={t('common:floatWidget.userSurvey.widgetTitle')}
         widgetAction={t('common:floatWidget.userSurvey.widgetAction')}
         widgetActionText={t('common:floatWidget.userSurvey.widgetActionText')}
-        WidgetIcon={<Image src={surveyIcon} className="d-block mx-auto my-3" />}
         variant="app-bg-primary-10"
+        className="survey-widget"
         show
-      >
-        {t('common:floatWidget.userSurvey.widgetContent')}
-      </FloatWidget>
+      />
     </div>
   );
 }
