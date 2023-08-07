@@ -82,7 +82,7 @@ function IprDetails({
   const currentLang = i18n.language;
   const searchResultParams = {
     workstreamId:
-      searchParams.get('workstreamId') || activeWorkstream.toString(),
+      searchParams.get('workstreamId') || activeWorkstream?.toString(),
   };
 
   const getDefaultSelectedViewValue = () => {
