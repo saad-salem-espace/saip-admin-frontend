@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import i18n from 'i18n';
 import Button from 'components/shared/button/Button';
 import PropTypes from 'prop-types';
-import { TbRefresh } from 'react-icons/tb';
 import { BsPinAngle, BsPinFill, BsPlusLg } from 'react-icons/bs';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
-import { FaCommentAlt } from 'react-icons/fa';
+import { FaCommentAlt, FaRegBell } from 'react-icons/fa';
 import './PatentCard.scss';
 import { calculateDifference, formatLongDate, dateFormatSubstring } from 'utils/dates';
 import useAxios from 'hooks/useAxios';
@@ -102,7 +101,7 @@ const PatentCard = ({
                   }
                 tooltipTrigger={
                   <BootstrapButton variant="transparent" className="app-bg-secondary-tangerine me-2 rounded-circle py-1 px-2">
-                    <TbRefresh className="app-text-secondary-tangerine fs-18" />
+                    <FaRegBell className="app-text-secondary-tangerine fs-18" />
                   </BootstrapButton>
                   }
               />
