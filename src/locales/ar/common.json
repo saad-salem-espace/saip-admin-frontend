@@ -7,8 +7,8 @@
   "gotIt": "حسناً!",
   "floatWidget": {
     "userSurvey": {
-      "widgetTitle": "شاركنا تقييمك لمنصة البحث",
-      "widgetContent": "شاركنا تجربتك في خدمة البحث",
+      "widgetTitle": " شاركنا تجربتك في خدمة البحث",
+      "widgetContent": "مع منصة بحث IP.",
       "widgetActionText": "إبدأ",
       "widgetAction": "https://surveys.saip.gov.sa/index.php/982283?lang=ar"
     }

@@ -5,6 +5,22 @@
 .float-widget {
   transform: none !important;
   top: 70% !important;
+  &.survey-widget {
+    min-width: 250px;
+    .widget-action {
+      margin-top: 0 !important;
+    }
+    .widget-title {
+      p {
+        margin-bottom: 0 !important;
+        html[dir="rtl"] & {
+          padding: 0 30px;
+          font-size: 14px !important;
+          line-height: 24px;
+        }
+      }
+    }
+  }
   @media screen and (max-width: 1900px) {
     position: fixed !important;
     html[dir="ltr"] & {
@@ -40,10 +56,10 @@
     position: relative;
     top: 15px;
     html[dir="ltr"] & {
-      left: 90%;
+      left: 88%;
     }
     html[dir="rtl"] & {
-      right: 90%;
+      right: 88%;
     }
   }
   .widget-title {
