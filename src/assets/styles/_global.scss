@@ -76,4 +76,8 @@ $fontSize: (
 
 .min-h-90 {
   min-height: 90vh;
+  @media screen and (max-width: 1420px), 
+  screen and (max-height: 550px) {
+    min-height: 65vw;
+  }
 }
