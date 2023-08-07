@@ -46,7 +46,7 @@ const getIfIsDate = (data) => {
 const convertQueryArrToObjsArr = (qArr, searchIdentifiersData) => {
   const qObjsArr = [];
   let counter = 1;
-  qArr?.forEach((qObj) => {
+  qArr.forEach((qObj) => {
     if (qObj.identifier !== 'image') {
       const selectedIdentifier = searchIdentifiersData.find(
         (i) => i.identiferStrId === qObj.identifier,
