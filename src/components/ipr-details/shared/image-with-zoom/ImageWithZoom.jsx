@@ -23,7 +23,7 @@ const ImageWithZoom = ({ img, className }) => {
           />
         </Button> */}
         <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
-          <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="f-24 text-white" />
+          <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="fs-24 text-white" />
         </Button>
         <Modal centered show={show} onHide={handleClose}>
           <Modal.Body className="p-0">

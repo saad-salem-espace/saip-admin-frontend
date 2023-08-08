@@ -13,12 +13,12 @@ const SharedErrorPage = ({ title, msg, img }) => {
       <div>
         <Image src={img} className="errorImg mb-10" />
         <h3 className="text-gray-700 mb-4">{title}</h3>
-        <p className="text-gray f-14 mb-8">{msg}</p>
+        <p className="text-gray fs-sm mb-8">{msg}</p>
         <a
           href={routes.home}
           className="btn btn-primary appBtn btn-md"
         >
-          <FontAwesomeIcon icon={faHouse} className="f-20 me-3" />
+          <FontAwesomeIcon icon={faHouse} className="fs-20 me-3" />
           {t('homePage')}
         </a>
       </div>

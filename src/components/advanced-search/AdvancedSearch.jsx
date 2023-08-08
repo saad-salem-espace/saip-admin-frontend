@@ -110,7 +110,7 @@ function AdvancedSearch({
           variant="primary-dark"
           onClick={toggleAdvancedSearchMenu}
           className={` ${AdvancedSearchStyle.collapseIcon} p-2 d-flex`}
-          text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="text-white f-16" />}
+          text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="text-white fs-base" />}
         />
         <div className={`${isAdvancedMenuOpen ? 'd-block' : 'd-none'}`}>
           <h5 className="pb-6 pt-9 ms-3">{t('advancedSearch')}</h5>

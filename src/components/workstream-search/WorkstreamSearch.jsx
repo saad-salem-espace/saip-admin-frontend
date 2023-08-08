@@ -123,7 +123,7 @@ function WorkstreamSearch() {
         <Container className="px-0 m-auto">
           <Row className="mx-0">
             <Col className="pt-24 pb-8">
-              <p className="app-text-primary-dark f-30 text-center mb-8">
+              <p className="app-text-primary-dark fs-30 text-center mb-8">
                 <Trans
                   i18nKey="searchSpecificProperty"
                   ns="search"
