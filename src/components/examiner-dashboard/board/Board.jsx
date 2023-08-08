@@ -131,6 +131,7 @@ const Board = ({
             selectedCardId={selectedCardId}
             setNotesUpdated={setNotesUpdated}
             className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'}`}
+            dashboardExpandedView={isIPRExpanded}
           />
         )
       }

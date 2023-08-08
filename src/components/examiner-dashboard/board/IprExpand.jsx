@@ -24,6 +24,7 @@ function IprExpand({
   updateIprModal,
   fromFocusArea,
   hideFocus,
+  dashboardExpandedView,
 }) {
   const { t } = useTranslation('dashboard');
 
@@ -85,6 +86,7 @@ function IprExpand({
             examinerView
             hideFocus={hideFocus}
             fromFocusArea={fromFocusArea}
+            dashboardExpandedView={dashboardExpandedView}
           />
         </Col>
         <Col lg={6}>
@@ -120,6 +122,7 @@ IprExpand.propTypes = {
   updateIprModal: PropTypes.func,
   fromFocusArea: PropTypes.bool,
   hideFocus: PropTypes.func,
+  dashboardExpandedView: PropTypes.bool,
 };
 
 IprExpand.defaultProps = {
@@ -130,6 +133,7 @@ IprExpand.defaultProps = {
   updateIprModal: () => { },
   hideFocus: () => { },
   fromFocusArea: false,
+  dashboardExpandedView: false,
 };
 
 export default IprExpand;
