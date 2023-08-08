@@ -18,7 +18,7 @@ function IprData({
         {() => (
           <Form>
             <div className="position-relative mt-6">
-              <span className="position-absolute f-12 saip-label select2">{t('viewSection')}</span>
+              <span className="position-absolute fs-xs saip-label select2">{t('viewSection')}</span>
               <Select
                 options={options}
                 setSelectedOption={onChangeSelect}

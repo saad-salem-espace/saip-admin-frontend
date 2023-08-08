@@ -27,7 +27,7 @@ function IprControlAction({
         data-testid="close-ipr-detail-button"
         onClick={onClose}
         className="p-0 ps-5 border-start"
-        text={<FontAwesomeIcon icon={faTimes} className="f-20 text-gray" />}
+        text={<FontAwesomeIcon icon={faTimes} className="fs-20 text-gray" />}
       />
     </>
   );

@@ -4,7 +4,7 @@ function ErrorMessage({
   msg, className,
 }) {
   return (
-    <p className={`app-text-danger f-14 ${className}`}>{msg}</p>
+    <p className={`app-text-danger fs-sm ${className}`}>{msg}</p>
   );
 }
 
