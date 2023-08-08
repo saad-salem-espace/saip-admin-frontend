@@ -439,7 +439,6 @@ function SearchResults({ showFocusArea }) {
           q: (simpleQuery ? query : ''),
           ...(imageName && { imageName }),
           ...(docImage && { docImage }),
-          ...(similarDocId && { similarDocId }),
         })}`,
       });
     } else {
@@ -453,7 +452,6 @@ function SearchResults({ showFocusArea }) {
           filterEnabled: false,
           ...(imageName && { imageName }),
           ...(docImage && { docImage }),
-          ...(similarDocId && { similarDocId }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
           page: 1,
