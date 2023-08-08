@@ -13,6 +13,7 @@ import Row from 'react-bootstrap/Row';
 import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
 import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
+import 'components/shared/button/Button.scss';
 
 const BibliographicDataSection = (
   {
@@ -58,7 +59,7 @@ const BibliographicDataSection = (
             </div>
             <SearchImageButton
               imgSrc={imgSrc}
-              btnClass="appBtn my-2 fs-sm py-4 px-6"
+              btnClass="appBtn my-2 fs-sm py-4 px-6 mt-22 btn-primary"
               btnSize="lg"
               btnVariant=""
             >

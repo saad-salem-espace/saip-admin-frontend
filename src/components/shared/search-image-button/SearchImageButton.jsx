@@ -31,6 +31,7 @@ function SearchImageButton({
       className={btnClass}
       size={btnSize}
       onClick={() => { searchByImage(); }}
+
     >
       {
          children || (<Image src={searchImg} className="fs-base" />)
