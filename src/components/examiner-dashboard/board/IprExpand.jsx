@@ -85,6 +85,7 @@ function IprExpand({
             examinerView
             hideFocus={hideFocus}
             fromFocusArea={fromFocusArea}
+            dashboardExpandedView={isIPRExpanded}
           />
         </Col>
         <Col lg={6}>

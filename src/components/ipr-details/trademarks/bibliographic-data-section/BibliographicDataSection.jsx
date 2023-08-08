@@ -22,6 +22,7 @@ const BibliographicDataSection = (
     getAttachmentURL,
     handleClick,
     examinerView,
+    dashboardExpandedView,
   },
 ) => {
   const { t } = useTranslation('search');
@@ -52,8 +53,8 @@ const BibliographicDataSection = (
     <Container fluid>
       <Row>
         {
-        isIPRExpanded && (
-          <Col md={4} className="mb-md-0 mb-2">
+        (isIPRExpanded || dashboardExpandedView) && (
+          <Col md={dashboardExpandedView ? 12 : 4} className={`mb-2 ${dashboardExpandedView ? 'mb-6' : 'mb-md-0'}`}>
             <div className="me-4">
               <Image src={imgSrc} className="mw-100" />
             </div>
@@ -196,10 +197,12 @@ BibliographicDataSection.propTypes = {
   getAttachmentURL: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  dashboardExpandedView: PropTypes.bool,
 };
 
 BibliographicDataSection.defaultProps = {
   examinerView: false,
+  dashboardExpandedView: false,
 };
 
 export default BibliographicDataSection;
