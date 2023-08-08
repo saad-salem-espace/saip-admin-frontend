@@ -46,7 +46,7 @@ function Filter({
         <Form onChange={setFormikInitials(values)}>
           <div className="mt-4 mx-3">
             {
-              filters.map((filter) => (
+              filters?.map((filter) => (
                 <FilterComponent
                   filter={filter}
                   values={prepareSearchByFilters(values)}
