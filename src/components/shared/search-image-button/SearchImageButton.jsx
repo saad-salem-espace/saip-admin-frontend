@@ -5,7 +5,9 @@ import routes from 'components/routes/routes.json';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import searchImg from '../../../assets/images/icons/search-image.svg';
 
-function SearchImageButton({ imgSrc }) {
+function SearchImageButton({
+  imgSrc, btnClass, btnSize, btnVariant, children,
+}) {
   const navigate = useNavigate();
   const variableRegex = /.*\/attachments\/(.*)\/image\/(.*)\/(.*)/;
   const [, workstreamId, docId, fileName] = imgSrc.match(variableRegex);
@@ -25,19 +27,30 @@ function SearchImageButton({ imgSrc }) {
 
   return (
     <Button
-      variant="transparent"
-      className="border-0 icon"
+      variant={btnVariant}
+      className={btnClass}
+      size={btnSize}
       onClick={() => { searchByImage(); }}
     >
-      <Image
-        src={searchImg}
-        className="fs-base"
-      />
+      {
+         children || (<Image src={searchImg} className="fs-base" />)
+      }
     </Button>
   );
 }
 SearchImageButton.propTypes = {
   imgSrc: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  btnClass: PropTypes.string,
+  btnSize: PropTypes.string,
+  btnVariant: PropTypes.string,
+};
+
+SearchImageButton.defaultProps = {
+  children: null,
+  btnClass: 'border-0 icon',
+  btnSize: '',
+  btnVariant: 'transparent',
 };
 
 export default SearchImageButton;

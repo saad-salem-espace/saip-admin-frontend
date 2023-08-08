@@ -6,8 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
+import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
 import Thumb from './Thumb';
-import SearchImageButton from './SearchImageButton';
 import './style.scss';
 
 function Carousel({

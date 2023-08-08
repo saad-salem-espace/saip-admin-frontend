@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import SearchImageButton from './SearchImageButton';
+import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
 
 function Thumb({
   largeThumb,
