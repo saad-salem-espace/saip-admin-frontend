@@ -57,9 +57,25 @@ function SearchResultCard({
             {BibliographicData?.PublicationNumber}
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
-            {t('priority', { value: searchResult?.Priority })}
-            <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
-            {t('filed', { value: BibliographicData?.FilingNumber })}
+            {
+              searchResult?.Priority && (
+                <>
+                  {t('priority', { value: searchResult?.Priority })}
+                </>
+              )
+            }
+            {
+              (BibliographicData?.FilingNumber && searchResult?.Priority) && (
+                <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
+              )
+            }
+            {
+              BibliographicData?.FilingNumber && (
+                <>
+                  {t('filed', { value: BibliographicData?.FilingNumber })}
+                </>
+              )
+            }
             {
               BibliographicData?.PublicationDate && (
                 <>
@@ -71,11 +87,11 @@ function SearchResultCard({
           </p>
           <div className="d-flex">
             {
-            (firstDrawing && (selectedView.value === 'detailed')) && (
-            <div className={`${style['patent-img']} me-2`}>
-              <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
-            </div>
-            )
+              (firstDrawing && (selectedView.value === 'detailed')) && (
+                <div className={`${style['patent-img']} me-2`}>
+                  <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
+                </div>
+              )
             }
             {
               selectedView.value !== 'compact' && (
