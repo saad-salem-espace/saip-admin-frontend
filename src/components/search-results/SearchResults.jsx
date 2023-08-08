@@ -23,6 +23,7 @@ import emptyState from 'assets/images/search-empty-state.svg';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
+import similarDocSearchApi from 'apis/search/similarDocSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
@@ -100,6 +101,8 @@ function SearchResults({ showFocusArea }) {
   const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q'));
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
+  const docImage = searchParams.get('docImage');
+  const similarDocId = searchParams.get('similarDocId');
 
   const checkFilters = () => {
     if (!searchParams.get('filterEnabled') || searchParams.get('filterEnabled') === 'false') {
@@ -118,6 +121,9 @@ function SearchResults({ showFocusArea }) {
     qString: searchParams.get('q'),
     filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(docImage && { docImage }),
+    ...(similarDocId && { similarDocId }),
+    currentLang,
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [otherSearchParams, searchIdentifiers, searchFilters]);
 
@@ -126,6 +132,8 @@ function SearchResults({ showFocusArea }) {
     qArr: (searchParams.get('q')),
     filters: checkFilters().length ? JSON.stringify(checkFilters()) : '',
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(docImage && { docImage }),
+    ...(similarDocId && { similarDocId }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [otherSearchParams, searchIdentifiers, searchFilters]);
 
@@ -317,7 +325,7 @@ function SearchResults({ showFocusArea }) {
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
     return (index === results.data.length - 1
-      ? null : results.data[index + 1].BibliographicData.FilingNumber);
+      ? null : results.data[index + 1]?.BibliographicData?.FilingNumber);
   };
 
   const getPreviousDocument = () => {
@@ -326,7 +334,7 @@ function SearchResults({ showFocusArea }) {
     const index = results.data.findIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
+    return (index === 0 ? null : results.data[index - 1]?.BibliographicData?.FilingNumber);
   };
 
   const collapseIPR = () => {
@@ -430,6 +438,8 @@ function SearchResults({ showFocusArea }) {
           filterEnabled: false,
           q: (simpleQuery ? query : ''),
           ...(imageName && { imageName }),
+          ...(docImage && { docImage }),
+          ...(similarDocId && { similarDocId }),
         })}`,
       });
     } else {
@@ -442,6 +452,8 @@ function SearchResults({ showFocusArea }) {
           q: values.searchQuery,
           filterEnabled: false,
           ...(imageName && { imageName }),
+          ...(docImage && { docImage }),
+          ...(similarDocId && { similarDocId }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
           page: 1,
@@ -485,7 +497,13 @@ function SearchResults({ showFocusArea }) {
       );
       if (qObjsArr) {
         setSearchKeywords(
-          convertQueryObjsArrToTransMemo(qObjsArr, searchResultParams.imageName, t, currentLang),
+          convertQueryObjsArrToTransMemo(
+            qObjsArr,
+            searchResultParams.docImage || searchResultParams.imageName,
+            searchResultParams.similarDocId,
+            t,
+            currentLang,
+          ),
         );
       }
     }
@@ -590,7 +608,9 @@ function SearchResults({ showFocusArea }) {
     setSortBy(sortCriteria);
   };
 
-  const axiosConfig = advancedSearchApi(searchResultParams);
+  const axiosConfig = similarDocId
+    ? similarDocSearchApi(searchResultParams)
+    : advancedSearchApi(searchResultParams);
 
   const searchResult = {
     1: SearchResultCards,
@@ -877,7 +897,7 @@ function SearchResults({ showFocusArea }) {
           </Formik>
         </Col>
         {activeDocument && (
-          <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
+          <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start handle-different-mobile">
             <IprDetails
               collapseIPR={collapseIPR}
               isIPRExpanded={isIPRExpanded}

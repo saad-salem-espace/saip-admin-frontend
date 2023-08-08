@@ -70,12 +70,12 @@ function IcLayoutsResultCard({
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
             {searchResult?.Priorities && (t('priority', { value: searchResult?.Priorities[0]?.PriorityDate }))}
-            <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+            <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
             {t('filed', { value: BibliographicData?.FilingDate })}
             {
               BibliographicData?.PublicationDate && (
                 <>
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
                   {t('published', { value: BibliographicData?.PublicationDate })}
                 </>
               )

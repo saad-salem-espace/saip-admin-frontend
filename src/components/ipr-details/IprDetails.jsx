@@ -9,7 +9,8 @@ import {
 import { FaSearch } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom';
+import routes from 'components/routes/routes.json';
 import { documentApi } from 'apis/search/documentsApi';
 import { getAttachmentURL } from 'utils/attachments';
 import PropTypes from 'prop-types';
@@ -71,6 +72,7 @@ function IprDetails({
   hideFocus,
 }) {
   const { t, i18n } = useTranslation('search', 'dashboard');
+  const navigate = useNavigate();
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [validHighlight, setValidHighlight] = useState(false);
@@ -80,7 +82,7 @@ function IprDetails({
   const currentLang = i18n.language;
   const searchResultParams = {
     workstreamId:
-      searchParams.get('workstreamId') || activeWorkstream.toString(),
+      searchParams.get('workstreamId') || activeWorkstream?.toString(),
   };
 
   const getDefaultSelectedViewValue = () => {
@@ -136,6 +138,19 @@ function IprDetails({
   };
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
+  };
+
+  const findSimilarDoc = () => {
+    navigate({
+      pathname: routes.search,
+      search: `?${createSearchParams({
+        workstreamId: searchResultParams.workstreamId,
+        similarDocId: documentId,
+        sort: 'mostRelevant',
+        page: '1',
+        q: '',
+      })}`,
+    });
   };
 
   useEffect(() => {
@@ -403,7 +418,7 @@ function IprDetails({
       ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
       : searchResultParams.workstreamId;
 
-    if (workstreamId.toString() === '2') {
+    if (workstreamId?.toString() === '2') {
       if (
         document[selectedView.value]
         || ((selectedView.value === 'Description'
@@ -412,32 +427,32 @@ function IprDetails({
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '1') {
+    } else if (workstreamId?.toString() === '1') {
       if (document[selectedView.value]) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '3') {
+    } else if (workstreamId?.toString() === '3') {
       if (
         document[selectedView.value]
         || selectedView.value === 'Description'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '4') {
+    } else if (workstreamId?.toString() === '4') {
       if (
         document[selectedView.value]
         || selectedView.value === 'JudgementDecision'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '5') {
+    } else if (workstreamId?.toString() === '5') {
       if (
         document[selectedView.value]
         || selectedView.value === 'CopyrightsData' || selectedView.value === 'Description'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '6' || workstreamId.toString() === '7') {
+    } else if (workstreamId?.toString() === '6' || workstreamId?.toString() === '7') {
       if (
         document[selectedView.value]
       ) {
@@ -448,7 +463,7 @@ function IprDetails({
   };
 
   const imgFilename = document?.BibliographicData?.OverallProductDrawing
-    || document?.Drawings?.[0].FileName;
+    || document?.Drawings?.[0]?.FileName;
 
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
@@ -609,11 +624,10 @@ function IprDetails({
           </p>
         )}
         <div
-          className="border-top py-3 px-6 d-xxl-flex align-items-start position-relative"
+          className="border-top py-3 px-6 flex-wrap d-flex align-items-start position-relative"
           translate="no"
         >
           <Button
-            disabled
             variant="primary"
             text={
               <>
@@ -621,7 +635,8 @@ function IprDetails({
                 {t('search:findSimilar')}
               </>
             }
-            className="me-4 fs-sm my-2 my-xxl-0"
+            className="me-4 fs-sm my-2 mt-0"
+            onClick={() => { findSimilarDoc(); }}
           />
           <Button
             variant="primary"
@@ -631,7 +646,7 @@ function IprDetails({
                 {t('search:download')}
               </>
             }
-            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 my-xxl-0`}
+            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 mt-0`}
             onClick={
               downloadOriginalDocuments
             }

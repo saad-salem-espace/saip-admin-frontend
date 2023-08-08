@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import searchImg from '../../../assets/images/icons/search-image.svg';
+import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
 
 function Thumb({
   largeThumb,
@@ -26,12 +26,7 @@ function Thumb({
         <div className={`${!largeThumb ? 'sm-thumb' : ''} item-thumb`}>
           <Image src={srcThumb} className="img-fluid" />
           <div className="overlay">
-            {/* <Button variant="transparent" className="border-0 icon">
-              <Image
-                src={searchImg}
-                className="fs-base"
-              />
-            </Button> */}
+            <SearchImageButton imgSrc={srcThumb} />
             <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
               <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="fs-base text-white" />
             </Button>

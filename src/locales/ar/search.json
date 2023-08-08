@@ -40,7 +40,8 @@
     "not": "باستثناء"
   },
   "identifiers": {
-    "image": "صورة"
+    "image": "صورة",
+    "similarDoc": "مشابه"
   },
   "abstract": "الملخص",
   "publicationCountry": "بلد النشر",
@@ -89,7 +90,8 @@
       "priorityDate": "تاريخ الأسبقية",
       "priorityNumber": "رقم الأسبقية",
       "priorityCountry": "دولة الأسبقية"
-    }
+    },
+    "similarImage": "ابحث عن العلامات التجارية ذات الصور المشابهة"
   },
   "ipr": {
     "bibliographic": "البيانات البيبلوغرافية",

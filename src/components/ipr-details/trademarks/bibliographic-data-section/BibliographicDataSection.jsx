@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { BiSearch } from 'react-icons/bi';
 import PropTypes from 'prop-types';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import './bibliographic.scss';
@@ -11,6 +12,7 @@ import { highlightListener } from 'utils/eventListeners';
 import Row from 'react-bootstrap/Row';
 import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
+import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
 
 const BibliographicDataSection = (
   {
@@ -43,6 +45,8 @@ const BibliographicDataSection = (
     top: `${top - 38}px`,
   };
 
+  const imgSrc = getAttachmentURL(BibliographicData?.Mark);
+
   return (
     <Container fluid>
       <Row>
@@ -50,8 +54,17 @@ const BibliographicDataSection = (
         isIPRExpanded && (
           <Col md={4} className="mb-md-0 mb-2">
             <div className="me-4">
-              <Image src={getAttachmentURL(BibliographicData?.Mark)} className="mw-100" />
+              <Image src={imgSrc} className="mw-100" />
             </div>
+            <SearchImageButton
+              imgSrc={imgSrc}
+              btnClass="appBtn my-2 fs-sm py-4 px-6"
+              btnSize="lg"
+              btnVariant=""
+            >
+              <BiSearch className="fs-20 me-3" />
+              {t('trademarks.similarImage')}
+            </SearchImageButton>
           </Col>
         )
       }

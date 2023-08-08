@@ -6,9 +6,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
+import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
 import Thumb from './Thumb';
 import './style.scss';
-// import searchImg from '../../../assets/images/icons/search-image.svg';
 
 function Carousel({
   largeThumb,
@@ -69,12 +69,7 @@ function Carousel({
         <div className="position-relative imgWrapper h-auto">
           <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" />
           <div className="overlay">
-            {/* <Button variant="transparent" className="border-0 icon">
-              <Image
-                src={searchImg}
-                className="fs-base"
-              />
-            </Button> */}
+            <SearchImageButton imgSrc={activeImg} />
             <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
               <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="f-24 text-white" />
             </Button>

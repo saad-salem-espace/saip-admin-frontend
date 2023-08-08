@@ -40,7 +40,8 @@
     "not": "NOT"
   },
   "identifiers": {
-    "image": "Image"
+    "image": "Image",
+    "similarDoc": "Similar"
   },
   "abstract": "Abstract",
   "publicationCountry": "Publication Country",
@@ -89,7 +90,8 @@
       "priorityDate": "Priority Date",
       "priorityNumber": "Priority Number",
       "priorityCountry": "Priority Country"
-    }
+    },
+    "similarImage": "Search for trademarks with similar images"
   },
   "ipr": {
     "bibliographic": "Bibliographic data",

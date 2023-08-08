@@ -113,7 +113,7 @@ const BibliographicDataSection = (
           <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
           <div className="fs-sm">
             <ShowMore>
-              <HandleEmptyAttribute checkOn={BibliographicData?.Abstract.join(' ')} />
+              <HandleEmptyAttribute checkOn={BibliographicData?.ApplicationAbstract?.join(' ')} />
             </ShowMore>
           </div>
         </Col>
@@ -125,6 +125,7 @@ const BibliographicDataSection = (
 BibliographicDataSection.propTypes = {
   BibliographicData: PropTypes.shape({
     ApplicationTitle: PropTypes.string,
+    ApplicationAbstract: PropTypes.arrayOf(PropTypes.string),
     FilingNumber: PropTypes.string,
     FilingDate: PropTypes.string,
     PublicationNumber: PropTypes.string,
