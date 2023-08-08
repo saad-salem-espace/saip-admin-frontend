@@ -34,7 +34,7 @@ function WorkStreams({ selectedWorkStream, onChange }) {
             onClick={() => handleChange(workStream.id)}
             key={workStream.id}
           >
-            <span className={`f-24 mb-2 d-block workstreamIcon icon-${workStream.workstreamName}`} />
+            <span className={`fs-24 mb-2 d-block workstreamIcon icon-${workStream.workstreamName}`} />
             <span className="text-capitalize font-regular">{currentLang === 'ar' ? workStream.workstreamNameAr : workStream.workstreamName}</span>
           </Button>
         ))

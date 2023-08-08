@@ -439,7 +439,6 @@ function SearchResults({ showFocusArea }) {
           q: (simpleQuery ? query : ''),
           ...(imageName && { imageName }),
           ...(docImage && { docImage }),
-          ...(similarDocId && { similarDocId }),
         })}`,
       });
     } else {
@@ -453,7 +452,6 @@ function SearchResults({ showFocusArea }) {
           filterEnabled: false,
           ...(imageName && { imageName }),
           ...(docImage && { docImage }),
-          ...(similarDocId && { similarDocId }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
           page: 1,
@@ -825,7 +823,7 @@ function SearchResults({ showFocusArea }) {
                     <div>
                       <div className="d-md-flex">
                         <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
+                          <span className="position-absolute fs-xs saip-label select2">{t('view')}</span>
                           <Select
                             options={viewOptions}
                             setSelectedOption={onChangeView}
@@ -837,7 +835,7 @@ function SearchResults({ showFocusArea }) {
                           />
                         </div>
                         <div className="position-relative mb-8 sortBy">
-                          <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                          <span className="position-absolute fs-xs saip-label select2">{t('sortBy')}</span>
                           <Select
                             options={getSortOptions(searchResultParams.workstreamId)}
                             setSelectedOption={onChangeSortBy}

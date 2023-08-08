@@ -70,6 +70,7 @@ function IprDetails({
   examinerView,
   fromFocusArea,
   hideFocus,
+  dashboardExpandedView,
 }) {
   const { t, i18n } = useTranslation('search', 'dashboard');
   const navigate = useNavigate();
@@ -341,6 +342,7 @@ function IprDetails({
         searchResultParams={searchResultParams}
         handleClick={handleClick}
         examinerView={examinerView}
+        dashboardExpandedView={dashboardExpandedView}
       />
     ),
     3: (
@@ -750,6 +752,7 @@ IprDetails.propTypes = {
   examinerView: PropTypes.bool,
   fromFocusArea: PropTypes.bool,
   hideFocus: PropTypes.func,
+  dashboardExpandedView: PropTypes.bool,
 };
 
 IprDetails.defaultProps = {
@@ -767,6 +770,7 @@ IprDetails.defaultProps = {
   setNotesUpdated: () => { },
   fromFocusArea: false,
   hideFocus: () => { },
+  dashboardExpandedView: false,
 };
 
 export default IprDetails;

@@ -148,8 +148,8 @@ const SaveQuery = ({
             >
               {
                     isSaved && isReady
-                      ? <span className="icon-filled-star star-button f-24" data-testid="filled-star" />
-                      : <span className="icon-star f-24 star-button" data-testid="empty-star" />
+                      ? <span className="icon-filled-star star-button fs-24" data-testid="filled-star" />
+                      : <span className="icon-star fs-24 star-button" data-testid="empty-star" />
                   }
             </Button>
               }
@@ -163,8 +163,8 @@ const SaveQuery = ({
         >
           {
             isSaved && isReady
-              ? <span className="icon-filled-star star-button f-24" data-testid="filled-star" />
-              : <span className="icon-star f-24 star-button" data-testid="empty-star" />
+              ? <span className="icon-filled-star star-button fs-24" data-testid="filled-star" />
+              : <span className="icon-star fs-24 star-button" data-testid="empty-star" />
           }
           {
             showSaveQueryMenu && (

@@ -34,7 +34,7 @@ function IndustrialDesignResultCard({
     <Button
       variant="transparent"
       onClick={() => { setActiveDocument(BibliographicData?.FilingNumber); }}
-      className="text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
+      className="text-start fs-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
       text={(
         <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex mb-1">
@@ -79,7 +79,7 @@ function IndustrialDesignResultCard({
               <div>
                 <p className="mb-1 text-black md-text">
                   {t('filed', { value: BibliographicData?.FilingNumber })}
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
                   <span>{BibliographicData?.FilingDate}</span>
                 </p>
                 {
@@ -93,15 +93,15 @@ function IndustrialDesignResultCard({
                   selectedView.value === 'detailed' && (
                     <>
                       <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
                         {t('ipr.registered', { value: BibliographicData?.RegistrationNumber })}
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
                         <span>{BibliographicData?.RegistrationDate}</span>
                       </p>
                       <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
                         {t('ipr.published', { value: BibliographicData?.PublicationNumber })}
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
                         <span>{BibliographicData?.PublicationDate}</span>
                       </p>
                     </>
