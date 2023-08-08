@@ -129,7 +129,7 @@ function SharedSearch({
         </div>
         {
           errorMessage && (
-            <span className="app-text-danger-dark f-12">
+            <span className="app-text-danger-dark fs-xs">
               {errorMessage}
             </span>
           )
