@@ -25,6 +25,18 @@ const BibliographicDataSection = ({
     }
     return grid;
   };
+
+  const getPublishedAs = (doc) => {
+    if (!doc?.PrioritiesDetails || doc.PrioritiesDetails.length === 0) return null;
+    let publishedAs = '';
+    if (doc.PrioritiesDetails[0]?.publishedAs) publishedAs += doc.PrioritiesDetails[0].publishedAs;
+    if (doc.PrioritiesDetails.length > 1 && doc.PrioritiesDetails[1]?.publishedAs) {
+      publishedAs += ' , ';
+      publishedAs += doc.PrioritiesDetails[1].publishedAs;
+    }
+    return publishedAs;
+  };
+
   const [left, setLeft] = useState();
   const [top, setTop] = useState();
 
@@ -102,7 +114,7 @@ const BibliographicDataSection = ({
         />
         <LabelValue
           label={t('internationalNumbers')}
-          value={document?.Priorities?.PublishedAs}
+          value={getPublishedAs(document)}
         />
         <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
         <div className="fs-sm">
