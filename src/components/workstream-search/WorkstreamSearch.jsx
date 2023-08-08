@@ -123,13 +123,12 @@ function WorkstreamSearch() {
         <Container className="px-0 m-auto">
           <Row className="mx-0">
             <Col className="pt-24 pb-8">
-              <p className="app-text-primary-dark fs-30 text-center mb-8">
-                <Trans
-                  i18nKey="searchSpecificProperty"
-                  ns="search"
-                  components={<span className="h3" />}
-                />
-              </p>
+              <div className="text-center mb-8">
+                <h3 className="app-text-primary-dark fs-30 mb-3">
+                  {t('searchSpecificProperty')}
+                </h3>
+                <p className="app-text-primary-dark fs-22">{t('chooseSpecificProperty')}</p>
+              </div>
               <WorkStreams
                 selectedWorkStream={selectedWorkStream}
                 onChange={onChangeWorkstream}
