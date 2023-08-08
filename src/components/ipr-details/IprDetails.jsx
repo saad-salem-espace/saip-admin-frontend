@@ -463,7 +463,7 @@ function IprDetails({
   };
 
   const imgFilename = document?.BibliographicData?.OverallProductDrawing
-    || document?.Drawings?.[0].FileName;
+    || document?.Drawings?.[0]?.FileName;
 
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
