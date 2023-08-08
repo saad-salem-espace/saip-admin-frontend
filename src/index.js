@@ -3,6 +3,7 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { CacheProvider } from 'contexts/CacheContext';
+import ErrorBoundary from 'errors/ErrorBoundary';
 import './index.css';
 import { AppAuthProvider } from 'contexts/AppAuthContext';
 import { initDB } from 'react-indexed-db';
@@ -28,9 +29,11 @@ ReactDOM.render(
     >
       <CacheProvider>
         <BrowserRouter>
-          <AppAuthProvider>
-            <App />
-          </AppAuthProvider>
+          <ErrorBoundary>
+            <AppAuthProvider>
+              <App />
+            </AppAuthProvider>
+          </ErrorBoundary>
         </BrowserRouter>
       </CacheProvider>
     </Suspense>
