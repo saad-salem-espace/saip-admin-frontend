@@ -25,7 +25,7 @@ import style from '../ipr-details.module.scss';
 
 const TrademarkViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
-  handleClick, examinerView, dashboard, dashboardExpandedView,
+  handleClick, examinerView, dashboardExpandedView,
 }) => {
   const content = (s) => {
     switch (s) {
@@ -36,7 +36,6 @@ const TrademarkViews = ({
           getAttachmentURL={preparedGetAttachmentURL}
           handleClick={handleClick}
           examinerView={examinerView}
-          dashboard={dashboard}
           dashboardExpandedView={dashboardExpandedView}
         />
       );
