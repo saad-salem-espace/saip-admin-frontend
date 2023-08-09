@@ -110,7 +110,7 @@ const BibliographicDataSection = (
             labelClassName="bibliographicLabel"
             value={BibliographicData?.Representatives?.join('; ')}
           />
-          <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
+          <p className="app-text-primary fs-sm disable-highlight">{t('abstract')}</p>
           <div className="fs-sm">
             <ShowMore>
               <HandleEmptyAttribute checkOn={BibliographicData?.ApplicationAbstract?.join(' ')} />

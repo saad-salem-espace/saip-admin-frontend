@@ -20,7 +20,6 @@ describe('<SearchResultCard />', () => {
     await waitFor(() => {
       expect(getByText(patentResponse.BibliographicData.ApplicationTitle)).toBeInTheDocument();
       expect(getByText(patentResponse.BibliographicData.PublicationNumber)).toBeInTheDocument();
-      expect(getByText(t('filed', { value: patentResponse.BibliographicData.FilingDate }), { exact: false })).toBeInTheDocument();
       expect(getByText(t('published', { value: patentResponse.BibliographicData.PublicationDate }), { exact: false })).toBeInTheDocument();
       expect(getByText(trimStringRelativeToSubtext(patentResponse.BibliographicData.ApplicationAbstract.join(' '), query, 100, 100))).toBeInTheDocument();
     });

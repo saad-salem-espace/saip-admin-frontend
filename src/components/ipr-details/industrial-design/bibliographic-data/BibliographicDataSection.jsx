@@ -115,7 +115,7 @@ const BibliographicDataSection = (
             value={BibliographicData?.PublicationDate}
             className="mb-4"
           />
-          <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
+          <p className="app-text-primary fs-sm disable-highlight">{t('abstract')}</p>
           <LabelValue
             labelClassName="bibliographicLabel"
             value={

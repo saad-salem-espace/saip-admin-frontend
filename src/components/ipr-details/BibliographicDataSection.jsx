@@ -72,23 +72,23 @@ const BibliographicDataSection = ({
           className="mb-4"
         />
         <div>
-          <p className="app-text-primary f-14 disable-highlight">{t('classifications')}</p>
+          <p className="app-text-primary fs-sm disable-highlight">{t('classifications')}</p>
           <LabelValue
             label={t('ipc')}
             value={document?.IPCClassification?.IPC?.join('; ')}
-            className="f-12 mb-5"
+            className="fs-xs mb-5"
             customLabel
           />
         </div>
         <LabelValue
           label={t('cpc')}
           value={document?.CPCClassification?.CPC?.join('; ')}
-          className="f-12 mb-5"
+          className="fs-xs mb-5"
           customLabel
         />
         {/* <div className="d-flex">
-          <p className={`app-text-primary f-14 ${style.label}`}>{t('priorities')}</p>
-          <p className="f-12">
+          <p className={`app-text-primary fs-sm ${style.label}`}>{t('priorities')}</p>
+          <p className="fs-xs">
             <HandleEmptyAttribute checkOn={document?.Priorities} />
           </p>
         </div> */}
@@ -116,7 +116,7 @@ const BibliographicDataSection = ({
           label={t('internationalNumbers')}
           value={getPublishedAs(document)}
         />
-        <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
+        <p className="app-text-primary fs-sm disable-highlight">{t('abstract')}</p>
         <div className="fs-sm">
           <ShowMore>
             <HandleEmptyAttribute checkOn={BibliographicData?.ApplicationAbstract.join(' ')} />
