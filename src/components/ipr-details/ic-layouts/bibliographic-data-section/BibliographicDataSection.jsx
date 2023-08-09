@@ -66,7 +66,7 @@ const BibliographicDataSection = (
             value={BibliographicData?.PublicationNumber}
           />
           <LabelValue
-            label={t('ipr.publicationDate')}
+            label={t('ipr.certificateGrantDate')}
             labelClassName="bibliographicLabel"
             value={BibliographicData?.PublicationDate}
           />

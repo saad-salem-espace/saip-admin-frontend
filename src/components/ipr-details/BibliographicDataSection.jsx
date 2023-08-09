@@ -25,6 +25,18 @@ const BibliographicDataSection = ({
     }
     return grid;
   };
+
+  const getPublishedAs = (doc) => {
+    if (!doc?.PrioritiesDetails || doc.PrioritiesDetails.length === 0) return null;
+    let publishedAs = '';
+    if (doc.PrioritiesDetails[0]?.publishedAs) publishedAs += doc.PrioritiesDetails[0].publishedAs;
+    if (doc.PrioritiesDetails.length > 1 && doc.PrioritiesDetails[1]?.publishedAs) {
+      publishedAs += ' , ';
+      publishedAs += doc.PrioritiesDetails[1].publishedAs;
+    }
+    return publishedAs;
+  };
+
   const [left, setLeft] = useState();
   const [top, setTop] = useState();
 
@@ -82,7 +94,13 @@ const BibliographicDataSection = ({
         </div> */}
         <LabelValue
           label={t('application')}
-          value={BibliographicData?.Application}
+          value={
+            <>
+              {BibliographicData?.FilingNumber}
+              {' '}
+              {BibliographicData?.FilingDate}
+            </>
+          }
         />
         <LabelValue
           label={t('publication')}
@@ -95,8 +113,8 @@ const BibliographicDataSection = ({
           }
         />
         <LabelValue
-          label={t('publishedAs')}
-          value={document?.Priorities?.PublishedAs}
+          label={t('internationalNumbers')}
+          value={getPublishedAs(document)}
         />
         <p className="app-text-primary fs-sm disable-highlight">{t('abstract')}</p>
         <div className="fs-sm">
@@ -118,6 +136,8 @@ BibliographicDataSection.propTypes = {
       Application: PropTypes.string,
       PublicationNumber: PropTypes.string,
       PublicationDate: PropTypes.string,
+      FilingNumber: PropTypes.string,
+      FilingDate: PropTypes.string,
       ApplicationAbstract: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     Applicants: PropTypes.arrayOf(PropTypes.string),

@@ -58,21 +58,21 @@ function SearchResultCard({
           </p>
           <p className="font-medium mb-2 d-lg-flex align-items-center text-dark fs-sm">
             {
-              searchResult?.Priority && (
+              BibliographicData?.EarliestPriorityDate && (
                 <>
-                  {t('priority', { value: searchResult?.Priority })}
+                  {t('priority', { value: BibliographicData?.EarliestPriorityDate })}
                 </>
               )
             }
             {
-              (BibliographicData?.FilingNumber && searchResult?.Priority) && (
+              (BibliographicData?.FilingDate && BibliographicData?.EarliestPriorityDate) && (
                 <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
               )
             }
             {
-              BibliographicData?.FilingNumber && (
+              BibliographicData?.FilingDate && (
                 <>
-                  {t('filed', { value: BibliographicData?.FilingNumber })}
+                  {t('filed', { value: BibliographicData?.FilingDate })}
                 </>
               )
             }
@@ -124,6 +124,8 @@ SearchResultCard.propTypes = {
       ApplicationAbstract: PropTypes.arrayOf(PropTypes.string).isRequired,
       ApplicationTitle: PropTypes.string.isRequired,
       FilingNumber: PropTypes.string.isRequired,
+      FilingDate: PropTypes.string.isRequired,
+      EarliestPriorityDate: PropTypes.string.isRequired,
       PublicationNumber: PropTypes.string.isRequired,
       PublicationDate: PropTypes.string.isRequired,
     }),

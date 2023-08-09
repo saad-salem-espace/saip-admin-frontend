@@ -303,6 +303,9 @@ function SearchResults({ showFocusArea }) {
     if (location.state?.filters) {
       setSearchFilters(location.state.filters);
     }
+    if (location.state?.simpleSearch) {
+      setIsAdvancedSearch(false);
+    }
   }, [location.state]);
 
   useEffect(() => {

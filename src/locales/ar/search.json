@@ -14,12 +14,12 @@
   "applicants": "المودعون",
   "inventors": "المخترعون",
   "classifications": "تصنيفات",
-  "ipc": "IPC",
+  "ipc": "التصنيف الدولي للبراءات",
   "cpc": "CPC",
   "priorities": "أولوية",
   "application": "طلب",
   "publication": "نشر",
-  "publishedAs": "منشور",
+  "internationalNumbers": "الأرقام الدولية",
   "viewSection": "قسم",
   "images": "الرسومات",
   "advancedSearch": "بحث متقدم",
@@ -88,9 +88,9 @@
       "exhibitionDetails": "تفاصيل المعرض"
     },
     "priorities": {
-      "priorityDate": "تاريخ الأولوية",
-      "priorityNumber": "رقم الأولوية",
-      "priorityCountry": "بلد الأولوية"
+      "priorityDate": "تاريخ الأسبقية",
+      "priorityNumber": "رقم الأسبقية",
+      "priorityCountry": "دولة الأسبقية"
     },
     "similarImage": "ابحث عن العلامات التجارية ذات الصور المشابهة"
   },
@@ -105,7 +105,7 @@
     "goodsServices": "الخدمات والمنتجات",
     "figurativeClassification": "التصنيف",
     "exhibitionDetails": "بيانات المعرض",
-    "priorities": "الأولوية",
+    "priorities": "الأسبقية",
     "officeActions": "الإجراءات",
     "countryCode": "كود البلد",
     "city": "المدينة",
@@ -118,13 +118,14 @@
     "registrationDate": "تاريخ التسجيل",
     "publicationNumber": "رقم النشر",
     "publicationDate": "تاريخ النشر",
-    "filingNumber": "رقم الإيداع",
+    "certificateGrantDate": "تاريخ منح الوثيقة",
+    "filingNumber": "رقم الطلب",
     "filingDate": "تاريخ الإيداع",
     "registered": "مسجل {{value}}",
     "published": "منشور {{value}}",
     "authors": "المؤلفون",
-    "earliestPriorityDate": "تاريخ الأولوية",
-    "earliestPriorityNumber": "رقم الأولوية",
+    "earliestPriorityDate": "تاريخ الأسبقية",
+    "earliestPriorityNumber": "رقم الأسبقية",
     "legal": {
       "statusCode": "كود الحالة",
       "status": "الحالة",
@@ -160,7 +161,7 @@
     "citation": {
       "type": "النوع",
       "citationOrigin": "بلد وثائق البراءات ذات الصلة",
-      "earliestPriorityDate": "تاريخ الأولوية"
+      "earliestPriorityDate": "تاريخ الأسبقية"
     },
     "inventors": {
       "inventorName": "اسم المخترع",
@@ -186,8 +187,8 @@
   "sortBy": "الترتيب ب",
   "publicationDateAsc": "تاريخ النشر تصاعديًا",
   "publicationDateDesc": "تاريخ النشر تنازليًا",
-  "priorityDateAsc": "تاريخ الأولوية تصاعديًا",
-  "priorityDateDesc": "تاريخ الأولوية تنازليًا",
+  "priorityDateAsc": "تاريخ الأسبقية تصاعديًا",
+  "priorityDateDesc": "تاريخ الأسبقية تنازليًا",
   "mostRelevant": "الأكثر توافقا",
   "filingDateAsc": "تاريخ الإيداع تصاعديًا",
   "filingDateDesc": "تاريخ الإيداع تنازليًا",
@@ -247,7 +248,7 @@
     "granted": "منحت {{value}}",
     "copyrightsData": "بيانات حقوق النشر",
     "grantDate": "تاريخ المنح",
-    "claimants": "المدعون"
+    "claimants": "مقدم الطلب"
   },
   "plantVariety": {
     "title": "العنوان",
