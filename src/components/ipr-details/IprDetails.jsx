@@ -640,7 +640,7 @@ function IprDetails({
             className="me-4 fs-sm my-2 mt-0"
             onClick={() => { findSimilarDoc(); }}
           />
-          <Button
+          {(searchResultParams.workstreamId !== '3' && searchResultParams.workstreamId !== '7') && <Button
             variant="primary"
             text={
               <>
@@ -653,7 +653,7 @@ function IprDetails({
               downloadOriginalDocuments
             }
             disabled={isSubmittingDownloadPdf}
-          />
+          />}
           <ModalAlert
             title={t('common:limitReached.login_now')}
             msg={t('common:limitReached.login_now_msg')}

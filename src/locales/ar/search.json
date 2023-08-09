@@ -11,7 +11,7 @@
   "typeHere": " كلمات البحث",
   "allowSynonyms": "المرادفات",
   "register": "تسجيل",
-  "applicants": "المودعون",
+  "applicants": "مقدم الطلب",
   "inventors": "المخترعون",
   "classifications": "تصنيفات",
   "ipc": "التصنيف الدولي للبراءات",
@@ -99,7 +99,7 @@
     "mark": "العلامة",
     "description": "الوصف",
     "legalStatus": "الحالة",
-    "applicantDetails": "بيانات المودع",
+    "applicantDetails": "بيانات مقدم الطلب",
     "ownerDetails": "بيانات المالك",
     "representativeDetails": "بيانات الوكلاء",
     "goodsServices": "الخدمات والمنتجات",
@@ -112,7 +112,7 @@
     "email": "البريد الإلكتروني",
     "nationality": "الجنسية",
     "owners": "الملاك",
-    "applicants": "المودعون",
+    "applicants": "مقدم الطلب",
     "representatives": "الوكلاء",
     "registrationNumber": "رقم التسجيل",
     "registrationDate": "تاريخ التسجيل",
@@ -134,8 +134,8 @@
       "notes": "ملاحظات"
     },
     "applicant": {
-      "applicantName": "اسم المودع",
-      "applicantDetails": "بيانات المودع"
+      "applicantName": "اسم مقدم الطلب",
+      "applicantDetails": "بيانات مقدم الطلب"
     },
     "owner": {
       "ownerName": "اسم المالك",
