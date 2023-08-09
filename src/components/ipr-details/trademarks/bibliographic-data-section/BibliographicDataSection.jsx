@@ -23,6 +23,7 @@ const BibliographicDataSection = (
     handleClick,
     examinerView,
     dashboardExpandedView,
+    setActiveDocument,
   },
 ) => {
   const { t } = useTranslation('search');
@@ -60,6 +61,7 @@ const BibliographicDataSection = (
             </div>
             <SearchImageButton
               imgSrc={imgSrc}
+              setActiveDocument={setActiveDocument}
               btnClass="appBtn my-2 fs-sm py-4 px-6 mt-22 btn-primary"
               btnSize="lg"
               btnVariant=""
@@ -196,6 +198,7 @@ BibliographicDataSection.propTypes = {
   isIPRExpanded: PropTypes.bool.isRequired,
   getAttachmentURL: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  setActiveDocument: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
   dashboardExpandedView: PropTypes.bool,
 };
