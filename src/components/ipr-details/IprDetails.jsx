@@ -343,6 +343,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         dashboardExpandedView={dashboardExpandedView}
+        setActiveDocument={setActiveDocument}
       />
     ),
     3: (
