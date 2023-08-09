@@ -41,10 +41,6 @@ const IndustrialDesignIprOptions = () => {
         label: t('ipr.priorities'),
         value: 'Priorities',
       },
-      {
-        label: t('ipr.originalDocument'),
-        value: 'OriginalDocuments',
-      },
     ],
   };
   return object;

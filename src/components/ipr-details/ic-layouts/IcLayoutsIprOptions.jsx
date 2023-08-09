@@ -37,10 +37,6 @@ const IcLayoutsIprOptions = () => {
         label: t('ipr.drawings'),
         value: 'Drawings',
       },
-      {
-        label: t('ipr.originalDocument'),
-        value: 'OriginalDocuments',
-      },
     ],
   };
   return object;
