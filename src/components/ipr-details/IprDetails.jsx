@@ -332,6 +332,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     2: (
@@ -346,6 +347,7 @@ function IprDetails({
         examinerView={examinerView}
         dashboardExpandedView={dashboardExpandedView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     3: (
@@ -359,6 +361,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     4: (
@@ -393,6 +396,7 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        fromFocusArea={fromFocusArea}
       />
     ),
     7: (
@@ -405,6 +409,7 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        fromFocusArea={fromFocusArea}
       />
     ),
   };
