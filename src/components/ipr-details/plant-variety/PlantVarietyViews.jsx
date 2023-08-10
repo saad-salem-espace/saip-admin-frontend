@@ -18,7 +18,7 @@ import Description from '../patent/description/Description';
 
 const PlantVarietyViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
-  selectedView, handleClick, examinerView,
+  selectedView, handleClick, examinerView, fromFocusArea,
 }) => {
   const { t } = useTranslation('search');
   const content = {
@@ -35,6 +35,7 @@ const PlantVarietyViews = ({
             largeThumb={isIPRExpanded}
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            fromFocusArea={fromFocusArea}
           />
         ) : (
           <NoData />
@@ -114,6 +115,7 @@ const PlantVarietyViews = ({
             largeThumb
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            fromFocusArea={fromFocusArea}
           />
         ) : (
           <NoData />
@@ -161,10 +163,12 @@ PlantVarietyViews.propTypes = {
   hideSearchQueryMenu: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  fromFocusArea: PropTypes.bool,
 };
 
 PlantVarietyViews.defaultProps = {
   examinerView: false,
+  fromFocusArea: false,
 };
 
 export default PlantVarietyViews;

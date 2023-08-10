@@ -186,6 +186,7 @@ const PatentViews = ({
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
               handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -206,6 +207,7 @@ const PatentViews = ({
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
               handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -220,6 +222,7 @@ const PatentViews = ({
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
               handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
