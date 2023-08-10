@@ -15,6 +15,7 @@ function Carousel({
   className,
   images,
   children,
+  handleCloseIprDetail,
 }) {
   const [show, setShow] = useState(false);
   const [activeImg, setActiveImg] = useState(images[0]);
@@ -69,7 +70,7 @@ function Carousel({
         <div className="position-relative imgWrapper h-auto">
           <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" />
           <div className="overlay">
-            <SearchImageButton imgSrc={activeImg} />
+            <SearchImageButton imgSrc={activeImg} handleCloseIprDetail={handleCloseIprDetail} />
             <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
               <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="fs-24 text-white" />
             </Button>
@@ -97,6 +98,7 @@ Carousel.propTypes = {
   className: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   children: PropTypes.node,
+  handleCloseIprDetail: PropTypes.func.isRequired,
 };
 
 Carousel.defaultProps = {
