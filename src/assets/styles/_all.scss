@@ -52,7 +52,7 @@
   .workStreamView {
     .image-item {
       html[dir="ltr"] & {
-        left: 5px 
+        left: 5px
       }
       html[dir="rtl"] & {
         right: 5px;
@@ -65,7 +65,7 @@
   .workStreamView {
     .image-item {
       html[dir="ltr"] & {
-        left: 5px 
+        left: 5px
       }
       html[dir="rtl"] & {
         right: 5px;
@@ -192,7 +192,6 @@
 }
 .search-result-wrapper {
   .uploadImageWrapper.imgUploaded {
-    position: relative;
     height: 59px;
     margin-top: -59px;
   }
