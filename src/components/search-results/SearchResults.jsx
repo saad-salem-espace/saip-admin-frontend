@@ -440,8 +440,8 @@ function SearchResults({ showFocusArea }) {
           sort: 'mostRelevant',
           filterEnabled: false,
           q: (simpleQuery ? query : ''),
-          ...(imageName && { imageName }),
-          ...(docImage && { docImage }),
+          ...(imageName && isImgUploaded && { imageName }),
+          ...(docImage && isImgUploaded && { docImage }),
         })}`,
       });
     } else {
@@ -453,8 +453,8 @@ function SearchResults({ showFocusArea }) {
           workstreamId: values.selectedWorkstream.value,
           q: values.searchQuery,
           filterEnabled: false,
-          ...(imageName && { imageName }),
-          ...(docImage && { docImage }),
+          ...(imageName && isImgUploaded && { imageName }),
+          ...(docImage && isImgUploaded && { docImage }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
           page: 1,
