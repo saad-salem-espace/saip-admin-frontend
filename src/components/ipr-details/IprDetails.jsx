@@ -143,6 +143,7 @@ function IprDetails({
   };
 
   const findSimilarDoc = () => {
+    handleCloseIprDetail();
     navigate({
       pathname: routes.search,
       search: `?${createSearchParams({
