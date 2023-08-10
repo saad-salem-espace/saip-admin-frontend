@@ -128,6 +128,9 @@
 }
 
 .search-results-view {
+  .image-wrapper {
+    position: relative;
+  }
   &.shared-search {
     flex-grow: 1;
   }

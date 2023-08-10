@@ -81,15 +81,17 @@ function UploadImage({
           }
             {imageList.map((image, index) => (
               // eslint-disable-next-line react/no-array-index-key
-              <div key={index} className="image-item">
-                <Image src={image.data_url} className="imageView" />
-                <Button
-                  className="pe-2 removeImg"
-                  onClick={() => onImageRemove(index)}
-                  text={
-                    <FontAwesomeIcon icon={faTimes} className="f-14 text-gray" />
-                }
-                />
+              <div key={index} className="image-wrapper">
+                <div className="image-item">
+                  <Image src={image.data_url} className="imageView" />
+                  <Button
+                    className="pe-2 removeImg"
+                    onClick={() => onImageRemove(index)}
+                    text={
+                      <FontAwesomeIcon icon={faTimes} className="f-14 text-gray" />
+                  }
+                  />
+                </div>
               </div>
             ))}
           </div>
