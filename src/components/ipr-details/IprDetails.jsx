@@ -331,6 +331,7 @@ function IprDetails({
         searchResultParams={searchResultParams}
         handleClick={handleClick}
         examinerView={examinerView}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
     2: (

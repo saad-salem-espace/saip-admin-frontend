@@ -28,6 +28,7 @@ import OriginalDocument from '../shared/original-document/OriginalDocument';
 const PatentViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
   selectedView, handleClick, examinerView,
+  handleCloseIprDetail,
 }) => {
   const { t } = useTranslation('search');
   const content = (s) => {
@@ -45,6 +46,7 @@ const PatentViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           ) : (
             <NoData />
@@ -182,6 +184,7 @@ const PatentViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           ) : (
             <NoData />
@@ -201,6 +204,7 @@ const PatentViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           ) : (
             <NoData />
@@ -214,6 +218,7 @@ const PatentViews = ({
               largeThumb
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           ) : (
             <NoData />
@@ -245,6 +250,7 @@ PatentViews.propTypes = {
   hideSearchQueryMenu: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  handleCloseIprDetail: PropTypes.func.isRequired,
 };
 
 PatentViews.defaultProps = {
