@@ -908,6 +908,7 @@ function SearchResults({ showFocusArea }) {
               getPreviousDocument={getPreviousDocument}
               setActiveDocument={setActiveDocument}
               fromFocusArea={false}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           </Col>
         )}

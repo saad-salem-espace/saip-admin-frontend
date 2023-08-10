@@ -71,6 +71,7 @@ function IprDetails({
   fromFocusArea,
   hideFocus,
   dashboardExpandedView,
+  handleCloseIprDetail,
 }) {
   const { t, i18n } = useTranslation('search', 'dashboard');
   const navigate = useNavigate();
@@ -343,7 +344,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         dashboardExpandedView={dashboardExpandedView}
-        setActiveDocument={setActiveDocument}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
     3: (
@@ -754,6 +755,7 @@ IprDetails.propTypes = {
   fromFocusArea: PropTypes.bool,
   hideFocus: PropTypes.func,
   dashboardExpandedView: PropTypes.bool,
+  handleCloseIprDetail: PropTypes.func.isRequired,
 };
 
 IprDetails.defaultProps = {
