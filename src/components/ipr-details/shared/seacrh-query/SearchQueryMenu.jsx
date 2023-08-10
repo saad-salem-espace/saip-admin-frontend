@@ -9,7 +9,6 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import CacheContext from 'contexts/CacheContext';
-import { Formik, Form } from 'formik';
 import useCacheRequest from 'hooks/useCacheRequest';
 import PropTypes from 'prop-types';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -115,34 +114,24 @@ function SearchQueryMenu({
       {children}
       {
         showSearchQuery && (
-          <Formik
-            validateOnChange
-            enableReinitialize
-            validateOnBlur={false}
-          >
-            {() => (
-              <Form className="search-query-menu shadow rounded">
-                <div className="p-8">
-                  <Button
-                    onClick={() => { hideSearchQueryMenu(); }}
-                    variant="transparent"
-                    className="text-end w-100 px-0 pb-4 pt-0 border-0"
-                  >
-                    <FontAwesomeIcon icon={faTimes} className="fs-base text-dark" />
-                  </Button>
-                  <SearchQuery
-                    workstreamId={activeWorkstream}
-                    firstIdentifierStr="ftxt"
-                    defaultInitializers={searchFields}
-                    isAdvancedMenuOpen={false}
-                    onChangeSearchQuery={setFormikFields}
-                    examinerView
-                    submitCallback={onSubmit}
-                  />
-                </div>
-              </Form>
-            )}
-          </Formik>
+          <div className="p-8 search-query-menu shadow rounded">
+            <Button
+              onClick={() => { hideSearchQueryMenu(); }}
+              variant="transparent"
+              className="text-end w-100 px-0 pb-4 pt-0 border-0"
+            >
+              <FontAwesomeIcon icon={faTimes} className="fs-base text-dark" />
+            </Button>
+            <SearchQuery
+              workstreamId={activeWorkstream}
+              firstIdentifierStr="ftxt"
+              defaultInitializers={searchFields}
+              isAdvancedMenuOpen={false}
+              onChangeSearchQuery={setFormikFields}
+              examinerView
+              submitCallback={onSubmit}
+            />
+          </div>
         )
       }
     </div>

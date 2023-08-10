@@ -303,6 +303,9 @@ function SearchResults({ showFocusArea }) {
     if (location.state?.filters) {
       setSearchFilters(location.state.filters);
     }
+    if (location.state?.simpleSearch) {
+      setIsAdvancedSearch(false);
+    }
   }, [location.state]);
 
   useEffect(() => {
@@ -437,9 +440,8 @@ function SearchResults({ showFocusArea }) {
           sort: 'mostRelevant',
           filterEnabled: false,
           q: (simpleQuery ? query : ''),
-          ...(imageName && { imageName }),
-          ...(docImage && { docImage }),
-          ...(similarDocId && { similarDocId }),
+          ...(imageName && isImgUploaded && { imageName }),
+          ...(docImage && isImgUploaded && { docImage }),
         })}`,
       });
     } else {
@@ -451,9 +453,8 @@ function SearchResults({ showFocusArea }) {
           workstreamId: values.selectedWorkstream.value,
           q: values.searchQuery,
           filterEnabled: false,
-          ...(imageName && { imageName }),
-          ...(docImage && { docImage }),
-          ...(similarDocId && { similarDocId }),
+          ...(imageName && isImgUploaded && { imageName }),
+          ...(docImage && isImgUploaded && { docImage }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
           page: 1,
@@ -825,7 +826,7 @@ function SearchResults({ showFocusArea }) {
                     <div>
                       <div className="d-md-flex">
                         <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
+                          <span className="position-absolute fs-xs saip-label select2">{t('view')}</span>
                           <Select
                             options={viewOptions}
                             setSelectedOption={onChangeView}
@@ -837,7 +838,7 @@ function SearchResults({ showFocusArea }) {
                           />
                         </div>
                         <div className="position-relative mb-8 sortBy">
-                          <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                          <span className="position-absolute fs-xs saip-label select2">{t('sortBy')}</span>
                           <Select
                             options={getSortOptions(searchResultParams.workstreamId)}
                             setSelectedOption={onChangeSortBy}
@@ -907,6 +908,7 @@ function SearchResults({ showFocusArea }) {
               getPreviousDocument={getPreviousDocument}
               setActiveDocument={setActiveDocument}
               fromFocusArea={false}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           </Col>
         )}

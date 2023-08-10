@@ -70,6 +70,8 @@ function IprDetails({
   examinerView,
   fromFocusArea,
   hideFocus,
+  dashboardExpandedView,
+  handleCloseIprDetail,
 }) {
   const { t, i18n } = useTranslation('search', 'dashboard');
   const navigate = useNavigate();
@@ -329,6 +331,7 @@ function IprDetails({
         searchResultParams={searchResultParams}
         handleClick={handleClick}
         examinerView={examinerView}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
     2: (
@@ -341,6 +344,8 @@ function IprDetails({
         searchResultParams={searchResultParams}
         handleClick={handleClick}
         examinerView={examinerView}
+        dashboardExpandedView={dashboardExpandedView}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
     3: (
@@ -353,6 +358,7 @@ function IprDetails({
         searchResultParams={searchResultParams}
         handleClick={handleClick}
         examinerView={examinerView}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
     4: (
@@ -479,7 +485,7 @@ function IprDetails({
               setIsBookmark={setIsBookmark}
             />
             <h5 className="mb-0">
-              {(searchResultParams.workstreamId === '4' || searchResultParams.workstreamId === '5') ? document.BibliographicData?.FilingNumber : document.BibliographicData?.PublicationNumber}
+              {document.BibliographicData?.FilingNumber}
             </h5>
           </div>
           <div className="d-flex">
@@ -638,7 +644,7 @@ function IprDetails({
             className="me-4 fs-sm my-2 mt-0"
             onClick={() => { findSimilarDoc(); }}
           />
-          <Button
+          {(searchResultParams.workstreamId !== '3' && searchResultParams.workstreamId !== '7') && <Button
             variant="primary"
             text={
               <>
@@ -651,7 +657,7 @@ function IprDetails({
               downloadOriginalDocuments
             }
             disabled={isSubmittingDownloadPdf}
-          />
+          />}
           <ModalAlert
             title={t('common:limitReached.login_now')}
             msg={t('common:limitReached.login_now_msg')}
@@ -750,6 +756,8 @@ IprDetails.propTypes = {
   examinerView: PropTypes.bool,
   fromFocusArea: PropTypes.bool,
   hideFocus: PropTypes.func,
+  dashboardExpandedView: PropTypes.bool,
+  handleCloseIprDetail: PropTypes.func.isRequired,
 };
 
 IprDetails.defaultProps = {
@@ -767,6 +775,7 @@ IprDetails.defaultProps = {
   setNotesUpdated: () => { },
   fromFocusArea: false,
   hideFocus: () => { },
+  dashboardExpandedView: false,
 };
 
 export default IprDetails;

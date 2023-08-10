@@ -13,6 +13,7 @@ import Row from 'react-bootstrap/Row';
 import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
 import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
+import 'components/shared/button/Button.scss';
 
 const BibliographicDataSection = (
   {
@@ -21,6 +22,8 @@ const BibliographicDataSection = (
     getAttachmentURL,
     handleClick,
     examinerView,
+    dashboardExpandedView,
+    handleCloseIprDetail,
   },
 ) => {
   const { t } = useTranslation('search');
@@ -51,14 +54,15 @@ const BibliographicDataSection = (
     <Container fluid>
       <Row>
         {
-        isIPRExpanded && (
-          <Col md={4} className="mb-md-0 mb-2">
+        (isIPRExpanded || dashboardExpandedView) && (
+          <Col md={dashboardExpandedView ? 12 : 4} className={`mb-2 ${dashboardExpandedView ? 'mb-6' : 'mb-md-0'}`}>
             <div className="me-4">
               <Image src={imgSrc} className="mw-100" />
             </div>
             <SearchImageButton
               imgSrc={imgSrc}
-              btnClass="appBtn my-2 fs-sm py-4 px-6"
+              handleCloseIprDetail={handleCloseIprDetail}
+              btnClass="appBtn my-2 fs-sm py-4 px-6 mt-22 btn-primary"
               btnSize="lg"
               btnVariant=""
             >
@@ -131,7 +135,7 @@ const BibliographicDataSection = (
             className="mb-4"
             value={BibliographicData?.PublicationDate}
           />
-          <p className="app-text-primary f-14 disable-highlight">{t('trademarks.markDescription')}</p>
+          <p className="app-text-primary fs-sm disable-highlight">{t('trademarks.markDescription')}</p>
           <LabelValue
             labelClassName="bibliographicLabel"
             value={
@@ -194,11 +198,14 @@ BibliographicDataSection.propTypes = {
   isIPRExpanded: PropTypes.bool.isRequired,
   getAttachmentURL: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  dashboardExpandedView: PropTypes.bool,
 };
 
 BibliographicDataSection.defaultProps = {
   examinerView: false,
+  dashboardExpandedView: false,
 };
 
 export default BibliographicDataSection;

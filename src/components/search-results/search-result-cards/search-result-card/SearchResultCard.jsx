@@ -30,7 +30,7 @@ function SearchResultCard({
     <Button
       variant="transparent"
       onClick={() => { setActiveDocument(BibliographicData?.FilingNumber); }}
-      className="w-100 text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0"
+      className="w-100 text-start fs-20 px-1 py-0 font-regular app-text-primary-dark border-0"
       text={(
         <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
@@ -56,14 +56,30 @@ function SearchResultCard({
           <p className="mb-2 text-black md-text">
             {BibliographicData?.PublicationNumber}
           </p>
-          <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
-            {t('priority', { value: searchResult?.Priority })}
-            <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
-            {t('filed', { value: BibliographicData?.FilingNumber })}
+          <p className="font-medium mb-2 d-lg-flex align-items-center text-dark fs-sm">
+            {
+              BibliographicData?.EarliestPriorityDate && (
+                <>
+                  {t('priority', { value: BibliographicData?.EarliestPriorityDate })}
+                </>
+              )
+            }
+            {
+              (BibliographicData?.FilingDate && BibliographicData?.EarliestPriorityDate) && (
+                <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+              )
+            }
+            {
+              BibliographicData?.FilingDate && (
+                <>
+                  {t('filed', { value: BibliographicData?.FilingDate })}
+                </>
+              )
+            }
             {
               BibliographicData?.PublicationDate && (
                 <>
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-5" />
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
                   {t('published', { value: BibliographicData?.PublicationDate })}
                 </>
               )
@@ -71,11 +87,11 @@ function SearchResultCard({
           </p>
           <div className="d-flex">
             {
-            (firstDrawing && (selectedView.value === 'detailed')) && (
-            <div className={`${style['patent-img']} me-2`}>
-              <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
-            </div>
-            )
+              (firstDrawing && (selectedView.value === 'detailed')) && (
+                <div className={`${style['patent-img']} me-2`}>
+                  <Image src={preparedGetAttachmentURL(firstDrawing.FileName)} />
+                </div>
+              )
             }
             {
               selectedView.value !== 'compact' && (
@@ -108,6 +124,8 @@ SearchResultCard.propTypes = {
       ApplicationAbstract: PropTypes.arrayOf(PropTypes.string).isRequired,
       ApplicationTitle: PropTypes.string.isRequired,
       FilingNumber: PropTypes.string.isRequired,
+      FilingDate: PropTypes.string.isRequired,
+      EarliestPriorityDate: PropTypes.string.isRequired,
       PublicationNumber: PropTypes.string.isRequired,
       PublicationDate: PropTypes.string.isRequired,
     }),

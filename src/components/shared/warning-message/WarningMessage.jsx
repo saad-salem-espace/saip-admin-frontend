@@ -4,7 +4,7 @@ function WarningMessage({
   msg, className,
 }) {
   return (
-    <p className={`text-warning f-14 ${className}`}>{msg}</p>
+    <p className={`text-warning fs-sm ${className}`}>{msg}</p>
   );
 }
 

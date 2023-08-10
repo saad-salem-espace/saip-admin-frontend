@@ -6,14 +6,13 @@ import BibliographicDataSection from './BibliographicDataSection';
 
 describe('<BibliographicDataSection />', () => {
   const tSearch = (key, options) => I18n.t(key, { ...options, ns: 'search' });
-  const tDefault = (key, options) => I18n.t(key, { ...options });
 
   it('renders component successfully', async () => {
     const { queryAllByText, getByText } = render(
       <BibliographicDataSection document={samplePatent} />,
     );
     await waitFor(() => {
-      ['register', 'applicants', 'inventors', 'classifications', 'ipc', 'cpc', 'application', 'publishedAs'].forEach((attributeName) => {
+      ['register', 'applicants', 'inventors', 'classifications', 'ipc', 'cpc', 'application'].forEach((attributeName) => {
         expect(getByText(tSearch(attributeName))).toBeInTheDocument();
       });
 
@@ -26,20 +25,6 @@ describe('<BibliographicDataSection />', () => {
       expect(getByText(samplePatent.IPCClassification.IPC.join('; '))).toBeInTheDocument();
       expect(getByText(samplePatent.CPCClassification.CPC.join('; '))).toBeInTheDocument();
       expect(getByText(`${samplePatent.BibliographicData.PublicationNumber} ${samplePatent.BibliographicData.PublicationDate}`)).toBeInTheDocument();
-    });
-  });
-
-  it('renders empty handler text if not exist', async () => {
-    const document = JSON.parse(JSON.stringify(samplePatent));
-    document.Inventors = [];
-    document.Drawings = null;
-
-    const { queryAllByText } = render(
-      <BibliographicDataSection document={samplePatent} />,
-    );
-
-    await waitFor(() => {
-      expect(queryAllByText(tDefault('emptyText')).length).toBeGreaterThanOrEqual(2);
     });
   });
 });

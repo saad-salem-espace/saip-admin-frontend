@@ -25,6 +25,18 @@ const BibliographicDataSection = ({
     }
     return grid;
   };
+
+  const getPublishedAs = (doc) => {
+    if (!doc?.PrioritiesDetails || doc.PrioritiesDetails.length === 0) return null;
+    let publishedAs = '';
+    if (doc.PrioritiesDetails[0]?.publishedAs) publishedAs += doc.PrioritiesDetails[0].publishedAs;
+    if (doc.PrioritiesDetails.length > 1 && doc.PrioritiesDetails[1]?.publishedAs) {
+      publishedAs += ' , ';
+      publishedAs += doc.PrioritiesDetails[1].publishedAs;
+    }
+    return publishedAs;
+  };
+
   const [left, setLeft] = useState();
   const [top, setTop] = useState();
 
@@ -60,29 +72,35 @@ const BibliographicDataSection = ({
           className="mb-4"
         />
         <div>
-          <p className="app-text-primary f-14 disable-highlight">{t('classifications')}</p>
+          <p className="app-text-primary fs-sm disable-highlight">{t('classifications')}</p>
           <LabelValue
             label={t('ipc')}
             value={document?.IPCClassification?.IPC?.join('; ')}
-            className="f-12 mb-5"
+            className="fs-xs mb-5"
             customLabel
           />
         </div>
         <LabelValue
           label={t('cpc')}
           value={document?.CPCClassification?.CPC?.join('; ')}
-          className="f-12 mb-5"
+          className="fs-xs mb-5"
           customLabel
         />
         {/* <div className="d-flex">
-          <p className={`app-text-primary f-14 ${style.label}`}>{t('priorities')}</p>
-          <p className="f-12">
+          <p className={`app-text-primary fs-sm ${style.label}`}>{t('priorities')}</p>
+          <p className="fs-xs">
             <HandleEmptyAttribute checkOn={document?.Priorities} />
           </p>
         </div> */}
         <LabelValue
           label={t('application')}
-          value={BibliographicData?.Application}
+          value={
+            <>
+              {BibliographicData?.FilingNumber}
+              {' '}
+              {BibliographicData?.FilingDate}
+            </>
+          }
         />
         <LabelValue
           label={t('publication')}
@@ -95,10 +113,10 @@ const BibliographicDataSection = ({
           }
         />
         <LabelValue
-          label={t('publishedAs')}
-          value={document?.Priorities?.PublishedAs}
+          label={t('internationalNumbers')}
+          value={getPublishedAs(document)}
         />
-        <p className="app-text-primary f-14 disable-highlight">{t('abstract')}</p>
+        <p className="app-text-primary fs-sm disable-highlight">{t('abstract')}</p>
         <div className="fs-sm">
           <ShowMore>
             <HandleEmptyAttribute checkOn={BibliographicData?.ApplicationAbstract.join(' ')} />
@@ -118,6 +136,8 @@ BibliographicDataSection.propTypes = {
       Application: PropTypes.string,
       PublicationNumber: PropTypes.string,
       PublicationDate: PropTypes.string,
+      FilingNumber: PropTypes.string,
+      FilingDate: PropTypes.string,
       ApplicationAbstract: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     Applicants: PropTypes.arrayOf(PropTypes.string),

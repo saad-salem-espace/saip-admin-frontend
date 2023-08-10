@@ -97,7 +97,7 @@ function IprSections({
   };
 
   const setActiveDocument = (activeDocument) => {
-    window.open(`/document?workstreamId=${activeWorkstream}&documentId=${activeDocument}`, '_blank');
+    window.open(`/document?workstreamId=${activeWorkstream}&documentId=${activeDocument}&FocusDoc=${localStorage.getItem('FocusDoc')}`, '_blank');
   };
 
   const prepareAuthBookamrks = (response) => {
