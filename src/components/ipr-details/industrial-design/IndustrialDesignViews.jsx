@@ -20,7 +20,7 @@ import LocarnoClassificationRow from './locarno-classification/LocarnoClassifica
 
 const IndustrialDesignViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
-  handleClick, examinerView,
+  handleClick, examinerView, handleCloseIprDetail,
 
 }) => {
   const { t } = useTranslation('search');
@@ -41,6 +41,7 @@ const IndustrialDesignViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           ) : (
             <NoData />
@@ -54,6 +55,7 @@ const IndustrialDesignViews = ({
               largeThumb
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           ) : (
             <NoData />
@@ -73,6 +75,7 @@ const IndustrialDesignViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           ) : (
             <NoData />
@@ -185,6 +188,7 @@ IndustrialDesignViews.propTypes = {
   searchResultParams: PropTypes.shape.isRequired,
   preparedGetAttachmentURL: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
 };
 

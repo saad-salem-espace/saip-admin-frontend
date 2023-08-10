@@ -7,13 +7,13 @@ import searchImg from '../../../assets/images/icons/search-image.svg';
 
 function SearchImageButton({
   imgSrc, btnClass, btnSize, btnVariant, children,
-  setActiveDocument,
+  handleCloseIprDetail,
 }) {
   const navigate = useNavigate();
   const variableRegex = /.*\/attachments\/(.*)\/image\/(.*)\/(.*)/;
   const [, workstreamId, docId, fileName] = imgSrc.match(variableRegex);
   const searchByImage = () => {
-    setActiveDocument(null);
+    handleCloseIprDetail();
     navigate({
       pathname: routes.search,
       search: `?${createSearchParams({
@@ -45,7 +45,7 @@ SearchImageButton.propTypes = {
   children: PropTypes.node,
   btnClass: PropTypes.string,
   btnSize: PropTypes.string,
-  setActiveDocument: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func.isRequired,
   btnVariant: PropTypes.string,
 };
 
