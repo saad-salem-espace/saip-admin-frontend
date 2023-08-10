@@ -393,6 +393,7 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
     7: (
