@@ -19,6 +19,7 @@ import Description from '../patent/description/Description';
 const PlantVarietyViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
   selectedView, handleClick, examinerView,
+  handleCloseIprDetail,
 }) => {
   const { t } = useTranslation('search');
   const content = {
@@ -35,6 +36,7 @@ const PlantVarietyViews = ({
             largeThumb={isIPRExpanded}
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -114,6 +116,7 @@ const PlantVarietyViews = ({
             largeThumb
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -138,6 +141,7 @@ const PlantVarietyViews = ({
         {document.Drawings?.length ? (
           <Carousel
             largeThumb={isIPRExpanded}
+            handleCloseIprDetail={handleCloseIprDetail}
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
           />
@@ -161,6 +165,7 @@ PlantVarietyViews.propTypes = {
   hideSearchQueryMenu: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  handleCloseIprDetail: PropTypes.func.isRequired,
 };
 
 PlantVarietyViews.defaultProps = {
