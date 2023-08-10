@@ -19,6 +19,7 @@ import Description from '../patent/description/Description';
 const IcLayoutsIprViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
   selectedView, handleClick, examinerView,
+  handleCloseIprDetail,
 }) => {
   const { t } = useTranslation('search');
   const content = {
@@ -35,6 +36,7 @@ const IcLayoutsIprViews = ({
             largeThumb={isIPRExpanded}
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -114,6 +116,7 @@ const IcLayoutsIprViews = ({
             largeThumb
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -140,6 +143,7 @@ const IcLayoutsIprViews = ({
             largeThumb={isIPRExpanded}
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -159,6 +163,7 @@ IcLayoutsIprViews.propTypes = {
   preparedGetAttachmentURL: PropTypes.func.isRequired,
   showSearchQuery: PropTypes.bool.isRequired,
   hideSearchQueryMenu: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
 };
