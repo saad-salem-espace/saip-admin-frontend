@@ -143,6 +143,7 @@ function IprDetails({
   };
 
   const findSimilarDoc = () => {
+    handleCloseIprDetail();
     navigate({
       pathname: routes.search,
       search: `?${createSearchParams({
@@ -397,6 +398,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         fromFocusArea={fromFocusArea}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
     7: (
@@ -410,6 +412,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         fromFocusArea={fromFocusArea}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
   };

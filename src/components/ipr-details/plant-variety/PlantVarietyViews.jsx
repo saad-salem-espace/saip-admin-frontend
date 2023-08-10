@@ -17,8 +17,9 @@ import OriginalDocument from '../shared/original-document/OriginalDocument';
 import Description from '../patent/description/Description';
 
 const PlantVarietyViews = ({
-  isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
-  selectedView, handleClick, examinerView, fromFocusArea,
+  isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, fromFocusArea,
+  selectedView, handleClick, examinerView,
+  handleCloseIprDetail,
 }) => {
   const { t } = useTranslation('search');
   const content = {
@@ -36,6 +37,7 @@ const PlantVarietyViews = ({
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
             fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -116,6 +118,7 @@ const PlantVarietyViews = ({
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
             fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -140,6 +143,7 @@ const PlantVarietyViews = ({
         {document.Drawings?.length ? (
           <Carousel
             largeThumb={isIPRExpanded}
+            handleCloseIprDetail={handleCloseIprDetail}
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
           />
@@ -164,6 +168,7 @@ PlantVarietyViews.propTypes = {
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
   fromFocusArea: PropTypes.bool,
+  handleCloseIprDetail: PropTypes.func.isRequired,
 };
 
 PlantVarietyViews.defaultProps = {

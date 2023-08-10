@@ -18,7 +18,7 @@ import Description from '../patent/description/Description';
 
 const IcLayoutsIprViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
-  selectedView, handleClick, examinerView, fromFocusArea,
+  selectedView, handleClick, examinerView, fromFocusArea, handleCloseIprDetail,
 }) => {
   const { t } = useTranslation('search');
   const content = {
@@ -36,6 +36,7 @@ const IcLayoutsIprViews = ({
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
             fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -116,6 +117,7 @@ const IcLayoutsIprViews = ({
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
             fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -143,6 +145,7 @@ const IcLayoutsIprViews = ({
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
             fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -162,6 +165,7 @@ IcLayoutsIprViews.propTypes = {
   preparedGetAttachmentURL: PropTypes.func.isRequired,
   showSearchQuery: PropTypes.bool.isRequired,
   hideSearchQueryMenu: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
   fromFocusArea: PropTypes.bool,
