@@ -149,6 +149,7 @@ const Board = ({
               isCardInprogress={isCardInprogress}
               selectedCardId={selectedCardId}
               setNotesUpdated={setNotesUpdated}
+              handleCloseIprDetail={handleCloseIprDetail}
               className={`${isIPRExpanded ? 'col-lg-12 ps-18' : 'col-lg-4 col-12 ps-18 ps-lg-0 border-start'} dashboard-ipr-container position-absolute top-0 end-0 bottom-0 h-100 me-0`}
             />
           )

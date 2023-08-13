@@ -765,7 +765,7 @@ IprDetails.propTypes = {
   fromFocusArea: PropTypes.bool,
   hideFocus: PropTypes.func,
   dashboardExpandedView: PropTypes.bool,
-  handleCloseIprDetail: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -783,6 +783,7 @@ IprDetails.defaultProps = {
   setNotesUpdated: () => { },
   fromFocusArea: false,
   hideFocus: () => { },
+  handleCloseIprDetail: () => { },
   dashboardExpandedView: false,
 };
 
