@@ -43,6 +43,7 @@ function Carousel({
             changeActiveImg={changeActiveImg}
             srcThumb={images[imgIndex]}
             fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />,
         );
       }
