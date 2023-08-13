@@ -1,13 +1,13 @@
 {
-  "myQueries": "استعلاماتي",
+  "myQueries": "محفوظات البحث",
   "query": "الاستعلام",
   "date": "التاريخ",
   "resultsFound": "النتائج",
   "actions": "الإجراءات",
-  "deleteQuery": "مسح الاستعلام",
-  "confirmDeleteQuery": "هل انت متأكد من مسح هذا الاستعلام؟",
+  "deleteQuery": "مسح محفوظ البحث",
+  "confirmDeleteQuery": "هل انت متأكد من مسح محفوظ البحث؟",
   "delete": "مسح",
-  "queryDeleted": "تم مسح الاستعلام",
-  "deleteFailedTitle": "لم يتم مسح الاستعلام.",
+  "queryDeleted": "تم مسح محفوظ البحث",
+  "deleteFailedTitle": "لم يتم مسح محفوظ البحث.",
   "deleteFailedText": ".برجاء المحاولة مرة أخرى"
 }
