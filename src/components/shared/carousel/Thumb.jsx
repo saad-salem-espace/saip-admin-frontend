@@ -11,6 +11,7 @@ function Thumb({
   largeThumb,
   srcThumb,
   changeActiveImg,
+  fromFocusArea,
 }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -30,7 +31,7 @@ function Thumb({
             <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
               <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="fs-base text-white" />
             </Button>
-            <Modal centered show={show} onHide={handleClose}>
+            <Modal centered show={show} onHide={handleClose} className={`${fromFocusArea ? 'thumb-focus-area' : ''}`}>
               <Modal.Body className="p-0">
                 <Image src={srcThumb} className="w-100 h-auto" />
               </Modal.Body>
@@ -45,11 +46,13 @@ Thumb.propTypes = {
   largeThumb: PropTypes.bool,
   srcThumb: PropTypes.string.isRequired,
   changeActiveImg: PropTypes.func,
+  fromFocusArea: PropTypes.bool,
 };
 
 Thumb.defaultProps = {
   largeThumb: false,
   changeActiveImg: null,
+  fromFocusArea: false,
 };
 
 export default Thumb;

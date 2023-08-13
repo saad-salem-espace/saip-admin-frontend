@@ -16,6 +16,7 @@ function Carousel({
   images,
   children,
   handleCloseIprDetail,
+  fromFocusArea,
 }) {
   const [show, setShow] = useState(false);
   const [activeImg, setActiveImg] = useState(images[0]);
@@ -41,6 +42,7 @@ function Carousel({
             largeThumb={largeThumb}
             changeActiveImg={changeActiveImg}
             srcThumb={images[imgIndex]}
+            fromFocusArea={fromFocusArea}
           />,
         );
       }
@@ -99,12 +101,14 @@ Carousel.propTypes = {
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   children: PropTypes.node,
   handleCloseIprDetail: PropTypes.func.isRequired,
+  fromFocusArea: PropTypes.bool,
 };
 
 Carousel.defaultProps = {
   largeThumb: false,
   className: null,
   children: null,
+  fromFocusArea: false,
 };
 
 export default Carousel;
