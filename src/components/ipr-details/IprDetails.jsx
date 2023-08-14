@@ -333,6 +333,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     2: (
@@ -347,6 +348,7 @@ function IprDetails({
         examinerView={examinerView}
         dashboardExpandedView={dashboardExpandedView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     3: (
@@ -360,6 +362,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     4: (
@@ -394,6 +397,7 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        fromFocusArea={fromFocusArea}
         handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
@@ -407,6 +411,7 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        fromFocusArea={fromFocusArea}
         handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
@@ -760,7 +765,7 @@ IprDetails.propTypes = {
   fromFocusArea: PropTypes.bool,
   hideFocus: PropTypes.func,
   dashboardExpandedView: PropTypes.bool,
-  handleCloseIprDetail: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -778,6 +783,7 @@ IprDetails.defaultProps = {
   setNotesUpdated: () => { },
   fromFocusArea: false,
   hideFocus: () => { },
+  handleCloseIprDetail: () => { },
   dashboardExpandedView: false,
 };
 

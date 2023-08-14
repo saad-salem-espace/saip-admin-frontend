@@ -28,7 +28,7 @@ import OriginalDocument from '../shared/original-document/OriginalDocument';
 const PatentViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
   selectedView, handleClick, examinerView,
-  handleCloseIprDetail,
+  handleCloseIprDetail, fromFocusArea,
 }) => {
   const { t } = useTranslation('search');
   const content = (s) => {
@@ -47,6 +47,7 @@ const PatentViews = ({
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
               handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -185,6 +186,7 @@ const PatentViews = ({
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
               handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -205,6 +207,7 @@ const PatentViews = ({
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
               handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -219,6 +222,7 @@ const PatentViews = ({
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
               handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -251,10 +255,12 @@ PatentViews.propTypes = {
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
   handleCloseIprDetail: PropTypes.func.isRequired,
+  fromFocusArea: PropTypes.bool,
 };
 
 PatentViews.defaultProps = {
   examinerView: false,
+  fromFocusArea: false,
 };
 
 export default PatentViews;
