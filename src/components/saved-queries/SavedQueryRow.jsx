@@ -3,6 +3,7 @@ import Moment from 'moment';
 import { useState, useEffect } from 'react';
 import {
   Link,
+  createSearchParams,
 } from 'react-router-dom';
 import { BsPlay, BsTrash } from 'react-icons/bs';
 import routes from 'components/routes/routes.json';
@@ -22,7 +23,7 @@ const SavedQueryRow = ({
   query, selectedWorkStream, setRefreshQueriesList, updateIprModal,
 }) => {
   const queryDate = Moment(query.createdAt).format(LONG_DATETIME_12H_FORMAT);
-  const queryStringUrl = query.queryString.replace(/\s/g, '+');
+  const queryStringUrl = query.queryString;
   const [selectedLink, setSelectedLink] = useState(false);
   const { t } = useTranslation('queries');
   const { deleteInstance } = useIndexedDbWrapper(tableNames.savedQuery);
@@ -31,6 +32,13 @@ const SavedQueryRow = ({
   const deleteQueryParams = {
     queryId: query.id,
   };
+
+  const writeQueryString = () => {
+    if (query.queryString && query?.imageName) return `${query.queryString} OR ${query.imageName}`;
+    if (!query.queryString && query?.imageName) return query.imageName;
+    return query.queryString;
+  };
+
   const deleteQueryConfig = deleteQueryApi(deleteQueryParams, true);
 
   const [deleteQueryData, executeDeleteQuery] = useAxios(
@@ -83,13 +91,22 @@ const SavedQueryRow = ({
 
   return (
     <tr className="text-capitalize">
-      <td className="text-nowrap">{query.queryString}</td>
+      <td className="text-nowrap">{writeQueryString()}</td>
       <td className="text-nowrap">{queryDate}</td>
       <td>{query.resultCount}</td>
       <td className="d-flex">
         <Link
           className={`p-2 rounded run-query ${selectedLink === query.queryString ? 'active-query' : ''}`}
-          to={`${routes.search}?workstreamId=${selectedWorkStream}&sort=mostRelevant&q=${queryStringUrl}&page=1'`}
+          to={{
+            pathname: routes.search,
+            search: `?${createSearchParams({
+              workstreamId: selectedWorkStream,
+              sort: 'mostRelevant',
+              q: (queryStringUrl),
+              ...(query?.imageName && { imageName: query.imageName }),
+              ...(query?.docImage && { docImage: query.docImage }),
+            })}`,
+          }}
           onClick={() => {
             setSelectedLink(query.queryString);
             updateIprModal();
@@ -123,6 +140,8 @@ SavedQueryRow.propTypes = {
     queryString: PropTypes.string.isRequired,
     resultCount: PropTypes.number.isRequired,
     createdAt: PropTypes.string.isRequired,
+    imageName: PropTypes.string.isRequired,
+    docImage: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
   selectedWorkStream: PropTypes.number.isRequired,
