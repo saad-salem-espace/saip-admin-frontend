@@ -20,7 +20,7 @@ const parseQuery = (fields, imageName) => {
       identifier: value.identifier.identiferStrId,
       condition: value.condition.optionParserName,
       data: ((typeof value.data === 'string' || value.data instanceof String) ? value.data.trim() : value.data),
-      operator: index === 0 ? value.operator : '',
+      operator: index > 0 ? value.operator : '',
     });
   });
 
