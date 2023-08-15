@@ -153,6 +153,8 @@ function SearchResults({ showFocusArea }) {
     enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
     documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber,
     fav: isQuerySaved,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
 
   const saveQueryParams = auth.isAuthenticated ? {
@@ -163,6 +165,8 @@ function SearchResults({ showFocusArea }) {
     workstreamKey: 'workStreamId',
     documentId: null,
     fav: true,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   } : {
     workstreamId: searchParams.get('workstreamId'),
     queryString: searchParams.get('q'),
@@ -171,6 +175,8 @@ function SearchResults({ showFocusArea }) {
     workstreamKey: 'workstreamId',
     documentId: null,
     fav: true,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
 
   const sortByOptionsPatent = [
