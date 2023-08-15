@@ -1,0 +1,13 @@
+{
+  "myQueries": "محفوظات البحث",
+  "query": "الاستعلام",
+  "date": "التاريخ",
+  "resultsFound": "النتائج",
+  "actions": "الإجراءات",
+  "deleteQuery": "مسح محفوظ البحث",
+  "confirmDeleteQuery": "هل انت متأكد من مسح محفوظ البحث؟",
+  "delete": "مسح",
+  "queryDeleted": "تم مسح محفوظ البحث",
+  "deleteFailedTitle": "لم يتم مسح محفوظ البحث.",
+  "deleteFailedText": ".برجاء المحاولة مرة أخرى"
+}

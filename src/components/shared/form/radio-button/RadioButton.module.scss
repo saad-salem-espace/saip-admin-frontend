@@ -1,0 +1,32 @@
+@import "../../../../assets/styles/utilities/variables";
+
+.customRadio {
+  border: $border-width solid var(--bs-gray-400);
+  display: inline-block;
+  padding: 7px 8px;
+  border-radius: $border-radius;
+  label:hover {
+    cursor: pointer;
+  }
+  html[dir="ltr"] & {
+    margin-left: 16px;
+  }
+  html[dir="rtl"] & {
+    margin-right: 16px;
+  }
+  input {
+    display: none;
+  }
+
+  label {
+    font-size: $font-size-sm;
+    color: var(--bs-gray-700);
+    padding: 4px 10px;
+  }
+
+  .checked {
+    background-color: var(--bs-primary);
+    border-radius: $border-radius;
+    color: var(--bs-white);
+  }
+}

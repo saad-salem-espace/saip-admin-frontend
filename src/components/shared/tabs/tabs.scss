@@ -1,0 +1,63 @@
+@import"../../../assets/styles/utilities/variables";
+
+.tabs{
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+  .btn {
+    background-color: transparent;
+  }
+  &.v1 {
+    border-color: var(--bs-primary);
+    .btn {
+      border-radius: $border-radius-lg $border-radius-lg 0 0 !important;
+      border:0;
+      color: var(--bs-gray) !important;
+      padding: 1rem;
+      &.active {
+        background-color: var(--bs-primary);
+        color: $white !important;
+      }
+
+      &:hover, &:focus, &:active {
+        background-color: transparent;
+        color: var(--bs-gray) !important;
+
+        &.active {
+          background-color: var(--bs-primary);
+          color: var(--bs-white) !important;
+        }
+      }
+    }
+  }
+  &.v2 {
+    border-color: var(--bs-gray-300);
+    .btn {
+      border-width: 0 0 3px 0;
+      border-color: transparent;
+      border-radius: 0;
+      margin-bottom: -3px;
+      color: var(--bs-gray);
+      font-family: $font-regular;
+      font-size: $font-size-base;
+      padding-top: .5rem;
+padding-bottom:  .5rem;
+      padding-left: 1rem;
+padding-right: 1rem;
+      &.active {
+        background: transparent;
+        color: var(--bs-primary) !important;
+        border-color: var(--bs-primary) !important;
+      }
+      &:hover, &:focus, &:active {
+        background-color: transparent;
+        color: var(--bs-gray) !important;
+
+        &.active {
+          background: transparent;
+          color: var(--bs-primary) !important;
+          border-color: var(--bs-primary);
+        }
+      }
+    }
+  }
+}

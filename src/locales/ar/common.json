@@ -1,0 +1,22 @@
+{
+  "datePicker": {
+    "singleValueMessage": "سيتم إعتبار أول تاريخ فقط في عملية الاستعلام"
+  },
+  "ago": "منذ",
+  "days": "ايام",
+  "gotIt": "حسناً!",
+  "floatWidget": {
+    "userSurvey": {
+      "widgetTitle": " شاركنا تجربتك في خدمة البحث",
+      "widgetContent": "مع منصة بحث IP.",
+      "widgetActionText": "إبدأ",
+      "widgetAction": "https://surveys.saip.gov.sa/index.php/982283?lang=ar"
+    }
+  },
+  "register": "سجل",
+  "limitReached": {
+    "login_now": "تسجيل الدخول",
+    "login_now_msg": "لقد وصلت إلى الحدود المسموح بها للمستخدم الضيف. تأكد من تسجيل الدخول للحصول على الحدود النهائية."
+  },
+  "loadMore": "عر ض المزيد"
+}

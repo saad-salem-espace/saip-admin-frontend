@@ -1,0 +1,19 @@
+@import "../../../assets/styles/utilities/variables";
+
+.modal-alert {
+  svg {
+    width: 100%;
+  }
+}
+
+.warning {
+  svg {
+    color: var(--bs-secondary-tangerine);
+  }
+}
+
+.danger {
+  svg {
+    color: var(--bs-danger-dark);
+  }
+}

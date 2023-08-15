@@ -1,0 +1,284 @@
+@import '../../../../assets/styles/utilities/variables';
+@import "~bootstrap/scss/mixins";
+
+button.searchIcon {
+  right: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 26px 24px;
+  font-size: 21px;
+  color: $white;
+  border-radius: 0 $border-radius $border-radius 0;
+  background-color: var(--bs-primary);
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: var(--bs-primary) !important;
+    color: var(--bs-white) !important;
+  }
+
+  html[dir="rtl"] & {
+    left: 0;
+    right: auto;
+    border-radius: $border-radius 0 0 $border-radius;
+  }
+}
+
+.clearIcon {
+  color: $gray;
+  position: absolute;
+  right: 85px;
+  top: 33px;
+  font-size: 20px;
+
+  html[dir="rtl"] & {
+    left: 85px;
+    right: auto;
+  }
+}
+
+////smSearch
+.smSearch {
+  input {
+    height: 59px !important;
+
+    html[dir="ltr"] & {
+      padding-right: 180px;
+    }
+
+    html[dir="rtl"] & {
+      padding-left: 180px;
+      padding-right: 20px !important;
+    }
+  }
+
+  .clearIcon {
+    top: 16px;
+  }
+
+  .searchIcon {
+    padding: 12px 24px;
+    height: 59px;
+  }
+}
+
+//// lgSearch
+.lgSearch {
+  height: 87px !important;
+}
+
+//// searchWithSibling
+.searchWithSibling input {
+  border-radius: $border-radius $border-radius;
+
+  @include media-breakpoint-up(xl) {
+    border-left: 0 !important;
+    border-radius: 0 $border-radius $border-radius 0;
+
+    html[dir="ltr"] & {
+      padding-right: 190px;
+      padding-left: 10px;
+
+    }
+
+    html[dir="rtl"] & {
+      border-right: 0 !important;
+      border-radius: $border-radius 0 0 $border-radius;
+      padding-left: 190px;
+      padding-right: 10px;
+    }
+  }
+
+  @include media-breakpoint-down(xl) {
+    html[dir="ltr"] & {
+      padding-right: 190px !important;
+      padding-left: 20px;
+    }
+
+    html[dir="rtl"] & {
+      padding-left: 190px;
+      padding-right: 20px;
+    }
+  }
+}
+
+.searchResultsView {
+
+  .imgUploaded {
+    &.searchInputWrapper {
+      @include media-breakpoint-up(md) {
+        input {
+
+          html[dir="ltr"] & {
+            padding-left: 100px !important;
+            padding-right: 180px !important;
+          }
+
+          html[dir="rtl"] & {
+            padding-right: 90px !important;
+            padding-left: 180px !important;
+          }
+        }
+      }
+
+      @include media-breakpoint-down(md) {
+        input {
+
+          html[dir="ltr"] & {
+            padding-left: 90px;
+            padding-right: 180px;
+          }
+
+          html[dir="rtl"] & {
+            padding-right: 90px !important;
+            padding-left: 180px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.imgUploaded {
+  &.searchInputWrapper {
+    @include media-breakpoint-up(md) {
+      input {
+
+        html[dir="ltr"] & {
+          padding-left: 130px !important;
+          padding-right: 180px !important;
+        }
+
+        html[dir="rtl"] & {
+          padding-right: 110px !important;
+          padding-left: 180px !important;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      input {
+
+        html[dir="ltr"] & {
+          padding-left: 130px !important;
+          padding-right: 180px !important;
+        }
+
+        html[dir="rtl"] & {
+          padding-right: 110px !important;
+          padding-left: 180px !important;
+        }
+      }
+    }
+  }
+}
+
+.imgUploadedResultView {
+  &.searchWithImage {
+    @include media-breakpoint-up(md) {
+      input {
+        padding-left: 120px;
+
+        html[dir="rtl"] & {
+          padding-right: 120px;
+          padding-left: auto;
+        }
+      }
+    }
+  }
+}
+
+.searchWithImage {
+  .clearIcon {
+    html[dir="ltr"] & {
+      right: 175px;
+    }
+
+    html[dir="rtl"] & {
+      left: 175px;
+    }
+  }
+}
+
+///// others
+.uploadIcon {
+  position: absolute;
+  top: 34px;
+  right: 94px;
+  &:hover, &:focus, &:active {
+    .icon-camera {
+      color:  var(--bs-primary);
+    }
+  }
+  html[dir="rtl"] & {
+    right: auto;
+    left: 94px;
+  }
+}
+
+.mic {
+  position: absolute;
+  top: 34px;
+  right: 140px;
+  cursor: pointer;
+  color:  var(--bs-gray);
+  &:hover, &:active, &:focus, :focus-visible {
+    color:  var(--bs-primary);
+  }
+  html[dir="rtl"] & {
+    right: auto;
+    left: 140px;
+  }
+}
+
+.smSearch {
+  .uploadIcon {
+    top: 17px;
+
+    html[dir="ltr"] & {
+      right: 90px;
+    }
+
+    html[dir="rtl"] & {
+      left: 90px;
+    }
+  }
+
+  .mic {
+    position: absolute;
+    top: 18px;
+    right: 131px;
+
+    html[dir="rtl"] & {
+      right: auto;
+      left: 140px;
+    }
+  }
+
+  &.searchWithImage {
+    .clearIcon {
+      top: 16px;
+
+      html[dir="ltr"] & {
+        right: 171px;
+      }
+
+      html[dir="rtl"] & {
+        left: 190px;
+      }
+    }
+  }
+}
+
+.searchResultsView.advanced .clearIcon {
+
+  html[dir="ltr"] & {
+    right: 138px;
+  }
+
+  html[dir="rtl"] & {
+    left: 141px;
+  }
+}

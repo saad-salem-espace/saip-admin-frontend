@@ -1,0 +1,16 @@
+@import "../../../../assets/styles/utilities/variables";
+
+.result-card {
+  &:hover, &.active {
+    background-color: var(--bs-primary-01);
+  }
+}
+
+.patent-img {
+  width: 84px;
+  height: 111px;
+
+  img {
+    width:  84px;
+  }
+}

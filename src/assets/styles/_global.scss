@@ -1,0 +1,67 @@
+@import "../../assets/styles/utilities/variables";
+@import "../../assets/styles/utilities/mixin";
+
+.md-text {
+  font-size: $font-size-base;
+}
+
+.sm-text {
+  font-size: $font-size-sm;
+}
+
+.hr {
+  border: $border-width solid $gray;
+}
+
+.text-underline {
+  text-decoration: underline
+}
+
+.app {
+  padding-top:80px;
+}
+
+.italicText {
+  font-style: italic;
+}
+
+.disable-highlight {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container-fluid {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.workStreamResults {
+  .fixed-panel-scrolled.search-result {
+    z-index: 1;
+    html[dir="rtl"] & {
+      padding-left: 1rem;
+    }
+  }
+  .fixed-panel-scrolled {
+    @include scrollbar;
+    height: 60vh;
+    overflow-y: auto;
+  }
+}
+
+* {
+  transition: all 0.1s ease-in-out;
+}
+
+.min-h-90 {
+  min-height: 90vh;
+  @media screen and (max-width: 1420px),
+  screen and (max-height: 550px) {
+    min-height: 65vw;
+  }
+}
+
+.small-icon {
+  font-size: 5px;
+}

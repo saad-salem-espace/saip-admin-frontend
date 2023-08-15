@@ -1,0 +1,13 @@
+{
+  "myQueries": "My queries",
+  "query": "Query",
+  "date": "Date",
+  "resultsFound": "Results found",
+  "actions": "Actions",
+  "deleteQuery": "Delete query",
+  "confirmDeleteQuery": "Are you sure you want to delete this query ?",
+  "delete": "Delete",
+  "queryDeleted": "The query is deleted!",
+  "deleteFailedTitle": "Couldn't delete the query.",
+  "deleteFailedText": "Something went wrong!, please try again later."
+}

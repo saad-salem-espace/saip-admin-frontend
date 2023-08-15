@@ -1,1 +1,4 @@
- pages/_app.jsx
+src/reportWebVitals.js
+src/**/__mocks__/*
+/build
+public/assets/**

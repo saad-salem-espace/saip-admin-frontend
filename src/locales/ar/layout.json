@@ -1,0 +1,39 @@
+{
+  "head": {
+    "title": "الهيئة السعودية للملكية الفكرية"
+  },
+  "navbar": {
+    "login": "تسجيل الدخول",
+    "logOut": "تسجيل الخروج",
+    "signup": "حساب جديد",
+    "recentSearch": "عمليات البحث السابقة",
+    "dashboard": "لوحة التحكم",
+    "myBookmarks": "محفوظات النتائج",
+    "savedQueries": "الاستعلامات المحفوظة",
+    "myQueries": "محفوظات البحث",
+    "myActivity": "نشاطاتي",
+    "myArchives": "المحفوظات",
+    "help": "الدليل الارشادي",
+    "settings": "الاعدادات",
+    "ipSearch": "منصة البحث",
+    "english": "الإنجليزية",
+    "arabic": "العربية",
+    "hightContrast": "تباين عالي",
+    "notifications": {
+      "headline": "إشعارات",
+      "markAllAsRead": "وضع علامة علي الكل كمفروء",
+      "aNewDocumentWith": "مستند جديد برقم إيداع ",
+      "isAssignedToYou": " تم تعيينة إليك ",
+      "isNoLongerAssignedToYou": " لم يعد مسند لك."
+    },
+    "viewAllHistory": "عرض كل السجلات",
+    "noSearchHistory": "لم تقم بالبحث حتى الآن"
+  },
+  "footer": {
+    "copyright": "جميع الحقوق محفوظة للهيئة السعودية للملكية الفكرية © ",
+    "links": {
+      "terms": "الأحكام والشروط",
+      "policy": "سياسة الاستخدام"
+    }
+  }
+}

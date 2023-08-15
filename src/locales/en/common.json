@@ -1,0 +1,22 @@
+{
+  "datePicker": {
+    "singleValueMessage": "Only the first date will be considered in the search query"
+  },
+  "ago": "Ago",
+  "days": "Days",
+  "gotIt": "Got it!",
+  "floatWidget": {
+    "userSurvey": {
+      "widgetTitle": "Share your search experience",
+      "widgetContent": "with the IP Search platform.",
+      "widgetActionText": "Start",
+      "widgetAction": "https://surveys.saip.gov.sa/index.php/982283?lang=en"
+    }
+  },
+  "register": "Register",
+  "limitReached": {
+    "login_now": "Login now",
+    "login_now_msg": "You have reached the allowed limits for the guest user. Make sure to login to have the ultimate limits"
+  },
+  "loadMore": "Load more"
+}

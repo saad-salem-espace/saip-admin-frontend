@@ -1,0 +1,41 @@
+@import "../../../../assets/styles/utilities/variables";
+
+.notes-wrapper {
+  overflow-y: auto;
+  position: relative;
+  height: calc(100vh - 677px);
+}
+
+.bottom-section {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: $white;
+}
+
+.dashboard-notes {
+  background-color: var(--bs-white);
+  position: absolute;
+  bottom: 0;
+}
+
+.notes-editor-container {
+  height: calc(100% - 208px);
+}
+
+.notes-tab {
+  height: calc(100vh - 400px);
+}
+
+.expand-view {
+  .notes-tab {
+    height: calc(100vh - 212px);
+  }
+  .notes-wrapper {
+    height: calc(100% - 229px);
+  }
+}
+
+.note-view {
+  background-color: var(--bs-white);
+}

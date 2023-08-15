@@ -1,0 +1,263 @@
+{
+  "search": "بحث",
+  "priority": "أولوية {{value}}",
+  "filed": "مودع {{value}}",
+  "published": "منشور {{value}}",
+  "searchNote": "البحث ب <0>{{searchKeywords}}، </0> نتج عنه <0>{{resultsCount}}</0> نتيجة.",
+  "searchSpecificProperty": "محرك بحث الملكية الفكرية",
+  "chooseSpecificProperty": "اختر مجال البحث",
+  "patents": "براءات الإختراع",
+  "searchFields": "مجالات البحث",
+  "typeHere": " كلمات البحث",
+  "allowSynonyms": "المرادفات",
+  "register": "تسجيل",
+  "applicants": "مقدم الطلب",
+  "inventors": "المخترعون",
+  "classifications": "تصنيفات",
+  "ipc": "التصنيف الدولي للبراءات",
+  "cpc": "CPC",
+  "priorities": "أولوية",
+  "application": "طلب",
+  "publication": "نشر",
+  "internationalNumbers": "الأرقام الدولية",
+  "viewSection": "قسم",
+  "images": "الرسومات",
+  "advancedSearch": "بحث متقدم",
+  "searchQuery": "استعلام",
+  "filters": "منقيات",
+  "analytics": "تحليل البيانات",
+  "addSearchField": "أضف مصطلح",
+  "clear": "مسح",
+  "apply": "بحث",
+  "condition": "محدد",
+  "criteria": "معايير",
+  "detailed": "مفصل",
+  "summary": "ملخص",
+  "compact": "محدد",
+  "view": "عرض ",
+  "operators": {
+    "and": "و",
+    "or": "أو",
+    "not": "باستثناء"
+  },
+  "identifiers": {
+    "image": "صورة",
+    "similarDoc": "مشابه"
+  },
+  "abstract": "الملخص",
+  "publicationCountry": "بلد النشر",
+  "clearAll": "مسح الكل",
+  "emptyStateMsg": "لا يوجد نتائج بحث متاحة لمدخلات البحث",
+  "emptyStateTitle": "لم يتم العثور على نتائج",
+  "browseFiles": "تصفح الملفات",
+  "dragDrop": "إسحب الملف هنا!",
+  "imgFormats": "الامتدادات المتاحة لإجراء عملية البحث: .jpeg .png .tiff .jpg .gif  <0> او </0>",
+  "validationErrors": {
+    "imgFormats": "إمتداد غير مدعوم. الامتدادات المتاحة لإجراء عملية البحث: .jpeg .png .tiff .jpg .gif",
+    "maxSize": "حجم الصورة يتعدى الحجم المسموح. يمكنك رفع صورة حتى حجم ١٠ ميجابايت.",
+    "maxNumber": "متاح البحث بصورة واحدة فقط.",
+    "empty": "يجب ادخال مصطلحات للبحث.",
+    "wildcards": "خطأ بالمدخلات. لا يمكن استخدام هذه الرموز في مصطلح بحث واحد"
+  },
+  "searchFieldValidationMsg": "لا يمكن إضافة مجالات بحث أخرى",
+  "SwitchToAdvancedSearch": "بحث متقدم",
+  "trademarks": {
+    "markNameEN": "اسم العلامة (EN)",
+    "markNameAR": "اسم العلامة (AR)",
+    "mark": "العلامة",
+    "markType": "نوع العلامة",
+    "markStatus": "حالة العلامة",
+    "markDescription": "وصف العلامة",
+    "officeActions": {
+      "officeAction": "الإجراءات",
+      "dateTime": "تاريخ الإجراء",
+      "examinerName": "اسم الفاحص",
+      "examinerDetails": "بيانات الفاحص"
+    },
+    "goodsServices": {
+      "niceClassification": "تصنيف نيس",
+      "goodsServices": "الوصف"
+    },
+    "figurativeClassification": {
+      "viennaCode": "كود فيينا",
+      "description": "الوصف"
+    },
+    "exhibition": {
+      "exhibitionName": "اسم المعرض",
+      "exhibitionDate": "تاريخ المعرض",
+      "exhibitionDetails": "تفاصيل المعرض"
+    },
+    "priorities": {
+      "priorityDate": "تاريخ الأسبقية",
+      "priorityNumber": "رقم الأسبقية",
+      "priorityCountry": "دولة الأسبقية"
+    },
+    "similarImage": "ابحث عن العلامات التجارية ذات الصور المشابهة"
+  },
+  "ipr": {
+    "bibliographic": "البيانات البيبلوغرافية",
+    "mark": "العلامة",
+    "description": "الوصف",
+    "legalStatus": "الحالة",
+    "applicantDetails": "بيانات مقدم الطلب",
+    "ownerDetails": "بيانات المالك",
+    "representativeDetails": "بيانات الوكلاء",
+    "goodsServices": "الخدمات والمنتجات",
+    "figurativeClassification": "التصنيف",
+    "exhibitionDetails": "بيانات المعرض",
+    "priorities": "الأسبقية",
+    "officeActions": "الإجراءات",
+    "countryCode": "كود البلد",
+    "city": "المدينة",
+    "email": "البريد الإلكتروني",
+    "nationality": "الجنسية",
+    "owners": "الملاك",
+    "applicants": "مقدم الطلب",
+    "representatives": "الوكلاء",
+    "registrationNumber": "رقم التسجيل",
+    "registrationDate": "تاريخ التسجيل",
+    "publicationNumber": "رقم النشر",
+    "publicationDate": "تاريخ النشر",
+    "certificateGrantDate": "تاريخ منح الوثيقة",
+    "filingNumber": "رقم الطلب",
+    "filingDate": "تاريخ الإيداع",
+    "registered": "مسجل {{value}}",
+    "published": "منشور {{value}}",
+    "authors": "المؤلفون",
+    "earliestPriorityDate": "تاريخ الأسبقية",
+    "earliestPriorityNumber": "رقم الأسبقية",
+    "legal": {
+      "statusCode": "كود الحالة",
+      "status": "الحالة",
+      "statusDate": "تاريج الحالة",
+      "effectiveDate": "التاريخ الفعلي",
+      "notes": "ملاحظات"
+    },
+    "applicant": {
+      "applicantName": "اسم مقدم الطلب",
+      "applicantDetails": "بيانات مقدم الطلب"
+    },
+    "owner": {
+      "ownerName": "اسم المالك",
+      "ownerDetails": "بيانات المالك"
+    },
+    "representative": {
+      "representativeName": "اسم الوكيل",
+      "representativeDetails": "بيانات الوكيل"
+    },
+    "drawings": "الرسومات",
+    "originalDocument": "الوثائق"
+  },
+  "patent": {
+    "claims": "مطالب الحماية",
+    "citations": "وثائق البراءات ذات الصلة",
+    "examiners": "الفاحص",
+    "drawings": "الرسومات",
+    "applicants": "المودعون ",
+    "publicationNumber": "رقم النشر",
+    "publicationTitle": "عنوان النشر",
+    "publicationDate": "تاريخ النشر",
+    "applicationTitle": "عنوان الطلب",
+    "citation": {
+      "type": "النوع",
+      "citationOrigin": "بلد وثائق البراءات ذات الصلة",
+      "earliestPriorityDate": "تاريخ الأسبقية"
+    },
+    "inventors": {
+      "inventorName": "اسم المخترع",
+      "inventorDetails": "بيانات المخترع"
+    },
+    "patentFamility": {
+      "patentFamility": "أسرة البراءات",
+      "applicationNumber": "رقم الطلب"
+    }
+  },
+  "industrialDesign": {
+    "indicationDesign": "دلالة التصميم",
+    "designerDetails": "بيانات المصمم",
+    "designerName": "اسم المصمم",
+    "description": "الوصف",
+    "locarnoClassification": "تصنيف لوكارنو",
+    "designStatus": "حالة التصميم",
+    "designTitleAr": "عنوان التصميم (AR)",
+    "designTitleEn": "عنوان التصميم (EN)",
+    "designDescription": "وصف التصميم",
+    "designers": "  المصممين"
+  },
+  "sortBy": "الترتيب ب",
+  "publicationDateAsc": "تاريخ النشر تصاعديًا",
+  "publicationDateDesc": "تاريخ النشر تنازليًا",
+  "priorityDateAsc": "تاريخ الأسبقية تصاعديًا",
+  "priorityDateDesc": "تاريخ الأسبقية تنازليًا",
+  "mostRelevant": "الأكثر توافقا",
+  "filingDateAsc": "تاريخ الإيداع تصاعديًا",
+  "filingDateDesc": "تاريخ الإيداع تنازليًا",
+  "saveSearchQuery": "حفظ محفوظات البحث",
+  "querySaved": ".حفظ محفوظات البحث بنجاح",
+  "savedQueryMsg": "يمكنك الوصول من خلال الدخول على <0>محفوظات البحث</0>",
+  "savedQueryMsgForDoc": "تم الحفظ بنجاح",
+  "couldnotSave": "لا يمكن حفظ محفوظات البحث.",
+  "failerMsg": "حدث خطأ ما! برجاء المحاولة لاحقًا.",
+  "findSimilar": "البحث عن مشابه",
+  "download": "تحميل",
+  "addtoSavedQueries": "أضافه الى محفوظات البحث",
+  "addtoFocusArea": "أضافه الى مساحة التركيز",
+  "noDocument": "عذرًا! لا يوجد مستند متاح للتنزيل",
+  "bookmarked": "تم الاضافة الى محفوظات النتائج",
+  "bookmarks": "يمكنك الوصول من خلال الدخول على <0>محفوظات النتائج</0>",
+  "alreadyBookmarked": "الملف من ضمن محفوظات النتائج",
+  "couldnotSaveBookmark": "لم تتم الاضافة لمحفوظات النتائج",
+  "addBookmarks": "أضف إلى محفوظات النتائج",
+  "selectedItems": "تم اختيار {{count}}",
+  "export": {
+    "title": "صدر",
+    "exportFileType": "ملف {{fileType}}",
+    "workstreams": {
+      "patent": "تصدير براءات الإختراع",
+      "trademark": "تصدير العلامات التجارية",
+      "copyrights": "تصدير حق المؤلف",
+      "Industrial Design": "تصدير النماذج الصناعية",
+      "Plant Varieties": "تصدير الأصناف النباتية",
+      "integratedCircuits": "تصدير الدوائر المتكاملة",
+      "Decision": "تصدير القرارات",
+      "IC Layout": "تصدير الدارات المتكاملة"
+    }
+  },
+  "decisions": {
+    "decisionValue": "قرار {{value}}",
+    "date": "التاريخ {{value}}",
+    "decisionNumber": "رقم القرار",
+    "decisionCategory": "فئة القرار",
+    "type": "النوع",
+    "decisionDate": "تاريخ القرار",
+    "decision": "القرار",
+    "domain": "المجال",
+    "keywords": "الكلمات الدالة",
+    "decisionBrief": "ملخص القرار",
+    "judgementDecision": "قرارات اللجان",
+    "references": "اﻷسانيد",
+    "failerMsg": "حقائق",
+    "reasons": "أسباب",
+    "decisionDateDesc": "تاريخ القرار تنازليًا",
+    "decisionDateAsc": "تاريخ القرار تصاعديًا",
+    "facts": "الحقائق"
+  },
+  "copyrights": {
+    "grantDateAsc": "تاريخ المنح تصاعديًا",
+    "grantDateDesc": "تاريخ المنح تنازليًا",
+    "granted": "منحت {{value}}",
+    "copyrightsData": "بيانات حقوق النشر",
+    "grantDate": "تاريخ المنح",
+    "claimants": "مقدم الطلب"
+  },
+  "plantVariety": {
+    "title": "العنوان",
+    "classification": "الوصف",
+    "status": "الحالة",
+    "ipOffice": "مكتب IP"
+  },
+  "speech": {
+    "english": "الإنجليزية",
+    "arabic": "العربية"
+  }
+}

@@ -1,0 +1,25 @@
+@import "../../../../../assets/styles/utilities/variables";
+
+.checkmark {
+  height: 24px;
+  width: 24px;
+  border: $border-width solid var(--bs-gray-400);
+  margin-top: 3px;
+  border-radius: $border-radius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox {
+  display: none;
+
+  ~.checkmark {
+    background-color: var(--bs-white);
+  }
+
+  &:checked~.checkmark {
+    background-color: var(--bs-secondary);
+    border-color: var(--bs-primary);
+  }
+}

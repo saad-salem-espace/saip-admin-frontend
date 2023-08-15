@@ -1,0 +1,30 @@
+@import '../../../../assets/styles/utilities/variables';
+@import "~bootstrap/scss/mixins";
+
+.has-value {
+  padding: 32px 16px 9px;
+
+  @include media-breakpoint-down(lg) {
+    padding: 43px 16px 23px
+  }
+}
+
+.input {
+  line-height: 0.1;
+  outline: none;
+  border-radius: $border-radius;
+  height: 100%;
+  background-color: var(--bs-white) !important;
+  padding-left: 16px;
+}
+
+.smInput input {
+  height: 57px;
+  padding:19px 15px 0;
+}
+
+input.error {
+  border-color: var(--bs-danger) !important;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px
+}

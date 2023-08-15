@@ -1,0 +1,35 @@
+@import "../../../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+.search-query-menu {
+  position: absolute;
+  width: 464px;
+  border: $border-width solid $border-color;
+  z-index: 9999999 !important;
+  top: 70px;
+  height: 448px;
+  background-color: $white;
+  overflow-y: auto;
+
+  html[dir="rtl"] & {
+    left: 0;
+  }
+
+  html[dir="ltr"] & {
+    right: 0px;
+  }
+
+  @include media-breakpoint-down(md) {
+    width: 318px;
+    top: 300px;
+  }
+}
+
+.keyword-planner-btn {
+  display: none;
+  position: fixed;
+}
+
+.added .keyword-planner-btn  {
+  display: block;
+}

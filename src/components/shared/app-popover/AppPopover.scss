@@ -1,0 +1,42 @@
+@import "../../../assets/styles/utilities/variables";
+@import "../../../assets/styles/components/popover";
+@import "../../../assets/styles/utilities/mixin";
+
+.btn-view-tip {
+  html[dir="ltr"] & {
+    padding-left: 8px;
+    padding-right: 0;
+  }
+  html[dir="rtl"] & {
+    padding-left: 0;
+    padding-right: 8px;
+  }
+}
+
+
+.app  {
+  &.popover {
+    .title{
+      @include truncate(5);
+    }
+    .fixed-content {
+      &::-webkit-scrollbar{
+        width: 19px;
+        margin-top: 1rem
+        }
+        &::-webkit-scrollbar-track{
+        background: $primary-10;
+        border-left: 5px solid $primary-10;
+        border-right: 5px solid $primary-10;
+        }
+        &::-webkit-scrollbar-thumb {
+        background: #dedede;
+        border-radius: 8px;
+        border-left: 5px solid $primary-10;
+        border-right: 5px solid $primary-10;
+      }
+      overflow-y: auto;
+      max-height: 250px;
+    }
+  }
+}

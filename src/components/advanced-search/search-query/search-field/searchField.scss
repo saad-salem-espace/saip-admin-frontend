@@ -1,0 +1,54 @@
+@import "../../../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+@include media-breakpoint-up(md) {
+
+  .workstream-view {
+    border: $border-width solid var(--bs-gray-400);
+    border-radius: $border-radius;
+    position: relative;
+    padding: 32px 32px 0;
+
+    .search-query-inputs {
+      display: flex;
+      position: relative;
+
+      .fa-trash-can {
+        position: absolute;
+        top: 34px;
+
+        html[dir="rtl"] & {
+          left: 14px;
+        }
+
+        html[dir="ltr"] & {
+          right: 14px;
+        }
+      }
+    }
+
+    .search-fields-condition {
+      width: 60%;
+
+      .search-fields {
+        width: 60%;
+      }
+
+      .search-query-condition {
+        width: 40%;
+
+        html[dir="rtl"] & {
+          margin-left: 8px;
+        }
+
+        html[dir="ltr"] & {
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .search-query-criteria {
+      width: calc(40% - 20px) !important;
+    }
+  }
+}

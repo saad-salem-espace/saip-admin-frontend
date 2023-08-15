@@ -1,0 +1,17 @@
+.searchImgWrapper {
+  height: calc(100% - 42px);
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 140px;
+  }
+}
+
+.title {
+  max-width: calc(100% - 148px);
+}
+
+.checkbox-badge {
+  width: 150px;
+}

@@ -1,0 +1,61 @@
+@import "../../styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+.table.appTable {
+  margin-bottom: 0;
+
+  tr:first-of-type {
+    border-top: $border-width solid $border-color;
+  }
+
+  th {
+    font-family: $font-medium;
+    color: var(--bs-primary-dark);
+    font-size: $font-size-base;
+    background-color: var(--bs-white);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    white-space: nowrap;
+    
+    html[dir="ltr"] & {
+      padding-right: 2rem;
+    }
+    html[dir="rtl"] & {
+      padding-left: 2rem;
+    }
+  }
+
+  td {
+    color: $gray-700;
+    font-size: $font-size-sm;
+    padding-top: 1rem;
+padding-bottom: 1rem;
+
+    html[dir="rtl"] & {
+      direction: rtl;
+      text-align: right;
+    }
+  }
+
+  tr {
+    background-color: var(--bs-primary-05);
+
+    &:nth-child(2n) {
+      background-color: var(--bs-white);
+    }
+  }
+
+  th,
+  td {
+    &:first-of-type {
+
+      html[dir="rtl"] & {
+        padding-right: 2rem;
+      }
+
+      html[dir="ltr"] & {
+        padding-left: 2rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,258 @@
+@import "../../../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+div[class$="indicatorContainer"] {
+  background-color: var(--bs-gray-200);
+  border-radius: 0 $border-radius $border-radius 0;
+
+  svg {
+    color: var(--bs-gray);
+  }
+}
+
+span[class$="indicatorSeparator"] {
+  display: none;
+}
+
+div[class$="singleValue"] {
+  position: absolute;
+  bottom: 5px;
+  left: 4px;
+  font-size: $font-size-sm;
+
+  html[dir="rtl"] & {
+    left: auto;
+    right: 4px;
+  }
+}
+
+////// selectWithSibling
+.selectWithSibling {
+  @include media-breakpoint-up(xl) {
+    div[class$="Control"] {
+      border-right: 0;
+      border-radius: 5px 0 0 5px;
+
+      html[dir="rtl"] & {
+        border-left: 0;
+        border-right: $border-width solid var(--bs-gray-400);
+        border-radius: 0 5px 5px 0;
+      }
+    }
+  }
+
+  div[class$="IndicatorsContainer"] {
+    background-color: var(--bs-gray-200);
+  }
+}
+
+.css-2jkpo2-option {
+  color:var(--bs-white) !important;
+  background-color: var(--bs-primary) !important;
+  text-transform: capitalize;
+}
+
+////// small select
+.smSelect {
+  div[class$="singleValue"] {
+    bottom: 13px;
+    color: $dark;
+    font-size: $font-size-base;
+  }
+
+  div[class$="container"] {
+    height: 59px;
+
+    >div:first-of-type {
+      height: 59px;
+    }
+  }
+}
+
+///// lg select
+.lgSelect {
+
+  div[class$="container"] {
+    height: 85px;
+
+    >div:first-of-type {
+      height: 87px;
+
+      html[dir="ltr"] & {
+        border-radius: 5px 0 0 5px;
+        border-right: none;
+      }
+
+      html[dir="rtl"] & {
+        border-radius: 0 5px 5px 0;
+        border-left: none;
+      }
+
+      >div:nth-child(2) {
+        background-color: $gray-200;
+      }
+    }
+  }
+
+  input {
+    margin-top: 30px !important;
+    margin-left: 5px !important;
+
+    html[dir="rtl"] & {
+      margin-left: auto !important;
+      margin-right: 5px !important;
+    }
+  }
+
+  div[class$="singleValue"] {
+    bottom: 14px;
+    font-size: $font-size-base;
+  }
+}
+
+////// customSelect
+.customSelect {
+  text-transform: capitalize;
+
+  div[class$="ValueContainer"] {
+    font-family: $font-medium;
+    height: auto;
+
+    html[dir="ltr"] & {
+      padding-left: 0;
+    }
+
+    html[dir="rtl"] & {
+      padding-right: 0;
+    }
+
+    input {
+      color: var(--bs-primary) !important;
+    }
+  }
+
+  div[class$="indicatorContainer"] {
+    background-color: transparent;
+  }
+
+  div[class$="Control"] {
+    border: none;
+  }
+
+  div[class$="singleValue"],
+  input {
+    color: var(--bs-primary);
+    font-size: 24px;
+    bottom: 0;
+    position: relative;
+    margin: 0;
+    font-family: $font-medium;
+    border-bottom: $border-width dashed var(--bs-gray);
+    top: 1px;
+    height: 35px;
+
+    html[dir="ltr"] & {
+      left: 0;
+    }
+
+    html[dir="rtl"] & {
+      right: 0;
+    }
+  }
+
+  div[class$="container"] {
+
+    >div:first-of-type {
+      border: none;
+      background-color: transparent;
+    }
+  }
+}
+
+///// select-2
+.select-2 {
+  div[class$="Control"] {
+    border: none;
+    border-bottom: $border-width solid var(--bs-gray-400);
+    border-radius: 0;
+  }
+
+  div[class$="indicatorContainer"] {
+    background-color: transparent;
+  }
+
+  div[class$="singleValue"] {
+    html[dir="ltr"] & {
+      left: 16px;
+    }
+
+    html[dir="rtl"] & {
+      right: 16px;
+    }
+  }
+
+  input {
+    padding-top: 19px !important;
+  }
+
+  div[class$="ValueContainer"] {
+    height: 61px;
+    padding: 2px 0;
+  }
+
+  div[class$="singleValue"] {
+    bottom: 16px;
+    margin-left: 0;
+  }
+
+  div[class$="indicatorContainer"] {
+    background-color: transparent;
+  }
+
+  div[class$="container"] {
+    padding: 0;
+
+    >div:first-of-type {
+      border-width: 0 0 $border-width;
+      border-radius: 0;
+      height: 63px;
+    }
+  }
+}
+
+///// defaultSelect
+.defaultSelect {
+
+  div[class$="indicatorContainer"] {
+    background-color: transparent;
+  }
+
+  input {
+    font-size: $font-size-sm !important;
+  }
+
+  div[class$="container"] {
+    >div:first-of-type {
+      height: 56px;
+    }
+  }
+
+  div[class$="singleValue"] {
+    bottom: 5px;
+    color: $gray-700;
+    font-size: $font-size-sm;
+  }
+}
+
+//// sm select with inner label
+.smWithLabel {
+  input {
+    margin-top: 20px !important;
+    margin-left: 5px !important;
+
+    html[dir="rtl"] & {
+      margin-right: 5px !important;
+      margin-left: 0 !important;
+    }
+  }
+}

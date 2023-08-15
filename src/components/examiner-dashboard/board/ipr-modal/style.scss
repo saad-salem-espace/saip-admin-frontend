@@ -1,0 +1,45 @@
+@import "../../../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+.full-view {
+  width: 100%;
+
+  .btn-close-wrappper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    button {
+      text-align: left;
+      display: flex;
+      align-items:  flex-end;
+      justify-content: flex-end;
+      margin: 0;
+    }
+  }
+}
+
+.ipr-modal {
+  z-index: 9999 !important;
+
+  .modal-dialog {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  @include media-breakpoint-down(lg) {
+
+    .modal-content,
+    .modal-body {
+      width: 98vw;
+    }
+  }
+}
+
+.expand-icon {
+  html[dir="ltr"] & {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1) !important;
+  }
+}

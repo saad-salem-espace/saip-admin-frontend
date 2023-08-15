@@ -1,0 +1,207 @@
+@import "../styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+
+.search-container{
+  .search-disabled{
+    html[dir="ltr"] & {
+      padding-right: 180px;
+      padding-left: 10px;
+    }
+    html[dir="rtl"] & {
+      padding-left: 180px;
+      padding-right: 10px;
+    }
+  }
+}
+
+.dashedBorder {
+  border: $border-width-md dashed var(--bs-primary);
+}
+
+.uploadImageWrapper {
+  .error.dashedBorder{
+    border-color: var(--bs-danger-dark);
+  }
+
+  .image-item {
+    border: $border-width solid var(--bs-gray-400);
+    border-radius: $border-radius;
+    position: absolute;
+  }
+
+  .imageView {
+    width: 30px;
+    height: 25px;
+    margin: 10px;
+  }
+}
+.advanced-search-home + .rounded {
+  .workStreamView {
+    .image-item {
+      html[dir="ltr"] & {
+        left: 10px !important;
+      }
+      html[dir="rtl"] & {
+        right: 10px !important;
+      }
+    }
+  }
+}
+.advanced-search-result + .rounded {
+  .workStreamView {
+    .image-item {
+      html[dir="ltr"] & {
+        left: 5px
+      }
+      html[dir="rtl"] & {
+        right: 5px;
+      }
+    }
+  }
+}
+
+.advanced-search-result + .rounded {
+  .workStreamView {
+    .image-item {
+      html[dir="ltr"] & {
+        left: 5px
+      }
+      html[dir="rtl"] & {
+        right: 5px;
+      }
+    }
+  }
+}
+.search-box-index {
+  .workStreamView {
+    .imageView {
+      width: 50px;
+      height: 45px;
+
+    }
+    .image-item {
+      top: 140px;
+      @include media-breakpoint-up(md) {
+        top: 140px;
+        html[dir="ltr"] & {
+          left: 10px;
+        }
+        html[dir="rtl"] & {
+          right: 10px;
+        }
+      }
+      @include media-breakpoint-up(lg) {
+        top: 145px;
+
+      }
+      @include media-breakpoint-up(xl) {
+        top: 55px;
+        html[dir="ltr"] & {
+          left: 210px;
+        }
+        html[dir="rtl"] & {
+          right:  210px;
+        }
+      }
+    }
+  }
+}
+
+.workStreamView {
+  &.imgUploaded {
+    .image-item {
+      display: block;
+    }
+  }
+  .image-item {
+    display: none;;
+    top: 3px;
+    html[dir="ltr"] & {
+      left: 17px;
+    }
+    html[dir="rtl"] & {
+      right: 17px;
+    }
+    @include media-breakpoint-up(sm) {
+      top: 92px;
+      html[dir="ltr"] & {
+        left: 16px;
+      }
+      html[dir="rtl"] & {
+        right: 16px;
+      }
+    }
+    @include media-breakpoint-up(md) {
+      top: 93px;
+    }
+    @include media-breakpoint-up(lg) {
+      top: 49px;
+      html[dir="ltr"] & {
+        left: 12.9rem;
+      }
+      html[dir="rtl"] & {
+        right: 12.9rem;
+      }
+    }
+    @include media-breakpoint-up(xl) {
+      top: 4px;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    margin-top: 60px;
+  }
+
+  .dashedBorder {
+    padding: 32px 0;
+  }
+}
+
+.advancedMode{
+  input{
+    @include media-breakpoint-up(md) {
+      padding-left: 150px;
+
+      html[dir="rtl"] & {
+        padding-left: auto;
+        padding-right: 150px;
+      }
+    }
+  }
+
+  .image-item {
+    left: 16px;
+    top: 53px;
+
+    html[dir="rtl"] & {
+      right: 16px;
+      left: auto;
+    }
+
+    @include media-breakpoint-down(sm) {
+      top: 140px;
+      left: 0;
+
+      html[dir="rtl"] & {
+        right: 0;
+        left: auto;
+      }
+    }
+  }
+}
+.search-result-wrapper {
+  .uploadImageWrapper.imgUploaded {
+    height: 59px;
+    margin-top: -59px;
+  }
+}
+
+.handle-different-mobile {
+  @include media-breakpoint-down(md) {
+    margin-top: -560px;
+    position: relative;
+    z-index: 9999;
+    background-color: var(--bs-white);
+  }
+}

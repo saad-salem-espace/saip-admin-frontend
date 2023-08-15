@@ -1,0 +1,240 @@
+{
+  "BibliographicData": {
+    "BrandNameEn": "omnia",
+    "BrandNameAr": "امنيه",
+    "Description": "any text Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description Mark Description",
+    "TrademarkType": "combined",
+    "Mark": "any text",
+    "FilingNumber": "US, 13797521",
+    "RegistrationNumber": "US, 13797521",
+    "ApplicationCountry": "",
+    "IPOffice": "",
+    "ApplicationLanguage": "",
+    "TrademarkLastStatus": "ended",
+    "Applicants": ["name 1", "name 2"],
+    "Owners": ["name 3", "name 4"],
+    "Representatives": ["Representativ 1", "Representative 2"],
+    "FilingDate": "2015-01-20",
+    "RegistrationDate": "2015-01-10",
+    "PublicationNumber": "B2, 08936998",
+    "PublicationDate": "2015-01-12",
+    "NICEClassification": [
+      "H01L21/30",
+      "H01L21/302",
+      "H01L21/324",
+      "H01L21/20",
+      "H01L23/00",
+      "H01L31/0203"
+    ]
+  },
+  "IPCClassification": {
+    "IPC": [
+      "H01L21/30",
+      "H01L21/302",
+      "H01L21/324",
+      "H01L21/20",
+      "H01L23/00",
+      "H01L31/0203"
+    ]
+  },
+  "CPCClassification": {
+    "CPC": [""]
+  },
+  "GoodsAndServices": [
+    {
+      "NICEClassification": "1",
+      "GoodsAndServices": "any text"
+    },
+    {
+      "NICEClassification": "2",
+      "GoodsAndServices": "any text 2"
+    }
+  ],
+  "FigurativeClassification": [
+    {
+      "ViennaCode": "any text",
+      "Description": "any text 2"
+    },
+    {
+      "ViennaCode": "any text",
+      "Description": "any text"
+    }
+  ],
+  "OwnersDetails": [
+    {
+      "OwnerName": "omniaaaaaa",
+      "CountryCode": "000",
+      "Nationality": "nationality",
+      "OwnerDetails": "city"
+    },
+    {
+      "OwnerName": "test",
+      "CountryCode": "8",
+      "Nationality": "nationality",
+      "OwnerDetails": "omnia"
+    }
+  ],
+  "ApplicantsDetails": [
+    {
+      "ApplicantName": "omnia",
+      "CountryCode": "03",
+      "Nationality": "nationality",
+      "ApplicantDetails": "applicant"
+    },
+    {
+      "ApplicantName": "nada",
+      "CountryCode": "03",
+      "Nationality": "nationality",
+      "ApplicantDetails": "applicant"
+    },
+    {
+      "ApplicantName": "nesma",
+      "CountryCode": "03",
+      "Nationality": "nationality",
+      "ApplicantDetails": "applicant"
+    },
+    {
+      "ApplicantName": "omnia",
+      "CountryCode": "03",
+      "Nationality": "nationality",
+      "ApplicantDetails": "applicant"
+    }
+  ],
+  "Publications": [
+    {
+      "PublicationNumber": "B2, 08936998",
+      "PublicationDate": "2015-01-20",
+      "PublicationCounrty": ""
+    },
+    {
+      "PublicationNumber": "B2, 08936998",
+      "PublicationDate": "2015-01-20",
+      "PublicationCounrty": ""
+    },
+    {
+      "PublicationNumber": "B2, 08936998",
+      "PublicationDate": "2015-01-20",
+      "PublicationCounrty": ""
+    }
+  ],
+  "LegalStatus": [
+    {
+      "StatusCode": "hi",
+      "StatusDate": "2015-01-20",
+      "Status": "Status",
+      "EffectiveDate": "2015-01-22",
+      "Notes": "Active"
+    },
+    {
+      "StatusCode": "A2, 08936998",
+      "StatusDate": "2015-01-22",
+      "Status": "In Active",
+      "EffectiveDate": "2015-01-20",
+      "Notes": "Active"
+    },
+    {
+      "StatusCode": "C2, 08936998",
+      "StatusDate": "2015-01-25",
+      "Status": "In Active",
+      "EffectiveDate": "2015-01-20",
+      "Notes": "Active"
+    }
+  ],
+  "Certificates": {
+    "PDFFiles": ["", ""]
+  },
+  "Recordals/LegalEvents": [
+    {
+      "EventDescription": "B2, 08936998",
+      "EventDate": "2015-01-20"
+    },
+    {
+      "EventDescription": "B2, 08936998",
+      "EventDate": "2015-01-20"
+    },
+    {
+      "EventDescription": "B2, 08936998",
+      "EventDate": "2015-01-20"
+    }
+  ],
+  "RepresentativesDetails": [
+    {
+      "RepresentativeName": "omnia yahia",
+      "CountryCode": "01",
+      "Nationality": "nationality",
+      "RepresentativeDetails": "rep"
+    },
+    {
+      "RepresentativeName": "asmaa",
+      "CountryCode": "00",
+      "Nationality": "",
+      "RepresentativeDetails": "rep"
+    },
+    {
+      "RepresentativeName": "salma",
+      "CountryCode": "",
+      "Nationality": "",
+      "RepresentativeDetails": "rep"
+    },
+    {
+      "RepresentativeName": "yasmin",
+      "CountryCode": "",
+      "Nationality": "",
+      "RepresentativeDetails": "rep"
+    }
+  ],
+  "ExhibitionInformation": [
+    {
+      "ExhibitionName": "name 1",
+      "ExihibitionDate": "1/10",
+      "ExibitionDetails": ["country 1", "city 1"]
+    },
+    {
+      "ExhibitionName": "name 2",
+      "ExihibitionDate": "2/10",
+      "ExibitionDetails": ["country 2", "city 2"]
+    },
+    {
+      "ExhibitionName": "name 3",
+      "ExihibitionDate": "1/50",
+      "ExibitionDetails": ["country 3", "city 3"]
+    }
+  ],
+  "Priorities": [
+    {
+      "PriorityNumber": "1",
+      "PriorityDate": "1/2",
+      "PriorityCountry": "country"
+    },
+    {
+      "PriorityNumber": "2",
+      "PriorityDate": "30",
+      "PriorityCountry": "counrty 2"
+    },
+    {
+      "PriorityNumber": "3",
+      "PriorityDate": "8/2",
+      "PriorityCountry": ""
+    }
+  ],
+  "OfficeActions": [
+    {
+      "OfficeAction": "action 1",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
+    },
+    {
+      "OfficeAction": "action 2",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
+    },
+    {
+      "OfficeAction": "action 3",
+      "OfficeActionDateTime": "20/30/22 - 10 am",
+      "ExaminerName": "omnia",
+      "ExaminerDetails": "hhhhh"
+    }
+  ]
+}

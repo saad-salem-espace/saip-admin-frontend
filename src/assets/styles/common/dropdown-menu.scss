@@ -1,0 +1,50 @@
+@import "../utilities/variables";
+
+.default-menu {
+  a {
+    color: $gray;
+    font-size: $font-size-sm;
+    padding: .5rem 1rem;
+
+    &:hover {
+      color: var(--bs-gray);
+    }
+
+    &:active {
+      color: var(--bs-white);
+    }
+  }
+
+  .dropdown-menu {
+    border: none;
+    box-shadow: $box-shadow;
+    padding: 0;
+  }
+
+  .dropdown-toggle {
+    border: none;
+    padding-top: 0.25rem;
+padding-bottom: 0.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: $gray;
+    background-color: transparent;
+
+    &::before {
+      content: "\f142";
+      font-family: FontAwesomeSolid;
+    }
+
+    &.show,
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: var(--bs-primary-10) !important;
+      color: var(--bs-primary) !important;
+    }
+
+    &::after {
+      display: none;
+    }
+  }
+}

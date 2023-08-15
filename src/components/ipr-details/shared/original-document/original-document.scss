@@ -1,0 +1,11 @@
+@import "../../../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+.pdf-viewer-wrapper {
+  overflow-x: hidden;
+	.border-end {
+    @include media-breakpoint-down(lg) {
+			border: none !important;
+		}
+	}
+}

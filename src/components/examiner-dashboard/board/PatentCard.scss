@@ -1,0 +1,22 @@
+@import "../../../assets/styles/utilities/variables";
+@import "../../../assets/styles/utilities/mixin";
+
+.patent-card {
+  .name-card {
+    @include truncate(2);
+  }
+  &.active , &:hover{
+    background: var(--bs-primary-01);
+  }
+  .icon-wrapper{
+    visibility: hidden;
+    width: 30px;
+    transition: all 0.1s ease-in-out;
+  }
+  &:hover {
+    .icon-wrapper{
+      visibility: visible;
+      transition: all 0.1s ease-in-out;
+    }
+  }
+}

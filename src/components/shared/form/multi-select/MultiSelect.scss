@@ -1,0 +1,164 @@
+@import "../../../../assets/styles/utilities/variables";
+
+.multiSelect {
+  position: relative;
+
+  div[id^="react-select"]  input {
+    display: none;
+  }
+
+  >div {
+    height: 100%;
+    width: 100%;
+  }
+
+  button {
+    height: 100%;
+    width: 100%;
+    box-shadow: none;
+    border: $border-width solid var(--bs-gray-400);
+    border-radius: $border-radius;
+    padding: 1rem;
+
+    +div {
+      z-index: 10 !important;
+    }
+
+    .css-1v99tuv {
+      color: $gray;
+      font-family: $font-regular;
+      font-size: $font-size-sm;
+    }
+
+    +div {
+      border: $border-width solid var(--bs-gray-400) !important;
+      padding: 1rem;
+      width: 100%;
+
+      [class$="control"] {
+        height: 56px;
+        border-color: var(--bs-gray-400);
+        margin-bottom: 0;
+        cursor: text;
+        box-shadow: none;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        svg {
+          color: var(--bs-gray);
+        }
+      }
+
+      [class$="placeholder"] {
+        color: var(--bs-gray);
+        font-size: $font-size-sm;
+      }
+
+      .css-ik6y5r {
+        box-shadow: none;
+      }
+
+      [class$="-option"] {
+        color: $gray-700;
+        font-family: $font-regular;
+      }
+
+
+
+      .css-1vr111p-option {
+        background-color: transparent;
+
+        &:hover {
+          background-color: var(--bs-gray-200);
+        }
+
+        &::before {
+          content: "\f0c8";
+          font-family: FontAwesomeRegular;
+          font-size: 22px;
+          margin-right: 10px;
+          color: $gray-400;
+
+          html[dir="rtl"] & {
+            margin-right: 0;
+            margin-left: 10px;
+          }
+        }
+      }
+
+      .css-1qprcsu-option {
+        background-color: transparent;
+
+        &:hover {
+          background-color: var(--bs-gray-200);
+        }
+
+        &::before {
+          content: "\f14a";
+          font-family: FontAwesomeSolid;
+          color: var(--bs-secondary);
+          font-size: 22px;
+          margin-right: 10px;
+
+          html[dir="rtl"] & {
+            margin-right: 0;
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  &.smMultiSelect {
+    height: 56px;
+  }
+
+  .css-1gpjby2 {
+    svg {
+      color: $gray;
+    }
+  }
+
+  &.has-value {
+    .css-1v99tuv {
+      color: $gray-700;
+      margin-top: 1rem;
+    }
+  }
+
+  .label {
+    z-index: 99;
+    color: $gray;
+    font-size: $font-size-xs;
+    top: 8px;
+    left: 16px;
+    font-family: $font-regular;
+
+    html[dir="rtl"] & {
+      left: auto;
+      right: 16px;
+    }
+  }
+
+  &.error {
+    button {
+      border: $border-width solid var(--bs-danger);
+
+      &::after {
+        content: "\f06a";
+        font-family: FontAwesomeSolid;
+        color: var(--bs-danger);
+        position: absolute;
+        right: 41px;
+        top: 19px;
+
+        html[dir="rtl"] & {
+          left: 41px;
+          right: auto;
+        }
+      }
+    }
+  }
+}

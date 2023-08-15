@@ -1,0 +1,28 @@
+@import "../../../assets/styles/utilities/variables";
+
+.searchFields{
+  width: calc(60% - 20px);
+}
+
+.search-query-condition {
+  width: 40%;
+}
+
+.search-query-wrapper {
+  border-radius: $border-radius-lg;
+
+  &:first-of-type {
+    border-radius: 0 0 $border-radius-lg $border-radius-lg;
+
+  }
+
+  &:not(:first-of-type){
+    .criteria, .dateWrapper, .advancedSearchSelect {
+      width: calc(100% - 26px);
+    }
+  }
+}
+
+.roundedTop0 {
+  border-radius: 0 0 $border-radius-lg $border-radius-lg;
+}

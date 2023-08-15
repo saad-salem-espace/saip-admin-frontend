@@ -1,0 +1,263 @@
+{
+  "search": "Search",
+  "priority": "Priority {{value}}",
+  "filed": "Filed {{value}}",
+  "published": "Published {{value}}",
+  "searchNote": "Your search for <0>{{searchKeywords}}</0> returned <0>{{resultsCount}}</0> results.",
+  "searchSpecificProperty": "Intellectual Property Search Engine",
+  "chooseSpecificProperty": "Choose search field",
+  "patents": "Patents",
+  "searchFields": "Search Fields",
+  "typeHere": "Type here",
+  "allowSynonyms": "Allow synonyms",
+  "register": "Register",
+  "applicants": "Applicants",
+  "inventors": "Inventors",
+  "classifications": "Classifications",
+  "ipc": "IPC",
+  "cpc": "CPC",
+  "priorities": "Priorities",
+  "application": "Application",
+  "publication": "Publication",
+  "internationalNumbers": "International Numbers",
+  "viewSection": "View section",
+  "images": "Images",
+  "advancedSearch": "Advanced Search",
+  "searchQuery": "Search query",
+  "filters": "Filters",
+  "analytics": "Analytics",
+  "addSearchField": "Add Search Field",
+  "clear": "Clear",
+  "apply": "Apply",
+  "condition": "Condition",
+  "criteria": "Criteria",
+  "detailed": "Detailed",
+  "summary": "Summary",
+  "compact": "Compact",
+  "view": "View",
+  "operators": {
+    "and": "AND",
+    "or": "OR",
+    "not": "NOT"
+  },
+  "identifiers": {
+    "image": "Image",
+    "similarDoc": "Similar"
+  },
+  "abstract": "Abstract",
+  "publicationCountry": "Publication Country",
+  "clearAll": "Clear all",
+  "emptyStateMsg": "No search results for the input keywords",
+  "emptyStateTitle": "Your search was not found",
+  "browseFiles": "Browse Files",
+  "dragDrop": "Drag & Drop File Here",
+  "imgFormats": "Only .jpeg .png .tiff .jpg .gif formats supported <0> or </0>",
+  "validationErrors": {
+    "imgFormats": "The upload format is not supported. You can upload .jpeg, .png, .tiff, .jpg, or .gif formats only.",
+    "maxSize": "The image size uploaded exceeds the allowed limit. You can upload an image less than 10 MB.",
+    "maxNumber": "Only a single image search is allowed.",
+    "empty": "Search criteria cannot be empty for any field",
+    "wildcards": "Fuzzy search cannot be at the beginning or middle of the string, or with a wildcard."
+  },
+  "searchFieldValidationMsg": "You have reached the maximum number of search fields",
+  "SwitchToAdvancedSearch": "Switch to advanced search",
+  "trademarks": {
+    "markNameEN": "Mark Name (EN)",
+    "markNameAR": "Mark Name (AR)",
+    "mark": "Mark",
+    "markType": "Mark Type",
+    "markStatus": "Mark Status",
+    "markDescription": "Mark Description",
+    "officeActions": {
+      "officeAction": "Office Action",
+      "dateTime": "Office action date and time",
+      "examinerName": "Examiner Name",
+      "examinerDetails": "Examiner Details"
+    },
+    "goodsServices": {
+      "niceClassification": "NICE Classification",
+      "goodsServices": "Goods and Services"
+    },
+    "figurativeClassification": {
+      "viennaCode": "Vienna Code",
+      "description": "Description"
+    },
+    "exhibition": {
+      "exhibitionName": "Exhibition Name",
+      "exhibitionDate": "Exhibition Date",
+      "exhibitionDetails": "Exhibition Details"
+    },
+    "priorities": {
+      "priorityDate": "Priority Date",
+      "priorityNumber": "Priority Number",
+      "priorityCountry": "Priority Country"
+    },
+    "similarImage": "Search for trademarks with similar images"
+  },
+  "ipr": {
+    "bibliographic": "Bibliographic data",
+    "mark": "Mark",
+    "description": "Description",
+    "legalStatus": "Legal Status",
+    "applicantDetails": "Applicant Details",
+    "ownerDetails": "Owner Details",
+    "representativeDetails": "Representative Details",
+    "goodsServices": "Goods and services",
+    "figurativeClassification": "Figurative Classification",
+    "exhibitionDetails": "Exhibition Details",
+    "priorities": "Priorities",
+    "officeActions": "Office Actions",
+    "countryCode": "Country Code",
+    "city": "City",
+    "email": "Email",
+    "nationality": "Nationality",
+    "owners": "Owners",
+    "applicants": "Applicants",
+    "representatives": "Representatives",
+    "registrationNumber": "Registration Number",
+    "registrationDate": "Registration Date",
+    "publicationNumber": "Publication Number",
+    "publicationDate": "Publication Date",
+    "certificateGrantDate": "Certificate grant date",
+    "filingNumber": "Filing Number",
+    "filingDate": "Filing Date",
+    "registered": "Registered {{value}}",
+    "published": "Published {{value}}",
+    "authors": "Authors",
+    "earliestPriorityDate": "Earliest Priority Date",
+    "earliestPriorityNumber": "Earliest Priority Number",
+    "legal": {
+      "statusCode": "Status Code",
+      "status": "Status",
+      "statusDate": "Status Date",
+      "effectiveDate": "Effective Date",
+      "notes": "Notes"
+    },
+    "applicant": {
+      "applicantName": "Applicant Name",
+      "applicantDetails": "Applicant Details"
+    },
+    "owner": {
+      "ownerName": "Owner Name",
+      "ownerDetails": "Owner Details"
+    },
+    "representative": {
+      "representativeName": "Representative Name",
+      "representativeDetails": "Representative details"
+    },
+    "drawings": "Drawings",
+    "originalDocument": "Original Document"
+  },
+  "patent": {
+    "claims": "Claims",
+    "citations": "Citations",
+    "examiners": "Examiners",
+    "drawings": "Drawings",
+    "applicants": "Applicants",
+    "publicationNumber": "Publication Number",
+    "publicationTitle": "Publication Title",
+    "publicationDate": "Publication date",
+    "applicationTitle": "Application Title",
+    "citation": {
+      "type": "Type",
+      "citationOrigin": "Citation origin country code",
+      "earliestPriorityDate": "Earliest priority date"
+    },
+    "inventors": {
+      "inventorName": "Inventor Name",
+      "inventorDetails": "Inventor Details"
+    },
+    "patentFamility": {
+      "patentFamility": "Patent Famility",
+      "applicationNumber": "Application number"
+    }
+  },
+  "industrialDesign": {
+    "indicationDesign": "Indication of Design",
+    "designerDetails": "Designer Details",
+    "designerName": "Designer Name",
+    "description": "Description",
+    "locarnoClassification": "Locarno Classification",
+    "designStatus": "Design Status",
+    "designTitleEn": "Design Title (EN)",
+    "designTitleAr": "Design Title (AR)",
+    "designDescription": "Design Description",
+    "designers": "Designers"
+  },
+  "sortBy": "Sort by",
+  "publicationDateAsc": "Publication date asc",
+  "publicationDateDesc": "Publication date desc",
+  "priorityDateAsc": "Priority date asc",
+  "priorityDateDesc": "Priority date desc",
+  "mostRelevant": "Most Relevant",
+  "filingDateAsc": "Filing date asc",
+  "filingDateDesc": "Filing date desc",
+  "saveSearchQuery": "Save search query",
+  "querySaved": "Query saved successfully.",
+  "savedQueryMsg": "You can find all your saved queries in <0>My queries</0>",
+  "savedQueryMsgForDoc": "Saved Successfully!",
+  "couldnotSave": "Couldn't save the query.",
+  "failerMsg": "Something went wrong! Please try again later.",
+  "findSimilar": "Find Similar",
+  "download": "Download",
+  "addtoSavedQueries": "Add to my saved queries",
+  "addtoFocusArea": "Add to card in focus area",
+  "noDocument": "Sorry! No document is available for download",
+  "bookmarked": "Bookmark saved successfully.",
+  "bookmarks": "You can find all your saved bookmarks in <0>My bookmarks</0>",
+  "alreadyBookmarked": "This document is already in your bookmarks.",
+  "couldnotSaveBookmark": "Could not save to your bookmarks.",
+  "addBookmarks": "Add to my bookmarks",
+  "selectedItems": "{{count}} selected.",
+  "export": {
+    "title": "Export",
+    "exportFileType": "{{fileType}} File",
+    "workstreams": {
+      "patent": "Export Patents",
+      "trademark": "Export Trademarks",
+      "copyrights": "Export Copyrights",
+      "Industrial Design": "Export Industrial Designs",
+      "Plant Varieties": "Export Plant Varieties",
+      "integratedCircuits": "Export Integrated Circuits",
+      "Decision": "Export Decisions",
+      "IC Layout": "IC Layout"
+    }
+  },
+  "decisions": {
+    "decisionValue": "Decision {{value}}",
+    "date": "Date {{value}}",
+    "decisionNumber": "Decision Number",
+    "decisionCategory": "Decision Category",
+    "type": "Type",
+    "decisionDate": "Decision Date",
+    "decision": "Decision",
+    "domain": "Domain",
+    "keywords": "Keywords",
+    "decisionBrief": "Decision Brief",
+    "judgementDecision": "Judgement Decision",
+    "references": "References",
+    "failerMsg": "Facts",
+    "reasons": "Reasons",
+    "decisionDateDesc": "Decision date desc",
+    "decisionDateAsc": "Decision date asc",
+    "facts": "Facts"
+  },
+  "copyrights": {
+    "grantDateAsc": "Grant date asc",
+    "grantDateDesc": "Grant date desc",
+    "granted": "Granted {{value}}",
+    "copyrightsData": "Copyrights Data",
+    "grantDate": "Grant Date",
+    "claimants": "Claimants"
+  },
+  "plantVariety": {
+    "title": "Title",
+    "classification": "Classification",
+    "status": "Status",
+    "ipOffice": "IP Office"
+  },
+  "speech": {
+    "english": "English",
+    "arabic": "Arabic"
+  }
+}

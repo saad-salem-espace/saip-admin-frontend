@@ -1,0 +1,16 @@
+@import "../../../assets/styles/utilities/variables";
+
+.sb-avatar {
+  .sb-avatar__text {
+    background-color: var(--bs-primary-10) !important;
+    color: var(--bs-primary) !important;
+    span {
+      font-size: $font-size-sm;
+      padding-top: 4px;
+    }
+  }
+}
+
+.xs-text.sb-avatar span {
+  font-size: $font-size-xs;
+}

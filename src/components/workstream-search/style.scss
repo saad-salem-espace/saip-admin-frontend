@@ -1,0 +1,35 @@
+@import "../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+.workstream-header {
+  background-image: url(../../assets/images/search-header-bg.svg);
+  html[data-bs-theme="dark"] & {
+    filter: grayscale(100%);
+  }
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom left;
+}
+
+.workstream-select {
+  @include media-breakpoint-up(xl) {
+    width: 200px;
+  }
+}
+
+span.customLabel {
+  html[dir="ltr"] & {
+    left: 154px;
+  }
+  html[dir="rtl"] & {
+    right: 154px;
+  }
+}
+
+.search-box-index {
+  div {
+    .rounded {
+      margin-top: 2.5rem;
+    }
+  }
+}

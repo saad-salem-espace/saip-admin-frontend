@@ -1,0 +1,19 @@
+{
+  "loadMoreNotes": "Load more notes...",
+  "noNotes": "No notes added yet.",
+  "add": "Add",
+  "unsavedContent": "Unsaved content",
+  "unsavedContentMsg": "You are about to lose unsaved content,<0> would you like to save it?</0>",
+  "noteAdded": "Note added successfully.",
+  "noteNotAdded": "Note not added, please try again.",
+  "noteDeleted": "Note deleted successfully.",
+  "noteNotDeleted": "Note not deleted, please try again.",
+  "noteUpdated": "Note updated successfully.",
+  "noteNotUpdated": "Note not updated, please try again.",
+  "day": "d",
+  "editNote": "Edit Note",
+  "deleteNote": "Delete Note",
+  "confirmDeleteNote": "Are you sure you want to delete this note?",
+  "delete": "Delete",
+  "update": "Update"
+}

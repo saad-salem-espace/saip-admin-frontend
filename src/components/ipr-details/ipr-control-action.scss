@@ -1,0 +1,48 @@
+@import "../../assets/styles/utilities/variables";
+@import "../../assets/styles/utilities/mixin";
+
+
+#google_translate_element {
+  .goog-te-combo {
+    background-color: var(--bs-primary-dark);
+    color: $white;
+    border-radius: $border-radius;
+    font-family: $font-regular;
+    margin: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-size: 6%;
+    html[dir="ltr"] & {
+      background-position: 8% center;
+      padding: 8px 20px 8px 35px;
+    }
+    html[dir="rtl"] & {
+      background-position: 93% center;
+      padding: 8px 35px 8px 20px;
+      direction: rtl;
+    }
+    background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --%3E%3Cpath d='M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z' fill='%23ffffff'/%3E%3C/svg%3E");
+    &::-webkit-scrollbar{
+      width: 19px;
+      margin-top: 1rem
+      }
+      &::-webkit-scrollbar-track{
+      background: var(--bs-primary-dark);
+      border-left: 5px solid var(--bs-primary-dark);
+      border-right: 5px solid var(--bs-primary-dark);
+      }
+      &::-webkit-scrollbar-thumb {
+      background: $gray-200;
+      border-radius: 8px;
+      border-left: 5px solid var(--bs-primary-dark);
+      border-right: 5px solid var(--bs-primary-dark);
+      }
+    &:focus-visible,
+    &:focus {
+      box-shadow: none;
+      border: none;
+    }
+  }
+}

@@ -1,0 +1,64 @@
+@import"../../../assets/styles/utilities/variables";
+
+@mixin border($width,$height,$top,$color) {
+  position: relative;
+  &::before,
+  &::after {
+    width: $width;
+    height: $height;
+    background:$color;
+    position: absolute;
+    top: $top;
+  }
+}
+@mixin border-start($value) {
+  &::before {
+    content: "";
+    html[dir="ltr"] & {
+      left: $value;
+    }
+    html[dir="rtl"] & {
+      right: $value;
+    }
+  }
+}
+@mixin border-end($value) {
+  &::after {
+    content: "";
+    html[dir="ltr"] & {
+      right: $value;
+    }
+    html[dir="rtl"] & {
+      left: $value;
+    }
+  }
+}
+@mixin truncate($lines) {
+  max-width: 100%;
+  -webkit-line-clamp: $lines;
+  /* autoprefixer: off */
+  -webkit-box-orient: vertical;
+  /* autoprefixer: on */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}
+
+
+@mixin scrollbar(){
+  &::-webkit-scrollbar{
+  width: 19px;
+  margin-top: 1rem
+  }
+  &::-webkit-scrollbar-track{
+  background: $gray-200;
+  border-left: 5px solid $white;
+  border-right: 5px solid $white;
+  }
+  &::-webkit-scrollbar-thumb {
+  background: #dedede;
+  border-radius: 8px;
+  border-left: 5px solid $white;
+  border-right: 5px solid $white;
+  }
+ }

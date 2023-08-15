@@ -1,0 +1,50 @@
+@import "../../assets/styles/utilities/variables";
+@import "../../assets/styles/utilities/mixin";
+
+.expand-icon {
+  transform: rotateY(180deg);
+}
+
+.select {
+  width: 250px;
+}
+
+.label {
+  width: 145px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.iprWrapper {
+  height: 67vh;
+  overflow-y: auto;
+  @include scrollbar;
+  ::selection {
+    background: var(--bs-primary-10);
+    padding: 0.5rem;
+  }
+}
+
+.img {
+  width: 193px;
+  height: 100px;
+  border: $border-width solid var(--bs-gray-400);
+
+  img {
+    width: 100%;
+  }
+}
+
+.imgWithZoom {
+  width: 486px;
+  height: 100%;
+}
+
+.headerImg {
+  width: 150px;
+
+  img {
+    width: 150px;
+  }
+}

@@ -1,0 +1,20 @@
+$utilities: (
+  // append new heights
+  "height-px": (
+      property: height,
+      class: h-px,
+      values: (
+        24: 24px,
+        39: 39px,
+        63: 63px,
+      )
+    ),
+  "width-px": (
+    property: width,
+    class: w-px,
+    values: (
+      65: 65px,
+      300: 300px,
+    )
+  ),
+ );

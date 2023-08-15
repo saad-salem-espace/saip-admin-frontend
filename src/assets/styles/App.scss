@@ -1,0 +1,22 @@
+// Custom variables
+@import "./utilities/map-amends";
+
+// global
+@import "./global";
+
+@import "./utilities/custom-theme";
+
+// rtl
+@import "./vendors/rtl";
+
+// icommon
+@import "./icomoon/icommon";
+
+// components
+@import "../../components/shared/button/Button.scss";
+
+//common
+@import "../../assets/styles/common/helpers.scss";
+@import "../../assets/styles/common/common.scss";
+
+@import "./all";

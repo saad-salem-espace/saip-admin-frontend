@@ -1,0 +1,43 @@
+@import "../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+.collapseIcon {
+  background-color: var(--bs-primary-dark);
+  padding: 4px 8px;
+  border-radius: $border-radius !important;
+  position: absolute;
+  top: 32px;
+  right: 24px;
+
+  html[dir="rtl"] & {
+    right: auto;
+    left: 24px;
+  }
+
+  &.closed {
+    right: calc(50% - 16px);
+
+    html[dir="rtl"] & {
+      right: auto;
+      left: calc(50% - 16px);
+    }
+  }
+
+  @include media-breakpoint-down(xl) {
+    top:10px;
+
+    &.closed {
+      right: auto;
+      left: 20px;
+
+      html[dir="rtl"] & {
+        left: auto;
+        right: 20px;
+      }
+    }
+  }
+}
+
+.menu {
+  box-shadow: 4px 8px 15px 0px rgba(0, 0, 0, 0.14);
+}

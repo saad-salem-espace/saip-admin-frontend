@@ -1,0 +1,55 @@
+@import "../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+.btn.types {
+  border-radius: $border-radius;
+  color: $gray !important;
+  text-decoration: none;
+  padding: 8px 24px;
+  background-color: var(--bs-white);
+  height: 72px;
+  border: none;
+  html[dir="rtl"] & {
+    font-size: 14px;
+    margin-bottom: 1rem !important;
+  }
+  &.active, &:hover, &:focus, &:not(.btn-check) + .btn:active  {
+    color: var(--bs-white) !important;
+
+    .workstreamIcon::before {
+      color: var(--bs-white) !important;
+    }
+
+    .workstreamIcon::before {
+      color: var(--bs-white) !important;
+    }
+
+    &.patent {
+      background-color: var(--bs-patents);
+    }
+
+    &.trademark {
+      background-color: var(--bs-trademark);
+    }
+
+    &.Industrial {
+      background-color: var(--bs-industrial-designs);
+    }
+
+    &.Decision {
+      background-color: var(--bs-secondary-sisal);
+    }
+
+    &.copyright {
+      background-color: var(--bs-copyright);
+    }
+
+    &.Plant {
+      background-color: var(--bs-primary);
+    }
+
+    &.IC {
+      background-color: var(--bs-ic-layout);
+    }
+  }
+}

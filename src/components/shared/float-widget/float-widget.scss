@@ -1,0 +1,76 @@
+@import "../../../assets/styles/utilities/variables";
+@import "../../../assets/styles/components/popover";
+@import "~bootstrap/scss/mixins";
+
+.float-widget {
+  transform: none !important;
+  top: 70% !important;
+  &.survey-widget {
+    min-width: 250px;
+    .widget-action {
+      margin-top: 0 !important;
+    }
+    .widget-title {
+      p {
+        margin-bottom: 0 !important;
+        html[dir="rtl"] & {
+          padding: 0 30px;
+          font-size: 13px !important;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 1900px) {
+    position: fixed !important;
+    html[dir="ltr"] & {
+      transform: translate(-95%, 0%) !important;
+      left: 95% !important;
+    }
+    html[dir="rtl"] & {
+      transform: translate(95%, 0%) !important;
+      inset: auto auto 60px 0px !important;
+      right: 95% !important;
+    }
+  }
+  @media screen and (max-width: 1200px) {
+    position: fixed !important;
+    html[dir="ltr"] & {
+      transform: translate(-50%, 0%) !important;
+      left: 50% !important;
+    }
+    html[dir="rtl"] & {
+      transform: translate(50%, 0%) !important;
+      inset: auto auto 60px 0px !important;
+      right: 50% !important;
+    }
+  }
+  .popover-arrow {
+    &::before,
+    &::after  {
+      display: none;
+      border: 0 !important;
+    }
+  }
+  .btn-dismiss {
+    position: relative;
+    top: 15px;
+    html[dir="ltr"] & {
+      left: 88%;
+    }
+    html[dir="rtl"] & {
+      right: 88%;
+    }
+  }
+  .widget-title {
+    margin-top: -20px;
+  }
+  .widget-action {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .btn-dismiss {
+    position: relative;
+    z-index: 1020;
+  }
+}

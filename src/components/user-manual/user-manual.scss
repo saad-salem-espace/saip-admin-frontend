@@ -1,0 +1,95 @@
+@import "../../assets/styles/utilities/variables";
+@import "../../assets/styles/utilities/mixin";
+@import "~bootstrap/scss/mixins";
+
+.user-manual {
+  z-index: 9999 !important;
+  .modal-90w {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .modal-header {
+    margin-top:  1.25rem;
+  }
+  .modal-title {
+    width: 100%;
+    @include media-breakpoint-up(lg){
+      text-align: center;
+    }
+    h4 {
+      @include media-breakpoint-down(md){
+        font-size: $font-size-base;
+      }
+      margin-bottom: 0;
+    }
+  }
+  .btn-close {
+    html[data-bs-theme="dark"] & {
+      filter: unset !important;
+    }
+    margin: 0 5px;
+  }
+  .show-content {
+    border-color: var(--bs-gray-300) !important;
+    min-height: 600px;
+  }
+}
+.user-manual-sections {
+  .appBtn {
+    width: 96%;
+    html[dir="ltr"] & {
+      margin-left: 5px;
+    }
+    html[dir="rtl"] & {
+      margin-right: 5px;
+    }
+  }
+  .fixed-scroll {
+    @include scrollbar;
+    height: 600px;
+    overflow-y: auto;
+    padding-bottom: 20px;
+  }
+}
+.search-wrapper {
+  .form-control, .btn-filter {
+    height: 57px;
+  }
+  .form-control {
+    background-color: var(--bs-white);
+    border: $border-width solid var(--bs-gray-400);
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    html[dir="ltr"] & {
+      padding-left: 15px;
+      padding-right: 80px;
+    }
+    html[dir="rtl"] & {
+      padding-left: 80px;
+      padding-right: 15px;
+    }
+    &:focus-visible,
+    &:focus {
+      border-color: var(--bs-gray-400);
+      outline: none;
+    }
+  }
+  .btn-filter {
+    width: 70px;
+    &:hover {
+      background-color: var(--bs-primary) !important;
+      color: var(--bs-white) !important;
+    }
+    html[dir="ltr"] & {
+      right: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    html[dir="rtl"] & {
+      left: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}

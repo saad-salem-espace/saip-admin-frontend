@@ -1,0 +1,122 @@
+{
+  "BibliographicData": {
+    "DesignTitleEN": "Coffee",
+    "DesignTitleAR": "ماكينة قهوة",
+    "DesignAbstract": "abstract",
+    "OverallProductDrawing": "SA 140000919-20230430-0.jpg",
+    "FilingNumber": "SA 412330195",
+    "FilingDate": "2015-02-09",
+    "ApplicationCountry": "SA",
+    "IPOffice": "SA",
+    "Status": "مسجل",
+    "PublicationNumber": "2627",
+    "PublicationDate": "2025-02-19",
+    "RegistrationNumber": "2627",
+    "RegistrationDate": "2005-02-09",
+    "ApplicationLanguage": "AR",
+    "Applicants": ["1انترمن اليانس", "2انترمن اليانس"],
+    "Designers": ["1انترمن اليانس", "2انترمن اليانس"],
+    "Representatives": ["نواف نايف عيد المطيري1", "نواف نايف عيد المطيري2"],
+    "LocarnoClassification": ["12-08", "12-09"]
+  },
+  "LocarnoClassification": [
+    {
+      "LocarnoClassification": "12-08",
+      "IndicationofDesign": "Locarno 10"
+    },
+    {
+      "LocarnoClassification": "12-09",
+      "IndicationofDesign": "Locarno 12"
+    }
+  ],
+  "DesignerDetails": [
+    {
+      "CountryCode": "SA1",
+      "Nationality": "SA2",
+      "DesignerName": "اسم",
+      "DesignerDetails": "Address, email@domain.com"
+    },
+    {
+      "CountryCode": "SA3",
+      "Nationality": "SA4",
+      "DesignerName": "٢انترمن اليانس",
+      "DesignerDetails": "Address, email@domain.com"
+    }
+  ],
+  "ApplicantsDetails": [
+    {
+      "CountryCode": "SA1",
+      "Nationality": "SA2",
+      "ApplicantName": "٣انترمن اليانس",
+      "ApplicantDetails": "Address, email@domain.com"
+    },
+    {
+      "CountryCode": "SA3",
+      "Nationality": "SA4",
+      "ApplicantName": "٤انترمن اليانس",
+      "ApplicantDetails": "Address, email@domain.com"
+    }
+  ],
+  "RepresentativesDetails": [
+    {
+      "CountryCode": "SA1",
+      "Nationality": "SA2",
+      "RepresentativeName": "١نواف نايف عيد المطيري",
+      "RepresentativeDetails": "Address, email@domain.com"
+    },
+    {
+      "CountryCode": "SA3",
+      "Nationality": "SA4",
+      "RepresentativeName": "٢نواف نايف عيد المطيري",
+      "RepresentativeDetails": "Address, email@domain.com"
+    }
+  ],
+  "LegalStatus": [
+    {
+      "Status": "علامة مسجلة",
+      "StatusCode": "B1",
+      "StatusDate": "1998-01-01",
+      "EffectiveDate": "2008-01-01",
+      "Notes": "There are many notes here"
+    }
+  ],
+  "Priorities": [
+    {
+      "PriorityDate": "1990-01-01",
+      "PriorityNumber": "2132-09",
+      "PriorityCountry": "JP"
+    },
+    {
+      "PriorityDate": "1995-01-01",
+      "PriorityNumber": "2135-09",
+      "PriorityCountry": "JP"
+    }
+  ],
+  "OriginalDocuments": [
+    {
+      "DocumentFormat": ".pdf",
+      "FileName": "specification_000001_20181002.pdf"
+    },
+    {
+      "DocumentFormat": ".pdf",
+      "FileName": "specification_000001_20181002.pdf"
+    }
+  ],
+  "Drawings": [
+    {
+      "ImageFormat": ".jpg",
+      "FileName": "SA1935_SA02230313_SA1935B1_DRAWINGS_SA1935B1AB00011.jpg",
+      "Description": "Front"
+    },
+    {
+      "ImageFormat": ".jpg",
+      "FileName": "SA1935_SA02230313_SA1935B1_DRAWINGS_SA1935B1AB00011.jpg",
+      "Description": "Back"
+    },
+    {
+      "ImageFormat": ".jpg",
+      "FileName": "SA1935_SA02230313_SA1935B1_DRAWINGS_SA1935B1AB00011.jpg",
+      "Description": "Top"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+
+.footer {
+  position: relative;
+  z-index: 2000;
+  background: var(--bs-primary-dark);
+  background: linear-gradient(90deg, rgba(17,46,62,1) 0%, rgba(0,157,147,1) 100%);
+  html[data-bs-theme="dark"] & {
+    background: linear-gradient(90deg, rgb(20, 20, 20) 0%, rgb(200, 202, 202) 100%);
+  }
+}

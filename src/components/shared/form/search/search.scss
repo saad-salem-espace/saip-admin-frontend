@@ -1,0 +1,23 @@
+@import "../../../../assets/styles/utilities/variables";
+@import "~bootstrap/scss/mixins";
+
+.searchBox {
+  .datePickerWrapper + .resetSearch {
+    html[dir="ltr"] & {
+      right: 115px;
+    }
+    html[dir="rtl"] & {
+      left: 115px;
+    }
+  }
+  &.style_searchWithImage__jbGoX {
+    .datePickerWrapper + .resetSearch {
+      html[dir="ltr"] & {
+        right: 169px;
+      }
+      html[dir="rtl"] & {
+        left: 169px;
+      }
+    }
+  }
+}
