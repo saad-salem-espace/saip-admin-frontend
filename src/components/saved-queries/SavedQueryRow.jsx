@@ -34,7 +34,7 @@ const SavedQueryRow = ({
   };
 
   const writeQueryString = () => {
-    if (query.queryString && query?.imageName) return `${query.queryString} OR ${query.imageName}`;
+    if (query?.queryString && query?.imageName) return `${query.queryString} OR ${query.imageName}`;
     if (!query.queryString && query?.imageName) return query.imageName;
     return query.queryString;
   };
