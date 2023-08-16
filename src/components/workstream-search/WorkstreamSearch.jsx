@@ -82,6 +82,7 @@ function WorkstreamSearch() {
   }, [searchOptions]);
 
   const onChangeWorkstream = (newState) => {
+    if (window.innerWidth < 426) window.scrollTo(0, document.body.scrollHeight);
     setSelectedWorkStream(newState);
   };
 
