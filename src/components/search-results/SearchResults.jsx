@@ -311,6 +311,7 @@ function SearchResults({ showFocusArea }) {
     }
     if (location.state?.simpleSearch) {
       setIsAdvancedSearch(false);
+      setIsAdvancedMenuOpen(false);
     }
   }, [location.state]);
 
@@ -351,7 +352,7 @@ function SearchResults({ showFocusArea }) {
   };
 
   const parseAndSetSearchQuery = (qObjsArr) => {
-    setSearchQuery(convertQueryArrToStr(qObjsArr));
+    if (qObjsArr) setSearchQuery(convertQueryArrToStr(qObjsArr));
   };
 
   useEffect(() => {
@@ -484,7 +485,7 @@ function SearchResults({ showFocusArea }) {
         operator: '',
       }]);
     }
-  }, [searchIdentifiers, searchResultParams.qArr]);
+  }, [searchIdentifiers, searchResultParams.qArr, isAdvancedMenuOpen, isAdvancedSearch]);
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -537,6 +538,7 @@ function SearchResults({ showFocusArea }) {
   };
 
   const toggleAdvancedSearchMenu = () => {
+    setIsAdvancedSearch(!isAdvancedSearch);
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
   };
 
@@ -728,6 +730,7 @@ function SearchResults({ showFocusArea }) {
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
+                            setIsAdvancedMenuOpen((advancedMenu) => !advancedMenu);
                           }}
                           isToggleButtonOn={isAdvancedSearch}
                           text={t('advancedSearch')}
