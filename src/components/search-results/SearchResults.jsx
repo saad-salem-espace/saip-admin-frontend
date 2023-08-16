@@ -644,6 +644,10 @@ function SearchResults({ showFocusArea }) {
         ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
       || data instanceof DateObject
       ))
+      .test('Consecutive *', validationMessages.search.consecutiveAsteric, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && !(data.includes('**'))))
+      || data instanceof DateObject
+      ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
         ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
       || data instanceof DateObject
