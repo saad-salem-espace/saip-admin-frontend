@@ -13,7 +13,7 @@ const timeStamp = [
 
 const dbConfig = {
   name: 'SAIPDB',
-  version: 3,
+  version: 4,
   objectStoresMeta: [
     {
       store: tableNames.savedQuery,
@@ -23,6 +23,8 @@ const dbConfig = {
         { name: 'resultCount', keypath: 'resultCount', options: { unique: false } },
         { name: 'synonymous', keypath: 'synonymous', options: { unique: false } },
         { name: 'workstreamId', keypath: 'workstreamId', options: { unique: false } },
+        { name: 'imageName', keypath: 'imageName', options: { unique: false } },
+        { name: 'docImage', keypath: 'docImage', options: { unique: false } },
         ...timeStamp,
       ],
     },

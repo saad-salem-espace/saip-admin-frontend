@@ -153,6 +153,8 @@ function SearchResults({ showFocusArea }) {
     enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
     documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber,
     fav: isQuerySaved,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
 
   const saveQueryParams = auth.isAuthenticated ? {
@@ -163,6 +165,8 @@ function SearchResults({ showFocusArea }) {
     workstreamKey: 'workStreamId',
     documentId: null,
     fav: true,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   } : {
     workstreamId: searchParams.get('workstreamId'),
     queryString: searchParams.get('q'),
@@ -171,6 +175,8 @@ function SearchResults({ showFocusArea }) {
     workstreamKey: 'workstreamId',
     documentId: null,
     fav: true,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
 
   const sortByOptionsPatent = [
@@ -305,6 +311,7 @@ function SearchResults({ showFocusArea }) {
     }
     if (location.state?.simpleSearch) {
       setIsAdvancedSearch(false);
+      setIsAdvancedMenuOpen(false);
     }
   }, [location.state]);
 
@@ -345,7 +352,7 @@ function SearchResults({ showFocusArea }) {
   };
 
   const parseAndSetSearchQuery = (qObjsArr) => {
-    setSearchQuery(convertQueryArrToStr(qObjsArr));
+    if (qObjsArr) setSearchQuery(convertQueryArrToStr(qObjsArr));
   };
 
   useEffect(() => {
@@ -478,7 +485,7 @@ function SearchResults({ showFocusArea }) {
         operator: '',
       }]);
     }
-  }, [searchIdentifiers, searchResultParams.qArr]);
+  }, [searchIdentifiers, searchResultParams.qArr, isAdvancedMenuOpen, isAdvancedSearch]);
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -531,6 +538,7 @@ function SearchResults({ showFocusArea }) {
   };
 
   const toggleAdvancedSearchMenu = () => {
+    setIsAdvancedSearch(!isAdvancedSearch);
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
   };
 
@@ -636,6 +644,10 @@ function SearchResults({ showFocusArea }) {
         ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
       || data instanceof DateObject
       ))
+      .test('Consecutive *', validationMessages.search.consecutiveAsteric, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && !(data.includes('**'))))
+      || data instanceof DateObject
+      ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
         ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
       || data instanceof DateObject
@@ -722,6 +734,7 @@ function SearchResults({ showFocusArea }) {
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
+                            setIsAdvancedMenuOpen((advancedMenu) => !advancedMenu);
                           }}
                           isToggleButtonOn={isAdvancedSearch}
                           text={t('advancedSearch')}

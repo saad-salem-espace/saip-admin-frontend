@@ -15,12 +15,12 @@ const optionName = (option, crrLang) => (
 const parseQuery = (fields, imageName) => {
   const queryObjsArr = [];
 
-  fields.forEach((value) => {
+  fields.forEach((value, index) => {
     queryObjsArr.push({
       identifier: value.identifier.identiferStrId,
       condition: value.condition.optionParserName,
       data: ((typeof value.data === 'string' || value.data instanceof String) ? value.data.trim() : value.data),
-      operator: fields.length > 1 ? value.operator : '',
+      operator: index > 0 ? value.operator : '',
     });
   });
 
