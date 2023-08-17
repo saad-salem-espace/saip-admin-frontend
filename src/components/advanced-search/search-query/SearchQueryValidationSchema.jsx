@@ -43,6 +43,10 @@ const SearchQueryValidationSchema = Yup.object().shape({
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         ))
+        .test('Consecutive *', validationMessages.search.consecutiveAsteric, (data) => (
+          ((typeof data === 'string' || data instanceof String) && !(data.includes('**')))
+        || data instanceof DateObject
+        ))
         .test('Words count', validationMessages.search.tooLong, (data) => (
           ((typeof data === 'string' || data instanceof String) && (wordCountValidation(data)))
           || (Array.isArray(data) && data.length > 0)
