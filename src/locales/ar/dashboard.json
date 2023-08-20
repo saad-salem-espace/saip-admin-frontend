@@ -13,10 +13,11 @@
   "notes": "ملاحظات",
   "translateInfo": "ترجمة",
   "markAsDone": "تم إنجازه",
-  "savedQueries": "الاستعلامات المحفوظه",
-  "bookmarks": "تفضيلاتي",
+  "savedQueries": "محفوظات البحث",
+  "bookmarks": "محفوظات النتائج",
   "notAssigned": "لا تجد الوثائق الخاضعة للفحص؟",
   "emptyStateTitle": "لم يتم إسناد أي من الوثائق لك. ",
+  "notAvailable": "غير متوفر",
   "status": {
     "toDo": "قائمة الأعمال",
     "done": "منجز",

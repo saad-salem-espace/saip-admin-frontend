@@ -30,7 +30,7 @@ function PlantVarietyResultCard({
     <Button
       variant="transparent"
       onClick={() => { setActiveDocument(BibliographicData?.FilingNumber); }}
-      className="w-100 text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0"
+      className="w-100 text-start fs-20 px-1 py-0 font-regular app-text-primary-dark border-0"
       text={(
         <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex align-items-start mb-1">
@@ -69,14 +69,14 @@ function PlantVarietyResultCard({
               )
             }
           </p>
-          <p className="font-medium mb-2 d-lg-flex align-items-center text-dark f-14">
+          <p className="font-medium mb-2 d-lg-flex align-items-center text-dark fs-sm">
             {t('priority', { value: BibliographicData?.PriorityDate })}
-            <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+            <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
             {t('filed', { value: BibliographicData?.FilingDate })}
             {
               BibliographicData?.PublicationDate && (
                 <>
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
                   {t('published', { value: BibliographicData?.PublicationDate })}
                 </>
               )

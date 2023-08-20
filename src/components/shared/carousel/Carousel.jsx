@@ -6,15 +6,17 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
+import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
 import Thumb from './Thumb';
 import './style.scss';
-// import searchImg from '../../../assets/images/icons/search-image.svg';
 
 function Carousel({
   largeThumb,
   className,
   images,
   children,
+  handleCloseIprDetail,
+  fromFocusArea,
 }) {
   const [show, setShow] = useState(false);
   const [activeImg, setActiveImg] = useState(images[0]);
@@ -40,6 +42,8 @@ function Carousel({
             largeThumb={largeThumb}
             changeActiveImg={changeActiveImg}
             srcThumb={images[imgIndex]}
+            fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />,
         );
       }
@@ -69,14 +73,9 @@ function Carousel({
         <div className="position-relative imgWrapper h-auto">
           <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" />
           <div className="overlay">
-            {/* <Button variant="transparent" className="border-0 icon">
-              <Image
-                src={searchImg}
-                className="fs-base"
-              />
-            </Button> */}
+            <SearchImageButton imgSrc={activeImg} handleCloseIprDetail={handleCloseIprDetail} />
             <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
-              <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="f-24 text-white" />
+              <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="fs-24 text-white" />
             </Button>
             <Modal centered show={show} onHide={handleClose}>
               <Modal.Body className="p-0">
@@ -102,12 +101,15 @@ Carousel.propTypes = {
   className: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   children: PropTypes.node,
+  handleCloseIprDetail: PropTypes.func.isRequired,
+  fromFocusArea: PropTypes.bool,
 };
 
 Carousel.defaultProps = {
   largeThumb: false,
   className: null,
   children: null,
+  fromFocusArea: false,
 };
 
 export default Carousel;

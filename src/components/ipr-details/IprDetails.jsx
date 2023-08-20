@@ -9,7 +9,8 @@ import {
 import { FaSearch } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom';
+import routes from 'components/routes/routes.json';
 import { documentApi } from 'apis/search/documentsApi';
 import { getAttachmentURL } from 'utils/attachments';
 import PropTypes from 'prop-types';
@@ -69,8 +70,11 @@ function IprDetails({
   examinerView,
   fromFocusArea,
   hideFocus,
+  dashboardExpandedView,
+  handleCloseIprDetail,
 }) {
   const { t, i18n } = useTranslation('search', 'dashboard');
+  const navigate = useNavigate();
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
   const [validHighlight, setValidHighlight] = useState(false);
@@ -80,7 +84,7 @@ function IprDetails({
   const currentLang = i18n.language;
   const searchResultParams = {
     workstreamId:
-      searchParams.get('workstreamId') || activeWorkstream.toString(),
+      searchParams.get('workstreamId') || activeWorkstream?.toString(),
   };
 
   const getDefaultSelectedViewValue = () => {
@@ -136,6 +140,20 @@ function IprDetails({
   };
   const ToggleSearchQueryMenu = () => {
     setShowSearchQuery(!showSearchQuery);
+  };
+
+  const findSimilarDoc = () => {
+    handleCloseIprDetail();
+    navigate({
+      pathname: routes.search,
+      search: `?${createSearchParams({
+        workstreamId: searchResultParams.workstreamId,
+        similarDocId: documentId,
+        sort: 'mostRelevant',
+        page: '1',
+        q: '',
+      })}`,
+    });
   };
 
   useEffect(() => {
@@ -226,13 +244,23 @@ function IprDetails({
         fileName: document?.OriginalDocuments[documentIndex]?.FileName,
       }).then((data) => {
         fireDownloadLink(data);
+      }).catch(() => {
+        setIsSubmittingDownloadPdf(false);
+        toastify(
+          'error',
+          <div>
+            <p className="toastifyTitle">
+              {t('noDocument')}
+            </p>
+          </div>,
+        );
       });
     }
   };
 
   const downloadOriginalDocuments = () => {
     setIsSubmittingDownloadPdf(true);
-    if (document.OriginalDocuments) {
+    if (document?.OriginalDocuments) {
       if (!isAuthenticated) {
         executeAfterLimitValidation(
           {
@@ -304,6 +332,8 @@ function IprDetails({
         searchResultParams={searchResultParams}
         handleClick={handleClick}
         examinerView={examinerView}
+        handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     2: (
@@ -316,6 +346,9 @@ function IprDetails({
         searchResultParams={searchResultParams}
         handleClick={handleClick}
         examinerView={examinerView}
+        dashboardExpandedView={dashboardExpandedView}
+        handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     3: (
@@ -328,6 +361,8 @@ function IprDetails({
         searchResultParams={searchResultParams}
         handleClick={handleClick}
         examinerView={examinerView}
+        handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     4: (
@@ -362,6 +397,8 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        fromFocusArea={fromFocusArea}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
     7: (
@@ -374,6 +411,8 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        fromFocusArea={fromFocusArea}
+        handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
   };
@@ -393,7 +432,7 @@ function IprDetails({
       ? JSON.parse(localStorage.getItem('FocusDoc'))?.workstreamId
       : searchResultParams.workstreamId;
 
-    if (workstreamId.toString() === '2') {
+    if (workstreamId?.toString() === '2') {
       if (
         document[selectedView.value]
         || ((selectedView.value === 'Description'
@@ -402,32 +441,32 @@ function IprDetails({
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '1') {
+    } else if (workstreamId?.toString() === '1') {
       if (document[selectedView.value]) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '3') {
+    } else if (workstreamId?.toString() === '3') {
       if (
         document[selectedView.value]
         || selectedView.value === 'Description'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '4') {
+    } else if (workstreamId?.toString() === '4') {
       if (
         document[selectedView.value]
         || selectedView.value === 'JudgementDecision'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '5') {
+    } else if (workstreamId?.toString() === '5') {
       if (
         document[selectedView.value]
         || selectedView.value === 'CopyrightsData' || selectedView.value === 'Description'
       ) {
         content = views[workstreamId];
       }
-    } else if (workstreamId.toString() === '6' || workstreamId.toString() === '7') {
+    } else if (workstreamId?.toString() === '6' || workstreamId?.toString() === '7') {
       if (
         document[selectedView.value]
       ) {
@@ -436,6 +475,10 @@ function IprDetails({
     }
     return content;
   };
+
+  const imgFilename = document?.BibliographicData?.OverallProductDrawing
+    || document?.Drawings?.[0]?.FileName;
+
   return (
     <div className={`${style.iprWrapper} ${className}`} translate="yes">
       <div className="border-bottom ipr-details-wrapper">
@@ -450,7 +493,7 @@ function IprDetails({
               setIsBookmark={setIsBookmark}
             />
             <h5 className="mb-0">
-              {(searchResultParams.workstreamId === '4' || searchResultParams.workstreamId === '5') ? document.BibliographicData.FilingNumber : document.BibliographicData.PublicationNumber}
+              {document.BibliographicData?.FilingNumber}
             </h5>
           </div>
           <div className="d-flex">
@@ -580,9 +623,7 @@ function IprDetails({
               {!isIPRExpanded && (
                 <div className={`me-6 mb-2 ${style.headerImg}`}>
                   <Image
-                    src={preparedGetAttachmentURL(
-                      document?.BibliographicData?.OverallProductDrawing,
-                    )}
+                    src={preparedGetAttachmentURL(imgFilename)}
                   />
                 </div>
               )}
@@ -597,11 +638,10 @@ function IprDetails({
           </p>
         )}
         <div
-          className="border-top py-3 px-6 d-xxl-flex align-items-start position-relative"
+          className="border-top py-3 px-6 flex-wrap d-flex align-items-start position-relative"
           translate="no"
         >
           <Button
-            disabled
             variant="primary"
             text={
               <>
@@ -609,9 +649,10 @@ function IprDetails({
                 {t('search:findSimilar')}
               </>
             }
-            className="me-4 fs-sm my-2 my-xxl-0"
+            className="me-4 fs-sm my-2 mt-0"
+            onClick={() => { findSimilarDoc(); }}
           />
-          <Button
+          {(searchResultParams.workstreamId !== '3' && searchResultParams.workstreamId !== '7') && <Button
             variant="primary"
             text={
               <>
@@ -619,20 +660,18 @@ function IprDetails({
                 {t('search:download')}
               </>
             }
-            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 my-xxl-0`}
+            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 mt-0`}
             onClick={
               downloadOriginalDocuments
             }
             disabled={isSubmittingDownloadPdf}
-          />
+          />}
           <ModalAlert
-            title={t('common:limitReached.register_now')}
-            msg={t('common:limitReached.register_now_msg')}
-            confirmBtnText={t('common:register')}
-            className="warning"
-            handleConfirm={() => {
-              // TODO to be written once receive URL
-            }}
+            title={t('common:limitReached.login_now')}
+            msg={t('common:limitReached.login_now_msg')}
+            confirmBtnText={t('common:limitReached.login_now')}
+            classIcon="text-warning"
+            handleConfirm={() => auth.signinRedirect()}
             hideAlert={() => { setReachedLimit(false); }}
             showModal={reachedLimit}
           />
@@ -725,6 +764,8 @@ IprDetails.propTypes = {
   examinerView: PropTypes.bool,
   fromFocusArea: PropTypes.bool,
   hideFocus: PropTypes.func,
+  dashboardExpandedView: PropTypes.bool,
+  handleCloseIprDetail: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -742,6 +783,8 @@ IprDetails.defaultProps = {
   setNotesUpdated: () => { },
   fromFocusArea: false,
   hideFocus: () => { },
+  handleCloseIprDetail: () => { },
+  dashboardExpandedView: false,
 };
 
 export default IprDetails;

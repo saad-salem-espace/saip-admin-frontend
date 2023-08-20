@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { BsPinAngle, BsPinFill, BsPlusLg } from 'react-icons/bs';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { FaCommentAlt } from 'react-icons/fa';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 import './PatentCard.scss';
 import { calculateDifference, formatLongDate, dateFormatSubstring } from 'utils/dates';
 import useAxios from 'hooks/useAxios';
@@ -82,6 +83,31 @@ const PatentCard = ({
     <Card ref={drag} className={`${cardStyle} patent-card mb-2`}>
       <Card.Body className="p-3">
         <div className="d-flex justify-content-between align-items-center border-bottom mb-2">
+          {
+            JSON.parse(assignment?.epoData)?.length >= 1 && (
+              <AppTooltip
+                placement="top"
+                tooltipContent={
+                    JSON.parse(assignment?.epoData).map((item) => (
+                      <div>
+                        <span className="d-block">
+                          {item?.country}
+                          {' • '}
+                          {item?.kind}
+                          {' • '}
+                          {item?.date}
+                        </span>
+                      </div>
+                    ))
+                  }
+                tooltipTrigger={
+                  <BootstrapButton variant="transparent" className="app-bg-secondary-tangerine me-2 rounded-circle py-1 px-2">
+                    <AiOutlineInfoCircle className="app-text-secondary-tangerine fs-18" />
+                  </BootstrapButton>
+                  }
+              />
+            )
+          }
           <Button
             variant="link"
             className="text-decoration-none text-start p-0 font-regular w-75"
@@ -91,7 +117,7 @@ const PatentCard = ({
               isInProgress(assignment.status === 'IN_PROGRESS');
             }}
             text={
-              <p className="app-text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate.substring(0, dateFormatSubstring)}`}</p>
+              <p className="app-text-primary-dark fs-sm text-truncate mb-0">{`${assignment.filingNumber} • ${assignment.filingDate?.substring(0, dateFormatSubstring) || t('dashboard:notAvailable')}`}</p>
             }
           />
           <div className="d-flex">
@@ -164,13 +190,13 @@ const PatentCard = ({
             <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:queue')}
             •
-            {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
+            {` ${assignment.queuePriorityDate?.substring(0, dateFormatSubstring) || t('dashboard:notAvailable')}`}
           </p>
           <p className="fs-xs mb-2">
             <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
             {t('dashboard:priority')}
             •
-            {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}
+            {` ${assignment.earliestPriorityDate?.substring(0, dateFormatSubstring) || t('dashboard:notAvailable')}`}
           </p>
         </div>
         <div className={`d-flex pt-3 ${assignment.status === 'IN_PROGRESS' ? 'justify-content-between' : 'justify-content-end'}`}>

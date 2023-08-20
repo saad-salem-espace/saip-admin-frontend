@@ -3,11 +3,11 @@ import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttr
 
 const PatentFamilityRow = ({ row }) => (
   <tr className="text-capitalize">
-    <td><HandleEmptyAttribute checkOn={row.PublicationNumber} /></td>
-    <td><HandleEmptyAttribute checkOn={row.PublicationDate} /></td>
-    <td><HandleEmptyAttribute checkOn={row.ApplicationTitle} /></td>
-    <td><HandleEmptyAttribute checkOn={row.ApplicationNumber} /></td>
-    <td><HandleEmptyAttribute checkOn={row.Applicants.join('; ')} /></td>
+    <td><HandleEmptyAttribute checkOn={row?.PublicationNumber} /></td>
+    <td><HandleEmptyAttribute checkOn={row?.PublicationDate} /></td>
+    <td><HandleEmptyAttribute checkOn={row?.ApplicationTitle} /></td>
+    <td><HandleEmptyAttribute checkOn={row?.ApplicationNumber} /></td>
+    <td><HandleEmptyAttribute checkOn={row?.Applicants.join('; ')} /></td>
   </tr>
 );
 

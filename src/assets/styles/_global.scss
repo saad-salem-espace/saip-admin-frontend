@@ -1,26 +1,6 @@
 @import "../../assets/styles/utilities/variables";
 @import "../../assets/styles/utilities/mixin";
 
-
-$fontSize: (
-  8,
-  12,
-  14,
-  17,
-  20,
-  22,
-  24,
-  26,
-  30,
-  60
-);
-
-@each $fontSize in $fontSize {
-  .f-#{$fontSize} {
-    font-size: #{$fontSize}px !important;
-  }
-}
-
 .md-text {
   font-size: $font-size-base;
 }
@@ -74,6 +54,14 @@ $fontSize: (
   transition: all 0.1s ease-in-out;
 }
 
-.min-h-88 {
-  min-height: 88vh;
+.min-h-90 {
+  min-height: 90vh;
+  @media screen and (max-width: 1420px),
+  screen and (max-height: 550px) {
+    min-height: 65vw;
+  }
+}
+
+.small-icon {
+  font-size: 5px;
 }

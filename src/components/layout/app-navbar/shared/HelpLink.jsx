@@ -16,9 +16,12 @@ function HelpLink() {
         }
         classNameModalHeader="border-0"
         variantTriggerBtn="link"
-        classNameTriggerBtn="nav-link app-text-primary-dark font-regular pt-1 ps-4 pe-2 mx-auto"
+        classNameTriggerBtn="appBtn font-regular with-hover mx-auto"
         triggerContent={
-          <AiOutlineQuestionCircle className="fs-29" />
+          <div className="app-text-primary-dark d-flex gap-2 fs-sm">
+            <AiOutlineQuestionCircle className="fs-22" />
+            {t('navbar.help')}
+          </div>
         }
         className="user-manual"
         size="xl"

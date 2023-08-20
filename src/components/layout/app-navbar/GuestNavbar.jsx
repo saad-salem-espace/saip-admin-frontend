@@ -14,11 +14,10 @@ import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import logo from '../../../assets/images/Logo.svg';
 import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
-import MyBookmarksLink from './shared/MyBookmarksLink';
-import MyQueriesLink from './shared/MyQueriesLink';
 import Accessibility from './shared/Accessibility';
 import DropdownItem from './shared/recent-search/DropdownItem';
 import HelpLink from './shared/HelpLink';
+import CommonLinks from './shared/CommonLinks';
 
 function GuestNavbar({ lang, changeLang }) {
   const { t } = useTranslation('layout');
@@ -42,17 +41,16 @@ function GuestNavbar({ lang, changeLang }) {
     getHistory();
   }, [workStreamId]);
   return (
-    <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest p-4 shadow">
-      <Container fluid className="ps-lg-18">
+    <Navbar collapseOnSelect fixed="top" expand="lg" bg="white" variant="light" className="app-navbar guest shadow">
+      <Container fluid className="px-0">
         <Navbar.Brand to="/" as={Link}>
           <Image src={logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           {/* Left navbar */}
-          <Nav className="me-auto">
-            <MyQueriesLink />
-            <MyBookmarksLink />
+          <Nav className="d-lg-flex gap-2 my-3 my-lg-0 text-center guest-links">
+            <CommonLinks />
           </Nav>
           {/* Right navbar */}
           <Nav>
@@ -75,14 +73,16 @@ function GuestNavbar({ lang, changeLang }) {
                 )
               }
             </RecentSearch>
-            <HelpLink />
-            <Accessibility />
+            <div className="d-flex justify-content-center align-items-center mb-3 mb-lg-0 gap-1">
+              <HelpLink />
+              <Accessibility />
+            </div>
             <div className="d-flex justify-content-center h-px-39">
               {/* Sign in / Sign up buttons */}
-              <div className="edges-border d-flex mx-lg-3 px-lg-3">
-                <Nav.Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary fs-sm me-lg-3 me-2 px-3">
+              <div className="edges-border d-flex mx-lg-4 px-lg-4">
+                <Link onClick={() => auth.signinRedirect()} as={Link} to="/" className="appBtn btn btn-outline-primary fs-sm py-2">
                   {t('navbar.login')}
-                </Nav.Link>
+                </Link>
               </div>
               {/* Switch language */}
               <LanguageSwitch lang={lang} changeLang={changeLang} />

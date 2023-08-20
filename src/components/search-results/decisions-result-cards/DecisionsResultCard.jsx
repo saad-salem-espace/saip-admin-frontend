@@ -49,7 +49,7 @@ function DecisionsResultCard({
             </div>
             <p className="mb-2 text-black fs-base">
               {t('decisions.decisionValue', { value: BibliographicData.FilingNumber })}
-              <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+              <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
               {t('decisions.date', { value: BibliographicData.DecisionDate })}
             </p>
             {

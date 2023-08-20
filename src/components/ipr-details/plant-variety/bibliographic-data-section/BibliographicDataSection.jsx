@@ -8,6 +8,8 @@ import { highlightListener } from 'utils/eventListeners';
 import Row from 'react-bootstrap/Row';
 import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
+import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
+import ShowMore from 'components/shared/show-more/ShowMore';
 
 const BibliographicDataSection = (
   {
@@ -46,68 +48,74 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('plantVariety.title')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.ApplicationTitle}
+            value={BibliographicData?.ApplicationTitle}
           />
           <LabelValue
             label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.FilingNumber}
+            value={BibliographicData?.FilingNumber}
           />
           <LabelValue
             label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.FilingDate}
+            value={BibliographicData?.FilingDate}
           />
           <LabelValue
             label={t('plantVariety.classification')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Classification.join(' , ')}
+            value={BibliographicData?.Classification.join(' , ')}
           />
           <LabelValue
             label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PublicationNumber}
+            value={BibliographicData?.PublicationNumber}
           />
           <LabelValue
             label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PublicationDate}
+            value={BibliographicData?.PublicationDate}
           />
           <LabelValue
             label={t('plantVariety.status')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Status}
+            value={BibliographicData?.Status}
           />
           <LabelValue
             label={t('plantVariety.ipOffice')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.IPOffice}
+            value={BibliographicData?.IPOffice}
           />
           <LabelValue
             label={t('ipr.earliestPriorityDate')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PriorityDate}
+            value={BibliographicData?.PriorityDate}
           />
           <LabelValue
             label={t('ipr.earliestPriorityNumber')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.PriorityNumber}
+            value={BibliographicData?.PriorityNumber}
           />
           <LabelValue
             label={t('applicants')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Applicants.join('; ')}
+            value={BibliographicData?.Applicants?.join('; ')}
           />
           <LabelValue
             label={t('inventors')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Inventors.join('; ')}
+            value={BibliographicData?.Inventors?.join('; ')}
           />
           <LabelValue
             label={t('ipr.representatives')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Representatives.join('; ')}
+            value={BibliographicData?.Representatives?.join('; ')}
           />
+          <p className="app-text-primary fs-sm disable-highlight">{t('abstract')}</p>
+          <div className="fs-sm">
+            <ShowMore>
+              <HandleEmptyAttribute checkOn={BibliographicData?.ApplicationAbstract?.join(' ')} />
+            </ShowMore>
+          </div>
         </Col>
       </Row>
     </Container>
@@ -117,6 +125,7 @@ const BibliographicDataSection = (
 BibliographicDataSection.propTypes = {
   BibliographicData: PropTypes.shape({
     ApplicationTitle: PropTypes.string,
+    ApplicationAbstract: PropTypes.arrayOf(PropTypes.string),
     FilingNumber: PropTypes.string,
     FilingDate: PropTypes.string,
     PublicationNumber: PropTypes.string,
@@ -129,6 +138,7 @@ BibliographicDataSection.propTypes = {
     Applicants: PropTypes.arrayOf(PropTypes.string),
     Representatives: PropTypes.arrayOf(PropTypes.string),
     Inventors: PropTypes.arrayOf(PropTypes.string),
+    Abstract: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   handleClick: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,

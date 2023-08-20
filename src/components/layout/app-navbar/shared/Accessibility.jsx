@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Dropdown, Button } from 'react-bootstrap';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { CgEditContrast } from 'react-icons/cg';
 import { useTranslation } from 'react-i18next';
 
-const Accessibility = () => {
+const Accessibility = ({ className }) => {
   const { t } = useTranslation('layout');
   // dark mode
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -51,15 +52,15 @@ const Accessibility = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
   return (
-    <div className="accessibility-container">
+    <div className={`${className} accessibility-container`}>
       <Dropdown>
         <Dropdown.Toggle
-          variant="primary"
-          className="appBtn has-icon no-arrow btn nav-link mx-auto my-3 my-lg-0 rounded"
-          size="lg"
+          variant="link"
+          className="appBtn with-hover no-arrow mx-auto rounded d-flex gap-2 app-text-primary-dark fs-sm"
           id="accessibility"
         >
           <IoSettingsOutline className="fs-22" />
+          {t('navbar.settings')}
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <div>
@@ -85,4 +86,13 @@ const Accessibility = () => {
     </div>
   );
 };
+
+Accessibility.propTypes = {
+  className: PropTypes.string,
+};
+
+Accessibility.defaultProps = {
+  className: '',
+};
+
 export default Accessibility;

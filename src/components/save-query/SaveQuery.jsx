@@ -131,7 +131,7 @@ const SaveQuery = ({
       if (selectedSaveQueryOption === 'myList') executeSaveQuery();
     }
   };
-
+  const auth = useAuth();
   return (
     <>
       {!showFocusArea ? (
@@ -148,8 +148,8 @@ const SaveQuery = ({
             >
               {
                     isSaved && isReady
-                      ? <span className="icon-filled-star star-button f-24" data-testid="filled-star" />
-                      : <span className="icon-star f-24 star-button" data-testid="empty-star" />
+                      ? <span className="icon-filled-star star-button fs-24" data-testid="filled-star" />
+                      : <span className="icon-star fs-24 star-button" data-testid="empty-star" />
                   }
             </Button>
               }
@@ -163,8 +163,8 @@ const SaveQuery = ({
         >
           {
             isSaved && isReady
-              ? <span className="icon-filled-star star-button f-24" data-testid="filled-star" />
-              : <span className="icon-star f-24 star-button" data-testid="empty-star" />
+              ? <span className="icon-filled-star star-button fs-24" data-testid="filled-star" />
+              : <span className="icon-star fs-24 star-button" data-testid="empty-star" />
           }
           {
             showSaveQueryMenu && (
@@ -196,13 +196,11 @@ const SaveQuery = ({
         </Button>
       )}
       <ModalAlert
-        handleConfirm={() => {
-          // TODO to be written once receive URL
-        }}
-        title={t('common:limitReached.register_now')}
+        handleConfirm={() => auth.signinRedirect()}
+        title={t('common:limitReached.login_now')}
         hideAlert={() => { setReachedLimit(false); }}
-        msg={t('common:limitReached.register_now_msg')}
-        confirmBtnText={t('common:register')}
+        msg={t('common:limitReached.login_now_msg')}
+        confirmBtnText={t('common:limitReached.login_now')}
         showModal={reachedLimit}
         classIcon="text-warning"
       />

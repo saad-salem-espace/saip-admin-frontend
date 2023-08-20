@@ -35,12 +35,12 @@ function IprExpand({
             <p className="fs-xs mb-2 mb-lg-0 me-3">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:queue')}
-              {` ${assignment.queuePriorityDate.substring(0, dateFormatSubstring)}`}
+              {` ${assignment?.queuePriorityDate?.substring(0, dateFormatSubstring)}`}
             </p>
             <p className="fs-xs mb-2  mb-lg-0">
               <MdOutlineCalendarMonth className="text-muted me-1 fs-sm" />
               {t('dashboard:priority')}
-              {` ${assignment.earliestPriorityDate.substring(0, dateFormatSubstring)}`}
+              {` ${assignment?.earliestPriorityDate?.substring(0, dateFormatSubstring)}`}
             </p>
           </div>
           <div>
@@ -85,6 +85,7 @@ function IprExpand({
             examinerView
             hideFocus={hideFocus}
             fromFocusArea={fromFocusArea}
+            dashboardExpandedView={isIPRExpanded}
           />
         </Col>
         <Col lg={6}>

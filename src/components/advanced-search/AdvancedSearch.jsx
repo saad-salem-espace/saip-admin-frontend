@@ -25,6 +25,7 @@ function AdvancedSearch({
   filters,
   isAdvancedSearch,
   searchIdentifiers,
+  setAdvancedValidation,
 }) {
   const [formikInitials, setFormikInitials] = useState({ selectedFilters: {} });
   const { t } = useTranslation('search');
@@ -41,6 +42,7 @@ function AdvancedSearch({
       }}
       submitRef={submitRef}
       isAdvancedMenuOpen={isAdvancedMenuOpen}
+      setAdvancedValidation={setAdvancedValidation}
     />
   ), [defaultInitializers, isAdvancedMenuOpen]);
 
@@ -98,7 +100,7 @@ function AdvancedSearch({
   useEffect(() => {
     if (!isAdvancedSearch) {
       if (activeTabId === 1) setActiveTabId(2);
-    }
+    } else setActiveTabId(1);
   }, [isAdvancedSearch]);
 
   return (
@@ -108,7 +110,7 @@ function AdvancedSearch({
           variant="primary-dark"
           onClick={toggleAdvancedSearchMenu}
           className={` ${AdvancedSearchStyle.collapseIcon} p-2 d-flex`}
-          text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="text-white f-16" />}
+          text={<FontAwesomeIcon icon={(!isAdvancedMenuOpen && lang === 'en') || (isAdvancedMenuOpen && lang === 'ar') ? faAnglesRight : faAnglesLeft} className="text-white fs-base" />}
         />
         <div className={`${isAdvancedMenuOpen ? 'd-block' : 'd-none'}`}>
           <h5 className="pb-6 pt-9 ms-3">{t('advancedSearch')}</h5>
@@ -146,10 +148,12 @@ AdvancedSearch.propTypes = {
   filters: PropTypes.instanceOf(Array),
   isAdvancedSearch: PropTypes.bool.isRequired,
   searchIdentifiers: PropTypes.instanceOf(Array).isRequired,
+  setAdvancedValidation: PropTypes.func,
 };
 
 AdvancedSearch.defaultProps = {
   onChangeSearchQuery: () => {},
+  setAdvancedValidation: () => {},
   filters: [],
 };
 

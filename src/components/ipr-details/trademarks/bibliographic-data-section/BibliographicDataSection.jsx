@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { BiSearch } from 'react-icons/bi';
 import PropTypes from 'prop-types';
 import HandleEmptyAttribute from 'components/shared/empty-states/HandleEmptyAttribute';
 import './bibliographic.scss';
@@ -11,6 +12,8 @@ import { highlightListener } from 'utils/eventListeners';
 import Row from 'react-bootstrap/Row';
 import KeywordPlannerButton from 'components/ipr-details/shared/seacrh-query/KeywordPlannerButton';
 import LabelValue from 'components/ipr-details/shared/label-value/LabelValue';
+import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
+import 'components/shared/button/Button.scss';
 
 const BibliographicDataSection = (
   {
@@ -19,6 +22,8 @@ const BibliographicDataSection = (
     getAttachmentURL,
     handleClick,
     examinerView,
+    dashboardExpandedView,
+    handleCloseIprDetail,
   },
 ) => {
   const { t } = useTranslation('search');
@@ -43,15 +48,27 @@ const BibliographicDataSection = (
     top: `${top - 38}px`,
   };
 
+  const imgSrc = getAttachmentURL(BibliographicData?.Mark);
+
   return (
     <Container fluid>
       <Row>
         {
-        isIPRExpanded && (
-          <Col md={4} className="mb-md-0 mb-2">
+        (isIPRExpanded || dashboardExpandedView) && (
+          <Col md={dashboardExpandedView ? 12 : 4} className={`mb-2 ${dashboardExpandedView ? 'mb-6' : 'mb-md-0'}`}>
             <div className="me-4">
-              <Image src={getAttachmentURL(BibliographicData.Mark)} className="mw-100" />
+              <Image src={imgSrc} className="mw-100" />
             </div>
+            <SearchImageButton
+              imgSrc={imgSrc}
+              handleCloseIprDetail={handleCloseIprDetail}
+              btnClass="appBtn my-2 fs-sm py-4 px-6 mt-22 btn-primary"
+              btnSize="lg"
+              btnVariant=""
+            >
+              <BiSearch className="fs-20 me-3" />
+              {t('trademarks.similarImage')}
+            </SearchImageButton>
           </Col>
         )
       }
@@ -63,67 +80,67 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('trademarks.markNameEN')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.BrandNameEn}
+            value={BibliographicData?.BrandNameEn}
           />
           <LabelValue
             label={t('trademarks.markNameAR')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.BrandNameAr}
+            value={BibliographicData?.BrandNameAr}
           />
           <LabelValue
             label={t('ipr.filingNumber')}
             labelClassName="bibliographicLabel"
             className="mb-4"
-            value={BibliographicData.FilingNumber}
+            value={BibliographicData?.FilingNumber}
           />
           <LabelValue
             label={t('ipr.filingDate')}
             labelClassName="bibliographicLabel"
             className="mb-4"
-            value={BibliographicData.FilingDate}
+            value={BibliographicData?.FilingDate}
           />
           <LabelValue
             label={t('trademarks.markType')}
             labelClassName="bibliographicLabel"
             className="mb-4"
-            value={BibliographicData.TrademarkType}
+            value={BibliographicData?.TrademarkType}
           />
           <LabelValue
             label={t('trademarks.markStatus')}
             labelClassName="bibliographicLabel"
             className="mb-4"
-            value={BibliographicData.TrademarkLastStatus}
+            value={BibliographicData?.TrademarkLastStatus}
           />
           <LabelValue
             label={t('ipr.registrationNumber')}
             labelClassName="bibliographicLabel"
             className="mb-4"
-            value={BibliographicData.RegistrationNumber}
+            value={BibliographicData?.RegistrationNumber}
           />
           <LabelValue
             label={t('ipr.registrationDate')}
             labelClassName="bibliographicLabel"
             className="mb-4"
-            value={BibliographicData.RegistrationDate}
+            value={BibliographicData?.RegistrationDate}
           />
           <LabelValue
             label={t('ipr.publicationNumber')}
             labelClassName="bibliographicLabel"
             className="mb-4"
-            value={BibliographicData.PublicationNumber}
+            value={BibliographicData?.PublicationNumber}
           />
           <LabelValue
             label={t('ipr.publicationDate')}
             labelClassName="bibliographicLabel"
             className="mb-4"
-            value={BibliographicData.PublicationDate}
+            value={BibliographicData?.PublicationDate}
           />
-          <p className="app-text-primary f-14 disable-highlight">{t('trademarks.markDescription')}</p>
+          <p className="app-text-primary fs-sm disable-highlight">{t('trademarks.markDescription')}</p>
           <LabelValue
             labelClassName="bibliographicLabel"
             value={
               <ShowMore>
-                <HandleEmptyAttribute checkOn={BibliographicData.Description} />
+                <HandleEmptyAttribute checkOn={BibliographicData?.Description} />
               </ShowMore>
 }
             handleClick={handleClick}
@@ -132,25 +149,25 @@ const BibliographicDataSection = (
           <LabelValue
             label={t('ipr.owners')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Owners.join('; ')}
+            value={BibliographicData?.Owners.join('; ')}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.applicants')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Applicants.join('; ')}
+            value={BibliographicData?.Applicants.join('; ')}
             className="mb-4"
           />
           <LabelValue
             label={t('ipr.representatives')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.Representatives.join('; ')}
+            value={BibliographicData?.Representatives.join('; ')}
             className="mb-4"
           />
           <LabelValue
             label={t('classifications')}
             labelClassName="bibliographicLabel"
-            value={BibliographicData.NICEClassification.join('; ')}
+            value={BibliographicData?.NICEClassification.join('; ')}
             className="mb-4"
           />
         </Col>
@@ -181,11 +198,14 @@ BibliographicDataSection.propTypes = {
   isIPRExpanded: PropTypes.bool.isRequired,
   getAttachmentURL: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  dashboardExpandedView: PropTypes.bool,
 };
 
 BibliographicDataSection.defaultProps = {
   examinerView: false,
+  dashboardExpandedView: false,
 };
 
 export default BibliographicDataSection;

@@ -14,10 +14,11 @@ import PriorityRow from '../shared/priorities/PriorityRow';
 import OriginalDocument from '../shared/original-document/OriginalDocument';
 import DesignerDetails from '../shared/designer-details/DesignerDetails';
 import DesignerDetailsRow from '../shared/designer-details/DesignerDetailsRow';
+import Description from '../patent/description/Description';
 
 const IcLayoutsIprViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
-  selectedView, handleClick, examinerView,
+  selectedView, handleClick, examinerView, fromFocusArea, handleCloseIprDetail,
 }) => {
   const { t } = useTranslation('search');
   const content = {
@@ -34,6 +35,8 @@ const IcLayoutsIprViews = ({
             largeThumb={isIPRExpanded}
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -113,6 +116,8 @@ const IcLayoutsIprViews = ({
             largeThumb
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -125,6 +130,27 @@ const IcLayoutsIprViews = ({
         workstreamId={searchResultParams.workstreamId}
         documentId={documentId}
       />
+    ),
+    Description: (
+      <Description
+        description={document.BibliographicData.Description}
+        isIPRExpanded={isIPRExpanded}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      >
+        <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
+        {document.Drawings?.length ? (
+          <Carousel
+            largeThumb={isIPRExpanded}
+            className="drawings"
+            images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
+          />
+        ) : (
+          <NoData />
+        )}
+      </Description>
     ),
   };
   return content[selectedView];
@@ -139,12 +165,15 @@ IcLayoutsIprViews.propTypes = {
   preparedGetAttachmentURL: PropTypes.func.isRequired,
   showSearchQuery: PropTypes.bool.isRequired,
   hideSearchQueryMenu: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  fromFocusArea: PropTypes.bool,
 };
 
 IcLayoutsIprViews.defaultProps = {
   examinerView: false,
+  fromFocusArea: false,
 };
 
 export default IcLayoutsIprViews;

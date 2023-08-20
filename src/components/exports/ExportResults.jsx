@@ -11,6 +11,8 @@ import useAuth from 'hooks/useAuth';
 import useAxios from 'hooks/useAxios';
 import exportDocumentsLoggerApi from 'apis/logs/exportDocumentsLoggerApi';
 
+import './export-result.scss';
+
 const ExportResults = ({ workstream, getSelectedItems, isValid }) => {
   const { t } = useTranslation('search', { keyPrefix: 'export' });
   const [reachedLimit, setReachedLimit] = useState(false);

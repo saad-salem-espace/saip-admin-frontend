@@ -208,13 +208,11 @@ function Bookmarks({
         />
       </div>
       <ModalAlert
-        handleConfirm={() => {
-          // TODO to be written once receive URL
-        }}
-        title={t('common:limitReached.register_now')}
+        handleConfirm={() => auth.signinRedirect()}
+        title={t('common:limitReached.login_now')}
         hideAlert={() => { setReachedLimit(false); }}
-        msg={t('common:limitReached.register_now_msg')}
-        confirmBtnText={t('common:register')}
+        msg={t('common:limitReached.login_now_msg')}
+        confirmBtnText={t('common:limitReached.login_now')}
         showModal={reachedLimit}
         classIcon="text-warning"
       />

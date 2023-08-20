@@ -23,10 +23,12 @@ import emptyState from 'assets/images/search-empty-state.svg';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
+import similarDocSearchApi from 'apis/search/similarDocSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
 import useAxios from 'hooks/useAxios';
+import { DateObject } from 'react-multi-date-picker';
 import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import { tableNames } from 'dbConfig';
@@ -43,6 +45,10 @@ import {
   convertQueryStrToArr,
   convertQueryArrToStr,
   convertQueryObjsArrToTransMemo,
+  teldaRegex,
+  noTeldaRegex,
+  wordCountValidation,
+  specialCharsValidation,
 } from '../../utils/searchQuery';
 import AdvancedSearch from '../advanced-search/AdvancedSearch';
 import SearchResultCards from './search-result-cards/SearchResultCards';
@@ -85,6 +91,7 @@ function SearchResults({ showFocusArea }) {
   const location = useLocation();
   const [searchFilters, setSearchFilters] = useState([]);
   const [otherSearchParams, setOtherSearchParams] = useState(Object.fromEntries(searchParams));
+  const [advancedValidation, setAdvancedValidation] = useState(true);
 
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
@@ -94,6 +101,8 @@ function SearchResults({ showFocusArea }) {
   const { getInstanceByMultiIndex } = useIndexedDbWrapper(tableNames.savedQuery);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q'));
   const [searchIdentifiers] = useCacheRequest(cachedRequests.workstreams, { url: `workstreams/${searchParams.get('workstreamId')}/identifiers` });
+  const docImage = searchParams.get('docImage');
+  const similarDocId = searchParams.get('similarDocId');
 
   const checkFilters = () => {
     if (!searchParams.get('filterEnabled') || searchParams.get('filterEnabled') === 'false') {
@@ -109,8 +118,12 @@ function SearchResults({ showFocusArea }) {
   const searchResultParams = useMemo(() => ({
     workstreamId: searchParams.get('workstreamId'),
     qArr: convertQueryStrToArr(searchParams.get('q'), searchIdentifiers),
+    qString: searchParams.get('q'),
     filters: checkFilters(),
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(docImage && { docImage }),
+    ...(similarDocId && { similarDocId }),
+    currentLang,
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [otherSearchParams, searchIdentifiers, searchFilters]);
 
@@ -119,6 +132,8 @@ function SearchResults({ showFocusArea }) {
     qArr: (searchParams.get('q')),
     filters: checkFilters().length ? JSON.stringify(checkFilters()) : '',
     ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
+    ...(docImage && { docImage }),
+    ...(similarDocId && { similarDocId }),
     ...(searchParams.get('enableSynonyms') && { enableSynonyms: searchParams.get('enableSynonyms') }),
   }), [otherSearchParams, searchIdentifiers, searchFilters]);
 
@@ -138,6 +153,8 @@ function SearchResults({ showFocusArea }) {
     enableSynonyms: (searchParams.get('enableSynonyms') === 'true'),
     documentId: JSON.parse(localStorage.getItem('FocusDoc'))?.doc?.filingNumber,
     fav: isQuerySaved,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
 
   const saveQueryParams = auth.isAuthenticated ? {
@@ -148,6 +165,8 @@ function SearchResults({ showFocusArea }) {
     workstreamKey: 'workStreamId',
     documentId: null,
     fav: true,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   } : {
     workstreamId: searchParams.get('workstreamId'),
     queryString: searchParams.get('q'),
@@ -156,6 +175,8 @@ function SearchResults({ showFocusArea }) {
     workstreamKey: 'workstreamId',
     documentId: null,
     fav: true,
+    docImage: (docImage && docImage !== 'false') ? docImage : null,
+    ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
   };
 
   const sortByOptionsPatent = [
@@ -288,6 +309,10 @@ function SearchResults({ showFocusArea }) {
     if (location.state?.filters) {
       setSearchFilters(location.state.filters);
     }
+    if (location.state?.simpleSearch) {
+      setIsAdvancedSearch(false);
+      setIsAdvancedMenuOpen(false);
+    }
   }, [location.state]);
 
   useEffect(() => {
@@ -310,7 +335,7 @@ function SearchResults({ showFocusArea }) {
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
     return (index === results.data.length - 1
-      ? null : results.data[index + 1].BibliographicData.FilingNumber);
+      ? null : results.data[index + 1]?.BibliographicData?.FilingNumber);
   };
 
   const getPreviousDocument = () => {
@@ -319,7 +344,7 @@ function SearchResults({ showFocusArea }) {
     const index = results.data.findIndex(
       (element) => element.BibliographicData.FilingNumber === activeDocument,
     );
-    return (index === 0 ? null : results.data[index - 1].BibliographicData.FilingNumber);
+    return (index === 0 ? null : results.data[index - 1]?.BibliographicData?.FilingNumber);
   };
 
   const collapseIPR = () => {
@@ -327,7 +352,7 @@ function SearchResults({ showFocusArea }) {
   };
 
   const parseAndSetSearchQuery = (qObjsArr) => {
-    setSearchQuery(convertQueryArrToStr(qObjsArr));
+    if (qObjsArr) setSearchQuery(convertQueryArrToStr(qObjsArr));
   };
 
   useEffect(() => {
@@ -422,7 +447,8 @@ function SearchResults({ showFocusArea }) {
           sort: 'mostRelevant',
           filterEnabled: false,
           q: (simpleQuery ? query : ''),
-          ...(imageName && { imageName }),
+          ...(imageName && isImgUploaded && { imageName }),
+          ...(docImage && isImgUploaded && { docImage }),
         })}`,
       });
     } else {
@@ -434,7 +460,8 @@ function SearchResults({ showFocusArea }) {
           workstreamId: values.selectedWorkstream.value,
           q: values.searchQuery,
           filterEnabled: false,
-          ...(imageName && { imageName }),
+          ...(imageName && isImgUploaded && { imageName }),
+          ...(docImage && isImgUploaded && { docImage }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
           page: 1,
@@ -458,7 +485,7 @@ function SearchResults({ showFocusArea }) {
         operator: '',
       }]);
     }
-  }, [searchIdentifiers]);
+  }, [searchIdentifiers, searchResultParams.qArr, isAdvancedMenuOpen, isAdvancedSearch]);
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -467,8 +494,8 @@ function SearchResults({ showFocusArea }) {
   }, [searchParams.get('enableSynonyms')]);
 
   useEffect(() => {
-    setSearchQuery(convertQueryArrToStr(searchResultParams.qArr));
-  }, [searchResultParams.qArr]);
+    if (!isAdvancedSearch) setSearchQuery('');
+  }, [isAdvancedSearch]);
 
   useEffect(() => {
     if (searchIdentifiers && searchResultParams.qArr) {
@@ -478,7 +505,13 @@ function SearchResults({ showFocusArea }) {
       );
       if (qObjsArr) {
         setSearchKeywords(
-          convertQueryObjsArrToTransMemo(qObjsArr, searchIdentifiers, t, currentLang),
+          convertQueryObjsArrToTransMemo(
+            qObjsArr,
+            searchResultParams.docImage || searchResultParams.imageName,
+            searchResultParams.similarDocId,
+            t,
+            currentLang,
+          ),
         );
       }
     }
@@ -505,6 +538,7 @@ function SearchResults({ showFocusArea }) {
   };
 
   const toggleAdvancedSearchMenu = () => {
+    setIsAdvancedSearch(!isAdvancedSearch);
     setIsAdvancedMenuOpen(!isAdvancedMenuOpen);
   };
 
@@ -589,7 +623,9 @@ function SearchResults({ showFocusArea }) {
     setSortBy(sortCriteria);
   };
 
-  const axiosConfig = advancedSearchApi(searchResultParams);
+  const axiosConfig = similarDocId
+    ? similarDocSearchApi(searchResultParams)
+    : advancedSearchApi(searchResultParams);
 
   const searchResult = {
     1: SearchResultCards,
@@ -604,9 +640,30 @@ function SearchResults({ showFocusArea }) {
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
       .test('Is not empty', validationMessages.search.required, (data) => (
-        (imageName || data)
+        (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
+      || data instanceof DateObject
+      ))
+      .test('Is valid advanced query', validationMessages.search.invalidAdvanced, () => (
+        (!isAdvancedSearch || advancedValidation)
+      ))
+      .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+      || data instanceof DateObject
+      ))
+      .test('Consecutive *', validationMessages.search.consecutiveAsteric, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && !(data.includes('**'))))
+      || data instanceof DateObject
+      ))
+      .test('Special characters', validationMessages.search.specialChars, (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
+      ))
+      .test('Words count', validationMessages.search.tooLong, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (wordCountValidation(data))))
+      || data instanceof DateObject
       )),
   });
+
   useEffect(() => {
     document.body.classList.add('search-result-wrapper');
     return () => {
@@ -651,7 +708,7 @@ function SearchResults({ showFocusArea }) {
                       options={WorkStreamsOptions}
                       moduleClassName="menu"
                       selectedOption={values.selectedWorkstream}
-                      className="workStreams ms-3 mt-1 customSelect w-px-300"
+                      className="workStreams ms-3 mt-1 customSelect"
                       setSelectedOption={(data) => {
                         setFieldValue('selectedWorkstream', data); setFieldValue('searchQuery', '');
                         resetSearch(data?.value);
@@ -672,17 +729,18 @@ function SearchResults({ showFocusArea }) {
                     setImageName={setImageName}
                     isImgUploaded={isImgUploaded}
                     onRecordingCallback={onRecordingCallback}
-                    setIsImgUploaded={() => {
-                      setIsImgUploaded();
+                    setIsImgUploaded={(v) => {
+                      setIsImgUploaded(v);
                     }}
                     resultsView
                     speechClassName="inner-speech"
                   >
                     <div className="d-md-flex mt-4">
-                      <div className="d-flex align-items-center me-4">
+                      <div className="d-flex align-items-center me-4 advanced-search-container">
                         <ToggleButton
                           handleToggleButton={() => {
                             setIsAdvancedSearch((isAdvanced) => !isAdvanced);
+                            setIsAdvancedMenuOpen((advancedMenu) => !advancedMenu);
                           }}
                           isToggleButtonOn={isAdvancedSearch}
                           text={t('advancedSearch')}
@@ -755,6 +813,7 @@ function SearchResults({ showFocusArea }) {
             onChangeSearchQuery={(values) => {
               parseAndSetSearchQuery(values);
             }}
+            setAdvancedValidation={setAdvancedValidation}
           />
         </Col>
         <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'} ${isAdvancedMenuOpen ? '' : 'closed-sidebar'}`}>
@@ -786,7 +845,7 @@ function SearchResults({ showFocusArea }) {
                     <div>
                       <div className="d-md-flex">
                         <div className="position-relative mb-6 viewSelect me-md-6">
-                          <span className="position-absolute f-12 saip-label select2">{t('view')}</span>
+                          <span className="position-absolute fs-xs saip-label select2">{t('view')}</span>
                           <Select
                             options={viewOptions}
                             setSelectedOption={onChangeView}
@@ -798,7 +857,7 @@ function SearchResults({ showFocusArea }) {
                           />
                         </div>
                         <div className="position-relative mb-8 sortBy">
-                          <span className="position-absolute f-12 saip-label select2">{t('sortBy')}</span>
+                          <span className="position-absolute fs-xs saip-label select2">{t('sortBy')}</span>
                           <Select
                             options={getSortOptions(searchResultParams.workstreamId)}
                             setSelectedOption={onChangeSortBy}
@@ -858,7 +917,7 @@ function SearchResults({ showFocusArea }) {
           </Formik>
         </Col>
         {activeDocument && (
-          <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className={`px-0 border-start ipr-section ${isAdvancedMenuOpen ? 'sidebar-expanded' : 'closed-sidebar'}`}>
+          <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className={`px-0 border-start ipr-section handle-different-mobile ${isAdvancedMenuOpen ? 'sidebar-expanded' : 'closed-sidebar'}`}>
             <IprDetails
               collapseIPR={collapseIPR}
               isIPRExpanded={isIPRExpanded}
@@ -868,6 +927,7 @@ function SearchResults({ showFocusArea }) {
               getPreviousDocument={getPreviousDocument}
               setActiveDocument={setActiveDocument}
               fromFocusArea={false}
+              handleCloseIprDetail={handleCloseIprDetail}
             />
           </Col>
         )}

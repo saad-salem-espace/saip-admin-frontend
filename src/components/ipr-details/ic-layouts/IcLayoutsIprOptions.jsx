@@ -10,6 +10,10 @@ const IcLayoutsIprOptions = () => {
         value: 'BibliographicData',
       },
       {
+        label: t('ipr.description'),
+        value: 'Description',
+      },
+      {
         label: t('ipr.applicantDetails'),
         value: 'ApplicantsDetails',
       },
@@ -32,10 +36,6 @@ const IcLayoutsIprOptions = () => {
       {
         label: t('ipr.drawings'),
         value: 'Drawings',
-      },
-      {
-        label: t('ipr.originalDocument'),
-        value: 'OriginalDocuments',
       },
     ],
   };

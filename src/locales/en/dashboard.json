@@ -17,6 +17,7 @@
   "bookmarks": "Bookmarks",
   "notAssigned": "Can't see your assignments?",
   "emptyStateTitle": "You don’t have any assignments yet",
+  "notAvailable": "Not Available",
   "status": {
     "toDo": "To Do",
     "done": "Done",

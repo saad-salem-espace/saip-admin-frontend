@@ -10,8 +10,8 @@
   }
 }
 .closed {
-  @include media-breakpoint-up(xxl) {
-    &.col-xxl-1 {
+  @include media-breakpoint-up(xl) {
+    &.col-xxl-1, &.col-xl-1 {
       width: 5.33333333% !important;
     }
   }
@@ -46,11 +46,8 @@
   }
 }
 .search-result-wrapper {
-  @include media-breakpoint-up(xl) {
-    overflow-y: hidden;
-  }
   .footer {
-    margin-top: -10px;
+    margin-top: -25px;
   }
 }
 
@@ -161,6 +158,9 @@
 }
 
 .search-results-view {
+  .image-wrapper {
+    position: relative;
+  }
   &.shared-search {
     flex-grow: 1;
   }
@@ -205,11 +205,15 @@
   color: var(--bs-primary-dark) !important;
 }
 
-// .closed-sidebar {
-//   html[dir="rtl"] & {
-//     margin-right: -40px;
-//   }
-//   html[dir="ltr"] & {
-//     margin-left: -40px;
-//   }
-// }
+.advanced-search-container {
+  @include media-breakpoint-up(xl) {
+    @include border(1px,20px,10px,$border-color);
+    @include border-end(0);
+    html[dir="ltr"] & {
+      padding-right: 16px;
+    }
+    html[dir="rtl"] & {
+      padding-left: 16px;
+    }
+  }
+}

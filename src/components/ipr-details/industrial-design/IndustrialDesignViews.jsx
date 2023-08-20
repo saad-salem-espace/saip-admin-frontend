@@ -20,7 +20,7 @@ import LocarnoClassificationRow from './locarno-classification/LocarnoClassifica
 
 const IndustrialDesignViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
-  handleClick, examinerView,
+  handleClick, examinerView, handleCloseIprDetail, fromFocusArea,
 
 }) => {
   const { t } = useTranslation('search');
@@ -41,6 +41,8 @@ const IndustrialDesignViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -54,6 +56,8 @@ const IndustrialDesignViews = ({
               largeThumb
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -73,6 +77,8 @@ const IndustrialDesignViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -185,11 +191,14 @@ IndustrialDesignViews.propTypes = {
   searchResultParams: PropTypes.shape.isRequired,
   preparedGetAttachmentURL: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  fromFocusArea: PropTypes.bool,
 };
 
 IndustrialDesignViews.defaultProps = {
   examinerView: false,
+  fromFocusArea: false,
 };
 
 export default IndustrialDesignViews;

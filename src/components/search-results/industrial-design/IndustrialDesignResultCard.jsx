@@ -23,17 +23,20 @@ function IndustrialDesignResultCard({
   const [searchParams] = useSearchParams();
   const preparedGetAttachmentURL = (fileName, fileType = 'image') => getAttachmentURL(
     {
-      workstreamId: searchParams.get('workstreamId') || '3', id: BibliographicData.FilingNumber, fileName, fileType,
+      workstreamId: searchParams.get('workstreamId') || '3', id: BibliographicData?.FilingNumber, fileName, fileType,
     },
   );
+
+  const imgFilename = BibliographicData?.OverallProductDrawing
+    || searchResult?.Drawings?.[0].FileName;
 
   return (
     <Button
       variant="transparent"
-      onClick={() => { setActiveDocument(BibliographicData.FilingNumber); }}
-      className="text-start f-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
+      onClick={() => { setActiveDocument(BibliographicData?.FilingNumber); }}
+      className="text-start fs-20 px-1 py-0 font-regular app-text-primary-dark border-0 w-100"
       text={(
-        <div className={`${activeDocument === BibliographicData.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
+        <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="d-flex mb-1">
             <div>
               <div className="d-flex">
@@ -42,10 +45,10 @@ function IndustrialDesignResultCard({
                   name={`selectedCards.${BibliographicData?.FilingNumber}`}
                   fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
                 />}
-                <Badge text={BibliographicData.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
+                <Badge text={BibliographicData?.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
-                <Image src={preparedGetAttachmentURL(BibliographicData.OverallProductDrawing)} className="rounded" />
+                <Image src={preparedGetAttachmentURL(imgFilename)} className="rounded" />
               </div>
             </div>
             <div className="title">
@@ -75,8 +78,8 @@ function IndustrialDesignResultCard({
               </span>
               <div>
                 <p className="mb-1 text-black md-text">
-                  {t('filed', { value: BibliographicData.FilingNumber })}
-                  <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
+                  {t('filed', { value: BibliographicData?.FilingNumber })}
+                  <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
                   <span>{BibliographicData?.FilingDate}</span>
                 </p>
                 {
@@ -90,16 +93,16 @@ function IndustrialDesignResultCard({
                   selectedView.value === 'detailed' && (
                     <>
                       <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        {t('ipr.registered', { value: BibliographicData.RegistrationNumber })}
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        <span>{BibliographicData.RegistrationDate}</span>
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+                        {t('ipr.registered', { value: BibliographicData?.RegistrationNumber })}
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+                        <span>{BibliographicData?.RegistrationDate}</span>
                       </p>
                       <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        {t('ipr.published', { value: BibliographicData.PublicationNumber })}
-                        <FontAwesomeIcon icon={faCircle} className="mx-1 f-8" />
-                        <span>{BibliographicData.PublicationDate}</span>
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+                        {t('ipr.published', { value: BibliographicData?.PublicationNumber })}
+                        <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+                        <span>{BibliographicData?.PublicationDate}</span>
                       </p>
                     </>
                   )
@@ -129,6 +132,9 @@ IndustrialDesignResultCard.propTypes = {
       OverallProductDrawing: PropTypes.string.isRequired,
       Status: PropTypes.string.isRequired,
     }),
+    Drawings: PropTypes.arrayOf(PropTypes.shape({
+      FileName: PropTypes.string.isRequired,
+    })),
   }).isRequired,
   setActiveDocument: PropTypes.func.isRequired,
   activeDocument: PropTypes.number.isRequired,

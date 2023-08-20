@@ -5,28 +5,32 @@
 .float-widget {
   transform: none !important;
   top: 70% !important;
-  @include media-breakpoint-up(lg) {
-    html[dir="ltr"] & {
-      left: 70% !important;
+  &.survey-widget {
+    min-width: 250px;
+    .widget-action {
+      margin-top: 0 !important;
     }
-    html[dir="rtl"] & {
-      right: 70% !important;
+    .widget-title {
+      p {
+        margin-bottom: 0 !important;
+        html[dir="rtl"] & {
+          padding: 0 30px;
+          font-size: 13px !important;
+          line-height: 24px;
+        }
+      }
     }
   }
-  @include media-breakpoint-up(xl) {
+  @media screen and (max-width: 1900px) {
+    position: fixed !important;
     html[dir="ltr"] & {
-      left: 74% !important;
+      transform: translate(-95%, 0%) !important;
+      left: 95% !important;
     }
     html[dir="rtl"] & {
-      right: 74% !important;
-    }
-  }
-  @include media-breakpoint-up(xxl) {
-    html[dir="ltr"] & {
-      left: 80% !important;
-    }
-    html[dir="rtl"] & {
-      right: 80% !important;
+      transform: translate(95%, 0%) !important;
+      inset: auto auto 60px 0px !important;
+      right: 95% !important;
     }
   }
   @media screen and (max-width: 1200px) {
@@ -40,7 +44,6 @@
       inset: auto auto 60px 0px !important;
       right: 50% !important;
     }
-
   }
   .popover-arrow {
     &::before,
@@ -53,10 +56,10 @@
     position: relative;
     top: 15px;
     html[dir="ltr"] & {
-      left: 90%;
+      left: 88%;
     }
     html[dir="rtl"] & {
-      right: 90%;
+      right: 88%;
     }
   }
   .widget-title {

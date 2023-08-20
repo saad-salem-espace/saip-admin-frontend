@@ -2,8 +2,19 @@
 @import "../../../assets/styles/utilities/mixin";
 @import "~bootstrap/scss/mixins";
 
+.skiptranslate:not([style="display: none;"]) + noscript + #root .app-navbar {
+  top: 40px;
+} 
 .app-navbar {
-  z-index: 7 !important;
+  z-index: 12 !important;
+  @include media-breakpoint-down(xxl) {
+    *:not(svg) {
+      font-size: 14px !important;
+    }
+    .appBtn {
+      font-size: 12px !important;
+    }
+  }
   @include media-breakpoint-up(lg) {
     height: 80px;
   }
@@ -26,7 +37,18 @@
       @include border-end(10px);
     }
   }
+  .guest-links {
+    html[dir="ltr"] & {
+      margin-left: 16px;
+      margin-right: auto;
+    }
+    html[dir="rtl"] & {
+      margin-right: 16px;
+      margin-left: auto;
+    }
+  }
   &.guest {
+    padding: 16px 40px;
     .navbar-brand {
       &::after {
         top: 19px;
@@ -35,6 +57,28 @@
         }
         html[dir="rtl"] & {
           left: -18px;
+        }
+      }
+    }
+    .edges-border {
+      html[dir="ltr"] & {
+        margin-left: 0 !important;
+      }
+      html[dir="rtl"] & {
+        margin-right: 0 !important;
+      }
+    }
+    .accessibility-container {
+      html[dir="ltr"] & {
+        padding-right: 10px;
+      }
+      html[dir="rtl"] & {
+        padding-left: 10px;
+      }
+      &.logged-customer {
+        @include media-breakpoint-up(lg) {
+          @include border(1px,25px,13px,$border-color);
+          @include border-start(0);
         }
       }
     }
@@ -62,14 +106,6 @@
     padding-bottom: 0;
   }
   .accessibility-container {
-    @include media-breakpoint-up(xl) {
-      html[dir="ltr"] & {
-        padding-left: 15px;
-      }
-      html[dir="rtl"] & {
-        padding-right: 15px;
-      }
-    }
     .size-control {
       width: 48px;
       height: 48px;
@@ -120,14 +156,20 @@
     }
   }
   .help-link-wrapper {
+    html[dir="ltr"] & {
+      padding-left: 10px;
+    }
+    html[dir="rtl"] & {
+      padding-right: 10px;
+    }
     @include media-breakpoint-up(xl) {
       @include border(1px,25px,6px,$border-color);
       @include border-start(0);
       html[dir="ltr"] & {
-        margin-left: 14px;
+        margin-left: 16px;
       }
       html[dir="rtl"] & {
-        margin-right: 14px;
+        margin-right: 16px;
       }
     }
   }
@@ -136,6 +178,19 @@
       @include media-breakpoint-up(xl) {
         @include border(1px,25px,6px,$border-color);
         @include border-end(0);
+      }
+      &.logged-customer {
+        @include media-breakpoint-up(xl) {
+          @include border-start(0);
+          html[dir="ltr"] & {
+            margin-left: 10px !important;
+            padding-left: 20px !important
+          }
+          html[dir="rtl"] & {
+            margin-right: 10px !important;
+            padding-right: 20px !important
+          }
+        }
       }
     }
     .navbar-toggler {

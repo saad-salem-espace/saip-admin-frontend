@@ -14,10 +14,12 @@ import RepresentativeRow from '../shared/representatives/RepresentativeRow';
 import Priorities from '../shared/priorities/Priorities';
 import PriorityRow from '../shared/priorities/PriorityRow';
 import OriginalDocument from '../shared/original-document/OriginalDocument';
+import Description from '../patent/description/Description';
 
 const PlantVarietyViews = ({
-  isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
+  isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, fromFocusArea,
   selectedView, handleClick, examinerView,
+  handleCloseIprDetail,
 }) => {
   const { t } = useTranslation('search');
   const content = {
@@ -34,6 +36,8 @@ const PlantVarietyViews = ({
             largeThumb={isIPRExpanded}
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -113,6 +117,8 @@ const PlantVarietyViews = ({
             largeThumb
             className="drawings"
             images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+            fromFocusArea={fromFocusArea}
+            handleCloseIprDetail={handleCloseIprDetail}
           />
         ) : (
           <NoData />
@@ -125,6 +131,26 @@ const PlantVarietyViews = ({
         workstreamId={searchResultParams.workstreamId}
         documentId={documentId}
       />
+    ),
+    Description: (
+      <Description
+        description={document.BibliographicData.Description}
+        isIPRExpanded={isIPRExpanded}
+        handleClick={handleClick}
+        examinerView={examinerView}
+      >
+        <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
+        {document.Drawings?.length ? (
+          <Carousel
+            largeThumb={isIPRExpanded}
+            handleCloseIprDetail={handleCloseIprDetail}
+            className="drawings"
+            images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+          />
+        ) : (
+          <NoData />
+        )}
+      </Description>
     ),
   };
   return content[selectedView];
@@ -141,10 +167,13 @@ PlantVarietyViews.propTypes = {
   hideSearchQueryMenu: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  fromFocusArea: PropTypes.bool,
+  handleCloseIprDetail: PropTypes.func.isRequired,
 };
 
 PlantVarietyViews.defaultProps = {
   examinerView: false,
+  fromFocusArea: false,
 };
 
 export default PlantVarietyViews;

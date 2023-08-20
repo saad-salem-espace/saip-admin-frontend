@@ -47,7 +47,7 @@ function UploadImage({
           <div className={`uploadImageWrapper ${className}`}>
             {
             showUploadImgSection && (
-              <div className={` dashedBorder ${errors ? 'error' : ''}`}>
+              <div className={` dashedBorder mt-2${errors ? 'error' : ''}`}>
                 <div className="uploadImage justify-content-center d-flex">
                   {
                   isSubmitting ? (
@@ -55,21 +55,21 @@ function UploadImage({
                   ) : (
                     <Button
                       variant="transparent"
-                      className="app-text-primary-dark f-16 w-100 py-0 border-0"
+                      className="app-text-primary-dark fs-base w-100 py-0 border-0"
                       onClick={onImageUpload}
                       {...dragProps}
                       text={
                         <>
-                          <div className="icon-file-plus f-60 mb-2" />
+                          <div className="icon-file-plus fs-60 mb-2" />
                           <span>{t('dragDrop')}</span>
-                          <span className="font-regular text-gray f-14 d-block mt-1">
+                          <span className="font-regular text-gray fs-sm d-block mt-1">
                             <Trans
                               i18nKey="imgFormats"
                               ns="search"
                               components={<span className="my-2 d-block" />}
                             />
                           </span>
-                          <span className="font-regular app-text-primary f-14 text-underline">{t('browseFiles')}</span>
+                          <span className="font-regular app-text-primary fs-sm text-underline">{t('browseFiles')}</span>
                         </>
                       }
                     />
@@ -81,33 +81,35 @@ function UploadImage({
           }
             {imageList.map((image, index) => (
               // eslint-disable-next-line react/no-array-index-key
-              <div key={index} className="image-item">
-                <Image src={image.data_url} className="imageView" />
-                <Button
-                  className="pe-2 removeImg"
-                  onClick={() => onImageRemove(index)}
-                  text={
-                    <FontAwesomeIcon icon={faTimes} className="f-14 text-gray" />
-                }
-                />
+              <div key={index} className="image-wrapper">
+                <div className="image-item">
+                  <Image src={image.data_url} className="imageView" />
+                  <Button
+                    className="pe-2 removeImg"
+                    onClick={() => onImageRemove(index)}
+                    text={
+                      <FontAwesomeIcon icon={faTimes} className="fs-sm text-gray" />
+                  }
+                  />
+                </div>
               </div>
             ))}
           </div>
           {errors && (
             <div>
-              {errors.acceptType && <span className="app-text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.imgFormats')}</span>}
+              {errors.acceptType && <span className="app-text-danger-dark fs-xs errorMsg pb-2">{t('validationErrors.imgFormats')}</span>}
             </div>
           )}
           {errors
           && (
             <div>
-              {errors.maxFileSize && <span className="app-text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxSize')}</span>}
+              {errors.maxFileSize && <span className="app-text-danger-dark fs-xs errorMsg pb-2">{t('validationErrors.maxSize')}</span>}
             </div>
           )}
           {errors
           && (
             <div>
-              {errors.maxNumber && <span className="app-text-danger-dark f-12 errorMsg pb-2">{t('validationErrors.maxNumber')}</span>}
+              {errors.maxNumber && <span className="app-text-danger-dark fs-xs errorMsg pb-2">{t('validationErrors.maxNumber')}</span>}
             </div>
           )}
         </>

@@ -28,6 +28,7 @@ import OriginalDocument from '../shared/original-document/OriginalDocument';
 const PatentViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams,
   selectedView, handleClick, examinerView,
+  handleCloseIprDetail, fromFocusArea,
 }) => {
   const { t } = useTranslation('search');
   const content = (s) => {
@@ -39,12 +40,14 @@ const PatentViews = ({
           handleClick={handleClick}
           examinerView={examinerView}
         >
-          <h6 className="disable-highlight">{t('ipr.drawings')}</h6>
+          <h6 className="disable-highlight mt-6">{t('ipr.drawings')}</h6>
           {document?.Drawings?.length ? (
             <Carousel
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -182,6 +185,8 @@ const PatentViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -201,6 +206,8 @@ const PatentViews = ({
               largeThumb={isIPRExpanded}
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -214,6 +221,8 @@ const PatentViews = ({
               largeThumb
               className="drawings"
               images={document.Drawings.map((d) => preparedGetAttachmentURL(d.FileName))}
+              handleCloseIprDetail={handleCloseIprDetail}
+              fromFocusArea={fromFocusArea}
             />
           ) : (
             <NoData />
@@ -245,10 +254,13 @@ PatentViews.propTypes = {
   hideSearchQueryMenu: PropTypes.func.isRequired,
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  handleCloseIprDetail: PropTypes.func.isRequired,
+  fromFocusArea: PropTypes.bool,
 };
 
 PatentViews.defaultProps = {
   examinerView: false,
+  fromFocusArea: false,
 };
 
 export default PatentViews;

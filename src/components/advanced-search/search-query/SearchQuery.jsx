@@ -11,14 +11,15 @@ import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import Button from 'components/shared/button/Button';
 import ErrorMessage from 'components/shared/error-message/ErrorMessage';
-import { parseQuery } from 'utils/searchQuery';
 import SearchFieldWithButtons from './search-field/SearchFieldWIthButtons';
 import SearchQueryValidationSchema from './SearchQueryValidationSchema';
 import './SearchQuery.scss';
+import SearchQueryUpdater from './SearchQueryUpdater';
 
 function SearchQuery({
   workstreamId, firstIdentifierStr, onChangeSearchQuery, defaultInitializers, submitRef, className,
   isAdvancedMenuOpen, examinerView, submitCallback,
+  setAdvancedValidation,
 }) {
   const currentLang = i18n.language;
   const { cachedRequests } = useContext(CacheContext);
@@ -75,25 +76,13 @@ function SearchQuery({
         {({
           values, setFieldValue, errors, setValues, touched, setErrors, setTouched, handleSubmit,
         }) => (
-          <Form
-            onChange={(event) => {
-              const { name, value } = event.target;
-              const [fName, fIndex, fAttr] = name.split('.');// searchFields.0.data
-              const updatedArray = values[fName].map((item, i) => {
-                if (i === Number(fIndex)) {
-                  return { ...item, [fAttr]: value };
-                }
-                return item;
-              });
-              const newValues = { ...values, [fName]: updatedArray };
-              if (isAdvancedMenuOpen) {
-                onChangeSearchQuery(parseQuery(newValues.searchFields, ''));
-              } else {
-                handleOnChange(newValues);
-              }
-            }}
-            onSubmit={handleSubmit}
-          >
+          <Form onSubmit={handleSubmit}>
+            <SearchQueryUpdater
+              handleOnChange={handleOnChange}
+              onChangeSearchQuery={onChangeSearchQuery}
+              advancedOpened={isAdvancedMenuOpen}
+              setAdvancedValidation={setAdvancedValidation}
+            />
             <FieldArray name="searchFields">
               {({ push, remove }) => (
                 <div>
@@ -199,11 +188,13 @@ SearchQuery.propTypes = {
   isAdvancedMenuOpen: PropTypes.bool,
   examinerView: PropTypes.bool,
   submitCallback: PropTypes.func,
+  setAdvancedValidation: PropTypes.func,
 };
 
 SearchQuery.defaultProps = {
   onChangeSearchQuery: () => {},
   submitCallback: () => {},
+  setAdvancedValidation: () => {},
   className: '',
   submitRef: null,
   isAdvancedMenuOpen: true,

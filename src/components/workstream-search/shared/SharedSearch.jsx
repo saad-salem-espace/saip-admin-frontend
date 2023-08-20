@@ -48,7 +48,7 @@ function SharedSearch({
 
   useEffect(() => {
     setSelectedOption(searchOptions?.[0]);
-  }, [searchOptions]);
+  }, [searchOptions, isAdvanced]);
 
   function identifierName(option) {
     return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
@@ -59,7 +59,7 @@ function SharedSearch({
     searchWithSibling: !isAdvanced,
     searchInputWrapper: true,
     imgUploaded: isImgUploaded,
-    searchWithImage: selectedWorkStream === 2 || selectedWorkStream === 1,
+    searchWithImage: ![4, 5].includes(selectedWorkStream), // Disabled for Decisions & Copyright
     smSearch: resultsView,
   });
 
@@ -72,11 +72,10 @@ function SharedSearch({
     execute(uploadFile(file));
     if (!data.trim?.()) setErrors({});
   };
-
   return (
     <div className={`shared-search ${className}`}>
       <div>
-        <div className="d-xl-flex align-items-stretch">
+        <div className={`${(isAdvanced && !resultsView) ? 'advanced-search-home' : ''} ${isAdvanced && resultsView ? 'advanced-search-result' : ''} d-xl-flex align-items-stretch`}>
           <div className="position-relative mb-xl-0 mb-3">
             {(!isAdvanced && !resultsView)
               && (<span className="position-absolute saip-label">{t('searchFields')}</span>
@@ -107,10 +106,10 @@ function SharedSearch({
               SearchModuleClassName
             }
             placeholder={t('typeHere')}
-            isClearable={!!values.searchQuery}
+            isClearable={!!values.searchQuery && !isAdvanced}
             clearInput={() => { setFieldValue('searchQuery', ''); }}
             handleUploadImg={handleUploadImg}
-            searchWithImg={selectedWorkStream === 2 || selectedWorkStream === 1}
+            searchWithImg={![4, 5].includes(selectedWorkStream)}// Disabled for Decisions, Copyright
             type={selectedOption?.identifierType}
             onChangeDate={(date) => { setFieldValue('searchQuery', date); }}
             imageSearch={isImgUploaded}
@@ -130,7 +129,7 @@ function SharedSearch({
         </div>
         {
           errorMessage && (
-            <span className="app-text-danger-dark f-12">
+            <span className="app-text-danger-dark fs-xs">
               {errorMessage}
             </span>
           )

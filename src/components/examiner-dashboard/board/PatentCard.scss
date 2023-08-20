@@ -9,11 +9,14 @@
     background: var(--bs-primary-01);
   }
   .icon-wrapper{
-    display: none;
+    visibility: hidden;
+    width: 30px;
+    transition: all 0.1s ease-in-out;
   }
   &:hover {
     .icon-wrapper{
-      display: block;
+      visibility: visible;
+      transition: all 0.1s ease-in-out;
     }
   }
 }

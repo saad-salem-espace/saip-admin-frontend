@@ -54,7 +54,7 @@ function App() {
       <SelectedWorkStreamIdProvider>
         <div className="app" translate="no">
           <AppNavbar lang={lang} changeLang={changeLang} hideFocusArea={hideFocusArea} />
-          <div className="min-h-88">
+          <div className="min-h-90">
             <AppRoutes
               updateFocusArea={(flag) => setShowFocusArea(flag)}
               showFocusArea={showFocusArea}

@@ -1,6 +1,13 @@
 const advancedSearchApi = ({
-  workstreamId, qArr, imageName, enableSynonyms, page, sort,
+  workstreamId,
+  qArr,
+  imageName,
+  docImage,
+  enableSynonyms,
+  page,
+  sort,
   filters,
+  qString,
 }) => {
   const dataArr = [];
   qArr.forEach((qObj) => {
@@ -8,6 +15,14 @@ const advancedSearchApi = ({
       dataArr.push(qObj);
     }
   });
+  let imgName = imageName;
+  let docImg = docImage;
+  if (imgName && docImg) {
+    imgName = `${docImg}/attachments/images/${imgName}`;
+    docImg = true;
+  } else {
+    docImg = false;
+  }
   return {
     url: 'advanced-search',
     method: 'POST',
@@ -15,13 +30,15 @@ const advancedSearchApi = ({
     params: {
       workstreamId,
       sort: sort || 'mostRelevant',
-      ...(imageName && { imageName }),
+      ...(imgName && { imageName: imgName }),
       ...(enableSynonyms && { enableSynonyms }),
+      docImage: docImg,
       page: page || 1,
     },
     data: {
       qJson: dataArr,
       filters,
+      qString,
     },
   };
 };

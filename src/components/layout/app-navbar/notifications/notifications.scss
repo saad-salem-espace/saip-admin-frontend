@@ -7,14 +7,15 @@
     width: 50px;
 
     @include media-breakpoint-up(xl) {
-      margin: 0 24px;
-
+      
       html[dir="ltr"] & {
         padding: 0 70px 0 10px;
+        margin: 0 24px 0 10px;
       }
-
+      
       html[dir="rtl"] & {
         padding: 0 10px 0 70px;
+        margin: 0 10px 0 24px;
       }
     }
 

@@ -7,7 +7,6 @@ import {
   Container,
   Row,
   Col,
-  Image,
   Button,
 } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
@@ -15,7 +14,11 @@ import CacheContext from 'contexts/CacheContext';
 import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import { parseSingleQuery } from 'utils/search-query/encoder';
-import { teldaRegex, noTeldaRegex, defaultConditions } from 'utils/searchQuery';
+import {
+  teldaRegex, noTeldaRegex, defaultConditions, convertQueryArrToStr,
+  specialCharsValidation,
+  wordCountValidation,
+} from 'utils/searchQuery';
 import FloatWidget from 'components/shared/float-widget/FloatWidget';
 import { BsQuestionCircle } from 'react-icons/bs';
 import AppPopover from 'components/shared/app-popover/AppPopover';
@@ -23,7 +26,6 @@ import useCacheRequest from 'hooks/useCacheRequest';
 import validationMessages from 'utils/validationMessages';
 import ToggleButton from 'components/shared/toggle-button/ToggleButton';
 import SearchQuery from 'components/advanced-search/search-query/SearchQuery';
-import surveyIcon from 'assets/images/icons/ic-survey.svg';
 import WorkStreams from '../work-streams/WorkStreams';
 import SharedSearch from './shared/SharedSearch';
 import './style.scss';
@@ -42,6 +44,11 @@ function WorkstreamSearch() {
   const [imageName, setImageName] = useState(null);
   const [advancedQuery, setAdvancedQuery] = useState('');
   const isSearchSubmitted = Number(localStorage.getItem('isSearchSubmitted') || 0);
+  const [advancedValidation, setAdvancedValidation] = useState(true);
+
+  const parseAndSetSearchQuery = (qObjsArr) => {
+    setAdvancedQuery(convertQueryArrToStr(qObjsArr));
+  };
 
   const formSchema = Yup.object({
     searchQuery: Yup.mixed()
@@ -49,8 +56,23 @@ function WorkstreamSearch() {
         (isImgUploaded || (data && (typeof data === 'string' || data instanceof String) && data.trim(t('errors.empty'))))
       || data instanceof DateObject
       ))
+      .test('Is valid advanced query', validationMessages.search.invalidAdvanced, () => (
+        (!isAdvanced || advancedValidation)
+      ))
       .test('is Valid String', validationMessages.search.invalidWildcards, (data) => (
-        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+        ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && (data.trim().match(noTeldaRegex) || data.trim().match(teldaRegex))))
+      || data instanceof DateObject
+      ))
+      .test('Consecutive *', validationMessages.search.consecutiveAsteric, (data) => (
+        ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && !(data.includes('**'))))
+      || data instanceof DateObject
+      ))
+      .test('Special characters', validationMessages.search.specialChars, (data) => (
+        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
+      ))
+      .test('Words count', validationMessages.search.tooLong, (data) => (
+        ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && (wordCountValidation(data))))
       || data instanceof DateObject
       )),
   });
@@ -60,6 +82,7 @@ function WorkstreamSearch() {
   }, [searchOptions]);
 
   const onChangeWorkstream = (newState) => {
+    if (window.innerWidth < 426) window.scrollTo(0, document.body.scrollHeight);
     setSelectedWorkStream(newState);
   };
 
@@ -83,12 +106,16 @@ function WorkstreamSearch() {
         search: `?${createSearchParams({
           workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery ? query : ''), ...(imageName && { imageName }),
         })}`,
+      }, {
+        state: {
+          simpleSearch: true,
+        },
       });
     } else {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery || ''), ...(imageName && { imageName }),
+          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (advancedQuery || ''), ...(imageName && { imageName }),
         })}`,
       });
     }
@@ -105,13 +132,12 @@ function WorkstreamSearch() {
         <Container className="px-0 m-auto">
           <Row className="mx-0">
             <Col className="pt-24 pb-8">
-              <p className="app-text-primary-dark f-30 text-center mb-8">
-                <Trans
-                  i18nKey="searchSpecificProperty"
-                  ns="search"
-                  components={<span className="h3" />}
-                />
-              </p>
+              <div className="text-center mb-8">
+                <h3 className="app-text-primary-dark fs-30 mb-3">
+                  {t('searchSpecificProperty')}
+                </h3>
+                <p className="app-text-primary-dark fs-22">{t('chooseSpecificProperty')}</p>
+              </div>
               <WorkStreams
                 selectedWorkStream={selectedWorkStream}
                 onChange={onChangeWorkstream}
@@ -175,23 +201,26 @@ function WorkstreamSearch() {
                     setSelectedOption={setSelectedOption}
                     className="search-box-index"
                   />
-                  {isAdvanced && <SearchQuery
-                    workstreamId={selectedWorkStream}
-                    firstIdentifierStr={searchOptions?.[0].identifierOptions[0]}
-                    defaultInitializers={[{
-                      id: selectedWorkStream,
-                      data: '',
-                      identifier: selectedOption,
-                      condition: selectedOption.identifierOptions[0],
-                      operator: '',
-                    }]}
-                    onChangeSearchQuery={(setAdvancedQuery)}
-                    submitRef={submitRef}
-                    className="mt-8 workstream-view"
-                  />}
                 </Form>
               )}
             </Formik>
+            {isAdvanced && <SearchQuery
+              workstreamId={selectedWorkStream}
+              firstIdentifierStr={searchOptions?.[0].identifierOptions[0]}
+              setAdvancedValidation={setAdvancedValidation}
+              defaultInitializers={[{
+                id: selectedWorkStream,
+                data: '',
+                identifier: selectedOption,
+                condition: selectedOption.identifierOptions[0],
+                operator: '',
+              }]}
+              onChangeSearchQuery={(vals) => {
+                parseAndSetSearchQuery(vals);
+              }}
+              submitRef={submitRef}
+              className="mt-8 workstream-view"
+            />}
           </Col>
         </Row>
       </Container>
@@ -200,12 +229,10 @@ function WorkstreamSearch() {
         widgetTitle={t('common:floatWidget.userSurvey.widgetTitle')}
         widgetAction={t('common:floatWidget.userSurvey.widgetAction')}
         widgetActionText={t('common:floatWidget.userSurvey.widgetActionText')}
-        WidgetIcon={<Image src={surveyIcon} className="d-block mx-auto my-3" />}
         variant="app-bg-primary-10"
+        className="survey-widget"
         show
-      >
-        {t('common:floatWidget.userSurvey.widgetContent')}
-      </FloatWidget>
+      />
     </div>
   );
 }
