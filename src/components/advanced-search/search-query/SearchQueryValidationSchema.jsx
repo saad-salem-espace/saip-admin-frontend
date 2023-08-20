@@ -43,7 +43,7 @@ const SearchQueryValidationSchema = Yup.object().shape({
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         ))
-        .test('Special characters', validationMessages.search.specialChars, (data) => (
+        .test('Special characters', validationMessages.search.consecutiveAsteric, (data) => (
           ((typeof data === 'string' || data instanceof String) && !(data.includes('**')))
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
