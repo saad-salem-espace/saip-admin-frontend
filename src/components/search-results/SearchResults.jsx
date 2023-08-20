@@ -536,7 +536,10 @@ function SearchResults({ showFocusArea }) {
           size = 11;
         }
       } else if (totalResults) {
-        size = 5;
+        size = 9;
+        if (activeDocument) {
+          size = 5;
+        }
       } else {
         size = 9;
       }
@@ -550,7 +553,10 @@ function SearchResults({ showFocusArea }) {
           size = 11;
         }
       } else if (totalResults) {
-        size = 4;
+        size = 8;
+        if (activeDocument) {
+          size = 4;
+        }
       } else {
         size = 8;
       }
@@ -734,7 +740,7 @@ function SearchResults({ showFocusArea }) {
         </Col>
       </Row>
       <Row className="border-top mx-0 align-items-stretch content">
-        <Col xxl={isAdvancedMenuOpen ? 3 : 1} xl={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} ps-0`}>
+        <Col xxl={isAdvancedMenuOpen ? 3 : 1} xl={isAdvancedMenuOpen ? 4 : 1} className={`${isAdvancedMenuOpen ? 'expanded' : 'closed'} sidebar-menu`}>
           <AdvancedSearch
             toggleAdvancedSearchMenu={toggleAdvancedSearchMenu}
             defaultInitializers={searchFields}
@@ -751,7 +757,7 @@ function SearchResults({ showFocusArea }) {
             }}
           />
         </Col>
-        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'}`}>
+        <Col xxl={getSearchResultsClassName('xxl')} xl={getSearchResultsClassName('xl')} md={6} className={`mt-8 search-result fixed-panel-scrolled ${isIPRExpanded ? 'd-none' : 'd-block'} ${isAdvancedMenuOpen ? '' : 'closed-sidebar'}`}>
           <div className="d-lg-flex align-items-center">
             <SaveQuery
               setIsSaved={setIsQuerySaved}
@@ -852,7 +858,7 @@ function SearchResults({ showFocusArea }) {
           </Formik>
         </Col>
         {activeDocument && (
-          <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className="px-0 border-start">
+          <Col xxl={getIprClassName('xxl')} xl={getIprClassName('xl')} lg={isIPRExpanded ? 12 : 5} md={isIPRExpanded ? 12 : 6} className={`px-0 border-start ipr-section ${isAdvancedMenuOpen ? 'sidebar-expanded' : 'closed-sidebar'}`}>
             <IprDetails
               collapseIPR={collapseIPR}
               isIPRExpanded={isIPRExpanded}

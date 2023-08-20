@@ -9,6 +9,36 @@
     width: 200px;
   }
 }
+.closed {
+  @include media-breakpoint-up(xxl) {
+    &.col-xxl-1 {
+      width: 5.33333333% !important;
+    }
+  }
+}
+
+.closed-sidebar.search-result {
+  @include media-breakpoint-up(xl) {
+    &.col-xxl-7, .col-xl-7{
+      width: 61.333%!important;
+    }
+  }
+}
+.closed-sidebar.ipr-section {
+  @include media-breakpoint-up(xl) {
+    &.col-xxl-11, .col-xl-11{
+      width: 94.667% !important;
+    }
+  }
+}
+.sidebar-menu {
+  html[dir="ltr"] & {
+    padding-left: 0;
+  }
+  html[dir="rtl"] & {
+    padding-right: 0;
+  }
+}
 
 @include media-breakpoint-down(xl) {
   .closed {
@@ -174,3 +204,12 @@
 .star-button::before {
   color: var(--bs-primary-dark) !important;
 }
+
+// .closed-sidebar {
+//   html[dir="rtl"] & {
+//     margin-right: -40px;
+//   }
+//   html[dir="ltr"] & {
+//     margin-left: -40px;
+//   }
+// }
