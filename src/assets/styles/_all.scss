@@ -81,7 +81,7 @@
 
     }
     .image-item {
-      top: 140px;
+      top: 154px;
       @include media-breakpoint-up(md) {
         top: 140px;
         html[dir="ltr"] & {
@@ -96,12 +96,24 @@
 
       }
       @include media-breakpoint-up(xl) {
-        top: 55px;
+        top: 53px;
         html[dir="ltr"] & {
           left: 210px;
         }
         html[dir="rtl"] & {
           right:  210px;
+        }
+      }
+    }
+  }
+}
+
+.is-advanced {
+  .search-box-index {
+    .workStreamView {
+      .image-item {
+        @include media-breakpoint-down(md) {
+          top: 60px;
         }
       }
     }
@@ -116,12 +128,12 @@
   }
   .image-item {
     display: none;;
-    top: 3px;
+    top: 5px;
     html[dir="ltr"] & {
-      left: 17px;
+      left: 6px;
     }
     html[dir="rtl"] & {
-      right: 17px;
+      right: 6px;
     }
     @include media-breakpoint-up(sm) {
       top: 92px;
@@ -141,11 +153,11 @@
         left: 12.9rem;
       }
       html[dir="rtl"] & {
-        right: 12.9rem;
+        right: 13.7rem;
       }
     }
     @include media-breakpoint-up(xl) {
-      top: 4px;
+      top: 5px;
     }
   }
 
