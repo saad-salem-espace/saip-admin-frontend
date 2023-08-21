@@ -45,7 +45,7 @@ function IndustrialDesignResultCard({
                   name={`selectedCards.${BibliographicData?.FilingNumber}`}
                   fieldFor={`selectedCards.${BibliographicData?.FilingNumber}`}
                 />}
-                <Badge text={BibliographicData?.Status} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
+                <Badge text={BibliographicData?.Status} className="text-capitalize mb-2 me-2 mt-1 bg-secondary" />
               </div>
               <div className="searchImgWrapper border rounded me-2">
                 <Image src={preparedGetAttachmentURL(imgFilename)} className="rounded" />
