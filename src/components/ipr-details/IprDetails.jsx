@@ -649,7 +649,7 @@ function IprDetails({
                 {t('search:findSimilar')}
               </>
             }
-            className="me-4 fs-sm my-2 mt-0"
+            className="me-2 fs-sm my-2 mt-0"
             onClick={() => { findSimilarDoc(); }}
           />
           {(searchResultParams.workstreamId !== '3' && searchResultParams.workstreamId !== '7') && <Button
@@ -660,7 +660,7 @@ function IprDetails({
                 {t('search:download')}
               </>
             }
-            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 mt-0`}
+            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-2 fs-sm my-2 mt-0`}
             onClick={
               downloadOriginalDocuments
             }
