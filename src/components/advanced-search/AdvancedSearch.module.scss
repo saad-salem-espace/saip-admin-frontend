@@ -22,7 +22,14 @@
       left: calc(50% - 16px);
     }
   }
-
+  @include media-breakpoint-down(xxl) {
+    html[dir="ltr"] & {
+      right: 14px;
+    }
+    html[dir="rtl"] & {
+      left: 14px;
+    }
+  }
   @include media-breakpoint-down(xl) {
     top:10px;
 
