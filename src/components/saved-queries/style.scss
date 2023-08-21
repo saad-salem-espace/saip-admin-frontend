@@ -2,6 +2,7 @@
 
 .play-icon {
   color:  var(--bs-primary-dark);
+  font-size: 20px;
 
   html[dir="rtl"] & {
     transform: rotateY(180deg);

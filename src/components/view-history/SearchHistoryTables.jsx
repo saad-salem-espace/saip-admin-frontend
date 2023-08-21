@@ -76,7 +76,7 @@ const SearchHistoryTables = ({
                             className="p-2 rounded run-query"
                             to={`${routes.search}?workstreamId=${workStreamId}&sort=mostRelevant&q=${query}&page=1'`}
                           >
-                            <BsPlay className="play-icon fs-base" />
+                            <BsPlay className="play-icon" />
                           </Link>
                         </td>
                       </tr>
