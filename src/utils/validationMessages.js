@@ -25,6 +25,8 @@ const validationMessages = {
     tooLong: () => ({ key: 'validations:search.tooLong' }),
     invalidAdvanced: () => ({ key: 'validations:search.invalidAdvanced' }),
     consecutiveAsteric: () => ({ key: 'validations:search.consecutiveAsteric' }),
+    dashStart: () => ({ key: 'validations:search.dashStart' }),
+    quotesValidation: () => ({ key: 'validations:search.quotes' }),
   },
 };
 
