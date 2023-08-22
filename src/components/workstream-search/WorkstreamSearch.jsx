@@ -18,6 +18,7 @@ import {
   teldaRegex, noTeldaRegex, defaultConditions, convertQueryArrToStr,
   specialCharsValidation,
   wordCountValidation,
+  quotesValidation,
 } from 'utils/searchQuery';
 import FloatWidget from 'components/shared/float-widget/FloatWidget';
 import { BsQuestionCircle } from 'react-icons/bs';
@@ -67,8 +68,16 @@ function WorkstreamSearch() {
         ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && !(data.includes('**'))))
       || data instanceof DateObject
       ))
+      .test('- at start', validationMessages.search.dashStart, (data) => (
+        ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && !(data.trim().charAt(0) === '-')))
+      || data instanceof DateObject
+      ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
-        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+        ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
+      ))
+      .test('Quotes', validationMessages.search.quotesValidation, (data) => (
+        ((isImgUploaded && !data) || isAdvanced || ((typeof data === 'string' || data instanceof String) && (quotesValidation(data))))
       || data instanceof DateObject
       ))
       .test('Words count', validationMessages.search.tooLong, (data) => (
@@ -104,7 +113,7 @@ function WorkstreamSearch() {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery ? query : ''), ...(imageName && { imageName }),
+          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery ? query : ''), ...(imageName && isImgUploaded && { imageName }),
         })}`,
       }, {
         state: {
@@ -115,7 +124,7 @@ function WorkstreamSearch() {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (advancedQuery || ''), ...(imageName && { imageName }),
+          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (advancedQuery || ''), ...(imageName && isImgUploaded && { imageName }),
         })}`,
       });
     }

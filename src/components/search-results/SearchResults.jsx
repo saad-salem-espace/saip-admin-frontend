@@ -43,6 +43,7 @@ import {
   defaultConditions,
   convertQueryArrToObjsArr,
   convertQueryStrToArr,
+  quotesValidation,
   convertQueryArrToStr,
   convertQueryObjsArrToTransMemo,
   teldaRegex,
@@ -448,7 +449,6 @@ function SearchResults({ showFocusArea }) {
           filterEnabled: false,
           q: (simpleQuery ? query : ''),
           ...(imageName && isImgUploaded && { imageName }),
-          ...(docImage && isImgUploaded && { docImage }),
         })}`,
       });
     } else {
@@ -461,7 +461,6 @@ function SearchResults({ showFocusArea }) {
           q: values.searchQuery,
           filterEnabled: false,
           ...(imageName && isImgUploaded && { imageName }),
-          ...(docImage && isImgUploaded && { docImage }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
           page: 1,
@@ -654,8 +653,16 @@ function SearchResults({ showFocusArea }) {
         ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && !(data.includes('**'))))
       || data instanceof DateObject
       ))
+      .test('- at start', validationMessages.search.dashStart, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && !(data.trim().charAt(0) === '-')))
+      || data instanceof DateObject
+      ))
       .test('Special characters', validationMessages.search.specialChars, (data) => (
-        ((isImgUploaded && !data) || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (specialCharsValidation(data))))
+      || data instanceof DateObject
+      ))
+      .test('Quotes', validationMessages.search.quotesValidation, (data) => (
+        ((isImgUploaded && !data) || isAdvancedSearch || ((typeof data === 'string' || data instanceof String) && (quotesValidation(data))))
       || data instanceof DateObject
       ))
       .test('Words count', validationMessages.search.tooLong, (data) => (
