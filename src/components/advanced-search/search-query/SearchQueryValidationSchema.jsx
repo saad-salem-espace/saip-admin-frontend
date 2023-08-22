@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { DateObject } from 'react-multi-date-picker';
 import {
   teldaRegex, noTeldaRegex, specialCharsValidation, wordCountValidation,
+  quotesValidation,
 } from 'utils/searchQuery';
 import validationMessages from 'utils/validationMessages';
 // import { DateObject } from 'react-multi-date-picker';
@@ -43,8 +44,18 @@ const SearchQueryValidationSchema = Yup.object().shape({
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         ))
-        .test('Special characters', validationMessages.search.consecutiveAsteric, (data) => (
+        .test('Consecutive *', validationMessages.search.consecutiveAsteric, (data) => (
           ((typeof data === 'string' || data instanceof String) && !(data.includes('**')))
+          || (Array.isArray(data) && data.length > 0)
+          || data instanceof DateObject
+        ))
+        .test('Quotes', validationMessages.search.quotesValidation, (data) => (
+          ((typeof data === 'string' || data instanceof String) && (quotesValidation(data)))
+          || (Array.isArray(data) && data.length > 0)
+          || data instanceof DateObject
+        ))
+        .test('- at start', validationMessages.search.dashStart, (data) => (
+          ((typeof data === 'string' || data instanceof String) && !(data.trim().charAt(0) === '-'))
           || (Array.isArray(data) && data.length > 0)
           || data instanceof DateObject
         ))

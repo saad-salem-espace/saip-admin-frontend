@@ -209,7 +209,7 @@ const teldaRegex = /^[^*?!~]+?~?\d*$/;
 const noTeldaRegex = /^[^~]+$/;
 
 const specialCharsValidation = (data) => {
-  const invalidChars = '()&[]{}^|<>+=\\';
+  const invalidChars = '()&[]{}^|<>+=\\:';
 
   for (let i = 0; i < data.length; i += 1) {
     if (invalidChars.includes(data[i])) return 0;
@@ -221,6 +221,14 @@ const specialCharsValidation = (data) => {
 const wordCountValidation = (data) => {
   const words = data.trim().split(' ');
   return (words.length <= 15);
+};
+
+const quotesValidation = (data) => {
+  let count = 0;
+  for (let i = 0; i < data.length; i += 1) {
+    if ((data[i]) === '"') count += 1;
+  }
+  return (count % 2 === 0);
 };
 
 export {
@@ -238,4 +246,5 @@ export {
   specialCharsValidation,
   convertQueryArrToStr,
   convertQueryObjsArrToTransMemo,
+  quotesValidation,
 };

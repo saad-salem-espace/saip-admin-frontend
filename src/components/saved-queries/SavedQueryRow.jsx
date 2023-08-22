@@ -112,7 +112,7 @@ const SavedQueryRow = ({
             updateIprModal();
           }}
         >
-          <BsPlay className="play-icon fs-base" />
+          <BsPlay className="play-icon" />
         </Link>
         <AppPopover
           Title={t('deleteQuery')}
