@@ -449,7 +449,6 @@ function SearchResults({ showFocusArea }) {
           filterEnabled: false,
           q: (simpleQuery ? query : ''),
           ...(imageName && isImgUploaded && { imageName }),
-          ...(docImage && isImgUploaded && { docImage }),
         })}`,
       });
     } else {
@@ -462,7 +461,6 @@ function SearchResults({ showFocusArea }) {
           q: values.searchQuery,
           filterEnabled: false,
           ...(imageName && isImgUploaded && { imageName }),
-          ...(docImage && isImgUploaded && { docImage }),
           enableSynonyms: isEnabledSynonyms,
           sort: sortBy.value,
           page: 1,

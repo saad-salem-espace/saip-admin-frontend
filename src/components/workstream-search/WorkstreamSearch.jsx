@@ -113,7 +113,7 @@ function WorkstreamSearch() {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery ? query : ''), ...(imageName && { imageName }),
+          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (searchQuery ? query : ''), ...(imageName && isImgUploaded && { imageName }),
         })}`,
       }, {
         state: {
@@ -124,7 +124,7 @@ function WorkstreamSearch() {
       navigate({
         pathname: '/search',
         search: `?${createSearchParams({
-          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (advancedQuery || ''), ...(imageName && { imageName }),
+          workstreamId: selectedWorkStream, sort: 'mostRelevant', q: (advancedQuery || ''), ...(imageName && isImgUploaded && { imageName }),
         })}`,
       });
     }
