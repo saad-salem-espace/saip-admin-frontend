@@ -28,7 +28,7 @@ function IndustrialDesignResultCard({
   );
 
   const imgFilename = BibliographicData?.OverallProductDrawing
-    || searchResult?.Drawings?.[0].FileName;
+    || searchResult?.Drawings?.[0]?.FileName;
 
   return (
     <Button
