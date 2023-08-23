@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { Trans, useTranslation } from 'react-i18next';
 import React, {
   useState, useContext, useEffect, useRef,
@@ -101,7 +102,6 @@ function WorkstreamSearch() {
 
     if (!isAdvanced) {
       if (selectedOption.identifierType !== 'Date') searchQuery = values.searchQuery.trim();
-
       const defaultCondition = (defaultConditions.get(selectedOption.identifierType));
 
       const query = parseSingleQuery({
@@ -109,6 +109,8 @@ function WorkstreamSearch() {
         condition: { optionParserName: defaultCondition },
         data: searchQuery,
       }, 0, true);
+      const d = new DateObject();
+      d.d;
 
       navigate({
         pathname: '/search',
@@ -118,6 +120,8 @@ function WorkstreamSearch() {
       }, {
         state: {
           simpleSearch: true,
+          query: selectedOption.identifierType !== 'Date' ? searchQuery : { year: searchQuery.year, month: searchQuery.month.number, day: searchQuery.day },
+          identifier: selectedOption,
         },
       });
     } else {

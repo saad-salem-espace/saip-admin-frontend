@@ -93,6 +93,8 @@ function SearchResults({ showFocusArea }) {
   const [searchFilters, setSearchFilters] = useState([]);
   const [otherSearchParams, setOtherSearchParams] = useState(Object.fromEntries(searchParams));
   const [advancedValidation, setAdvancedValidation] = useState(true);
+  const [simpleDefaultQuery, setSimpleDefaultQuery] = useState(null);
+  const [simpleDefaultOption, setSimpleDefaultOption] = useState(null);
 
   const auth = useAuth();
   const { cachedRequests } = useContext(CacheContext);
@@ -313,6 +315,9 @@ function SearchResults({ showFocusArea }) {
     if (location.state?.simpleSearch) {
       setIsAdvancedSearch(false);
       setIsAdvancedMenuOpen(false);
+      setSimpleDefaultOption(location.state.identifier);
+      if (location.state.identifier.identifierType !== 'Date') setSimpleDefaultQuery(location.state.query);
+      else setSimpleDefaultQuery(new DateObject(location.state.query));
     }
   }, [location.state]);
 
@@ -357,8 +362,11 @@ function SearchResults({ showFocusArea }) {
   };
 
   useEffect(() => {
-    setSelectedOption(searchIdentifiers?.[0]);
-  }, [searchIdentifiers]);
+    if (simpleDefaultOption) setSelectedOption(simpleDefaultOption);
+    else {
+      setSelectedOption(searchIdentifiers?.data[0]);
+    }
+  }, [searchIdentifiers, isAdvancedSearch, simpleDefaultOption]);
 
   useEffect(() => {
     setWorkStreamId(searchParams.get('workstreamId'));
@@ -467,6 +475,8 @@ function SearchResults({ showFocusArea }) {
         })}`,
       });
     }
+    setSimpleDefaultOption(null);
+    setSimpleDefaultQuery(null);
   };
 
   useEffect(() => {
@@ -493,8 +503,9 @@ function SearchResults({ showFocusArea }) {
   }, [searchParams.get('enableSynonyms')]);
 
   useEffect(() => {
-    if (!isAdvancedSearch) setSearchQuery('');
-  }, [isAdvancedSearch]);
+    if (!isAdvancedSearch && simpleDefaultQuery) setSearchQuery(simpleDefaultQuery);
+    else if (!isAdvancedSearch) setSearchQuery('');
+  }, [isAdvancedSearch, simpleDefaultQuery]);
 
   useEffect(() => {
     if (searchIdentifiers && searchResultParams.qArr) {
