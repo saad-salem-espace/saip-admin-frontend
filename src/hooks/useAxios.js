@@ -22,6 +22,8 @@ const useAxios = (config, options, customInstance) => {
   const { user } = useAuth();
   if (user?.access_token) {
     apiInstance.defaults.headers.common.Authorization = user ? `Bearer ${user.access_token}` : undefined;
+  } else {
+    apiInstance.defaults.headers.common.Authorization = undefined;
   }
   const { onError, ...axiosOptions } = options || {};
 
