@@ -46,10 +46,6 @@ function SharedSearch({
     }
   }, [imgData]);
 
-  useEffect(() => {
-    setSelectedOption(searchOptions?.[0]);
-  }, [searchOptions, isAdvanced]);
-
   function identifierName(option) {
     return currentLang === 'ar' ? option.identiferNameAr : option.identiferName;
   }

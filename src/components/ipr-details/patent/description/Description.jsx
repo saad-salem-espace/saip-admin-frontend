@@ -41,11 +41,11 @@ const Description = ({
             value={description?.TechnicalField?.Paragraphs?.join('; ')}
           />
           <LabelValue
-            label={description.BackgroundArt.Title}
+            label={description?.BackgroundArt.Title}
             value={description?.BackgroundArt?.Paragraphs?.join('; ')}
           />
           <LabelValue
-            label={description.Disclosure.Title}
+            label={description?.Disclosure.Title}
             value={description?.Disclosure?.Paragraphs?.join('; ')}
           />
         </Col>

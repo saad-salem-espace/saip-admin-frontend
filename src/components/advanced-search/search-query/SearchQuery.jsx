@@ -94,7 +94,7 @@ function SearchQuery({
                   {
                  values.searchFields.map((value, index) => (
                    <SearchFieldWithButtons
-                     key={generateRandomNumber(index)}
+                     key={() => generateRandomNumber(index)}
                      order={index}
                      namePrefix={`searchFields.${index}`}
                      handleRemove={() => remove(index)}
