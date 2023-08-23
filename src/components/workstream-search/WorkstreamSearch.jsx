@@ -172,7 +172,7 @@ function WorkstreamSearch() {
               {({
                 handleSubmit, values, setFieldValue, setErrors, setTouched,
               }) => (
-                <Form className="mt-8 position-relative" onSubmit={handleSubmit}>
+                <Form className={`mt-8 position-relative ${isAdvanced ? 'is-advanced' : ''}`} onSubmit={handleSubmit}>
                   <div className="d-flex justify-content-end align-items-center mb-2">
                     <ToggleButton
                       handleToggleButton={() => toggleState(isAdvanced)}

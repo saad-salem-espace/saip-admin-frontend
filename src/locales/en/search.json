@@ -48,7 +48,7 @@
   "publicationCountry": "Publication Country",
   "clearAll": "Clear all",
   "emptyStateMsg": "No search results for the input keywords",
-  "emptyStateTitle": "Searching but not finding?",
+  "emptyStateTitle": "Your search was not found",
   "browseFiles": "Browse Files",
   "dragDrop": "Drag & Drop File Here",
   "imgFormats": "Only .jpeg .png .tiff .jpg .gif formats supported <0> or </0>",

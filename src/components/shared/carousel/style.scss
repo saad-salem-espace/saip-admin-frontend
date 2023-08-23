@@ -121,3 +121,11 @@
    }
   }
 }
+
+.thumb-focus-area {
+  z-index: 99999 !important;
+
+  .modal-content{
+    box-shadow: 1px 1px 35px #00000050;
+  }
+}

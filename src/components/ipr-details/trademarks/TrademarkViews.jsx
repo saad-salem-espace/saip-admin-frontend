@@ -26,7 +26,7 @@ import style from '../ipr-details.module.scss';
 const TrademarkViews = ({
   isIPRExpanded, document, preparedGetAttachmentURL, documentId, searchResultParams, selectedView,
   handleClick, examinerView, dashboardExpandedView,
-  handleCloseIprDetail,
+  handleCloseIprDetail, fromFocusArea,
 }) => {
   const content = (s) => {
     switch (s) {
@@ -116,6 +116,7 @@ const TrademarkViews = ({
         <ImageWithZoom
           img={preparedGetAttachmentURL(document.BibliographicData.Mark)}
           className={style.imgWithZoom}
+          fromFocusArea={fromFocusArea}
         />
       );
       case 'OriginalDocuments': return (
@@ -144,10 +145,12 @@ TrademarkViews.propTypes = {
   ShowSearchQueryMenu: PropTypes.func.isRequired,
   handleCloseIprDetail: PropTypes.func.isRequired,
   examinerView: PropTypes.bool,
+  fromFocusArea: PropTypes.bool,
 };
 
 TrademarkViews.defaultProps = {
   examinerView: false,
+  fromFocusArea: false,
 };
 
 export default TrademarkViews;

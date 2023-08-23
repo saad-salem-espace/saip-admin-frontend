@@ -56,6 +56,11 @@ function SearchQuery({
     }
   };
 
+  const generateRandomNumber = (index) => {
+    const random = Math.floor(Math.random() * 900000) + 100001 + index;
+    return random;
+  };
+
   const onSubmit = (values) => {
     if (submitRef) submitRef.current.handleSubmit(values);
     else submitCallback(values);
@@ -89,7 +94,7 @@ function SearchQuery({
                   {
                  values.searchFields.map((value, index) => (
                    <SearchFieldWithButtons
-                     key={value.id}
+                     key={() => generateRandomNumber(index)}
                      order={index}
                      namePrefix={`searchFields.${index}`}
                      handleRemove={() => remove(index)}

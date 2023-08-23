@@ -333,6 +333,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     2: (
@@ -347,6 +348,7 @@ function IprDetails({
         examinerView={examinerView}
         dashboardExpandedView={dashboardExpandedView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     3: (
@@ -360,6 +362,7 @@ function IprDetails({
         handleClick={handleClick}
         examinerView={examinerView}
         handleCloseIprDetail={handleCloseIprDetail}
+        fromFocusArea={fromFocusArea}
       />
     ),
     4: (
@@ -394,6 +397,7 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        fromFocusArea={fromFocusArea}
         handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
@@ -407,6 +411,7 @@ function IprDetails({
         preparedGetAttachmentURL={preparedGetAttachmentURL}
         handleClick={handleClick}
         examinerView={examinerView}
+        fromFocusArea={fromFocusArea}
         handleCloseIprDetail={handleCloseIprDetail}
       />
     ),
@@ -644,7 +649,7 @@ function IprDetails({
                 {t('search:findSimilar')}
               </>
             }
-            className="me-4 fs-sm my-2 mt-0"
+            className="me-2 fs-sm my-2 mt-0"
             onClick={() => { findSimilarDoc(); }}
           />
           {(searchResultParams.workstreamId !== '3' && searchResultParams.workstreamId !== '7') && <Button
@@ -655,7 +660,7 @@ function IprDetails({
                 {t('search:download')}
               </>
             }
-            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-4 fs-sm my-2 mt-0`}
+            className={`${isSubmittingDownloadPdf ? 'disabled' : ''} me-2 fs-sm my-2 mt-0`}
             onClick={
               downloadOriginalDocuments
             }
@@ -760,7 +765,7 @@ IprDetails.propTypes = {
   fromFocusArea: PropTypes.bool,
   hideFocus: PropTypes.func,
   dashboardExpandedView: PropTypes.bool,
-  handleCloseIprDetail: PropTypes.func.isRequired,
+  handleCloseIprDetail: PropTypes.func,
 };
 
 IprDetails.defaultProps = {
@@ -778,6 +783,7 @@ IprDetails.defaultProps = {
   setNotesUpdated: () => { },
   fromFocusArea: false,
   hideFocus: () => { },
+  handleCloseIprDetail: () => { },
   dashboardExpandedView: false,
 };
 

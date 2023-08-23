@@ -36,7 +36,7 @@ function TrademarksSearchResultCard({
         <div className={`${activeDocument === BibliographicData?.FilingNumber ? style.active : ''} ${style['result-card']} mb-7 position-relative `}>
           <div className="mb-1">
             <div className="d-flex">
-              <div className={`${BibliographicData?.TrademarkLastStatus ? 'checkbox-badge' : ''} d-flex`}>
+              <div className="d-flex">
                 {!disableCheckbox && <Checkbox
                   className="me-4"
                   name={`selectedCards.${BibliographicData?.FilingNumber}`}
@@ -44,7 +44,7 @@ function TrademarksSearchResultCard({
                 />}
                 {
                   BibliographicData?.TrademarkLastStatus && (
-                    <Badge text={BibliographicData?.TrademarkLastStatus} className="text-capitalize mb-2 me-2 mt-1 app-bg-secondary" />
+                    <Badge text={BibliographicData?.TrademarkLastStatus} className="text-capitalize mb-2 me-2 mt-1 bg-secondary" />
                   )
                 }
               </div>
@@ -87,53 +87,53 @@ function TrademarksSearchResultCard({
                     <span>{BibliographicData?.FilingDate}</span>
                   </p>
                   {
-                  (selectedView.value === 'detailed' || selectedView.value === 'summary') && (
-                    <p className="text-gray md-text mb-2">
-                      {BibliographicData?.Applicants?.join('; ')}
-                    </p>)
-                }
+                    (selectedView.value === 'detailed' || selectedView.value === 'summary') && (
+                      <p className="text-gray md-text mb-2">
+                        {BibliographicData?.Applicants?.join('; ')}
+                      </p>)
+                  }
                   {
-                  selectedView.value === 'detailed' && (
-                    <>
-                      <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
-                        {
-                          BibliographicData?.RegistrationNumber && (
-                            <>
-                              <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
-                              {t('ipr.registered', { value: BibliographicData?.RegistrationNumber })}
-                            </>
-                          )
-                        }
-                        {
-                          BibliographicData?.RegistrationDate && (
-                            <>
-                              <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
-                              <span>{BibliographicData?.RegistrationDate}</span>
-                            </>
-                          )
-                        }
-                      </p>
-                      <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
-                        {
-                          BibliographicData?.PublicationNumber && (
-                            <>
-                              <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
-                              {t('ipr.published', { value: BibliographicData?.PublicationNumber })}
-                            </>
-                          )
-                        }
-                        {
-                          BibliographicData?.PublicationDate && (
-                            <>
-                              <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
-                              <span>{BibliographicData?.PublicationDate}</span>
-                            </>
-                          )
-                        }
-                      </p>
-                    </>
-                  )
-                }
+                    selectedView.value === 'detailed' && (
+                      <>
+                        <p className="font-medium mb-2 d-xxl-flex align-items-center text-dark sm-text">
+                          {
+                            BibliographicData?.RegistrationNumber && (
+                              <>
+                                <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+                                {t('ipr.registered', { value: BibliographicData?.RegistrationNumber })}
+                              </>
+                            )
+                          }
+                          {
+                            BibliographicData?.RegistrationDate && (
+                              <>
+                                <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+                                <span>{BibliographicData?.RegistrationDate}</span>
+                              </>
+                            )
+                          }
+                        </p>
+                        <p className="font-medium mb-0 d-xxl-flex align-items-center text-dark sm-text">
+                          {
+                            BibliographicData?.PublicationNumber && (
+                              <>
+                                <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+                                {t('ipr.published', { value: BibliographicData?.PublicationNumber })}
+                              </>
+                            )
+                          }
+                          {
+                            BibliographicData?.PublicationDate && (
+                              <>
+                                <FontAwesomeIcon icon={faCircle} className="mx-1 small-icon" />
+                                <span>{BibliographicData?.PublicationDate}</span>
+                              </>
+                            )
+                          }
+                        </p>
+                      </>
+                    )
+                  }
                 </div>
               </div>
             </div>
