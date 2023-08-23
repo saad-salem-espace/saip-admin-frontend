@@ -109,8 +109,6 @@ function WorkstreamSearch() {
         condition: { optionParserName: defaultCondition },
         data: searchQuery,
       }, 0, true);
-      const d = new DateObject();
-      d.d;
 
       navigate({
         pathname: '/search',
