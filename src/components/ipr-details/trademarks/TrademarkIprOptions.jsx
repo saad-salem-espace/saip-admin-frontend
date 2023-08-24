@@ -22,18 +22,6 @@ const TrademarkIprOptions = () => {
         value: 'LegalStatus',
       },
       {
-        label: t('ipr.applicantDetails'),
-        value: 'ApplicantsDetails',
-      },
-      {
-        label: t('ipr.ownerDetails'),
-        value: 'OwnersDetails',
-      },
-      {
-        label: t('ipr.representativeDetails'),
-        value: 'RepresentativesDetails',
-      },
-      {
         label: t('ipr.goodsServices'),
         value: 'GoodsAndServices',
       },
@@ -42,16 +30,8 @@ const TrademarkIprOptions = () => {
         value: 'FigurativeClassification',
       },
       {
-        label: t('ipr.exhibitionDetails'),
-        value: 'ExhibitionInformation',
-      },
-      {
         label: t('ipr.priorities'),
         value: 'Priorities',
-      },
-      {
-        label: t('ipr.officeActions'),
-        value: 'OfficeActions',
       },
     ],
   };

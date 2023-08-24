@@ -14,18 +14,6 @@ const IcLayoutsIprOptions = () => {
         value: 'Description',
       },
       {
-        label: t('ipr.applicantDetails'),
-        value: 'ApplicantsDetails',
-      },
-      {
-        label: t('industrialDesign.designerDetails'),
-        value: 'DesignersDetails',
-      },
-      {
-        label: t('ipr.representativeDetails'),
-        value: 'RepresentativesDetails',
-      },
-      {
         label: t('ipr.priorities'),
         value: 'Priorities',
       },
