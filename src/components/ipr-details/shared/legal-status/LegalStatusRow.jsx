@@ -5,7 +5,6 @@ const LegalStatusRow = ({ row }) => (
   <tr className="text-capitalize">
     <td><HandleEmptyAttribute checkOn={row.Status} /></td>
     <td><HandleEmptyAttribute checkOn={row.StatusDate} /></td>
-    <td><HandleEmptyAttribute checkOn={row.EffectiveDate} /></td>
   </tr>
 );
 
