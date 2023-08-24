@@ -24,6 +24,7 @@ function Carousel({
   const [activeImg, setActiveImg] = useState(images[0]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [isCorrupt, setIsCorrupt] = useState(false);
 
   useEffect(() => {
     setActiveImg(images[0]);
@@ -73,12 +74,14 @@ function Carousel({
       {children}
       {largeThumb && (
         <div className="position-relative imgWrapper h-auto">
-          <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" alt={t('imgNotAvailable')} />
+          <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" alt={t('imgNotAvailable')} onError={() => setIsCorrupt(true)} />
           <div className="overlay">
-            <SearchImageButton imgSrc={activeImg} handleCloseIprDetail={handleCloseIprDetail} />
-            <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
+            {!isCorrupt
+            && <SearchImageButton imgSrc={activeImg} handleCloseIprDetail={handleCloseIprDetail} />}
+            {!isCorrupt && <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
               <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="fs-24 text-white" />
-            </Button>
+              {/* eslint-disable-next-line react/jsx-closing-tag-location */}
+            </Button>}
             <Modal centered show={show} onHide={handleClose}>
               <Modal.Body className="p-0">
                 <Image src={activeImg} className="w-100 h-auto" alt={t('imgNotAvailable')} />
