@@ -26,10 +26,6 @@ const PatentIprOptions = () => {
         value: 'LegalStatus',
       },
       {
-        label: t('inventors'),
-        value: 'Inventors',
-      },
-      {
         label: t('ipr.priorities'),
         value: 'PrioritiesDetails',
       },

@@ -11,11 +11,9 @@ const LegalStatus = ({ children }) => {
       <Table className="appTable">
         <thead>
           <tr className="text-uppercase">
-            <th>{t('ipr.legal.statusCode')}</th>
             <th>{t('ipr.legal.status')}</th>
             <th>{t('ipr.legal.statusDate')}</th>
             <th>{t('ipr.legal.effectiveDate')}</th>
-            <th>{t('ipr.legal.notes')}</th>
           </tr>
         </thead>
         <tbody>

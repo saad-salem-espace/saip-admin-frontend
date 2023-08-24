@@ -9,11 +9,9 @@ describe('<LegalStatusRow />', () => {
       <LegalStatusRow row={sampleTrademark.LegalStatus[0]} />,
     );
     await waitFor(() => {
-      expect(getByText(sampleTrademark.LegalStatus[0].StatusCode)).toBeInTheDocument();
       expect(getByText(sampleTrademark.LegalStatus[0].Status)).toBeInTheDocument();
       expect(getByText(sampleTrademark.LegalStatus[0].StatusDate)).toBeInTheDocument();
       expect(getByText(sampleTrademark.LegalStatus[0].EffectiveDate)).toBeInTheDocument();
-      expect(getByText(sampleTrademark.LegalStatus[0].Notes)).toBeInTheDocument();
     });
   });
 });
