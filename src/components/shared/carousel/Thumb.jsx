@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
 
 function Thumb({
@@ -14,6 +15,7 @@ function Thumb({
   fromFocusArea,
   handleCloseIprDetail,
 }) {
+  const { t } = useTranslation('error');
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -22,11 +24,11 @@ function Thumb({
     <div>
       {largeThumb ? (
         <Button variant="transparent" className="item-thumb" onClick={() => changeActiveImg(srcThumb)}>
-          <Image src={srcThumb} className="img-fluid" />
+          <Image src={srcThumb} className="img-fluid" alt={t('imgNotAvailable')} />
         </Button>
       ) : (
         <div className={`${!largeThumb ? 'sm-thumb' : ''} item-thumb`}>
-          <Image src={srcThumb} className="img-fluid" />
+          <Image src={srcThumb} className="img-fluid" alt={t('imgNotAvailable')} />
           <div className="overlay">
             <SearchImageButton imgSrc={srcThumb} handleCloseIprDetail={handleCloseIprDetail} />
             <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
@@ -34,7 +36,7 @@ function Thumb({
             </Button>
             <Modal centered show={show} onHide={handleClose} className={`${fromFocusArea ? 'thumb-focus-area' : ''}`}>
               <Modal.Body className="p-0">
-                <Image src={srcThumb} className="w-100 h-auto" />
+                <Image src={srcThumb} className="w-100 h-auto" alt={t('imgNotAvailable')} />
               </Modal.Body>
             </Modal>
           </div>

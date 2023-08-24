@@ -26,7 +26,7 @@ const BibliographicDataSection = (
     handleCloseIprDetail,
   },
 ) => {
-  const { t } = useTranslation('search');
+  const { t } = useTranslation('search', 'error');
 
   const [left, setLeft] = useState();
   const [top, setTop] = useState();
@@ -57,7 +57,7 @@ const BibliographicDataSection = (
         (isIPRExpanded || dashboardExpandedView) && (
           <Col md={dashboardExpandedView ? 12 : 4} className={`mb-2 ${dashboardExpandedView ? 'mb-6' : 'mb-md-0'}`}>
             <div className="me-4">
-              <Image src={imgSrc} className="mw-100" />
+              <Image src={imgSrc} className="mw-100" alt={t('error:imgNotAvailable')} />
             </div>
             <SearchImageButton
               imgSrc={imgSrc}

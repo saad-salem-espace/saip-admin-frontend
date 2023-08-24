@@ -16,6 +16,7 @@
   "badRequest": "طلب غير متوافق",
   "badRequestMsg": "عذرًا! تعذر الخادم من فهم الطلب.",
   "errorText": "خطأ فى النص",
+  "imgNotAvailable": "الصورة غير متوفرة",
   "authorization": {
     "accessDenied": "تعذر الدخول",
     "accessDeniedMsg": "عذرًا! تعذر الوصول للصفحة بالصلاحيات الحالية."
