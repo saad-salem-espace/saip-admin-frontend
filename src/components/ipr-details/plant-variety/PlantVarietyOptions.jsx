@@ -22,14 +22,6 @@ const PlantVarietyOptions = () => {
         value: 'LegalStatus',
       },
       {
-        label: t('inventors'),
-        value: 'InventorDetails',
-      },
-      {
-        label: t('ipr.representativeDetails'),
-        value: 'RepresentativesDetails',
-      },
-      {
         label: t('ipr.drawings'),
         value: 'Drawings',
       },

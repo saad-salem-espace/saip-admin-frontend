@@ -13,7 +13,6 @@ const LegalStatus = ({ children }) => {
           <tr className="text-uppercase">
             <th>{t('ipr.legal.status')}</th>
             <th>{t('ipr.legal.statusDate')}</th>
-            <th>{t('ipr.legal.effectiveDate')}</th>
           </tr>
         </thead>
         <tbody>
