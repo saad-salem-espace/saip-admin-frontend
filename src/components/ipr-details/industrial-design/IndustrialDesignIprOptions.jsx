@@ -22,22 +22,6 @@ const IndustrialDesignIprOptions = () => {
         value: 'LegalStatus',
       },
       {
-        label: t('ipr.applicantDetails'),
-        value: 'ApplicantsDetails',
-      },
-      {
-        label: t('industrialDesign.designerDetails'),
-        value: 'DesignerDetails',
-      },
-      {
-        label: t('ipr.representativeDetails'),
-        value: 'RepresentativesDetails',
-      },
-      {
-        label: t('industrialDesign.locarnoClassification'),
-        value: 'LocarnoClassification',
-      },
-      {
         label: t('ipr.priorities'),
         value: 'Priorities',
       },

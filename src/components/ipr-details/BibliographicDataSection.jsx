@@ -80,12 +80,6 @@ const BibliographicDataSection = ({
             customLabel
           />
         </div>
-        <LabelValue
-          label={t('cpc')}
-          value={document?.CPCClassification?.CPC?.join('; ')}
-          className="fs-xs mb-5"
-          customLabel
-        />
         {/* <div className="d-flex">
           <p className={`app-text-primary fs-sm ${style.label}`}>{t('priorities')}</p>
           <p className="fs-xs">
@@ -113,7 +107,7 @@ const BibliographicDataSection = ({
           }
         />
         <LabelValue
-          label={t('internationalNumbers')}
+          label={t('priorityPublish')}
           value={getPublishedAs(document)}
         />
         <p className="app-text-primary fs-sm disable-highlight">{t('abstract')}</p>

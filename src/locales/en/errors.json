@@ -16,6 +16,7 @@
   "badRequest": "Bad Request",
   "badRequestMsg": "Oops! The browser sent a request that this server could not understand.",
   "errorText": "Error Text",
+  "imgNotAvailable": "Image not available",
   "authorization": {
     "accessDenied": "Access Denied",
     "accessDeniedMsg": "Insufficient permissions to view this page."

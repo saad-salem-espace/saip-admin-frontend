@@ -12,7 +12,7 @@ describe('<BibliographicDataSection />', () => {
       <BibliographicDataSection document={samplePatent} />,
     );
     await waitFor(() => {
-      ['register', 'applicants', 'inventors', 'classifications', 'ipc', 'cpc', 'application'].forEach((attributeName) => {
+      ['register', 'applicants', 'inventors', 'classifications', 'ipc', 'application'].forEach((attributeName) => {
         expect(getByText(tSearch(attributeName))).toBeInTheDocument();
       });
 
@@ -23,7 +23,6 @@ describe('<BibliographicDataSection />', () => {
         expect(getByText(samplePatent.Inventors.join('; '))).toBeInTheDocument();
       }
       expect(getByText(samplePatent.IPCClassification.IPC.join('; '))).toBeInTheDocument();
-      expect(getByText(samplePatent.CPCClassification.CPC.join('; '))).toBeInTheDocument();
       expect(getByText(`${samplePatent.BibliographicData.PublicationNumber} ${samplePatent.BibliographicData.PublicationDate}`)).toBeInTheDocument();
     });
   });
