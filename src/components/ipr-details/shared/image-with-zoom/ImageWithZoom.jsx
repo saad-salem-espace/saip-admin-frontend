@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
@@ -9,12 +10,12 @@ import React, { useState } from 'react';
 
 const ImageWithZoom = ({ img, className, fromFocusArea }) => {
   const [show, setShow] = useState(false);
-
+  const { t } = useTranslation('error');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
     <div className={`position-relative imgWrapper m-auto ${className} `}>
-      <Image src={img} className="img" />
+      <Image src={img} className="img" alt={t('imgNotAvailable')} />
       <div className="overlay">
         {/* <Button variant="transparent" className="border-0 icon">
           <Image
@@ -27,7 +28,7 @@ const ImageWithZoom = ({ img, className, fromFocusArea }) => {
         </Button>
         <Modal centered show={show} onHide={handleClose} className={`${fromFocusArea ? 'thumb-focus-area' : ''}`}>
           <Modal.Body className="p-0">
-            <Image src={img} className="innerImg" />
+            <Image src={img} className="innerImg" alt={t('imgNotAvailable')} />
           </Modal.Body>
         </Modal>
       </div>

@@ -73,7 +73,7 @@ function IprDetails({
   dashboardExpandedView,
   handleCloseIprDetail,
 }) {
-  const { t, i18n } = useTranslation('search', 'dashboard');
+  const { t, i18n } = useTranslation('search', 'dashboard', 'error');
   const navigate = useNavigate();
   const previousDocument = getPreviousDocument();
   const nextDocument = getNextDocument();
@@ -579,6 +579,7 @@ function IprDetails({
                     src={preparedGetAttachmentURL(
                       document.BibliographicData.Mark,
                     )}
+                    alt={t('error:imgNotAvailable')}
                   />
                 </div>
               )}
@@ -624,6 +625,7 @@ function IprDetails({
                 <div className={`me-6 mb-2 ${style.headerImg}`}>
                   <Image
                     src={preparedGetAttachmentURL(imgFilename)}
+                    alt={t('error:imgNotAvailable')}
                   />
                 </div>
               )}

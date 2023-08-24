@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import SearchImageButton from 'components/shared/search-image-button/SearchImageButton';
+import { useTranslation } from 'react-i18next';
 import Thumb from './Thumb';
 import './style.scss';
 
@@ -18,6 +19,7 @@ function Carousel({
   handleCloseIprDetail,
   fromFocusArea,
 }) {
+  const { t } = useTranslation('error');
   const [show, setShow] = useState(false);
   const [activeImg, setActiveImg] = useState(images[0]);
   const handleClose = () => setShow(false);
@@ -71,7 +73,7 @@ function Carousel({
       {children}
       {largeThumb && (
         <div className="position-relative imgWrapper h-auto">
-          <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" />
+          <Image src={activeImg} className="img-fluid object-fit-cover w-100 h-auto" alt={t('imgNotAvailable')} />
           <div className="overlay">
             <SearchImageButton imgSrc={activeImg} handleCloseIprDetail={handleCloseIprDetail} />
             <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
@@ -79,7 +81,7 @@ function Carousel({
             </Button>
             <Modal centered show={show} onHide={handleClose}>
               <Modal.Body className="p-0">
-                <Image src={activeImg} className="w-100 h-auto" />
+                <Image src={activeImg} className="w-100 h-auto" alt={t('imgNotAvailable')} />
               </Modal.Body>
             </Modal>
           </div>
