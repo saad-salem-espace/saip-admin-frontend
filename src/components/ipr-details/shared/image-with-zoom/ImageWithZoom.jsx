@@ -13,9 +13,10 @@ const ImageWithZoom = ({ img, className, fromFocusArea }) => {
   const { t } = useTranslation('error');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [isCorrupt, setIsCorrupt] = useState(false);
   return (
     <div className={`position-relative imgWrapper m-auto ${className} `}>
-      <Image src={img} className="img" alt={t('imgNotAvailable')} />
+      <Image src={img} className="img" alt={t('imgNotAvailable')} onError={() => setIsCorrupt(true)} />
       <div className="overlay">
         {/* <Button variant="transparent" className="border-0 icon">
           <Image
@@ -23,9 +24,10 @@ const ImageWithZoom = ({ img, className, fromFocusArea }) => {
             className="fs-base"
           />
         </Button> */}
-        <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
+        {!isCorrupt && <Button variant="transparent" onClick={handleShow} className="border-0 px-2 icon">
           <FontAwesomeIcon icon={faMagnifyingGlassPlus} className="fs-24 text-white" />
-        </Button>
+          {/* eslint-disable-next-line react/jsx-closing-tag-location */}
+        </Button>}
         <Modal centered show={show} onHide={handleClose} className={`${fromFocusArea ? 'thumb-focus-area' : ''}`}>
           <Modal.Body className="p-0">
             <Image src={img} className="innerImg" alt={t('imgNotAvailable')} />
