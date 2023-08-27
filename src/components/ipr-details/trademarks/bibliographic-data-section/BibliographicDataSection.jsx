@@ -30,6 +30,7 @@ const BibliographicDataSection = (
 
   const [left, setLeft] = useState();
   const [top, setTop] = useState();
+  const [isCorrupt, setIsCorrupt] = useState(false);
 
   useEffect(() => {
     const handleSelectionChange = () => {
@@ -57,9 +58,9 @@ const BibliographicDataSection = (
         (isIPRExpanded || dashboardExpandedView) && (
           <Col md={dashboardExpandedView ? 12 : 4} className={`mb-2 ${dashboardExpandedView ? 'mb-6' : 'mb-md-0'}`}>
             <div className="me-4">
-              <Image src={imgSrc} className="mw-100" alt={t('error:imgNotAvailable')} />
+              <Image src={imgSrc} className="mw-100" alt={t('error:imgNotAvailable')} onError={() => setIsCorrupt(true)} />
             </div>
-            <SearchImageButton
+            {!isCorrupt && <SearchImageButton
               imgSrc={imgSrc}
               handleCloseIprDetail={handleCloseIprDetail}
               btnClass="appBtn my-2 fs-sm py-4 px-6 mt-22 btn-primary"
@@ -68,7 +69,8 @@ const BibliographicDataSection = (
             >
               <BiSearch className="fs-20 me-3" />
               {t('trademarks.similarImage')}
-            </SearchImageButton>
+              {/* eslint-disable-next-line react/jsx-closing-tag-location */}
+            </SearchImageButton>}
           </Col>
         )
       }
