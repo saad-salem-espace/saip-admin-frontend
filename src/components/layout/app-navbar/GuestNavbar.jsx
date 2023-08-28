@@ -16,7 +16,6 @@ import LanguageSwitch from './shared/LanguageSwitch';
 import RecentSearch from './shared/recent-search/RecentSearch';
 import Accessibility from './shared/Accessibility';
 import DropdownItem from './shared/recent-search/DropdownItem';
-import HelpLink from './shared/HelpLink';
 import CommonLinks from './shared/CommonLinks';
 
 function GuestNavbar({ lang, changeLang }) {
@@ -78,7 +77,7 @@ function GuestNavbar({ lang, changeLang }) {
               }
             </RecentSearch>
             <div className="d-flex justify-content-center align-items-center mb-3 mb-lg-0 gap-1">
-              <HelpLink />
+              {/* <HelpLink /> */}
               <Accessibility />
             </div>
             <div className="d-flex justify-content-center h-px-39">
