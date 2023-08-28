@@ -4,6 +4,7 @@ import '../../assets/styles/common/table.scss';
 import PropTypes from 'prop-types';
 import {
   Link,
+  createSearchParams,
 } from 'react-router-dom';
 import React, {
   useContext,
@@ -28,25 +29,38 @@ const SearchHistoryTables = ({
   if (isAuth) {
     groupedData = data.data.reduce((acc, item) => {
       const date = Moment(item.timestamp).format(LONG_DATE_12H_FORMAT);
-      const qry = convertQueryArrToStr(item.payload.qjson);
+      const query = convertQueryArrToStr(item.payload.qjson);
+      const imageName = item.payload?.docImage ? item.payload?.imageName.split('/')[3] : item.payload?.imageName;
+      const docImage = item.payload?.docImage ? item.payload?.imageName.split('/')[0] : false;
+      const historyRow = { query, imageName, docImage };
       if (!acc[date]) {
-        acc[date] = [qry];
+        acc[date] = [historyRow];
       } else {
-        acc[date].push(qry);
+        acc[date].push(historyRow);
       }
       return acc;
     }, {});
   } else {
     groupedData = data.reduce((acc, item) => {
       const date = Moment(item.createdAt).format(LONG_DATE_12H_FORMAT);
+      const query = item?.queryString;
+      const imageName = item?.imageName;
+      const docImage = item?.docImage;
+      const historyRow = { query, imageName, docImage };
       if (!acc[date]) {
-        acc[date] = [item.queryString];
+        acc[date] = [historyRow];
       } else {
-        acc[date].push(item.queryString);
+        acc[date].push(historyRow);
       }
       return acc;
     }, {});
   }
+
+  const writeHistory = (row) => {
+    if (row?.query && row?.imageName) return (`${row.query} OR ${row.imageName}`);
+    if (row?.query) return row.query;
+    return row.imageName;
+  };
 
   return (
     <div>
@@ -67,14 +81,23 @@ const SearchHistoryTables = ({
                 </thead>
                 <tbody>
                   {
-                    groupedData[keyName].map((query) => (
+                    groupedData[keyName].map((historyRow) => (
                       <tr className="text-capitalize">
-                        <td className="text-nowrap query">{query}</td>
+                        <td className="text-nowrap query">{writeHistory(historyRow)}</td>
                         <td className="text-nowrap date">{keyName}</td>
                         <td>
                           <Link
                             className="p-2 rounded run-query"
-                            to={`${routes.search}?workstreamId=${workStreamId}&sort=mostRelevant&q=${query}&page=1'`}
+                            to={{
+                              pathname: routes.search,
+                              search: `?${createSearchParams({
+                                workstreamId: workStreamId,
+                                sort: 'mostRelevant',
+                                ...(historyRow?.query && { q: historyRow.query }),
+                                ...(historyRow?.imageName && { imageName: historyRow.imageName }),
+                                ...(historyRow?.docImage && { docImage: historyRow.docImage }),
+                              })}`,
+                            }}
                           >
                             <BsPlay className="play-icon" />
                           </Link>

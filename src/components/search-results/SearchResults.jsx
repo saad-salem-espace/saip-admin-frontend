@@ -299,6 +299,7 @@ function SearchResults({ showFocusArea }) {
         indecies: {
           queryString: convertQueryArrToStr(searchResultParams.qArr),
           workstreamId: searchResultParams.workstreamId,
+          ...(searchParams.get('imageName') && { imageName: searchParams.get('imageName') }),
         },
         onSuccess: (resp) => { setIsQuerySaved(!!resp); },
         onError: () => { setIsQuerySaved(false); },
@@ -385,6 +386,8 @@ function SearchResults({ showFocusArea }) {
     workstreamId: searchParams.get('workstreamId'),
     queryString: searchParams.get('q'),
     synonymous: (searchParams.get('enableSynonyms') ?? 'false'),
+    imageName: searchParams.get('imageName'),
+    docImage: searchParams.get('docImage'),
     workstreamKey: 'workstreamId',
     documentId: null,
     fav: true,

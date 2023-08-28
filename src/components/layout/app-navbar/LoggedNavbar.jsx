@@ -119,7 +119,11 @@ function LoggedNavbar({
               {
                 history.map((h) => (
                   <DropdownItem
-                    query={convertQueryArrToStr(h?.payload?.qjson)}
+                    query={{
+                      query: convertQueryArrToStr(h?.payload?.qjson),
+                      imageName: h.payload?.docImage ? h.payload?.imageName.split('/')[3] : h.payload?.imageName,
+                      docImage: h.payload?.docImage ? h.payload?.imageName.split('/')[0] : false,
+                    }}
                     timestamp={h.timestamp}
                     workStreamId={workStreamId}
                   />

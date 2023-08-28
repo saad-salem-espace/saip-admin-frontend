@@ -63,7 +63,11 @@ function GuestNavbar({ lang, changeLang }) {
                     {
                     history.map((h) => (
                       <DropdownItem
-                        query={h?.queryString}
+                        query={{
+                          query: h?.queryString,
+                          imageName: h?.imageName,
+                          docImage: h?.docImage,
+                        }}
                         timestamp={h?.createdAt}
                         workStreamId={workStreamId}
                       />
