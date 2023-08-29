@@ -324,7 +324,7 @@ function SearchResults({ showFocusArea }) {
 
   useEffect(() => {
     executeFilters();
-  }, [searchParams.get('q')]);
+  }, [searchParams.get('q'), searchParams.get('workstreamId')]);
 
   useEffect(() => {
     if (filtersData.data) {
