@@ -44,7 +44,7 @@ function MyActivity() {
     setSortByMostRecent(sortByMostRecent === 'leastRecent' ? 'mostRecent' : 'leastRecent');
   };
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
+    return t(`workstreams:${workstream.workstreamName.replace(/\s/g, '')}`);
   }
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({

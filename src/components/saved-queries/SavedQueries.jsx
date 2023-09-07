@@ -35,7 +35,7 @@ const SavedQueries = () => {
   const [refreshQueriesList, setRefreshQueriesList] = useState(0);
 
   function workstreamName(workstream) {
-    return currentLang === 'ar' ? workstream.workstreamNameAr : workstream.workstreamName;
+    return t(`workstreams:${workstream.workstreamName.replace(/\s/g, '')}`);
   }
 
   const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
