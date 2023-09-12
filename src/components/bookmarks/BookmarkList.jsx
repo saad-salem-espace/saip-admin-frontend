@@ -21,6 +21,7 @@ import { tableNames } from 'dbConfig';
 import { Container, Row, Col } from 'react-bootstrap';
 import Spinner from 'components/shared/spinner/Spinner';
 import useAxios from 'hooks/useAxios';
+import { sortWorkstreams } from 'utils/objects';
 import getBookmarksLocalUser from 'apis/bookmarks/getBookmarksLocalUser';
 import exportSearchResultsValidationSchema from '../search-results/exportSearchResultsValidationSchema';
 import ExportSearchResults from '../search-results/ExportSearchResults';
@@ -51,7 +52,7 @@ const BookmarkList = () => {
   function workstreamName(workstream) {
     return t(`workstreams:${workstream.workstreamName.replace(/\s/g, '')}`);
   }
-  const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
+  const WorkStreamsOptions = sortWorkstreams(workstreams?.data)?.map((workstream) => ({
     label: workstreamName(workstream),
     value: workstream.id,
   }));

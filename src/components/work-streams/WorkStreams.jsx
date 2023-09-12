@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from 'react';
 import CacheContext from 'contexts/CacheContext';
 import PropTypes from 'prop-types';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
+import { sortWorkstreams } from 'utils/objects';
 import useCacheRequest from '../../hooks/useCacheRequest';
 import './workstream.scss';
 
@@ -26,7 +27,7 @@ function WorkStreams({ selectedWorkStream, onChange }) {
   return (
     <div className="text-center">
       {
-        workstreams.map((workStream) => (
+        sortWorkstreams(workstreams).map((workStream) => (
           <Button
             variant="transparent"
             className={`types me-4 mb-lg-0 mb-3 shadow px-6 py-2 ${workStream.workstreamName} ${selectedWorkStream === workStream.id ? 'active' : ''}`}

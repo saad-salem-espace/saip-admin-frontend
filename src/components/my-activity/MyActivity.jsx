@@ -10,6 +10,7 @@ import { useSearchParams } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import useCacheRequest from 'hooks/useCacheRequest';
 import CacheContext from 'contexts/CacheContext';
+import { sortWorkstreams } from 'utils/objects';
 import i18n from 'i18n';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import Select from 'components/shared/form/select/Select';
@@ -47,7 +48,7 @@ function MyActivity() {
     return t(`workstreams:${workstream.workstreamName.replace(/\s/g, '')}`);
   }
 
-  const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
+  const WorkStreamsOptions = sortWorkstreams(workstreams?.data)?.map((workstream) => ({
     label: workstreamName(workstream),
     value: workstream.id,
   }));

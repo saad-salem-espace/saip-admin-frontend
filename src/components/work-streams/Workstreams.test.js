@@ -6,7 +6,6 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import apiInstance from 'apis/apiInstance';
 import WorkstreamList from 'testing-resources/workstreams/workstreams.json';
-import Workstreams from './WorkStreams';
 
 // const mockAxios = new MockAdapter(apiInstance);
 
