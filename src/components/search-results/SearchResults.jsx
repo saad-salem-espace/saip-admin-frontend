@@ -25,6 +25,7 @@ import AppPagination from 'components/shared/app-pagination/AppPagination';
 import advancedSearchApi from 'apis/search/advancedSearchApi';
 import similarDocSearchApi from 'apis/search/similarDocSearchApi';
 import { parseSingleQuery } from 'utils/search-query/encoder';
+import { sortWorkstreams } from 'utils/objects';
 import { BsQuestionCircle } from 'react-icons/bs';
 import SaveQuery from 'components/save-query/SaveQuery';
 import useAxios from 'hooks/useAxios';
@@ -540,7 +541,7 @@ function SearchResults({ showFocusArea }) {
   function workstreamName(workstream) {
     return t(`workstreams:${workstream.workstreamName.replace(/\s/g, '')}`);
   }
-  const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
+  const WorkStreamsOptions = sortWorkstreams(workstreams?.data)?.map((workstream) => ({
     label: workstreamName(workstream),
     value: workstream.id,
   }));

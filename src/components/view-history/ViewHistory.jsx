@@ -15,6 +15,7 @@ import { LIMITS, executeAfterLimitValidation } from 'utils/manageLimits';
 import useIndexedDbWrapper from 'hooks/useIndexedDbWrapper';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
 import Select from 'components/shared/form/select/Select';
+import { sortWorkstreams } from 'utils/objects';
 import { tableNames } from 'dbConfig';
 import EmptyState from 'components/shared/empty-state/EmptyState';
 import AppPagination from 'components/shared/app-pagination/AppPagination';
@@ -54,7 +55,7 @@ function ViewHistory() {
     return t(`workstreams:${workstream.workstreamName.replace(/\s/g, '')}`);
   }
 
-  const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
+  const WorkStreamsOptions = sortWorkstreams(workstreams?.data)?.map((workstream) => ({
     label: workstreamName(workstream),
     value: workstream.id,
   }));

@@ -14,6 +14,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAuth } from 'react-oidc-context';
 import { tableNames } from 'dbConfig';
 import CacheContext from 'contexts/CacheContext';
+import { sortWorkstreams } from 'utils/objects';
 import useCacheRequest from 'hooks/useCacheRequest';
 import Spinner from 'components/shared/spinner/Spinner';
 import SelectedWorkStreamIdContext from 'contexts/SelectedWorkStreamIdContext';
@@ -38,7 +39,7 @@ const SavedQueries = () => {
     return t(`workstreams:${workstream.workstreamName.replace(/\s/g, '')}`);
   }
 
-  const WorkStreamsOptions = workstreams?.data?.map((workstream) => ({
+  const WorkStreamsOptions = sortWorkstreams(workstreams?.data)?.map((workstream) => ({
     label: workstreamName(workstream),
     value: workstream.id,
   }));
