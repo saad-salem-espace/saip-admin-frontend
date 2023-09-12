@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { get } from 'wild-wild-path';
 
 function getProperties(obj, propertyNames) {
