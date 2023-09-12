@@ -29,6 +29,8 @@ import helpEn from './locales/en/help.json';
 import helpAr from './locales/ar/help.json';
 import pagesAr from './locales/ar/pages.json';
 import pagesEn from './locales/en/pages.json';
+import workstreamsEn from './locales/en/workstreams.json';
+import workstreamsAr from './locales/ar/workstreams.json';
 
 const resources = {
   en: {
@@ -46,6 +48,7 @@ const resources = {
     activity: activityEn,
     help: helpEn,
     pages: pagesEn,
+    workstreams: workstreamsEn,
   },
   ar: {
     translation: translationAr,
@@ -62,6 +65,7 @@ const resources = {
     activity: activityAr,
     help: helpAr,
     pages: pagesAr,
+    workstreams: workstreamsAr,
   },
 };
 

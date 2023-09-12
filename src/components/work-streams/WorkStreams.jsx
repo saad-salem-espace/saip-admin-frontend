@@ -8,6 +8,7 @@ import useCacheRequest from '../../hooks/useCacheRequest';
 import './workstream.scss';
 
 function WorkStreams({ selectedWorkStream, onChange }) {
+  const { t } = useTranslation('workstreams');
   const { setWorkStreamId } = useContext(SelectedWorkStreamIdContext);
   const { cachedRequests } = useContext(CacheContext);
   const [workstream] = useCacheRequest(cachedRequests.workstreams, { url: 'workstreams' });
@@ -18,8 +19,6 @@ function WorkStreams({ selectedWorkStream, onChange }) {
       setWorkStreamId(workstreamId);
     }
   };
-  const { i18n } = useTranslation();
-  const currentLang = i18n.language;
   useEffect(() => {
     handleChange(workstreams?.[0].id);
   }, [workstreams]);
@@ -35,7 +34,7 @@ function WorkStreams({ selectedWorkStream, onChange }) {
             key={workStream.id}
           >
             <span className={`fs-24 mb-2 d-block workstreamIcon icon-${workStream.workstreamName}`} />
-            <span className="text-capitalize font-regular">{currentLang === 'ar' ? workStream.workstreamNameAr : workStream.workstreamName}</span>
+            <span className="text-capitalize font-regular">{t(workStream.workstreamName.replace(/\s/g, ''))}</span>
           </Button>
         ))
       }
